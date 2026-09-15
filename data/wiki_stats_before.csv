@@ -1,0 +1,122 @@
+﻿file,title,raw_tokens,wiki_tokens,delta,reduction_pct,missing_code_refs
+_llm-test.md,LLM test file,2810,2754,-56,1.99,0
+advanced/additional-responses.md,Additional Responses in OpenAPI,2262,2892,630,-27.85,0
+advanced/additional-status-codes.md,Additional Status Codes,500,723,223,-44.6,0
+advanced/advanced-dependencies.md,Advanced Dependencies,2312,3694,1382,-59.78,0
+advanced/advanced-python-types.md,Advanced Python Types,518,577,59,-11.39,0
+advanced/async-tests.md,Async Tests,959,1289,330,-34.41,0
+advanced/behind-a-proxy.md,Behind a Proxy,4047,4285,238,-5.88,0
+advanced/custom-response.md,"Custom Response - HTML, Stream, File, others",2822,3694,872,-30.9,0
+advanced/dataclasses.md,Using Dataclasses,1024,1573,549,-53.61,0
+advanced/events.md,Lifespan Events,1992,2684,692,-34.74,0
+advanced/generate-clients.md,Generating SDKs,2176,2766,590,-27.11,0
+advanced/index.md,Advanced User Guide,189,224,35,-18.52,0
+advanced/json-base64-bytes.md,JSON with Bytes as Base64,618,1271,653,-105.66,0
+advanced/middleware.md,Advanced Middleware,1050,1258,208,-19.81,0
+advanced/openapi-callbacks.md,OpenAPI Callbacks,1964,3293,1329,-67.67,0
+advanced/openapi-webhooks.md,OpenAPI Webhooks,737,941,204,-27.68,0
+advanced/path-operation-advanced-configuration.md,Path Operation Advanced Configuration,1780,2655,875,-49.16,0
+advanced/response-change-status-code.md,Response - Change Status Code,389,519,130,-33.42,0
+advanced/response-cookies.md,Response Cookies,557,743,186,-33.39,0
+advanced/response-directly.md,Return a Response Directly,1034,1393,359,-34.72,0
+advanced/response-headers.md,Response Headers,550,726,176,-32.0,0
+advanced/security/http-basic-auth.md,HTTP Basic Auth,1279,1944,665,-51.99,0
+advanced/security/oauth2-scopes.md,OAuth2 scopes,3442,14341,10899,-316.65,0
+advanced/settings.md,Settings and Environment Variables,2952,3671,719,-24.36,0
+advanced/stream-data.md,Stream Data,1372,10672,9300,-677.84,0
+advanced/strict-content-type.md,Strict Content-Type Checking,822,941,119,-14.48,0
+advanced/sub-applications.md,Sub Applications - Mounts,739,910,171,-23.14,0
+advanced/templates.md,Templates,853,1016,163,-19.11,0
+advanced/testing-dependencies.md,Testing Dependencies with Overrides,603,985,382,-63.35,0
+advanced/testing-events.md,Testing Events: lifespan and startup - shutdown,156,588,432,-276.92,0
+advanced/testing-websockets.md,Testing WebSockets,101,302,201,-199.01,0
+advanced/using-request-directly.md,Using the Request Directly,584,667,83,-14.21,0
+advanced/websockets.md,WebSockets,1348,3711,2363,-175.3,0
+advanced/wsgi.md,"Including WSGI - Flask, Django, others",369,514,145,-39.3,0
+async.md,Concurrency and async / await,5921,5808,-113,1.91,0
+deployment/cloud.md,Deploy FastAPI on Cloud Providers,297,316,19,-6.4,0
+deployment/concepts.md,Deployments Concepts,4722,4644,-78,1.65,0
+deployment/docker.md,FastAPI in Containers - Docker,7209,7051,-158,2.19,0
+deployment/fastapicloud.md,FastAPI Cloud,434,457,23,-5.3,0
+deployment/https.md,About HTTPS,3575,3551,-24,0.67,0
+deployment/index.md,Deployment,379,397,18,-4.75,0
+deployment/manually.md,Run a Server Manually,1647,1547,-100,6.07,0
+deployment/server-workers.md,Server Workers - Uvicorn with Workers,2092,1878,-214,10.23,0
+deployment/versions.md,About FastAPI versions,877,929,52,-5.93,0
+editor-support.md,Editor Support,629,698,69,-10.97,0
+environment-variables.md,Environment Variables,192,247,55,-28.65,0
+fastapi-cli.md,FastAPI CLI,1668,1574,-94,5.64,0
+features.md,Features,2284,2241,-43,1.88,0
+how-to/authentication-error-status-code.md,Use Old 403 Authentication Error Status Codes,297,507,210,-70.71,0
+how-to/conditional-openapi.md,Conditional OpenAPI,609,719,110,-18.06,0
+how-to/configure-swagger-ui.md,Configure Swagger UI,722,4005,3283,-454.71,0
+how-to/custom-docs-ui-assets.md,Custom Docs UI Static Assets (Self-Hosting),1897,3741,1844,-97.21,0
+how-to/custom-request-and-route.md,Custom Request and APIRoute class,1138,2613,1475,-129.61,0
+how-to/extending-openapi.md,Extending OpenAPI,935,1817,882,-94.33,0
+how-to/general.md,General - How To - Recipes,708,719,11,-1.55,0
+how-to/graphql.md,GraphQL,694,827,133,-19.16,0
+how-to/migrate-from-pydantic-v1-to-pydantic-v2.md,Migrate from Pydantic v1 to Pydantic v2,1577,1815,238,-15.09,0
+how-to/separate-openapi-schemas.md,Separate OpenAPI Schemas for Input and Output or Not,1161,1517,356,-30.66,0
+index.md,FastAPI,6239,5667,-572,9.17,0
+python-types.md,Python Types Intro,2801,3161,360,-12.85,0
+reference/dependencies.md,Dependencies - `Depends()` and `Security()`,167,219,52,-31.14,0
+reference/fastapi.md,`FastAPI` class,181,222,41,-22.65,0
+reference/middleware.md,Middleware,211,242,31,-14.69,0
+reference/request.md,`Request` class,163,230,67,-41.1,0
+reference/responses.md,"Custom Response Classes - File, HTML, Redirect, Streaming, etc.",1136,1198,62,-5.46,0
+reference/security/index.md,Security Tools,444,533,89,-20.05,0
+reference/status.md,Status Codes,215,257,42,-19.53,0
+reference/websockets.md,WebSockets,501,579,78,-15.57,0
+translations.md,Translations,495,570,75,-15.15,0
+tutorial/background-tasks.md,Background Tasks,1196,1765,569,-47.58,0
+tutorial/bigger-applications.md,Bigger Applications - Multiple Files,5043,6634,1591,-31.55,0
+tutorial/body-fields.md,Body - Fields,597,924,327,-54.77,0
+tutorial/body-multiple-params.md,Body - Multiple Parameters,1233,1859,626,-50.77,0
+tutorial/body-nested-models.md,Body - Nested Models,1704,2541,837,-49.12,0
+tutorial/body-updates.md,Body - Updates,1022,1984,962,-94.13,0
+tutorial/body.md,Request Body,1652,2121,469,-28.39,0
+tutorial/cookie-param-models.md,Cookie Parameter Models,776,953,177,-22.81,0
+tutorial/cookie-params.md,Cookie Parameters,400,515,115,-28.75,0
+tutorial/cors.md,CORS (Cross-Origin Resource Sharing),1342,1507,165,-12.3,0
+tutorial/debugging.md,Debugging,617,688,71,-11.51,0
+tutorial/dependencies/classes-as-dependencies.md,Classes as Dependencies,1728,2746,1018,-58.91,0
+tutorial/dependencies/dependencies-in-path-operation-decorators.md,Dependencies in path operation decorators,738,1352,614,-83.2,0
+tutorial/dependencies/dependencies-with-yield.md,Dependencies with yield,3211,4190,979,-30.49,0
+tutorial/dependencies/global-dependencies.md,Global Dependencies,265,477,212,-80.0,0
+tutorial/dependencies/index.md,Dependencies,2442,2865,423,-17.32,0
+tutorial/dependencies/sub-dependencies.md,Sub-dependencies,955,1341,386,-40.42,0
+tutorial/encoder.md,JSON Compatible Encoder,402,561,159,-39.55,0
+tutorial/extra-data-types.md,Extra Data Types,673,1100,427,-63.45,0
+tutorial/extra-models.md,Extra Models,1721,2386,665,-38.64,0
+tutorial/first-steps.md,First Steps,3525,3364,-161,4.57,0
+tutorial/frontend.md,Frontend,1591,1774,183,-11.5,0
+tutorial/handling-errors.md,Handling Errors,2289,3427,1138,-49.72,0
+tutorial/header-param-models.md,Header Parameter Models,667,981,314,-47.08,0
+tutorial/header-params.md,Header Parameters,758,996,238,-31.4,0
+tutorial/index.md,Tutorial - User Guide,1864,1770,-94,5.04,0
+tutorial/metadata.md,Metadata and Docs URLs,1493,2252,759,-50.84,0
+tutorial/middleware.md,Middleware,985,1191,206,-20.91,0
+tutorial/path-operation-configuration.md,Path Operation Configuration,1030,1796,766,-74.37,0
+tutorial/path-params-numeric-validations.md,Path Parameters and Numeric Validations,1552,2173,621,-40.01,0
+tutorial/path-params.md,Path Parameters,2260,3000,740,-32.74,0
+tutorial/query-param-models.md,Query Parameter Models,553,791,238,-43.04,0
+tutorial/query-params-str-validations.md,Query Parameters and String Validations,4156,5634,1478,-35.56,0
+tutorial/query-params.md,Query Parameters,1149,1567,418,-36.38,0
+tutorial/request-files.md,Request Files,1770,2615,845,-47.74,0
+tutorial/request-form-models.md,Form Models,511,671,160,-31.31,0
+tutorial/request-forms-and-files.md,Request Forms and Files,338,551,213,-63.02,0
+tutorial/request-forms.md,Form Data,631,772,141,-22.35,0
+tutorial/response-model.md,Response Model - Return Type,3953,5529,1576,-39.87,0
+tutorial/response-status-code.md,Response Status Code,998,1147,149,-14.93,0
+tutorial/schema-extra-example.md,Declare Request Example Data,2238,3188,950,-42.45,0
+tutorial/security/first-steps.md,Security - First Steps,2089,2339,250,-11.97,0
+tutorial/security/get-current-user.md,Get Current User,1029,2050,1021,-99.22,0
+tutorial/security/index.md,Security,1137,1187,50,-4.4,0
+tutorial/security/oauth2-jwt.md,"OAuth2 with Password (and hashing), Bearer with JWT tokens",2690,6919,4229,-157.21,0
+tutorial/security/simple-oauth2.md,Simple OAuth2 with Password and Bearer,2397,5473,3076,-128.33,0
+tutorial/server-sent-events.md,Server-Sent Events (SSE),1175,2837,1662,-141.45,0
+tutorial/sql-databases.md,SQL (Relational) Databases,3894,13729,9835,-252.57,0
+tutorial/static-files.md,Static Files,480,566,86,-17.92,0
+tutorial/stream-json-lines.md,Stream JSON Lines,1111,2031,920,-82.81,0
+tutorial/testing.md,Testing,1381,2260,879,-63.65,0
+virtual-environments.md,Virtual Environments,285,315,30,-10.53,0
