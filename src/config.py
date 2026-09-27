@@ -44,6 +44,10 @@ class Config:
     judge_model: str = _env("JUDGE_MODEL", "qwen2.5:7b")  # 채점
     summary_model: str = _env("SUMMARY_MODEL", "qwen2.5:3b")  # 재귀 요약용
     embed_model: str = _env("EMBED_MODEL", "bge-m3")      # 의미 손실률
+    # 토큰 계산 기준. 모델 가중치 없이 토크나이저만 내려받는다
+    tokenizer: str = _env("TOKENIZER", "Qwen/Qwen2.5-7B-Instruct")
+    # 토크나이저 리비전(허깅페이스 커밋 해시) 고정. 저장소가 갱신돼도 토큰 수가 바뀌지 않게 한다
+    tokenizer_revision: str = _env("TOKENIZER_REVISION", "a09a35458c702b33eeacc393d103063234e8bc28")
 
     # ---------- 생성 조건 (실험 통제) ----------
     temperature: float = _env("LLM_TEMPERATURE", 0.0)
@@ -58,13 +62,35 @@ class Config:
     wiki_dir: Path = ROOT / "data" / "wiki"
     eval_dir: Path = ROOT / "data" / "eval"
     results_dir: Path = ROOT / "results"
+    # FastAPI 저장소 스냅샷 루트 (docs/en 이 있는 곳). 연구 기간 내내 고정
+    raw_repo: Path = ROOT / "data" / "raw" / "fastapi"
+    corpus_manifest: Path = ROOT / "data" / "corpus_manifest.jsonl"
+    index_dir: Path = ROOT / "data" / "index"        # 탐색용 인덱스 변형들 ({이름}.md)
+    ctx_log_path: Path = ROOT / "results" / "ctx_overflow.jsonl"   # num_ctx 초과 기록
 
     # ---------- 실험 조건 ----------
-    repeats: int = _env("REPEATS", 3)           # 반복 횟수 (평균·표준편차용)
+    repeats: int = _env("REPEATS", 1)           # 반복 횟수 (평균·표준편차용)
     context_lengths: tuple = (4000, 8000, 16000)  # 긴 문맥 실험 조건
 
     # 압축률 목표 (LLMLingua 등)
     compression_rates: tuple = (0.3, 0.5, 0.7)
+
+    # ---------- 코퍼스 범위 ----------
+    # 문서: docs/en/docs/**/*.md 중 아래 corpus_exclude 를 뺀 것
+    # 코드: docs_src 폴더 전체(**/*.py) + 코퍼스 문서가 {* ... *} 로 참조하는 그 외 파일
+    #       (예: fastapi/openapi/docs.py). 참조의 ln[...] 줄 범위는 펼칠 때만 적용하고
+    #       코드 문서 자체는 파일 전체를 원문 그대로 갖는다.
+    # 아래는 기술 설명이 아닌 페이지. docs/en/docs 기준 경로, "/"로 끝나면 폴더 전체
+    corpus_exclude: tuple = (
+        "release-notes.md", "newsletter.md", "help-fastapi.md", "contributing.md",
+        "benchmarks.md", "history-design-future.md", "external-links.md",
+        "fastapi-people.md", "project-generation.md", "management.md",
+        "management-tasks.md", "alternatives.md", "resources/",
+        "about/", "learn/",
+        "reference/",       # 대부분 ::: fastapi.X 자동 생성 구문이라 본문이 거의 없음
+        "_llm-test.md", "translations.md", "translation-banner.md",   # 번역 작업용
+        "environment-variables.md", "virtual-environments.md",   # 일반 파이썬 환경 안내, nav 에 없음
+    )
 
     def ensure_dirs(self):
         for d in (self.wiki_dir, self.eval_dir, self.results_dir):
