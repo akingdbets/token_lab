@@ -80,6 +80,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from config import CFG
 from corpus import ANCHOR, DOCS_PREFIX, FENCE, Corpus, load_corpus, load_nav, manifest_sha256
+from grader import closed_book_knows
 from llm import LLM, count_message_tokens, count_tokens
 
 TYPES = ("fact", "procedure", "code", "multi")
@@ -628,38 +629,6 @@ def config_snapshot() -> dict:
 
 
 # ---------------- 생성 ----------------
-
-# TODO(grader): 채점기(grader.py)를 만들면 아래 단어 단위 비교(word_tokens, contains_words,
-#   closed_book_knows)를 채점기와 공유하는 모듈로 옮겨, 생성 단계 판정과 채점 기준을 하나로 맞출 것.
-
-def word_tokens(s: str) -> list[str]:
-    """단어 단위 비교용 토큰 (소문자, 영숫자와 _ 만). "AsyncIterable[Item]" -> [asynciterable, item]."""
-    return re.findall(r"[a-z0-9_]+", s.lower())
-
-
-def contains_words(haystack: list[str], needle: str) -> bool:
-    """needle 의 단어들이 haystack 에 연속으로 그대로 있는지. "50" 은 "500" 에 걸리지 않는다."""
-    n = word_tokens(needle)
-    if not n:
-        return False
-    return any(haystack[i:i + len(n)] == n for i in range(len(haystack) - len(n) + 1))
-
-
-def closed_book_knows(response: str, a: str, entities: list[str]) -> tuple[bool, str]:
-    """답변(response)이 정답을 맞혔는지. 문서 없이 풀기와 한 페이지로 풀기 검사에 같이 쓴다.
-    - 짧은 답(5단어 이하): 정답이 답변에 단어 단위로 그대로 있으면 안다
-    - 긴 답: 핵심 엔티티 중 절반 이상(올림)이 답변에 단어 단위로 있으면 안다
-      (엔티티가 없으면 판정할 수 없어 모른다로 둔다)
-    (판정, 사용한 규칙)을 돌려준다."""
-    resp = word_tokens(response)
-    if len(a.split()) <= 5:
-        return contains_words(resp, a), "answer_words_in_response"
-    ents = [e for e in entities if word_tokens(e)]
-    if not ents:
-        return False, "no_entities"
-    need = -(-len(ents) // 2)            # 절반 올림
-    hit = sum(contains_words(resp, e) for e in ents)
-    return hit >= need, f"entities_in_response {hit}/{len(ents)} (need {need})"
 
 
 def process_candidate(rec: RunLog, it: dict, qtype: str, docs: list[Doc], doc_text: str,
