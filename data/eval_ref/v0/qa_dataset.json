@@ -1,0 +1,2905 @@
+[
+  {
+    "id": "q0001",
+    "split": "test",
+    "type": "procedure",
+    "question": "In FastAPI, how do I set up and use environment variables for application settings, including reading from a .env file and using them in a path operation function?",
+    "answer": "1) Import BaseSettings from Pydantic and create a sub-class with type annotations for settings 2) Use the Settings class to read environment variables 3) Create a dependency function with @lru_cache to return the Settings object 4) Use the dependency in a path operation function to access the settings 5) Optionally, use model_config to read settings from a .env file",
+    "key_entities": [
+      "BaseSettings",
+      "Settings",
+      "@lru_cache",
+      "dependency",
+      "model_config"
+    ],
+    "evidence": [
+      {
+        "quote": "Import `BaseSettings` from Pydantic and create a sub-class, very much like with a Pydantic model.",
+        "page": "docs/en/docs/advanced/settings.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/advanced/settings.md",
+            "line": 55
+          }
+        ]
+      },
+      {
+        "quote": "Next, you would run the server passing the configurations as environment variables, for example you could set an `ADMIN_EMAIL` and `APP_NAME` with:",
+        "page": "docs/en/docs/advanced/settings.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/advanced/settings.md",
+            "line": 81
+          }
+        ]
+      },
+      {
+        "quote": "And then we can require it from the *path operation function* as a dependency and use it anywhere we need it.",
+        "page": "docs/en/docs/advanced/settings.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/advanced/settings.md",
+            "line": 171
+          }
+        ]
+      },
+      {
+        "quote": "Here we define the config `env_file` inside of your Pydantic `Settings` class, and set the value to the filename with the dotenv file we want to use.",
+        "page": "docs/en/docs/advanced/settings.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/advanced/settings.md",
+            "line": 228
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/advanced/settings.md"
+    ],
+    "source_files": [
+      "docs/en/docs/advanced/settings.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "advanced",
+    "doc_tokens": 3722,
+    "copy_overlap": 0.115,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-234937",
+      "cand_id": "20261004-234937-c0002",
+      "log": "results/logs/dataset_20261004-234937.jsonl"
+    }
+  },
+  {
+    "id": "q0002",
+    "split": "test",
+    "type": "code",
+    "question": "What is the default value of the `items_per_user` parameter in the `Settings` class?",
+    "answer": "50",
+    "key_entities": [
+      "items_per_user"
+    ],
+    "evidence": [
+      {
+        "quote": "class Settings(BaseSettings):\n    app_name: str = \"Awesome API\"\n    admin_email: str\n    items_per_user: int = 50",
+        "page": "docs/en/docs/advanced/settings.md",
+        "locations": [
+          {
+            "file": "docs_src/settings/tutorial001_py310.py",
+            "line": 5
+          },
+          {
+            "file": "docs_src/settings/app01_py310/config.py",
+            "line": 4
+          },
+          {
+            "file": "docs_src/settings/app02_an_py310/config.py",
+            "line": 4
+          },
+          {
+            "file": "docs_src/settings/app03_an_py310/config.py",
+            "line": 4
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/advanced/settings.md"
+    ],
+    "source_files": [
+      "docs/en/docs/advanced/settings.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "advanced",
+    "doc_tokens": 3722,
+    "copy_overlap": 0.182,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-234937",
+      "cand_id": "20261004-234937-c0003",
+      "log": "results/logs/dataset_20261004-234937.jsonl"
+    }
+  },
+  {
+    "id": "q0003",
+    "split": "test",
+    "type": "fact",
+    "question": "What is the content type for a response that uses JSON Lines in FastAPI?",
+    "answer": "application/jsonl",
+    "key_entities": [
+      "content type",
+      "application/jsonl"
+    ],
+    "evidence": [
+      {
+        "quote": "A response would have a content type of `application/jsonl` (instead of `application/json`) and the body would be something like:",
+        "page": "docs/en/docs/tutorial/stream-json-lines.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/stream-json-lines.md",
+            "line": 41
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/tutorial/stream-json-lines.md"
+    ],
+    "source_files": [
+      "docs/en/docs/tutorial/stream-json-lines.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "tutorial",
+    "doc_tokens": 1455,
+    "copy_overlap": 0.083,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-234937",
+      "cand_id": "20261004-234937-c0005",
+      "log": "results/logs/dataset_20261004-234937.jsonl"
+    }
+  },
+  {
+    "id": "q0004",
+    "split": "test",
+    "type": "code",
+    "question": "What is the return type of the `stream_items` function in the example code?",
+    "answer": "AsyncIterable[Item]",
+    "key_entities": [
+      "stream_items",
+      "AsyncIterable[Item]"
+    ],
+    "evidence": [
+      {
+        "quote": "@app.get(\"/items/stream\")\nasync def stream_items() -> AsyncIterable[Item]:",
+        "page": "docs/en/docs/tutorial/stream-json-lines.md",
+        "locations": [
+          {
+            "file": "docs_src/stream_json_lines/tutorial001_py310.py",
+            "line": 22
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/tutorial/stream-json-lines.md"
+    ],
+    "source_files": [
+      "docs/en/docs/tutorial/stream-json-lines.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "tutorial",
+    "doc_tokens": 1455,
+    "copy_overlap": 0.091,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-234937",
+      "cand_id": "20261004-234937-c0007",
+      "log": "results/logs/dataset_20261004-234937.jsonl"
+    }
+  },
+  {
+    "id": "q0005",
+    "split": "test",
+    "type": "code",
+    "question": "In the example that simulates sending an email by writing to a file, what is the name of the function that is passed to `add_task`?",
+    "answer": "write_notification",
+    "key_entities": [
+      "write_notification"
+    ],
+    "evidence": [
+      {
+        "quote": "def write_notification(email: str, message=\"\"):",
+        "page": "docs/en/docs/tutorial/background-tasks.md",
+        "locations": [
+          {
+            "file": "docs_src/background_tasks/tutorial001_py310.py",
+            "line": 6
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/tutorial/background-tasks.md"
+    ],
+    "source_files": [
+      "docs/en/docs/tutorial/background-tasks.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "tutorial",
+    "doc_tokens": 1557,
+    "copy_overlap": 0.087,
+    "original_question": "What is the name of the function passed to `add_task` in the example that writes to a file simulating sending an email?",
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-234937",
+      "cand_id": "20261004-234937-c0011",
+      "log": "results/logs/dataset_20261004-234937.jsonl"
+    }
+  },
+  {
+    "id": "q0006",
+    "split": "test",
+    "type": "fact",
+    "question": "What is the minimum number of dependencies FastAPI requires to run a basic application?",
+    "answer": "2",
+    "key_entities": [
+      "FastAPI",
+      "dependencies"
+    ],
+    "evidence": [
+      {
+        "quote": "FastAPI depends on Pydantic and Starlette.",
+        "page": "docs/en/docs/index.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/index.md",
+            "line": 535
+          }
+        ]
+      },
+      {
+        "quote": "If you don't want to include the `standard` optional dependencies, you can install with `uv add fastapi` instead of `uv add \"fastapi[standard]\"`.",
+        "page": "docs/en/docs/index.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/index.md",
+            "line": 559
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/index.md"
+    ],
+    "source_files": [
+      "docs/en/docs/index.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "(root)",
+    "doc_tokens": 6664,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0001",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0007",
+    "split": "test",
+    "type": "procedure",
+    "question": "In FastAPI, how do I configure the entrypoint for my app in a `pyproject.toml` file and use it with the `fastapi dev` command?",
+    "answer": "1) Set the `entrypoint` in the `pyproject.toml` file like: [tool.fastapi] entrypoint = \"main:app\" 2) Use the `--entrypoint` option with the `fastapi dev` command: $ fastapi dev --entrypoint main:app",
+    "key_entities": [
+      "entrypoint",
+      "pyproject.toml",
+      "fastapi dev",
+      "--entrypoint"
+    ],
+    "evidence": [
+      {
+        "quote": "[tool.fastapi]\nentrypoint = \"main:app\"",
+        "page": "docs/en/docs/fastapi-cli.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/fastapi-cli.md",
+            "line": 67
+          }
+        ]
+      },
+      {
+        "quote": "You can configure where your app is located in a `pyproject.toml` file like:\n\n```toml\n[tool.fastapi]\nentrypoint = \"main:app\"\n```",
+        "page": "docs/en/docs/fastapi-cli.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/fastapi-cli.md",
+            "line": 63
+          }
+        ]
+      },
+      {
+        "quote": "Or, you can also pass the `--entrypoint` option to the `fastapi dev` command:\n\n```console\n$ uv run fastapi dev --entrypoint main:app\n```",
+        "page": "docs/en/docs/fastapi-cli.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/fastapi-cli.md",
+            "line": 106
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/fastapi-cli.md"
+    ],
+    "source_files": [
+      "docs/en/docs/fastapi-cli.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "(root)",
+    "doc_tokens": 1887,
+    "copy_overlap": 0.273,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0004",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0008",
+    "split": "test",
+    "type": "multi",
+    "question": "How does the FastAPI CLI start a development server and what is the default behavior regarding Content-Type for JSON requests?",
+    "answer": "The `fastapi dev` command starts a development server with auto-reload enabled, using the `main:app` entrypoint by default. JSON requests must include a valid `Content-Type` header (e.g., `application/json`) to be parsed as JSON.",
+    "key_entities": [
+      "fastapi dev",
+      "main:app",
+      "Content-Type"
+    ],
+    "evidence": [
+      {
+        "quote": "To run your FastAPI app for development, you can use the `fastapi dev` command:",
+        "page": "docs/en/docs/fastapi-cli.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/fastapi-cli.md",
+            "line": 7
+          }
+        ]
+      },
+      {
+        "quote": "By default, **auto-reload** is enabled, automatically reloading the server when you make changes to your code.",
+        "page": "docs/en/docs/fastapi-cli.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/fastapi-cli.md",
+            "line": 120
+          }
+        ]
+      },
+      {
+        "quote": "By default, **FastAPI** uses strict `Content-Type` header checking for JSON request bodies, this means that JSON requests **must** include a valid `Content-Type` header (e.g. `application/json`) in order for the body to be parsed as JSON.",
+        "page": "docs/en/docs/advanced/strict-content-type.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/advanced/strict-content-type.md",
+            "line": 3
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/advanced/strict-content-type.md",
+      "docs/en/docs/fastapi-cli.md"
+    ],
+    "source_files": [
+      "docs/en/docs/fastapi-cli.md",
+      "docs/en/docs/advanced/strict-content-type.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "(root)",
+    "doc_tokens": 2697,
+    "copy_overlap": 0.053,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0006",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0009",
+    "split": "test",
+    "type": "procedure",
+    "question": "In FastAPI, how do I configure the application name and admin email using environment variables?",
+    "answer": "1) Import BaseSettings from Pydantic 2) Create a class Settings inheriting BaseSettings with app_name and admin_email attributes 3) Set environment variables ADMIN_EMAIL and APP_NAME before running the server",
+    "key_entities": [
+      "BaseSettings",
+      "Settings",
+      "app_name",
+      "admin_email",
+      "ADMIN_EMAIL",
+      "APP_NAME"
+    ],
+    "evidence": [
+      {
+        "quote": "Import `BaseSettings` from Pydantic and create a sub-class, very much like with a Pydantic model.",
+        "page": "docs/en/docs/advanced/settings.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/advanced/settings.md",
+            "line": 55
+          }
+        ]
+      },
+      {
+        "quote": "The same way as with Pydantic models, you declare class attributes with type annotations, and possibly default values.",
+        "page": "docs/en/docs/advanced/settings.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/advanced/settings.md",
+            "line": 57
+          }
+        ]
+      },
+      {
+        "quote": "Next it will convert and validate the data. So, when you use that `settings` object, you will have data of the types you declared (e.g. `items_per_user` will be an `int`).",
+        "page": "docs/en/docs/advanced/settings.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/advanced/settings.md",
+            "line": 71
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/advanced/settings.md"
+    ],
+    "source_files": [
+      "docs/en/docs/advanced/settings.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "advanced",
+    "doc_tokens": 3722,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0008",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0010",
+    "split": "test",
+    "type": "multi",
+    "question": "How can you use Pydantic Settings and APIRouter together to manage settings and path operations in a FastAPI application with multiple files?",
+    "answer": "Use Pydantic Settings to manage settings in a separate module, and use APIRouter to organize path operations in submodules. Include the APIRouter in the main FastAPI app with custom tags, dependencies, and responses.",
+    "key_entities": [
+      "Pydantic Settings",
+      "APIRouter",
+      "FastAPI",
+      "submodules"
+    ],
+    "evidence": [
+      {
+        "quote": "Pydantic provides a great utility to handle these settings coming from environment variables with [Pydantic: Settings management](https://pydantic.dev/docs/validation/latest/concepts/pydantic_settings/).",
+        "page": "docs/en/docs/advanced/settings.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/advanced/settings.md",
+            "line": 27
+          }
+        ]
+      },
+      {
+        "quote": "Let's say the file dedicated to handling just users is the submodule at `/app/routers/users.py`.",
+        "page": "docs/en/docs/tutorial/bigger-applications.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/bigger-applications.md",
+            "line": 76
+          }
+        ]
+      },
+      {
+        "quote": "You can create the *path operations* for that module using `APIRouter`.",
+        "page": "docs/en/docs/tutorial/bigger-applications.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/bigger-applications.md",
+            "line": 82
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/advanced/settings.md",
+      "docs/en/docs/tutorial/bigger-applications.md"
+    ],
+    "source_files": [
+      "docs/en/docs/advanced/settings.md",
+      "docs/en/docs/tutorial/bigger-applications.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "advanced",
+    "doc_tokens": 10577,
+    "copy_overlap": 0.25,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0010",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0011",
+    "split": "test",
+    "type": "code",
+    "question": "What type of response is used to set a cookie directly in the example code?",
+    "answer": "JSONResponse",
+    "key_entities": [
+      "JSONResponse",
+      "response"
+    ],
+    "evidence": [
+      {
+        "quote": "response = JSONResponse(content=content)",
+        "page": "docs/en/docs/advanced/response-cookies.md",
+        "locations": [
+          {
+            "file": "docs_src/response_cookies/tutorial001_py310.py",
+            "line": 10
+          }
+        ]
+      },
+      {
+        "quote": "from fastapi.responses import JSONResponse",
+        "page": "docs/en/docs/advanced/response-cookies.md",
+        "locations": [
+          {
+            "file": "docs_src/response_cookies/tutorial001_py310.py",
+            "line": 2
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/advanced/response-cookies.md"
+    ],
+    "source_files": [
+      "docs/en/docs/advanced/response-cookies.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "advanced",
+    "doc_tokens": 650,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0012",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0012",
+    "split": "test",
+    "type": "fact",
+    "question": "What attribute of the FastAPI application can be used to override dependencies during testing?",
+    "answer": "app.dependency_overrides",
+    "key_entities": [
+      "app.dependency_overrides"
+    ],
+    "evidence": [
+      {
+        "quote": "For these cases, your **FastAPI** application has an attribute `app.dependency_overrides`, it is a simple `dict`.",
+        "page": "docs/en/docs/advanced/testing-dependencies.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/advanced/testing-dependencies.md",
+            "line": 25
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/advanced/testing-dependencies.md"
+    ],
+    "source_files": [
+      "docs/en/docs/advanced/testing-dependencies.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "advanced",
+    "doc_tokens": 938,
+    "copy_overlap": 0.167,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0018",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0013",
+    "split": "test",
+    "type": "procedure",
+    "question": "In FastAPI, how can I override a dependency for testing purposes, specifically for a function that returns common parameters?",
+    "answer": "1) Define a new function that overrides the original dependency. 2) Use app.dependency_overrides to map the original dependency to the new override function.",
+    "key_entities": [
+      "app.dependency_overrides",
+      "common_parameters",
+      "override_dependency"
+    ],
+    "evidence": [
+      {
+        "quote": "To override a dependency for testing, you put as a key the original dependency (a function), and as the value, your dependency override (another function).",
+        "page": "docs/en/docs/advanced/testing-dependencies.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/advanced/testing-dependencies.md",
+            "line": 27
+          }
+        ]
+      },
+      {
+        "quote": "async def override_dependency(q: str | None = None):",
+        "page": "docs/en/docs/advanced/testing-dependencies.md",
+        "locations": [
+          {
+            "file": "docs_src/dependency_testing/tutorial001_an_py310.py",
+            "line": 26
+          }
+        ]
+      },
+      {
+        "quote": "app.dependency_overrides[common_parameters] = override_dependency",
+        "page": "docs/en/docs/advanced/testing-dependencies.md",
+        "locations": [
+          {
+            "file": "docs_src/dependency_testing/tutorial001_an_py310.py",
+            "line": 30
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/advanced/testing-dependencies.md"
+    ],
+    "source_files": [
+      "docs/en/docs/advanced/testing-dependencies.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "advanced",
+    "doc_tokens": 938,
+    "copy_overlap": 0.176,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0019",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0014",
+    "split": "test",
+    "type": "code",
+    "question": "What is the default value for the 'limit' parameter in the 'common_parameters' function?",
+    "answer": "100",
+    "key_entities": [
+      "common_parameters",
+      "limit"
+    ],
+    "evidence": [
+      {
+        "quote": "limit: int = 100",
+        "page": "docs/en/docs/advanced/testing-dependencies.md",
+        "locations": [
+          {
+            "file": "docs_src/dependency_testing/tutorial001_an_py310.py",
+            "line": 9
+          }
+        ]
+      },
+      {
+        "quote": "async def common_parameters(q: str | None = None, skip: int = 0, limit: int = 100):",
+        "page": "docs/en/docs/advanced/testing-dependencies.md",
+        "locations": [
+          {
+            "file": "docs_src/dependency_testing/tutorial001_an_py310.py",
+            "line": 9
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/advanced/testing-dependencies.md"
+    ],
+    "source_files": [
+      "docs/en/docs/advanced/testing-dependencies.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "advanced",
+    "doc_tokens": 938,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0020",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0015",
+    "split": "test",
+    "type": "fact",
+    "question": "What is the name of the template engine commonly used with FastAPI, as mentioned in the documentation?",
+    "answer": "Jinja2",
+    "key_entities": [
+      "Jinja2"
+    ],
+    "evidence": [
+      {
+        "quote": "A common choice is Jinja2, the same one used by Flask and other tools.",
+        "page": "docs/en/docs/advanced/templates.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/advanced/templates.md",
+            "line": 5
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/advanced/templates.md"
+    ],
+    "source_files": [
+      "docs/en/docs/advanced/templates.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "advanced",
+    "doc_tokens": 989,
+    "copy_overlap": 0.2,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0023",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0016",
+    "split": "test",
+    "type": "fact",
+    "question": "What is the range of versions that can be used when pinning FastAPI to a specific PATCH version according to the document?",
+    "answer": "0.112.0 or above, but less than 0.113.0",
+    "key_entities": [
+      "0.112.0",
+      "0.113.0"
+    ],
+    "evidence": [
+      {
+        "quote": "that would mean that you would use the versions `0.112.0` or above, but less than `0.113.0`, for example, a version `0.112.2` would still be accepted.",
+        "page": "docs/en/docs/deployment/versions.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/deployment/versions.md",
+            "line": 31
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/deployment/versions.md"
+    ],
+    "source_files": [
+      "docs/en/docs/deployment/versions.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "deployment",
+    "doc_tokens": 895,
+    "copy_overlap": 0.05,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0027",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0017",
+    "split": "test",
+    "type": "procedure",
+    "question": "In FastAPI, what steps are needed to ensure that a specific version of FastAPI is used in a production application, and how can this be checked?",
+    "answer": "1) Pin the version of fastapi in the requirements file with fastapi[standard]==0.112.0 or fastapi[standard]>=0.112.0,<0.113.0 2) Check the available versions in the Release Notes",
+    "key_entities": [
+      "fastapi",
+      "requirements.txt",
+      "0.112.0",
+      "0.113.0",
+      "Release Notes"
+    ],
+    "evidence": [
+      {
+        "quote": "The first thing you should do is to \"pin\" the version of **FastAPI** you are using to the specific latest version that you know works correctly for your application.",
+        "page": "docs/en/docs/deployment/versions.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/deployment/versions.md",
+            "line": 13
+          }
+        ]
+      },
+      {
+        "quote": "If you use a `requirements.txt` file you could specify the version with:\n```txt\nfastapi[standard]==0.112.0\n```",
+        "page": "docs/en/docs/deployment/versions.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/deployment/versions.md",
+            "line": 17
+          }
+        ]
+      },
+      {
+        "quote": "Or you could also pin it with:\n```txt\nfastapi[standard]>=0.112.0,<0.113.0\n```",
+        "page": "docs/en/docs/deployment/versions.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/deployment/versions.md",
+            "line": 28
+          }
+        ]
+      },
+      {
+        "quote": "You can see the available versions (e.g. to check what is the current latest) in the [Release Notes](../release-notes.md).",
+        "page": "docs/en/docs/deployment/versions.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/deployment/versions.md",
+            "line": 37
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/deployment/versions.md"
+    ],
+    "source_files": [
+      "docs/en/docs/deployment/versions.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "deployment",
+    "doc_tokens": 895,
+    "copy_overlap": 0.042,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0028",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0018",
+    "split": "test",
+    "type": "procedure",
+    "question": "What are the steps to build and run a FastAPI application in a Docker container, including the Dockerfile setup and command to start the container?",
+    "answer": "1) Create a Dockerfile that starts from the official Python image 2) Set the working directory to /code 3) Copy the requirements.txt file to /code 4) Install the dependencies using pip 5) Copy the app directory to /code 6) Use CMD to run the FastAPI application with Uvicorn",
+    "key_entities": [
+      "Dockerfile",
+      "FastAPI",
+      "pip",
+      "CMD",
+      "requirements.txt",
+      "app",
+      "Uvicorn"
+    ],
+    "evidence": [
+      {
+        "quote": "Now in the same project directory create a file Dockerfile with:",
+        "page": "docs/en/docs/deployment/docker.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/deployment/docker.md",
+            "line": 161
+          }
+        ]
+      },
+      {
+        "quote": "FROM python:3.14\nWORKDIR /code\nCOPY ./requirements.txt /code/requirements.txt\nRUN pip install --no-cache-dir --upgrade -r /code/requirements.txt\nCOPY ./app /code/app\nCMD ['fastapi', 'run', 'app/main.py', '--port', '80']",
+        "page": "docs/en/docs/deployment/docker.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/deployment/docker.md",
+            "line": 23
+          },
+          {
+            "file": "docs/en/docs/deployment/docker.md",
+            "line": 174
+          },
+          {
+            "file": "docs/en/docs/deployment/docker.md",
+            "line": 295
+          },
+          {
+            "file": "docs/en/docs/deployment/docker.md",
+            "line": 395
+          },
+          {
+            "file": "docs/en/docs/deployment/docker.md",
+            "line": 504
+          }
+        ]
+      },
+      {
+        "quote": "The Dockerfile below uses pip inside the container. You can export the locked dependencies from your uv project to the requirements.txt format it expects:",
+        "page": "docs/en/docs/deployment/docker.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/deployment/docker.md",
+            "line": 123
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/deployment/docker.md"
+    ],
+    "source_files": [
+      "docs/en/docs/deployment/docker.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "deployment",
+    "doc_tokens": 6764,
+    "copy_overlap": 0.087,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0032",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0019",
+    "split": "test",
+    "type": "fact",
+    "question": "When no version is specified, which version of the OpenAPI specification does FastAPI's get_openapi() function default to?",
+    "answer": "3.1.0",
+    "key_entities": [
+      "openapi_version"
+    ],
+    "evidence": [
+      {
+        "quote": "And that function `get_openapi()` receives as parameters:\n* `openapi_version`: The version of the OpenAPI specification used. By default, the latest: `3.1.0`.",
+        "page": "docs/en/docs/how-to/extending-openapi.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/how-to/extending-openapi.md",
+            "line": 25
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/how-to/extending-openapi.md"
+    ],
+    "source_files": [
+      "docs/en/docs/how-to/extending-openapi.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "how-to",
+    "doc_tokens": 1836,
+    "copy_overlap": 0.188,
+    "original_question": "What is the default version of the OpenAPI specification used by FastAPI's get_openapi() function if not specified?",
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0035",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0020",
+    "split": "test",
+    "type": "procedure",
+    "question": "In FastAPI, how can I add a custom logo to the OpenAPI schema using the ReDoc extension?",
+    "answer": "1) Define a custom_openapi() function 2) Use the get_openapi() function to generate the OpenAPI schema 3) Add the custom x-logo to the info object 4) Cache the generated schema in app.openapi_schema 5) Replace the .openapi() method with custom_openapi()",
+    "key_entities": [
+      "custom_openapi",
+      "get_openapi",
+      "app.openapi_schema",
+      "x-logo"
+    ],
+    "evidence": [
+      {
+        "quote": "def custom_openapi():",
+        "page": "docs/en/docs/how-to/extending-openapi.md",
+        "locations": [
+          {
+            "file": "docs_src/extending_openapi/tutorial001_py310.py",
+            "line": 12
+          }
+        ]
+      },
+      {
+        "quote": "app.openapi_schema = openapi_schema",
+        "page": "docs/en/docs/how-to/extending-openapi.md",
+        "locations": [
+          {
+            "file": "docs_src/extending_openapi/tutorial001_py310.py",
+            "line": 25
+          }
+        ]
+      },
+      {
+        "quote": "app.openapi = custom_openapi",
+        "page": "docs/en/docs/how-to/extending-openapi.md",
+        "locations": [
+          {
+            "file": "docs_src/extending_openapi/tutorial001_py310.py",
+            "line": 29
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/how-to/extending-openapi.md"
+    ],
+    "source_files": [
+      "docs/en/docs/how-to/extending-openapi.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "how-to",
+    "doc_tokens": 1836,
+    "copy_overlap": 0.267,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0036",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0021",
+    "split": "test",
+    "type": "fact",
+    "question": "What is the purpose of the `GzipRoute` class in the provided example?",
+    "answer": "To handle gzip compressed or uncompressed requests.",
+    "key_entities": [
+      "GzipRoute",
+      "GzipRequest"
+    ],
+    "evidence": [
+      {
+        "quote": "Next, we create a custom subclass of `fastapi.routing.APIRoute` that will make use of the `GzipRequest`.",
+        "page": "docs/en/docs/how-to/custom-request-and-route.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/how-to/custom-request-and-route.md",
+            "line": 49
+          }
+        ]
+      },
+      {
+        "quote": "This time, it will overwrite the method `APIRoute.get_route_handler()`.",
+        "page": "docs/en/docs/how-to/custom-request-and-route.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/how-to/custom-request-and-route.md",
+            "line": 51
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/how-to/custom-request-and-route.md"
+    ],
+    "source_files": [
+      "docs/en/docs/how-to/custom-request-and-route.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "how-to",
+    "doc_tokens": 2328,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0039",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0022",
+    "split": "test",
+    "type": "code",
+    "question": "What is the name of the custom `APIRoute` subclass used to log validation errors in the exception handler example?",
+    "answer": "ValidationErrorLoggingRoute",
+    "key_entities": [
+      "ValidationErrorLoggingRoute"
+    ],
+    "evidence": [
+      {
+        "quote": "class ValidationErrorLoggingRoute(APIRoute):",
+        "page": "docs/en/docs/how-to/custom-request-and-route.md",
+        "locations": [
+          {
+            "file": "docs_src/custom_request_and_route/tutorial002_an_py310.py",
+            "line": 9
+          }
+        ]
+      },
+      {
+        "quote": "app.router.route_class = ValidationErrorLoggingRoute",
+        "page": "docs/en/docs/how-to/custom-request-and-route.md",
+        "locations": [
+          {
+            "file": "docs_src/custom_request_and_route/tutorial002_an_py310.py",
+            "line": 25
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/how-to/custom-request-and-route.md"
+    ],
+    "source_files": [
+      "docs/en/docs/how-to/custom-request-and-route.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "how-to",
+    "doc_tokens": 2328,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0041",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0023",
+    "split": "test",
+    "type": "code",
+    "question": "What function is used when adding a task to simulate sending an email by writing to a file?",
+    "answer": "write_notification",
+    "key_entities": [
+      "write_notification"
+    ],
+    "evidence": [
+      {
+        "quote": "def write_notification(email: str, message=\"\"):",
+        "page": "docs/en/docs/tutorial/background-tasks.md",
+        "locations": [
+          {
+            "file": "docs_src/background_tasks/tutorial001_py310.py",
+            "line": 6
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/tutorial/background-tasks.md"
+    ],
+    "source_files": [
+      "docs/en/docs/tutorial/background-tasks.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "tutorial",
+    "doc_tokens": 1557,
+    "copy_overlap": 0.125,
+    "original_question": "What is the name of the function passed to `add_task` in the example that writes to a file simulating sending an email?",
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0049",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0024",
+    "split": "test",
+    "type": "code",
+    "question": "In the example FastAPI function, what is the default value for the 'repeat_at' parameter?",
+    "answer": "None",
+    "key_entities": [
+      "repeat_at"
+    ],
+    "evidence": [
+      {
+        "quote": "repeat_at: Annotated[time | None, Body()] = None,",
+        "page": "docs/en/docs/tutorial/extra-data-types.md",
+        "locations": [
+          {
+            "file": "docs_src/extra_data_types/tutorial001_an_py310.py",
+            "line": 16
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/tutorial/extra-data-types.md"
+    ],
+    "source_files": [
+      "docs/en/docs/tutorial/extra-data-types.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "tutorial",
+    "doc_tokens": 1087,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0053",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0025",
+    "split": "test",
+    "type": "fact",
+    "question": "What HTTP status code range is used for client errors in FastAPI?",
+    "answer": "400",
+    "key_entities": [
+      "HTTP status code",
+      "400"
+    ],
+    "evidence": [
+      {
+        "quote": "In these cases, you would normally return an **HTTP status code** in the range of **400** (from 400 to 499).",
+        "page": "docs/en/docs/tutorial/handling-errors.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/handling-errors.md",
+            "line": 14
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/tutorial/handling-errors.md"
+    ],
+    "source_files": [
+      "docs/en/docs/tutorial/handling-errors.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "tutorial",
+    "doc_tokens": 3310,
+    "copy_overlap": 0.1,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0054",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0026",
+    "split": "test",
+    "type": "procedure",
+    "question": "In FastAPI, how do I handle a request with invalid data and return a custom error message?",
+    "answer": "1) Import RequestValidationError from fastapi.exceptions 2) Define an exception handler for RequestValidationError 3) In the handler, create a JSONResponse with the validation errors and the received body",
+    "key_entities": [
+      "RequestValidationError",
+      "JSONResponse",
+      "validation errors",
+      "received body"
+    ],
+    "evidence": [
+      {
+        "quote": "The `RequestValidationError` contains the `body` it received with invalid data.",
+        "page": "docs/en/docs/tutorial/handling-errors.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/handling-errors.md",
+            "line": 182
+          }
+        ]
+      },
+      {
+        "quote": "Now try sending an invalid item like:",
+        "page": "docs/en/docs/tutorial/handling-errors.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/handling-errors.md",
+            "line": 188
+          }
+        ]
+      },
+      {
+        "quote": "```JSON\n{\n  \"title\": \"towel\",\n  \"size\": \"XL\"\n}\n```",
+        "page": "docs/en/docs/tutorial/handling-errors.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/handling-errors.md",
+            "line": 192
+          },
+          {
+            "file": "docs/en/docs/tutorial/handling-errors.md",
+            "line": 212
+          }
+        ]
+      },
+      {
+        "quote": "You will receive a response telling you that the data is invalid containing the received body:",
+        "page": "docs/en/docs/tutorial/handling-errors.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/handling-errors.md",
+            "line": 197
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/tutorial/handling-errors.md"
+    ],
+    "source_files": [
+      "docs/en/docs/tutorial/handling-errors.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "tutorial",
+    "doc_tokens": 3310,
+    "copy_overlap": 0.067,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0055",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0027",
+    "split": "test",
+    "type": "code",
+    "question": "What is the type annotation for the 'username' parameter in the login function?",
+    "answer": "str",
+    "key_entities": [
+      "username",
+      "Form",
+      "str"
+    ],
+    "evidence": [
+      {
+        "quote": "username: Annotated[str, Form()]",
+        "page": "docs/en/docs/tutorial/request-forms.md",
+        "locations": [
+          {
+            "file": "docs_src/request_forms/tutorial001_an_py310.py",
+            "line": 9
+          }
+        ]
+      },
+      {
+        "quote": "from fastapi import FastAPI, Form",
+        "page": "docs/en/docs/tutorial/request-forms.md",
+        "locations": [
+          {
+            "file": "docs_src/request_forms/tutorial001_an_py310.py",
+            "line": 3
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/tutorial/request-forms.md"
+    ],
+    "source_files": [
+      "docs/en/docs/tutorial/request-forms.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "tutorial",
+    "doc_tokens": 730,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0060",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0028",
+    "split": "test",
+    "type": "fact",
+    "question": "What happens if a required query parameter is not provided in the URL?",
+    "answer": "Field required",
+    "key_entities": [
+      "needy"
+    ],
+    "evidence": [
+      {
+        "quote": "Here the query parameter needy is a required query parameter of type str.",
+        "page": "docs/en/docs/tutorial/query-params.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/query-params.md",
+            "line": 133
+          }
+        ]
+      },
+      {
+        "quote": "If you open in your browser a URL like:",
+        "page": "docs/en/docs/tutorial/query-params.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/query-params.md",
+            "line": 135
+          }
+        ]
+      },
+      {
+        "quote": "http://127.0.0.1:8000/items/foo-item",
+        "page": "docs/en/docs/tutorial/query-params.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/query-params.md",
+            "line": 138
+          },
+          {
+            "file": "docs/en/docs/tutorial/query-params.md",
+            "line": 162
+          }
+        ]
+      },
+      {
+        "quote": "...without adding the required parameter needy, you will see an error like:",
+        "page": "docs/en/docs/tutorial/query-params.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/query-params.md",
+            "line": 141
+          }
+        ]
+      },
+      {
+        "quote": "{\n  \"detail\": [\n    {\n      \"type\": \"missing\",\n      \"loc\": [\n        \"query\",\n        \"needy\"\n      ],\n      \"msg\": \"Field required\",\n      \"input\": null\n    }\n  ]\n}",
+        "page": "docs/en/docs/tutorial/query-params.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/query-params.md",
+            "line": 152
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/tutorial/query-params.md"
+    ],
+    "source_files": [
+      "docs/en/docs/tutorial/query-params.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "tutorial",
+    "doc_tokens": 1821,
+    "copy_overlap": 0.273,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0062",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0029",
+    "split": "test",
+    "type": "code",
+    "question": "In the example that uses the `status_code` parameter, what is the status code used for creating an item?",
+    "answer": "201",
+    "key_entities": [
+      "status_code",
+      "HTTP_201_CREATED"
+    ],
+    "evidence": [
+      {
+        "quote": "@app.post(\"/items/\", status_code=status.HTTP_201_CREATED)",
+        "page": "docs/en/docs/tutorial/path-operation-configuration.md",
+        "locations": [
+          {
+            "file": "docs_src/path_operation_configuration/tutorial001_py310.py",
+            "line": 15
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/tutorial/path-operation-configuration.md"
+    ],
+    "source_files": [
+      "docs/en/docs/tutorial/path-operation-configuration.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "tutorial",
+    "doc_tokens": 1809,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0068",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0030",
+    "split": "test",
+    "type": "fact",
+    "question": "What is the term used for the function that is passed to `Depends` in FastAPI?",
+    "answer": "dependency",
+    "key_entities": [
+      "dependency"
+    ],
+    "evidence": [
+      {
+        "quote": "It is just a function that can take all the same parameters that a *path operation function* can take:",
+        "page": "docs/en/docs/tutorial/dependencies/index.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/dependencies/index.md",
+            "line": 32
+          }
+        ]
+      },
+      {
+        "quote": "Although you use `Depends` in the parameters of your function the same way you use `Body`, `Query`, etc, `Depends` works a bit differently.",
+        "page": "docs/en/docs/tutorial/dependencies/index.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/dependencies/index.md",
+            "line": 74
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/tutorial/dependencies/index.md"
+    ],
+    "source_files": [
+      "docs/en/docs/tutorial/dependencies/index.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "tutorial",
+    "doc_tokens": 2739,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0073",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0031",
+    "split": "test",
+    "type": "fact",
+    "question": "What will FastAPI return when a client sends extra form fields that are not allowed by the Pydantic model configuration?",
+    "answer": "an error response",
+    "key_entities": [
+      "extra",
+      "Pydantic model",
+      "FastAPI"
+    ],
+    "evidence": [
+      {
+        "quote": "They will receive an error response telling them that the field `extra` is not allowed:",
+        "page": "docs/en/docs/tutorial/request-form-models.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/request-form-models.md",
+            "line": 61
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/tutorial/request-form-models.md"
+    ],
+    "source_files": [
+      "docs/en/docs/tutorial/request-form-models.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "tutorial",
+    "doc_tokens": 692,
+    "copy_overlap": 0.111,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261004-235749",
+      "cand_id": "20261004-235749-c0077",
+      "log": "results/logs/dataset_20261004-235749.jsonl"
+    }
+  },
+  {
+    "id": "q0032",
+    "split": "dev",
+    "type": "fact",
+    "question": "In FastAPI, what type of parameter can be used to set headers in a path operation function?",
+    "answer": "Response",
+    "key_entities": [
+      "Response"
+    ],
+    "evidence": [
+      {
+        "quote": "You can declare a parameter of type `Response` in your *path operation function* (as you can do for cookies).",
+        "page": "docs/en/docs/advanced/response-headers.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/advanced/response-headers.md",
+            "line": 5
+          }
+        ]
+      },
+      {
+        "quote": "response: Response",
+        "page": "docs/en/docs/advanced/response-headers.md",
+        "locations": [
+          {
+            "file": "docs_src/response_headers/tutorial002_py310.py",
+            "line": 7
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/advanced/response-headers.md"
+    ],
+    "source_files": [
+      "docs/en/docs/advanced/response-headers.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "advanced",
+    "doc_tokens": 636,
+    "copy_overlap": 0.333,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-001847",
+      "cand_id": "20261005-001847-c0004",
+      "log": "results/logs/dataset_20261005-001847.jsonl"
+    }
+  },
+  {
+    "id": "q0033",
+    "split": "dev",
+    "type": "procedure",
+    "question": "In FastAPI, how do I ensure a machine learning model is loaded before handling any requests and unloaded after all requests are processed?",
+    "answer": "1) Define an async context manager function `lifespan()` with `yield` to load the model before `yield` and unload it after. 2) Pass this function to the `lifespan` parameter of the `FastAPI` app.",
+    "key_entities": [
+      "lifespan",
+      "asynccontextmanager",
+      "yield",
+      "FastAPI"
+    ],
+    "evidence": [
+      {
+        "quote": "You can define this *startup* and *shutdown* logic using the `lifespan` parameter of the `FastAPI` app, and a \"context manager\"",
+        "page": "docs/en/docs/advanced/events.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/advanced/events.md",
+            "line": 27
+          }
+        ]
+      },
+      {
+        "quote": "The first thing to notice, is that we are defining an async function with `yield`. This is very similar to Dependencies with `yield`.",
+        "page": "docs/en/docs/advanced/events.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/advanced/events.md",
+            "line": 49
+          }
+        ]
+      },
+      {
+        "quote": "The `lifespan` parameter of the `FastAPI` app takes an **async context manager**, so we can pass our new `lifespan` async context manager to it.",
+        "page": "docs/en/docs/advanced/events.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/advanced/events.md",
+            "line": 83
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/advanced/events.md"
+    ],
+    "source_files": [
+      "docs/en/docs/advanced/events.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "advanced",
+    "doc_tokens": 2576,
+    "copy_overlap": 0.048,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-001847",
+      "cand_id": "20261005-001847-c0008",
+      "log": "results/logs/dataset_20261005-001847.jsonl"
+    }
+  },
+  {
+    "id": "q0034",
+    "split": "dev",
+    "type": "procedure",
+    "question": "How can I set up a webhook in FastAPI that triggers a POST request with a Subscription object each time a new user subscribes to a service?",
+    "answer": "1) Import BaseModel from pydantic 2) Define a class Subscription inheriting BaseModel with username, monthly_fee, and start_date attributes 3) Use @app.webhooks.post('new-subscription') to define the webhook 4) Define a function new_subscription with body: Subscription as parameter",
+    "key_entities": [
+      "@app.webhooks.post",
+      "Subscription",
+      "new-subscription"
+    ],
+    "evidence": [
+      {
+        "quote": "from fastapi import FastAPI\nfrom pydantic import BaseModel\n\napp = FastAPI()\n\nclass Subscription(BaseModel):\n    username: str\n    monthly_fee: float\n    start_date: datetime\n\n@app.webhooks.post(\"new-subscription\")\ndef new_subscription(body: Subscription):",
+        "page": "docs/en/docs/advanced/openapi-webhooks.md",
+        "locations": [
+          {
+            "file": "docs_src/openapi_webhooks/tutorial001_py310.py",
+            "line": 16
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/advanced/openapi-webhooks.md"
+    ],
+    "source_files": [
+      "docs/en/docs/advanced/openapi-webhooks.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "advanced",
+    "doc_tokens": 876,
+    "copy_overlap": 0.2,
+    "original_question": "In FastAPI, how do I define a webhook that sends a POST request with a Subscription object when a new user subscribes to a service?",
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-001847",
+      "cand_id": "20261005-001847-c0014",
+      "log": "results/logs/dataset_20261005-001847.jsonl"
+    }
+  },
+  {
+    "id": "q0035",
+    "split": "dev",
+    "type": "fact",
+    "question": "What is the path prefix used for the sub-application's docs UI when mounted in a FastAPI application?",
+    "answer": "/subapi",
+    "key_entities": [
+      "subapi",
+      "docs UI"
+    ],
+    "evidence": [
+      {
+        "quote": "FastAPI will take care of communicating the mount path for the sub-application using a mechanism from the ASGI specification called a `root_path`.",
+        "page": "docs/en/docs/advanced/sub-applications.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/advanced/sub-applications.md",
+            "line": 61
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/advanced/sub-applications.md"
+    ],
+    "source_files": [
+      "docs/en/docs/advanced/sub-applications.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "advanced",
+    "doc_tokens": 962,
+    "copy_overlap": 0.235,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-001847",
+      "cand_id": "20261005-001847-c0016",
+      "log": "results/logs/dataset_20261005-001847.jsonl"
+    }
+  },
+  {
+    "id": "q0036",
+    "split": "dev",
+    "type": "procedure",
+    "question": "In FastAPI, what steps are needed to properly handle HTTPS requests and ensure the application receives the correct client IP address and protocol information?",
+    "answer": "1) Use a TLS Termination Proxy to handle HTTPS and certificates for multiple domains. 2) Configure the application server to trust forwarded headers from the proxy, using the --forwarded-allow-ips option.",
+    "key_entities": [
+      "TLS Termination Proxy",
+      "forwarded-allow-ips"
+    ],
+    "evidence": [
+      {
+        "quote": "This way the application would be able to know what is its own public URL, if it is using HTTPS, the domain, etc.",
+        "page": "docs/en/docs/deployment/https.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/deployment/https.md",
+            "line": 215
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/deployment/https.md"
+    ],
+    "source_files": [
+      "docs/en/docs/deployment/https.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "deployment",
+    "doc_tokens": 3176,
+    "copy_overlap": 0.091,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-001847",
+      "cand_id": "20261005-001847-c0022",
+      "log": "results/logs/dataset_20261005-001847.jsonl"
+    }
+  },
+  {
+    "id": "q0037",
+    "split": "dev",
+    "type": "fact",
+    "question": "What will happen to the 'description' field in the JSON response if it has a default value and the model is used for output in Pydantic v2?",
+    "answer": "It will always have a value, possibly null.",
+    "key_entities": [
+      "description",
+      "default value",
+      "output"
+    ],
+    "evidence": [
+      {
+        "quote": "This means that it will **always have a value**, it's just that sometimes the value could be `None` (or `null` in JSON).",
+        "page": "docs/en/docs/how-to/separate-openapi-schemas.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/how-to/separate-openapi-schemas.md",
+            "line": 47
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/how-to/separate-openapi-schemas.md"
+    ],
+    "source_files": [
+      "docs/en/docs/how-to/separate-openapi-schemas.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "how-to",
+    "doc_tokens": 1486,
+    "copy_overlap": 0.24,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-001847",
+      "cand_id": "20261005-001847-c0024",
+      "log": "results/logs/dataset_20261005-001847.jsonl"
+    }
+  },
+  {
+    "id": "q0038",
+    "split": "dev",
+    "type": "procedure",
+    "question": "How can I make sure that the description field is included in the response schema when using FastAPI, even when its default value is set to None?",
+    "answer": "1) Use the same Pydantic model for input and output 2) Set separate_input_output_schemas=False in FastAPI",
+    "key_entities": [
+      "separate_input_output_schemas",
+      "False"
+    ],
+    "evidence": [
+      {
+        "quote": "Support for `separate_input_output_schemas` was added in FastAPI `0.102.0`. 🤓",
+        "page": "docs/en/docs/how-to/separate-openapi-schemas.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/how-to/separate-openapi-schemas.md",
+            "line": 90
+          }
+        ]
+      },
+      {
+        "quote": "```python\napp = FastAPI(separate_input_output_schemas=False)\n```",
+        "page": "docs/en/docs/how-to/separate-openapi-schemas.md",
+        "locations": [
+          {
+            "file": "docs_src/separate_openapi_schemas/tutorial002_py310.py",
+            "line": 10
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/how-to/separate-openapi-schemas.md"
+    ],
+    "source_files": [
+      "docs/en/docs/how-to/separate-openapi-schemas.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "how-to",
+    "doc_tokens": 1486,
+    "copy_overlap": 0.04,
+    "original_question": "In FastAPI, how do I ensure that the description field is always included in the response schema, even if it has a default value of None?",
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-001847",
+      "cand_id": "20261005-001847-c0025",
+      "log": "results/logs/dataset_20261005-001847.jsonl"
+    }
+  },
+  {
+    "id": "q0039",
+    "split": "dev",
+    "type": "code",
+    "question": "What is the default value for the `description` field in the `Item` model when used as input in the example code?",
+    "answer": "None",
+    "key_entities": [
+      "description",
+      "Item",
+      "input"
+    ],
+    "evidence": [
+      {
+        "quote": "description: str | None = None",
+        "page": "docs/en/docs/how-to/separate-openapi-schemas.md",
+        "locations": [
+          {
+            "file": "docs_src/separate_openapi_schemas/tutorial001_py310.py",
+            "line": 7
+          },
+          {
+            "file": "docs_src/separate_openapi_schemas/tutorial002_py310.py",
+            "line": 7
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/how-to/separate-openapi-schemas.md"
+    ],
+    "source_files": [
+      "docs/en/docs/how-to/separate-openapi-schemas.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "how-to",
+    "doc_tokens": 1486,
+    "copy_overlap": 0.105,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-001847",
+      "cand_id": "20261005-001847-c0026",
+      "log": "results/logs/dataset_20261005-001847.jsonl"
+    }
+  },
+  {
+    "id": "q0040",
+    "split": "dev",
+    "type": "fact",
+    "question": "In FastAPI, what is the minimum version required to use the `examples` field in JSON Schema for Pydantic models?",
+    "answer": "0.99.0",
+    "key_entities": [
+      "examples",
+      "Pydantic models",
+      "JSON Schema"
+    ],
+    "evidence": [
+      {
+        "quote": "FastAPI 0.99.0 and above uses OpenAPI 3.1.0, that uses JSON Schema 2020-12, and Swagger UI 5.0.0 and above, everything is more consistent and the examples are included in JSON Schema.",
+        "page": "docs/en/docs/tutorial/schema-extra-example.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/schema-extra-example.md",
+            "line": 190
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/tutorial/schema-extra-example.md"
+    ],
+    "source_files": [
+      "docs/en/docs/tutorial/schema-extra-example.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "tutorial",
+    "doc_tokens": 3275,
+    "copy_overlap": 0.235,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-001847",
+      "cand_id": "20261005-001847-c0027",
+      "log": "results/logs/dataset_20261005-001847.jsonl"
+    }
+  },
+  {
+    "id": "q0041",
+    "split": "dev",
+    "type": "code",
+    "question": "What is the value of the 'name' key in the example provided for the 'Item' model in the 'tutorial001_py310' file?",
+    "answer": "Foo",
+    "key_entities": [
+      "name",
+      "Item",
+      "tutorial001_py310"
+    ],
+    "evidence": [
+      {
+        "quote": "    'name': 'Foo',",
+        "page": "docs/en/docs/tutorial/schema-extra-example.md",
+        "locations": [
+          {
+            "file": "docs_src/schema_extra_example/tutorial001_py310.py",
+            "line": 17
+          },
+          {
+            "file": "docs_src/schema_extra_example/tutorial003_an_py310.py",
+            "line": 24
+          },
+          {
+            "file": "docs_src/schema_extra_example/tutorial004_an_py310.py",
+            "line": 25
+          },
+          {
+            "file": "docs_src/schema_extra_example/tutorial005_an_py310.py",
+            "line": 28
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/tutorial/schema-extra-example.md"
+    ],
+    "source_files": [
+      "docs/en/docs/tutorial/schema-extra-example.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "tutorial",
+    "doc_tokens": 3275,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-001847",
+      "cand_id": "20261005-001847-c0029",
+      "log": "results/logs/dataset_20261005-001847.jsonl"
+    }
+  },
+  {
+    "id": "q0042",
+    "split": "dev",
+    "type": "fact",
+    "question": "What type of keys and values are expected in the 'weights' parameter of the '/index-weights/' endpoint?",
+    "answer": "int keys, float values",
+    "key_entities": [
+      "weights",
+      "int",
+      "float"
+    ],
+    "evidence": [
+      {
+        "quote": "This means that, even though your API clients can only send strings as keys, as long as those strings contain pure integers, Pydantic will convert them and validate them.",
+        "page": "docs/en/docs/tutorial/body-nested-models.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/body-nested-models.md",
+            "line": 205
+          }
+        ]
+      },
+      {
+        "quote": "In this case, you would accept any `dict` as long as it has `int` keys with `float` values:",
+        "page": "docs/en/docs/tutorial/body-nested-models.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/body-nested-models.md",
+            "line": 195
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/tutorial/body-nested-models.md"
+    ],
+    "source_files": [
+      "docs/en/docs/tutorial/body-nested-models.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "tutorial",
+    "doc_tokens": 2778,
+    "copy_overlap": 0.067,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-001847",
+      "cand_id": "20261005-001847-c0031",
+      "log": "results/logs/dataset_20261005-001847.jsonl"
+    }
+  },
+  {
+    "id": "q0043",
+    "split": "dev",
+    "type": "procedure",
+    "question": "In FastAPI, how do I define an Item model with a nested Image model and a list of Images, and what steps are involved in creating an Offer model that contains a list of such Item models?",
+    "answer": "1) Define a class Image inheriting from BaseModel with url and name attributes 2) Define a class Item inheriting from BaseModel with name, description, price, tax, tags, and image attributes 3) Define a class Offer inheriting from BaseModel with name, description, price, and items attributes where items is a list of Item",
+    "key_entities": [
+      "Image",
+      "Item",
+      "Offer",
+      "list[Image]",
+      "list[Item]"
+    ],
+    "evidence": [
+      {
+        "quote": "class Image(BaseModel):\n    url: HttpUrl\n    name: str",
+        "page": "docs/en/docs/tutorial/body-nested-models.md",
+        "locations": [
+          {
+            "file": "docs_src/body_nested_models/tutorial004_py310.py",
+            "line": 7
+          },
+          {
+            "file": "docs_src/body_nested_models/tutorial005_py310.py",
+            "line": 7
+          },
+          {
+            "file": "docs_src/body_nested_models/tutorial006_py310.py",
+            "line": 7
+          },
+          {
+            "file": "docs_src/body_nested_models/tutorial007_py310.py",
+            "line": 7
+          },
+          {
+            "file": "docs_src/body_nested_models/tutorial008_py310.py",
+            "line": 7
+          }
+        ]
+      },
+      {
+        "quote": "class Item(BaseModel):\n    name: str\n    description: str | None = None\n    price: float\n    tax: float | None = None\n    tags: set[str] = set()\n    image: Image | None = None",
+        "page": "docs/en/docs/tutorial/body-nested-models.md",
+        "locations": [
+          {
+            "file": "docs_src/body_nested_models/tutorial001_py310.py",
+            "line": 9
+          },
+          {
+            "file": "docs_src/body_nested_models/tutorial002_py310.py",
+            "line": 9
+          },
+          {
+            "file": "docs_src/body_nested_models/tutorial003_py310.py",
+            "line": 9
+          },
+          {
+            "file": "docs_src/body_nested_models/tutorial004_py310.py",
+            "line": 14
+          },
+          {
+            "file": "docs_src/body_nested_models/tutorial005_py310.py",
+            "line": 14
+          },
+          {
+            "file": "docs_src/body_nested_models/tutorial006_py310.py",
+            "line": 14
+          },
+          {
+            "file": "docs_src/body_nested_models/tutorial007_py310.py",
+            "line": 14
+          },
+          {
+            "file": "docs_src/body_nested_models/tutorial007_py310.py",
+            "line": 23
+          }
+        ]
+      },
+      {
+        "quote": "class Offer(BaseModel):\n    name: str\n    description: str | None = None\n    price: float\n    items: list[Item]",
+        "page": "docs/en/docs/tutorial/body-nested-models.md",
+        "locations": [
+          {
+            "file": "docs_src/body_nested_models/tutorial001_py310.py",
+            "line": 9
+          },
+          {
+            "file": "docs_src/body_nested_models/tutorial002_py310.py",
+            "line": 9
+          },
+          {
+            "file": "docs_src/body_nested_models/tutorial003_py310.py",
+            "line": 9
+          },
+          {
+            "file": "docs_src/body_nested_models/tutorial004_py310.py",
+            "line": 14
+          },
+          {
+            "file": "docs_src/body_nested_models/tutorial005_py310.py",
+            "line": 14
+          },
+          {
+            "file": "docs_src/body_nested_models/tutorial006_py310.py",
+            "line": 14
+          },
+          {
+            "file": "docs_src/body_nested_models/tutorial007_py310.py",
+            "line": 14
+          },
+          {
+            "file": "docs_src/body_nested_models/tutorial007_py310.py",
+            "line": 23
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/tutorial/body-nested-models.md"
+    ],
+    "source_files": [
+      "docs/en/docs/tutorial/body-nested-models.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "tutorial",
+    "doc_tokens": 2778,
+    "copy_overlap": 0.029,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-001847",
+      "cand_id": "20261005-001847-c0032",
+      "log": "results/logs/dataset_20261005-001847.jsonl"
+    }
+  },
+  {
+    "id": "q0044",
+    "split": "dev",
+    "type": "code",
+    "question": "What type is used for the `tags` attribute in the `Item` model in the example that uses a set of strings?",
+    "answer": "set[str]",
+    "key_entities": [
+      "tags",
+      "set[str]"
+    ],
+    "evidence": [
+      {
+        "quote": "`tags: set[str] = set()`",
+        "page": "docs/en/docs/tutorial/body-nested-models.md",
+        "locations": [
+          {
+            "file": "docs_src/body_nested_models/tutorial003_py310.py",
+            "line": 12
+          },
+          {
+            "file": "docs_src/body_nested_models/tutorial004_py310.py",
+            "line": 17
+          },
+          {
+            "file": "docs_src/body_nested_models/tutorial005_py310.py",
+            "line": 17
+          },
+          {
+            "file": "docs_src/body_nested_models/tutorial006_py310.py",
+            "line": 17
+          },
+          {
+            "file": "docs_src/body_nested_models/tutorial007_py310.py",
+            "line": 17
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/tutorial/body-nested-models.md"
+    ],
+    "source_files": [
+      "docs/en/docs/tutorial/body-nested-models.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "tutorial",
+    "doc_tokens": 2778,
+    "copy_overlap": 0.105,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-001847",
+      "cand_id": "20261005-001847-c0033",
+      "log": "results/logs/dataset_20261005-001847.jsonl"
+    }
+  },
+  {
+    "id": "q0045",
+    "split": "dev",
+    "type": "code",
+    "question": "What is the default value of the 'q' parameter in the example FastAPI function that enforces a maximum length of 50 characters?",
+    "answer": "None",
+    "key_entities": [
+      "q",
+      "Query(max_length=50)"
+    ],
+    "evidence": [
+      {
+        "quote": "q: Annotated[str | None, Query(max_length=50)] = None",
+        "page": "docs/en/docs/tutorial/query-params-str-validations.md",
+        "locations": [
+          {
+            "file": "docs_src/query_params_str_validations/tutorial002_an_py310.py",
+            "line": 9
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/tutorial/query-params-str-validations.md"
+    ],
+    "source_files": [
+      "docs/en/docs/tutorial/query-params-str-validations.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "tutorial",
+    "doc_tokens": 5989,
+    "copy_overlap": 0.3,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-001847",
+      "cand_id": "20261005-001847-c0037",
+      "log": "results/logs/dataset_20261005-001847.jsonl"
+    }
+  },
+  {
+    "id": "q0046",
+    "split": "dev",
+    "type": "fact",
+    "question": "What is the name of the class used to handle OAuth2 password flow in FastAPI?",
+    "answer": "OAuth2PasswordBearer",
+    "key_entities": [
+      "OAuth2PasswordBearer"
+    ],
+    "evidence": [
+      {
+        "quote": "`OAuth2PasswordBearer` class",
+        "page": "docs/en/docs/tutorial/security/first-steps.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/security/first-steps.md",
+            "line": 119
+          },
+          {
+            "file": "docs/en/docs/tutorial/security/first-steps.md",
+            "line": 133
+          }
+        ]
+      },
+      {
+        "quote": "```python\nfrom fastapi.security import OAuth2PasswordBearer\n```",
+        "page": "docs/en/docs/tutorial/security/first-steps.md",
+        "locations": [
+          {
+            "file": "docs_src/security/tutorial001_an_py310.py",
+            "line": 4
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/tutorial/security/first-steps.md"
+    ],
+    "source_files": [
+      "docs/en/docs/tutorial/security/first-steps.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "tutorial",
+    "doc_tokens": 2270,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-001847",
+      "cand_id": "20261005-001847-c0038",
+      "log": "results/logs/dataset_20261005-001847.jsonl"
+    }
+  },
+  {
+    "id": "q0047",
+    "split": "dev",
+    "type": "procedure",
+    "question": "In FastAPI, what steps are needed to set up basic OAuth2 password flow authentication for a path operation?",
+    "answer": "1) Import OAuth2PasswordBearer from fastapi.security 2) Create an instance of OAuth2PasswordBearer with tokenUrl='token' 3) Use the instance with Depends in a path operation parameter 4) The path operation will receive a token as a str parameter",
+    "key_entities": [
+      "OAuth2PasswordBearer",
+      "tokenUrl",
+      "Depends"
+    ],
+    "evidence": [
+      {
+        "quote": "When we create an instance of the `OAuth2PasswordBearer` class we pass in the `tokenUrl` parameter. This parameter contains the URL that the client (the frontend running in the user's browser) will use to send the `username` and `password` in order to get a token.",
+        "page": "docs/en/docs/tutorial/security/first-steps.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/security/first-steps.md",
+            "line": 133
+          }
+        ]
+      },
+      {
+        "quote": "Now you can pass that `oauth2_scheme` in a dependency with `Depends`.",
+        "page": "docs/en/docs/tutorial/security/first-steps.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/security/first-steps.md",
+            "line": 171
+          }
+        ]
+      },
+      {
+        "quote": "It will go and look in the request for that `Authorization` header, check if the value is `Bearer ` plus some token, and will return the token as a `str`.",
+        "page": "docs/en/docs/tutorial/security/first-steps.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/security/first-steps.md",
+            "line": 189
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/tutorial/security/first-steps.md"
+    ],
+    "source_files": [
+      "docs/en/docs/tutorial/security/first-steps.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "tutorial",
+    "doc_tokens": 2270,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-001847",
+      "cand_id": "20261005-001847-c0039",
+      "log": "results/logs/dataset_20261005-001847.jsonl"
+    }
+  },
+  {
+    "id": "q0048",
+    "split": "dev",
+    "type": "code",
+    "question": "What is the name of the variable that holds the instance of OAuth2PasswordBearer in the example code?",
+    "answer": "oauth2_scheme",
+    "key_entities": [
+      "oauth2_scheme"
+    ],
+    "evidence": [
+      {
+        "quote": "oauth2_scheme = OAuth2PasswordBearer(tokenUrl=\"token\")",
+        "page": "docs/en/docs/tutorial/security/first-steps.md",
+        "locations": [
+          {
+            "file": "docs_src/security/tutorial001_an_py310.py",
+            "line": 8
+          }
+        ]
+      },
+      {
+        "quote": "The `oauth2_scheme` variable is an instance of `OAuth2PasswordBearer`, but it is also a \"callable\".",
+        "page": "docs/en/docs/tutorial/security/first-steps.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/security/first-steps.md",
+            "line": 159
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/tutorial/security/first-steps.md"
+    ],
+    "source_files": [
+      "docs/en/docs/tutorial/security/first-steps.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "tutorial",
+    "doc_tokens": 2270,
+    "copy_overlap": 0.067,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-001847",
+      "cand_id": "20261005-001847-c0040",
+      "log": "results/logs/dataset_20261005-001847.jsonl"
+    }
+  },
+  {
+    "id": "q0049",
+    "split": "dev",
+    "type": "fact",
+    "question": "What class is utilized to retrieve the username and password from the form data?",
+    "answer": "OAuth2PasswordRequestForm",
+    "key_entities": [
+      "OAuth2PasswordRequestForm"
+    ],
+    "evidence": [
+      {
+        "quote": "First, import `OAuth2PasswordRequestForm`, and use it as a dependency with `Depends` in the *path operation* for `/token`:",
+        "page": "docs/en/docs/tutorial/security/simple-oauth2.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/security/simple-oauth2.md",
+            "line": 53
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/tutorial/security/simple-oauth2.md"
+    ],
+    "source_files": [
+      "docs/en/docs/tutorial/security/simple-oauth2.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "tutorial",
+    "doc_tokens": 5316,
+    "copy_overlap": 0.333,
+    "original_question": "What is the name of the class dependency used to get the username and password in the form data?",
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-001847",
+      "cand_id": "20261005-001847-c0041",
+      "log": "results/logs/dataset_20261005-001847.jsonl"
+    }
+  },
+  {
+    "id": "q0050",
+    "split": "dev",
+    "type": "procedure",
+    "question": "In FastAPI, how do I set up a token endpoint to receive a username and password, validate them, and return a token for a user who is active?",
+    "answer": "1) Import OAuth2PasswordRequestForm and OAuth2PasswordBearer 2) Define a path operation for /token that receives an OAuth2PasswordRequestForm as a dependency 3) Check if the user exists in the database and if the password is correct 4) If the user is active, return a JSON with 'access_token' and 'token_type' fields",
+    "key_entities": [
+      "OAuth2PasswordRequestForm",
+      "OAuth2PasswordBearer",
+      "token",
+      "access_token",
+      "token_type"
+    ],
+    "evidence": [
+      {
+        "quote": "First, import `OAuth2PasswordRequestForm`, and use it as a dependency with `Depends` in the *path operation* for `/token`:",
+        "page": "docs/en/docs/tutorial/security/simple-oauth2.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/security/simple-oauth2.md",
+            "line": 53
+          }
+        ]
+      },
+      {
+        "quote": "```python\nfrom fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm\n```\n",
+        "page": "docs/en/docs/tutorial/security/simple-oauth2.md",
+        "locations": [
+          {
+            "file": "docs_src/security/tutorial003_an_py310.py",
+            "line": 4
+          }
+        ]
+      },
+      {
+        "quote": "```python\nreturn {'access_token': user.username, 'token_type': 'bearer'}\n```\n",
+        "page": "docs/en/docs/tutorial/security/simple-oauth2.md",
+        "locations": [
+          {
+            "file": "docs_src/security/tutorial003_an_py310.py",
+            "line": 87
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/tutorial/security/simple-oauth2.md"
+    ],
+    "source_files": [
+      "docs/en/docs/tutorial/security/simple-oauth2.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "tutorial",
+    "doc_tokens": 5316,
+    "copy_overlap": 0.038,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-001847",
+      "cand_id": "20261005-001847-c0042",
+      "log": "results/logs/dataset_20261005-001847.jsonl"
+    }
+  },
+  {
+    "id": "q0051",
+    "split": "dev",
+    "type": "procedure",
+    "question": "How do I set up a FastAPI project using the `uv` tool, including the necessary commands to initialize the project and install FastAPI?",
+    "answer": "1) Run `uv init awesome-project --bare` to create a new Python project 2) Run `uv add 'fastapi[standard]'` to add FastAPI to the project",
+    "key_entities": [
+      "uv init",
+      "uv add",
+      "fastapi[standard]"
+    ],
+    "evidence": [
+      {
+        "quote": "$ uv init awesome-project --bare",
+        "page": "docs/en/docs/tutorial/index.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/index.md",
+            "line": 70
+          }
+        ]
+      },
+      {
+        "quote": "$ uv add 'fastapi[standard]'",
+        "page": "docs/en/docs/tutorial/index.md",
+        "locations": [
+          {
+            "file": "docs/en/docs/tutorial/index.md",
+            "line": 72
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "docs/en/docs/tutorial/index.md"
+    ],
+    "source_files": [
+      "docs/en/docs/tutorial/index.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "tutorial",
+    "doc_tokens": 1981,
+    "copy_overlap": 0.0,
+    "original_question": "In FastAPI, what steps are needed to create a project and add FastAPI using the `uv` tool?",
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-001847",
+      "cand_id": "20261005-001847-c0045",
+      "log": "results/logs/dataset_20261005-001847.jsonl"
+    }
+  }
+]

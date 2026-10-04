@@ -17,7 +17,7 @@ page 는 펼친 코드 안에서 찾았어도 그 코드를 펼친 md 페이지�
     multi      여러 페이지 종합형  두 페이지의 정보를 합쳐야 답할 수 있음
 
 처리 단계
-    문서 선택(폴더별 층화 추출) -> 유형별 생성 -> 순환 질문 제거
+    문서 선택(dev/test 비율 맞춘 뒤 폴더별 층화 추출) -> 유형별 생성 -> 순환 질문 제거
     -> 문서 표현 베끼기 검사(바꿔 쓰기 또는 제거) -> 근거 위치 확인(corpus.locate)
     -> 유형별 근거 위치(사실형=본문 md, 코드형=코드 파일)
     -> 종합형은 한 페이지에만 있는 핵심 엔티티가 양쪽에 있는지, 그리고 페이지 A만/B만 주고
@@ -55,6 +55,7 @@ page 는 펼친 코드 안에서 찾았어도 그 코드를 펼친 md 페이지�
     python src/dataset_builder.py                      # 기본: 문서 30개 x 유형별 1문항
     python src/dataset_builder.py --docs 50 --per-type 2
     python src/dataset_builder.py --types fact,code --docs 5 --dry-run   # 화면 출력만
+    python src/dataset_builder.py --only-split dev --docs 10             # dev 문서에서만
 
 검수
     python src/dataset_builder.py --review             # 대화형 검수 모드
@@ -375,7 +376,26 @@ def load_all_docs(corpus: Corpus, min_tokens: int, max_tokens: int,
     return docs
 
 
-def pick_documents(docs: dict[str, Doc], n: int, seed: int) -> list[Doc]:
+def pick_documents(docs: dict[str, Doc], n: int, seed: int,
+                   only_split: str | None = None) -> list[Doc]:
+    """분할(dev/test)별로 먼저 나눈 뒤, 각 분할 안에서 폴더별 층화 추출.
+    dev 는 n 의 DEV_RATIO 만큼(반올림, 2개 이상 뽑으면 최소 1개) 배정해 작은 실행에서도
+    dev 문서가 빠지지 않게 한다. 한쪽 문서가 모자라면 나머지는 다른 쪽에서 채운다.
+    only_split 을 주면 그 분할에서만 뽑는다."""
+    pools = {s: {k: d for k, d in docs.items() if d.split == s} for s in ("dev", "test")}
+    if only_split:
+        return _pick_by_folder(pools[only_split], n, seed)
+    n = min(n, len(docs))
+    n_dev = round(n * DEV_RATIO)
+    if n >= 2 and pools["dev"]:
+        n_dev = max(n_dev, 1)
+    n_dev = min(n_dev, len(pools["dev"]))
+    n_test = min(n - n_dev, len(pools["test"]))
+    n_dev = min(n - n_test, len(pools["dev"]))
+    return _pick_by_folder(pools["dev"], n_dev, seed) + _pick_by_folder(pools["test"], n_test, seed)
+
+
+def _pick_by_folder(docs: dict[str, Doc], n: int, seed: int) -> list[Doc]:
     """폴더별 층화 추출. 폴더 크기에 비례해 배분하되 폴더마다 최소 1개."""
     groups: dict[str, list[Doc]] = defaultdict(list)
     for d in docs.values():
@@ -383,6 +403,8 @@ def pick_documents(docs: dict[str, Doc], n: int, seed: int) -> list[Doc]:
 
     total = sum(len(g) for g in groups.values())
     n = min(n, total)
+    if n <= 0:
+        return []
     alloc = {k: 0 for k in groups}
     if n >= len(groups):
         for k in alloc:
@@ -395,6 +417,13 @@ def pick_documents(docs: dict[str, Doc], n: int, seed: int) -> list[Doc]:
     rest = n - sum(alloc.values())
     for k in sorted(groups, key=lambda k: quota[k] - int(quota[k]), reverse=True)[:rest]:
         alloc[k] += 1
+    # 폴더 크기를 넘게 배정된 몫은 남는 문서가 많은 폴더로 옮긴다 (n 이 전체에 가까울 때)
+    over = sum(max(0, alloc[k] - len(g)) for k, g in groups.items())
+    alloc = {k: min(alloc[k], len(g)) for k, g in groups.items()}
+    while over:
+        k = max(sorted(groups), key=lambda k: len(groups[k]) - alloc[k])
+        alloc[k] += 1
+        over -= 1
 
     rng = random.Random(seed)
     picked = []
@@ -897,7 +926,7 @@ def cmd_generate(args):
           f"매니페스트 {corpus_sha[:12]})")
 
     all_docs = load_all_docs(corpus, args.min_tokens, args.max_tokens, args.exclude)
-    docs = pick_documents(all_docs, args.docs, args.seed)
+    docs = pick_documents(all_docs, args.docs, args.seed, args.only_split)
     if not docs:
         raise SystemExit("조건에 맞는 문서가 없습니다. --min-tokens / --exclude 확인")
     by_folder = Counter(d.folder for d in docs)
@@ -1095,6 +1124,8 @@ def main():
                     help="개발용 비율 (문서 단위, 경로 해시로 고정)")
     ap.add_argument("--copy-mode", choices=("rewrite", "drop", "off"), default="rewrite",
                     help="문서 표현을 베낀 질문 처리: 바꿔 쓰기 / 제거 / 검사 안 함")
+    ap.add_argument("--only-split", choices=("dev", "test"),
+                    help="이 분할의 문서에서만 생성 (기본: dev 를 --dev-ratio 비율로 섞음)")
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--no-verify", action="store_true", help="LLM 자동 검증 생략(빠름)")
     ap.add_argument("--no-closed-book", action="store_true",
