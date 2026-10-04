@@ -141,15 +141,18 @@ class LLM:
         return True
 
     def embed(self, text: str) -> list[float]:
-        """임베딩 벡터. 의미 손실률 계산에 사용."""
+        """임베딩 벡터. 의미 손실률 계산에 사용.
+        Ollama 기본값은 입력을 2048 토큰에서 조용히 잘라내므로, 모델 한도(embed_ctx)까지
+        늘리고 truncate=False 로 넘치면 오류(HTTP 400)를 내게 한다. 긴 문맥은 호출하는 쪽에서 나눈다."""
         if self.backend == "ollama":
             r = requests.post(
-                f"{self.base_url}/api/embeddings",
-                json={"model": CFG.embed_model, "prompt": text},
+                f"{self.base_url}/api/embed",
+                json={"model": CFG.embed_model, "input": text, "truncate": False,
+                      "options": {"num_ctx": CFG.embed_ctx, "num_batch": CFG.embed_ctx}},
                 timeout=self.timeout,
             )
             r.raise_for_status()
-            return r.json()["embedding"]
+            return r.json()["embeddings"][0]
 
         r = requests.post(
             f"{self.base_url}/v1/embeddings",

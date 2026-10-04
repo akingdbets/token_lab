@@ -44,6 +44,7 @@ class Config:
     judge_model: str = _env("JUDGE_MODEL", "qwen2.5:7b")  # 채점
     summary_model: str = _env("SUMMARY_MODEL", "qwen2.5:3b")  # 재귀 요약용
     embed_model: str = _env("EMBED_MODEL", "bge-m3")      # 의미 손실률
+    embed_ctx: int = _env("EMBED_CTX", 8192)              # 임베딩 입력 한도 (bge-m3 최대 8192)
     # 토큰 계산 기준. 모델 가중치 없이 토크나이저만 내려받는다
     tokenizer: str = _env("TOKENIZER", "Qwen/Qwen2.5-7B-Instruct")
     # 토크나이저 리비전(허깅페이스 커밋 해시) 고정. 저장소가 갱신돼도 토큰 수가 바뀌지 않게 한다
