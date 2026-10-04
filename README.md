@@ -3,7 +3,7 @@
 문서의 의미 손실을 최소화하면서 토큰 소비량을 줄이는 문맥 압축 연구
 (2026학년도 2학기 산학협력 프로젝트 / LG전자)
 
-오픈소스 기술 문서(FastAPI 공식 문서)를 LLM Wiki로 구조화하고, 서로 다른 문맥 압축 기법을
+오픈소스 기술 문서(FastAPI 공식 문서)를 OpenWiki로 구조화하고, 서로 다른 문맥 압축 기법을
 동일 조건에서 비교하여 토큰 절감률·의미 손실률·답변 정확도를 정량적으로 측정한다.
 
 ## 실험 설계
@@ -14,7 +14,7 @@ RAG(Vector DB 검색) 단계를 두지 않고, 질문마다 정답 근거 문서
 검색 결과 후처리 단계에 그대로 연결할 수 있다.
 
 ```
-[준비]  원문 수집 → LLM Wiki 구축 → 평가 데이터셋 생성
+[준비]  원문 수집(코퍼스) → OpenWiki 생성 → 평가 데이터셋 생성
 [실험]  질문 + 근거 문서 → 압축 → LLM 답변 → 평가·기록 → 대시보드
 ```
 
@@ -52,14 +52,16 @@ ollama pull bge-m3          # 임베딩 (의미 손실률 측정)
 ```
 token_lab/
 ├── data/
-│   ├── raw/fastapi/          # git clone 원본 (버전 관리 제외)
-│   ├── wiki/                 # 정제된 LLM Wiki (생성물, 버전 관리 제외)
-│   ├── wiki_stats.csv        # 문서별 토큰 변화 기록
-│   └── eval/qa_dataset.json  # 평가 데이터셋
+│   ├── raw/fastapi/          # FastAPI 원문 스냅샷 (git clone, 버전 관리 제외)
+│   ├── corpus_manifest.jsonl # 코퍼스 문서 목록·해시·토큰 수
+│   ├── index/                # 탐색용 인덱스 (nav_v0 등)
+│   ├── openwiki/             # OpenWiki 생성 위키 (예정)
+│   └── eval/                 # 평가 데이터셋 (버전 관리 제외)
 ├── src/
 │   ├── config.py             # 모델·경로·실험 조건 통합 설정
-│   ├── llm.py                # LLM 호출 (백엔드 교체 가능)
-│   ├── wiki_builder.py       # 원문 → LLM Wiki 변환
+│   ├── llm.py                # LLM 호출 (백엔드 교체 가능), 토큰 계산
+│   ├── corpus.py             # 원문 코퍼스 로더 (원본의 단일 출처)
+│   ├── index_builder.py      # 탐색용 인덱스 생성
 │   ├── dataset_builder.py    # 평가 데이터셋 생성 및 검수
 │   └── compressors/          # 압축 기법 구현 (예정)
 ├── results/                  # 실험 로그
@@ -70,52 +72,65 @@ token_lab/
 
 ### 1. 원문 수집
 
-```bash
-git clone --depth 1 https://github.com/fastapi/fastapi.git data/raw/fastapi
-```
-
-### 2. LLM Wiki 구축
+코퍼스는 FastAPI 커밋 `50113da` (v0.142.2) 스냅샷으로 고정한다.
 
 ```bash
-python src/wiki_builder.py --src ./data/raw/fastapi --out ./data/wiki
+git clone -c core.autocrlf=true https://github.com/fastapi/fastapi.git data/raw/fastapi
+git -C data/raw/fastapi checkout 50113da16fec53b66b80d75e80a89296de4fa5a5
+python src/corpus.py --stats
 ```
 
-원문 마크다운을 LLM이 읽기 좋은 형태로 가공한다.
+`corpus.py`는 파일 바이트 그대로 해시·토큰 수를 계산한다. `data/corpus_manifest.jsonl`은
+CRLF 줄바꿈으로 체크아웃한 상태에서 만들어졌으므로, OS와 관계없이 `core.autocrlf=true`로
+clone해야 해시와 토큰 수가 일치한다.
 
-- 코드 참조 `{* ../../docs_src/x.py *}` 를 실제 소스 코드로 펼침
-- 앵커 `{ #id }`, HTML 태그 등 형식 잡음 제거
-- 페이지별 메타정보(제목·요약·목차·핵심 용어·원본 경로) 부착
-- 변경 이력, 프로젝트 안내 등 기술 설명이 아닌 문서 제외
-- 문서별 토큰 변화를 `data/wiki_stats.csv`에 기록
+### 2. 위키 (OpenWiki)
+
+위키는 OpenWiki로 같은 스냅샷에서 생성하고,
+결과 `openwiki/` 폴더를 `data/openwiki/`에 그대로 둔다. 실험 기간 동안 위키는 고정한다.
+생성 시 `config.corpus_exclude`에 해당하는 페이지(릴리스 노트, reference 등)는 원본에서
+빼고 생성해 위키와 코퍼스의 범위를 맞춘다.
 
 ### 3. 평가 데이터셋 생성
 
 ```bash
-python src/dataset_builder.py --docs 30 --per-doc 2      # 생성
+python src/dataset_builder.py --docs 30 --per-type 1     # 생성
 python src/dataset_builder.py --review                   # 사람 검수
 python src/dataset_builder.py --stats                    # 통계 확인
 ```
 
-문항마다 3단계 필터를 거친다.
+질문 유형은 사실 확인형(`fact`), 절차형(`procedure`), 코드·파라미터형(`code`),
+여러 페이지 종합형(`multi`) 네 가지다. 문항마다 다음 필터를 거친다.
 
 | 단계 | 내용 |
 |---|---|
-| 생성 | 위키 문서를 LLM에 입력해 사실 확인형 질문·정답·근거 문장 생성 |
+| 생성 | 코퍼스 문서(예제 코드 펼친 보기)를 LLM에 입력해 질문·정답·근거 문장 생성 |
+| 순환 질문 제거 | 정답이 질문 안에 포함된 항목 제외 |
+| 베끼기 검사 | 문서 표현을 그대로 옮긴 질문은 바꿔 쓰거나 제외 |
+| 근거 확인 | 근거 문장이 원문 어디에 있는지 파일·줄 번호로 기록, 못 찾으면 제외 |
 | 자동 검증 | 정답이 문서에 명시되어 있고 구체적인지 LLM이 판정 |
 | Closed-book 검사 | 문서 없이도 맞히는 질문은 제외 (압축 효과 측정 불가) |
-| 순환 질문 제거 | 정답이 질문 안에 포함된 항목 자동 제외 |
 
-주요 옵션
+주요 옵션 (전체는 `--help`)
 
 ```
---docs N           대상 문서 수
---per-doc N        문서당 문항 수
---prefix PATH      우선할 문서 폴더 (기본 tutorial/)
+--docs N           대상 문서 수 (폴더별 층화 추출)
+--per-type N       문서당 유형별 문항 수
+--types LIST       생성할 유형 (예: fact,code)
 --dry-run          저장 없이 화면 출력만
+--no-verify        LLM 자동 검증 생략
 --no-closed-book   closed-book 검사 생략 (빠르지만 품질 저하)
 ```
 
-### 4. LLM 연결 확인
+### 4. 탐색용 인덱스 생성
+
+```bash
+python src/index_builder.py
+```
+
+mkdocs nav 계층을 목차 형태로 만들어 `data/index/nav_v0.md`에 저장한다.
+
+### 5. LLM 연결 확인
 
 ```bash
 python src/llm.py
@@ -141,7 +156,9 @@ LLM_MODEL=qwen2.5:3b python src/dataset_builder.py --docs 3 --dry-run
 
 ## 진행 현황
 
-- [x] LLM Wiki 구축 (121개 문서 / 약 26만 토큰)
+- [x] 원문 코퍼스 로더 (574개 파일, 커밋 50113da 고정)
+- [x] 탐색용 인덱스 (nav_v0)
+- [ ] OpenWiki 위키 생성 (영어, 코퍼스 범위에 맞춤)
 - [x] LLM 호출 모듈 (Ollama · OpenAI 호환 백엔드, TTFT 측정)
 - [x] 평가 데이터셋 생성 파이프라인
 - [ ] 평가 데이터셋 확정 (생성 및 검수)

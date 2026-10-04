@@ -59,7 +59,8 @@ class Config:
     # ---------- 경로 ----------
     root: Path = ROOT
     raw_dir: Path = ROOT / "data" / "raw"
-    wiki_dir: Path = ROOT / "data" / "wiki"
+    # OpenWiki 로 생성한 위키 (openwiki/ 폴더를 그대로 복사). 실험 입력이므로 생성 후 고정
+    openwiki_dir: Path = ROOT / "data" / "openwiki"
     eval_dir: Path = ROOT / "data" / "eval"
     results_dir: Path = ROOT / "results"
     # FastAPI 저장소 스냅샷 루트 (docs/en 이 있는 곳). 연구 기간 내내 고정
@@ -93,7 +94,7 @@ class Config:
     )
 
     def ensure_dirs(self):
-        for d in (self.wiki_dir, self.eval_dir, self.results_dir):
+        for d in (self.eval_dir, self.results_dir):
             d.mkdir(parents=True, exist_ok=True)
 
     def summary(self) -> str:
@@ -108,6 +109,6 @@ CFG.ensure_dirs()
 if __name__ == "__main__":
     print(CFG.summary())
     print(f"루트    : {CFG.root}")
-    print(f"위키    : {CFG.wiki_dir}  ({len(list(CFG.wiki_dir.rglob('*.md')))}개 문서)")
+    print(f"위키    : {CFG.openwiki_dir}  ({len(list(CFG.openwiki_dir.rglob('*.md')))}개 문서)")
     print(f"평가셋  : {CFG.eval_dir}")
     print(f"결과    : {CFG.results_dir}")
