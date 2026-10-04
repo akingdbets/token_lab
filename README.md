@@ -63,8 +63,10 @@ token_lab/
 │   ├── corpus.py             # 원문 코퍼스 로더 (원본의 단일 출처)
 │   ├── index_builder.py      # 탐색용 인덱스 생성
 │   ├── dataset_builder.py    # 평가 데이터셋 생성 및 검수
-│   └── compressors/          # 압축 기법 구현 (예정)
-├── results/                  # 실험 로그
+│   ├── grader.py             # 정답 채점 (단어 일치 + LLM 판정)
+│   ├── experiment.py         # 압축 실험 실행 (A/B 비교)
+│   └── compressors/          # 압축 기법 (none, rule)
+├── results/                  # 실험 로그 (runs/<run_id>/)
 └── dashboard/                # Streamlit 대시보드 (예정)
 ```
 
@@ -130,7 +132,28 @@ python src/index_builder.py
 
 mkdocs nav 계층을 목차 형태로 만들어 `data/index/nav_v0.md`에 저장한다.
 
-### 5. LLM 연결 확인
+### 5. 압축 실험 (A/B 비교)
+
+```bash
+python src/experiment.py                              # dev 문항, none(기준선) vs rule
+python src/experiment.py --split all --limit 5        # 연결 확인용
+python src/experiment.py --compressors none,rule --semantic   # 임베딩 유사도 포함 (bge-m3)
+```
+
+문항마다 `질문 → 근거 문서 → 압축 → LLM 답변 → 채점 → 로그` 를 압축기별로 실행한다.
+문맥은 문항의 정답 근거 페이지 원문(예제 코드 펼침)이고, `none` 이 기준선이다.
+결과는 `results/runs/<run_id>/` 에 저장된다.
+
+- `trials.jsonl` 문항 x 압축기마다 한 줄 (토큰, 절감률, 답변, 채점, TTFT 등)
+- `summary.json` 압축기별 집계 (절감률, 순 절감률, 정확도, 정확도 유지율, 엔티티 보존율)
+- `contexts/` 압축 전후 문맥 (압축 결과를 눈으로 확인할 때)
+
+채점은 짧은 정답(5단어 이하)은 단어 일치, 긴 정답은 LLM 판정(`judge_model`)을 쓴다.
+
+압축기는 `compress(question, context) -> CompressResult` 인터페이스를 따르고
+`src/compressors/__init__.py` 의 `REGISTRY` 에 등록하면 `--compressors` 로 고를 수 있다.
+
+### 6. LLM 연결 확인
 
 ```bash
 python src/llm.py
@@ -162,11 +185,12 @@ LLM_MODEL=qwen2.5:3b python src/dataset_builder.py --docs 3 --dry-run
 - [x] LLM 호출 모듈 (Ollama · OpenAI 호환 백엔드, TTFT 측정)
 - [x] 평가 데이터셋 생성 파이프라인
 - [ ] 평가 데이터셋 확정 (생성 및 검수)
+- [x] 압축 실험 실행기 (A/B 비교, 채점, 로그)
 - [ ] 기준선(Baseline) 측정
-- [ ] 압축 기법 1 — 규칙 기반 문맥 정제
+- [x] 압축 기법 1 — 규칙 기반 문맥 정제 (구현, 측정 전)
 - [ ] 압축 기법 3 — LLMLingua
 - [ ] 압축 기법 2 — 재귀 요약
 - [ ] 하이브리드 파이프라인
 - [ ] 멀티 에이전트 오케스트레이션 검증
-- [ ] 평가 지표 모듈 (의미 손실률 · 정답 채점)
+- [ ] 평가 지표 모듈 (의미 손실률 · 정답 채점) — 채점·엔티티 보존율 구현, 의미 손실률은 bge-m3 필요
 - [ ] Streamlit 대시보드
