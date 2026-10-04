@@ -1,0 +1,4 @@
+requests>=2.31          # LLM 호출 (Ollama / OpenAI 호환 API)
+transformers>=4.43      # Qwen 토크나이저 (토큰 수 계산, 모델 가중치는 받지 않음)
+jinja2>=3.1             # 토크나이저 채팅 템플릿 적용 (count_message_tokens)
+pyyaml>=6.0             # mkdocs.yml nav 파싱 (corpus, index_builder)
