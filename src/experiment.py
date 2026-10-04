@@ -41,6 +41,8 @@ from dataclasses import asdict, dataclass, field
 from datetime import datetime
 from pathlib import Path
 
+import requests
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from compressors import get_compressor
@@ -83,6 +85,7 @@ class TrialRecord:
     entity_retention: float | None  # 핵심 엔티티 보존율 (엔티티 없으면 None)
     answer_in_context: bool | None  # 짧은 정답이 문맥에 남았는지 (긴 정답이면 None)
     semantic_sim: float | None      # 압축 전후 임베딩 코사인 유사도 (--semantic 일 때)
+    semantic_chunks: int | None     # 임베딩 한도를 넘어 나눠 계산한 조각 수 (원문, 압축본 중 큰 쪽)
     # 답변
     response: str
     prompt_tokens: int              # 답변 LLM 입력 토큰 (서버 보고값)
@@ -122,6 +125,28 @@ def entity_retention(entities: list[str], ctx_words: list[str]) -> float | None:
 def cosine(a: list[float], b: list[float]) -> float:
     dot = sum(x * y for x, y in zip(a, b))
     return dot / (math.sqrt(sum(x * x for x in a)) * math.sqrt(sum(y * y for y in b)))
+
+
+def embed_long(embedder: LLM, text: str) -> tuple[list[float], int]:
+    """(임베딩, 조각 수). 임베딩 모델 한도를 넘으면 빈 줄 경계에서 반으로 나눠 다시 시도하고,
+    조각 임베딩을 글자 수 가중 평균한다. 조각이 2개 이상이면 원문과 압축본이 다르게 나뉠 수
+    있으므로 유사도 해석에 주의 (TrialRecord.semantic_chunks 로 기록)."""
+    try:
+        return embedder.embed(text), 1
+    except requests.HTTPError as e:
+        if e.response is None or e.response.status_code != 400:
+            raise
+    mid = len(text) // 2
+    cut = text.rfind("\n\n", 0, mid)
+    if cut <= 0:
+        cut = text.rfind("\n", 0, mid)
+    if cut <= 0:
+        cut = mid
+    parts = [embed_long(embedder, p) for p in (text[:cut], text[cut:]) if p.strip()]
+    weights = [len(p) for p in (text[:cut], text[cut:]) if p.strip()]
+    dim = len(parts[0][0])
+    vec = [sum(w * v[0][i] for w, v in zip(weights, parts)) / sum(weights) for i in range(dim)]
+    return vec, sum(v[1] for v in parts)
 
 
 # ---------------- 실행 ----------------
@@ -173,7 +198,7 @@ def run(args) -> Path:
         for i, item in enumerate(items, 1):
             raw = build_context(corpus, item)
             raw_tokens = count_tokens(raw)
-            raw_emb = embedder.embed(raw) if embedder else None
+            raw_emb, raw_chunks = embed_long(embedder, raw) if embedder else (None, None)
             ents = item.get("key_entities", [])
             print(f"[{i}/{len(items)}] {item['id']} {item['type']:<9} ctx {raw_tokens} tok", flush=True)
 
@@ -192,9 +217,13 @@ def run(args) -> Path:
                 ], stream_ttft=True)
                 g = grade(item["question"], item["answer"], ents, res.text, judge_llm=judge)
 
-                sim = None
+                sim = chunks = None
                 if embedder:
-                    sim = 1.0 if ctx == raw else round(cosine(raw_emb, embedder.embed(ctx)), 4)
+                    if ctx == raw:
+                        sim, chunks = 1.0, raw_chunks
+                    else:
+                        emb, n = embed_long(embedder, ctx)
+                        sim, chunks = round(cosine(raw_emb, emb), 4), max(raw_chunks, n)
 
                 rec = TrialRecord(
                     run_id=run_id, qid=item["id"], split=item["split"], qtype=item["type"],
@@ -206,7 +235,7 @@ def run(args) -> Path:
                     compress_llm_tokens=cres.llm_prompt_tokens + cres.llm_completion_tokens,
                     entity_retention=entity_retention(ents, ctx_words),
                     answer_in_context=contains_words(ctx_words, item["answer"]) if is_short(item["answer"]) else None,
-                    semantic_sim=sim,
+                    semantic_sim=sim, semantic_chunks=chunks,
                     response=res.text.strip(), prompt_tokens=res.prompt_tokens,
                     completion_tokens=res.completion_tokens,
                     ttft_sec=round(res.ttft, 3) if res.ttft is not None else None,
