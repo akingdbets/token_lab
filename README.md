@@ -54,7 +54,8 @@ token_lab/
 ├── data/
 │   ├── openwiki/             # OpenWiki 생성 위키: en/ (문서 원천, 고정), ko/ (보관용). 출처는 각 SOURCE.md
 │   ├── corpus_manifest.jsonl # 코퍼스 페이지 목록·종류·해시·토큰 수
-│   └── eval/                 # 평가 데이터셋 (버전 관리 제외)
+│   ├── evalsets/claude-v1/   # 평가셋 (git 관리, EVAL_DIR 로 선택). 후보 원본·생성 규칙은 candidates/
+│   └── eval/                 # 평가셋 작업 공간 (기본 EVAL_DIR, 버전 관리 제외)
 ├── src/
 │   ├── config.py             # 모델·경로·실험 조건 통합 설정
 │   ├── llm.py                # LLM 호출 (백엔드 교체 가능), 토큰 계산
@@ -114,6 +115,30 @@ python src/dataset_builder.py --stats                    # 통계 확인
 --dry-run          저장 없이 화면 출력만
 --no-verify        LLM 자동 검증 생략
 --no-closed-book   closed-book 검사 생략 (빠르지만 품질 저하)
+--id-prefix X      새 평가셋의 문항 번호 앞 글자 (기본 q, 예: c -> c0001)
+```
+
+#### 외부 모델이 만든 후보 가져오기 (`--list-targets`, `--import`)
+
+질문 후보를 Ollama 대신 다른 모델(예: Claude)이 만들고, 검사·필터·저장만 여기서 한다.
+
+```bash
+python src/dataset_builder.py --list-targets      # 페이지별 split·토큰·종합형 짝 후보 (+ candidates/targets.json)
+python src/dataset_builder.py --import 후보.jsonl --generator 모델이름 --dry-run
+```
+
+- 후보 한 줄: `type`, `persona`, `source_pages`, `question`, `answer`, `key_entities`, `key_facts`, `evidence`
+- 기본값: 베낀 질문은 바꿔 쓰지 않고 제외(`--copy-mode drop`), 7B 자동 검증 끔(`--verify` 로 켬).
+  문서 없이 풀기와 종합형 한 페이지 검사는 실험 모델 기준이라 항상 실행한다.
+- 통과 문항에는 `persona` 와 `gen_log`(생성 모델, 후보 파일, 줄 번호)가 붙는다.
+
+#### 평가셋 폴더 (`EVAL_DIR`)
+
+기본 `data/eval/` 은 git 밖 작업 공간이다. git 으로 공유하는 평가셋은 `data/evalsets/<이름>/` 에 두고
+`EVAL_DIR` 로 고른다. 현재 평가셋은 `data/evalsets/claude-v1/` (README 참고).
+
+```bash
+EVAL_DIR=data/evalsets/claude-v1 python src/experiment.py --split dev --semantic
 ```
 
 ### 3. 압축 실험 (A/B 비교)
@@ -165,7 +190,7 @@ LLM_MODEL=qwen2.5:3b python src/dataset_builder.py --docs 3 --dry-run
 
 - [x] OpenWiki 위키 생성 (영어)
 - [x] 코퍼스 OpenWiki 전환 (문서 원천 data/openwiki/en, 인덱스 quickstart.md)
-- [ ] 평가셋 재생성 (OpenWiki 코퍼스 기준)
+- [x] 평가셋 재생성 (OpenWiki 코퍼스 기준, Claude 생성 후보 → `data/evalsets/claude-v1`)
 - [x] LLM 호출 모듈 (Ollama · OpenAI 호환 백엔드, TTFT 측정)
 - [x] 평가 데이터셋 생성 파이프라인
 - [ ] 평가 데이터셋 확정 (생성 및 검수)

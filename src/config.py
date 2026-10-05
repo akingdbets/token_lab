@@ -63,7 +63,9 @@ class Config:
     openwiki_dir: Path = Path(_env("OPENWIKI_DIR", str(ROOT / "data" / "openwiki" / "en")))
     # 탐색기가 그대로 읽는 인덱스 = OpenWiki 최상위 목차 페이지 (openwiki_dir 기준 경로)
     index_page: str = _env("INDEX_PAGE", "quickstart.md")
-    eval_dir: Path = ROOT / "data" / "eval"
+    # 평가셋 폴더. 기본 data/eval 은 버전 관리 밖 작업 공간이고, git 에 올리는 평가셋은
+    # data/evalsets/<이름>/ 에 두고 EVAL_DIR 로 고른다 (예: EVAL_DIR=data/evalsets/claude-v1)
+    eval_dir: Path = ROOT / _env("EVAL_DIR", "data/eval")
     results_dir: Path = ROOT / "results"
     corpus_manifest: Path = ROOT / "data" / "corpus_manifest.jsonl"
     ctx_log_path: Path = ROOT / "results" / "ctx_overflow.jsonl"   # num_ctx 초과 기록
