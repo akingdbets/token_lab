@@ -1,0 +1,5 @@
+# Files
+
+- [Dataclasses, Separate OpenAPI Schemas and Pydantic v1 to v2](dataclasses-and-pydantic-versions.md) - Use standard or Pydantic dataclasses as request bodies and response models, understand why Pydantic v2 generates separate Item-Input/Item-Output schemas and how to disable it with separate_input_output_schemas=False, and migrate apps from Pydantic v1 to v2.
+- [Extra Models, jsonable_encoder and Body Updates](extra-models-and-updates.md) - Use separate input, output and database models (UserIn/UserOut/UserInDB) with inheritance, declare Union, list and dict responses, convert data with jsonable_encoder, and implement PUT replacement and PATCH partial updates with model_dump(exclude_unset=True) and model_copy(update=...).
+- [Response Models and Return Types](response-model.md) - Declare the response shape with a return type annotation or response_model to validate, filter, document and serialize output; priority rules, returning Response objects, response_model=None, and the response_model_exclude_unset / include / exclude options.

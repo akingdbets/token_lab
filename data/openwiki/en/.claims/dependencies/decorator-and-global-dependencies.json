@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:3939061357a316cf8df1c719215125ec314efd46c2c22ccfafb43aa6cdb79d20",
+  "claims": [
+    {
+      "id": "claim_470bfddba224432e86f2f36c48258394",
+      "statement": "Dependencies listed in a path operation decorator's dependencies parameter are executed like normal dependencies but their return values are not passed to the path operation function.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/dependencies/dependencies-in-path-operation-decorators.md",
+          "version": "repo-file-v1:sha256:3cf120606916eb43d50b55b255c851ed0a4f1e0edff8210b6e5a35b8666ee275"
+        },
+        {
+          "resource": "repo://docs_src/dependencies/tutorial006_an_py310.py",
+          "version": "repo-file-v1:sha256:ee085eaffb2bbf140e65118e873dcacdf4c46b9a5e580181d9c5b3b34a80125f"
+        }
+      ]
+    },
+    {
+      "id": "claim_0608d89845db4d98b8860088c106356f",
+      "statement": "FastAPI(dependencies=[...]) applies dependencies to every path operation in the application.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dependencies/tutorial012_an_py310.py",
+          "version": "repo-file-v1:sha256:3d9e02a97f5b73e8031ab7a158b4c20fad206d612838531045c857998557d820"
+        }
+      ]
+    },
+    {
+      "id": "claim_6086407320274c92babd733381ff90d1",
+      "statement": "Router dependencies run before decorator dependencies, which run before normal parameter dependencies.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/bigger-applications.md#L183-L187",
+          "version": "repo-lines-v1:sha256:b0178ffcd79d63c12cfc2a39b4cad76a282d798231ab0fd14e6d661a321f7995:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmRkZTYzYzUzZGY0OTVlN2UzMGIzMjRkOTZkODNjOGNiODhiYjA4NTUxZjQ0OWFlYTQ5ZmZjNTliNDY3ZGQ4NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMWFiZDM4NjE0ZTE0MDk0NWU5MmI0Njc1NTc1YTk0ZGQ1NThhYWQzMDJkODkwMjM0ZGNjNWNkZTg2MjkzNGJiMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjU1ZmJkOTUzNTc0NGQ2NWIyMzIxNzk0YWM0NTk4NmJjZTUyMmQ3ZjYwMGJjYjU5OGVjY2IxZDM5NGI0ZjRkYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYWIzM2QyMDk4MTEyOGMwOTdmN2EyMjM5ZjlkNDBlODM1ZDA3ZDRkOWExMGNjNGY1Yjg3MWY4YTU4Y2VkNjlmMCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c22da6962d5148e3964f9b0970f7633a",
+      "statement": "Decorator dependencies can declare request parameters such as headers and can raise HTTPException to abort the request.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dependencies/tutorial006_an_py310.py",
+          "version": "repo-file-v1:sha256:ee085eaffb2bbf140e65118e873dcacdf4c46b9a5e580181d9c5b3b34a80125f"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

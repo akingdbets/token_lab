@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:58784178cdde3342a14b89de009f69bceecbaf283f96a9def2894d5e52250064",
+  "claims": [
+    {
+      "id": "claim_4ee200a760fe4a91865d62798a5d3e54",
+      "statement": "The response model is derived from the return annotation only when response_model is not passed; a return annotation that is a Response subclass yields no response model.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L1114-L1134",
+          "version": "repo-lines-v1:sha256:86555a5ddb12dcc35092dba0497e955f4051d9850da65a6cbe912eddb15d3ae3:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZmZTdiMjczNjc0ZWM5ZGJkMTI3MmU1NjU2ZWQyMTU2YTBlN2M3YTc1OGZkY2U0ZDk0ZGI2MDkxZDBlYzE0NWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjYWQ2YzkxMDg0YmRhZDdmNDY0ZGUwZDJkYzk0N2MxZmNlYTZkZGMzYmFhZGE4NTM5ZDE1MzdkZGZlZmNmMWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVlZWYyMjdiYzQ3OTkwYjQ1NzMzMWMwODZhNDBjM2I4Mjc3NTQ4YzkxM2YwODdkOGM3MTYzZmM0YmQzODFlMTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUxNTdlMDIzYzYyODNiNjQ5NzM2ZjkzNDUxMTMyZWI2YmQ0YWE1ZjA4MTlmNDNkYzllZWNiMzIzZmM4NjU3MGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f9432f3ad0f84ddaacdc62c0ea5a2e47",
+      "statement": "If both return type and response_model are declared, response_model takes priority, and response_model=None disables response model creation.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/response-model.md",
+          "version": "repo-file-v1:sha256:7a68126ccca77a077ddd5e58feb015e069359bbfe06702028211bfbde5faec36"
+        },
+        {
+          "resource": "repo://docs_src/response_model/tutorial003_05_py310.py",
+          "version": "repo-file-v1:sha256:4c4b76f3de28e34e534e0638e83c93ccee1606cce3308e407c5c4c67a7e7ee32"
+        }
+      ]
+    },
+    {
+      "id": "claim_c62dee7e66bb4195b4e693136509ea35",
+      "statement": "response_model filters output so fields not in the model (e.g. password) are not returned.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/response_model/tutorial003_01_py310.py",
+          "version": "repo-file-v1:sha256:e4134b26114889cf64644971ed527b723aee613d627d8f8c795d737f5eac0314"
+        },
+        {
+          "resource": "repo://docs_src/response_model/tutorial003_py310.py",
+          "version": "repo-file-v1:sha256:118beca9d2bf2c295e9dd8ba7a0b8973fddf711a502573f00229e142ce287139"
+        }
+      ]
+    },
+    {
+      "id": "claim_4b9d217e07c64890aa49b9e36b73f994",
+      "statement": "Returned data that fails response validation raises ResponseValidationError, producing a server error.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L308-L337",
+          "version": "repo-lines-v1:sha256:56d32793bc92f5f7188a562fc591c547a90f5da4d17778937f28746dcdbf9967:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQwMjM2YzhjMjAwNWIyMjY4NDQ0OGU2YTAwNjBmNjc5MDBkYjEyZmY5NDcyMTFjNGZjNGQ2ZTQ3N2Q4NTRkYTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJjNGYyZGM4NDEyNjhmMTViNDg2NTcwNGY2ZGQ0ODgwN2Q3MDkzOTc2NGYwZWQ3MzA1MmRjYjRjNWFhYmM5NmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI2NDJhNDEwNjlmMWYyNjYzNmQ3MTgxZGE0MTg0YjM2MjY3NDBhNDA4ZDhiMjYyMTljMzc3N2E2ZTBlZjZiYWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY3ZjQ1OWU4YTJhMzc0NjYwNjVhYmE3ZTVmZjBmZTM4YTgyYTAzZmZlOTQwZTllNjFhZGZlMmFhNGZhM2NmNGUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_883caf150a204cfa9277fa99119071be",
+      "statement": "response_model_exclude_unset omits fields not explicitly set, and response_model_include/response_model_exclude select fields.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/response_model/tutorial004_py310.py",
+          "version": "repo-file-v1:sha256:4235c67db7c860f63fc7a9aa26cde939d7137bc69a415c5a97cc3d76632999a1"
+        },
+        {
+          "resource": "repo://docs_src/response_model/tutorial005_py310.py",
+          "version": "repo-file-v1:sha256:d8a2e5f6e84674dabbc343a24a3861e8870194ca404dae81b0a08cd5db6449b0"
+        }
+      ]
+    },
+    {
+      "id": "claim_438d3b84b39b4279bc1cb001811e998e",
+      "statement": "Route defaults are response_model_by_alias=True and response_model_exclude_unset/defaults/none=False.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L1011-L1016",
+          "version": "repo-lines-v1:sha256:96d817eb3c4c1a44a442fa1c015985a35cde2a5a2aa440e6651046206f9bb897:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmE2ZjU0MmYyZjRhZGNiMzFhYmFmNTFmNDA0NmUwYjAyMWRmZWM3ODUwYzAzMDY5ZDhkYjdjMTZkODU2N2FiOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjBlNjA3NDA0OTM3NjljMjExYzk4NDY0MzYwMjBjOWVjMTM0YTQwN2Q4ZDQ2ODE1ZDNlOWMyNDQ4MmE2NDQzMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGRlZjM5YjBkYjIxNTNmN2ViMTVlN2Y3ZTcwOTc1ZDE0MjIzNjMwMjJiNTYyOTNjMTY4M2I0MjQ0YTBiNDcwNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNWEwMzE2NzczNWRlMGExNjZmZmEyY2IyNDZjNDBjZDU5ZGQ1NjY4MmZmNTcyN2IyYTk5NzQxNGM2YzMzMjg1MSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

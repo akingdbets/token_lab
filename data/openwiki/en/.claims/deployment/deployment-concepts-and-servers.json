@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:bddb3f20f269432ab6445d4756276aadfb31456f6dd33a43dba1254956d48b6c",
+  "claims": [
+    {
+      "id": "claim_53750da613454681a1a08e150509320a",
+      "statement": "fastapi run starts a production server with auto-reload disabled, listening on 0.0.0.0, while fastapi dev enables auto-reload and listens on 127.0.0.1.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/manually.md#L3-L44",
+          "version": "repo-lines-v1:sha256:19f69124ec1f0499e70a3d1604efd7a4ff3b8caf5b57c6906bf7d32f0bb29f1b:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjNjY5MjRiYWZlNjgxNTU2ZjZiMWY4ZWExZjkwM2UwODRhNGY0NGVmNjEzNmZlNDI4ZmRiOWQ0ZmM4ZjUwMjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjoyLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdmNTFhMWJiYmVhM2NmNWEyMmUxZWIxYWJjNzBmNmZjNGVkMDFkZWNkOGVlM2QwODVlY2M3NTg4MDkxOTFkNjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc5ZDFlNjYwMjJjMGM0YTZhMmJiMjc5NjQxNGVlZTk5NWQ3MjYyOTExZjBjMDFkYTUzMGIzOTQxNmFjZGYwMzEifQ"
+        },
+        {
+          "resource": "repo://docs/en/docs/fastapi-cli.md#L118-L132",
+          "version": "repo-lines-v1:sha256:c43ad2ab8809ef61fd3c430c5da5051ce105958d34a1c75c89c02a7283a169df:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkzYjA1MTI1NjlmMzM5ZjZlMzAwNTBlYjY1NmYyNTRjMjQ0NWEzMjUzYjA0YWQ3NGQ0ZmQzMmFjMmIyMTk1NjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY1NTg2MWU2ZGNjYmJlY2JiMjYyYzViMjE3OGU2NmYzNzJkODMzZjY4MjBjZDI3MTU5ZWZlOTQ4YTYxZmEzZWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg2NjZjYjJjMDRjNzAzY2JhMDlhNDliNjk2MGYxNTZhZTIyZDRkYzVhYmNkODE0OTRjZGE3MTZhNzIxMzEwNzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU1ZTM0ZTY2MGZiOWE3MzgzMTg0ODk3Zjk2NTdlYTYzMGY0NWNmZDE3YzgyOGYzMDgyMDcxYmU0Zjk2MjY4NTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ecca3e8bab9846869af32da7291d689b",
+      "statement": "Multiple worker processes are started with the --workers option of fastapi run or uvicorn; on Kubernetes a single Uvicorn process per container is usually preferred.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/server-workers.md",
+          "version": "repo-file-v1:sha256:57f35681720dbc38c49e1cf43a8db6e6502d4e7c0878d0698d78ef0c356dedba"
+        }
+      ]
+    },
+    {
+      "id": "claim_380c9fed921e4fb29339fb6919ac0da4",
+      "statement": "Deployment concepts to handle are HTTPS, running on startup, restarts, replication, memory, and previous steps before starting such as migrations which should run in a single process.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/concepts.md",
+          "version": "repo-file-v1:sha256:efef19cd03a079340cad46ab4989fdd87533b2ee620f5c624a9f99f668441e9b"
+        }
+      ]
+    },
+    {
+      "id": "claim_edcfc294403541f7aff35b80c5b88c58",
+      "statement": "FastAPI PATCH releases are for bug fixes and non-breaking changes while MINOR releases may include breaking changes, so versions should be pinned to a minor range; Starlette should not be pinned.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/versions.md#L39-L81",
+          "version": "repo-lines-v1:sha256:342aaaa90b8463eef28fe5f9c57c0a94c826b5aad33560ee146545a5f25fbe13:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViMDgzYzI0NTQwNzI5N2YzMWRmZWNhN2MwMTgyZGFlY2JmMGZjZjZhNjZhMWQ5NDZhMTAzYWJlYzc2ZGIyNjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ1Y2EwYTI3MmJjNDRjOWY2ODA0NjhhYWNmYzQ1YjBjNWRjNTE1MDQ0YTVhNmMwNWY5M2ViYjQ2M2M1Mjc3N2UiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcxNjU0M2Q4ZjNlMjE2MjczZjZhNmQyZWZhODNlM2JmZTBjZTM5ZGZmYTgwYjY5ZjM1OWQ0MDkwZDFiYmZjMjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUxZWMwZGVhZmZkNTk4NzhjNzFkODFkODFkYjBmOTg5ZmNiNGFjYjg1YmVkN2UwZDc1NWJiMDc5MDMwNDZlMTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9526ba3a244d4ebf98c7113325750234",
+      "statement": "The fastapi command requires fastapi[standard] (fastapi-cli) and raises a RuntimeError with install instructions if it is missing.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/cli.py",
+          "version": "repo-file-v1:sha256:a444f8922fb65a8da1556df00dd526303536f2368db1edeb972d70f4fba81485"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

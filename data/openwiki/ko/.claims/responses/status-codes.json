@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:967a0a9effebd72733a621ded8f7a77ba7de4bc68deb1630cbb3b8244ec840dd",
+  "claims": [
+    {
+      "id": "claim_6d22f4a80a4d43dba183a2cb74566f27",
+      "statement": "The status_code parameter of path operation decorators sets the default response status (int, fastapi.status constant or IntEnum normalized to int) and documents it in OpenAPI.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/response_status_code/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:06e24238b7ea974659aa2b26c5d8254bf0720dd3e04b372746c0e6e23c39eb9d"
+        },
+        {
+          "resource": "repo://docs_src/response_status_code/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:29de7174d31edea6ff40ea622b76bbf70704c8a30a33df90efda91e13619fc6f"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L1062-L1065",
+          "version": "repo-lines-v1:sha256:d3cde22fdae9fd59bcf1eeb13972857d05440004f13423cc8e5a9245ee39196f:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmVhOGM2ZGMxMWEwYjA0MzVkMDViNjExY2I0MzI1NTViYTdjYWY4ZDhiYzE1NDIzNjA1ZjE2YjhlNTAyZTY2OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOWRhZGI4MjMxYTdhYTNiOGMzOTM0ZWViOTYzNmVjNTliOWMwMGVmNTU0ZGM3ZTIwYTdiNGY2NGU3OWE3NGMyNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWYyNWFlM2FmZTJlMGJkNjUyOTgzYTgxMmI0MjY4MTQ4NDA0Y2I0ZjhiMzM2MzQ0ZTg2OWYxNDk4NTFiNTI2MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTcwOWViNzY0ODVkNTYzZmRlNDcwNjU3M2QzZjEzZTZmMmEwMGQ2MDIxN2UxYjU4ZWE2ZTAwNTE3ZDQ5NjEyMiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_f88178b3c34548bdb82a2c49b1c9ee97",
+      "statement": "For status codes that disallow a body (e.g. 204, 304, 1xx) FastAPI documents no response body and empties the response body.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/response-status-code.md",
+          "version": "repo-file-v1:sha256:b27ef05a996edd0e4462cdd15dddca86ae3e98bcd2d784ac66576651047325ee"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L766-L768",
+          "version": "repo-lines-v1:sha256:2c6ae634e48d04d7ec11d61d22e20973d396619805cee8e3907c38154770d4a6:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTcxNDFkODgzM2Y3OTNhOTc0M2U0M2ExZGQ4YzI0NDZkYTZhODhhYWQ0NGY1NWZhYzk1OTQ3MWZiYTY3NWU2YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmQ3NWFhY2ZhMTExZTMxM2EzYjU2NGM0MTE0NjdjNzhkNWJmNWI3NmQ0MjU3MjcwOTdlMWFlMjUwY2QzMTExMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWM4ZjRjNjFhYjcwZDQzYzcwMTkzNjEzMTE1YjJjNmIzMzM1ZTU3MzE2OGJmYWUzYjY0ZTUwMzA0NWJjYzc0OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiY2ZmZTI4ZDc4OTdjMzAzNmUzMmIyOGUzNGYwNDdlMWYzZjViZjA0ZTZmNTQyMjhmYTU0Yzk3NTliMjk1MjVhMSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_e82950b7e4e6466484b684172237a1bc",
+      "statement": "Additional status codes are returned by directly returning a JSONResponse with status_code, which bypasses response model serialization and is not documented automatically.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/additional-status-codes.md",
+          "version": "repo-file-v1:sha256:5d4fe4788ca4722d7cb62b57e55dcc24065d378ec42cfe570efdc1c668a99c53"
+        },
+        {
+          "resource": "repo://docs_src/additional_status_codes/tutorial001_an_py310.py",
+          "version": "repo-file-v1:sha256:d48dec2f0e4679b274926340e5cab94f488d53f26d691a162d44ce5d5371e472"
+        }
+      ]
+    },
+    {
+      "id": "claim_ec2700a3736542448fd9fc5c3743c119",
+      "statement": "Setting response.status_code on an injected Response parameter changes the status dynamically while still filtering returned data with response_model, and it overrides the decorator status_code.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/response_change_status_code/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:10e19894d2da296c10be6b511e1be60f3d494b88a4c3ea58c582bad6e9bbc904"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L367-L384",
+          "version": "repo-lines-v1:sha256:d4a53f852ef5eb7c9ae486d7f9821394d803d63aced15405060884941dc40619:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc1ZWZjN2Q0YWU0MjAwMjRjMDFmMmEwNDE1YTk3MTY5ZmExOTMyOTgwODU2YjdhZmVmMTMyMzZkZDBjNWQ1NDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI2YWQyMzM1ZDM5NGEwMTE2NjAyYjcyMGNiNzJjNDdmN2NiNDk5YTM3MzM0MzMzMmEwNGU4OTRjMDE3MjkxMmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY1MTMzNjAwZTlkMmZhYmEyYjA5N2YxM2IwOGExOWU2MzZhZjhlYzlhMGI3ODRiMGE3NDJhNGQ5YzI4MGQ3OWQifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

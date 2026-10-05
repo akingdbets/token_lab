@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:d9a4d3a3f9e1ea7996805d69b01d7b003531cd9808e19c0d7fe47e85b8ed116a",
+  "claims": [
+    {
+      "id": "claim_a57ad2f19ed144b79cb2afda37d40c4d",
+      "statement": "Settings are declared as a pydantic_settings.BaseSettings subclass whose fields are read from environment variables, with defaults and required fields.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/settings/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:042200c75bf08234f8780f08c4089482529abedaea4680752a7c06fdaf2aae7f"
+        }
+      ]
+    },
+    {
+      "id": "claim_75f7f40a07434deab3d4d32d408b6c9c",
+      "statement": "The recommended pattern exposes settings via a get_settings dependency decorated with functools.lru_cache so the Settings object is created only once.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/settings.md#L230-L256",
+          "version": "repo-lines-v1:sha256:13bb89f10b0cb65c65d229b3749ed8efd6e13c19f3b1362ccb9b10cafea660a7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3M2RiMDdmYjE2M2FmYjQyNGMzOWMwNGQyMmU3NGVmYjVkNWUyNmYyOTdkNjc0NTJkMjU1ZmY4ZmExY2Q0OTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU4MjJmMGZjY2Q3ZWFmODdmMzhkNGM2ZDJhNDM5N2FmMTQzMGI4YmIwYjRkM2E5OTAyNTg3YzZkZGFhYzY5ZDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU4Y2VjODE5ZDdkNjkzNjUyYjFlNDdkMjlmNGM5ZjQxZTI3ZDNlNGM5YmY2MTlmZmZhNjk4ODhmOTEyNmE5YzcifQ"
+        },
+        {
+          "resource": "repo://docs_src/settings/app02_an_py310/main.py",
+          "version": "repo-file-v1:sha256:9bc5c0a7ce3548ccaa6de1953dadda1216d01c74440286c6f4143ace77c824ef"
+        }
+      ]
+    },
+    {
+      "id": "claim_bbdc8965bdd4439c868df7d62f045372",
+      "statement": "Tests override settings by assigning app.dependency_overrides[get_settings] to a function returning Settings with test values.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/settings/app02_an_py310/test_main.py",
+          "version": "repo-file-v1:sha256:417a962595fc1fa5fc40313c05e0204d8b9b8abdd937385602d5f6fde3145d24"
+        }
+      ]
+    },
+    {
+      "id": "claim_fa1fd07ff6f44528acfee37f9fec2f04",
+      "statement": "A .env file is read by setting model_config = SettingsConfigDict(env_file='.env') on the Settings class, and python-dotenv must be installed.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/settings.md#L199-L205",
+          "version": "repo-lines-v1:sha256:cabf287abccdb95a7868133fe5fa950b97d34bc54f345deb16bf2f4100b35548:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDdiYjkyNjBkZDMyYjk2ZmU5MDFjZTc1ZDg2ZGY0ZDMwN2FhMjZkNTY5YzAwNzAxYjY0MTFmNDY5NDQ3MmQ1MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTc4OWVmZTQzMGIyZjRjYWVjYjcwMDBiYjA5MDAwZDhiMjM2OThhMWU0MGM2MTYyMzRkZmZiYmVjZGNmNTE0ZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDc1NzYxNGUyZTIyNWFjNTAxOGJiMjAxMWQzMmViMmQ0YjljNTFlM2RmZjEzNGM4NzZhZjU0MjUxNDU1ODlhZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzIwMjYwNGM2ZjQ5ZDk4MTk2Njc3M2MxMzY3MWI4MTkwMzFlMjMzYWI5NTVmNTI2YzhhZmIxNDk0MjI5OWU0ZSJ9"
+        },
+        {
+          "resource": "repo://docs_src/settings/app03_an_py310/config.py",
+          "version": "repo-file-v1:sha256:95a59879a76c23382b1bb53121236948beeeaa9eace33166bf2cf8dd8175de35"
+        }
+      ]
+    },
+    {
+      "id": "claim_f1e06588ea804ebe8a8dfccc35ab242c",
+      "statement": "pydantic-settings is part of the fastapi standard extra.",
+      "evidence": [
+        {
+          "resource": "repo://pyproject.toml#L80-L81",
+          "version": "repo-lines-v1:sha256:82aeca0ec5944410745cd3e21de24797c5deca949d342934170237b8e7bbf2ae:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTgzNjE3MWQwN2E3ODYxYzI2OTViZjQ0YzZkZGViNTAzNDM4MDc2NmQ2NDM1MDgzYTZkN2Y2MTc3N2IxYTkxYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzQ1ZjQ4YTRjYzczMmIyMzIyY2NlY2VmOWIwMTNjYTBjMGY4Y2U4MzYzNzNiNmVkNjIxN2JjMjJhYzk0ZDcwNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTgwNzM4Y2I4ZmVmNjJlMzkwM2E0NzZlODRjNjE5ZGVjMDI1YTMwMDYxNjljYjljMjk2YzU0MDMzYjQxNjFmNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzI5M2U2Y2EyYzIxMmFkYTI2YTA5YmM4MjA3YjEwODg1MTQyMDEwMDc1MzNmNDE0MjhkM2FmMjVhNTk2Mjk1MiJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:adaba7e0ca63b40ad0a93e4c9793c0453618c3dc4e26dd38dedae822af17c4f7",
+  "claims": [
+    {
+      "id": "claim_53b9e133e62943659da4879695f17940",
+      "statement": "Passwords are hashed and verified with pwdlib's PasswordHash.recommended() (Argon2) via password_hash.hash() and password_hash.verify().",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/security/tutorial004_an_py310.py#L49-L63",
+          "version": "repo-lines-v1:sha256:d1a78b5aa9e2c867b791fd39bd955ee12508a12a38606e58c7fdc2111df61d37:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwNzZkZjliYjE4NDIxNDgyYzUzY2I0ZDhlY2NkZThkYTI0MWU2ZDZlYWJiN2JlYzYzYTZkMTE3YWNkZTE5ODQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJkZGM4MjdiYjQzMTMxMTBiMjZkNTlhMDA5NjI2NmQ4OWQ2ODdmMzVmMjk2MDMzZjEwYjllNjM0OTlkYWExNWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk0ODBjYmFiZWNkYjA5M2NhM2VkYmEyZWUxODRkY2NmNjRkMDBlMmNlODFiNmE2ZWEyZmFmNTgxMWZiMjIxZjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUwYzBhZTk4Y2MwNDEyNTM4YTc3ZjFlOTVlMjY5ZGYyNTIzOGFjYTE2ODUwN2JkZGZkOTNiYjQyODk2NTQyNGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cc9eeb6bcc18483d9cba037ab52ccfbb",
+      "statement": "authenticate_user verifies against a DUMMY_HASH when the user does not exist so response timing does not reveal valid usernames.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/security/oauth2-jwt.md",
+          "version": "repo-file-v1:sha256:f574e9078f47da3b50d3361b9484f88fb7fbd0d9d4e4237a93dd9fd50818b0a4"
+        },
+        {
+          "resource": "repo://docs_src/security/tutorial004_an_py310.py#L51-L79",
+          "version": "repo-lines-v1:sha256:a2eabfcb8ad51ea5e1ed2b55926fed2c5153f9ebb063852582d15d155d7bdf9c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxMDE2N2IyNmYyM2QyMjljNGFhZTAzZTQ1ODEwZDkzNGVkNzRhZGUxODI1NGI4NTU2NjlhODYzMGE1ZDUwZjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjN2E2NTdiNjYyZTNkMWUyNzE1NjliMmI2YzhhMDUwMzE2ZjY5ZjBiNzRlNDQ4N2M4N2Y4ZWY4ZDlmMThmM2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ1ZDI2Mjk2NmIzMTBkMGI3MjlhMWVjZjlkYTM2YjI3NjZmMTY3YzFhMThjZjA1YjE1NzQ0NTc3MWRhMTlhNTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMyYzRkMGViZjYxYjZiNzA0MGYxNTc1OGRkNDdlYjFiYjE3ZWFiOWE3ZGFlMTIwYWQ2YzRlNDI2MWNjZTdiNGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7502623f50e14c18a520cea53b227dd0",
+      "statement": "create_access_token adds a UTC exp claim (default 15 minutes, 30 via ACCESS_TOKEN_EXPIRE_MINUTES) and signs the payload with jwt.encode using SECRET_KEY and HS256.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/security/tutorial004_an_py310.py#L11-L15",
+          "version": "repo-lines-v1:sha256:7d9470876a35d6af8afe1ce682a4e0c0714d4cf0f64a340e30a02ca2c58527a0:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGJmMDliNjUyMzg1N2U1ZWVlZTA2ODcxNjQyOTY4ODJhM2VlYmI1OWY0MTc3ZGE2NjljMDUxM2RlNjYyYjU5ZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2QwMzA5YmU2YWYxNzFkOTU3NWU0NWZlODBjYTcwYzg3MWFiMjIzMjgzNTZlY2UyZTUzNGMwNjdiMjRlNDNhZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWU0OWU3MDg2ZTk1YmI0ODAzYTY0ZDU4ZDJmNzgwYWZhZmViN2QyMzY4NDYwZmVlZWVmNjEyNDZiYzA1NzRhOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGU1MmZjM2ZlMzBhY2QwZWI4MGNkZTBhMjQyMmMxMTlhM2Q5MTdjOTFkZDM2YzUwOWUzOWYzMGI4OWE3OTJlNSJ9"
+        },
+        {
+          "resource": "repo://docs_src/security/tutorial004_an_py310.py#L82-L90",
+          "version": "repo-lines-v1:sha256:48d6a47c3b3f6d7e9c186c09098121438e0764f6535e2710dfeeccfc30920482:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjliNzdlNmIyMzA4MDY2ZjZmMjZhZjRmNDA1NzgwODliYzg2Zjg2ZjU2MDYyMDA4YTJmMTcwNjg0ZDI2ZmM1ZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTAwNjM1NjI0NmNlZTQ2ZDQ1ZjFhYTIxZWZkNDFmOTY2MTVjYTA0OThhM2Q4MzRmZDk2NTcyY2U1MTQ4NjQ4NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTdiM2UwZWRlNjU5MzQ4ZGI0YzRmYjc3Njg5ZjRlNzZhNDJhYTEyYWFiY2UzNDA1ZGFkYTQ5YWU3MmJmYWJlYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjYwNDU1ZjdlZTUwY2ZiODY3YWM1NzRjMmNkZDY4YTA0Njk3NjAwODBmMDI3NjAwNWM2MDFlY2VlMzg2OGM4MSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_3675254d0a584aadae3641a14b0c2174",
+      "statement": "get_current_user decodes the bearer token with jwt.decode(..., algorithms=[ALGORITHM]), reads the sub claim, and converts InvalidTokenError or missing users into 401 with WWW-Authenticate: Bearer.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/security/tutorial004_an_py310.py#L93-L110",
+          "version": "repo-lines-v1:sha256:6a3d23bf9550b0a1de41a9a590784fb055775a1f4e7b72f40b9c928d5464bdef:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1ZWUzZGIyYzk2OTZkYTY3MjFkNjkxMzllNGZhMGU5NWFiNzA3Njc2ZjEyYmM5YWZjZDIwZTA1MGQ0YjA1NTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjN2E2NTdiNjYyZTNkMWUyNzE1NjliMmI2YzhhMDUwMzE2ZjY5ZjBiNzRlNDQ4N2M4N2Y4ZWY4ZDlmMThmM2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc5NzAzYTIwYTA5MDlkNjk3NTdhYzRhYjFjMTViYmY2Mjg3MDVjYzQxMjlkMjliNGFiMWQ2YmNkYzEzZTU1N2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUyZjZkZDY2M2VhNjVjMWU2NGViYTdmODk2OWUzMDUwN2U4ZTY2YjU1N2ZjYWEzNDIzOGZlZjA1MGI4ODQyMmUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_81db4566fd274fd4af3beff81703bbf9",
+      "statement": "The /token endpoint authenticates OAuth2PasswordRequestForm credentials and returns Token(access_token=..., token_type=\"bearer\") with sub set to the username.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/security/tutorial004_an_py310.py#L121-L136",
+          "version": "repo-lines-v1:sha256:82c01a5ca96b0a8a1c6fe81ce0a312f2614a4942a34fe5860609804e6b89aa52:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxM2JlNjFiMmY2YThkOTI2MTU1YTgzZWU4MDg4OTk0ZTkzNmViYzZkZjczNGRiZjM1OWRlYzI3YjI5NTQ3MWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3MTA4YWNjN2YwOWFlNDBhZmQ1NjgwNTJiZGYxZjUxYTQyZDlkMGIzN2I2ODE0MmI3NzdmZjFmZDkwOTk0ZGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdlZDM0ZDc1ZTM1MWJlMGMzMjdmMTc1YzVmOTU1NTRiMjlmMzM2MzMyMDk0ZDA4NDhjZjE2N2M4ZGNmOGE1NWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI4MjFjYWE3MTBmY2QzZWJlN2RkMzIzZGJmY2UyN2VlMGVlM2Q4ZDNhNDcwOTUzMTQwZWMxOThhYjg2NDkwYzMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_db51d43cd29146b5ab194f061c6c4f1b",
+      "statement": "JWTs are signed but not encrypted, so their contents are readable while tampering is detectable via signature mismatch; sub should be an application-unique string identifier.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/security/oauth2-jwt.md",
+          "version": "repo-file-v1:sha256:f574e9078f47da3b50d3361b9484f88fb7fbd0d9d4e4237a93dd9fd50818b0a4"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

@@ -1,0 +1,8 @@
+# Files
+
+- [Bigger Applications with APIRouter](bigger-applications.md) - How to split a FastAPI app into multiple modules with APIRouter, apply prefix, tags, responses and dependencies per router or at include time, nest routers, and configure the CLI entrypoint.
+- [Lifespan Events](lifespan-events.md) - Run code once before the app starts serving requests and once after it stops, using the lifespan async context manager; how router lifespans merge, lifespan state, and the deprecated startup/shutdown events.
+- [Path Operation Configuration](path-operation-configuration.md) - Decorator parameters that shape a path operation's documentation and OpenAPI entry — status_code, tags, summary, description and docstrings, response_description, deprecated, operation_id, generate_unique_id_function, include_in_schema and openapi_extra.
+- [Settings and Environment Variables](settings.md) - Load typed application configuration from environment variables and .env files with pydantic-settings BaseSettings, expose it through a cached get_settings dependency, and override it in tests.
+- [Static Files, Templates and Frontends](static-files-templates-and-frontend.md) - Serve static assets with StaticFiles, render server-side HTML with Jinja2Templates and url_for, and serve a built single-page or static-site frontend with app.frontend() including fallback and check_dir behavior.
+- [Sub-applications, Running Behind a Proxy and WSGI](sub-applications-proxy-and-wsgi.md) - Mount independent FastAPI sub-applications, run behind proxies with forwarded headers and stripped path prefixes using root_path, control OpenAPI servers, and mount Flask/Django apps with WSGIMiddleware from a2wsgi.

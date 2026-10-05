@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:65cfd44539fbfad40d57c34af3ef960de0c5ce507a77fec39331da997370a996",
+  "claims": [
+    {
+      "id": "claim_eb1c6669df594914947d0778ef524424",
+      "statement": "Typed path parameters are converted (e.g. '3' to int 3) and invalid values return a 422 int_parsing error.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/path-params.md",
+          "version": "repo-file-v1:sha256:555eb4692bdfbc864a78c451f4a90bae12217f1c943d9093ab1f8e4bec247b11"
+        },
+        {
+          "resource": "repo://docs_src/path_params/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:26e7a8c74692fc37e2269615103ea2a20edc26e645238cffc52e51a931855f2f"
+        }
+      ]
+    },
+    {
+      "id": "claim_7ee6aaeadb1441849ce0f33a7f999ac0",
+      "statement": "Path operations are evaluated in order, so fixed paths like /users/me must be declared before /users/{user_id}.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/path_params/tutorial003_py310.py",
+          "version": "repo-file-v1:sha256:e18ef1215eb4bb3b23e945294889eaa56f57265e39c752041c0e4fd8437e7a59"
+        },
+        {
+          "resource": "repo://docs_src/path_params/tutorial003b_py310.py",
+          "version": "repo-file-v1:sha256:9445ba828db1f99538b4447f5f768f8c9118937dacde2106c69f8ba20100d7a3"
+        }
+      ]
+    },
+    {
+      "id": "claim_8060764de8344238838a55959e5d9edb",
+      "statement": "A str-and-Enum subclass restricts a path parameter to predefined values.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/path_params/tutorial005_py310.py",
+          "version": "repo-file-v1:sha256:6273495af05cb3ab5e8c8256ed6ef721beb4d9e7088908496b42cfbd5207446b"
+        }
+      ]
+    },
+    {
+      "id": "claim_5155d44555e7430a9dec726511c3d357",
+      "statement": "The :path converter lets a path parameter contain slashes.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/path_params/tutorial004_py310.py",
+          "version": "repo-file-v1:sha256:a612cd14d939374737bb9284a33fa3bca3438625259218aeddfdc8ccb4cd3915"
+        }
+      ]
+    },
+    {
+      "id": "claim_1c96e07e7d7c4834af3279085ef35ba7",
+      "statement": "Path parameters are always required: Path asserts no default is given and dependency analysis asserts path params have no defaults.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L439-L439",
+          "version": "repo-lines-v1:sha256:da42bf2c70abb288e4611dd6c9d02ea37d7a3e92fe34d776696f7ce3e348c282:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZGE0MmJmMmM3MGFiYjI4OGU0NjExZGQ2YzlkMDJlYTM3ZDdhM2U5MmZlMzRkNzc2Njk2ZjdjZTNlMzQ4YzI4MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZGE0MmJmMmM3MGFiYjI4OGU0NjExZGQ2YzlkMDJlYTM3ZDdhM2U5MmZlMzRkNzc2Njk2ZjdjZTNlMzQ4YzI4MiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMGI2NjA5YThjZmUzNjkxZThhM2VmYzNkZDQzM2MxZGQ0ZDg1NWJjNWM5NTY3NzRjYTg1OWU1MmU0ZTVkZTNiOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYmRhNWRlZTI4ZTcxNDg1ODlmNzQxYzAzZGM1NTFhNWQ0NTY1ODZlYTI4NjRmMjM0NGYwOWUyNmQwMWNjYmRlYiJ9"
+        },
+        {
+          "resource": "repo://fastapi/params.py#L185-L185",
+          "version": "repo-lines-v1:sha256:0ab2e4085c910b6d103044114eab60bbdb0f13dc6d617f0351a5974588da119c:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMGFiMmU0MDg1YzkxMGI2ZDEwMzA0NDExNGVhYjYwYmJkYjBmMTNkYzZkNjE3ZjAzNTFhNTk3NDU4OGRhMTE5YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMGFiMmU0MDg1YzkxMGI2ZDEwMzA0NDExNGVhYjYwYmJkYjBmMTNkYzZkNjE3ZjAzNTFhNTk3NDU4OGRhMTE5YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODk3OTgwOTBlMTljMDgzMjUxOWZlMzE0MDdmOWRhYmRiNGVkYjljODA0YzRlZDFmNjVkNGY1YzI1NTQzODE5YiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiM2I1MTJjN2E1ODMxNzQ0ZTcwY2JkOTg2YmZkZDQ4YjU2MDY4MjM3NTQ3MzEwMTQ2OTY1MDNiZmNkMGFiYjYxMSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_d3dd767ff3804f15a1000fd34ad81db7",
+      "statement": "Path() supports title metadata and numeric constraints gt, ge, lt, le, which also work for floats in Query.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/path_params_numeric_validations/tutorial004_an_py310.py",
+          "version": "repo-file-v1:sha256:6d6f31429140269ae0b755fef34cabd58f4677e2028f457ca5e7aaf2f52b3eab"
+        },
+        {
+          "resource": "repo://docs_src/path_params_numeric_validations/tutorial005_an_py310.py",
+          "version": "repo-file-v1:sha256:0f8b3e43a7501ccec20471dca1fda33aef9564e552f29f3bbf878e0d81ad2c27"
+        },
+        {
+          "resource": "repo://docs_src/path_params_numeric_validations/tutorial006_an_py310.py",
+          "version": "repo-file-v1:sha256:9e3ae830f0157f709d969f70cb2ddbf6ba8311d84ec6852d4700afbf844f9ece"
+        }
+      ]
+    },
+    {
+      "id": "claim_2fa23c43665c4d378edb8dfe09783fc0",
+      "statement": "Path, Query and other parameter functions in fastapi.param_functions return instances of the classes in fastapi.params.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/param_functions.py",
+          "version": "repo-file-v1:sha256:1a9843553e5bb832c93bed298ef1abf16e94549b5db4ab7241d5580dd93e2657"
+        },
+        {
+          "resource": "repo://fastapi/params.py#L137-L221",
+          "version": "repo-lines-v1:sha256:867d5397ec79d0c23b6a69cb6d430c84a153610f222caecadd503b910b09c1b0:eyJzZWxlY3RlZExpbmVDb3VudCI6ODUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdkYzhlYjAyZWEyNmU1MzRhYzEwZjgwYmY3N2Y3YWZmZDQ2MjBiMmJlZjM0Y2Y5NzMyZDY5MTI5ZmY0YzlmZWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMyNWZkMjc0OWYwNjQ0ZjU3ZDg1MDRkZDJiZjNkZDBkOTMwYmMxMmYxN2FiZTM5NTg2OGU0YTkyNWMyYmFlZGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ2N2U0NTNlYTBjNDY5MWY2ZTAyNjNiYjVmMDZjOWMwODVjMDI2OWU0ZDNhMTE1YzI5N2EyMWM1ZGUxNGVkNDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFlODc4MWQzZmQxM2VlNzdkY2Y0ZmVlYzE0MGJkOTk5NmJkNTU3YzhiZGJjYTk5ZGIzZTRkMzlhNjQ1ODJjMDMifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

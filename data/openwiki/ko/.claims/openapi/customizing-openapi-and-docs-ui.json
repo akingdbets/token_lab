@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:f3c358cbc2183205e4a1d0ed8f858ce1fffbc9ad3d4b869bc48960cb0bd3363f",
+  "claims": [
+    {
+      "id": "claim_b1bf3a7cb6df41f69a23c5b7ba7f3bb3",
+      "statement": "The OpenAPI schema can be customized by writing a function that returns the cached app.openapi_schema or builds it with fastapi.openapi.utils.get_openapi(title, version, summary, description, routes=app.routes), modifies it (e.g. info x-logo), stores it, and replaces app.openapi.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/extending_openapi/tutorial001_py310.py#L1-L29",
+          "version": "repo-lines-v1:sha256:b8b36f9fac16cd73ff8ac85a18b16d2bb20ab390e72b8ec30327b03a317069fa:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NTJhNjdiNWY5MWZhYTUxN2I4M2E2Nzk4MDk5NTI5MThlNWUxZjc5YmEzMDE1OTE2MTJlYWViM2VhMTQ1YjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM0MTBkMzViZGU3Nzk0YWM2MWIyNjBjOGY1NDRhNDhmMGVlMTI1NzcyMGE1NGU5ZjdiNmRhMzRkOTJjZjRjOTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bff2ea2a79fd4d1fa3574ff9cf7c5a18",
+      "statement": "With Pydantic v2, a model with defaults can produce separate Item-Input and Item-Output schemas where defaulted fields are optional for input but required for output; separate_input_output_schemas=False yields a single schema.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/how-to/separate-openapi-schemas.md",
+          "version": "repo-file-v1:sha256:338694575651cd60aa747983d23912b5ae594004b1a819547e9faf52745ede6b"
+        },
+        {
+          "resource": "repo://docs_src/separate_openapi_schemas/tutorial002_py310.py#L1-L26",
+          "version": "repo-lines-v1:sha256:123bd064b86c9831d073b92bea6ec88adc7040b53c9672dfde58334d97dedcd4:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NTJhNjdiNWY5MWZhYTUxN2I4M2E2Nzk4MDk5NTI5MThlNWUxZjc5YmEzMDE1OTE2MTJlYWViM2VhMTQ1YjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcyOWQ0NTI5OThhZWE2YTYyY2MxMTA4ODgyNzk3Y2VmNmE1YTFiN2NlYTAzNjZlZWVmNTkxN2EzZDA3YTJjOWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8ac91d2f71124be080b6e2cb0cba0e79",
+      "statement": "swagger_ui_parameters passes a dict of Swagger UI configuration (e.g. syntaxHighlight, deepLinking) that overrides FastAPI's defaults dom_id, layout, deepLinking, showExtensions and showCommonExtensions.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/configure_swagger_ui/tutorial001_py310.py#L1-L8",
+          "version": "repo-lines-v1:sha256:9e77aeaf5062c9e15fcffeb199c590ce7043605891c3a1a67ddd5f1b1842529f:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTk1MmE2N2I1ZjkxZmFhNTE3YjgzYTY3OTgwOTk1MjkxOGU1ZTFmNzliYTMwMTU5MTYxMmVhZWIzZWExNDViMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzU3ZmM2ODQzMWMyY2E0NWJlOGQzZDQyNzQzYmNkMWU2MjAzZmI1ZTdjZDQ4MTBlMjI0YjQ2YjZjYzE0YTdjNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://docs_src/configure_swagger_ui/tutorial003_py310.py#L1-L8",
+          "version": "repo-lines-v1:sha256:7f149634133f606946ddcf76341b3bc98ebe0db56cf39e2eb3237a4893265831:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTk1MmE2N2I1ZjkxZmFhNTE3YjgzYTY3OTgwOTk1MjkxOGU1ZTFmNzliYTMwMTU5MTYxMmVhZWIzZWExNDViMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzU3ZmM2ODQzMWMyY2E0NWJlOGQzZDQyNzQzYmNkMWU2MjAzZmI1ZTdjZDQ4MTBlMjI0YjQ2YjZjYzE0YTdjNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://fastapi/openapi/docs.py#L22-L37",
+          "version": "repo-lines-v1:sha256:9836a393e0f3a05dc36860bd7ebbd4a2c16aa4193938c709ec499023433b5508:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI5MDU5NDRiZjk2OGYyNjI4MmQyNDMyODBmMmMzYWFjZWEyN2I0MjNiM2IxYjBmNzI3NDQ1NmU3NDI5Nzg4M2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUyMmZhYTUzNWJkMmVhM2Q1MmU3NDFlZDQ1NDQzNWI3ZmU0OWU4MzU4NmU5NDNkOThkODJiYmZiMjRkMWY1YzUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhiOTc0ZGE0MDg2MzJhNGFhN2UyYWU4MGI4NjAzOTFhM2RjZDgyMTFjNzllY2FkN2NhOGU5NTEyOGIwMDE4MzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVhNjBkYmFkMjI5ZTMxN2M4ZDAzZTlhYWIxMWFjNzMwNDU1YzNlMDFjMGViNTViZjQ3YmRjZDYzNzU5MjYzZDUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_53117974c55343a7aefc9a85f01ab3ad",
+      "statement": "Docs assets default to cdn.jsdelivr.net; custom CDNs or self-hosted assets are used by disabling docs_url/redoc_url and serving get_swagger_ui_html, get_swagger_ui_oauth2_redirect_html and get_redoc_html from custom path operations with swagger_js_url, swagger_css_url and redoc_js_url.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/custom_docs_ui/tutorial001_py310.py#L1-L38",
+          "version": "repo-lines-v1:sha256:327879266be130e02320b74a2107b066e20638172a044292a0aedf6deec3efea:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NTJhNjdiNWY5MWZhYTUxN2I4M2E2Nzk4MDk5NTI5MThlNWUxZjc5YmEzMDE1OTE2MTJlYWViM2VhMTQ1YjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM1N2ZjNjg0MzFjMmNhNDViZThkM2Q0Mjc0M2JjZDFlNjIwM2ZiNWU3Y2Q0ODEwZTIyNGI0NmI2Y2MxNGE3YzQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://docs_src/custom_docs_ui/tutorial002_py310.py#L1-L41",
+          "version": "repo-lines-v1:sha256:b8c21361f521903128bd9d2b38504d35e834906f17319ec89dd366e3c636ab45:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NTJhNjdiNWY5MWZhYTUxN2I4M2E2Nzk4MDk5NTI5MThlNWUxZjc5YmEzMDE1OTE2MTJlYWViM2VhMTQ1YjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM1N2ZjNjg0MzFjMmNhNDViZThkM2Q0Mjc0M2JjZDFlNjIwM2ZiNWU3Y2Q0ODEwZTIyNGI0NmI2Y2MxNGE3YzQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://fastapi/openapi/docs.py#L75-L95",
+          "version": "repo-lines-v1:sha256:7771e9cb2bb28fda1f8209948148924fb83b1489d224472f9de1a5edd8de78bb:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYwZmRhNjM4ZTY0NTg2Yjk5ZDNlYmFhMTM5MGY0NTBkMTE4MDNkZTk0NmYzZjE0ODVmMWI1ZjFiNWVhYWZhM2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVlNWMzZTE5MTc4OTliOGZiZjA3ZjhiYjlkYjY5NDk4ZmVlZTdhN2MyNGQ5NDU2MWU3ZmMxN2VkZThhZmM5OTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhhZWJhN2FkOGExYjk3YzY3ZjVlZjc2ZmU1MTA2MTIxOWM1ZjhlOWY3YmIzZGQ5NzliM2U1MzkwZWUyMDBmMjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhlNmUxNTlhYWJhZmM4N2U1MzE2MDU0OTEwMDY4MzJiMzdmMWYzYjMxZWE5Y2UwYTRmMmQ1YTgxODYwYzFiNjAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f6ad7862cb0f429b8da54a2fe3774547",
+      "statement": "The default swagger_ui_oauth2_redirect_url is /docs/oauth2-redirect.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/applications.py#L465-L477",
+          "version": "repo-lines-v1:sha256:63ef2102fee03d9ce8a282eb764d381b191f752b9c7b4a09a3f0cfde8787fb74:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNkMzA2ZGNiYjc1OGRlMjA0NTk1NzRkNWZhNWMyZjBhMmZlYTZiNDJkMjE2MWZlZTI0YWM5NGYwMjdmZGIwZDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU0Zjc3MmE3ODBjOTI3OWIwZTg4MDNhN2RhZjZlZGRkZmM0NWY0OTAzNmM0NGVkMzUyNGEwODY0ZDU0Njg2Y2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFmYTE4MmQzOWViZjkzMjMxNWZhZjI0MzRlYWRkYTU1NWIxYjkwYWJkY2Y2YmJiMWY2NTMzZmMzZmI5ZGFkMjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhkZjExZWE2Njg3Yzg0MjAzZTFjYzA5MjI5OGIxODY1MjdjZGE2YzEwZDU3MWE1Yzg3NjI5NDUwMTEwZmY3ODgifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

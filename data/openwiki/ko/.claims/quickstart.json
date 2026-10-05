@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:30277dd0083e412605f25fc03e4ce61667bddf8de30585b73d9c37b1cc327d50",
+  "claims": [
+    {
+      "id": "claim_bb4e8ee52348403e995e886d37dddcdf",
+      "statement": "FastAPI is installed with uv add \"fastapi[standard]\" (quoted for all terminals) and builds on Starlette for web parts and Pydantic for data parts.",
+      "evidence": [
+        {
+          "resource": "repo://README.md",
+          "version": "repo-file-v1:sha256:08d10450a18e62ce35a5f9ea1a80044567ff2ffb2a328b64027d95027f127dd9"
+        },
+        {
+          "resource": "repo://pyproject.toml#L1-L60",
+          "version": "repo-lines-v1:sha256:2b880048a7aa70d834f2eb279a52fc0336592a910eca1a392827786a23d07850:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5NDE1Nzk4YzNkZmJkNmFiZGYyNjE5NmIzMTczNWVkNjkzMWNlYWFiZmYyMTZjMzJlOTEzYjg5NDNjMzFlYmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEyMGI4ZDUzYWM1ZTM3NmI4YmZlNmMzZWUwOTQ4MmNkNTk1ZDlmZTkyNmRhYzk1NmQyZjEyZTBiMWYwMzUwMmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU3MzExYTM2MjU0OThiMzQxYjFhNzBjYzIyYjBjOGFmZDU5Nzg3MTdkYzYxNjAwMWE1N2NkZDAyYTRjYzA1Y2EifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f0f9e9adcb1c463da4c7946e871885db",
+      "statement": "The minimal README example declares GET / and GET /items/{item_id} with an int path parameter and optional q query parameter, runnable with fastapi dev and documented at /docs and /redoc.",
+      "evidence": [
+        {
+          "resource": "repo://README.md",
+          "version": "repo-file-v1:sha256:08d10450a18e62ce35a5f9ea1a80044567ff2ffb2a328b64027d95027f127dd9"
+        },
+        {
+          "resource": "repo://docs_src/first_steps/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:b07ced9e58a5143f0c4d8468a61418ff443874f1c0ed5311e2978959dc747f4a"
+        }
+      ]
+    },
+    {
+      "id": "claim_8a42f9c1ce4a4dae92818e36ac6c7cd5",
+      "statement": "Adding a Pydantic model parameter to a PUT path operation makes FastAPI read and validate a JSON body and update the interactive docs automatically.",
+      "evidence": [
+        {
+          "resource": "repo://README.md#L270-L310",
+          "version": "repo-lines-v1:sha256:5b1fd732421de6342e9f43032625cfeb569b74956d2d7c4c20231d1765226d22:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjYTg3ZmQzN2M1OWMzN2RiMWRlZWExMzRhYTc2NmE5ZTI1MmY2M2RiOTc2OWJmNDIyNjU3NTRkZjUwOTljOGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJjZTM1NmNlNDBmOTFkOTVhMjc5MWI1MGRhNzlkNGVhNGFlYzQwYWUwODVhMmNmOWYzNTNjZWEyMmIwN2QzMTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM0NmFjNjE3ODkzZTU2ODcwY2RlMzI1ZWNhYWY2OTdlM2IzMzU0ZmUzOTU2OGY0NzZjYmUxNGZhMGY3MTRiMWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEzMjdhYTYwOGQ4ZWVhMjJkZjQzNmU4ZGZjYjljMGU4ZDBhMGZmNTBhYzBjM2Q4MDY0OTcxNTM5NzUyYWJjNmUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

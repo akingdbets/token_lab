@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:4aa8b44e286ae8cf8bdf748e1443d91cdbc2de63573c1f6a1ab0d9342023484a",
+  "claims": [
+    {
+      "id": "claim_18b9f17393f145169aea433acbf0d74c",
+      "statement": "Strawberry integrates with FastAPI by building a strawberry.Schema, wrapping it in strawberry.fastapi.GraphQLRouter, and including it with app.include_router(graphql_app, prefix=\"/graphql\").",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/graphql_/tutorial001_py310.py#L1-L25",
+          "version": "repo-lines-v1:sha256:8d4239c7f8a3199585e7b49c8ea3ba12882f90e2af86ca8c5beebeaa4989454b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhNjAwM2Y5OGM0YjcyZGI2NDcyNWIwNWIyY2FlNmQ4MzU5YjIwNDljNmQxYzdhN2VjZGZkZDcyMTYxNDE2ZTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1NTdhODIwYjg2MTU3ODIzYTI5NTdkNmRiOWE4OTc2NmI5OTk0OWRkZWY1YzEzZWU5YzU5MTE3YjdhZWE1NjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_776ef4b98e164d489de0a0906f085ba5",
+      "statement": "FastAPI provides OpenTelemetry traces, metrics and logs for HTTP requests (and traces/logs for WebSockets) by default with no custom code, exporting via OTLP when OTEL_EXPORTER_OTLP_ENDPOINT is set.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/opentelemetry.md",
+          "version": "repo-file-v1:sha256:f062145395cd6b61eed1d7e517f836e194b1c20c85fd4c6b5d13a8c9645726cc"
+        },
+        {
+          "resource": "repo://docs_src/opentelemetry/tutorial001_py310.py#L1-L8",
+          "version": "repo-lines-v1:sha256:26e7a8c74692fc37e2269615103ea2a20edc26e645238cffc52e51a931855f2f:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTk1MmE2N2I1ZjkxZmFhNTE3YjgzYTY3OTgwOTk1MjkxOGU1ZTFmNzliYTMwMTU5MTYxMmVhZWIzZWExNDViMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjU4NTc2MjNlN2ViZjY1MzI4MmZiMjI2ZGQ3NzlhYzY0ZjY2OTFhODRlYjczMTE5ZmVmZjY1YWYxYzEyM2U5MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_1d6d19e7a6f14c37b5e3b2e017dd34cd",
+      "statement": "FastAPI(telemetry={...}) accepts TelemetryConfig keys tracer_provider, meter_provider, logger_provider, tracing, metrics, logs, operation_spans, auto_configure and exclude; providers supplied by the application are never shut down by FastAPI.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/telemetry/_api.py#L35-L82",
+          "version": "repo-lines-v1:sha256:d3152042d58b8095dbe9cff11737a82a65ac4f2b5f1be34323fc0c4f6ef6c0af:eyJzZWxlY3RlZExpbmVDb3VudCI6NDgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4MGIxYTI3MDgxYTZkNTQ2YzI1Yjk0MDk5ZTI5ZmZjM2YwY2M2MDA0ZGYxYjY4MTNkNzcwZTcxZDk1YTM3ZTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhlNmNkMjRmMmVjMWVmNGJkMzhiYzBkZjAxYjhkNThjMjE2ZGI2MDYzOTlhZTNkMGJhNDQ4NDkzNGQ0MTE2YzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA4MWZmNGI0ZGUyMDMxNjdjYWI2MDkwOTM1OWQ1MzJjNGE0M2U5Zjc1ZjljYjc4ZDQ2NTQwZGNmYjVhNmQ4ZTcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_61c98b54ba904c988935f5b8dc881621",
+      "statement": "A custom TracerProvider with a BatchSpanProcessor(ConsoleSpanExporter()) can be passed via telemetry={\"tracer_provider\": ...}.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/opentelemetry/tutorial002_py310.py#L1-L13",
+          "version": "repo-lines-v1:sha256:b18098aa2b87433164d0af9db5df2a43e3b96dd1f519efc186eed3f0f3e3852f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NTJhNjdiNWY5MWZhYTUxN2I4M2E2Nzk4MDk5NTI5MThlNWUxZjc5YmEzMDE1OTE2MTJlYWViM2VhMTQ1YjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY1ODU3NjIzZTdlYmY2NTMyODJmYjIyNmRkNzc5YWM2NGY2NjkxYTg0ZWI3MzExOWZlZmY2NWFmMWMxMjNlOTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b69f254ced4e47abbe1f0aabe6b3ca9d",
+      "statement": "operation_spans=False limits tracing to the HTTP request span, dropping spans for dependency resolution, endpoint execution, serialization and background tasks.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/opentelemetry/tutorial003_py310.py#L1-L8",
+          "version": "repo-lines-v1:sha256:966ed1615816d22ad6f552bff7a4c1606ec2908cbf1c0d3ed91d8c4c5bab638b:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTk1MmE2N2I1ZjkxZmFhNTE3YjgzYTY3OTgwOTk1MjkxOGU1ZTFmNzliYTMwMTU5MTYxMmVhZWIzZWExNDViMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjU4NTc2MjNlN2ViZjY1MzI4MmZiMjI2ZGQ3NzlhYzY0ZjY2OTFhODRlYjczMTE5ZmVmZjY1YWYxYzEyM2U5MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://fastapi/telemetry/_api.py#L66-L71",
+          "version": "repo-lines-v1:sha256:0b1d433d4d911c0cbbab7ab1b426ba9334290a6d2b483032d5d3a6e32a848961:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMGMxZmIxMzgyNWFmMTkxNGJiMTkzYzVlZTE0YWVhZTBiNzdkZmVkYzUyMzY4NTI5Njk4OGIyMDIzNmFlNzNiYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzI5ZDQ1Mjk5OGFlYTZhNjJjYzExMDg4ODI3OTdjZWY2YTVhMWI3Y2VhMDM2NmVlZWY1OTE3YTNkMDdhMmM5ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNGU5N2M5NTk5M2ZlMTRhYjQ1YTNhM2M3NjdlMTM5MzZmNTBlMTJkYmM3MjZiNjE5NDM4M2FkODQ4YjJiMmJhNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzEyZTc4NTBiNTJiMTMwZGIwNjJlZTdmNmE2ZjUxNWQzMTA3ZWRkOTU4MmU2ZDBiYjEwMmFmYmFjMTYyZDE1MiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_2f59093d417144619676d2eb3a2cda96",
+      "statement": "get_telemetry_data reads request-local TelemetryData (request, websocket, body, values, errors) from an OpenTelemetry context and returns None after the request finishes; the data is not automatically exported.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/telemetry/_api.py#L85-L144",
+          "version": "repo-lines-v1:sha256:044dfc61fd2b6f1b8b79032bddb3660c528d0d8c7baa4a3ee77db3f484512937:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlMWM3ZmZhZWIzMGZmY2Y3MDYxMDVkY2Q1ODg2ODA5ZDZmM2JiYTQwZmEzY2JkMDhmNmIxYTIzMzgzNzNmZTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkyODczNjE0MjQ0MzUxNzE0ZTA4OTY1NmVhMmUzMDY0ZTNiMDQ1ODBiNmYwN2E2ODM0MmFjZmJkYWNmZDhkNjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhlZGQ3YmM5ZTA4NTY5NTQyZGFhOWVlYjRjYWVmZWU5YjhlZTEzMmUxZjRmYjRkZmJkMDQ0NDFjNWMwMTY2OGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFkOWE4ZmY1MWIxOTkwOWViMzAwYjM4MmJhYzg4NzNmNzUwYjJkZDQ2YmNkNjI2OWY4NTU1MGFlNTk0NTg0ZTIifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

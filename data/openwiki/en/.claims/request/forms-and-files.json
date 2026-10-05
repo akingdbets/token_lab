@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:f7050ccabad7867c1ef430ffc905f6696216a939bd9c4029da245337ba131a33",
+  "claims": [
+    {
+      "id": "claim_a81932dfa66044d1ba9d928e7f536c79",
+      "statement": "Form fields are declared with Annotated[str, Form()], otherwise they would be treated as query parameters.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/request-forms.md",
+          "version": "repo-file-v1:sha256:552758251ec27e721b62069ea421f300ab6682ba5c121529718c1479d971069c"
+        },
+        {
+          "resource": "repo://docs_src/request_forms/tutorial001_an_py310.py",
+          "version": "repo-file-v1:sha256:29ae76aa0bc421770aa09dfe341ba7d60da11a58cc1290217724d9b09b5b41c8"
+        }
+      ]
+    },
+    {
+      "id": "claim_62b9ce50582b4366b803c0e0877b2f7b",
+      "statement": "Using form or file parameters requires python-multipart; FastAPI raises a RuntimeError if it is missing or if the wrong multipart package is installed.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L103-L130",
+          "version": "repo-lines-v1:sha256:5baaf488fbd860ac87932b37a0f8a0f38e2bb17079b6a872fc03de9b3b5de679:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM2Yjk3MDI5ZmM0ODZlNDNmNzYzZTQzNmU2MzY0NTY0NGI5YjBkMzcxZTZlM2M3NWFhNTJiNjE0MzM4NzViOWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhlNmNkMjRmMmVjMWVmNGJkMzhiYzBkZjAxYjhkNThjMjE2ZGI2MDYzOTlhZTNkMGJhNDQ4NDkzNGQ0MTE2YzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdjYzQwZGUyMGMyMzY1MTVjZWJmYTRiZjIyMGIzNWI5NzE1ODk0YmQxYjNlZWI0YTA3MDgyNDgyODAyODFjNGEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_383e681d7ea84579969d170f4dab20de",
+      "statement": "Files can be received as bytes with File() (stored fully in memory) or as UploadFile (a spooled file) exposing filename, content_type, size, headers and async read/write/seek/close.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/request-files.md",
+          "version": "repo-file-v1:sha256:e01de51522295553df574201c68f55c571f5df03fd4b36d83d1f3b13cab56aa8"
+        },
+        {
+          "resource": "repo://docs_src/request_files/tutorial001_an_py310.py",
+          "version": "repo-file-v1:sha256:664b36d714e5096312b4b9a3c1ffcbe7420cde9d99634c245c2185217c64bce0"
+        },
+        {
+          "resource": "repo://fastapi/datastructures.py#L21-L130",
+          "version": "repo-lines-v1:sha256:eecec7ee3c16c8509af8ba346355f33cfa5e16b4f51ebeba0cf26d7866bbe41d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEwLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI0MjY0OTliNWEzYzdjZmUxOTQyYTk0OTM5MmY4MWUwMGNiNGRlNGExZWFlYzEyYmU1YjFjMGY2YjQ3MzlmM2UzIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI1ZTQ1OTIxNmY4ZDVjMmVlMjRlNTRiMTgxOTU4MjkyMzdmNjEwNzM0OGNhOGRmMjQ4Yzg3NDNkY2MzOWEzZmI4IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIwZmJhMzg2YjgyYTc4MTk4ZWU3ZmNkM2NiZjczZmU0NjIzNTIzMjQ4YzE0NmQzNWM5MWQ5ZTU5MjE5ZWY1MzNhIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI0Njk2ZjUwZjExZGY1M2Q2NTc4MWQ3ZTE3MmM0ZDM3OTM1MTZkYzEyZmY4MGFhMDNhZDg0NDkwOTgwNTliMjk4In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_967ea30ce284404aad3e59c9913ff54e",
+      "statement": "Multiple files are declared as list[bytes] with File() or list[UploadFile], and files can be optional with a None default.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/request_files/tutorial001_02_an_py310.py",
+          "version": "repo-file-v1:sha256:846ae4e1352ec682ebf3c3fde5fd69847f211d554204f90977c557c84dca20e7"
+        },
+        {
+          "resource": "repo://docs_src/request_files/tutorial002_an_py310.py",
+          "version": "repo-file-v1:sha256:d81cba4a906b7c9a6a275d0ac1978ce6ed6bb6888d5b0d2df967bda4df74b95c"
+        }
+      ]
+    },
+    {
+      "id": "claim_a781653b246c45e5a1deeeb68864726c",
+      "statement": "File and Form parameters can be combined, but not with JSON Body parameters because the request uses multipart/form-data.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/request-files.md",
+          "version": "repo-file-v1:sha256:e01de51522295553df574201c68f55c571f5df03fd4b36d83d1f3b13cab56aa8"
+        },
+        {
+          "resource": "repo://docs_src/request_forms_and_files/tutorial001_an_py310.py",
+          "version": "repo-file-v1:sha256:34334dcc14b6dd520e2e9e7b2b858c8a12ee87d5c4e7293ef6cbdb7223899613"
+        }
+      ]
+    },
+    {
+      "id": "claim_cf28e8a1e99d4186b6fb3de2c8b7c3ae",
+      "statement": "A Pydantic model can be declared as Annotated[FormData, Form()] to group form fields, and model_config extra='forbid' rejects unexpected fields.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/request_form_models/tutorial001_an_py310.py",
+          "version": "repo-file-v1:sha256:cadd1e5bb2060735c3a0e0fe308154cbcb0e7e2a482421c8af374b2007353d51"
+        },
+        {
+          "resource": "repo://docs_src/request_form_models/tutorial002_an_py310.py",
+          "version": "repo-file-v1:sha256:d26b56d2f9b18235329ab4d19fb44db690323f0eb03f29624b49734b75747a47"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

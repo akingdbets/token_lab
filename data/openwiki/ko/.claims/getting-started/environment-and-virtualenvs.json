@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:3a17b1bba296cf3f0764b72d13fb649b2fb088688082115911889906407da4ce",
+  "claims": [
+    {
+      "id": "claim_d7a62c42f04b44898bb3d1365eb290e6",
+      "statement": "The docs recommend uv: uv init, uv add \"fastapi[standard]\" creates the project virtual environment automatically, and commands run inside it with uv run.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/virtual-environments.md#L1-L35",
+          "version": "repo-lines-v1:sha256:7968b621874f11b55a957bed86ee7587a90a45fa3df3039ec47d8f47a1417d5c:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0ZWQ3M2UyMTQwMDMzMGNmNDJkYzAwMzU0NTgxYjU0Nzc0MjBmZmNjMmE1YmFkNDMyZDgyNjViMmEzODFiN2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxMGNjZTkwZmQwNmI2OTQzNTkyMGI5N2I0YmY2NmFmMDgxOTFhY2EwZDJlMTQ5ZjZlNGMwMmM0OWI2ZmI4YWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_980342d6bb6e42f893814a57370075d4",
+      "statement": "The standard extra installs fastapi-cli, uvicorn[standard], httpx, jinja2, python-multipart, email-validator, pydantic-settings, pydantic-extra-types and OpenTelemetry SDK/exporter; all additionally adds itsdangerous and pyyaml; standard-no-fastapi-cloud-cli omits the cloud CLI.",
+      "evidence": [
+        {
+          "resource": "repo://pyproject.toml#L60-L128",
+          "version": "repo-lines-v1:sha256:3a05561904734fda3ed9ab338d39aa2c5a99b3ecf5648aea80db2332b579afc6:eyJzZWxlY3RlZExpbmVDb3VudCI6NjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEyMGI4ZDUzYWM1ZTM3NmI4YmZlNmMzZWUwOTQ4MmNkNTk1ZDlmZTkyNmRhYzk1NmQyZjEyZTBiMWYwMzUwMmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZkM2I2YzViOTQ0MjJhN2MwNGYwMDkzMzgxYmY4ZDE3MDdlNmVjY2E2Zjc4NzMyMWE2Nzk0ZWEzZGYxNjQ1MmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVjYjNiNzgxM2NiZTczYzM4OGYxZTE2MGMzMGZiZmNjMzljN2Y0NDQ1YmVhODAyNGQ0NmJlZTk5NDNkZGIyZjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVmYzA0ZWEzNmM1M2MyOWQzNzc4ZGRhMTg4OThhZjU3ZDYyMGVjMmQ1MzQ2YTMzZDZjMmRmN2JhMmViNWM4YjQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_85f68d2ffabb4fe4ac3d7a672e2cd99e",
+      "statement": "The fastapi console script entry point is fastapi.cli:main.",
+      "evidence": [
+        {
+          "resource": "repo://pyproject.toml#L130-L131",
+          "version": "repo-lines-v1:sha256:7f81512b34f005506b2e731cf3ed7f27d30502ceda1ea8904c2f04a46d7e8b15:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTZmYmJhODg1ODY1NzVkMzYwNmNhMDIzZWZmYTU5MTk5OTBkMzJiYjQ1Njg4N2IzMGU0NjcyMzgzNjM1NmMyMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjY4ZDJjMWY4ZjU2YzZlZTg3N2ZkZWIwYmMyOWY4NWU1NjFhODBmODgzOTdlMWUwM2EyN2IzMThmYjM2MzhlYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTE0NzJkZjJlNDRmZTUzMDdiMmRmY2E1ZjMxNDM3NzYxMTFjNDBkMDY2YzM2YjU3ZmQxMjRkMDA3MTk3N2RjZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZmVlNjg1ODdiNTY4NGFjNzJhNDQyZmRhZTY2MDRjOWY5MmFhMDg1MTJhOTFmYWI5MTcwMDJkNTc2NzIxYjhmYyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_03282dd99c1d42e6b36d7b9319d22a37",
+      "statement": "Environment variables live outside Python code in the OS and are commonly used for FastAPI configuration such as database URLs and secret keys.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/environment-variables.md#L1-L11",
+          "version": "repo-lines-v1:sha256:c1a4034139fe81354c5f5a11c7bad75bf8a0ae2fec82a318fbcccf9c3d330430:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4MjFlZTY5Mzg3NTIyYzk4YTkwYzY3NWU0OTk2NGM0MTI2ZmFmMGVhZmNlNzU2NTY1ODcxMDhlNzkyNzExNDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFkZWNkODI5YTgzODc2ODY2Zjk1Y2E0YWEwODc3MjM3ZTQ5NDA0ZDkxZDMzYmU5ODg0ZWFhOGE3NDdiZGU2OWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

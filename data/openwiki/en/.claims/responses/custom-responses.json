@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:00af3b3b275cb56bb9379fecb1d782b1b5e9d1724bafcd00728dde2bff21643d",
+  "claims": [
+    {
+      "id": "claim_a1c7fe1976df44da948aa89bede7ec6e",
+      "statement": "fastapi.responses re-exports Starlette's Response, JSONResponse, HTMLResponse, PlainTextResponse, RedirectResponse, StreamingResponse and FileResponse, plus FastAPI's EventSourceResponse.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/responses.py#L1-L15",
+          "version": "repo-lines-v1:sha256:b2724eeac22e36bcc3afb6bb132bd771a73e58bc86a8e3052cc1044c4a5aa9e2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVlZTMyMzc3NjdhOTRlMWVmNDBiNDYxZTUwYWY3MWEwMWI1ZGQyMWQ5NGVkNmM1MDA2ZDI2YjQwODc4ZThhMTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc0M2YwMWIzOTFmNjdlOWM4ODQzMzhlYjVhOTQwMjg5ZmVhYzc1YWFjNDQyYjA1NDcyN2E2M2JiMWU2MWM1MGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3c52baf44a284c4083e67be9e61e4968",
+      "statement": "A returned Response instance is sent as-is without conversion, so content must already be serializable, e.g. via jsonable_encoder.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/response_directly/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:c5ba30b57409b5a3ce123ce94bf4ced559cc8ae23c841ac66d48b95ebb87185d"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L727-L735",
+          "version": "repo-lines-v1:sha256:13f5f592fa745d7a302e3ed763264a417d0edfe65547d4911cfebd014b098d88:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjFkNWFhZDA3YzFjZTUzM2U4M2MwZmUxM2RmODg2ZWE2OGQ2YTFmNWExMGM2YWE2MGYzNzI5Y2QwNjExNjgxNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTEzYTAwNjg1YzliZTM4YjFiMjAwYjE4YzY1YjAwM2U4MTYxZjBjODdkYmFhN2JkZTE1OGE1ZDdkZGYyYWE3MiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWU3NDRlYzY5M2E4OTQxZGUzY2E5MDQ4NjZiOTc3OTg0ZmMxYWU0NzEyZjIyOWJlNjBlYWQyNGE0ZmY2MzkzNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTAzNDNlZWRiYTFmM2FiMmE2Nzg4YzI0ZGJhNmEwY2I4MmQ0NGQ2NzUwZDA0NzE5OTFjZWM2ZTk0YTM3NDliNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_b115da80e3bf4135a7b2b69f75a999b1",
+      "statement": "response_class sets the response class used and documented for a path operation; with RedirectResponse or FileResponse as response_class the endpoint can return just a URL or path.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/custom_response/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:69afb75cfc83fddda8556e261f810c84f05783d3e81164b78b9460676befbe46"
+        },
+        {
+          "resource": "repo://docs_src/custom_response/tutorial006b_py310.py",
+          "version": "repo-file-v1:sha256:0f53d288c51c6ef8d8d54401a14915c1db353a0b3a81929a98b151f174cc2a88"
+        },
+        {
+          "resource": "repo://docs_src/custom_response/tutorial009b_py310.py",
+          "version": "repo-file-v1:sha256:093e91ee7cdc411402bdbbed9b300253fb9ee853cae4c3dff84879f5de745116"
+        }
+      ]
+    },
+    {
+      "id": "claim_a59e23723a08403c86f016a271387c00",
+      "statement": "default_response_class on FastAPI sets the response class for all path operations.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/custom_response/tutorial010_py310.py",
+          "version": "repo-file-v1:sha256:1a9e3857b2e55ab19abccaf35f9a3532a933945db3b436058835328ff13dcf62"
+        }
+      ]
+    },
+    {
+      "id": "claim_7b9d591ad81a45febb8d40fcb2ccb414",
+      "statement": "Custom response classes subclass Response and implement render(content) returning bytes.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/custom_response/tutorial009c_py310.py",
+          "version": "repo-file-v1:sha256:54478beefaca88b134e864f17c15d38a00b9a17b96209b8e37be34d7794bc004"
+        }
+      ]
+    },
+    {
+      "id": "claim_99cb36fc72014fb3b22d692d5c138ce5",
+      "statement": "ORJSONResponse and UJSONResponse are deprecated with FastAPIDeprecationWarning because FastAPI serializes directly to JSON bytes via Pydantic when a response model is set.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/custom-response.md",
+          "version": "repo-file-v1:sha256:90a94828ff0f2d0970069b9138c079adc6c9b7c0a5155ed27cc2f4117284ae98"
+        },
+        {
+          "resource": "repo://fastapi/responses.py",
+          "version": "repo-file-v1:sha256:8cdb3ff6551a296748636e55ab0aee2b62c8dce9363dd49fdf68d63072801bae"
+        }
+      ]
+    },
+    {
+      "id": "claim_713520489a1c4315b85f40647b74f063",
+      "statement": "With an explicit JSON response_class, response-model-filtered data is converted with jsonable_encoder and serialized by that class instead of Pydantic's direct JSON serialization.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/custom-response.md",
+          "version": "repo-file-v1:sha256:90a94828ff0f2d0970069b9138c079adc6c9b7c0a5155ed27cc2f4117284ae98"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L739-L768",
+          "version": "repo-lines-v1:sha256:97b8938925afd9c4f58c6ac95d063eb631503d910ddcf3cea6353ff1a8a27f2f:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMyMTdlMWM4Y2VkNjE2MDNmYjA5YmFkYzcyNjMzZWQxMzVmNWE4YzllOTE4MDc5YzYzM2Y4MjY1NTc1MWVjMjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZkNzVhYWNmYTExMWUzMTNhM2I1NjRjNDExNDY3Yzc4ZDViZjViNzZkNDI1NzI3MDk3ZTFhZTI1MGNkMzExMTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEwMzQzZWVkYmExZjNhYjJhNjc4OGMyNGRiYTZhMGNiODJkNDRkNjc1MGQwNDcxOTkxY2VjNmU5NGEzNzQ5YjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNmZmUyOGQ3ODk3YzMwMzZlMzJiMjhlMzRmMDQ3ZTFmM2Y1YmYwNGU2ZjU0MjI4ZmE1NGM5NzU5YjI5NTI1YTEifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:d46f5868db2db77cd9acb4fdebde2391741ba4d86793d30053e87c00a1300d74",
+  "claims": [
+    {
+      "id": "claim_cddb7a520f3a4d9e8f8733e2337dc5be",
+      "statement": "The FastAPI class directly subclasses Starlette, so Starlette functionality and code work with FastAPI applications.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/features.md#L160-L176",
+          "version": "repo-lines-v1:sha256:77648900aeac446ffb5854661e37ec4ff53a34ddacaa0671bc71268129ca64f9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlkMzA2NmFmNTNkNWRjZTY4MGZhMzFlMjVkYmYxMDk4NDZlNGUwODc0NjI1N2QyNGMwMDAxZTk1YTA1ZmRkMTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMwNmU0NGY2YzI3Y2Y1ZGNhYWZiYWE5OWQ4ZGM4YWQ4ZmY5YTE1YjA2NTE4NTcyMGIwNGY4ZDA4NmEwNTAwMjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA3NGFhNmExY2RhYTFkZmY1YmNiNjk3NDRhMzA4MmRlNDZmOGVlNjNjYTA4OGI1M2FhYWFhZmZjOGE1NDdjNjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgzOGQ3ZTczNGUzMDQyZGYyNjg2YjMxZGQzM2EwZGEyNTViMmUzYmZiZGQ5ZGRhYzNmYzcxZjMxMjA3OWUyNDIifQ"
+        },
+        {
+          "resource": "repo://fastapi/applications.py#L48-L48",
+          "version": "repo-lines-v1:sha256:4cc9c7fdee5b57804862935c3e016a936c8570dc8ac743acf53fc0c9bc9b2902:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGNjOWM3ZmRlZTViNTc4MDQ4NjI5MzVjM2UwMTZhOTM2Yzg1NzBkYzhhYzc0M2FjZjUzZmMwYzliYzliMjkwMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNGNjOWM3ZmRlZTViNTc4MDQ4NjI5MzVjM2UwMTZhOTM2Yzg1NzBkYzhhYzc0M2FjZjUzZmMwYzliYzliMjkwMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjc3ZTU1NzQyNGU3ZDYxNWYyMTM0ZDA1MDQxZTkxODcxMGRhYTVlM2YzYTJhMWRmMmVhYjQ3ODk5ODc4NzE1MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNmYWExMWM3OTE5NTlhZGRiZDM4NGRjNmY4N2FjZWQ5MjU3YTE2YzIzNGQxMDA3MmExYTQyMzRjYjI4M2M1NiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_2b15c078b1434260b982027a818a147d",
+      "statement": "FastAPI requires Python 3.10+ and declares starlette>=0.46.0 and pydantic>=2.9.0 among its runtime dependencies.",
+      "evidence": [
+        {
+          "resource": "repo://pyproject.toml#L1-L60",
+          "version": "repo-lines-v1:sha256:2b880048a7aa70d834f2eb279a52fc0336592a910eca1a392827786a23d07850:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5NDE1Nzk4YzNkZmJkNmFiZGYyNjE5NmIzMTczNWVkNjkzMWNlYWFiZmYyMTZjMzJlOTEzYjg5NDNjMzFlYmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEyMGI4ZDUzYWM1ZTM3NmI4YmZlNmMzZWUwOTQ4MmNkNTk1ZDlmZTkyNmRhYzk1NmQyZjEyZTBiMWYwMzUwMmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU3MzExYTM2MjU0OThiMzQxYjFhNzBjYzIyYjBjOGFmZDU5Nzg3MTdkYzYxNjAwMWE1N2NkZDAyYTRjYzA1Y2EifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7d000a9daf1a425eb7c9ff23e7cbe6e6",
+      "statement": "Benchmarks should compare tools within the same layer: Uvicorn (ASGI server) < Starlette (web microframework) < FastAPI (API framework), and FastAPI cannot be faster than Starlette; automatic docs are generated at startup and add no request overhead.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/benchmarks.md#L1-L34",
+          "version": "repo-lines-v1:sha256:e205c1289e0403306be986da8e8e41c0ca0f19e8bd6fe81514730860bbe4c344:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI5NzcyMzBjYzVlZDkzYWU2NTk0NTg3NDM5OGI2NDEyOTc3NDJmZmNmZTA2YTZlZjI2NTk1YzJkZGQ2ODQ1ODgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhMDIwNjUyZGQ1MWFmMWVlZjhjMzU5NTI0YjRjZmExMmE2N2NhNDVhZDUxZTU5MDdjNjcwN2QxNjNkMmE0YzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3df38f43253c4ea08aef3611997889c7",
+      "statement": "The Full Stack FastAPI Template bundles FastAPI with SQLModel, PostgreSQL, a React/TypeScript frontend, Docker Compose, Traefik, JWT authentication and Pytest tests.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/project-generation.md#L1-L28",
+          "version": "repo-lines-v1:sha256:59439ea6be63c71c5214506a6186f74768286114efb6ae7c21b470c6d127c5c2:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA1ZDI5NDFhMjM4YzA3ZGE3ZTYxNGFmMmZmYTg5ZmI4OWJhNjBlYWI3ODY5YTk5M2JhNTQ2NWFhZTcxOGI2MmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjYWYwZjg1OTZiNWQ0NDY4YTU2NTc0NDEzNmQ1MmU2ODBmZTIyODYwNTJlNTk5MGI1ZjdiZmEwYmEyYmI1YTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3b088f7c13fa40c39b67c35abc08b6be",
+      "statement": "The FastAPI editor extension auto-discovers apps by scanning for FastAPI() instantiation and accepts an explicit entrypoint via [tool.fastapi] in pyproject.toml or the fastapi.entryPoint setting.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/editor-support.md#L1-L23",
+          "version": "repo-lines-v1:sha256:f9795222024facd886e56bfd942308d0112629e8e9f7940075c7b897c2998882:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZlZjc2N2UwMzQ3MTg4MDBlY2I0Y2ZhMDIxZGUyNzY4ZTdiNDY1YjU2N2M1YWQ2NzE4ZGY2ZmI1M2I3MDAyNDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg4YjU3Yjk4OGExZmU1MTAzYjEyYzQwNGVmM2NmOWExN2ExZmNmYjc4ZDM4MTM4ODg2MGUzNDRmMDNjOWQzZmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

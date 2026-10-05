@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:bec77f406701a37f014c875a75dae6f0a1e1b60689d25d98af41603b3495b09d",
+  "claims": [
+    {
+      "id": "claim_c6746d019ff94f64aae938de3ff965a8",
+      "statement": "Request and response models declared on path operations appear in the OpenAPI schema, which SDK generators such as Hey API (npx @hey-api/openapi-ts -i http://localhost:8000/openapi.json -o src/client) use to generate typed clients; tools must support OpenAPI 3.1.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/generate-clients.md",
+          "version": "repo-file-v1:sha256:febae93ca763a6f79738aca7244fd1e021ca73ffb75fa991a348e016065ab40d"
+        },
+        {
+          "resource": "repo://docs_src/generate_clients/tutorial001_py310.py#L1-L26",
+          "version": "repo-lines-v1:sha256:727236fbfee7816f97f10c7398ebd20049b69033241d9695cbc7586282c0119c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NTJhNjdiNWY5MWZhYTUxN2I4M2E2Nzk4MDk5NTI5MThlNWUxZjc5YmEzMDE1OTE2MTJlYWViM2VhMTQ1YjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcyOWQ0NTI5OThhZWE2YTYyY2MxMTA4ODgyNzk3Y2VmNmE1YTFiN2NlYTAzNjZlZWVmNTkxN2EzZDA3YTJjOWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5266ee2b979e419bbbc95e71d2ba6598",
+      "statement": "Tags on path operations typically make generators split clients into per-tag services such as ItemsService and UsersService.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/generate-clients.md",
+          "version": "repo-file-v1:sha256:febae93ca763a6f79738aca7244fd1e021ca73ffb75fa991a348e016065ab40d"
+        },
+        {
+          "resource": "repo://docs_src/generate_clients/tutorial002_py310.py#L21-L36",
+          "version": "repo-lines-v1:sha256:170c575b1339365c71c31b81b16cbfa929a8f14160d715ea28f22ee0d09372ae:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY0ZTg0ZjVkMGE4OGRhYjk5MjMxNTRlZTI3NGI4NmM0MmVmN2Q0YzBlNTFhYzVlZGI4MmExYjA2OTg3MzJmYWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBmMzk1YzQ0MzA2Y2M3YmUwNTg2NGQ1OThlMTUyNjY2MmFhNDEzNzhmMjNlOTFiMjJmNWNjMjU0Yzk0M2MxMjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ2NTU2Mjg3MDk4NTg5NTY5MGQ0N2U5NWMxNzM1MjI5MTZmMTU2YjdmOGY1MDQxZWVjOGY3MmRmMzZlZTFiNWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_530f4476e9994a59ba43046da263f36f",
+      "statement": "Default operation IDs combine function name, path and HTTP method, producing client method names like createItemItemsPost.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/generate-clients.md",
+          "version": "repo-file-v1:sha256:febae93ca763a6f79738aca7244fd1e021ca73ffb75fa991a348e016065ab40d"
+        },
+        {
+          "resource": "repo://fastapi/utils.py#L95-L100",
+          "version": "repo-lines-v1:sha256:cbf3086bd0f75876a831db96144b85c6d61d309f62fa09eaa4b5045d6f8af45d:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmFkNDdjNmQyN2VlMzFmY2FmNDAwOTkwYzNiODQzNTRkOGRjZDFmZDI3ODBlYjZiZWYzNmI5ODRkNDZmYzY1OSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWE0ZTdkNjZkZTI3Y2UxZDM3YTY2ZWYxNmQzZTM4MDAwZmExMzQyZmQ2MzE1Nzk2MTE3MzM1ZWQyNmMyMDA4NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODRhYTc0MGIxYWRmM2FlOTYzNDMyYWVjNzAwNjg0ZTY2N2FlYWY1NWQ3YzNiODIyMTdkOGI5NWYxNzk1Yzc0ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiY2RmZTJiZTIxOTRkN2I0YjA4YmE5YzNmMWU1MjhmOWUzM2QxNzAxMjQ1OTNlYTIyYmI1NDBhYjE5YjA5ZjdkMCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_95471cfe1bc44d0695a98df0695b047c",
+      "statement": "A custom generate_unique_id_function such as f\"{route.tags[0]}-{route.name}\" passed to FastAPI yields cleaner operation IDs, which are also used for generated model names.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/generate_clients/tutorial003_py310.py#L1-L10",
+          "version": "repo-lines-v1:sha256:23c29e6302113008fce0d05c155ad0bab34db490c3caaa9a21766dd38a1b7596:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NTJhNjdiNWY5MWZhYTUxN2I4M2E2Nzk4MDk5NTI5MThlNWUxZjc5YmEzMDE1OTE2MTJlYWViM2VhMTQ1YjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2NGM4OTk3NWQ1ZDQ2NDI1NWEzMzVlNTJlMzcxYmQzYWU1N2IyZmE0NDZhZmQ1MDZlMTFkM2MxM2I3NDVkM2YiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFmYjAwNDM2YWJhODQxZDVmMjVhZjA4ODA3ZmE2YWUwOTgzZDcyZjYwODgyZTE2YjM0YTdlYzhkYzE2ODdmODIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7a6f15a0cdcf434199afcccd67b03676",
+      "statement": "A preprocessing script can strip the tag prefix from operationIds in a downloaded openapi.json before client generation.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/generate_clients/tutorial004.js#L1-L36",
+          "version": "repo-lines-v1:sha256:42897f2bf26ce044f61347561f6dbac3850360d566a85a4867a21175e1c12696:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgzZTkzMzBiNzJkOGQ0NzY2NDg1OWMwMmU4N2IzOWExNGVmZjFmZDhkODdiN2ZjYWQ3M2M0NTUxOWQzODIzZGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhiMWZkMjkwNTk5MmM5NDIyNmYwYWQ5N2Q0ZmZlYzYyZmY2NjAyMGY4M2ExYmY0NWRiODZhNGE5NDg0ZGNlYWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://docs_src/generate_clients/tutorial004_py310.py#L1-L15",
+          "version": "repo-lines-v1:sha256:e400486a938dda51a12fa8769f6ac8680443704a5dee9b3155777ba77e384fd9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ5MGJiMzkzZDVhZjk3ODY2Njk4Y2JlZTljMDZkMzZmYWVlNjUyMjJlODUwYzdkYTFhYzk1ZmM2ZGZjNjNiOTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhNTg0M2IwNWQ1YWU1MzZiMWIzYTg5MGQ3ZWNlOTZhY2I1ZGE5MWUyZTc4ZDU4YjdlODk2NjQwN2I0ZGUzYzkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

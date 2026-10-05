@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:ccb0a3b0d2bcd935fa49ab55852472bc1025d1841033964daa7465feef108f6e",
+  "claims": [
+    {
+      "id": "claim_13a58f09d8cb42878693e8886f065b9e",
+      "statement": "WebSocket endpoints are declared with @app.websocket(path) taking a WebSocket parameter, calling await websocket.accept() and then exchanging messages with receive_text/send_text.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/websockets_/tutorial001_py310.py#L41-L51",
+          "version": "repo-lines-v1:sha256:450b186230bb38d7451724765007602cc0fcd848d488d4554059cae7672b9b75:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNlNGVjZWM5ZGJhZmQyM2ViOTQ0YWJlNjM4NDNiOGI4ZmZiM2I5NmMzM2M4ZTEyMzZmOWRhMDI2YzAxNjdjYTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBmYjNiYTQ0NTYzMmQzNGZlNmU5Yzk3ZTI3MzllYmE1N2Y1MjVlNGQ5NDI4NWJhMDI3ZDQyYjBiOTc5MWIxNGIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ0ODQxOWZjM2NjOTFhY2IwYTFhYjA1MTIyMDk5OWZkOWQ4MjdjYzA1YTA0Mzg1Nzc5NmYyZWJkMDY5NzA0NmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_697bb2d3f2d346a191d564b0f29d652d",
+      "statement": "fastapi.websockets re-exports Starlette's WebSocket, WebSocketDisconnect and WebSocketState.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/websockets.py#L1-L3",
+          "version": "repo-lines-v1:sha256:2a492f8afd353cfc6b8a8f498ae7a835d8dd8b4bf66ef27bed795e80c92ad466:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmQ5Y2RkZmJlODliMmQ3ZjA3ZDEzNWI2ZWNiMzAzY2QxNDhhM2U3MTEzZjA3MjIwYWNmNmZkYWVjYjk0MmY4ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjYzZTEwNTNjMGVkYjMzM2JjYzIyNmU0NWRiNjU5NWE4N2Y1OWNjZjIwYzQ2YTlkMmNhN2IyZTg1ODk0NTdmNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_025b1dd175294e37988bd7ef8d85fdb6",
+      "statement": "WebSocket endpoints support Depends, Cookie, Query and path parameters; dependencies reject connections by raising WebSocketException with a close code like WS_1008_POLICY_VIOLATION instead of HTTPException.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/websockets_/tutorial002_an_py310.py#L66-L92",
+          "version": "repo-lines-v1:sha256:027c0c77d12577ae18fe5e256530be3b3929062ea3242af18afd6e794c18b0f5:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQwZTM3MjZmYzAxYzAxNzI1NDVhZWZjMDFkNGFjYTA3ZGExMjVhMDAzOTEyODE2MmM5YjA0NWNiNjViNzAxZDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYyY2IzMTNkOTI5OTgyNmMxMDY0ZDU5YTEyZGI4YzY2ODlhYjEyOGEwZTA0MjFjZmRhZTgzMTYxOGMyNDk1NDAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM5M2YzODEzMjM3ZWIwMDE3NTE0MGM2MTkxNTFkZGRiZDE5OWQzMGRjY2M3MGRiYTdlYzYzZDc5MTljZDA5NTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5761038688014b3ea7bce7e4dfc51523",
+      "statement": "When a client disconnects, receive_text() raises WebSocketDisconnect, which can be caught to clean up and broadcast; the in-memory ConnectionManager only works within a single process.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/websockets.md",
+          "version": "repo-file-v1:sha256:964fb362e75ff908200f0e1a33100c0fe8e2e962a27bf82f1012043a457754c7"
+        },
+        {
+          "resource": "repo://docs_src/websockets_/tutorial003_py310.py#L44-L81",
+          "version": "repo-lines-v1:sha256:d9621cc5d3b18a2232abb7a486fcd6315b35927e1cd95a63a888088915490c40:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ1Mjg2NDNlYmRiYjlhMDRlNjUxMzQ5OGY0YjIwNzY3M2U4YTM1NDdlM2UzODdmOTZhMDY5OWY1ZTRjMDUzYzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE5ZDM5MjQxZDJkNGQ5ZTA4OWM2MDVmMmYyYTRiYWQ2YjQwZGZkNDc3ZWUzZDBmNTNlYWIzYzk0NGZhZmUxMTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ0ODQxOWZjM2NjOTFhY2IwYTFhYjA1MTIyMDk5OWZkOWQ4MjdjYzA1YTA0Mzg1Nzc5NmYyZWJkMDY5NzA0NmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6cb1a7bf1d57469a8f9b27a0ad95fb24",
+      "statement": "WebSocket request validation errors are handled by default by closing the connection with code 1008.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/exception_handlers.py#L29-L34",
+          "version": "repo-lines-v1:sha256:c4a881dd0fd079c08796708615815a389d86b2bcc835a3a01761d7d588f9f1c4:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzBhMGRjMzRjNGNjNGM5MmJhNzUyOGQ3ZjI2ZWExMGIxNTYxZWNiYjMxY2Y2ZWZhZTk0MGNiNWE4NWUxNWQ3NyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzkyMjA0YzY1ZjUwMmRjMTY0NTRiNjI0MDg1NmE5YWI3YWRlMDAzYThlOWY4NjMzM2VjMGI3YzllNDA5NDkxZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGI5NzRkYTQwODYzMmE0YWE3ZTJhZTgwYjg2MDM5MWEzZGNkODIxMWM3OWVjYWQ3Y2E4ZTk1MTI4YjAwMTgzMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

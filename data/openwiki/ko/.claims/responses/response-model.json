@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:462ca33867f58614f5a8820d879ac10aa07a345e802ba911a60eaa956e4f638d",
+  "claims": [
+    {
+      "id": "claim_faaa56af8e0040c283b6be709f3519fb",
+      "statement": "The endpoint's return type annotation is used as the response model to validate, filter, document and serialize the output (e.g. -> Item, -> list[Item]).",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/response-model.md",
+          "version": "repo-file-v1:sha256:7a68126ccca77a077ddd5e58feb015e069359bbfe06702028211bfbde5faec36"
+        },
+        {
+          "resource": "repo://docs_src/response_model/tutorial001_01_py310.py",
+          "version": "repo-file-v1:sha256:83fb9d6003ce7787365743a12e03fe3e42753568fbcb6c923a6c02743fe2d980"
+        }
+      ]
+    },
+    {
+      "id": "claim_7ca41dda764148858f085e8a691c37db",
+      "statement": "The return annotation is only used when response_model is not explicitly provided, so response_model takes priority; a return annotation that is a Response subclass disables the response model.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L1114-L1117",
+          "version": "repo-lines-v1:sha256:c3915b7b624eb177fbc46ac94ae93cc05171a93b3d4dd7afe1ca1a41a4ccb1d9:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmZlN2IyNzM2NzRlYzlkYmQxMjcyZTU2NTZlZDIxNTZhMGU3YzdhNzU4ZmRjZTRkOTRkYjYwOTFkMGVjMTQ1ZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiODE3N2Y2OWIyZDM5NDE4NzZmNTM1MmE5N2VjYjFkNjZmYjk2NDBkZDc1YzZhYWZiNDFkNTA2MjBkOTZkOTJlYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWVlZjIyN2JjNDc5OTBiNDU3MzMxYzA4NmE0MGMzYjgyNzc1NDhjOTEzZjA4N2Q4YzcxNjNmYzRiZDM4MWUxOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZmU0YWE5ZmNhOTU5MmU4NjVkMjBkZjg5N2UyYzE5OWZmYWU0YTVjYzg0ZDhiY2U3MTQ5ZTQwYjkyNmUwMjU2YiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_6a6332546e654006afeae24909a220a4",
+      "statement": "response_model=UserOut filters out fields like password from a returned UserIn, and returning a subclass instance with a base-class return type (-> BaseUser) also filters extra fields.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/response_model/tutorial003_01_py310.py",
+          "version": "repo-file-v1:sha256:e4134b26114889cf64644971ed527b723aee613d627d8f8c795d737f5eac0314"
+        },
+        {
+          "resource": "repo://docs_src/response_model/tutorial003_py310.py",
+          "version": "repo-file-v1:sha256:118beca9d2bf2c295e9dd8ba7a0b8973fddf711a502573f00229e142ce287139"
+        }
+      ]
+    },
+    {
+      "id": "claim_01ae9b13e1704522ad4afc203398972d",
+      "statement": "A return annotation like Response | dict cannot be turned into a Pydantic field and raises FastAPIError; response_model=None disables response model generation.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/response_model/tutorial003_05_py310.py",
+          "version": "repo-file-v1:sha256:4c4b76f3de28e34e534e0638e83c93ccee1606cce3308e407c5c4c67a7e7ee32"
+        },
+        {
+          "resource": "repo://fastapi/utils.py#L71-L77",
+          "version": "repo-lines-v1:sha256:aaeabe69adb5a6d1ca92cec96f60f20c5b931c3303ab89f910b8a2321bc5ac06:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDI5NzUyOGVlNDU5MGEwYjc2ZDQwNGZkMGViY2RmMTVjNGViYjZhNzM1OTY0Nzk4ZTE5MzE0MDAzMjY3M2QzOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWI3ZTkzMTg3MjJkNjA4OWRhMTdiMTU1NDA3YzU2M2Q5ZjhkODI4MDA4NjJkMzJhM2RiYjljZGYxMTM2NjVlMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWI4NGI0MTcxM2E0YmIwYzg5MTZiNDZhZjYyMmZkOGUwMjE2MWU5NjkwNTliNmM3NGQzNTEyYzJhMzQzYjg2NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTJiMTNkOWJlN2IxMWY2ZGRhMzg2OGMxNjYwYzU1ZGZjYzlmYWMwM2M4NDEyNGQ4OWZjNGY2MDBlYTkyNGYyNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_2a45aebd755c4018bf587c6a38a27f56",
+      "statement": "response_model_exclude_unset=True omits fields not explicitly set, while explicitly set values equal to defaults are still included.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/response-model.md",
+          "version": "repo-file-v1:sha256:7a68126ccca77a077ddd5e58feb015e069359bbfe06702028211bfbde5faec36"
+        },
+        {
+          "resource": "repo://docs_src/response_model/tutorial004_py310.py",
+          "version": "repo-file-v1:sha256:4235c67db7c860f63fc7a9aa26cde939d7137bc69a415c5a97cc3d76632999a1"
+        }
+      ]
+    },
+    {
+      "id": "claim_acb95f2780e14f76a8d9f5b17304bff8",
+      "statement": "response_model_include and response_model_exclude take sets (lists/tuples are converted) of field names but do not change the documented JSON Schema.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/response_model/tutorial005_py310.py",
+          "version": "repo-file-v1:sha256:d8a2e5f6e84674dabbc343a24a3861e8870194ca404dae81b0a08cd5db6449b0"
+        },
+        {
+          "resource": "repo://docs_src/response_model/tutorial006_py310.py",
+          "version": "repo-file-v1:sha256:16f577d67a3ee0e662fce8be98fd829277edcd21ec7c71d80ba44dea0c77ee2c"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

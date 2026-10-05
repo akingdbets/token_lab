@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:96b789268b727f385e19fcd89bae14faa5e563eab84f7e5118d8bb6504e109b0",
+  "claims": [
+    {
+      "id": "claim_ae9c16cbccd44012a32aea4da21f4c8b",
+      "statement": "A dependency is a callable whose parameters are declared like path operation parameters, injected with Annotated[..., Depends(callable)].",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dependencies/tutorial001_an_py310.py",
+          "version": "repo-file-v1:sha256:819dbfdaf2efbf0e15454302c8ae46d328e613eff27aebba774bda359c562191"
+        }
+      ]
+    },
+    {
+      "id": "claim_3670523418534f988ee998c7d4e8a2e3",
+      "statement": "Annotated dependency declarations can be stored in type aliases such as CommonsDep and reused.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dependencies/tutorial001_02_an_py310.py",
+          "version": "repo-file-v1:sha256:fe324809cca9f5199511b84f8c1d977f8b322fde84717e6c72c035ee7822f855"
+        }
+      ]
+    },
+    {
+      "id": "claim_dd334f1fabe549b78e015603b3fe5c9d",
+      "statement": "Classes can be dependencies; FastAPI calls the class with request-derived __init__ arguments and injects the instance.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dependencies/tutorial002_an_py310.py",
+          "version": "repo-file-v1:sha256:5f2541d6b3cc0308e76bad780887aa1ccd24381b314066927078337aadb2c6de"
+        }
+      ]
+    },
+    {
+      "id": "claim_a3b8419bceb0471e92f1769ed036216f",
+      "statement": "When Depends() is given no dependency, FastAPI uses the parameter's annotated type as the dependency.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dependencies/tutorial004_an_py310.py",
+          "version": "repo-file-v1:sha256:89e233337867962cfc82c41e36d1c41db243c625b6fc6f84d147289da35d37fd"
+        },
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L468-L471",
+          "version": "repo-lines-v1:sha256:13718e82b54af30e5db5563ae047f7131dc199fd3a24eb116b13ccf6e6c0a2d3:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGZlZTc5NTE3YzAzYjdjMTc5YmU0NzQ4MjQ3YTM1ZThjMTAwYjc4MTkyNzkzMWY4Zjk5ZGYzMDMyMjNjYmRhOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTQ1MzBiYjZiN2MyZTk5ZGZhYTUwMmI3NDFlNGE0Mjk5NTViYWEwZDlhZmYwZDBiYmIzM2QxMmJkNzNjZDY4ZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDY0NjlhMzFlZWY4NGIwN2YyM2NlOTM5ODk4YzJiM2NiMjcyMDc4NDI1NTI2ZjhlMjE2MmRlYzViNTQ3ZDc1YyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzRjM2MxNmI4ZmJlMmRiNmQwZjFmNDYxY2Q1NTAxYWZhMzZkY2ExYzVjOWFhZTJlNmIzOTE4YTc3NzcxMjU3MSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_74d78242742c4565b6b2fe1fa7d68c23",
+      "statement": "Dependencies can declare sub-dependencies, forming a graph resolved per request.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dependencies/tutorial005_an_py310.py",
+          "version": "repo-file-v1:sha256:0f3076c46f2d005b74a7152ffdc1933ff7ebbf449a47858ebd64f6035c7074b1"
+        }
+      ]
+    },
+    {
+      "id": "claim_226ecef811a5454e916d581322528d86",
+      "statement": "Within a request a dependency's value is cached by a key of the callable, its effective OAuth scopes and its dependency scope, and Depends(use_cache=False) disables reuse.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/dependencies/sub-dependencies.md#L63-L85",
+          "version": "repo-lines-v1:sha256:23db1962638df7252da101d6d1afe703e86ec1a2ac5deaa525d97e301a16dcdb:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQyY2M4MTVkOGNmMjRjMjkwZmQwYzFlODJkMWQ0NDRhNTk5M2NkODljN2I2NjE5YzVmYmQ2M2M3OWY2YzhhYzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJmN2U4MTA3Yjg0MzUwNTQ2Mjc4OWY1MDBhNmM3ZjJiMDhkMmYzZmE3MDZhODI3NTZlMWFjMzVhNjQzNzU5ZTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY1OWE0MWM5MmVjMTcyYzJhZmU2MWI2ZTdlZDkwMDRkNDViMjYxNTgxN2MwNGMwZjk0N2NhOWZiNmQxNmIwOTYifQ"
+        },
+        {
+          "resource": "repo://fastapi/dependencies/models.py#L82-L96",
+          "version": "repo-lines-v1:sha256:d744a6e4a8cddb4fdaa1a7aad4a12de55931d79cb34c425189b45bc2e0a097e8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMwNjQ2NjhjZjE1MmE5N2I4ZDY2NTdhYTAyOWQxOWExMjJjODAyNDBiNDA2MDdlYjI5NGYzYmY2ZTIxZjYwNWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5MjIwNGM2NWY1MDJkYzE2NDU0YjYyNDA4NTZhOWFiN2FkZTAwM2E4ZTlmODYzMzNlYzBiN2M5ZTQwOTQ5MWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE1ZTk0OGY4YTM4N2NmYTNkY2JjNjk0ZjhlOWEwN2UzZTY4NTZiNmVmMDAxYTg3YzIzMTI0ZWIwYTNhMjM0ZWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFlZmQzZWQ0YjYwMTAyZjczOGZhNzI3Nzk5MWZkZjQ5NzZlYTE1MDgwYWViMDQ3NWE1ZGQ3M2YyNDA5NDlkMjQifQ"
+        },
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L656-L679",
+          "version": "repo-lines-v1:sha256:b7f68c06bd20fcd28dc027c32749213c8e4c3b26dbcc67498db43439d7ba4997:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlZDU4MmQ4MzM1NTkxZDA4NDlkM2Q3OTYzMWM1YzhhZWZmNTA1MjBiNTNlYzk2NWRjY2NmNTY0MTEwZjdlYTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmMjZkNjZkNDRkZGM0NGUwNTA0M2YxMDBlYjA0OTZmNjU1N2ZmZTM1OGY3NGM0OTgwY2VlMWRkZjM0ODNhMjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYxNDFmMTcyYzUxMWJhNjNjOGU2YzQyYjUxZjBlNTc2ODdkMzQ5MDllMmIxYWVkMGY4NWQwOGY1ZDk3NTQwNWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk5Yzk4NThmYTA2NWQzZGE3Y2U3NzRkZTNmMTg4Zjc0ZDgxN2QyODM5Y2E2OGU2MmU4YTQwMDBmYTQ5MmVhNzgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9c113fbb82d14f2489d9a220c5c4c10e",
+      "statement": "Non-async, non-generator dependencies are run in a threadpool, while coroutine dependencies are awaited.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L671-L674",
+          "version": "repo-lines-v1:sha256:81471fd6ec1b4a0ffd1da3425f327b2d747f4592ab185f2d1ce260ea9de8e65e:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDNhZjRiMzE2NzcwZDJiN2JlZWJlNmI5NjFkZTcyNTBkMjM5NWMwNjI5NGU4MzA1MTkyYTFjZGYwYTc2MTAzMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjk0MzE4N2ZjOTg4YWQzNzdjYzZjODI4YmY4ODgxZGQ2NWYxNmMzYzUwNDIxNzY5Y2ViNTNmMWQ3ZDgxODlkYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDI3ODFiM2NjMWQwNzA2NTg1M2I5OGE0ZmM2MjdkZDQ3Y2RhOGYyNmEzNDMzYWM4OTM3ZTY2ZWNhZGM2OTNkNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDA3ODBiZTk0OGY3MTZiMTlkZWUwZTY4M2E2OWU0NWEwMWQ2MjA5ODkwNmIxNDAwN2NjYjQ4Y2Q0Y2U4NGQ4YiJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

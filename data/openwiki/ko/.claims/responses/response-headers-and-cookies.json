@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:9d804767777eb8015bd109f2a98424dca0bcbc7c2e1384736e5548a3ad449000",
+  "claims": [
+    {
+      "id": "claim_dcd94159ad824e6c97aa80d95414d7fa",
+      "statement": "Declaring a Response parameter provides a temporary response on which headers and cookies (set_cookie) can be set while returning normal data that is still filtered by response_model.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/response-headers.md",
+          "version": "repo-file-v1:sha256:0a88b9b47a6968bfa16e9bc923ffae22492273ca210742b9cc7c10cb5f2eb1e5"
+        },
+        {
+          "resource": "repo://docs_src/response_cookies/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:468f15dc0438b28bb457c8c0852aaaa05f048564abb39bd8f8219a5348deea2d"
+        },
+        {
+          "resource": "repo://docs_src/response_headers/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:8423d04f88a29db7f6149e0cc61123a1cb510194870b40572d91630e69eeec9f"
+        }
+      ]
+    },
+    {
+      "id": "claim_47940a38d2e6481fa6f0b9d7a6b3d05a",
+      "statement": "FastAPI copies the temporary Response's raw headers (including cookies) into the final response it builds from the returned value.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L766-L770",
+          "version": "repo-lines-v1:sha256:a737e154246ed0fdc0b4380e751da75c61680b54a952697a83449c53e719c461:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTcxNDFkODgzM2Y3OTNhOTc0M2U0M2ExZGQ4YzI0NDZkYTZhODhhYWQ0NGY1NWZhYzk1OTQ3MWZiYTY3NWU2YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTJjODc0OGM2ZjJjMjBjYmExMjViMGVhNjBiNGU5MDVlOWI5MmM0MTVmMWM0YzEyYzMzZGZiYjlhMTY1MGM3NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWM4ZjRjNjFhYjcwZDQzYzcwMTkzNjEzMTE1YjJjNmIzMzM1ZTU3MzE2OGJmYWUzYjY0ZTUwMzA0NWJjYzc0OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjM0MzM2ODY5ZGEwMzRkMGRhNWQ4MjYwYTJmMGViOGRkZmJkNDA1ZjE4MDU2MTM4ZjI0NWFhYTY1YTg4ZDQyOCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_414b2908f02f44bba3478e67447af2db",
+      "statement": "A Response parameter can also be declared in dependencies to set headers and cookies.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/response-cookies.md",
+          "version": "repo-file-v1:sha256:5c719613c9a715be5e42ecdd9aa19e040505246303eebf06cae4b76e6767c7be"
+        }
+      ]
+    },
+    {
+      "id": "claim_bc0e16f4414541878e49a5598c1c8662",
+      "statement": "Headers and cookies can be set on a directly returned response, e.g. JSONResponse(content=..., headers=...) or response.set_cookie(...), which is returned as-is without response_model filtering.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/response_cookies/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:6bab4c418f7efd8202f6805c01f7af37754443d5ec4bc789d746e15fbe27c3d3"
+        },
+        {
+          "resource": "repo://docs_src/response_headers/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:2ba72babee1c9b7b290581d6cee35906d333c1506e8311d053fbde2eaae45db1"
+        }
+      ]
+    },
+    {
+      "id": "claim_19228fc1018b4aa78e4e78adf6312e6c",
+      "statement": "Custom response headers that browser clients must read need to be listed in the CORS expose_headers configuration.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/response-headers.md",
+          "version": "repo-file-v1:sha256:0a88b9b47a6968bfa16e9bc923ffae22492273ca210742b9cc7c10cb5f2eb1e5"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

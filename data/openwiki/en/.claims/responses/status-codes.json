@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:ac8f18787c30541f234a0211d93ab4f1f7326f1a5721259e9b9014d1414d0270",
+  "claims": [
+    {
+      "id": "claim_c8250f5cbe674c0ab006b882227593c8",
+      "statement": "status_code is a decorator parameter that sets and documents the response status, accepting ints or fastapi.status constants.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/response_status_code/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:06e24238b7ea974659aa2b26c5d8254bf0720dd3e04b372746c0e6e23c39eb9d"
+        },
+        {
+          "resource": "repo://docs_src/response_status_code/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:29de7174d31edea6ff40ea622b76bbf70704c8a30a33df90efda91e13619fc6f"
+        }
+      ]
+    },
+    {
+      "id": "claim_4292f84430f54aeeb52380e77ea5b716",
+      "statement": "Status codes below 200 and 204, 205 and 304 do not allow a response body, and FastAPI empties the body for them.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L766-L767",
+          "version": "repo-lines-v1:sha256:f0501a370f29f622f62d3d7f0d929404efea0a3b47b6adc6f928fd3ceb743b95:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTcxNDFkODgzM2Y3OTNhOTc0M2U0M2ExZGQ4YzI0NDZkYTZhODhhYWQ0NGY1NWZhYzk1OTQ3MWZiYTY3NWU2YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTU5NDY5MGMwY2JiYTQ4MTk4OGZmYTcwYzMyYjk4ZDVjZWY4MWM3YjNhZGQ5ZTRlMzA3NTdkNGJhNzRmMjU2ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWM4ZjRjNjFhYjcwZDQzYzcwMTkzNjEzMTE1YjJjNmIzMzM1ZTU3MzE2OGJmYWUzYjY0ZTUwMzA0NWJjYzc0OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGM2YjdmYmIxNzk5ZmMzNDNlZTBlNzk2NDk1OWE5OTE2ZWJjM2NiODJjMzgxMTU4Mjk5MzQ3NmEwNzk4MzcwNiJ9"
+        },
+        {
+          "resource": "repo://fastapi/utils.py#L26-L40",
+          "version": "repo-lines-v1:sha256:0184d9df2e21532092a360f450c5e2d1ad26571f089c5f23f80959aa70ba3b96:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5NDRmYmEwODFjNzk2ZDNlMDJlNWI2NzE4NDM1M2FhNDVkNzlhOTI5ZDk3ZDc4MjgzYzM1MTdiYmU3YmJlYWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjMzE0ZmRmZDc0YTkzYTM0N2IxNGRiOWE3YTkzOTFjZThkMTNlZDc0NzFlNDZhYjY2MzQxNGJkYTgyZTQ1YTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE1MWM3YmExNzIwNzQxZGFiOGMxMDMxOWI0MThlYTQzMmIyYTAxZGJkM2I0Y2Q2MDczNjQwNzk2ZGZlMGM1ZjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRlOWJkMmNhNmU3ZDkzOTc4MTk3ZWU5NDM4OTRhZTY3NTc0MmQ2N2U4Mzc4MzU1MjQwYzYyMTc0YTM4MjViOWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2572d506ecf645979c98edc71c798427",
+      "statement": "Additional status codes are returned by returning a JSONResponse with the desired status_code directly, which bypasses response model validation and is not documented automatically.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/additional-status-codes.md",
+          "version": "repo-file-v1:sha256:5d4fe4788ca4722d7cb62b57e55dcc24065d378ec42cfe570efdc1c668a99c53"
+        },
+        {
+          "resource": "repo://docs_src/additional_status_codes/tutorial001_an_py310.py",
+          "version": "repo-file-v1:sha256:d48dec2f0e4679b274926340e5cab94f488d53f26d691a162d44ce5d5371e472"
+        }
+      ]
+    },
+    {
+      "id": "claim_b8579aa389b64d51aa171f57953a08ec",
+      "statement": "Setting status_code on an injected Response parameter overrides the decorator's status_code for that response.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/response_change_status_code/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:10e19894d2da296c10be6b511e1be60f3d494b88a4c3ea58c582bad6e9bbc904"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L367-L383",
+          "version": "repo-lines-v1:sha256:18d8129c0eee8e04dfd31dce2ca03e06b97bc160a22172324cb39acebe423bc7:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc1ZWZjN2Q0YWU0MjAwMjRjMDFmMmEwNDE1YTk3MTY5ZmExOTMyOTgwODU2YjdhZmVmMTMyMzZkZDBjNWQ1NDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI2YWQyMzM1ZDM5NGEwMTE2NjAyYjcyMGNiNzJjNDdmN2NiNDk5YTM3MzM0MzMzMmEwNGU4OTRjMDE3MjkxMmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNkYTUxMzcyYWViZThhMzM5ZGZkNjNjNGU5NDMzMGU4MDEwN2JlZWRmYTQ2ZDI5MmY0NzcwMjYwNmJiMTg0OTkifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

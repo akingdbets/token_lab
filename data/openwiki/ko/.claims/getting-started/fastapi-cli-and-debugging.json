@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:03aba21fa5a8ed298124f2ebd5ab78be347c610e2c6848e9cd3bf0a25d198537",
+  "claims": [
+    {
+      "id": "claim_34bb11b79b86415cbea7be1b8eeee693",
+      "statement": "fastapi dev runs a development server with auto-reload enabled listening on 127.0.0.1, while fastapi run starts production mode with auto-reload disabled listening on 0.0.0.0; both use Uvicorn internally.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/fastapi-cli.md",
+          "version": "repo-file-v1:sha256:6b21506911e64492c49e59ecd3428490069cf0f04a3e9b70e95dab9732dfb405"
+        }
+      ]
+    },
+    {
+      "id": "claim_7e01265a2ac74462b3910ffcf8081083",
+      "statement": "fastapi dev sets FASTAPI_ENV=development before importing the app unless it is already set; fastapi run leaves FASTAPI_ENV unchanged.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/fastapi-cli.md",
+          "version": "repo-file-v1:sha256:6b21506911e64492c49e59ecd3428490069cf0f04a3e9b70e95dab9732dfb405"
+        }
+      ]
+    },
+    {
+      "id": "claim_856c0a76bf85447ebe02f0fa41325c37",
+      "statement": "The app can be configured with entrypoint under [tool.fastapi] in pyproject.toml (e.g. backend.main:app), or passed as a file path or with --entrypoint; pyproject configuration is recommended so other tools can find it.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/fastapi-cli.md",
+          "version": "repo-file-v1:sha256:6b21506911e64492c49e59ecd3428490069cf0f04a3e9b70e95dab9732dfb405"
+        }
+      ]
+    },
+    {
+      "id": "claim_6980f11a198c44e69b47e528c3f40b7a",
+      "statement": "fastapi.cli.main delegates to fastapi_cli and raises RuntimeError with install instructions if fastapi-cli is not installed; python -m fastapi calls the same main.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/__main__.py#L1-L3",
+          "version": "repo-lines-v1:sha256:bb9c77339fab15296444ed0b775b92da8aeb4de4fb109cec14efc6e572607572:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGVlNDBlNGE2ZmE0Y2QyYTg4ZGNmZGRmNzc0MjFkOWNhYTM0YmZiZjc0MmZmMTAwZWMzOWE3YjNiZTNlMzNiZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjJmOWZjNzMyNGMyMjRiMGE4MmU2YzBjYWEwZThiNTA3YWMyZTI4ZDM5MWQ5NDcwMmFiNzk0YTY5MzlhYWEzMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://fastapi/cli.py#L1-L13",
+          "version": "repo-lines-v1:sha256:a444f8922fb65a8da1556df00dd526303536f2368db1edeb972d70f4fba81485:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM1NDdkMTAyZjBjY2M4Yzg5NDNjMDM1ZjViNTkxNGIwZmE0YzlmMzUxYjNhNDg1ODEyYjE0YmNhMjM0YTBiZmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmMDkxOGU1ZjhhM2E0NTM1YmE5OTI1YTg3N2FkYWIxNTRhMjc5MGMyZDhjOWRkNzc0NTk5ZGU5Yjk1MTNmMTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_409c2b635fdb47e69348d5aaced187ad",
+      "statement": "For debugging, the app file can call uvicorn.run(app, host=\"0.0.0.0\", port=8000) under if __name__ == \"__main__\" so the file can be launched directly from an editor debugger.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/debugging/tutorial001_py310.py#L1-L15",
+          "version": "repo-lines-v1:sha256:96cc81d2ef212b4dfa220cb4f05cb8688d0468557178ff7da36a0c0f68b3590b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZmNDAyODIxZDE4ZDM0YWY0YTU0NDc2ZDY2NmRkZjkwMGVmNDVmOTdiZmJkZDI4MDMzMTdkYjY2NDU4MjU1OWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY3N2JlNmVlZTY0NGEzY2VjZmMzMjkzODhjN2FiOGQ1OWQzZWIwMjEwOTQ2YjVkOTNlZDc5ZWNkOTAxMzNkNzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

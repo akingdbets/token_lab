@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:73376951c401e3b85fa90a07b3f1d1827165b4cdaa53d8f930516f576933c4f0",
+  "claims": [
+    {
+      "id": "claim_4aa35b173245425abeb357fc5daec3d6",
+      "statement": "A class instance with a __call__ method can be passed to Depends(); FastAPI inspects __call__ for parameters and sub-dependencies while __init__ is only used by user code to parameterize the instance.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dependencies/tutorial011_an_py310.py#L8-L23",
+          "version": "repo-lines-v1:sha256:95f9cc7b2d00c06110df52a2e675c68ed163cec086eef75d120d57de6eb2515f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk1NDNlMTAxZWFlOTBiYzJjOWE3NTgxNjdmNDFiYWRlNzhlZWJkNThiOTMwNzBhODMxNzEwNGVlY2ZmM2MwYTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBmODhkNTI1N2FhMjZhOWM4M2ZkNjE3ZTljMTg3NWJlYWNkNWFkOGQ0ZTMyYjRkNDljYTc2NjJiNTZiYjhjMTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU5NzI5ZWM2NWMyMTJkMTVmM2QxNDc0NzUyYzg5YzljNjc3ZDRmN2Y0ZjQ4ZmU4YjI1YmE4YTk4MWJkM2ExMzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_13e2d5ae5f46439e82e641e2e5067e97",
+      "statement": "Depends accepts scope='function' or scope='request'; with 'function' the exit code after yield runs right after the path operation function returns, before the response, while the default request scope runs it after the response is sent.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/advanced-dependencies.md",
+          "version": "repo-file-v1:sha256:948d9383f3fb730ee58dc0037c6fd7f0532f6e66e299b336ff3051e1d297e6b4"
+        },
+        {
+          "resource": "repo://fastapi/param_functions.py#L2283-L2330",
+          "version": "repo-lines-v1:sha256:452c3967a4a2d139cf03deddda1de97065cb63ffaec0f41f66c78d593eaa2c42:eyJzZWxlY3RlZExpbmVDb3VudCI6NDgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMyOWMyZWU4MDJhZDdhNWJkZDRkNjllOWM4NDMxMzdkMGQ4Y2UwMzMxNzg1ZTYzY2YwMmU1NTkwOWZlNjc1MmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ5M2JhOGFlZjhiMWNjZThjYzdmYjA5MjNlNzU0OTlmMDE2N2M4ZDE1YzI0OTRlMTVlOTczZTQ1MDgzZDFkOTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhiOTc0ZGE0MDg2MzJhNGFhN2UyYWU4MGI4NjAzOTFhM2RjZDgyMTFjNzllY2FkN2NhOGU5NTEyOGIwMDE4MzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjllY2I3MTM0YjFkNmRhOTc0ZDU5YjZhNDllMzhhYmU2NzY4N2Y0NjY5MWY2YzM4YjM1ZDQ5NzQxODAwZmFmODkifQ"
+        },
+        {
+          "resource": "repo://fastapi/params.py#L749-L749",
+          "version": "repo-lines-v1:sha256:fddf4dae69283bb45c9d36522c645a15b684101402f98cb56ebc25d618704638:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmRkZjRkYWU2OTI4M2JiNDVjOWQzNjUyMmM2NDVhMTViNjg0MTAxNDAyZjk4Y2I1NmViYzI1ZDYxODcwNDYzOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmRkZjRkYWU2OTI4M2JiNDVjOWQzNjUyMmM2NDVhMTViNjg0MTAxNDAyZjk4Y2I1NmViYzI1ZDYxODcwNDYzOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNmE1NjRjNzNjMTMzMjM1ZGE4OTQwYThhZGEwMjliMWQ0ZWQxMzM5ZTliNGM3MmZmMDUyZTU2YzQ5NWFlZWNlNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2RhZmY3NGExZjE1YmY1MmQ2MWFiMzU0MmZiMzJjMzRlOWNkOTg0ODE2YjBkN2ZhMWI5MTI5YjljZmRkNDgyOCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_bdb67dad87cd491e871fb52cdbca3192",
+      "statement": "With a request-scoped yield session dependency and a slow StreamingResponse, the session stays open until streaming finishes unless it is explicitly closed (session.close()) in the dependency.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dependencies/tutorial013_an_py310.py#L19-L38",
+          "version": "repo-lines-v1:sha256:8004e91ce4ed965be7e2eae8e1b7f584be1fee5bf1635bdfe1325a355314532d:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ4NjM5MzBlN2U2YTgyNzExMzQ2MDg0MTZiNTFkYjJkZmQxYTJhOWE5YzFmYWJlZTkwZjUxZDM0NWFmNjkwNTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFhYzhmMTQ3MmUyZDBmMjkwY2Y2YjVhNDNkYmY4MmYxNzMyY2IxMThlOGQ1ZWJkNzlkZGQxY2I1ODM2MjExMWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU5NzI5ZWM2NWMyMTJkMTVmM2QxNDc0NzUyYzg5YzljNjc3ZDRmN2Y0ZjQ4ZmU4YjI1YmE4YTk4MWJkM2ExMzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://docs_src/dependencies/tutorial014_an_py310.py#L24-L28",
+          "version": "repo-lines-v1:sha256:d90cc24fcf8b5d5733338b0efbad5cfdc678641cdcaa6457797198d5920beeb9:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjIzYjU2MTkwZWM2NWU5MTAxMTY5MmExMDhjYjI2ZDA0MjJmZjkyYjE4MzA5OThjNTdhMTQ1ZDE5MmIwMjQ4ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzc0MzAyMDY0NzM1MTUzNzZhYWRiMDc4NDMxMzUwOGJmNjVhYjI2ZTNkMzM4ZTgwZWQ1YThkN2E1OTE4M2JlMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDVmZmEyMTYzNWRkMmQ5MThmYWJkODAyMTU1NWI5NWVkMTE1ZTcwNWQ2ZjVmYmJmYjZiZWMwOWFlMDIyODRlZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTUxMDZhNTVmZjY4MTZiMzcyMzJhMDgzZWQwN2JjY2I0OTkxNjQ3YjU3NzMxZTM3YTkwNGJiZmE3OWZhODBlMCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7eda75a0594f4158800d0d2989afb611",
+      "statement": "Since FastAPI 0.110.0, exceptions caught with except in a yield dependency are not forwarded to exception handlers unless re-raised.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/advanced-dependencies.md",
+          "version": "repo-file-v1:sha256:948d9383f3fb730ee58dc0037c6fd7f0532f6e66e299b336ff3051e1d297e6b4"
+        }
+      ]
+    },
+    {
+      "id": "claim_b64c5cf1467445dbad8d6ba47f0efd2c",
+      "statement": "Background tasks should create their own resources (e.g. a new DB session and re-fetch by ID) instead of reusing objects yielded by dependencies.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/advanced-dependencies.md",
+          "version": "repo-file-v1:sha256:948d9383f3fb730ee58dc0037c6fd7f0532f6e66e299b336ff3051e1d297e6b4"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

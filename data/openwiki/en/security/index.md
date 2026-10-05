@@ -1,0 +1,6 @@
+# Files
+
+- [HTTP Basic, Bearer, API Keys and OpenID Connect](http-basic-and-api-keys.md) - Use FastAPI's non-OAuth2 security utilities — HTTPBasic with HTTPBasicCredentials and timing-safe secrets.compare_digest checks, HTTPBearer/HTTPDigest with HTTPAuthorizationCredentials, APIKeyHeader/APIKeyQuery/APIKeyCookie and OpenIdConnect — plus auto_error, 401 responses and WWW-Authenticate headers.
+- [OAuth2 with JWT Tokens and Password Hashing](oauth2-jwt.md) - Build a real login flow — hash passwords with pwdlib (Argon2), authenticate with a timing-safe dummy hash, issue signed JWT access tokens with PyJWT including exp and sub claims, and decode them in a get_current_user dependency.
+- [Security Basics: OAuth2 Password Flow and Current User](oauth2-password-flow.md) - Security concepts (OAuth2, OpenID Connect, OpenAPI security schemes), OAuth2PasswordBearer for reading bearer tokens, a get_current_user dependency chain, and a simple /token login with OAuth2PasswordRequestForm.
+- [OAuth2 Scopes](oauth2-scopes.md) - Add fine-grained permissions with OAuth2 scopes — declare available scopes on OAuth2PasswordBearer, request them per dependency with Security(..., scopes=[...]), and verify the accumulated required scopes centrally with SecurityScopes in get_current_user.

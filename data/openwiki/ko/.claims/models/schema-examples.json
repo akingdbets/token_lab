@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:36aef7bb4bbcd8c7ef0e0abdd13edcd6b27f102ff497c4fa5693911c1e03209f",
+  "claims": [
+    {
+      "id": "claim_2c90e95afdcc47fdad8f68b276562a4b",
+      "statement": "Setting model_config = {\"json_schema_extra\": {\"examples\": [...]}} on a Pydantic model adds the examples as-is to the model's JSON Schema used in the docs.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/schema_extra_example/tutorial001_py310.py#L7-L24",
+          "version": "repo-lines-v1:sha256:247b13cd153765321161aa3e3a8f61ec229eb2ae551a001224ac3312f09eb7d0:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3NDQxNGZkMDA3ZDU2ZDlmYWE5MzljYjZlMTE5MDg4NWMwYjgwODU2ZmZkZmNhNmFmYmFlMTg5ZTFkZTc4MTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0MTlhNmRjYzA0ZTIxM2EzYzdhNzdhNDU2YjAxZTc2ZDFlZjc4Y2QwMGJiZWMxZDhmODE0NThmZTkzZWRjNTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU5NzI5ZWM2NWMyMTJkMTVmM2QxNDc0NzUyYzg5YzljNjc3ZDRmN2Y0ZjQ4ZmU4YjI1YmE4YTk4MWJkM2ExMzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFkOGM5ZTcxODkzY2RlMzBiNmIyNDQzYTUxZGM5MGJjNjE1MzA2YTczZGIwYTYyNDVjOGU4MTA4YjY3MTAxNmYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cea9cd2310044b64957bc013f845e929",
+      "statement": "Field(examples=[...]) declares per-field examples in the model JSON Schema.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/schema_extra_example/tutorial002_py310.py#L7-L11",
+          "version": "repo-lines-v1:sha256:3becb755267a269dff024ec24332ea82a06633fd268f9cac50449349199606c6:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzc0NDE0ZmQwMDdkNTZkOWZhYTkzOWNiNmUxMTkwODg1YzBiODA4NTZmZmRmY2E2YWZiYWUxODllMWRlNzgxNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzM2MDQyMTkxMmFjYTQyMjY0ZThiN2JjNTI1YTBjZTYzMDlkMGU2ODAxZTIxMWE4MzRiY2U2NzFlMzQ4NjExZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTk3MjllYzY1YzIxMmQxNWYzZDE0NzQ3NTJjODljOWM2NzdkNGY3ZjRmNDhmZThiMjViYThhOTgxYmQzYTEzNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYWQ4YzllNzE4OTNjZGUzMGI2YjI0NDNhNTFkYzkwYmM2MTUzMDZhNzNkYjBhNjI0NWM4ZTgxMDhiNjcxMDE2ZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_dbd8c726d2fd481f84114a457ac93477",
+      "statement": "Path, Query, Header, Cookie, Body, Form and File accept an examples list that goes into the JSON Schema; Swagger UI does not display multiple JSON Schema examples.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/schema-extra-example.md",
+          "version": "repo-file-v1:sha256:d659e4c5f150b3410b504237e3e054ac871e9356a2573652e71934ae514d6596"
+        },
+        {
+          "resource": "repo://docs_src/schema_extra_example/tutorial004_an_py310.py#L16-L43",
+          "version": "repo-lines-v1:sha256:7178f0500ce220411b2ede3bbeb4939cb1b94adcbddd25ca66c9d30fb7005133:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImExZDExYjc4NDBjN2EyNTcwMDc2MjhiNTU0Mzg1YzJjMjI4ODkzNDBjODEyNTdjYmFmYjQwZjM4ZDUwN2JjYjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQwNzFlNjJjNDE4ZTRkMDMxYWE4NDhkMjllNWE5MDE5NzA5Y2ExMjBhYmE0NWIwNjU5YmJlNGM0YzE3YjcyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEzYjAxNTdlY2U4Y2U5NjdlZTNmZjIxOTFlNWM0ZmI1YzNkNDEyY2ZmZTRiMjgyMzVmOWU2OTY2OGY4ZDhkMmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b96961d3bce5424ca4b5a0e576fed07e",
+      "statement": "openapi_examples takes a dict of named examples each with summary, description, value or externalValue, placed in the path operation's OpenAPI details so Swagger UI can show multiple selectable examples (added in FastAPI 0.103.0).",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/schema-extra-example.md",
+          "version": "repo-file-v1:sha256:d659e4c5f150b3410b504237e3e054ac871e9356a2573652e71934ae514d6596"
+        },
+        {
+          "resource": "repo://docs_src/schema_extra_example/tutorial005_an_py310.py#L16-L54",
+          "version": "repo-lines-v1:sha256:67284e14e902b9bf30697fefee55dae0ee5115070b6de176149d4c13af7ab58a:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImExZDExYjc4NDBjN2EyNTcwMDc2MjhiNTU0Mzg1YzJjMjI4ODkzNDBjODEyNTdjYmFmYjQwZjM4ZDUwN2JjYjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQwNzFlNjJjNDE4ZTRkMDMxYWE4NDhkMjllNWE5MDE5NzA5Y2ExMjBhYmE0NWIwNjU5YmJlNGM0YzE3YjcyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEzYjAxNTdlY2U4Y2U5NjdlZTNmZjIxOTFlNWM0ZmI1YzNkNDEyY2ZmZTRiMjgyMzVmOWU2OTY2OGY4ZDhkMmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b7785533ea884cda8a748a56c4592ccf",
+      "statement": "Since FastAPI 0.99.0 OpenAPI 3.1.0 is used, where JSON Schema's examples list supersedes the deprecated single example keyword.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/schema-extra-example.md",
+          "version": "repo-file-v1:sha256:d659e4c5f150b3410b504237e3e054ac871e9356a2573652e71934ae514d6596"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:075a0dee6ea5bda47fd0fd84890bfc11cad1d5d42937bcdd9f8e6aa1dffec568",
+  "claims": [
+    {
+      "id": "claim_cbb176f42833499eb797f18300edb1d6",
+      "statement": "Available scopes are declared as a name-to-description dict in OAuth2PasswordBearer(scopes=...), which appear in OpenAPI and let users pick scopes in the docs login.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/security/tutorial005_an_py310.py#L65-L68",
+          "version": "repo-lines-v1:sha256:5a2d40508f05860480a66a71dc47bdc2efc6b81f2153103f982deef42d45c8d2:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiY2Y0YmY0NTE3YjY3YWI1MDUyN2Y3YmFhMTllMThkZjQwOTY3YWY3Mjg2ODgwYWVjM2E3Yzc0MTc4OGRjYWI1OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOWIzOWUwMjJlMGQ4NTQxMjAwMDNkNzkwYzI4Yjc1OTYyZWRkMzAzNzU2ZDUxMzMzZGY3NDVjZmI4NmVhMTFjZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODFiMTc2MmE2MzY5MThhYTc2ZWJhNDRmZmY0MzBkNTg1OWY4Zjk5M2EyNmU3MTY4ZmFhMGNhNjA5NTc1N2Y0YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTJjNmI2MDE3MWFmNjgwOWQ4YTY5Yzk5MmJlNmY5NmFkOGFhMDI0MTk1NTBlZDVjODgzNjA4N2NhOGQ5NjExYiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_33d0865a59c24241a0a2ee5ecfb439d1",
+      "statement": "Security(dependency, scopes=[...]) declares a dependency plus required scopes; Security is a subclass of Depends with an extra scopes parameter.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/security/tutorial005_an_py310.py#L143-L177",
+          "version": "repo-lines-v1:sha256:79c170433a39727dbb904a2fd00cd359bc78ae32e35b14f3efe95ae5f6ccd1ab:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQyOWJkMDlkOTU4N2JiZjNjOGVkY2ZjZGNmNTE2YWY4NDAwOTI4YzJhMzRmOTI0OTgxZDBmMjU2MGM1YmM1YjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVjMTIzNzQwNDU4MjRjYTkwNTFiOGU1MjY0MTJkYjRhOTM3ZDFkMmJkNGU5NmNjYjM5ZTJiNDZiZGYxZmRmZTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE3YjNlMGVkZTY1OTM0OGRiNGM0ZmI3NzY4OWY0ZTc2YTQyYWExMmFhYmNlMzQwNWRhZGE0OWFlNzJiZmFiZWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZmMDY2YWIyYmE5MDI5ZTcwMTU4MTZkZWM2Nzk0ZWM4NDA5MWE4NzVjN2YzYzhkMzYzZmRlYWQxNWRjZGEwMzgifQ"
+        },
+        {
+          "resource": "repo://fastapi/param_functions.py#L2372-L2460",
+          "version": "repo-lines-v1:sha256:55e8aefd0a78f4b48c9131c5482a27edd72f6e9314b1c312a3cd3eb0cd619d59:eyJzZWxlY3RlZExpbmVDb3VudCI6ODksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZjOGUxNWNiNzEwNmZhNWFlNzQyYzZiODljMjI2MWE5MjMzZjMxZWI1ZjAyNzcxNDgxYjMyZWYwYmEzMDUwN2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQzZmMwNWI0N2FkZDRmOWE1NDNhZjI0YWZiNDY1ZjA0OTY4N2QwZjUxMDk0ODFhNDIzZmIzMDYyMDBmYzYxZDciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFjZjM4ZDI5MjQzN2M3YjYzZWQ3MTg4MTQ5MzhkNDJiMmY1ZmZiNDEyZWEyN2IyZWE5OWZlNWI0NTFkMGM3NTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d92610ecb32b40cd9dc60af6e3ae505a",
+      "statement": "A SecurityScopes parameter receives all scopes required by the dependency and its dependants (scopes list and space-joined scope_str), accumulated from parent Security declarations.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L290-L330",
+          "version": "repo-lines-v1:sha256:6e5ff4f10bfcba6949926ba462823601c7ca6d58221cbe0c1979b2ef4523d69c:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmMTkwMjU2YmQ3ZmNiZTU3NDY4ZWNmMjdjNWZmMTZlNzNjNTlmNDg1OTUzMmZiODdjYTQxNGE0OTUyNjA4MmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZkMDAwNzg3NWRlOGY5MmQ5MmI3ODdhMDE4YzE2YzAwMDQxOGJkNWY5NDk5MjNiOTBmNGQ2M2M3ZWMxNmQ4M2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFkYTcwNmRjNmNhYjAyY2NmOGZjYjdkM2IxMTFhYzUzYThlMjdmNGRkNDM4OTE3YmYwYzM3NTQ2NWVkNWM5MDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRlMTY3Mzk5ODA5NTIwZmM2NTlkNWY5MDJlMTQ2YmZmZjUwOGUxNTFkNGMxZWM0NDAyNzYyOWVjODUwMGM1ZGQifQ"
+        },
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L721-L723",
+          "version": "repo-lines-v1:sha256:71dcfbfd146aa7813b6160d0a41b5954bd7f91c6c62ad687957285583bbe313c:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTExYTE2NWNjYTA4NmIzOTcxMGZkMjViNzJiMjJlNTVkMmQyYTU3NmVhOTg3ZTRiZDk5YWJiZDUyMmE3ZGNlOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjQ1ZjQwOWQ2NDkyOWYzOWNiOTY1Y2ZmZTMwNjFiODgyNmI0ZmI1MjgyNTJhZGVjMGQwYWEyMjcyNjA3YjRkZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTA1OGZlNDFlMzgyODc3YTc0ZTk5N2FmM2RkNzc3OWM3NjIxZDVjZGExODI5MjQ4MTM0Mjk4ZWM5YWE3NWE2MSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMWZlYjE3YjUyYjdmNzJiMDI4YjBjNzBiMmMyNTk4MWQ1ZWE3YjE2MTZjZmE1MDUzNWY1NTE4ODQ3YTFiYTExZCJ9"
+        },
+        {
+          "resource": "repo://fastapi/security/oauth2.py#L653-L693",
+          "version": "repo-lines-v1:sha256:2e0dc29ab596b02f535b7d20a1b82fdb0740da24c029781902f39e0f7e63f128:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3NjYyMGU2Njc5OTVhYWYzYTE1NzMyNjk0MGU5NTgzZjc1YzZiNmIyMmRlYmM0ZWNmMzMyMTk0ZGNiNzEyOTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY0ZDNjN2FjNTQwZjQwZDZmNDMxZGVkOGU0OWM0MTc4ZjkwODczODdhNTcyNDhkYmM0ZDFkMGY3NGE1MDQ3NjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMzNjYwMzEzYTY4NjcxMGJmZmM3Njk5OGFiODRmY2EzYTFkM2ExZWM2MGFlMzI5NDkxZDhkYzg2ODY1ZmU0YzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2b9bc27533a449e68534173e9f77af62",
+      "statement": "The example's get_current_user decodes the JWT scope claim, validates TokenData, and raises 401 Not enough permissions with WWW-Authenticate: Bearer scope=\"...\" when a required scope is missing.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/security/tutorial005_an_py310.py#L108-L140",
+          "version": "repo-lines-v1:sha256:8e435d87a52e4625e23d525e1aac37ecd7f4928e6a831f3d2f1bbfa22f0db914:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5OTdmMzkxYjVjYmI5NmE5YzIxZDM0YmE0NjI5NjQ1YjJlM2ZhNTczZjk2NDE4Yjg0MDE0NDY3NTAxNDZmMGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjN2E2NTdiNjYyZTNkMWUyNzE1NjliMmI2YzhhMDUwMzE2ZjY5ZjBiNzRlNDQ4N2M4N2Y4ZWY4ZDlmMThmM2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc5NzAzYTIwYTA5MDlkNjk3NTdhYzRhYjFjMTViYmY2Mjg3MDVjYzQxMjlkMjliNGFiMWQ2YmNkYzEzZTU1N2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUyZjZkZDY2M2VhNjVjMWU2NGViYTdmODk2OWUzMDUwN2U4ZTY2YjU1N2ZjYWEzNDIzOGZlZjA1MGI4ODQyMmUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c943d80e4cec4dfab5fc3d8ffde3157d",
+      "statement": "The token endpoint stores the requested form scopes in the JWT scope claim joined by spaces.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/security/tutorial005_an_py310.py#L151-L163",
+          "version": "repo-lines-v1:sha256:5cd2859fe543a434d96dad13c7789467f041c52b42cd52feeaa81ddd54c0bc0c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxM2JlNjFiMmY2YThkOTI2MTU1YTgzZWU4MDg4OTk0ZTkzNmViYzZkZjczNGRiZjM1OWRlYzI3YjI5NTQ3MWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3MTA4YWNjN2YwOWFlNDBhZmQ1NjgwNTJiZGYxZjUxYTQyZDlkMGIzN2I2ODE0MmI3NzdmZjFmZDkwOTk0ZGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdlZDM0ZDc1ZTM1MWJlMGMzMjdmMTc1YzVmOTU1NTRiMjlmMzM2MzMyMDk0ZDA4NDhjZjE2N2M4ZGNmOGE1NWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI4MjFjYWE3MTBmY2QzZWJlN2RkMzIzZGJmY2UyN2VlMGVlM2Q4ZDNhNDcwOTUzMTQwZWMxOThhYjg2NDkwYzMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_59b919060d99430caa1ac05751035bfe",
+      "statement": "Dependency cache keys include the sorted set of OAuth scopes for dependencies that use scopes, so the same dependency used with different scopes is solved separately.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/dependencies/models.py#L82-L120",
+          "version": "repo-lines-v1:sha256:df052982f5a663e286b99f761a1a0758188826bbbf750f8a6ee594523a8b1a3d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMwNjQ2NjhjZjE1MmE5N2I4ZDY2NTdhYTAyOWQxOWExMjJjODAyNDBiNDA2MDdlYjI5NGYzYmY2ZTIxZjYwNWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFiY2MxZDEwMGEwMGZiN2Q4MjhmYzllOTgzOTMyNGZkMmExNTNhNjYzYzg5MTQyZGEwMGUwNDBiYWMwNDhiYmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE1ZTk0OGY4YTM4N2NmYTNkY2JjNjk0ZjhlOWEwN2UzZTY4NTZiNmVmMDAxYTg3YzIzMTI0ZWIwYTNhMjM0ZWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRhM2FiZTZkMTdkMjIwMzA4NjJiZDJjNmI3MzIzODlmMzE5ZTk3ZDgxYTk3NWJiNzMxYTJjMDA5NWU0OTI3NWIifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

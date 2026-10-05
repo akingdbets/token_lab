@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:176fa036c6059da0136a1620314ba07417d131df21d46f30efc767e2f1050d87",
+  "claims": [
+    {
+      "id": "claim_c7caf0a9e0644b0c902889c110baa706",
+      "statement": "Returning a Response subclass directly bypasses FastAPI validation, serialization and OpenAPI documentation; Pydantic data must first be converted with jsonable_encoder before putting it in a JSONResponse.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/response-directly.md",
+          "version": "repo-file-v1:sha256:a16e842fe44bd9b6c4ffbb21281d6e5f705c08e09c1a2f6b0bd49bbb130b51fe"
+        },
+        {
+          "resource": "repo://docs_src/response_directly/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:c5ba30b57409b5a3ce123ce94bf4ced559cc8ae23c841ac66d48b95ebb87185d"
+        }
+      ]
+    },
+    {
+      "id": "claim_e4662a7961f44d589ed6ab466e4612c0",
+      "statement": "Response(content=..., media_type=...) can return arbitrary content such as XML.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/response_directly/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:8d6c3927aaf4a3417d0373db861d99f739cb442e9b86fc0a703da984c2b0a1c2"
+        }
+      ]
+    },
+    {
+      "id": "claim_1ddcc79d8c3f441e8e832bada5e662a2",
+      "statement": "response_class sets the response class and documented media type; combining response_class with returning a Response uses response_class only for documentation.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/custom_response/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:69afb75cfc83fddda8556e261f810c84f05783d3e81164b78b9460676befbe46"
+        },
+        {
+          "resource": "repo://docs_src/custom_response/tutorial004_py310.py",
+          "version": "repo-file-v1:sha256:6ac7dcaeeb944bf2d78744e00aed29c35ad790705a91c3869a46d0741fcec65e"
+        }
+      ]
+    },
+    {
+      "id": "claim_bdbfe128700c43518f0ddbac9e00b53a",
+      "statement": "fastapi.responses re-exports Starlette's Response, HTMLResponse, PlainTextResponse, JSONResponse, RedirectResponse, StreamingResponse and FileResponse, plus EventSourceResponse from fastapi.sse.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/responses.py#L1-L13",
+          "version": "repo-lines-v1:sha256:d61b17ae82b55afb0beaca85dfee4bb424ae40ac0ba0eba3fac04bedad207acd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVlZTMyMzc3NjdhOTRlMWVmNDBiNDYxZTUwYWY3MWEwMWI1ZGQyMWQ5NGVkNmM1MDA2ZDI2YjQwODc4ZThhMTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYyZWY1MmU3ZGQyYTg5NzI0NTM4MjNlN2VjZmM3NDAzMWE0MTU4MDYxNTk0MzY5MWM4MmVhNzIzZGEwMTJiYzUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgxNjQxMmE3MjBjZmE2NWY5ZDBkYThmZDVlMjBlOGM3MTdiMDVlYzdjMTA0ZDcyZTdiYWYyNjhhNGZiYTNmM2YifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_83b433d81f4f4cb383c9b8b571895d6a",
+      "statement": "RedirectResponse defaults to status 307 and with response_class=RedirectResponse the endpoint can return just the URL, optionally combined with status_code=302.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/custom-response.md",
+          "version": "repo-file-v1:sha256:90a94828ff0f2d0970069b9138c079adc6c9b7c0a5155ed27cc2f4117284ae98"
+        },
+        {
+          "resource": "repo://docs_src/custom_response/tutorial006b_py310.py",
+          "version": "repo-file-v1:sha256:0f53d288c51c6ef8d8d54401a14915c1db353a0b3a81929a98b151f174cc2a88"
+        },
+        {
+          "resource": "repo://docs_src/custom_response/tutorial006c_py310.py",
+          "version": "repo-file-v1:sha256:d6ab8f35a24cce2df4dec8d3ae979fd2c715dabf9757c97a05a437525d1727c2"
+        }
+      ]
+    },
+    {
+      "id": "claim_11c44f666caa40cfabc1e0bd19455625",
+      "statement": "StreamingResponse streams from sync or async generators (await anyio.sleep(0) enables cancellation), and FileResponse streams a file path with Content-Length, Last-Modified and ETag headers; with response_class=FileResponse the endpoint may return the path.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/custom-response.md",
+          "version": "repo-file-v1:sha256:90a94828ff0f2d0970069b9138c079adc6c9b7c0a5155ed27cc2f4117284ae98"
+        },
+        {
+          "resource": "repo://docs_src/custom_response/tutorial007_py310.py",
+          "version": "repo-file-v1:sha256:3687b2a3de3c4c6a3e43f7c110df72c03395065ebd702ff820fd6bcd9c7013c5"
+        },
+        {
+          "resource": "repo://docs_src/custom_response/tutorial009b_py310.py",
+          "version": "repo-file-v1:sha256:093e91ee7cdc411402bdbbed9b300253fb9ee853cae4c3dff84879f5de745116"
+        }
+      ]
+    },
+    {
+      "id": "claim_89c298aa5b274d8fb2235c920aeeab5c",
+      "statement": "Custom response classes subclass Response and implement render(content) -> bytes, e.g. orjson with OPT_INDENT_2.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/custom_response/tutorial009c_py310.py",
+          "version": "repo-file-v1:sha256:54478beefaca88b134e864f17c15d38a00b9a17b96209b8e37be34d7794bc004"
+        }
+      ]
+    },
+    {
+      "id": "claim_d9de83be5ecd4558868bb4eb304501ef",
+      "statement": "UJSONResponse and ORJSONResponse are deprecated with FastAPIDeprecationWarning because a response model already serializes JSON directly via Pydantic.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/responses.py#L33-L80",
+          "version": "repo-lines-v1:sha256:e8e8a20838a596ad58809a7b0fc1c7157e621b4cf7974f556410d4277e8757e1:eyJzZWxlY3RlZExpbmVDb3VudCI6NDgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM1NDdkMTAyZjBjY2M4Yzg5NDNjMDM1ZjViNTkxNGIwZmE0YzlmMzUxYjNhNDg1ODEyYjE0YmNhMjM0YTBiZmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRjZTNmNWVhMzNlOWE3NmNjNjM1ZWMxZDE5MWVhMTdmOWQ4OWZjODBhMDk5YWFiMGM5MTI4MDcyODY4OWM5YTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ3ODgzNWFjOWVmZDFhOWIyOWJmZTQ1NGEyMDY2MGQ2ZjBjOWFlNGM2Y2RmODljNjk4NWEyZTE3YWRhMGEwNmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ea9c48da306544ee9330d9cd61c1e33e",
+      "statement": "default_response_class on FastAPI (or APIRouter) sets the response class for all path operations, overridable per operation.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/custom_response/tutorial010_py310.py",
+          "version": "repo-file-v1:sha256:1a9e3857b2e55ab19abccaf35f9a3532a933945db3b436058835328ff13dcf62"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

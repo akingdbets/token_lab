@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:b4897eda11bc6e2f5406e202c5fd10fd10e981ec1787a42d7a52e07d4ae251a2",
+  "claims": [
+    {
+      "id": "claim_b60d33505e3e44bba850b35facfb2c7a",
+      "statement": "Pydantic models validate and convert input data on instantiation, e.g. coercing \"123\" to int and a timestamp string to datetime.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/python_types/tutorial011_py310.py#L1-L22",
+          "version": "repo-lines-v1:sha256:502a7d9fb9465e5ebb1f2c0d16bcad857ae83186792fa417121dea893b86aec2:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzNjZjYjg1Y2EzYThkYjg4N2I5YjhiOWQxZDNmNGFkODE2ZDM2MGM4NGI4OTA1YThhNmFkMjA3ZjQ0NjE0MzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxN2U3NTE4Y2JmMjQ3NTY2MmZkYzMxNDkwMjQyNGRiMWRjNWU2MTcyYjgzYzFjMzY5MWI4ZTBhNjJkZjg4M2YiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_85d31f19fb5f4445a60ab7ec53fb274a",
+      "statement": "In Annotated[T, ...], the first type parameter is the actual type and the rest is metadata ignored by Python, which FastAPI uses for extra declarations.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/python-types.md#L296-L321",
+          "version": "repo-lines-v1:sha256:c1acc791343e11b3ff3df98450abea728b9410be3c0c7996bfcdf30128a6b908:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJlMmY0ZjU1NzEzYWQwOWMxZDZjNTYwN2ZlZWEyZGI4MTVjZDg2YmFlNjkyNGZlY2VhMDVjMzIyZDZiODcyNzYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE2ZmI4MTlmMmE2MjBlMmM1NTkyNjBmZmYwY2Y3YzFhYjk0NzIyNjQ5ZTUzYjAwOTgxZTNhMGEzYmE1NTg3YzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA3ZDI1NjZmMjI3YWVjMWI0ZGI1OThhZDM5NTYyNjdiMjNiOGM3OThjOWFmMzZmMTMyODgwMmY5MTI3YWNlMWMifQ"
+        },
+        {
+          "resource": "repo://docs_src/python_types/tutorial013_py310.py#L1-L5",
+          "version": "repo-lines-v1:sha256:0f1bcff7af0cd49ccebccbb796eafecc0901ba0e14fa2fbdfb5d7dddb6ca766d:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGQ2NTQ2Yjk1YmMzMDI5NGFkZTRkMzY4YzFiM2Y2NTA3MzgzNWNiOGUwNTM2NjM5NTdlZjJlMWNjNTUzODdmZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjE2ODI4MmJhZjkzZTk5MjQzYmE0YWU0MDJlNjM2NWQ4NjcyZjUxZTAyODViNzExNmE1OTIyNDkxYTEzN2UyYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_1ef2ea6341bb4423a44e8d2ce72765b2",
+      "statement": "Optional[X] is equivalent to Union[X, None]; a parameter typed this way without a default is still required, and the docs recommend X | None or Union over Optional.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/advanced-python-types.md#L1-L61",
+          "version": "repo-lines-v1:sha256:b0869c253e99abda72600bc0e1ebf9ba0fd092f625e4f7c23cd1fd977aaea5d0:eyJzZWxlY3RlZExpbmVDb3VudCI6NjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI4YWViYmIzYWNjZjBlNDkyYTY3YzMwZWI4YzBlMDg3NzFhMzYxNDAzMzFjMDkzOWNmNzJmMTUyZmU1ZGI1ZmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE4N2RkZWVjMDU5ODU3YjYzMTBlZWZlZDZlMmZiNjg1Yjc4MTA2MTY4YTQwYmQyYTM1MGY1ZGIxZTZmYjVhOTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_48dcd62c1c6340a6a15392ed86be8251",
+      "statement": "Coroutine path operation functions are awaited directly, while plain def endpoints are run via run_in_threadpool.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L350-L363",
+          "version": "repo-lines-v1:sha256:7dbb8514b38b02ce43b5f1a403b4cbdfc86bddddbab63c89b7bd35d192dfba80:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4N2FiMDYxOTE0N2Q0ZTdhYTIzZjJhMjBiNjAxNGY4ZmZmMzljNDY2MjFkZDgxOTE1ZmZlZmY3NmZmYTY1OTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVmZTVmMzQ3YTdlODYzNDIyMWQ3NjdlNzZlZWI2YjdlYmE2MGU4ZTFlMTQ2Mjk1MmJiNDI3MTg1OTM2NjkzZWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI2YWQyMzM1ZDM5NGEwMTE2NjAyYjcyMGNiNzJjNDdmN2NiNDk5YTM3MzM0MzMzMmEwNGU4OTRjMDE3MjkxMmIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4ff224a249894411b7445455bbac6c79",
+      "statement": "For sync endpoints, response model validation is also executed in the threadpool.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L316-L330",
+          "version": "repo-lines-v1:sha256:b84b735c0f4893a35217e5f1799b4483dde62aaac5b5d164ec0ff15b9caa374c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFiYmJhMzMwNWIzY2JlYTUyNDc1NDZhYTNjY2U0ZjIxY2I4YzIzOGNlN2E1ODQyMjJkN2YxZDcyOTM0OWE2NWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhNTc2NGQzYWFmZGUyYzMyMTE1MDRjYzE1NDM4ZTFmYjI2NGU3M2RlZGFiMmQ4ZjkwOTc3ZjYxNGE1ODVhOTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQwZWZjNDRhZmRkNGNkZDk2NDk0ZWJmNjI1ZmI2YjY3ZWVjNjIxYTVhYjhjYzBmZDMwNmRkYWY3ODMxMWY2NzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI0ZTk1NTUzYzVkMDQ5MTRkNWI5YmUyZDI2OGIxMjU5OWNiY2Q5YWVkN2MzZTcxZDkxMWM3ZDg2ZmVhM2U0ZDAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9c750c3a8ee447019a82687b2ddd2ffe",
+      "statement": "contextmanager_in_threadpool runs a sync context manager's __enter__ in the threadpool and its __exit__ with a separate CapacityLimiter to avoid deadlocks with pooled resources.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/concurrency.py#L17-L41",
+          "version": "repo-lines-v1:sha256:d2eef2e92996f2727716f206cc1db6826b5356289655cf281dae8f17f406ae5b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNiY2M0NDVlYmQyMGQ1ZGYyYjlhMWY3M2JjODdmNjQyZWQ1MTcyYmFmNzc3NzAxNzJhNTczNzJhMTQxOGVlOWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhOWY4YzJiYzdhMTQxYTAyMmFmM2ZlYjhhYjUwMDhlYzI1NzU3ZWYyNGFjZDA0OWY1MDg5YTc0YjdjOWFlODEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUwNjZhZjhjNjA3NmIyNTVlYzg0MjcyZDUwM2FiMTZmZDE1M2MzYzI4ZjdiMWY2YTgxZDk1YjBlOTNjODA0NjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_99c0a46e34ff4261afc6a8cb5603b9be",
+      "statement": "The docs advise async def when using awaitable libraries or no blocking I/O, def for blocking libraries without await support, and def when unsure; sync dependencies also run in the threadpool.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/async.md#L404-L444",
+          "version": "repo-lines-v1:sha256:38b6709245897e3233c6f8015cd7096ee876fdf3e2d54eda06a76829e6fa2e87:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNhZmZiOTk5YTNiMzBiODY0NTY0OWIxMGZiODMwOGMzY2I0MDc0ZmI4M2JhZDFlNmUyZTc2ZTdiOThjZTZhYTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4YWRkM2I1ZmRiMzM5MzMwMjUxODA5NjVjN2E5MzA0ZjFkNmVhZWIyZWRiOGVkMDYxNDFlN2ZkNzlmOWVhNzQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhjZDA3MGUwMTMyZWJlMjZjNjZjYTQ0MGUzMjgwOTFiODdmNjBlOTAyZmUwNjQxMjRmOGEzZDdlNTNmYzA2MjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://docs/en/docs/async.md#L5-L56",
+          "version": "repo-lines-v1:sha256:15d5461d61fade0ae575f7ea5a31e85e8d89519d33a27bec075db3af2609738e:eyJzZWxlY3RlZExpbmVDb3VudCI6NTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0YzM5MWFhMmJlMzc1NWE2YzU0YTZkOTQ2NzNiMzNkYmU2ODc1ZDhjYWY1NjdkNGI3ZTNlMTI4NDU3ZWFhMzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI0MjQ2MTk2MmFlYTY4ZTZjNDU1ZjI0MGU0ZDNjNDI1NzEyYTc5N2YwZWUxMDVhOWM0Mzg4NDBmYWY3ZTgwYTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZiOWE1NGI4NjllZWQ4NTk4ZjNiOTZiODdkNDllMGUzYTQ5ODJkY2ZjOTBkZjZjZGMwYzhkNjVkZmQyYjdhOWUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

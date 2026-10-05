@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:adcdf7ee11253b04584c2457ad7ff04cd151159257495832009588051b80d0d2",
+  "claims": [
+    {
+      "id": "claim_159af6d6001349c6971c133677bd8c16",
+      "statement": "FastAPI accepts title, description, summary, version, terms_of_service, contact and license_info constructor arguments that populate the OpenAPI info section; license_info may use an SPDX identifier instead of url.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/metadata/tutorial001_1_py310.py#L29-L32",
+          "version": "repo-lines-v1:sha256:880a7c0b57297755e356da8f35b8fc1a10d2740140572b6dcd6ce457fbfed8ab:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjQyMjdiNDgxN2U0NzhlNjQwYTcyMjBhMDNhOWRkNGM2OTYxZWY1NTY2ZWMwN2YwN2U5NDlhZGI2MTI4ZTRhNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTg3NGYwNTUyZTg2ZjM3MmNmMjczNGU5ODFhMzRlZTNkZDVlODI1NzdlNzc2ZDc1YmQ3ZDQzYTkzNGU2NDdjZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZmY5NmExN2Q3MzAxYTM4YjM3NzMwODgzMjY5ZTNiMWUwMDg4OWI1OWY1N2U5ZjIxYTQ4YjhiMWJjM2ExMTY0YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOGU2Y2QyNGYyZWMxZWY0YmQzOGJjMGRmMDFiOGQ1OGMyMTZkYjYwNjM5OWFlM2QwYmE0NDg0OTM0ZDQxMTZjMiJ9"
+        },
+        {
+          "resource": "repo://docs_src/metadata/tutorial001_py310.py#L18-L33",
+          "version": "repo-lines-v1:sha256:da90277d35aa50df7069cf3abd9e4efb59298f0c0a789389358136dd4a6c0635:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ2YmJmZTZjZTQwMDg2NTQ4MDBlZjUwZTE1YjUyNjZjYmM4MjQxYzUzODUzNTViYTA1YTA2NGU4MWJhODJkYjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliMzllMDIyZTBkODU0MTIwMDAzZDc5MGMyOGI3NTk2MmVkZDMwMzc1NmQ1MTMzM2RmNzQ1Y2ZiODZlYTExY2UiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU2MWU4NzM3ZGM5ZDI0M2YxZWU1M2RhZTY4YzZlMzg3ZWJjNGQ4OTdiZTI1MmQwZDk1ZDZhZjJkNjNmYWRmODkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM4NGYyM2UyMzliYmY5ZDBjNzc0MTNkMzk0OTAzMDI4NDgxMzFmZTk4ZWJhYTI3MDM4NDM0NmIxZGRiYmU4ZjIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f8085ee7d5f24b8f899c4bdeba2ac6bf",
+      "statement": "The default title is \"FastAPI\" and the default version is \"0.1.0\".",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/applications.py#L114-L134",
+          "version": "repo-lines-v1:sha256:b4d6b5c222cf5c4b1d676a55930be1959c2f99f23494c7ae1768ef65ec2ee5c9:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmNGNkOTBkN2FhOWQ1MGUzMWQ4MmQzYzY0ZDVlY2U4MDRlNzc3NjVlODU1ZTZiY2FjNGE5ZmE5OWY1MWEzMzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJjYTVlMDJjMDI2OWU1YTBkNTY5NDY1NGE3NTRkNWEzOTZlNGEyM2NiYTE0N2I3NDFiZDJmNDk0MjNhZmY5NTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVmNjU3NjgxYTc0OTIzMzExZWY5OGM0OGFjMDhlZjgzYzc2NDA0NDQ2YjIyYjVkNTIxYmJmMjljMjE0NjhjNTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFhMjU1ZTg0N2EzODc1MGRiOTA3MDg4MjhmYjBkN2FmNmM2MDg3MDZkZGE1ZDg0ODc4ZWUxYjA2MDcxOTViNGEifQ"
+        },
+        {
+          "resource": "repo://fastapi/applications.py#L194-L217",
+          "version": "repo-lines-v1:sha256:03bbd5220926bfd3de954899908f43477e730f4745156fdade08f2bae474de39:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdkMmI5MmRiMTMyNmI4NDA0MGJiYjM2OTMwMjNmOTg3NmQ0M2RmMTI0YzY5NjNhOTIwZDJiYzM4YTRkMzIzMmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJlM2RhZmZkOWU2Mjc2OTA0ZjcwMDhiYjIyMmNlNGRhZmMxMGYwZmY1MjU3ZWJkMjlmZTBlMGIxNTUzYzA1NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJhODI3MjBiMjdhZWFlYjk5MDJlN2E4OTc4NWNlMDM0MzIzMzkyZWY3NGQ5ZjRhYzExMGJiNGI3NTNhODUwM2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI4ZTU1NGQyZDcyZTJiMDY1NzJjYWM4YTE0YzU0ZWIzYzdlNGU4YjJmNmI4ZWNjY2M3MmMzMmNlOWNhZWE1ZTcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_696aec14489d4d12a12e52ce9e010f9b",
+      "statement": "FastAPI generates OpenAPI 3.1.0; openapi_version can only be overridden as an attribute, not a constructor parameter.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/applications.py#L912-L942",
+          "version": "repo-lines-v1:sha256:f7e9c46cd0fcf26b82c47021fd256d963549dd8def72fbf8949d7f3103ef5a98:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjczYmI3NTcxNmQ2YjZkMTI4NDFjNzY0M2U4NzQ1ZTM2NDE3MmUyYjI1YzhhYTM4NGYxN2Y4NGFkMjFkZDM4NjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ0NmYwYmVmZmVjNGQxYWQxMGFjYTUxYWZkOWNiZDZmNGM3NzJjOTBiNTc5MzRlNDVlYjc4ZDlmNWI3MmQzZTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjczZmQ4YjA0Y2I4OWVhY2RmYjk4MzM2YTk5N2VkMjJmMTc0ODk4OWRlZjhmOTNkNWVlMjFiZDc4ZTJjZDFhMTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU5MzM2MzE1YWFkYzgyYjI4MmI1YTU2ZGQzN2UzZTg3YTE2MDdjNTEwMjU4NTUyNWVmMGM4ZWZiMjkzYjJhYTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e9b2ae3712cc4e36a493e56a28498627",
+      "statement": "openapi_tags takes a list of tag dicts (name required, optional description and externalDocs) and the list order defines tag order in docs UIs.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/metadata/tutorial004_py310.py#L1-L28",
+          "version": "repo-lines-v1:sha256:a4494d9021c2038d3ad22b6a87263b7cc9838273ffbd6af69d54179c205d76d2:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NTJhNjdiNWY5MWZhYTUxN2I4M2E2Nzk4MDk5NTI5MThlNWUxZjc5YmEzMDE1OTE2MTJlYWViM2VhMTQ1YjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3NzZiYjQ0ZGM3NGEzMGMzNzE4NTAxYmI2Y2ZmNTE0ZDNjYTQyNTEzMzE0MWJmZWIyOGJkNGQ0NWIxMTBhMTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a4a68491ea8740298d91fb60ac299c6b",
+      "statement": "setup() registers the OpenAPI route only when openapi_url is set and registers docs_url/redoc_url routes only when openapi_url is also set, all with include_in_schema=False, so openapi_url=None disables the docs UIs too.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/applications.py#L1141-L1195",
+          "version": "repo-lines-v1:sha256:8c0abf51d11141c94f4e68730a66c1f03e6caec3ce3c7a554f95f1d17cec61b1:eyJzZWxlY3RlZExpbmVDb3VudCI6NTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjMmJlYzY5M2VlOWU2NjhmM2FhODI1Y2I4YzYzNjUzNWM0ZjdmNDk1ZTU0M2M2ZmZhNDBkZDZiZjhjMzc2YTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRiOGI2Y2Q1ZTY1ZjVhMTM2M2FmYjY2ZDgxNDMyZmY0MWVjMDZlZGFjZmY5NTQ5ZmUzMDllMjJlNjRkYzljNzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJlZjM3YjlmODNmNDk1ZTcxNTliOTdlODg2MDUyYTk3MTQ0MGUxYzQ4ZjBhMDIwNTM5NTgwNzYxNWNiZTRjYjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b4c65a5f67ec4f5b897c629c6af7313c",
+      "statement": "Setting openapi_url from a pydantic-settings BaseSettings field lets an empty OPENAPI_URL environment variable disable OpenAPI and docs, returning 404 for /openapi.json, /docs and /redoc.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/how-to/conditional-openapi.md",
+          "version": "repo-file-v1:sha256:ca6d6df6ec65e9629105ca7b75316f11fcb8205f52ca3f83c31907f3c7bfb71a"
+        },
+        {
+          "resource": "repo://docs_src/conditional_openapi/tutorial001_py310.py#L1-L16",
+          "version": "repo-lines-v1:sha256:f79d5ffde728d45af68a46614b9cec13e20ca765b5012e8daf2aa60d49cf5f96:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NTJhNjdiNWY5MWZhYTUxN2I4M2E2Nzk4MDk5NTI5MThlNWUxZjc5YmEzMDE1OTE2MTJlYWViM2VhMTQ1YjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViZDlmZDRkZGQxODVmMDE3ODdmOWM5NDhkZjZjYWM5YzY3YTU0OTg5MDlmZDFiMDNhMGNlMTc1N2YwZmZlOWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

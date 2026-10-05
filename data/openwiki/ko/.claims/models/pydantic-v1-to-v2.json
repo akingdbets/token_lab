@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:8d53cb9066d8d8eb0313bd8828ed901aff1a5ac182a019588f2232ee3e0ddf23",
+  "claims": [
+    {
+      "id": "claim_d5375ec44bc549cd9121f2ec3c029b8d",
+      "statement": "FastAPI 0.119.0 added partial pydantic.v1 support, 0.126.0 dropped Pydantic v1, and 0.128.0 dropped pydantic.v1 so current FastAPI requires Pydantic v2; pydantic.v1 is unsupported on Python 3.14+.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/how-to/migrate-from-pydantic-v1-to-pydantic-v2.md",
+          "version": "repo-file-v1:sha256:d32eeb81809f77fae691dd364f92f2c63c265d1758b45b5147454323b947e24f"
+        }
+      ]
+    },
+    {
+      "id": "claim_9f25858598d4400490d8c4aaac971c8a",
+      "statement": "Using a pydantic.v1 model as a field/response model, or encoding a pydantic.v1 instance with jsonable_encoder, raises PydanticV1NotSupportedError.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/encoders.py#L341-L345",
+          "version": "repo-lines-v1:sha256:8bd4eaa88e97cbabc56f7b007a142a573dbf5f540b79f1a572766ffba1ae2921:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmZkODk3YjhiODc3ZGQ0YzBjZGVlNjJmZDNiZDFhYzhhODBmOGZlYzc0MDI3ZmMxMGQwMzg2NzRkMWY1MjBhMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmE5ZjhjMmJjN2ExNDFhMDIyYWYzZmViOGFiNTAwOGVjMjU3NTdlZjI0YWNkMDQ5ZjUwODlhNzRiN2M5YWU4MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTM3ZmQzMDAyMWYxMzE3YjdjZjAyNjczZmZmMWRkNzFjNjAxZTYyOGUzMDdiYjIzYzlmNTY4ODcxYzRmNDE1OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzYyZDE0MGM5YjI4N2IxYzY5OTRlYjg4OTdkOGU2ZGMxMTQ5MDYxMDM0MmZkNzE4ODRkZjU5YzEyNGI2YjQ4YyJ9"
+        },
+        {
+          "resource": "repo://fastapi/exceptions.py#L246-L249",
+          "version": "repo-lines-v1:sha256:764f41ec7e31955a911b955f50206a2df7a7619476a57b0e6702d47f67022936:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTg0ZGUzZWE4ZWExY2JiM2VlMGZjNGVmOTNlOTkxMWRjMjc4Y2FjMjRhN2Q0YjJhNzA1MjNmYWZiYTk3YWZhMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOWY4NzNlOGVkMDU3ZGJmYzlkYmRlMDc1YjVlNDcyZTk1YTcyMzNmYmM4MGJjNjg0Mjc5MmEyZDIxYmJmY2ZmYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMGFkYjMzOTc3NWI3M2IxMGJiZWZjNWFjYjI1YjQwYTRiYjNhZTFkNWU5ZTQ5N2Q5NzMwM2RiNTgzMzE3MjA5YyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGRkOTFmYjI5ZjNmZjYxNWNiN2VlMmNmYzdjODUwZGY0MmU5YjQ0MDE3NTUwNGFhYWQ4MTUxMmYzODg5ODI4NCJ9"
+        },
+        {
+          "resource": "repo://fastapi/utils.py#L58-L70",
+          "version": "repo-lines-v1:sha256:54d174d40c0d0ac34c551f086bcf13fb9ef8076514e4b2bc340b2776350b4aea:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxMGUwZjFjN2VkMzUyMmU5OTFkZGQxNTNkNDllN2UzYTY3ZGJlNWZhNGE4NmNmMmU4OGZjYTBmYjViNDFkOTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhOWY4YzJiYzdhMTQxYTAyMmFmM2ZlYjhhYjUwMDhlYzI1NzU3ZWYyNGFjZDA0OWY1MDg5YTc0YjdjOWFlODEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhlNmNkMjRmMmVjMWVmNGJkMzhiYzBkZjAxYjhkNThjMjE2ZGI2MDYzOTlhZTNkMGJhNDQ4NDkzNGQ0MTE2YzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc1NzYwN2FjNzg2MDhkOTUzMTc4Mjk0ZmZlZTAxMjM2NWEwOGM4Y2FkMDMxNjk1MmJhNmI2MmYyYjliNzYzYWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6cc4ce143f6a4f9f8144464448cccd0b",
+      "statement": "The recommended migration path is to have tests in CI and use the bump-pydantic tool to automate most code changes.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/how-to/migrate-from-pydantic-v1-to-pydantic-v2.md",
+          "version": "repo-file-v1:sha256:d32eeb81809f77fae691dd364f92f2c63c265d1758b45b5147454323b947e24f"
+        }
+      ]
+    },
+    {
+      "id": "claim_49ee9a34bcb2475bb46c2158d0c6d198",
+      "statement": "In FastAPI 0.119-0.127, pydantic.v1 models could be used as inputs with Pydantic v2 response models in the same path operation, and fastapi.temp_pydantic_v1_params provided Body/Query/Form for v1 models; that module is absent from this repository's fastapi package.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/pydantic_v1_in_v2/tutorial003_an_py310.py#L1-L23",
+          "version": "repo-lines-v1:sha256:52db986981354283edd0df87337c507d7a96076e5769d62c7f39959ad4e1a77b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NTJhNjdiNWY5MWZhYTUxN2I4M2E2Nzk4MDk5NTI5MThlNWUxZjc5YmEzMDE1OTE2MTJlYWViM2VhMTQ1YjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQwNGVjNDQwNGU0NWIyNmJmZjBmYjU5YTVjM2FkNWZkNDdiNjFhYjdmMTQyODBlYTgzZmQ5NDA5NTQ5ODBlOTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://docs_src/pydantic_v1_in_v2/tutorial004_an_py310.py#L1-L19",
+          "version": "repo-lines-v1:sha256:eb24080f605379c61fc4b2570543301d38d26a10238253d86ff7b05d27c2a3fa:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkNjU0NmI5NWJjMzAyOTRhZGU0ZDM2OGMxYjNmNjUwNzM4MzVjYjhlMDUzNjYzOTU3ZWYyZTFjYzU1Mzg3ZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQwNGVjNDQwNGU0NWIyNmJmZjBmYjU5YTVjM2FkNWZkNDdiNjFhYjdmMTQyODBlYTgzZmQ5NDA5NTQ5ODBlOTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

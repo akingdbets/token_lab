@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:140097633cf899efaf86e927b97f6952581c7019cba82d9e600c775604c9f4c2",
+  "claims": [
+    {
+      "id": "claim_b26dbf3689c14aebb4fb93bf0035083d",
+      "statement": "jsonable_encoder converts objects such as Pydantic models and datetimes into JSON-compatible Python structures (dict, str) rather than a JSON string.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/encoder.md",
+          "version": "repo-file-v1:sha256:734b4bcaedfb1cc9071d50caa3166b38c9145774793d932a581b32fdc227e46d"
+        },
+        {
+          "resource": "repo://docs_src/encoder/tutorial001_py310.py#L1-L22",
+          "version": "repo-lines-v1:sha256:865e6a0be6cbe0593f2b1b3f18841253d31fcea25052c1f31892a3f2f09941b3:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzNjZjYjg1Y2EzYThkYjg4N2I5YjhiOWQxZDNmNGFkODE2ZDM2MGM4NGI4OTA1YThhNmFkMjA3ZjQ0NjE0MzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU0MDQ1NjZmYTk3N2Y2NmMzNDMyMWQxNGUxYmI0NzAzNWNmYWUwMzkwMTk5OGE5NDNiM2U3NGNkYzRiNTlmZjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_63146768bdc94ddfa63650df5b7047e3",
+      "statement": "jsonable_encoder's default type encoders map dates/times to isoformat strings, timedelta to total seconds, Decimal to int or float depending on exponent, Enum to value, UUID/Path/URL types to str, bytes via decode and sets to lists.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/encoders.py#L53-L112",
+          "version": "repo-lines-v1:sha256:7ec91ad0261187030e8ceabf34875922516999a95b903d2380ec129cbe19877d:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJiMTcyODMxYmYyZjY5OGYwNDIyMTNkZWJiNGQxNjYyOWI2YTdiNDhiMzlhYWNiODVhNDU2MDFkNDBjZGFkOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUyMmZhYTUzNWJkMmVhM2Q1MmU3NDFlZDQ1NDQzNWI3ZmU0OWU4MzU4NmU5NDNkOThkODJiYmZiMjRkMWY1YzUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE0OTVhMDNiNzRiZTc1NDFmMmY2OGVlODU1Mzg4MzA3YTBkMmI4OWM0ODNhZmQyOTI0ZTAzNjkwNDE1ZDE3MmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk1MWU1ZDEyYmVjZmRhNDVlYTk0MzViNTA0MmQ2OGQ2MjRkZmU5MWU3MjZiODg2ZjRjZTFiMmViYmI5ODMzYTMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2875be49cfe14040bbe0de85dbbd8b6d",
+      "statement": "jsonable_encoder accepts include, exclude, by_alias (default True), exclude_unset, exclude_defaults, exclude_none, custom_encoder and sqlalchemy_safe (default True).",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/encoders.py#L129-L220",
+          "version": "repo-lines-v1:sha256:b58802b1c897b7f7bca1adf368c84c6c7f569c2aa2f441b333a12e0fdb91586e:eyJzZWxlY3RlZExpbmVDb3VudCI6OTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgyNTQwZDhjNjNkY2QxMmY5ODIyYmFhODUzOTcxMzk2NzNmNzg4ZThjZmE0YTk1OGEzZDgyMDRmZDliMWExNTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyOWZmOWIyZDM5MjdlNzQ3MjAzMTg0NDZhOWFjZjA1ZGI1OTA3ZTVhMDI0NjY3NjYyMGQwOTZjZDk4MWYzZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM5NTUzZTUxOGNlMDhhM2EwNmM1YTk1OTA3YWYzNTgxNjE3ZjljYWQxYTQ5N2E1MjAzNzQ5OTExZmY0ZGRmMDQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRjMzk0ZjdjM2I2MDNiOThiZmM4NzE4NDIxNjljMzRjOTc1NDI5MWQ2NTg2N2Y1NWJlNTkyNDI2N2U0YzIwMDUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_96b992b6d6294dfa9d6d4e2cf251b9fe",
+      "statement": "With PUT replacement, fields omitted from the request take the input model's defaults (e.g. tax reverting to 10.5), overwriting stored values.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/body-updates.md",
+          "version": "repo-file-v1:sha256:166ed4b1d088483a926573fa880dcbdaefcdb5dcb3521a5c136b4c57bbe74104"
+        },
+        {
+          "resource": "repo://docs_src/body_updates/tutorial001_py310.py#L8-L32",
+          "version": "repo-lines-v1:sha256:efbc397bfddd2085f77bedab4cd31bc8d9b9037e847007485e28be52066c2e4d:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3NDQxNGZkMDA3ZDU2ZDlmYWE5MzljYjZlMTE5MDg4NWMwYjgwODU2ZmZkZmNhNmFmYmFlMTg5ZTFkZTc4MTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJiOTg4YzIyMzgxMDZiOWZiZmMxZGFhZDc5MjNhMGIwYTVmOWRkZDlkOTgxMmUyYTczMmRiODExNWNjNmE5YTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU5NzI5ZWM2NWMyMTJkMTVmM2QxNDc0NzUyYzg5YzljNjc3ZDRmN2Y0ZjQ4ZmU4YjI1YmE4YTk4MWJkM2ExMzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e6d2c58c6b5a42c9b27f09b1d919645e",
+      "statement": "Partial updates use item.model_dump(exclude_unset=True) to get only provided fields and stored_model.model_copy(update=update_data) to merge them, then jsonable_encoder before storing.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/body_updates/tutorial002_py310.py#L28-L35",
+          "version": "repo-lines-v1:sha256:8e03cd5fb0df25bd6d78348d4a5a33608007789e3109d973e02da732237e56e4:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDkwNWU0Y2ExZWYwNzNlYzg1YmE1ZTA3ZWZkYzhmOWI1YmNmYTQ5OWVlYmYyOTRlZDM1NWU5ZWQ0ZDhiNTMxYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDhhOWYzNjE3MjFjMWQ3NjZmZjVkMDZmNzQzNDBhNGVmMmY4MzUxOGI5NzdkN2VkNzAyMDE1Y2M4ZWM1MWFhMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjc0ZTRlNmEyY2U5MWE5NGQ3ZmJkM2EyOGNhNmVjZDU5NTUwOTM0ZGEzZDgzOTVlMmQwOWE0YWE5YWJmZWQyNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

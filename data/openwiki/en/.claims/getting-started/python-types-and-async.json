@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:689f10b49b622d85c58f0e344d4254a1d0ae5c05b8afa00b196dc29458b00d96",
+  "claims": [
+    {
+      "id": "claim_5f29c8308bcf440bad600a23163ee701",
+      "statement": "Non-coroutine path operation functions are executed with run_in_threadpool, while coroutine functions are awaited directly.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L350-L363",
+          "version": "repo-lines-v1:sha256:7dbb8514b38b02ce43b5f1a403b4cbdfc86bddddbab63c89b7bd35d192dfba80:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4N2FiMDYxOTE0N2Q0ZTdhYTIzZjJhMjBiNjAxNGY4ZmZmMzljNDY2MjFkZDgxOTE1ZmZlZmY3NmZmYTY1OTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVmZTVmMzQ3YTdlODYzNDIyMWQ3NjdlNzZlZWI2YjdlYmE2MGU4ZTFlMTQ2Mjk1MmJiNDI3MTg1OTM2NjkzZWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI2YWQyMzM1ZDM5NGEwMTE2NjAyYjcyMGNiNzJjNDdmN2NiNDk5YTM3MzM0MzMzMmEwNGU4OTRjMDE3MjkxMmIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6fcc6198964a42d9abbf801428fe0d3e",
+      "statement": "Use async def when calling libraries that require await, plain def for blocking libraries, and plain def when unsure; def and async def can be mixed.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/async.md#L5-L56",
+          "version": "repo-lines-v1:sha256:15d5461d61fade0ae575f7ea5a31e85e8d89519d33a27bec075db3af2609738e:eyJzZWxlY3RlZExpbmVDb3VudCI6NTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0YzM5MWFhMmJlMzc1NWE2YzU0YTZkOTQ2NzNiMzNkYmU2ODc1ZDhjYWY1NjdkNGI3ZTNlMTI4NDU3ZWFhMzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI0MjQ2MTk2MmFlYTY4ZTZjNDU1ZjI0MGU0ZDNjNDI1NzEyYTc5N2YwZWUxMDVhOWM0Mzg4NDBmYWY3ZTgwYTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZiOWE1NGI4NjllZWQ4NTk4ZjNiOTZiODdkNDllMGUzYTQ5ODJkY2ZjOTBkZjZjZGMwYzhkNjVkZmQyYjdhOWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_86abd6905b3a42218eaf1faf2a9c9104",
+      "statement": "Plain def dependencies and sub-dependencies are also run in the threadpool, while utility functions called directly by user code are not affected.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/async.md#L404-L440",
+          "version": "repo-lines-v1:sha256:c27e1efa9871009bc7581d3413bf4d99b52a9deafb3c0ddee9c85479938957e8:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNhZmZiOTk5YTNiMzBiODY0NTY0OWIxMGZiODMwOGMzY2I0MDc0ZmI4M2JhZDFlNmUyZTc2ZTdiOThjZTZhYTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5Yzc4NDc4Yzk3MTg3YmVmZGYwZjNhZGI3YmFkYzUwMTgzY2QwMjliY2VhMzU5YmU3NjZkZGNhMGQ1MDgwZmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhjZDA3MGUwMTMyZWJlMjZjNjZjYTQ0MGUzMjgwOTFiODdmNjBlOTAyZmUwNjQxMjRmOGEzZDdlNTNmYzA2MjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEwZjYxY2NjZTYxMWExMWUxZDVjZjFmMzM4MDAzMGY4NTU1NjQ4YzU5NDBkNjFiMjQxODZlOTUxNGZkNGZiMzIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5bef0b6cc53243bbb259455d1986ca3d",
+      "statement": "fastapi.concurrency re-exports Starlette's run_in_threadpool, iterate_in_threadpool and run_until_first_complete.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/concurrency.py#L1-L12",
+          "version": "repo-lines-v1:sha256:73155e04afef2ad4848b8c25abf1ec1847621aca4a0cc6a2ae81628fd9052a6c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU3ZDg1YTE5YTNhZTUwYjVkZTY0ZGQ2NzkyMmM2MzRkZmFiMTQ0YWFjYzQ2OWVhOWIwZDE2MzIxMTY3YzRjZDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliMzllMDIyZTBkODU0MTIwMDAzZDc5MGMyOGI3NTk2MmVkZDMwMzc1NmQ1MTMzM2RmNzQ1Y2ZiODZlYTExY2UiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY0ZGVlYjc4ZjY1ZjYzY2ZkOTNiZjEyNjY2OTI1MjE2YjAyNTMxZTVhZGJkZGE3MmZkZjBhNTRlODUyYmVmYjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8c1e8c1df77542699890ecbe1ae99cf4",
+      "statement": "A parameter typed Optional[X] without a default value is still required, so the docs recommend Union[X, None] or X | None and rely on defaults for optionality.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/advanced-python-types.md",
+          "version": "repo-file-v1:sha256:b0869c253e99abda72600bc0e1ebf9ba0fd092f625e4f7c23cd1fd977aaea5d0"
+        }
+      ]
+    },
+    {
+      "id": "claim_0b686a09106f4d358a8462b897a16598",
+      "statement": "Annotated attaches metadata to a type that Python ignores but FastAPI uses.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/python-types.md#L296-L321",
+          "version": "repo-lines-v1:sha256:c1acc791343e11b3ff3df98450abea728b9410be3c0c7996bfcdf30128a6b908:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJlMmY0ZjU1NzEzYWQwOWMxZDZjNTYwN2ZlZWEyZGI4MTVjZDg2YmFlNjkyNGZlY2VhMDVjMzIyZDZiODcyNzYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE2ZmI4MTlmMmE2MjBlMmM1NTkyNjBmZmYwY2Y3YzFhYjk0NzIyNjQ5ZTUzYjAwOTgxZTNhMGEzYmE1NTg3YzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA3ZDI1NjZmMjI3YWVjMWI0ZGI1OThhZDM5NTYyNjdiMjNiOGM3OThjOWFmMzZmMTMyODgwMmY5MTI3YWNlMWMifQ"
+        },
+        {
+          "resource": "repo://docs_src/python_types/tutorial013_py310.py",
+          "version": "repo-file-v1:sha256:0f1bcff7af0cd49ccebccbb796eafecc0901ba0e14fa2fbdfb5d7dddb6ca766d"
+        }
+      ]
+    },
+    {
+      "id": "claim_97068ff9b28047cab9f50f78c5fc97ba",
+      "statement": "Pydantic models validate and convert external data on instantiation, e.g. string '123' to int.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/python_types/tutorial011_py310.py",
+          "version": "repo-file-v1:sha256:502a7d9fb9465e5ebb1f2c0d16bcad857ae83186792fa417121dea893b86aec2"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:fd4254db5963eb93fd829d3567703574df353a7972c9bb8ce5a28fdd9a875793",
+  "claims": [
+    {
+      "id": "claim_250c329a8b354dababcd778ebbf92b47",
+      "statement": "Function parameters not in the path are query parameters; a parameter without a default is required, while defaults or None make it optional.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/query_params/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:24a89a52791101a417f38a26b8f753a6e4b76b6ab44775d8c0a8e3e9bcb68204"
+        },
+        {
+          "resource": "repo://docs_src/query_params/tutorial006_py310.py",
+          "version": "repo-file-v1:sha256:c28777ce2035be4a5c9ca1bc7ccb7c2be88f9c9c2e6fdb4917402b05bc942ee4"
+        }
+      ]
+    },
+    {
+      "id": "claim_e8cc4d3184964e528be8298b69ba5edc",
+      "statement": "bool query parameters accept values such as 1, True, true, on and yes as True.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/query-params.md#L80-L110",
+          "version": "repo-lines-v1:sha256:cb155c411ffeeb85d45502fc963d2cec7d5d8347bd85e5ec6809d348df81c3b4:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFlNTAxYjVjNjUyOGY2YjBmMmRiNjQwMWYzNDU3OGVmMTQwZmM3YjcwNDU2OTUwNjFjYjBjYjVjNzQ3ZmJkYTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk2YTIyNzY2NTczYWUyODc2NzMzMDIxNzk4NGUxY2I5YjcxMGQ2YzcwODdkZGFkYmE2Yzk3ZTU5ZDE1MzMxN2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY1Y2FiMDgwZGM4NDVlOTBmOTU4NjY1ZDExMjAwNDMxZWU2OTM0MzhhMjM5M2ZmMTkxNDI5MTdhY2YwOTZiYTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFhNjQ1MGM2N2Q3NWFiYzc5N2ViMTU0NDQwYjlmNWQ5Y2M4NGZiZGE3Y2YxZmI2MmNkNWIxMzAyOTdhNjJlOWEifQ"
+        },
+        {
+          "resource": "repo://docs_src/query_params/tutorial003_py310.py",
+          "version": "repo-file-v1:sha256:08aba8e65aba610adba0a9c4b1e7ebab377566e569d0fca6ab1afe67e17f6846"
+        }
+      ]
+    },
+    {
+      "id": "claim_f907ae5d48c14974ba19709f8c557613",
+      "statement": "Query() supports min_length, max_length and pattern; regex is deprecated in favor of pattern.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/query_params_str_validations/tutorial004_an_py310.py",
+          "version": "repo-file-v1:sha256:ee8c53820477421fad2320832713569514e59e59c81ad40e927f896523b1bd3f"
+        },
+        {
+          "resource": "repo://fastapi/params.py#L104-L107",
+          "version": "repo-lines-v1:sha256:196873064b24c558569980d1f899c479ab5cada638472f9875b7e786d44a624d:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTMyNTg4YWUyMjBiZTgyNTA3NGZhNzFmZjQxMzlkMGRhNjRjMTEyNzMzMGU1NTBmYWEzOWM1ZWJiNWRhOWVjMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGM1NTc5OWQxMzcwYzc1OGFiYzcyMzBkNjNhZDMwODcyNzlhZmNjZjYxNWNmMWIwNDliMmQ1MjhhYmFiM2FmMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjAwYjMyZTY2NGQ1ZTM3YTkyYTRkOWZjMWUwNjgwZGMxNzg2MzliMzJjYmM1NjM0ZjE4NTA5MWJlN2Q4YTVjOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMmMxMGQyZWIwMmNjODQ0Y2IxODg4MDlhNzU4NzE1Y2EzM2RjNGUyODRjMDgxYjllMGNhMTBhMzA2MWYyZGY5YSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_65245711ea994645aa348ba71bd4a7c7",
+      "statement": "List query parameters require explicit Query() and receive repeated values like ?q=foo&q=bar.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/query_params_str_validations/tutorial011_an_py310.py",
+          "version": "repo-file-v1:sha256:aec567167522472aaebb94b3772d589d445c2bf2c812e8ea2509a414e41410a6"
+        },
+        {
+          "resource": "repo://docs_src/query_params_str_validations/tutorial012_an_py310.py",
+          "version": "repo-file-v1:sha256:5442c54450b377acc0187b979bb878539466a994bd082306ed83980f02191476"
+        }
+      ]
+    },
+    {
+      "id": "claim_a7c126f1cb5a4902a120c027c0a9db61",
+      "statement": "Query supports alias, title, description, deprecated and include_in_schema=False.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/query_params_str_validations/tutorial010_an_py310.py",
+          "version": "repo-file-v1:sha256:0173690403774c23029f6e72980b5f130bd85864b78cefef11e0ea7727d4bca0"
+        },
+        {
+          "resource": "repo://docs_src/query_params_str_validations/tutorial014_an_py310.py",
+          "version": "repo-file-v1:sha256:7b1ad6b08fd1c3e45da9a49217cb16bb7b58debf5b1201fc65370070c1df2a70"
+        }
+      ]
+    },
+    {
+      "id": "claim_36a8ddb7d0fc4a808a4ca59077fb4407",
+      "statement": "Custom validation can use Pydantic's AfterValidator in Annotated, raising ValueError for invalid values.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/query_params_str_validations/tutorial015_an_py310.py",
+          "version": "repo-file-v1:sha256:d733f3a7f0d68492c453c224d112e8961cfbb7f61fa81ea5b370508b05e6cf8a"
+        }
+      ]
+    },
+    {
+      "id": "claim_52c6076067364a63a755fabb37eb193c",
+      "statement": "A Pydantic model declared as Annotated[FilterParams, Query()] groups query parameters, and extra='forbid' rejects unknown ones.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/query-param-models.md#L35-L60",
+          "version": "repo-lines-v1:sha256:04d417b6e3fb8e836dea39fbcfb0fb9ff16a2350b965d7e7525f43d61ab13dcc:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZkNzI2ZjRlZTkzZmI4ODg4MGIzZDQwYjQ2MTJlM2NhOGJiYjM4MWE4OTU5NmFkYjE5MDBmY2IzZmIyMWYxNTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU0ODc2MjZiM2RiNTk4M2IxMjdjNGFlYWY5ZmE4OTE1NDQyMGU4YjEyNjE4MzBhZmJhOWI2MjFkNDYwNGM1MjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjViMTBjZGNkOGI4N2ZiYmViODgwZTA0YWIyZjk2OGFjMTI2MjIzY2RlYzYwMmNhNWM1NTE1ZDAzZTZmMDM1NGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQwODk4NDE0M2EzYmYyNWE5MDMzMjU5NzkwNDQyMWQzYjc3NzNiNTViMjdjNmM5ZDA0NGI5NDU1NzA3ZmM1NzMifQ"
+        },
+        {
+          "resource": "repo://docs_src/query_param_models/tutorial001_an_py310.py",
+          "version": "repo-file-v1:sha256:43310422d9502e0971e91f8c385be549c7c74629cd305dfa1609fa0bfa56684f"
+        },
+        {
+          "resource": "repo://docs_src/query_param_models/tutorial002_an_py310.py",
+          "version": "repo-file-v1:sha256:083cf7d3d61f65d1e7636e43627f56715091512ddd22e047f06e86980e8f1a07"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

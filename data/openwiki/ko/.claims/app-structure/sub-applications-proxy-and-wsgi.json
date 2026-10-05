@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:c69522960f3ab62bf9a6eaa8fb374a1ba956a8c6182c3b1fd7448ecdd37d5a5c",
+  "claims": [
+    {
+      "id": "claim_9ec3e5384da544878a5433d3a764d583",
+      "statement": "app.mount(path, subapp) attaches an independent FastAPI application that has its own OpenAPI schema and docs UI under the mount path; the mount path is communicated to the sub-app via the ASGI root_path.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/sub-applications.md",
+          "version": "repo-file-v1:sha256:f26e3e2c648bd9643a057aaa55882b739828930f8aec62b9c9205844e410a93e"
+        },
+        {
+          "resource": "repo://docs_src/sub_applications/tutorial001_py310.py#L1-L19",
+          "version": "repo-lines-v1:sha256:0185c00e86f07a94acb528007575338104385db2e1547932d301982b10241f66:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NTJhNjdiNWY5MWZhYTUxN2I4M2E2Nzk4MDk5NTI5MThlNWUxZjc5YmEzMDE1OTE2MTJlYWViM2VhMTQ1YjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmMWIyZGQyNzM5YWEwY2Y1MmZjZDg3MGQzNGQ2YWE5MDYyYjZhYzAyNWNiYzZkYWQ2M2NmMmVjODFiOWM2YWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ccbb9f3b3e914c148263c7dff33f7784",
+      "statement": "root_path can be provided with the --root-path server option or the FastAPI(root_path=...) parameter, and the current value is available in request.scope[\"root_path\"].",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/behind_a_proxy/tutorial001_py310.py#L1-L8",
+          "version": "repo-lines-v1:sha256:3dd4b33bb2a39f6887d0be02f0d19398d1e7a5a8a7a080e32ca6749e63618629:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjY3MzU3MDcxNmZjZDc5MzQwM2JlNTIxMjkzYTFiNzJhY2ViZDk0OTcwYzc4Njk0NDhiOGIxMjgwZmUyOTE5ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNmNiYTFlYTY1NmE1NWZkZjk2ODdhODA3NGE1NjU1ZDY0YzkyNTI0MzZlMTc5OGNiZTMwYTBlYWY5Zjk3YjBiNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://docs_src/behind_a_proxy/tutorial002_py310.py#L1-L8",
+          "version": "repo-lines-v1:sha256:bca9320bab320270e2f9c1274f3dccd4b98bc3d05e1e092f89232c04a626c563:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjY3MzU3MDcxNmZjZDc5MzQwM2JlNTIxMjkzYTFiNzJhY2ViZDk0OTcwYzc4Njk0NDhiOGIxMjgwZmUyOTE5ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNmNiYTFlYTY1NmE1NWZkZjk2ODdhODA3NGE1NjU1ZDY0YzkyNTI0MzZlMTc5OGNiZTMwYTBlYWY5Zjk3YjBiNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_aa05b8aad7d54347b83cf150ec77f232",
+      "statement": "When serving /openapi.json, FastAPI reads root_path from the request scope and, if root_path_in_servers is true and no server with that URL exists, prepends {\"url\": root_path} to the schema's servers list.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/applications.py#L1141-L1156",
+          "version": "repo-lines-v1:sha256:44801aaca2ab21967127ad149bbb182c7b0156d8790b0c3f857c5b2d672e41ac:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjMmJlYzY5M2VlOWU2NjhmM2FhODI1Y2I4YzYzNjUzNWM0ZjdmNDk1ZTU0M2M2ZmZhNDBkZDZiZjhjMzc2YTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIxOGQ5ZGYzZjZlYWI4Yzg3M2E1M2U4ZGIyNDk5MDI4ZWVmYTBlZDZmNWRiNzRkYTFlNjM2M2I4ZThmNDcxYjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRiOGI2Y2Q1ZTY1ZjVhMTM2M2FmYjY2ZDgxNDMyZmY0MWVjMDZlZGFjZmY5NTQ5ZmUzMDllMjJlNjRkYzljNzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ2Yzk1MDk1OGU0OGFiYzk1OGQ4ZGE2ODQyNmI2OTVmM2Q4ZDlkYTI3MWIwNDc4ODFiODlmMzEyZTUyOTFmY2MifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ee24ac46807e4b20998b6e6feebbc690",
+      "statement": "root_path_in_servers=False disables the automatic server entry derived from root_path; custom servers can be passed via the servers parameter.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/behind_a_proxy/tutorial003_py310.py#L1-L14",
+          "version": "repo-lines-v1:sha256:ce51c83208a2a84b6011e8c4cedfb2248c6cefd7924bd6535a6b4726e3740853:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI2NzM1NzA3MTZmY2Q3OTM0MDNiZTUyMTI5M2ExYjcyYWNlYmQ5NDk3MGM3ODY5NDQ4YjhiMTI4MGZlMjkxOWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZjYmExZWE2NTZhNTVmZGY5Njg3YTgwNzRhNTY1NWQ2NGM5MjUyNDM2ZTE3OThjYmUzMGEwZWFmOWY5N2IwYjQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://docs_src/behind_a_proxy/tutorial004_py310.py#L1-L15",
+          "version": "repo-lines-v1:sha256:90a8268c6f574a8a8778399a7329dc85b94654eac9b2600028adb27aac2e065f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI2NzM1NzA3MTZmY2Q3OTM0MDNiZTUyMTI5M2ExYjcyYWNlYmQ5NDk3MGM3ODY5NDQ4YjhiMTI4MGZlMjkxOWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZjYmExZWE2NTZhNTVmZGY5Njg3YTgwNzRhNTY1NWQ2NGM5MjUyNDM2ZTE3OThjYmUzMGEwZWFmOWY5N2IwYjQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_651fc3ea0b7a45ed99aab6c9e5deeb2a",
+      "statement": "Proxy X-Forwarded-* headers are only trusted when the server is started with --forwarded-allow-ips, which allows correct HTTPS redirect URLs.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/behind-a-proxy.md",
+          "version": "repo-file-v1:sha256:197d035c951663303e173d6c11051ed40402100aeaa08f66280a59e72b93111e"
+        }
+      ]
+    },
+    {
+      "id": "claim_6d1fc6a2b6a64bd3a471b2cda4e2ee69",
+      "statement": "WSGI apps like Flask are mounted by wrapping them with a2wsgi's WSGIMiddleware; fastapi.middleware.wsgi.WSGIMiddleware is just a re-export of Starlette's and is deprecated.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/wsgi.md",
+          "version": "repo-file-v1:sha256:26fc5d4ce5dd27a70d5a9f8a28cf799d217f5b53fafecd7978bed1f9ef4a093a"
+        },
+        {
+          "resource": "repo://docs_src/wsgi/tutorial001_py310.py#L1-L23",
+          "version": "repo-lines-v1:sha256:c25743b01e411e47ce8209f08edcec2ba742991cdcae32c7fa11f45daaee6a53:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImExZDA2MGMxNTI5MmQ3YTE0ZjI4YzJiM2EzNzg1YTJjOTYyZGY3Yzc1NTM0OGJmOTViODZlNmI4YWNlZWE3MGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhYTFmMmI2YjJkM2NmMmRiYjYzMWJjMWVlN2ZmZDE3OGVlNzE2ZGYzYWJhZmMyOGU1MDY5ZWQ2ZTM4OWU5MmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://fastapi/middleware/wsgi.py#L1-L3",
+          "version": "repo-lines-v1:sha256:dc4bee81980ce351a75e1a45a85d55159a14f6dfbbd8d0c110e68044ead65d59:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMThlNmJjZDFiNjA3MjJlZmRkMGY1NTEyZTJlMzNhOGVjODE4MzQyYzhmN2ZmMWI4N2FiMjdkMjhjMWUzZmU4MSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzFkODlkNjA1MjI2YzQyODI5M2RmYzQ2MDcyOTU2MmU1MjAzMTEyZmI1ZmEzMzI4M2FiMjAwNjU0ODJhMmFkYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

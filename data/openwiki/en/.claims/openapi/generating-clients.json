@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:fe868437dfcef61670abc2c9a7dfd877385a42ea21d4f9da2e6f2a751d08d159",
+  "claims": [
+    {
+      "id": "claim_967ca0f87cf5423d830edb0747f3b168",
+      "statement": "A TypeScript client can be generated from a FastAPI app with npx @hey-api/openapi-ts -i http://localhost:8000/openapi.json -o src/client, and tools must support OpenAPI 3.1.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/generate-clients.md",
+          "version": "repo-file-v1:sha256:febae93ca763a6f79738aca7244fd1e021ca73ffb75fa991a348e016065ab40d"
+        }
+      ]
+    },
+    {
+      "id": "claim_09cc5d7ed1bd4a90aa607c930497d984",
+      "statement": "Tags on path operations let generated clients group methods into services.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/generate-clients.md#L79-L99",
+          "version": "repo-lines-v1:sha256:594756d34d45963d91caca0cb7aae1f4630dbfc06cca6bef9d1133ddc0eb7151:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA0MGMwNGY0YjM1ZjVmNzZhZDEzNjE2MTU0MmViNjZkZWIxNzU2N2YxODI4ZmFlMTQ1NWIxMzIwYTcxNTk3NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFhM2E1OGQ3NmMzZDlmMWFhOTNhZDNjNmZmZjE4Y2NhNzUyODcxNGY0MmZiNDllZDQ3ZDY0NzU5ZTk1MGIyNGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ4NmYyYmRjY2YzYTdkZTQ2YmIxMjdhMDJiYWQ1ZDUxMjEyODUyNDVlYmFhZjkyNzNhYmZiZWU1YmY3MTk0YjAifQ"
+        },
+        {
+          "resource": "repo://docs_src/generate_clients/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:497d4a90138e3bfa3bf2989cf548023bacee2240be4a38b60eb9900de1723894"
+        }
+      ]
+    },
+    {
+      "id": "claim_f936eb15546145a099d108b0c1a1fcb3",
+      "statement": "generate_unique_id_function can build operation IDs from the first tag and route name, e.g. f\"{route.tags[0]}-{route.name}\", which also names generated models.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/generate-clients.md#L114-L133",
+          "version": "repo-lines-v1:sha256:7e925b166e392ff45ecc7725cdfb073134cad94d46f55d66335dc5433dbc0771:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkwOTNiY2UzNjA0MTI3YmNhYzAwZmQ3MjQ2MjJjOGMwNGFlOGYzN2I1NTgxYzljNWFkM2MxNmM5ZmRkNDNiOTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc5MGZiYjUyNWQ5NDllMmMzNzFmYWQ4ZWVhMzFkNzA0ZmE0MGYwYzNjMDFhOGE5MzU2M2UxMzQzZTg4ODY3OGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIxNmExYjQ0NzZjNzljN2Y5YmJiZjAxOTIzODVmM2QxZWMxOTU1MmNiNTc4ZGRlNmVkYzIxMmMyMjEyNTY1YTUifQ"
+        },
+        {
+          "resource": "repo://docs_src/generate_clients/tutorial003_py310.py",
+          "version": "repo-file-v1:sha256:5d12148df2f6a7a4a1c4d630b57254084a0d0ae906186c1c34019a7e9c941fbf"
+        }
+      ]
+    },
+    {
+      "id": "claim_0c720f99bffa474eb3db11d5f39f5c4c",
+      "statement": "The OpenAPI JSON can be preprocessed to strip the tag prefix from operation IDs before generating the client.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/generate_clients/tutorial004.js",
+          "version": "repo-file-v1:sha256:42897f2bf26ce044f61347561f6dbac3850360d566a85a4867a21175e1c12696"
+        },
+        {
+          "resource": "repo://docs_src/generate_clients/tutorial004_py310.py",
+          "version": "repo-file-v1:sha256:e400486a938dda51a12fa8769f6ac8680443704a5dee9b3155777ba77e384fd9"
+        }
+      ]
+    },
+    {
+      "id": "claim_039e53ef189f4b80946574800251f3f5",
+      "statement": "FastAPI's default operation ID combines the function name, path and HTTP method to guarantee uniqueness.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/utils.py#L95-L100",
+          "version": "repo-lines-v1:sha256:cbf3086bd0f75876a831db96144b85c6d61d309f62fa09eaa4b5045d6f8af45d:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmFkNDdjNmQyN2VlMzFmY2FmNDAwOTkwYzNiODQzNTRkOGRjZDFmZDI3ODBlYjZiZWYzNmI5ODRkNDZmYzY1OSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWE0ZTdkNjZkZTI3Y2UxZDM3YTY2ZWYxNmQzZTM4MDAwZmExMzQyZmQ2MzE1Nzk2MTE3MzM1ZWQyNmMyMDA4NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODRhYTc0MGIxYWRmM2FlOTYzNDMyYWVjNzAwNjg0ZTY2N2FlYWY1NWQ3YzNiODIyMTdkOGI5NWYxNzk1Yzc0ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiY2RmZTJiZTIxOTRkN2I0YjA4YmE5YzNmMWU1MjhmOWUzM2QxNzAxMjQ1OTNlYTIyYmI1NDBhYjE5YjA5ZjdkMCJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

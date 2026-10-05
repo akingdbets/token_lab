@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:e202f14b23fdc4655e8aca8467e7d71f649d9edccd7d4160a5e894ee5b027e4e",
+  "claims": [
+    {
+      "id": "claim_1069a5e8840744afa0ae0ad79a33d911",
+      "statement": "The recommended Dockerfile starts from the official Python image, copies requirements.txt and installs dependencies before copying the app code so Docker layer caching skips reinstalling dependencies, and runs CMD [\"fastapi\", \"run\", \"app/main.py\", \"--port\", \"80\"].",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/docker.md#L159-L234",
+          "version": "repo-lines-v1:sha256:f76914d4807f224f3ae06e36a817aa964dc7524530dc117f37c1288ae7323daa:eyJzZWxlY3RlZExpbmVDb3VudCI6NzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1YTc2YjVkOGE3MDU1NWU0YWVmNjU2OWVjMzRlMDZmNDg3MDlkN2I4NTk5ZjQ1Y2FmNDVmZjg1MWU4MDNkNWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQxZDNkNWIxZmYxMjY5MjA0YTU0OTMyN2M4MzExNTNjNmNjMWMzNGQzMDMzM2E5NjI2OTQ3YTI1Mjc1Yjk1ODciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZmMjA5ODMyYWY2ZGE5ODk2OGVkYzZhZDRkNWRjYTYwMzZlMzIyNWVhNjJhNDUzMzQyZjNmYjkwNzViM2E5MmEifQ"
+        },
+        {
+          "resource": "repo://docs/en/docs/deployment/docker.md#L280-L311",
+          "version": "repo-lines-v1:sha256:89073197d531451b626d0ee73b854bb04bce90bc4e2ffbbfce287a61547e390a:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NmRjYzY2NTE4MDYwNjRhMTVhZDU0OTg5ZTA3MzZjMGFjZjVhYTAxOWVkNGE1ZGM2ZDA1ZTI3MzkxZjBkMjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA4OWUxZWZjMTA4MDZmMTMwYTQ3YWVjZWM2YzMxZTE2Yzk4ZmY0MTJjMmRhY2U4Njg0Mjg3MDM4ODk1YmZhODUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQzMTMyNTVhYzRhNTYwMGY1ZmRhNWJlYTcwNmJhYTJiNjVmNGRhMTZiZjQyNzg1MTMyZDUxZDUzZjgxOTMyZjYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3aa78377716b4f7ba0d58345230e8af1",
+      "statement": "CMD must use the exec form so FastAPI shuts down gracefully and lifespan events are triggered.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/docker.md#L235-L258",
+          "version": "repo-lines-v1:sha256:a2e6493852154c9b6a4f8ddf5d979a2d658d3f0840bf99c97c87e76ea9fbb321:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhjOTI5ZDlhOTU4NGQyYTliZDFmMGE2MjNlYzk0NDU2MTMxYTI2OWFmN2JhOTYyMTJlYzBjNTE3ZDU3ZjAwNmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA3NTc2MTRlMmUyMjVhYzUwMThiYjIwMTFkMzJlYjJkNGI5YzUxZTNkZmYxMzRjODc2YWY1NDI1MTQ1NTg5YWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA0ODgwNDRiNTk2YzhmZWVkYzBmYjgxYmE0NTUxNGFiMGJlN2Q0MzY5ZmYzYTFlZDgwYzhlOTYxMTFiZDI0ODAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9e4deb68bb394d6f8d9748fb9e47ddd0",
+      "statement": "Behind a TLS termination proxy, --proxy-headers makes Uvicorn (via FastAPI CLI) trust the proxy's forwarded headers.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/docker.md#L272-L279",
+          "version": "repo-lines-v1:sha256:e8bd119eb1eaaf1c29f01f369080f43591dfb8fc0712fc14058b70433ede0538:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDNlOWE2OGNjNDc5Njg0MjhhOTNkMjU5ZmVlNDM2YmYxMGRlYTkwNzdmNjJkYmYwYWY0ZGEzY2RmOWMyZGYwNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2ViNzAyNTc1OTNkYTA2ZjY4MmEzZGRkYTU0YTlkMjYwZDRmYzUxNGY2NDUyMzdmNWNhNzRiMDhmOGRhNjFhNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzZkN2Y2YzY5Yjc0NWZhNTFkMzliN2FmMTZjNTA4NjcwZjM3NGI1NjFhMmUwZTUwMDJjM2IwOWY1NzE2MTI4NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiY2YwYjg2YWM2YzcwODlkZjMzOTVkZThmMTEyOTZiM2U1OWI2N2FlODBjYzU3OWQ1ZTZlNzcyNTlkNjA3YmY0ZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_ae147319fba646e6b5012b3d84979f49",
+      "statement": "With cluster-level replication (Kubernetes etc.) each container should run a single Uvicorn process; --workers inside a container is for special cases like a single server or Docker Compose.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/docker.md#L451-L536",
+          "version": "repo-lines-v1:sha256:e8ff71bceeb43b1bc56921bed9ccc9866e864677bdace4632563fda7ee56def8:eyJzZWxlY3RlZExpbmVDb3VudCI6ODYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcxYjg2MWIyYWM0Yzk0N2FlMGYzOGQ5NDUwZWMwMTQ3YmI4NGM4YTI5ZGVlMGY5ZDU0ZmE4OTU1OGU4OGM5ZTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgyNjU1NWY3NDkxZjFkMzZlMTNkNjQ2MmJlNGZkZTc0MDcwY2Y0ZGU0MzU3YTdiNjBkNGJhYzYyODY4NWJjMWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxN2I3ZGQxYzNmYzFmNzY4NzU3NDA3M2NkY2IzOWVjZWRhYzIwMWNkMTYyZGViYTVjMThlYjdkNzBkYTc0ZDYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c46f77ed8aac4c0899a0a257bba9c8f1",
+      "statement": "The tiangolo/uvicorn-gunicorn-fastapi base image is deprecated; images should be built from scratch and --workers used when multiple workers are needed.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/docker.md#L567-L584",
+          "version": "repo-lines-v1:sha256:b76e31ec99a57c3b8573c5ad3b802ada1f26e2eddb3f88e693791a7f4b890c6f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE5ODVjYzI4MmNjZTIwMTk1MWVkNGRjM2E2MzRjMDhmMGI2N2Y1ZmY0MzJhYTIzODFiY2ZmZDJjYjhjNjk1NzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdhMDg4MzMxODQ2NGIwNzMyYWVmNTJlZDg0Y2Y4YWE3ODRjOTk3MTE2ZWU1OThmZDdhNDRjODdmNGRlMDQzMmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIzZDM0YmY0OWMyZmM2Y2RjM2U2NjAxNDBjZDI3NDYwNTMwNTE2MjM3ZmYwNThhN2Q1MjAxMjIwNGVlNGMwM2MifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e4cb4abdf91146f2bc8dd941d1064d42",
+      "statement": "The fastapi command is provided by fastapi-cli (included in fastapi[standard]); without it fastapi.cli.main prints install instructions and raises RuntimeError.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/cli.py#L1-L13",
+          "version": "repo-lines-v1:sha256:a444f8922fb65a8da1556df00dd526303536f2368db1edeb972d70f4fba81485:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM1NDdkMTAyZjBjY2M4Yzg5NDNjMDM1ZjViNTkxNGIwZmE0YzlmMzUxYjNhNDg1ODEyYjE0YmNhMjM0YTBiZmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmMDkxOGU1ZjhhM2E0NTM1YmE5OTI1YTg3N2FkYWIxNTRhMjc5MGMyZDhjOWRkNzc0NTk5ZGU5Yjk1MTNmMTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://pyproject.toml#L65-L80",
+          "version": "repo-lines-v1:sha256:23af202dacd8d0d2ac3c848178d59c056afda7ed466c5d2c783f00c0f620a4e8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmNjM2ZDUzNDJmYWZmODY4ZTQwNjFmYzVjNGQwOGZmYTYwZGVkMjMwMGY0Y2RiZjE0MTJkMzNmOTc2ZTI1MDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU4MzYxNzFkMDdhNzg2MWMyNjk1YmY0NGM2ZGRlYjUwMzQzODA3NjZkNjQzNTA4M2E2ZDdmNjE3NzdiMWE5MWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlkN2Q1MjRiZTViNDQ2YmM0NDM3YjhjZTA1ZGU4MjUzOTM0NTlhZjY1NzRkODhlMzYwY2JkM2Y3ZGQ1NGEzNzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY2NWQ3ZDZjNTNmZDI2ZTEyMTQxNjE4ZjdjOGU3Y2JjZDk2YzRjNWI2MzMwNmVmOTRjOTc3YWI0MGZhMmNlMGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_787fbd2b31444042af956ccd0fcf81b3",
+      "statement": "fastapi deploy auto-detects the FastAPI app and deploys it to FastAPI Cloud, opening the browser to authenticate if not logged in; FastAPI Cloud handles HTTPS and request-based autoscaling.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/fastapicloud.md#L1-L47",
+          "version": "repo-lines-v1:sha256:2aa32a816486ccd57584a89e1f7c77573550e89cf13aff81a1894bc59d1c1b2d:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5YWVlNzBkZTEwOWMxODNhYzViYTk2YzM1YTEyMDU2ZGQ1ODI0M2NlOTI3ZWEzOTk1OWU4Yzg1NjZiNmI2MWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM2ZjFiZmY5YTE5YTJiNTRmZTNmNzUwYjhiMWZmZDFhMDIyZmUzMWVmZGVkNDQ5YmZmMTJhNjhiN2JkM2Y2YjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

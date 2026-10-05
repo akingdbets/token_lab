@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:b931363d71bb6ea1c943f949db5d9ca1f0b9837b28c440d51566bdbc772a7184",
+  "claims": [
+    {
+      "id": "claim_a5c07624afd24fdca0687d4f7a86cc1b",
+      "statement": "A common HTTPS setup uses a single TLS termination proxy on port 443 that holds certificates, selects them via SNI, decrypts requests and forwards plain HTTP to the FastAPI server.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/https.md#L1-L45",
+          "version": "repo-lines-v1:sha256:e3404482e84356c2c9b2ceb599cc81f64d84154a87e61399c20531dba2b9e6d4:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY4NWE1ZmVkOTQ4NDAyMGZmMWVjNDRhNzhjMDdlMTUxN2RjY2ZkNzg0MTg3MTBkZmJiMjdiMmRkMGY4Y2I2YTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc2ZGQ3Y2E5MDg2ZjMyNzc3MGY3YjhjOGQxMmE2NmVkZmVmYmI1NTU0NzlhZDViMmViNDE2MGVmN2NmNjcwYjAifQ"
+        },
+        {
+          "resource": "repo://docs/en/docs/deployment/https.md#L100-L159",
+          "version": "repo-lines-v1:sha256:9f5677fa27516305546bd869cf54e063f6d870008c0711b3484e42008439d3fb:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIzMjUwZjZiNjlhZDEzZTc3MTVmYTIzNTgyMDZhMTgyNjMwMGVjYTFjM2ZhMmNkNDZlMjYwMDZlZjViMmQyN2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc3YzY0MDk4Y2ExNWNiMWM5YjZkMWVlMTg2YjVkYjY1NmVhODBhZjYyYTEyZTJlMmRhZTY0NDE2YTZkZGU2ZjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAwNmEyZTAyYWUyMmVjOTAxZjAyMTdkOGUwMDk0OTg1MzBjMDI2MDY4OGRjYmRmZmYyZjdlMmRhNzE1MzBiMjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_73e4e3e44c9647ad8e6d27bae30d6140",
+      "statement": "Let's Encrypt provides free, automated certificates with about a 3-month lifetime that must be renewed, sometimes by the TLS proxy itself.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/https.md#L170-L192",
+          "version": "repo-lines-v1:sha256:6cbb2574b954bdaad44c1e5551f24dd0d24964e1d3666a97781e40011c6921db:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2OTU1YzVhZmM4MzVkNzFjZDZjZDM1Y2NkZjY3NTA3ODg2ZjgwOGYyYjQ3NTE5MDlmYTViMzM0MDA0OGNhNGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBkNWEzNjc3N2UxZDJlMzVjOThiMGE3Yzk5MjE1YTU3NzJhMjZhM2VhNDBiMTEyYmZhNzM2ZDRkZTY5MDBiN2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYzYjYyMjE2ZDU5ZjdmZDYzOWZmZTc0NjI3MjNmNmZlMTU5YmUzMmExNmM1MGQ2ZjIwZWU5Nzg0ZTI1MWMxMmMifQ"
+        },
+        {
+          "resource": "repo://docs/en/docs/deployment/https.md#L46-L59",
+          "version": "repo-lines-v1:sha256:f1c0914efb0e7927105385ea7c377f8c9b1b4bf715ec0b7fd51c5238d46493ab:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVkMTcxZDExODk1YjBjZGNiMTlkN2Y2NmI5YjhlM2JhZjAxZjE3NjUxZjUwMDY0Yzc2OTA2MjUyN2Q2NzE2MGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRiOWM4YWM5YjdlYzY0M2FkMWIzNWM0ZDg5MDFjYzExN2NmZTUxYTBlZTNiY2U1ZGE1OGJlZjBkY2U2ODc1ZWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQyZDViMTE2OWQzYzhlYmE5NTFmODQ2MTliNDI2YzBhNDY4MWMwZjQ4YzMyNWQ3YmQ0MzNiNzgxNjU2ZjhkNDgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0f4913409a314417b5a48973aa314b45",
+      "statement": "FastAPI Cloud deploys an app with the single command fastapi deploy and handles HTTPS and autoscaling replication.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/fastapicloud.md",
+          "version": "repo-file-v1:sha256:2aa32a816486ccd57584a89e1f7c77573550e89cf13aff81a1894bc59d1c1b2d"
+        }
+      ]
+    },
+    {
+      "id": "claim_9edb451b0c03466588e27fb177ab1b1d",
+      "statement": "The standard-no-fastapi-cloud-cli extra installs the standard dependencies without the FastAPI Cloud CLI.",
+      "evidence": [
+        {
+          "resource": "repo://pyproject.toml#L86-L104",
+          "version": "repo-lines-v1:sha256:84721540b5b05543f27a6d591535d8a720734bae6982a7c5df37fb5cd8aba69a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2YjI3YmVkMTJkNDMwNzU0MTVmMjMyZmRjZGE1NWM0YjA1ODU3M2QyOWNhMzdhNjJkZDQ3OTAxNTViYTAxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZkM2I2YzViOTQ0MjJhN2MwNGYwMDkzMzgxYmY4ZDE3MDdlNmVjY2E2Zjc4NzMyMWE2Nzk0ZWEzZGYxNjQ1MmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjExNDcyZGYyZTQ0ZmU1MzA3YjJkZmNhNWYzMTQzNzc2MTExYzQwZDA2NmMzNmI1N2ZkMTI0ZDAwNzE5NzdkY2UiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY3YjQ4ZWI5MTIyMWI3NGNmMjZkOGRhZTNiNGI0NzA1ZTRhNGE4N2ViNmUyYTc1Y2MyYzVhOWZiNmEyYTZmN2QifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bbbdb5e1cd834b73a6d8fa06e01ae520",
+      "statement": "FastAPI can be deployed to any cloud provider; Render and Railway are sponsoring providers with FastAPI guides.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/cloud.md",
+          "version": "repo-file-v1:sha256:77afcfc42ac2a099c1e8dedbe4b0af84c228cb1b9d4b17b46c48b312afed0e1a"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

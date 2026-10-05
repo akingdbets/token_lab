@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:4b7a6d4c7bd99b5545429dd65dbfcd5dd820c5f5a2392da3965e061822ce929e",
+  "claims": [
+    {
+      "id": "claim_17506ef3d86c457285b928e8d59e81a1",
+      "statement": "A SQLModel class with table=True is a table model; Field(primary_key=True) and Field(index=True) declare the primary key and indexes.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/sql_databases/tutorial001_an_py310.py#L7-L11",
+          "version": "repo-lines-v1:sha256:e69d0a165103b7b0e93c4edb4a68b8068269452a55064b4f8c070a9816ed2d48:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjFlOGI2YjNiYzI1NTk2MTI1Y2I4MTRkMmI1N2RjZDVlYTZkY2YyOGY2OTQyZDg2MDlhNzM3OTUyYTMxZDk1NCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzEyYTBjMzhhZDlkNmU4ZjBlOWUyOWQzYjEyMzIwNzQyYmQ2ZDcwMjhmZWI0ZDU4MDkyMzRlODlkMTI0ZDViMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGYxMTRjN2RiNGI0NGVmMWNmYzk1MTUwNzY5MWYzZjk3NjBhNmY2YjU4YjQwODZmZjU2NGMzN2NmZDQ0NjkxZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjZlNmI5ZTMwZTY2ZDE2MmVjMWIxZmU5ZDg3MGFkNzhkODU1ZmQzYjYyNzM5MzllYTZjMGQ3NmEyOWEzNGU4OSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_cdf756ded691435dabf7feede090cca3",
+      "statement": "The SQLite engine is created once with connect_args={\"check_same_thread\": False} because a single request may use multiple threads, and tables are created with SQLModel.metadata.create_all(engine).",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/sql-databases.md",
+          "version": "repo-file-v1:sha256:3fd102fdc70e9fed26fafb0e3296a67c51b451903e15640b4cf9551a63b777b8"
+        },
+        {
+          "resource": "repo://docs_src/sql_databases/tutorial001_an_py310.py#L14-L22",
+          "version": "repo-lines-v1:sha256:929bdb1e8846fa079b686986511655b40bc0e054994b86394d70949723ad99c8:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiY2Y1YzUxMDU4MjFkZGE4ZTNlOWQ5ODYwNTUzZTNmZTY5OWM0N2MyNzA0NDgyYTlmNzBlZjliM2U4ZWVlODY2ZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNGIxMTM4MDlhZjUzZDQ1NmM0ZjM3N2VlZTU5MDBjYTVkZTQ3Y2M3MjBmMGY2OGU5ZTgxOWI0ODlmNjNiNjBhMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2QzYjBkZWVlNzNlN2NmNTRmMzQzM2VhZGE0OGJhNmEyNDg3NTkzZWJmMGE0YTkxMjJhNjMzYmFjYWZmYjI2NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyNWQ4ZWM5ZmJmZjkzMTFjZDYyZjlmNWMxNDcyODEyZjhlM2IwNGE2OTFhNzlkM2UzN2Q1OTVhZWE4NDg0YiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_cb5bda7cf98a4e428ac1a221406ede8d",
+      "statement": "A yield dependency get_session provides one Session per request, exposed via the Annotated alias SessionDep.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/sql_databases/tutorial001_an_py310.py#L25-L30",
+          "version": "repo-lines-v1:sha256:08ea06572b2ca9a4daca9d7de9b8983035098506e3f17287aaee8b0606f00ee5:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDg2MzkzMGU3ZTZhODI3MTEzNDYwODQxNmI1MWRiMmRmZDFhMmE5YTljMWZhYmVlOTBmNTFkMzQ1YWY2OTA1MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTQ5NWM1MDUzNWY0MjAyMjRmN2Y5MGNkNTVkMmMyMDJjMTUwNGU2ODVhNGRiZjc1YzhlYjE4ZjNkNmYxNTE1ZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTY4ODEzOTllZDBmY2FiZWExYzIxNzU4ZTY5MzM2MzRjOTgwOWU4Nzc1YWRlMDg4Y2U5YWU5YTE5YmZkNWZhZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTJjNmI2MDE3MWFmNjgwOWQ4YTY5Yzk5MmJlNmY5NmFkOGFhMDI0MTk1NTBlZDVjODgzNjA4N2NhOGQ5NjExYiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_1549d0c9c0114d68a198afb870f707eb",
+      "statement": "The multiple-model pattern uses HeroBase for shared fields, Hero as the table model, HeroPublic (id: int, no secret_name) for responses, HeroCreate for creation input and HeroUpdate with all-optional fields.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/sql_databases/tutorial002_an_py310.py#L7-L28",
+          "version": "repo-lines-v1:sha256:58db2a257c2709048603ac025279fe60943763d996fd3865b72147c505174786:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA3NmEwYzBlNDBkNGQ3OWQ3NTIzNGNjNWI4MmI5ZjE0NWNjNWZjYzg4YTk1MDMzMTEwNzczYzMxMTkzMmJjMjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3YjEyNjRmOTM1MDgzODE4MDkzZTBiZTM5NDFiOGEwNTI2YTdjODY3ODM1OWZkOWU5NmYyYjMxYzA4MDcxYjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRmMTE0YzdkYjRiNDRlZjFjZmM5NTE1MDc2OTFmM2Y5NzYwYTZmNmI1OGI0MDg2ZmY1NjRjMzdjZmQ0NDY5MWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY2ZTZiOWUzMGU2NmQxNjJlYzFiMWZlOWQ4NzBhZDc4ZDg1NWZkM2I2MjczOTM5ZWE2YzBkNzZhMjlhMzRlODkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c7a6a6de02fc444bb92c1dc7c1b4e4ff",
+      "statement": "Endpoints return Hero table instances but declare response_model=HeroPublic so FastAPI validates and filters output; creation converts input with Hero.model_validate(hero).",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/sql_databases/tutorial002_an_py310.py#L56-L80",
+          "version": "repo-lines-v1:sha256:8fa6dc302a8af16563a332bab178bd43ab6f8d00c073ccd671ac8e759599e62e:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY1Y2ZkMjM2NWI5MzI5OGNhMGEyY2I3ZGI0N2U4MjBmYTk4NDI2YjkzZDA4OTk3ODdhNTM3MGEyYTZhODg1ZTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI2YjRhOTFiMTg3OTI5YzAwYTg4NzhhYmE0NTRjMzE2NDJiZjY2YTMwZjU4MDExNjYxNTQ5Y2U5YWZmZTFhNjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRhOWI0ZWMwOTA3OWU5NGY4MDliNDUwZDQwMTM2MmI4NDgxM2JlNDdlYzJjNDdkMDczOTY2MzJmNjRiNDBkMzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU3MWMxZmIxNTM4NTg0YzQ5ZjZiOTY2MzgzN2EyNmNlMWFlYWJmMDJkMGEyZTI1NWE3YTgzZTg5MjI3NzFhMTMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6c99cd3112df4dfa80609d805187787e",
+      "statement": "PATCH updates use hero.model_dump(exclude_unset=True) to get only client-sent fields and hero_db.sqlmodel_update(hero_data) to apply them.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/sql_databases/tutorial002_an_py310.py#L83-L93",
+          "version": "repo-lines-v1:sha256:1d95344f78f0fb7a32aad248c2a60e3854e5fb5f702240bc78b895561a09f39b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwNGZiZDZkYzI2NzhhNjQ4M2M3ODFjYjY5MmMzMjIyNWRkMTAxN2U5YjA5Zjg2NjRkZGU0MmVhZmRkYWRiNDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhiNGIwNjRhMzZlM2YyN2E2ODVmMjg0NGExOTZkMmQ4Y2NiNDk0YWQ0MTMyMWYyNmIwMmI3ZWMxNWEwZDkxMDQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRlMTFkMmZhMDA0ODIwZTZkZjFkOTcyZmQ5Y2RiMTZjZTE0MGY0YzY3MTg4NmIwNzhjNzZiMzZkNjlhMzc4YzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRjYjY4OTUwNmVjMzE2NDUzZDVlMzZjYTdkNWRlZThjMzAzODgxNmZlZjk0MzIzMjI4NTAyMzZjNThmN2QzOGUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f7cd8d159b7a40f38a2df0f4bb1889ef",
+      "statement": "List endpoints paginate with select(Hero).offset(offset).limit(limit) where limit is constrained with Query(le=100).",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/sql_databases/tutorial001_an_py310.py#L48-L55",
+          "version": "repo-lines-v1:sha256:88c8c4f2ddbd79abba11b68f2e69d2623e58af5da49670a346b2b7db74292e72:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMGQzZDZhOTc3YjM4NDllYWJiNzRjYzhhYzVhZjUyMDU0ZWQwYjNkMWUzMjI2NDVjMmQ4MDhhNGI1OTNjMGNlYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMGY4ZGMyZDUwNWM0YjgzMzQ2YzNjODFmMmI2YzJiZjE1NzIxYzFhOTBmZTcxZWVmY2Y2MWUxNDZlNzBlZjY5MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNGUxMWQyZmEwMDQ4MjBlNmRmMWQ5NzJmZDljZGIxNmNlMTQwZjRjNjcxODg2YjA3OGM3NmIzNmQ2OWEzNzhjOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWFjZjU0OWE0MjYzNGJjMGI2NmNiMzhjNWIxNTE2NWUwNzk4MjM0ZWFmYmU2ZDViMDA0MmM0NDY2ODdkMTdhMiJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

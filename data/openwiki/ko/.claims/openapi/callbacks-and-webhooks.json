@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:279d497d7fc01801d84fb942a47a679c06715f6d782ca27d9ee3b7b011aa9327",
+  "claims": [
+    {
+      "id": "claim_a65b9f8835564102b11119ed24fb1ac6",
+      "statement": "Callbacks are documented by declaring path operations on a separate APIRouter (bodies and response_model only, function body can be pass) and passing router.routes to the original path operation's callbacks parameter.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/openapi_callbacks/tutorial001_py310.py#L23-L34",
+          "version": "repo-lines-v1:sha256:591a34e8c167cb3e6e633b5908b0a8b75f48c6c8c1479e5e9ec69f25e0b3c62d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhZWY1OGQ5YTI0MWE4ZTE4NGI4NDQ4Y2ViY2UxOWUwMTI2NDhmYjdkMmUxY2Y2MGZhYjZlN2YyZDMyNTA5NTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc2YTUxYTU4ZjQ3ZDQ1MGI4ZGJkNzhhMzgzNWJjOWFhNmY5OGQ2ODhjZWY1NTNhNjM5NjVmOGY2YjZlYjQ3OTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlkYjk2NDYzYzcyNzQ4NGI1Y2JlOTkyMDZiYmMwOWQ3ZjM5ODQ0MGU2ZGQ5MTQ0M2Y2MTQ0YmU4ZDVkMGQzMTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRlOTRkYTkwOTBlNjRhM2Y3ZTExZTVlZTVlMDg0OWJjMTNlYzk0OWJhM2Q5OTFjZDZkMTI4ZGI0Njk1ZDZmNzAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ec17b4e4ae1845ec82e4816c6831e54d",
+      "statement": "Callback paths can use OpenAPI runtime expressions such as \"{$callback_url}/invoices/{$request.body.id}\" referencing the original request's query parameter and body.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/openapi-callbacks.md",
+          "version": "repo-file-v1:sha256:074a2020f80ffd83f674f51de44e0b2d598ccba24d309069ed38b4e589cd3307"
+        },
+        {
+          "resource": "repo://docs_src/openapi_callbacks/tutorial001_py310.py#L26-L28",
+          "version": "repo-lines-v1:sha256:913a87f4a7ffa0614cb76929124cd02ad67eb085bb4da4ee03d31a57700fb1cc:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjFmZWM2NWM1MjZmMTI1NmE1MzM3ZDI5MDhkOWE3ZmE3NTUzODM2NDhjODU4MWRmOGZiNGU0NGQxMzc0Y2RiMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOWIzOWUwMjJlMGQ4NTQxMjAwMDNkNzkwYzI4Yjc1OTYyZWRkMzAzNzU2ZDUxMzMzZGY3NDVjZmI4NmVhMTFjZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiN2MwOGI2YzNhMTIxOTFhNTc2ZDllYzM3MWRjMjRiOGZmYTkwODk2MDA4MGNhYTAyMTM3Yzk2M2E5ODE2YjYzZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDA3ZTRlMGZmZTQxNjE1ODc4NTFlYTAyNDYwYzNiNTJhNDlmYzZhODQ2N2VkYTU0MWE5ZjY0NTk5MzM2OTYxMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_02783c833fde4abe896586b7a59890fe",
+      "statement": "OpenAPI generation builds an operation schema for each callback APIRoute and stores it under the operation's callbacks keyed by callback name and path.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/openapi/utils.py#L386-L402",
+          "version": "repo-lines-v1:sha256:fa52f5089baa6d2d50f3d3519d5c69d99cd35e5d40cc359c93d902a70dc4aeaf:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc2MGRhNGEwZTdiYzBlODY2NDhhN2U5MzhlYmQwN2Y1ZDYzYmMyMTlkNjJjMzUzNWZmYTg1ODViNDc5YmFkMDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFhNThhNDVhNWUxODQzYThlZDY5MTk2Mzg5NzlkZDg1MmFkNDEwMTNiNTk1YWRjYWE3MzllZTExMDJlNThhNzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjExNjYxZGI0NzE1ZGJhZTc2MmU5MTNhZTc5MTc2NjNiYTQzMmQzYjY3YTU4ZWUxYTdjYzk0YTZlZTFiNGVjNDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjViMGQ1MjkxMmY0YTk3MDAxMjk4YWRiMGQ5MTBhZGViYTQyNDhjNjc1OTI0MjA4ZDVhOWFiN2VmMTBhM2UyZDQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f2fd87c774cd477f8dd748d91450d813",
+      "statement": "app.webhooks is an APIRouter used only for documentation; webhooks are declared like @app.webhooks.post(\"new-subscription\") with an event name instead of a path and included in OpenAPI via app.webhooks.routes.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/openapi_webhooks/tutorial001_py310.py#L1-L25",
+          "version": "repo-lines-v1:sha256:5f73b044a3d39ee5533d62973b8ed45fe5a9476ff21232069bc4173fb5ba1e6c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzNjZjYjg1Y2EzYThkYjg4N2I5YjhiOWQxZDNmNGFkODE2ZDM2MGM4NGI4OTA1YThhNmFkMjA3ZjQ0NjE0MzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVhMzRkYmQ4ZjdkYmI3MGYxMTEwZWJhYWNjMzRkZTJhNjNiOWFjZmVmNzM4MGYyN2E3N2QzYmQyYTAzMGJkZDUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://fastapi/applications.py#L1132-L1132",
+          "version": "repo-lines-v1:sha256:5bc635e379028e59972cb0789fdce44af3cdd260e1f2b62bb33f5b63b73197fc:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWJjNjM1ZTM3OTAyOGU1OTk3MmNiMDc4OWZkY2U0NGFmM2NkZDI2MGUxZjJiNjJiYjMzZjViNjNiNzMxOTdmYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWJjNjM1ZTM3OTAyOGU1OTk3MmNiMDc4OWZkY2U0NGFmM2NkZDI2MGUxZjJiNjJiYjMzZjViNjNiNzMxOTdmYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2NiNmY5MGJlMDRhMmMwMzYyMDQ1NzFhY2U1NjgyMTMwZDQ3ZGZmNzNkNmVkODVjZmZmODJmNmNmMGQ3NTlkZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMWNiM2IwMWFlZjJmNWYzMDliZDNhZGRkOWI4NDM2OThhNGYyOTIyY2MzYzMyMzM1ODc2NWU4ZGFhMmYwMjcyNiJ9"
+        },
+        {
+          "resource": "repo://fastapi/applications.py#L956-L965",
+          "version": "repo-lines-v1:sha256:28d57a51ff15372f372af99cff391bd4eb287a45136beb847858f0d579b50fb2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViZGU3MmJhNWY2ZDZiMzNlNWViYjUwODIzMDMzYWNhYmQ0MTk4Y2U2YmE3ZjM3OWY5ZDAyMWRiZmFiNDE1M2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUxYTMxNTJkZDZmZDliMGQyZTk2ZjEwNWM1MTc4YjIyNjliMTYwYmVkZWUwYTZkMzM0MTVlY2NlMmYwNmE0NTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY5NjNjNzZmZjJlNTg2OWVmMzMxZTYxNGQ4YzQzOWVmYzA4YTBiNzk1NWEzZWM0ZjVhY2IyZTQ2NDJmNWU3ZjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVmMWE2MGZiZjMwZTc3N2RlYzUyY2UwN2Q5MTQzZDE5NzEwM2UzNWNlYzZiZmJiMTg4YWYwNzk5YzBjZDgwNTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ed4108ba67c24574975430ccaab3b20d",
+      "statement": "Webhooks require OpenAPI 3.1.0 and are supported since FastAPI 0.99.0; sending requests and registering URLs is left to application code.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/openapi-webhooks.md",
+          "version": "repo-file-v1:sha256:743f0700dcff572b030a0fa5eeca3152272a601a5f0f914e90b3fe035bb4d60d"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

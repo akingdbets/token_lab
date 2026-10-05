@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:b7450dca0edee850b78b16395ee910bc11c9273b86c0bc15c9eabfd382dd4d9c",
+  "claims": [
+    {
+      "id": "claim_6b3c61c8f9cb4ebdbd85cd3574b65ea3",
+      "statement": "HTTP middleware is declared with @app.middleware('http') on an async function receiving request and call_next, which returns the response for post-processing.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/middleware/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:382413034d11412b09a7af9698800cedbd3efaca78b2bad24f2acd2ee8233b27"
+        }
+      ]
+    },
+    {
+      "id": "claim_739978621bf14579ae2113d627dc92ad",
+      "statement": "The last middleware added is the outermost: on the request path it runs first and on the response path last.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/middleware.md",
+          "version": "repo-file-v1:sha256:add50be20c3cfd05e6c40eca7966e95d084cdc7540e93e2fb064385bde958f91"
+        }
+      ]
+    },
+    {
+      "id": "claim_463c42f5fc264a008c0de336a2f50dfb",
+      "statement": "User middleware sits between ServerErrorMiddleware (outside) and ExceptionMiddleware with exception handlers (inside).",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/applications.py#L1066-L1097",
+          "version": "repo-lines-v1:sha256:22ab2a952534f50b4d9a3f3b0e0f9ef4fd935aee69e11c8f22744ff7795a75e7:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM4MWE4MmI2MjkyZmYyZDAyNTZkYjU4OGQxMzE4MWZmNzE2NjEwZjQxMTI3NDczZTA2OWE4NmExOWJjMDdmNzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ5NjQ4ZWEzMTNjOWIzYjU0MjFkYzFhOTYzYjNiMjBkZjBjNzNlNTBkYzY4ODA0M2I2YTZiZmE1MzAyOWM1NTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE3OTE4ZjdiNWQ2MDUwZmUxNmU3MjVmYjY4NWJkMDFiOTBkZDhiOTAzNDdmNDVlNzdjMmI3OWEyMDM2ZGM5YzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBhODBhYzZkNmIzYmI1MTllY2E4ZmU4NTU3NDk5MzQyNWE1YzliNjk4MzkxZmU4MDAxNWI4MTdjNjQ4MjJkOWIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_adca9ee5ced24d50957c2c971f59a887",
+      "statement": "GZipMiddleware, TrustedHostMiddleware and HTTPSRedirectMiddleware in fastapi.middleware are re-exports of Starlette middleware.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/middleware/gzip.py",
+          "version": "repo-file-v1:sha256:a271ff1f0512e018742e85a3916ee7571e91e726ec13dfe718c44217453465a2"
+        },
+        {
+          "resource": "repo://fastapi/middleware/httpsredirect.py",
+          "version": "repo-file-v1:sha256:f749cdf329ee58a19d087758020acf7684e9a230209b12e408059d1f4a27b9fa"
+        },
+        {
+          "resource": "repo://fastapi/middleware/trustedhost.py",
+          "version": "repo-file-v1:sha256:d49cfb2fafecfe0f040a170d2cc95b68ece54e04835fc087ef924abd0d9be8ce"
+        }
+      ]
+    },
+    {
+      "id": "claim_19545e98cb5a4149a6286725b70d0f84",
+      "statement": "TrustedHostMiddleware takes allowed_hosts with wildcard subdomain support and returns 400 for invalid hosts; GZipMiddleware takes minimum_size (default 500) and compresslevel (default 9).",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/middleware.md",
+          "version": "repo-file-v1:sha256:295cd4d4420ff118afe6c7236b13397fbc08b941d5ac09e1f1f9f86b75c250b4"
+        },
+        {
+          "resource": "repo://docs_src/advanced_middleware/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:ff4ce0d3e2b4cf7892da1dacb6792b8af97a887b197b5adb32c16924af2ee0c8"
+        },
+        {
+          "resource": "repo://docs_src/advanced_middleware/tutorial003_py310.py",
+          "version": "repo-file-v1:sha256:5fb367205e0936f853fa3a1b53e365ef629170962bff49be6ff8ee6d51e6bcce"
+        }
+      ]
+    },
+    {
+      "id": "claim_3b4852301c8e4e7a94e40f53b27843ba",
+      "statement": "Third-party ASGI middleware should be added with app.add_middleware(MiddlewareClass, **options).",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/middleware.md",
+          "version": "repo-file-v1:sha256:295cd4d4420ff118afe6c7236b13397fbc08b941d5ac09e1f1f9f86b75c250b4"
+        }
+      ]
+    },
+    {
+      "id": "claim_3fc6f180685a4d168330f269182f99e0",
+      "statement": "Exit code of yield dependencies and background tasks run after the middleware.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/middleware.md",
+          "version": "repo-file-v1:sha256:add50be20c3cfd05e6c40eca7966e95d084cdc7540e93e2fb064385bde958f91"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

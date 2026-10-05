@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:5715b2ffe6fccd8733cbdfa5683fa21928a3fdd06095791793af3662ecc3f32a",
+  "claims": [
+    {
+      "id": "claim_8e0599db94a0491ebb5a2142b617c32d",
+      "statement": "An HTTPBasic instance used with Depends returns HTTPBasicCredentials(username, password) parsed from the base64 Authorization: Basic header, raising 401 for missing, non-basic or malformed headers, and adds a realm to WWW-Authenticate when configured.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/security/tutorial006_an_py310.py",
+          "version": "repo-file-v1:sha256:797f0a37db479b56203888c3b738d41cf6c6b2dfc357f58d3753ac9f516ae996"
+        },
+        {
+          "resource": "repo://fastapi/security/http.py#L196-L219",
+          "version": "repo-lines-v1:sha256:d91f07ce767e07c5d23a65e351dbb29008b1d782ad3f6e46432ed262b9c098e9:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ2YzQ0ZjQ4N2M5ZTNiOGU5ZDZmZjkxNjIyY2IwOWJlYjhmMjQ5N2EwNDYzYmE0YmYwOTViNDhiMGY4OGFhZTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBjODMzM2M4OGJlNGE3N2M0NDIwZDA5OTU3M2QxNWE5NTFmNGI3MzE2MzdjNDMwOWRhZWYxOGQ5MmM2OTIyNjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVjNGRlYzYyMTJhYWFlOTJhZjMzMWMzODI5NmFkMzExOTFjZDdhZTEwODBhMzExYzYwY2I3MDU0M2MwMTk3MmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_802822a752e94173961440fb91983532",
+      "statement": "Credentials should be compared with secrets.compare_digest on UTF-8-encoded bytes to resist timing attacks, raising 401 with WWW-Authenticate: Basic on mismatch.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/security/http-basic-auth.md",
+          "version": "repo-file-v1:sha256:3da274385efba1bce110cde9497d0d2a1b1b5ea72310d2b8f1090573ceadaabe"
+        },
+        {
+          "resource": "repo://docs_src/security/tutorial007_an_py310.py",
+          "version": "repo-file-v1:sha256:a548c3351eecb2284144d9967bb457c100654d15541a2a73c47725771d8d82f8"
+        }
+      ]
+    },
+    {
+      "id": "claim_cf66f019a3fb4fc2a298db0a723592d4",
+      "statement": "APIKeyHeader, APIKeyQuery and APIKeyCookie return the raw key string and, when missing, raise 401 Not authenticated with a custom WWW-Authenticate: APIKey challenge unless auto_error is False.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/security/api_key.py#L31-L53",
+          "version": "repo-lines-v1:sha256:592a11bb675aaca78044e86db660b882744fa1f1b081ffc4809ec849f85f5ec3:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcwYmI2ZmVmOTMxYzZlNWY0Mzk1NzVmNWJlNWYwZjVhMjUxY2M4MjQ0ZjI2NDc0YzUwYmFhYTI4ZmZiZTgzYjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMwMjczMzI5NGRmZDAyY2M3NjFkMTk3ODgxODEyNzMzOTE2ZDk2ZmQ0MGIyYTliMzllZGNhZDYwOGMyMjJlNzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFjOWVhMWJhNjI2ZjU3MjViYzE2OWVkZWFiODIwM2FkMzVmMDQzYTNiNTNiNWJmOTdkMTM3YzVlY2NkZGYwYzUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_13bcd599b7d64d85b5f9e06c38da9ec3",
+      "statement": "HTTPBearer returns HTTPAuthorizationCredentials(scheme, credentials) for Authorization: Bearer headers and returns None instead of raising when auto_error=False; HTTPDigest similarly extracts Digest credentials without verifying them.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/security/http.py#L303-L316",
+          "version": "repo-lines-v1:sha256:5f137c6f61a9483dfb0f35517a5333beff98c1c4ffc007be6a40f04305a93fed:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZkNTk2NzE0N2UwODVmMzUwOTYzMTZhNmU1YTUyZDk1NzU2OWZjMGVjM2NmOTUwZDg3ZmRiY2EwYjM3NWViZjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRlZjM0ZDY0MjgwZGY0ZTY3ZTZiMTk1MGJjMTk5MGEwNDRlZGZjN2M2YjdjYTk0NjdmN2NhOGY4MWVmYmYxMDkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJlOTExMzFkMjZiNGU4YTNkNTRlYTM1MmI0NmI2NmE0Y2ExNmVlZGQ0NDZmYjQ0MGEwMWZiMWI5OGY4MzQyNWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk2NGM5ZjMyMWIyNDY5M2JhYzI1YTFlZTE0MDM3ODM4MDAwMDNlY2M5NmUyYWQwN2E2NGFhYjRlZjljNWVkNGIifQ"
+        },
+        {
+          "resource": "repo://fastapi/security/http.py#L404-L417",
+          "version": "repo-lines-v1:sha256:81e1d632b645be54d8040ef833e8f801a1ca625fd38a85c0650d176386c92368:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZkNTk2NzE0N2UwODVmMzUwOTYzMTZhNmU1YTUyZDk1NzU2OWZjMGVjM2NmOTUwZDg3ZmRiY2EwYjM3NWViZjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRlZjM0ZDY0MjgwZGY0ZTY3ZTZiMTk1MGJjMTk5MGEwNDRlZGZjN2M2YjdjYTk0NjdmN2NhOGY4MWVmYmYxMDkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJlOTExMzFkMjZiNGU4YTNkNTRlYTM1MmI0NmI2NmE0Y2ExNmVlZGQ0NDZmYjQ0MGEwMWZiMWI5OGY4MzQyNWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c71af69c5f754edeb308f6b44e430d52",
+      "statement": "OpenIdConnect is only a stub that registers the scheme in OpenAPI and returns the Authorization header value; the full scheme must be implemented by subclassing.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/security/open_id_connect_url.py#L11-L20",
+          "version": "repo-lines-v1:sha256:08caf1a2e3c83eb49c95a5ef90442b3d9de3983d3458edd64fbdd2462bdbfb37:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUyMjYyNWEyYjU5NjE2NzU0ZjM5NGY5ZTkzMDZmYTdhNTNlYzM3OGFiMjlkOGEwMGQwYjYzZjE4MjU1NjVhNjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmODczZThlZDA1N2RiZmM5ZGJkZTA3NWI1ZTQ3MmU5NWE3MjMzZmJjODBiYzY4NDI3OTJhMmQyMWJiZmNmZmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ5Y2E0ZDdjNWYxODExODg5YWJiYjJkYTc4YjJlMThjNGRmNjc5MDVlNmQ2MmU0NDc0NTAzNTUzNWI5ZjM0YWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQzNzRlMzkxMzliODU5YzI0ZGM4NmQ4Y2UwNmE4NGRlYjc3YTFiYzljOTI0ODJiYjVmZDk0NjJkNWY1MmE2NWQifQ"
+        },
+        {
+          "resource": "repo://fastapi/security/open_id_connect_url.py#L87-L94",
+          "version": "repo-lines-v1:sha256:cd147a1fa52351f280db962a1cf8636589df059df49c647d2b3e303575d0cd32:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjU3OTBlYzM0MjhjOGI4ZjZhNWJhNDMwNDNiMDRlNjY5MTQ3NjMxMTdiNTM3MjM1NTVlYTcyMTYzMzhlMmVhNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2FiODM1M2ExNDMwZWJjMTUzOTcyOTkwOTYwODk1NDJkYWU3OTlhMjZmMTQ1ZDg5ODA4ZWY5NmZhMTExM2U1MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTg4N2QyZmNkM2I5ZmIyOGZjOTEyY2YwZDE5ODgxNDM2NWU0ZDNmMGJjYzA0MmVkOWJkZGI4MWFiNmRiODE0YiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_4d91761a3e254c88bdf530fa32608c3d",
+      "statement": "fastapi.security exports APIKey*, HTTPBasic/HTTPBearer/HTTPDigest and credentials models, OAuth2 classes, SecurityScopes and OpenIdConnect.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/security/__init__.py",
+          "version": "repo-file-v1:sha256:8ea61b26486fcc9169ac5fcd0ee9695f188e58dc383c3d92905398043987ad87"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

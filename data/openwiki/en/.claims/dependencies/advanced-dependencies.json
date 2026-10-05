@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:4eb8ad9f01bf4248defe2764b39b3284ebce9c32a05d8ccff53c12c850807ee4",
+  "claims": [
+    {
+      "id": "claim_d0771a909cf94b2db7bbfe2170f70706",
+      "statement": "Depends has fields dependency, use_cache (default True) and scope ('function' or 'request'), and Security subclasses Depends adding scopes.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/params.py#L746-L754",
+          "version": "repo-lines-v1:sha256:71bf835cff85f038fd8a8f094211f0da2ee7197f6ccc92a7c45715eed5104288:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzk2ZGFmZWE2MmQ1YzI3ZmNiYzk3NDU2ZjA3OGQxODM3ZmU0ODNlNGIxMGJiMjcxNThjY2RkNWY5ODY3NjY5ZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDNjNjdjYjZmMDgyMjNkZDdmZDY5YzA4YjlkOTNmZmE3ZmM1YWI1NzI0ODllNDQzMzBjN2U0Y2VjM2QwMDY3ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiN2RhZmY3NGExZjE1YmY1MmQ2MWFiMzU0MmZiMzJjMzRlOWNkOTg0ODE2YjBkN2ZhMWI5MTI5YjljZmRkNDgyOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_26b87aada1ec484d9eb9e8911f5c5b8b",
+      "statement": "A callable class instance can be a dependency: FastAPI inspects __call__ for parameters and calls the instance per request while __init__ is used only by user code.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dependencies/tutorial011_an_py310.py",
+          "version": "repo-file-v1:sha256:f7f88a578ad8910e560aef9127606a3b79e15ca7ec0dd5aff51d9e2211603cc6"
+        }
+      ]
+    },
+    {
+      "id": "claim_64d2926877ff45b09a1b349119b046d0",
+      "statement": "With Depends(scope='function') the exit code of a yield dependency runs after the path operation function returns but before the response is sent; the default request scope runs it after the response is sent.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/advanced-dependencies.md",
+          "version": "repo-file-v1:sha256:948d9383f3fb730ee58dc0037c6fd7f0532f6e66e299b336ff3051e1d297e6b4"
+        },
+        {
+          "resource": "repo://docs_src/dependencies/tutorial008e_an_py310.py",
+          "version": "repo-file-v1:sha256:09b3d186d0bad2944a5d881e2a4847044cd382508b363a48b77d48358db6dbf2"
+        }
+      ]
+    },
+    {
+      "id": "claim_f4762140fa294252aa1dd3ac2e7d8d1b",
+      "statement": "Generator dependencies are pushed onto a request-scoped exit stack by default, or a function-scoped exit stack when scope='function'.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L661-L670",
+          "version": "repo-lines-v1:sha256:57b89884b0fe67f02e39d5764322055f2c16500a52f46ab7058774133ae8ead3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5NzNmZmQ2MDlmODQwOTM4YjlhZTE0M2M0ODMzMDkyZjAwYmQzM2RlZDVmNzVkMjVmMTMwNDc5OTI3ZjM0NDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA4MDgyZDJlMTZlYWRkMzk5YmNjODMxOGNkZWRiNGNlNTdkYTNkNDFmNGVmZGI3ZWQ2MTIwNjlmMjZjZGJhZWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM3NjhjYzFjYmVkNTQ2ZmRkNGVlOGQ4NDNkZmZkNTM0MzZhMGMyNGI1OWQxZTUwZDMxYjhhZWY1ZWIyOWYwOWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZkYWJkYWJlODk3ZGNjNzFhZDMwMzA1Y2Y2OGRiNmExZDA4YjllYmYyZGEzNmZhZTNkZTlkODJmYjU1MzQyNTkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5ec8174757794f8ca214b96ea3e9aa0b",
+      "statement": "A request-scoped yield dependency that depends on a function-scoped dependency raises DependencyScopeError.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L303-L317",
+          "version": "repo-lines-v1:sha256:517abcf0222e56521a0fcd36519c32f4830ef1869c11a92487f96c0663e33f45:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0NzE0ZjUzOTJmY2I4ZDIwODhhMGRmNzY1OTkzOWQwNDBmMmM5YmJmYTg0NjFlNjE5NjE0ODIyN2FjMjYyNzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU5Y2U4NDUxMzIxZjk4MjZmNWQ2OTczZTQ1OTA4ZTc2ZDczNjk0N2M1MTU5NTc0ZGMwMmIyZjZmMTdmNTUyMjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjliNjY4MmU0YjE5N2I5MjZkNDIxNWZlOWUxZWMwZWU3Nzg4NTA0MzI5ODU3NDlkMjkxYWU0ZmU4ZjE3MjE2N2UiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJmZTFmMjViZGZiZTZjMTU1MWY3MWRhNzkwNjI2NWJhMzZmZGI2YTdiNmM0MDRjZTkzODZkN2EyZjRhNDZmMjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e15fdeb54ddc4c1e9c9e571826ea9395",
+      "statement": "Since 0.118.0 the exit code of yield dependencies runs after the response is sent, so a session can be explicitly closed early in a dependency to release it during slow StreamingResponses.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/advanced-dependencies.md",
+          "version": "repo-file-v1:sha256:948d9383f3fb730ee58dc0037c6fd7f0532f6e66e299b336ff3051e1d297e6b4"
+        },
+        {
+          "resource": "repo://docs_src/dependencies/tutorial014_an_py310.py",
+          "version": "repo-file-v1:sha256:20d1f5b1e62711e546e8ff1028fd72c92d6f2acf9f568bbba6cdd960dbc4dea1"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

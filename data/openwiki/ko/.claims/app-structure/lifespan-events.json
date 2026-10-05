@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:1eb4ac95b5f9cf36357c0c33ad9ade06b405ed1e4bae01a7a10f316ddd9224eb",
+  "claims": [
+    {
+      "id": "claim_eb7523ae6f4346b79e638ab97fe9425a",
+      "statement": "Passing an @asynccontextmanager function to FastAPI(lifespan=...) runs code before yield at startup (before requests) and code after yield at shutdown.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/events/tutorial003_py310.py#L1-L28",
+          "version": "repo-lines-v1:sha256:e48a5051e9b43d857d96215e23b93285925f78a5098cfec42ed324b049be1b4d:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1NjZiNWJlN2JmNTc5MmIzY2VjZWM1ZWViMmQ2ZWNlYmYzNzZjZDAxZmE5ZGQ4ODE0NjRkYmFiZjEzZTk3NzYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM5OWM0YmJmMGY3MzY2MWJkYTM3ZDI1NjI5ZjAyN2Q3ZTdhOGJkMjUxNGQ3ZjFkYmQyMGMxMDAxNDNiOTY5NWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c7d53beab43248bf992aa1ce803d3660",
+      "statement": "When lifespan is None the router uses _DefaultLifespan to run on_startup/on_shutdown handlers; bare async generator functions are wrapped with asynccontextmanager and sync generator functions with a wrapper.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L2567-L2577",
+          "version": "repo-lines-v1:sha256:199a81827fabeaf284cd119157e8846872f3f2c5189a21e199dd61542424fb2b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ2ZTkxMTNiMzE2MDU3MDE5ZjkyMWZlNmY0MGU3ZGQwODVkYWM2ZTY5MjA5YmY0MTIzYjgzYTIxNzlkOTRjNjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZhZTgxYWU0OWU1NGI2NTlmNGVkNzExZjQ2MzYyNjI4MDYxNmJiNGEzMmJmMDA4OGJkZmIzODhlOTkyN2U5ZTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkwNzI2MDE1NmNhNWNlNTRiNjgzMmVkNzFmZDQ4Yzc0NzA4ODY5NTc1NTQzY2Q2MmYzNDEzOTVlOWZjMzRmYjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIyYWQzOTc4ZmQwMGRiNTZkOTFjZWFiYTRhMzFlYzFmY2NiNTUzNjRjMmFhOWUyMTllYmQ4NDEwMjFmZjJkNTQifQ"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L257-L270",
+          "version": "repo-lines-v1:sha256:4f6c4fda34c33aee6276b038cb0a04e8f199b32fb522b5813a63990037fa17d9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxODc0MjIwMGUxNDlmNDcxYWE2OTJlNDk1MzE5MWUyZDMyNjZlMGEyNWZiYWI1YzcwYmIxMTc4ZTdiZmNmZTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhlZjc1OTRmNzQ1Yzc2YzEzMzMxYjA2NWMzMjc0ODkyZGI0MTcxZWNhNmYxYjlmYjI3YTZkMjRmZDY4NDcwNzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBmMTU1YWM2YTM2M2VmYzViYTBiYjgwMTdiZjZjODBkMGYxZDQ4ZmI5N2U2ZGI3OWU1YTNkMzViNjI3M2Q0YjEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_187748347ccc47358203ffd907c1f15e",
+      "statement": "If a lifespan is provided, startup and shutdown event handlers are no longer called; app.on_event is marked deprecated.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/events.md",
+          "version": "repo-file-v1:sha256:b53f7c2eca9ff45581732daa024c1ac70f1b3585f2f13defa0ef4cfab73c8f79"
+        },
+        {
+          "resource": "repo://fastapi/applications.py#L4717-L4725",
+          "version": "repo-lines-v1:sha256:49fc7f3a136868cd477bd12eb61d6d3dba8f8fc24ac4490ac4a180b5daa63c33:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzg3MjE4OWRhNzQzYWQyMzA2ZWUxNjc1ZWIwY2MyZDdiZTE4MzAxZTZmYjBmMzU2NmNlZDBlYTkxZTM5MGI1NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTk0MzY5NGNkMTU5MjFmYmZiY2U1ZDA2MmEwYzI5MTBlYTdiZTgyYjBiNzA5NzBkZmE0NjJkN2M5YzA0YzUwOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMzgxMTA3MjM1ZTcyZTI0ZjE2MmNiNTE1M2IwZmQxZmVjM2JjNDlkMTVlYTczOTQzY2Y5ZTBhNTBjZDM2MWFiMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDFkZTRhNzkxNWQ5MTljYjZiODAyODMyMjAzOTk1NTgwNzc2Zjc0NzY5MGY5M2E1ODFiYmY2YzY2YTMyNDFjYSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_49f8e5f6b70a45249c54adfde2c54086",
+      "statement": "Including a router nests its lifespan inside the parent's and merges yielded state dicts, with parent state keys taking precedence.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L240-L254",
+          "version": "repo-lines-v1:sha256:7a3cc712d4668aa98ce40edfcc56939136787aad3b9682948193a519f01eae0c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3YzZjM2MyZGU1OTVhNGIzYmJkNzA3NjYwNGQzODBmYzM3ZTI0YzAzOTNjMWMwOThhOGE4NzMzNzIxNzg1MGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJkOGY5OTMxZjQ0ZTljMDA1MTM5OTg2OGFjYzlhNDJmNDQ5N2MzZGFhYzJjZWIzZDFkMzU1MGM2Yzg3ODg2MjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdlYjQ4ZWIyZWQ2NjllZmFlMTk5ZDdiYTkxMGIxY2NmZGMyZTBiYWY4NzcxNDA1NzI4YzkyMWRmNTQ1NzZhZWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNkYmQ5NjM3ZTUwZWZkYWY4ZTRlODM3ZWRmZDc4Y2I3NDc3NDA0OGI4ODgzNGI5NGYwZjFlOWRhMmQzNWUzZDgifQ"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L3393-L3400",
+          "version": "repo-lines-v1:sha256:70740c9230ef1512ba9afd8d9e7d292fcae88cbac21adf962a8111c4fc7642e8:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTliYThmZDRkOTMwYWQ3NDFjMjMyZGIxNjliODRjZmI2Mjc4NWYwOTJmNGU4YmE0NzlkZWIzMDIwN2ZkNzM5YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmE5ZjhjMmJjN2ExNDFhMDIyYWYzZmViOGFiNTAwOGVjMjU3NTdlZjI0YWNkMDQ5ZjUwODlhNzRiN2M5YWU4MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiN2NjNjI3MjA3YTYyOGNmZTk5NGE0N2Y5ZjdjYTNlYTc4N2VkMGRjMTAyZTcxZjY0NzEzOGNiMmNhZjlmNzFhYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2JjZjk2NmY2N2I0MWE1OTUxYzZiMWZiY2Q2ODY2OWEyMDY3YWI3NGMzODI3NWNlYjZlMGRkODNjYjM3YzNkYSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_63f59bb1b7574924aca07e05b8d21419",
+      "statement": "Lifespan events only run for the main application, not for mounted sub-applications.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/events.md",
+          "version": "repo-file-v1:sha256:b53f7c2eca9ff45581732daa024c1ac70f1b3585f2f13defa0ef4cfab73c8f79"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

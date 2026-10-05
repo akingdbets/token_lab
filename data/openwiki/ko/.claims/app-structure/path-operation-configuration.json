@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:26477883dd86eb200f420d2b8a6de13cfc75d75196991181ac443521a9e7c903",
+  "claims": [
+    {
+      "id": "claim_6764ac8b92c343debee82333e7ac0896",
+      "statement": "When no description is given, the path operation description is taken from the endpoint docstring via inspect.cleandoc and truncated at the first form feed (\\f) character.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/path_operation_advanced_configuration/tutorial004_py310.py#L15-L28",
+          "version": "repo-lines-v1:sha256:e197e12be6fd2f8bf444c67db7f99223a0e75366cdd5882044de314f46c5bf77:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc1NGVhYzNmNTg0YTc1ODBiZjIxNzE2MDViZmJjMGZkMjUwOWIwZWM1NDQyMmI1MmJjZjdmYzI5NmI5YTI3ZTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQwNGVjNDQwNGU0NWIyNmJmZjBmYjU5YTVjM2FkNWZkNDdiNjFhYjdmMTQyODBlYTgzZmQ5NDA5NTQ5ODBlOTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY0ZTUyMjI3NzMyMzcwMzNkYTA0NGQzMDNkNTgwZTNiMDk1OTQ3NzM0Mzg4YzY1NjE1YTEwYWU0OTliZTA4MmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L1067-L1070",
+          "version": "repo-lines-v1:sha256:e45dca02fff1490a956de82a98cafb78b172ad377aa1923940fc8dc340c6d12e:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDc3NGUxODVlZDM2MjIyOTVjYjIxYzQ2ZDYzNjBiYTUzZmViNzFmYTY0NDM3NjM4NTIyNmY4ZTNhOWNkNDM3YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDBhOTMwMTlkYjdjYjM4OWUwMWU2YzM1NWYzYzgyZGM2YTQ2NTM0ZGNkZmZhMzFkYzNiNDcyZjVlOWZjZDIwNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWQ0MGYzNmQ5YWVkMDAxMzg5NDVlZTMxYjc5NjdlYWIyYzBkNzM3Nzg0ZjYwNjA4Nzc5YzZhMmE5NGVkN2FlYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOThmMmJiMDkzNDUyZmYwZDU2OGZjYjk4MTM2ZmZhNzQwNTM2NzQ1M2FlNGVkMDU1YTNkODg2YTUzZWNlNWU2YSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_e62a3461745247f6beed18094a9dec41",
+      "statement": "If summary is not set, the OpenAPI summary is generated from the function name by replacing underscores with spaces and title-casing.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/openapi/utils.py#L281-L284",
+          "version": "repo-lines-v1:sha256:c5e6f8ef09253f08805337a85dcd8a64157adb83069c9d418832023a5025e4e6:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjgwZDg5MDVkZDhkYmU4NWI5MTQ0MmRkNDBhMWNlMTVjZmViOTZiYmFmOGRjZjRhOWExNzc5MDE4MDg5NjE5NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNGEzOWZlM2I2NWEzOTBhMGMwMTlhMzY2MDA5ZDdjMjk2YTgwYjhmYjY4Y2I0ZjQ4NzQ3MmM5Nzc0MWY5NzFjMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOThmNmEyNmRmZTI4ZjRjMTgzZWQ5M2Y5MTUyZDg0YjE3MmVlZTgzY2FjYzdkMDdjMzA2ZTBjYzUwYjZjYWQ1MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTRkNWFmMjRiOWIyY2MyZWQyODZmZmZlZWJlNzEyNjE5ZDIzYmZkOGY2YzNjMjI2NzVlMGUxYzlmNDY0NzBhNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_9371d725197343819464a2e62fe287ae",
+      "statement": "response_description defaults to \"Successful Response\".",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/path_operation_configuration/tutorial005_py310.py#L15-L30",
+          "version": "repo-lines-v1:sha256:9ec28408d7b37f569ea2328fc03a30d0ac62d536145f37b6d88c4701484a52ba:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3Y2YxNjA2ZGI5YzcwYzlhNTIzMzBjYmRlN2U3Y2NlYjBhYzk1YmM4OTkzMjQ4NDlhYjMyNzY5YmJmYWI3ZTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQwNGVjNDQwNGU0NWIyNmJmZjBmYjU5YTVjM2FkNWZkNDdiNjFhYjdmMTQyODBlYTgzZmQ5NDA5NTQ5ODBlOTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY0ZTUyMjI3NzMyMzcwMzNkYTA0NGQzMDNkNTgwZTNiMDk1OTQ3NzM0Mzg4YzY1NjE1YTEwYWU0OTliZTA4MmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L1005-L1005",
+          "version": "repo-lines-v1:sha256:ef305897d78c126dd062471eea20c635b042fa0c9c7b6870697b12721ee506e2:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWYzMDU4OTdkNzhjMTI2ZGQwNjI0NzFlZWEyMGM2MzViMDQyZmEwYzljN2I2ODcwNjk3YjEyNzIxZWU1MDZlMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWYzMDU4OTdkNzhjMTI2ZGQwNjI0NzFlZWEyMGM2MzViMDQyZmEwYzljN2I2ODcwNjk3YjEyNzIxZWU1MDZlMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjU2N2EyNGU5MzE5MWY4YjE5ZjlhZmFjZGIzNjM5MmJkNTkwNmRhMTU3ODc3YzU5ODMwNDIyMzExYTFiNTcxMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzU3YzRkZmJmNGZjY2ExMzUxZWU5ZmIzZTM1OWVkZWJlZTkzMjU2NThjNjFiODI2YjQ5ZDNmYzJmNGFiOThjYiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_d4bb39c9a749475baf3c9cb0207ae2ad",
+      "statement": "The default operationId is built by generate_unique_id from route name plus path format with non-word characters replaced by underscores and the lowercase first HTTP method appended; an explicit operation_id takes precedence.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L1061-L1061",
+          "version": "repo-lines-v1:sha256:c53cb76f45eb405bb452837b20a8fc0f06c338380be40264bf22189dad485926:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzUzY2I3NmY0NWViNDA1YmI0NTI4MzdiMjBhOGZjMGYwNmMzMzgzODBiZTQwMjY0YmYyMjE4OWRhZDQ4NTkyNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzUzY2I3NmY0NWViNDA1YmI0NTI4MzdiMjBhOGZjMGYwNmMzMzgzODBiZTQwMjY0YmYyMjE4OWRhZDQ4NTkyNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTg1OWJhZDU0MjdmZjBmMDJlMDQ5YzY3NTNlYmI4M2Q3NTA1M2QyMjRkODZlNjY3NTMxOWY3YTYwODQ1MjJlMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTg0Yjc3ZTdjYzZjOWFlZGNlOWQyZjc0NzVlZTVjYjJiNjk1ODRlMGI1MjI0YmJlNmI1ZDI1ZmMwNzE4NjVjZSJ9"
+        },
+        {
+          "resource": "repo://fastapi/utils.py#L95-L100",
+          "version": "repo-lines-v1:sha256:cbf3086bd0f75876a831db96144b85c6d61d309f62fa09eaa4b5045d6f8af45d:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmFkNDdjNmQyN2VlMzFmY2FmNDAwOTkwYzNiODQzNTRkOGRjZDFmZDI3ODBlYjZiZWYzNmI5ODRkNDZmYzY1OSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWE0ZTdkNjZkZTI3Y2UxZDM3YTY2ZWYxNmQzZTM4MDAwZmExMzQyZmQ2MzE1Nzk2MTE3MzM1ZWQyNmMyMDA4NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODRhYTc0MGIxYWRmM2FlOTYzNDMyYWVjNzAwNjg0ZTY2N2FlYWY1NWQ3YzNiODIyMTdkOGI5NWYxNzk1Yzc0ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiY2RmZTJiZTIxOTRkN2I0YjA4YmE5YzNmMWU1MjhmOWUzM2QxNzAxMjQ1OTNlYTIyYmI1NDBhYjE5YjA5ZjdkMCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_165a3871646c4ad285111893688263f1",
+      "statement": "A custom generate_unique_id_function such as returning route.name can be passed to FastAPI to use function names as operationIds, requiring unique function names.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/path_operation_advanced_configuration/tutorial002_py310.py#L1-L14",
+          "version": "repo-lines-v1:sha256:6fe542a79e347a437dca10d5fed798277b69d603fbc20fec7cbb9b76270c20b6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NTJhNjdiNWY5MWZhYTUxN2I4M2E2Nzk4MDk5NTI5MThlNWUxZjc5YmEzMDE1OTE2MTJlYWViM2VhMTQ1YjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZiOGY5ZGZiMWYyNzY2M2MzZTQ4YWVkY2YxNGU0YTU4Yzg2NjhkMmQ2NjE3OTIwN2U0ZGEyNjE2MmI5M2M4YjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2227254d64474c8d872f511e967a5f10",
+      "statement": "openapi_extra is deep-merged into the generated OpenAPI operation, enabling extension fields and manually declared requestBody schemas (e.g. YAML validated with a Pydantic model).",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/path_operation_advanced_configuration/tutorial007_py310.py#L1-L32",
+          "version": "repo-lines-v1:sha256:3b3b5cddbfc4e027626df445983993a79e750f944f34a084d14d925c860a81b1:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIzYjEyYjQ2ZGQxNWU5NjExZTUzYThhOTEzMzY0NmVlZmI2MmExMjQ2YmI4MjYyODFkZDc4NmMzYzRiOWFjMzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQwNGVjNDQwNGU0NWIyNmJmZjBmYjU5YTVjM2FkNWZkNDdiNjFhYjdmMTQyODBlYTgzZmQ5NDA5NTQ5ODBlOTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://fastapi/openapi/utils.py#L537-L538",
+          "version": "repo-lines-v1:sha256:658fd582e75413ab202a69945f63bcaccec109b1b2948adf81e1598aa2906b91:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjk0NWM2NTQ0MjMwYTc0Y2ZjN2MxZDhlMGRkYzY3MGZlOTMwOGQxMDU5NGRmMDIwMGI0ZWM2NjZmOTc0MTE3NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2YyNTRlZDhjZjdjOGMzYWRkNGNlNGI3NjczOTNkZDE0MmY5NjUwZjkwMWVhNTA0N2I5NjE1YmM1MzRjMmI1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDRmZjUzNTk3YzFkN2ZhNGIxNTkyOTViN2Y4YmU5ZWZmNWUyNjk4NmY0MjRmZjA5NmRlM2IwNjVmNjU0NGE0ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzk3NmQzYWJkMjJjZGY4M2U1MTlhMGVmMmI5ODIwMjE3M2FjZDU3MTIzMmI0ZDIyNmE3MDBhY2VhMWYyOWI3YiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_9229d162ac734ba49820c4c7079dda46",
+      "statement": "include_in_schema=False excludes a path operation from the OpenAPI schema and docs while the route still works.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/path_operation_advanced_configuration/tutorial003_py310.py#L1-L8",
+          "version": "repo-lines-v1:sha256:5f7d84a87643828c14ecf311db18c39dec68c3799243e19d3d42571d6fc17190:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTk1MmE2N2I1ZjkxZmFhNTE3YjgzYTY3OTgwOTk1MjkxOGU1ZTFmNzliYTMwMTU5MTYxMmVhZWIzZWExNDViMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNmI4ZjlkZmIxZjI3NjYzYzNlNDhhZWRjZjE0ZTRhNThjODY2OGQyZDY2MTc5MjA3ZTRkYTI2MTYyYjkzYzhiMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_64cd24059bf2458da7cb930ba0e96ca9",
+      "statement": "Status codes given as IntEnum (e.g. http.HTTPStatus) are normalized to int.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L1062-L1065",
+          "version": "repo-lines-v1:sha256:d3cde22fdae9fd59bcf1eeb13972857d05440004f13423cc8e5a9245ee39196f:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmVhOGM2ZGMxMWEwYjA0MzVkMDViNjExY2I0MzI1NTViYTdjYWY4ZDhiYzE1NDIzNjA1ZjE2YjhlNTAyZTY2OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOWRhZGI4MjMxYTdhYTNiOGMzOTM0ZWViOTYzNmVjNTliOWMwMGVmNTU0ZGM3ZTIwYTdiNGY2NGU3OWE3NGMyNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWYyNWFlM2FmZTJlMGJkNjUyOTgzYTgxMmI0MjY4MTQ4NDA0Y2I0ZjhiMzM2MzQ0ZTg2OWYxNDk4NTFiNTI2MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTcwOWViNzY0ODVkNTYzZmRlNDcwNjU3M2QzZjEzZTZmMmEwMGQ2MDIxN2UxYjU4ZWE2ZTAwNTE3ZDQ5NjEyMiJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

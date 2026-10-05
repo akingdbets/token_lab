@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:3db89d69469e17412b214e0398f2fc71c794def69e57c359570b02966f910f1a",
+  "claims": [
+    {
+      "id": "claim_fd0f82f2d05e465eaba7bdcb78ca2b33",
+      "statement": "Declaring a parameter typed BackgroundTasks makes FastAPI inject an instance, and add_task(func, *args, **kwargs) schedules func (sync or async) to run after the response is sent.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/background_tasks/tutorial001_py310.py#L1-L15",
+          "version": "repo-lines-v1:sha256:b2b609220f5b9bda9663e81369285e385d20e60086e4893b66e74da428548b26:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJiMjI1MWI5YmFiMjU0YjNiYWVlODliMmY0MzQwODExNmE1Y2NhYzI1MWVhOGQzYjVhNWMxNWEzYzQwZjAzZjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2MWFiZDdkYmFlMWNjYmRkMDhjY2YwZDQ0YmVmOTI0ZTFmOGFlZjVjM2JhMThlOThkYzJmZjRlZWRkNjY4ZWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://fastapi/background.py",
+          "version": "repo-file-v1:sha256:0a1b63c4bfbae64ec894f30a01909eb618632620671265be8cd3f0e47e018bd8"
+        }
+      ]
+    },
+    {
+      "id": "claim_3a98f497b7294761bcd44916bfe77230",
+      "statement": "The same BackgroundTasks object is shared across the path operation and its dependencies within a request, so tasks added at all levels run after the response.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/background_tasks/tutorial002_an_py310.py#L1-L26",
+          "version": "repo-lines-v1:sha256:268323d6d4e827baa66f170390362dfa1a309cedd2e3f02de398b624911a40ac:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkNjU0NmI5NWJjMzAyOTRhZGU0ZDM2OGMxYjNmNjUwNzM4MzVjYjhlMDUzNjYzOTU3ZWYyZTFjYzU1Mzg3ZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk0YmU1YzNhMWFhYzc0OWU0MTNkYjM4OGIyYzYwOWM4ZmYyM2Y5MWExMTY1NjIzNGFmZDY3M2IyN2ZjNGExYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L715-L718",
+          "version": "repo-lines-v1:sha256:f09823b11d498e3eb51edc105636fea6f1db9fe318cf634cb97e49085e74814d:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzYwMGU4Nzc0ZjJlZDE0MjJiOGE5OGVmZWVkZWM0YjUyOTZiMjY3MmZhZGI0MWU0MzJhODAyMmUxODMyYjU0NCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjBiNmY2ZjNkOTFkYWJjZTY0YTkyODc0YjcwMzU1OTEwZWIwZTQ0ODgzYmI0NjVlZGQzM2Y1Y2ZjN2JkMGNkYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTM5ZDhkNDI4OThhNGY3MWRhYjY3MTJjOWM3ZjAyOTVkMTk4NGQyYmQ3YmU1NTI3NGNiMjQyYzBlNjIzMDg1MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYmE0OWRjZTZjNmQxZDQ5MTYxMmJjNGIxYmQ5MjE1ZDEzMDEzZjZjMjAyM2E3MzA1MGJhYmJkYTM1NDlhNDA1MyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_1cf535fe50794e6891d00dea3f2b27b6",
+      "statement": "If an endpoint returns a Response directly, FastAPI attaches the injected background tasks only when the response's background is None.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L732-L735",
+          "version": "repo-lines-v1:sha256:bc5cb1f02058ceab2684c68a15d835e8d7a7797b05496223b7a2609668a7168f:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODMxZGYzZWQzNjlkODYxMjYzN2I3OGI1ZWE0OTIyMmE1NzE5MTYzMGYyZWNiMTQ1ZDlhMzI0NjJjMjQwY2ZjZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTEzYTAwNjg1YzliZTM4YjFiMjAwYjE4YzY1YjAwM2U4MTYxZjBjODdkYmFhN2JkZTE1OGE1ZDdkZGYyYWE3MiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDU1YjQzZjFjN2YxOGE1MmI1ZTgzMjUyOWQzZThlZDI4ODdjMTZiZjAzZGRkMTRkYmM1MGVmMWE4ZjhkYzU0YiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTAzNDNlZWRiYTFmM2FiMmE2Nzg4YzI0ZGJhNmEwY2I4MmQ0NGQ2NzUwZDA0NzE5OTFjZWM2ZTk0YTM3NDliNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_9ead081888e547229d2dd76453a70f1d",
+      "statement": "fastapi.BackgroundTasks subclasses Starlette's BackgroundTasks and runs each task sequentially, wrapping it in a telemetry operation named background_task.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/background.py#L64-L67",
+          "version": "repo-lines-v1:sha256:0830cfff458bdcf1036f7ad1e3ff69f029071e7737da68907f8ceec49bcff41f:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGQ4NDNhMzliMmRmNjVlMGYxODliOTQ1ZjYxN2UxOGEzZmE0ODZkNjQ0ODM3NTRlNGEyMjY4NDcwMWUzM2I3NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjAwOTc1ZWEwOGNjNGExZWY0OGNhZjhhMjAyOGQ1ZjQxZThhZjY3ZjczN2RmZjRkYjFjYTU4YTc3M2JhY2IyMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTI4Y2E1ZDU0ZWU3ZDMyNWRiMjE4ZGJmYTc2ZmE5ODlmNmYxZWFjOWFjNjM3ZDgyMWFjZjY3ZWNhMDFkNmFkNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c3500e8a09a2479c9f31da0db1e8c901",
+      "statement": "For heavy computation that need not share process memory, tools like Celery with a queue (RabbitMQ/Redis) are recommended over BackgroundTasks.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/background-tasks.md",
+          "version": "repo-file-v1:sha256:57a23e2a304c4c2d305da19b538fa1c802b037213526149937a254468be55b80"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

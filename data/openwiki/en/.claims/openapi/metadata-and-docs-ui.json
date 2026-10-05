@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:57bed3671e7205d9aded60ac2a3eb637a8938d12f6ae66f72e72a7c7a08e62c7",
+  "claims": [
+    {
+      "id": "claim_8f80400ddf9c40a68351b6d290f10f24",
+      "statement": "FastAPI accepts title, description, summary, version, terms_of_service, contact and license_info for OpenAPI metadata, and license_info can use either url or an SPDX identifier.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/metadata/tutorial001_1_py310.py",
+          "version": "repo-file-v1:sha256:6851d5e13d87d1b030734e23e4a034634a7b4e8c4b35fbe55d65b28dcdcad451"
+        },
+        {
+          "resource": "repo://docs_src/metadata/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:86b941514fa3b9be9c4c7f241aca866db04a06ebdf470309366166670dc412f2"
+        }
+      ]
+    },
+    {
+      "id": "claim_a48a4335eb674651af1098282fe68357",
+      "statement": "Defaults are title 'FastAPI', version '0.1.0', openapi_url '/openapi.json', docs_url '/docs', redoc_url '/redoc' and swagger_ui_oauth2_redirect_url '/docs/oauth2-redirect'.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/applications.py#L134-L134",
+          "version": "repo-lines-v1:sha256:bca5e02c0269e5a0d5694654a754d5a396e4a23cba147b741bd2f49423aff956:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmNhNWUwMmMwMjY5ZTVhMGQ1Njk0NjU0YTc1NGQ1YTM5NmU0YTIzY2JhMTQ3Yjc0MWJkMmY0OTQyM2FmZjk1NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmNhNWUwMmMwMjY5ZTVhMGQ1Njk0NjU0YTc1NGQ1YTM5NmU0YTIzY2JhMTQ3Yjc0MWJkMmY0OTQyM2FmZjk1NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjhlY2I1NmYxNDA1MGY2MzdhMTAzNGRmM2VlNzNmMTdhMmExZGM1NzU5ZWZmZGM0NDcwNWQ4NmJjMzNhMzI1ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMWEyNTVlODQ3YTM4NzUwZGI5MDcwODgyOGZiMGQ3YWY2YzYwODcwNmRkYTVkODQ4NzhlZTFiMDYwNzE5NWI0YSJ9"
+        },
+        {
+          "resource": "repo://fastapi/applications.py#L217-L217",
+          "version": "repo-lines-v1:sha256:be3daffd9e6276904f7008bb222ce4dafc10f0ff5257ebd29fe0e0b1553c056b:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmUzZGFmZmQ5ZTYyNzY5MDRmNzAwOGJiMjIyY2U0ZGFmYzEwZjBmZjUyNTdlYmQyOWZlMGUwYjE1NTNjMDU2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmUzZGFmZmQ5ZTYyNzY5MDRmNzAwOGJiMjIyY2U0ZGFmYzEwZjBmZjUyNTdlYmQyOWZlMGUwYjE1NTNjMDU2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjhlY2I1NmYxNDA1MGY2MzdhMTAzNGRmM2VlNzNmMTdhMmExZGM1NzU5ZWZmZGM0NDcwNWQ4NmJjMzNhMzI1ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjhlNTU0ZDJkNzJlMmIwNjU3MmNhYzhhMTRjNTRlYjNjN2U0ZThiMmY2YjhlY2NjYzcyYzMyY2U5Y2FlYTVlNyJ9"
+        },
+        {
+          "resource": "repo://fastapi/applications.py#L240-L240",
+          "version": "repo-lines-v1:sha256:70bad4de270c0ac2e6aa10b0e12fcd0ca2273a009b1a21e480f568739c4db704:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzBiYWQ0ZGUyNzBjMGFjMmU2YWExMGIwZTEyZmNkMGNhMjI3M2EwMDliMWEyMWU0ODBmNTY4NzM5YzRkYjcwNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzBiYWQ0ZGUyNzBjMGFjMmU2YWExMGIwZTEyZmNkMGNhMjI3M2EwMDliMWEyMWU0ODBmNTY4NzM5YzRkYjcwNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjhlY2I1NmYxNDA1MGY2MzdhMTAzNGRmM2VlNzNmMTdhMmExZGM1NzU5ZWZmZGM0NDcwNWQ4NmJjMzNhMzI1ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYmYwMzYyOWQ3MDcwYTU2YjNkYTA3NGE5YTZlYmI0ODU3MTAwZjkyODJiZTAyZDc0OGM1MDE3MjdjZjA3ZjNmYyJ9"
+        },
+        {
+          "resource": "repo://fastapi/applications.py#L440-L440",
+          "version": "repo-lines-v1:sha256:1841c93ca27e92b799fc622efa4133a02149f57409a97e78e40134ad54d1a68a:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTg0MWM5M2NhMjdlOTJiNzk5ZmM2MjJlZmE0MTMzYTAyMTQ5ZjU3NDA5YTk3ZTc4ZTQwMTM0YWQ1NGQxYTY4YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTg0MWM5M2NhMjdlOTJiNzk5ZmM2MjJlZmE0MTMzYTAyMTQ5ZjU3NDA5YTk3ZTc4ZTQwMTM0YWQ1NGQxYTY4YSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjhlY2I1NmYxNDA1MGY2MzdhMTAzNGRmM2VlNzNmMTdhMmExZGM1NzU5ZWZmZGM0NDcwNWQ4NmJjMzNhMzI1ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYmUwYWNhMmM5MGM0NmRkNzMzZWZjNzAzMzk2MGVlOTA4YmRkYWQ0NDM2ZGE3MWMwMGY4ODUwYzgxMTAwZDUzMiJ9"
+        },
+        {
+          "resource": "repo://fastapi/applications.py#L464-L464",
+          "version": "repo-lines-v1:sha256:5c750d13b58c486e0a5c2ee924fb5d1ecc93ac73ab349f65585cdcce62a36ad2:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWM3NTBkMTNiNThjNDg2ZTBhNWMyZWU5MjRmYjVkMWVjYzkzYWM3M2FiMzQ5ZjY1NTg1Y2RjY2U2MmEzNmFkMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWM3NTBkMTNiNThjNDg2ZTBhNWMyZWU5MjRmYjVkMWVjYzkzYWM3M2FiMzQ5ZjY1NTg1Y2RjY2U2MmEzNmFkMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjhlY2I1NmYxNDA1MGY2MzdhMTAzNGRmM2VlNzNmMTdhMmExZGM1NzU5ZWZmZGM0NDcwNWQ4NmJjMzNhMzI1ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTBjZDRkODFjNmE1MWQ4YzY2NDQyYTYzMDgzMjUzYjM0ZmRkYjNmNmU3YzkzY2I0NTJhNWRjMmNlNzkwNGJhNSJ9"
+        },
+        {
+          "resource": "repo://fastapi/applications.py#L477-L477",
+          "version": "repo-lines-v1:sha256:e4f772a780c9279b0e8803a7daf6edddfc45f49036c44ed3524a0864d54686cd:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTRmNzcyYTc4MGM5Mjc5YjBlODgwM2E3ZGFmNmVkZGRmYzQ1ZjQ5MDM2YzQ0ZWQzNTI0YTA4NjRkNTQ2ODZjZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTRmNzcyYTc4MGM5Mjc5YjBlODgwM2E3ZGFmNmVkZGRmYzQ1ZjQ5MDM2YzQ0ZWQzNTI0YTA4NjRkNTQ2ODZjZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiN2YzMDk5NjkzYjUzNmRiOWVhMDQ0NDYwNzE1OGE4ODVkYmM1YWEzMWRhZGQxMDZjMGZmYWM1NDBmZTZlNGQzZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOGRmMTFlYTY2ODdjODQyMDNlMWNjMDkyMjk4YjE4NjUyN2NkYTZjMTBkNTcxYTVjODc2Mjk0NTAxMTBmZjc4OCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_6bd8156a5fb34c83869d3f6d9d237abf",
+      "statement": "The docs UIs are only set up when openapi_url is set, so openapi_url=None disables the schema and both UIs.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/applications.py#L1155-L1190",
+          "version": "repo-lines-v1:sha256:49582a8f6bd2927fbed7c215f9804bc844ae0fe204259486e2bb78460cd06cda:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEzNzkzMWIyODhjOTVlZjY3NTExYWVkMzM0MmRiZmE4ZDUzNzc0MDljMWFkMzg1Nzk5YTMzNmY1YWM5Y2QxMmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNmZDMxMTU2NTVmMjc1OGMxODAxNGRlZTViNmU3MGQwNmU3MDc4NmEwYzZkODM3YzY2ODg2ZTc4ZWRhNjAyNWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEwMTE3YzBiOGQxOTZjYThiN2NiYjY5YjBmY2FkMzBjYmVlZTliZTI3N2U2ZjZhNDFhM2JjNmU5MmMxOWRiNmEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5b0913f0dcfb4555994e314d7532c4bd",
+      "statement": "openapi_tags describes tags with name, description and externalDocs.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/metadata/tutorial004_py310.py",
+          "version": "repo-file-v1:sha256:a4494d9021c2038d3ad22b6a87263b7cc9838273ffbd6af69d54179c205d76d2"
+        }
+      ]
+    },
+    {
+      "id": "claim_ae86b78f2f6c4303a66247098ac5a1ad",
+      "statement": "swagger_ui_parameters are merged over swagger_ui_default_parameters (dom_id, layout BaseLayout, deepLinking True, showExtensions True, showCommonExtensions True).",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/configure_swagger_ui/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:9e77aeaf5062c9e15fcffeb199c590ce7043605891c3a1a67ddd5f1b1842529f"
+        },
+        {
+          "resource": "repo://fastapi/openapi/docs.py#L22-L37",
+          "version": "repo-lines-v1:sha256:9836a393e0f3a05dc36860bd7ebbd4a2c16aa4193938c709ec499023433b5508:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI5MDU5NDRiZjk2OGYyNjI4MmQyNDMyODBmMmMzYWFjZWEyN2I0MjNiM2IxYjBmNzI3NDQ1NmU3NDI5Nzg4M2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUyMmZhYTUzNWJkMmVhM2Q1MmU3NDFlZDQ1NDQzNWI3ZmU0OWU4MzU4NmU5NDNkOThkODJiYmZiMjRkMWY1YzUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhiOTc0ZGE0MDg2MzJhNGFhN2UyYWU4MGI4NjAzOTFhM2RjZDgyMTFjNzllY2FkN2NhOGU5NTEyOGIwMDE4MzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVhNjBkYmFkMjI5ZTMxN2M4ZDAzZTlhYWIxMWFjNzMwNDU1YzNlMDFjMGViNTViZjQ3YmRjZDYzNzU5MjYzZDUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a6f6059c9adc4824a5a6adcbcd19b610",
+      "statement": "Default docs assets are loaded from cdn.jsdelivr.net (swagger-ui-dist@5 and redoc@2), and custom/self-hosted docs pages can be built with get_swagger_ui_html, get_redoc_html and get_swagger_ui_oauth2_redirect_html after disabling docs_url and redoc_url.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/custom_docs_ui/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:b8c21361f521903128bd9d2b38504d35e834906f17319ec89dd366e3c636ab45"
+        },
+        {
+          "resource": "repo://fastapi/openapi/docs.py#L236-L236",
+          "version": "repo-lines-v1:sha256:9075891b178fe284b50fee0d75f2cc5c4cb2f5ec71de7b6c1ce0232b969cd2bc:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTA3NTg5MWIxNzhmZTI4NGI1MGZlZTBkNzVmMmNjNWM0Y2IyZjVlYzcxZGU3YjZjMWNlMDIzMmI5NjljZDJiYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTA3NTg5MWIxNzhmZTI4NGI1MGZlZTBkNzVmMmNjNWM0Y2IyZjVlYzcxZGU3YjZjMWNlMDIzMmI5NjljZDJiYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTE5NzM3ODFiMzU3OTEwMWUwMzZiZGM2M2NjMTUwZDZlYWZhNzk1NjdmMTdjMDllYjEwMWEzOTI3MjRkMGE2OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNmRiNDY2MmQ0M2VmOTJjNDJhYTc1ZjhhMGQwNmUwNTFkMzcxNmVjMTFmN2U0ZmQwNDY2ODY5MzEwODNhOTdhYiJ9"
+        },
+        {
+          "resource": "repo://fastapi/openapi/docs.py#L79-L92",
+          "version": "repo-lines-v1:sha256:98cb5b722be32f305384f2dbdd19d4a95836dabbb97197ad443359edd2458290:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU4YjY4OGJiOTMyNjFkMDM0OGE1M2IwMzY3YzdjMjgyZmMxMmMxZTkwZjRlYmJjYjRmMGU5ZGE4OGUzNzdmNWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0ZjE5OTlmMmM5ZmJjMzdmMGNiYWMzY2E1NzI1NWQyNWNkMjBmOTQ5Y2RjMjFkNWJlYmQ2OTdlMzNmNWViZTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImExOTczNzgxYjM1NzkxMDFlMDM2YmRjNjNjYzE1MGQ2ZWFmYTc5NTY3ZjE3YzA5ZWIxMDFhMzkyNzI0ZDBhNjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI2NDlkNDVmYmNjNWZkYmYwMGJjY2I5NGY3ZDA3ODk2YjZiMjA2MGMwNThhZTUwNmUxYTUyNmU5MWMzNzVhNTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_62489273ca4e41798b10cb5c93ed3455",
+      "statement": "OpenAPI can be disabled conditionally by reading openapi_url from settings and setting OPENAPI_URL to an empty string; hiding docs is not a security measure.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/how-to/conditional-openapi.md",
+          "version": "repo-file-v1:sha256:ca6d6df6ec65e9629105ca7b75316f11fcb8205f52ca3f83c31907f3c7bfb71a"
+        },
+        {
+          "resource": "repo://docs_src/conditional_openapi/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:f79d5ffde728d45af68a46614b9cec13e20ca765b5012e8daf2aa60d49cf5f96"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

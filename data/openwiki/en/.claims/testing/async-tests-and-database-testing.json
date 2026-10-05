@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:60fc6a305e10b873c28fbfad72c7d221a85e4da6663ffd66f6d98d912e1b18c5",
+  "claims": [
+    {
+      "id": "claim_ffd6c0ea8e864f528e07b0cc78c84d5b",
+      "statement": "Async tests use @pytest.mark.anyio and httpx.AsyncClient with ASGITransport(app=app) and a base_url to call the app in-process.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/async-tests.md",
+          "version": "repo-file-v1:sha256:dfcef60778226025f74bd5359d32d03138262a963d895ea8d7d4d0ae6dbb6020"
+        },
+        {
+          "resource": "repo://docs_src/async_tests/app_a_py310/test_main.py",
+          "version": "repo-file-v1:sha256:9e00a357d569b8212bab8cdec5eb2df7df77543facab295366e58f065cbc34ad"
+        }
+      ]
+    },
+    {
+      "id": "claim_a28f1aa380934095b37426f49b0b340a",
+      "statement": "AsyncClient does not trigger lifespan events; LifespanManager from asgi-lifespan is recommended to run them.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/async-tests.md",
+          "version": "repo-file-v1:sha256:dfcef60778226025f74bd5359d32d03138262a963d895ea8d7d4d0ae6dbb6020"
+        }
+      ]
+    },
+    {
+      "id": "claim_914a167a41934ce380f0808e7fc6bafe",
+      "statement": "A 'Task attached to a different loop' error is avoided by instantiating event-loop-bound objects only inside async functions such as startup callbacks.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/async-tests.md",
+          "version": "repo-file-v1:sha256:dfcef60778226025f74bd5359d32d03138262a963d895ea8d7d4d0ae6dbb6020"
+        }
+      ]
+    },
+    {
+      "id": "claim_940a54e861bc49b7a04a300c4a43d14f",
+      "statement": "Database testing guidance points to the SQLModel tutorial's section on testing SQL databases.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/how-to/testing-database.md",
+          "version": "repo-file-v1:sha256:8b14bbd2af4ed99de95b7d6e6b30fdaea97c0421967eee967d3a2fd904b8ce03"
+        }
+      ]
+    },
+    {
+      "id": "claim_d8d56e12902c4b6eb41ba13256b10f81",
+      "statement": "The SQL tutorial's get_session yield dependency is the seam that tests can override via app.dependency_overrides.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/sql_databases/tutorial002_an_py310.py#L42-L47",
+          "version": "repo-lines-v1:sha256:08ea06572b2ca9a4daca9d7de9b8983035098506e3f17287aaee8b0606f00ee5:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDg2MzkzMGU3ZTZhODI3MTEzNDYwODQxNmI1MWRiMmRmZDFhMmE5YTljMWZhYmVlOTBmNTFkMzQ1YWY2OTA1MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTQ5NWM1MDUzNWY0MjAyMjRmN2Y5MGNkNTVkMmMyMDJjMTUwNGU2ODVhNGRiZjc1YzhlYjE4ZjNkNmYxNTE1ZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTY4ODEzOTllZDBmY2FiZWExYzIxNzU4ZTY5MzM2MzRjOTgwOWU4Nzc1YWRlMDg4Y2U5YWU5YTE5YmZkNWZhZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTk3MjllYzY1YzIxMmQxNWYzZDE0NzQ3NTJjODljOWM2NzdkNGY3ZjRmNDhmZThiMjViYThhOTgxYmQzYTEzNCJ9"
+        },
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L620-L646",
+          "version": "repo-lines-v1:sha256:3ce8917080c047c92d0a07fa9daacc72c90dd16c0d64c278bc8a85c72c7aa41e:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmOTRjZmFmYjZjMjQ2ZWI2NWNkNzRmODNlMzI4NzE1MjI5N2UwYzMzYTM5N2JhNzA4NDcxNTg0Yjk5N2ZmZWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3YjI1OTIxZmQ0ZmJjOTFhMmQ1NzRiMDIxYjQwYmY3MDVjMjIwMTFmOTFhNTkxYmM4YmE5MmJjZGMxMzRmZTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlhN2VmMDFkYzAxNTBkMWEwM2YzMTRiMGVkMWM4ZjQ4YmIyZWMzODVmOTA1M2UyODY1MjUwOGZlNTA1YjQ4NDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcxY2JhODliM2IwOTRlZGQ1M2I5Nzg1OTg1NjAzMzUwOTgxY2M5NGIzY2NjOWEyY2IyNDZhNmNiZDc2MTIwNDYifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:537b3ceb247ea11cc6d9e3a65f84a4e24fcd6d6cadc1078305a6b377dea1dea6",
+  "claims": [
+    {
+      "id": "claim_907fb06c91ea42f6b7823c7c8895cc63",
+      "statement": "fastapi.WebSocket, WebSocketDisconnect and WebSocketState are re-exports from Starlette.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/websockets.py",
+          "version": "repo-file-v1:sha256:2a492f8afd353cfc6b8a8f498ae7a835d8dd8b4bf66ef27bed795e80c92ad466"
+        }
+      ]
+    },
+    {
+      "id": "claim_8c1036c3f6ce4fe893a82c8ed7811952",
+      "statement": "A WebSocket endpoint is declared with @app.websocket, accepts the connection with await websocket.accept(), and exchanges messages with receive_text/send_text.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/websockets_/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:cdc7d81c0da19b57bd4fd43171c6bfd8cc167a1a73b01a8585de5efd98ccd294"
+        }
+      ]
+    },
+    {
+      "id": "claim_47cb392c26fd4dd18d61136dac7fbaf1",
+      "statement": "WebSocket endpoints support Depends, Security, Cookie, Header, Path and Query, and dependencies should raise WebSocketException (e.g. WS_1008_POLICY_VIOLATION) instead of HTTPException.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/websockets.md",
+          "version": "repo-file-v1:sha256:964fb362e75ff908200f0e1a33100c0fe8e2e962a27bf82f1012043a457754c7"
+        },
+        {
+          "resource": "repo://docs_src/websockets_/tutorial002_an_py310.py",
+          "version": "repo-file-v1:sha256:8493dbe1a5316177f084da528ee0ba8ab0b36143662d9697758130e4bb8d7233"
+        }
+      ]
+    },
+    {
+      "id": "claim_7d313fbd352e4457847d2f344a4946c9",
+      "statement": "WebSocket validation errors are handled by closing the socket with code 1008 and the errors as reason.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/exception_handlers.py#L28-L34",
+          "version": "repo-lines-v1:sha256:70b6da0539f7aec6cbdb27d8909028ecaccfd7ba48e7e0ecdc371238a83ba276:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2ViNzAyNTc1OTNkYTA2ZjY4MmEzZGRkYTU0YTlkMjYwZDRmYzUxNGY2NDUyMzdmNWNhNzRiMDhmOGRhNjFhNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzkyMjA0YzY1ZjUwMmRjMTY0NTRiNjI0MDg1NmE5YWI3YWRlMDAzYThlOWY4NjMzM2VjMGI3YzllNDA5NDkxZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMmNjZWI2NjgyNzIzZTdkZWY4MjYxMTM5NWUxYTUxNGU3M2M3OWEwZTY1ZGU5ZjBkZTg2YjgzMGE0OTU3ZWE3ZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_6a24aaa51dae46b49692522e67364eea",
+      "statement": "receive_text raises WebSocketDisconnect when the client disconnects, which can be caught to clean up a connection manager.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/websockets_/tutorial003_py310.py",
+          "version": "repo-file-v1:sha256:e18ce603f03efb538b10639eb2b5535f56d5dc2556a4d4c02d9e6b2ca9b23c3d"
+        }
+      ]
+    },
+    {
+      "id": "claim_60fe9880f9854fac98fee1ceffa8b35f",
+      "statement": "An in-memory connection list only works in a single process; encode/broadcaster is suggested for Redis/PostgreSQL-backed broadcasting.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/websockets.md",
+          "version": "repo-file-v1:sha256:964fb362e75ff908200f0e1a33100c0fe8e2e962a27bf82f1012043a457754c7"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

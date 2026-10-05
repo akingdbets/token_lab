@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:2e2320f93cb7055f75f28049ed92a0c2fc129d95cb7b3909ecd7a517d78726b5",
+  "claims": [
+    {
+      "id": "claim_a675861d212f470fbf5c92ec2c9df446",
+      "statement": "The extra-models pattern uses UserIn (plain password), UserOut (no password) and UserInDB (hashed_password), building UserInDB with **user_in.model_dump() and filtering output with response_model=UserOut.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/extra_models/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:683a5eef6dbbfe8f5f744bebd7d88b918e13393c13dc6f67d6757ad658a0fed9"
+        }
+      ]
+    },
+    {
+      "id": "claim_31b503090e204c0091f0797ed60ed190",
+      "statement": "Shared fields can be declared once in a UserBase model that UserIn, UserOut and UserInDB inherit from.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/extra_models/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:70755deb1ec61cec2edd0a6fd84da44b96cef7b5349dc1bfc392527f7cc43aa1"
+        }
+      ]
+    },
+    {
+      "id": "claim_4b4d756b87cf4e018877e1946d43e659",
+      "statement": "A response can be a union of models (documented with anyOf), with the most specific type listed first.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/extra-models.md",
+          "version": "repo-file-v1:sha256:2c55fffbcd867e76661c9f0f86f70fdcec507730df087bab45521fa993984fbf"
+        },
+        {
+          "resource": "repo://docs_src/extra_models/tutorial003_py310.py",
+          "version": "repo-file-v1:sha256:4ef8fe72769a492e749d04c7348c7a65e7544417ce8efff2719d71c806cba0a8"
+        }
+      ]
+    },
+    {
+      "id": "claim_4011146cd78f480c8d52ff92c7554939",
+      "statement": "response_model can be list[Item] or an arbitrary dict[str, float].",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/extra_models/tutorial004_py310.py",
+          "version": "repo-file-v1:sha256:e5373052a4ce3faa21ed87d53cf8789c77d4f75e2469be1b2ef8214798ff0e3e"
+        },
+        {
+          "resource": "repo://docs_src/extra_models/tutorial005_py310.py",
+          "version": "repo-file-v1:sha256:3e7757559cf52c04a3ef5fb2408e0e786344ac266fe14685ca2a59dd544e8dda"
+        }
+      ]
+    },
+    {
+      "id": "claim_68ff0a73dad34cbf9f686d3fad9ec638",
+      "statement": "jsonable_encoder converts objects to JSON-compatible Python data using ENCODERS_BY_TYPE: datetimes to ISO strings, timedelta to total seconds, Decimal to int or float, Enum to value, UUID and Path to str.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/encoder/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:865e6a0be6cbe0593f2b1b3f18841253d31fcea25052c1f31892a3f2f09941b3"
+        },
+        {
+          "resource": "repo://fastapi/encoders.py#L53-L110",
+          "version": "repo-lines-v1:sha256:f04a22318b4785d2e5a3ba2ee25d435b867a2f01f7802fd57cd84d95323954f3:eyJzZWxlY3RlZExpbmVDb3VudCI6NTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJiMTcyODMxYmYyZjY5OGYwNDIyMTNkZWJiNGQxNjYyOWI2YTdiNDhiMzlhYWNiODVhNDU2MDFkNDBjZGFkOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5NThkYmJkM2JkMTc0YTRkY2UwOWMxMDI0YTg2ZmY0YTA4MjRmNWNiYWUxMzliMTFhYTEyN2YxYjYzZmMyNzEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE0OTVhMDNiNzRiZTc1NDFmMmY2OGVlODU1Mzg4MzA3YTBkMmI4OWM0ODNhZmQyOTI0ZTAzNjkwNDE1ZDE3MmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFjMDI5YzBiNDVhZDk2ZTZiN2Q1Y2Q1OWYwNjRhNGNlMjQxYzE5YTYxNzA4N2NkNGRlMjYyNzY4ZDhkYWM1NjEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5d8640a55c6b4f02853f0a361ec569a0",
+      "statement": "jsonable_encoder accepts include, exclude, by_alias, exclude_unset, exclude_defaults, exclude_none, custom_encoder and sqlalchemy_safe parameters.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/encoders.py#L129-L215",
+          "version": "repo-lines-v1:sha256:c868af4d84c1cd13b705d2ea9215fe975420f791950bf16b1b8649380afa0be7:eyJzZWxlY3RlZExpbmVDb3VudCI6ODcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgyNTQwZDhjNjNkY2QxMmY5ODIyYmFhODUzOTcxMzk2NzNmNzg4ZThjZmE0YTk1OGEzZDgyMDRmZDliMWExNTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjllOTA0OTA1NzEyMmQ0ZGE0OTQ5ZjUzNjE1YjRkZjQ1N2VlMjA1YzYwNTFhYTYwZjBlYzE1OGM4NmI2YTUxMjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM5NTUzZTUxOGNlMDhhM2EwNmM1YTk1OTA3YWYzNTgxNjE3ZjljYWQxYTQ5N2E1MjAzNzQ5OTExZmY0ZGRmMDQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQxOTI0OGM4YzM2NWM5OTFjMDhlOTlkODYzM2ZjNTNkMjkyNjhmYjY2MTJjZjRiOTAyMDk0OGY4NDViNDEyMTMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3000314317324018a72b0d4f98d9c8a6",
+      "statement": "With PUT, omitted fields take model defaults; partial PATCH updates use model_dump(exclude_unset=True) and stored_model.model_copy(update=update_data).",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/body-updates.md",
+          "version": "repo-file-v1:sha256:166ed4b1d088483a926573fa880dcbdaefcdb5dcb3521a5c136b4c57bbe74104"
+        },
+        {
+          "resource": "repo://docs_src/body_updates/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:65537a1ff3e202b778c928a8fd322d424b46e47a15612836c0e027d5c4ba3fe6"
+        },
+        {
+          "resource": "repo://docs_src/body_updates/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:5b61c27ebfe8d61957f4b9ab51ba54b8a265010eda37d554349420aec32ea94c"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:a3eea10f9b547bfe6a6177fdc8427e3af71ad5d5cc65603cbd604bb7cc7450ac",
+  "claims": [
+    {
+      "id": "claim_5cd46b55e49c455e8b63296c37e6cdca",
+      "statement": "Form fields are declared with Annotated[T, Form()] and require python-multipart; FastAPI raises a RuntimeError with install instructions if python-multipart is missing or the wrong multipart package is installed.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/request_forms/tutorial001_an_py310.py#L1-L10",
+          "version": "repo-lines-v1:sha256:29ae76aa0bc421770aa09dfe341ba7d60da11a58cc1290217724d9b09b5b41c8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkNjU0NmI5NWJjMzAyOTRhZGU0ZDM2OGMxYjNmNjUwNzM4MzVjYjhlMDUzNjYzOTU3ZWYyZTFjYzU1Mzg3ZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJlZDQyNzEyZjRmOTNjM2Y1MzY2ZmRjNjlmZGM1OGRiZTg5ZjU3YTViYzVkZWM1ZTRlNzgyYTg1ZGNhM2FlZWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L103-L129",
+          "version": "repo-lines-v1:sha256:f0c50f13780e4eaae4f69e3898e9cccc335bddb5d17cdbc5b40d440698416ae3:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM2Yjk3MDI5ZmM0ODZlNDNmNzYzZTQzNmU2MzY0NTY0NGI5YjBkMzcxZTZlM2M3NWFhNTJiNjE0MzM4NzViOWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzNWVhZGU1NWNiNWU1YTM5MGU4YTEzMTQzNGZmNzI3ZTBhNDhiZGNjYWFlNGFhNGUxMTE0YjA4Y2IyODEzYzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhlNmNkMjRmMmVjMWVmNGJkMzhiYzBkZjAxYjhkNThjMjE2ZGI2MDYzOTlhZTNkMGJhNDQ4NDkzNGQ0MTE2YzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM4OWE2NDhlMDk3OWQwZmE5YWJjOTQ0MGVhNTQ2ZDM2YzE3NjUzNjI3MTcyMTgyYjYwZjQyMjg5ZDM0NmI5M2EifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1dc5c8a8d9e9447cbc91f982afac9516",
+      "statement": "Form subclasses Body and File subclasses Form.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/params.py#L469-L469",
+          "version": "repo-lines-v1:sha256:2ec38554940682bdf15424231bbfce08b2663902b4aec7d8938adf01e76c90a8:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmVjMzg1NTQ5NDA2ODJiZGYxNTQyNDIzMWJiZmNlMDhiMjY2MzkwMmI0YWVjN2Q4OTM4YWRmMDFlNzZjOTBhOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmVjMzg1NTQ5NDA2ODJiZGYxNTQyNDIzMWJiZmNlMDhiMjY2MzkwMmI0YWVjN2Q4OTM4YWRmMDFlNzZjOTBhOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjZhZDIzMzVkMzk0YTAxMTY2MDJiNzIwY2I3MmM0N2Y3Y2I0OTlhMzczMzQzMzMyYTA0ZTg5NGMwMTcyOTEyYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjYwNTI5ZGYxOWZlZjAzMWY2NTBkMDU1NzY2ODE0M2QzYjdjNDAwN2MyMzBkNDYzMjFhNzZlZDNjNzYyMTlkYiJ9"
+        },
+        {
+          "resource": "repo://fastapi/params.py#L581-L581",
+          "version": "repo-lines-v1:sha256:977a26c3c6f4ade54b3cb264235a0de9a2ea636d6d731abbfbdacd3fe91d4c1c:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTc3YTI2YzNjNmY0YWRlNTRiM2NiMjY0MjM1YTBkZTlhMmVhNjM2ZDZkNzMxYWJiZmJkYWNkM2ZlOTFkNGMxYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTc3YTI2YzNjNmY0YWRlNTRiM2NiMjY0MjM1YTBkZTlhMmVhNjM2ZDZkNzMxYWJiZmJkYWNkM2ZlOTFkNGMxYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDY3ZTQ1M2VhMGM0NjkxZjZlMDI2M2JiNWYwNmM5YzA4NWMwMjY5ZTRkM2ExMTVjMjk3YTIxYzVkZTE0ZWQ0OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjYwNTI5ZGYxOWZlZjAzMWY2NTBkMDU1NzY2ODE0M2QzYjdjNDAwN2MyMzBkNDYzMjFhNzZlZDNjNzYyMTlkYiJ9"
+        },
+        {
+          "resource": "repo://fastapi/params.py#L663-L663",
+          "version": "repo-lines-v1:sha256:320b060a1a4d3c44ad523276e38143142bb1a18a232c824296f678156547274f:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzIwYjA2MGExYTRkM2M0NGFkNTIzMjc2ZTM4MTQzMTQyYmIxYTE4YTIzMmM4MjQyOTZmNjc4MTU2NTQ3Mjc0ZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzIwYjA2MGExYTRkM2M0NGFkNTIzMjc2ZTM4MTQzMTQyYmIxYTE4YTIzMmM4MjQyOTZmNjc4MTU2NTQ3Mjc0ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjZhZDIzMzVkMzk0YTAxMTY2MDJiNzIwY2I3MmM0N2Y3Y2I0OTlhMzczMzQzMzMyYTA0ZTg5NGMwMTcyOTEyYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjYwNTI5ZGYxOWZlZjAzMWY2NTBkMDU1NzY2ODE0M2QzYjdjNDAwN2MyMzBkNDYzMjFhNzZlZDNjNzYyMTlkYiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_275d84d0151948c48591a743b927ab93",
+      "statement": "A Pydantic model annotated with Form() collects form fields into the model, and model_config = {\"extra\": \"forbid\"} rejects extra form fields with an extra_forbidden error.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/request-form-models.md",
+          "version": "repo-file-v1:sha256:179c40beabba39e0c6df0c8782c599d1ea50212053e3d1f50c3d35b9013444e6"
+        },
+        {
+          "resource": "repo://docs_src/request_form_models/tutorial001_an_py310.py#L1-L16",
+          "version": "repo-lines-v1:sha256:cadd1e5bb2060735c3a0e0fe308154cbcb0e7e2a482421c8af374b2007353d51:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkNjU0NmI5NWJjMzAyOTRhZGU0ZDM2OGMxYjNmNjUwNzM4MzVjYjhlMDUzNjYzOTU3ZWYyZTFjYzU1Mzg3ZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg0ZmE3NGRlOGIyNWY5ODUyZDVjMTdiNDdjMzM4NDdiNzNiNjE0NjZkNzA5NzJhYzVmNjU3ZTU3NDc3OGI3ZTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://docs_src/request_form_models/tutorial002_an_py310.py#L9-L17",
+          "version": "repo-lines-v1:sha256:90b469e9bf4639800a43755d37dcab97b823e90705850ac6df627f164e2da7ad:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTJlYzEyNDFkYmUzNmQxZTMzYzNmZjJiMjRmNTY5M2JlNmUzOTc0ZGM5NGUyOWJhM2U4NmRkMDMxOTliODQ2NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiODRmYTc0ZGU4YjI1Zjk4NTJkNWMxN2I0N2MzMzg0N2I3M2I2MTQ2NmQ3MDk3MmFjNWY2NTdlNTc0Nzc4YjdlNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTk3MjllYzY1YzIxMmQxNWYzZDE0NzQ3NTJjODljOWM2NzdkNGY3ZjRmNDhmZThiMjViYThhOTgxYmQzYTEzNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_eddb0cdc04ab4ee1bd2732f8002e273b",
+      "statement": "A file parameter typed bytes with File() is read fully into memory, while UploadFile uses a spooled temporary file and exposes filename, content_type, file and async read/write/seek/close methods.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/request-files.md",
+          "version": "repo-file-v1:sha256:e01de51522295553df574201c68f55c571f5df03fd4b36d83d1f3b13cab56aa8"
+        },
+        {
+          "resource": "repo://docs_src/request_files/tutorial001_an_py310.py#L1-L15",
+          "version": "repo-lines-v1:sha256:664b36d714e5096312b4b9a3c1ffcbe7420cde9d99634c245c2185217c64bce0:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkNjU0NmI5NWJjMzAyOTRhZGU0ZDM2OGMxYjNmNjUwNzM4MzVjYjhlMDUzNjYzOTU3ZWYyZTFjYzU1Mzg3ZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjllNDZhNzJkY2ZmODNhOTczNzE1ZDMzZjBiYTFlYWQ3ZjAxYTk4ZGNiNWE3NjExNWRmNzI1NDYwNGIxM2U5NDYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://fastapi/datastructures.py#L21-L130",
+          "version": "repo-lines-v1:sha256:eecec7ee3c16c8509af8ba346355f33cfa5e16b4f51ebeba0cf26d7866bbe41d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEwLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI0MjY0OTliNWEzYzdjZmUxOTQyYTk0OTM5MmY4MWUwMGNiNGRlNGExZWFlYzEyYmU1YjFjMGY2YjQ3MzlmM2UzIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI1ZTQ1OTIxNmY4ZDVjMmVlMjRlNTRiMTgxOTU4MjkyMzdmNjEwNzM0OGNhOGRmMjQ4Yzg3NDNkY2MzOWEzZmI4IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIwZmJhMzg2YjgyYTc4MTk4ZWU3ZmNkM2NiZjczZmU0NjIzNTIzMjQ4YzE0NmQzNWM5MWQ5ZTU5MjE5ZWY1MzNhIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI0Njk2ZjUwZjExZGY1M2Q2NTc4MWQ3ZTE3MmM0ZDM3OTM1MTZkYzEyZmY4MGFhMDNhZDg0NDkwOTgwNTliMjk4In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_a8e7d3277e47464783051be5ecf2dd35",
+      "statement": "Optional uploads use a None default, and multiple files are received with list[bytes] + File() or list[UploadFile].",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/request_files/tutorial001_02_an_py310.py#L1-L21",
+          "version": "repo-lines-v1:sha256:846ae4e1352ec682ebf3c3fde5fd69847f211d554204f90977c557c84dca20e7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkNjU0NmI5NWJjMzAyOTRhZGU0ZDM2OGMxYjNmNjUwNzM4MzVjYjhlMDUzNjYzOTU3ZWYyZTFjYzU1Mzg3ZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmYmQyMzIyNDZmMzk1MjFjZWM2MGE1Y2QyMTc2NTk1NWY4OTZlZTNmZjViOTQ4ZWE1Yzk4ZmI1YmNhMGZhMTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://docs_src/request_files/tutorial002_an_py310.py#L9-L16",
+          "version": "repo-lines-v1:sha256:8ebf524ad76fe76dd7505b3b8d77205f40ec06ff70301e27a78a82f7a99498a9:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmE0ZGM4YzBiYjM4NTYwYTE3YmI2MTc5ZjA3NDhhMmIwOTgyYWZjMDcwMWRjYmUyMGY2NGUwOTc2ZDczMTBiYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiODczODU4N2ZhMjhkNzE1ZDhhOTFmMDZiOGQ5ZTc0NzUxNjQwOGMwYTNiYzk5MzExMjMwZGYzMGVhYjUxOGMyNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTk3MjllYzY1YzIxMmQxNWYzZDE0NzQ3NTJjODljOWM2NzdkNGY3ZjRmNDhmZThiMjViYThhOTgxYmQzYTEzNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWYyZjlmNjZhMTI3ZGQyM2U0Yzg1NDY4YjFlMzhjZDBjNjgxNWUyYTFlY2NiNjYwNGM5ZDVjZTk4NjFiZDAwMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_cd3b4216c2c1477baa3e1bfe9d6b528a",
+      "statement": "File and Form parameters can be combined in one path operation, but JSON Body fields cannot be declared alongside them because the body is form-encoded.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/request-forms-and-files.md",
+          "version": "repo-file-v1:sha256:e55ea4c311e075a37fd56d643e7962e162fbfda32ae29d1546c3ee218be1e18d"
+        },
+        {
+          "resource": "repo://docs_src/request_forms_and_files/tutorial001_an_py310.py#L1-L18",
+          "version": "repo-lines-v1:sha256:34334dcc14b6dd520e2e9e7b2b858c8a12ee87d5c4e7293ef6cbdb7223899613:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkNjU0NmI5NWJjMzAyOTRhZGU0ZDM2OGMxYjNmNjUwNzM4MzVjYjhlMDUzNjYzOTU3ZWYyZTFjYzU1Mzg3ZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0MTlhNmRjYzA0ZTIxM2EzYzdhNzdhNDU2YjAxZTc2ZDFlZjc4Y2QwMGJiZWMxZDhmODE0NThmZTkzZWRjNTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:5292321b7e8c4bb0aa3539600179f4996565f0eb94daf06d154e118e0ddc8080",
+  "claims": [
+    {
+      "id": "claim_1c3047c3983b4a769f137105a77604e6",
+      "statement": "A FastAPI app mounted with app.mount() is independent, with its own OpenAPI and docs at the mount sub-path, and the mount path is communicated via the ASGI root_path.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/sub-applications.md#L31-L65",
+          "version": "repo-lines-v1:sha256:85071107e50abada35b38252368a8a6d9b57fb8f7e56e8bfbd57618130be1edd:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3NDliZDYxMmZmOThkYmJmYTBjNWJlZThmMzEzOTU2N2I0MTVmMjFmMzI3ODZhOGU2MTA3NWFmMjEzODU3MzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZiMzIzMDgxZGFjN2RlMTg2YjNjZjhhYjFmYjY0NzhkZGViMWNhZmFiNWFlOWUxZGRlMmNiNTU0ZWYwOWFhYjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMzOWEwZThhZTBjNjNiMDlkMTFmZmY4YjA5NjgwM2Q1ZDBkYTc5OGNmYjljNjJmMGNmNTY0OWJiYTQxMzgwZjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlhY2NhNjU3ZjJlMzZiNjI2OWM4NTk5NjRhODk5OWZhNTIzOTA3MmI1NTU3ZjI4NDZjNzA0OTQ0ZDdjMzQyNmQifQ"
+        },
+        {
+          "resource": "repo://docs_src/sub_applications/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:0185c00e86f07a94acb528007575338104385db2e1547932d301982b10241f66"
+        }
+      ]
+    },
+    {
+      "id": "claim_404ef7d8825b4b2ca3f4dedb4444f248",
+      "statement": "When FastAPI(root_path=...) is set, FastAPI.__call__ writes it into scope['root_path'] for every request.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/applications.py#L1196-L1198",
+          "version": "repo-lines-v1:sha256:bef37b9f83f495e7159b97e886052a971440e1c48f0a0205395807615cbe4cb7:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2Y2MWVkZDQ5NTUzMjRmMDkwOTE2ZjA5NThkYjlkNmU2N2NkM2U4ZDU3YjhkZWVhMzM2OGIzYTAwNzc4ZWZkZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjBiYzJkNWU5OTBkYzBiN2YxNTg4NGE2YjdjYTUyYjM1OGU4YmI5OGU4NzFmYzQyZjcxMGM1NjliZjRiMzUyYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWE5MTM5MDFhZjhiZTZiZjUyNzc2ZDNiOTliMmZlZDIyMGE3Y2NlOWMzOTYzYzAyODk5NDlmMmI3NjE3MDYzNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMmU4Yjk2NGZlN2ZjZjJmMTE3MzBmZjBmN2ExMWU2MTE3NzE5MjdmODMzYWYzNDcyZDg3NzI0YzQwM2RmZWRkNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_d68078688d834709a2182531a87b17b7",
+      "statement": "The openapi endpoint prepends a server entry with the request's root_path unless root_path_in_servers is False or that URL is already present.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/behind_a_proxy/tutorial004_py310.py",
+          "version": "repo-file-v1:sha256:90a8268c6f574a8a8778399a7329dc85b94654eac9b2600028adb27aac2e065f"
+        },
+        {
+          "resource": "repo://fastapi/applications.py#L1144-L1153",
+          "version": "repo-lines-v1:sha256:a085a8361d071c67079cef28883f3fb575147cbb4bc670e158f10fb0b3fe40b2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJhOTEzODBjNWY2NGVjYmU2MmU5OTZhYjk5ZmMwNjM0ZGRhOTQyMTU4ODI2NDViODQ3Zjc2ZWU5YWZlYTQ0OTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1OTQ2OTBjMGNiYmE0ODE5ODhmZmE3MGMzMmI5OGQ1Y2VmODFjN2IzYWRkOWU0ZTMwNzU3ZDRiYTc0ZjI1NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFjZjgzYTYyNTgxNWViMDNiYWUzM2E2ODk0YmY1MDllZjNhOTFjZTRjOTg5NGM5MmRhNzZiMGZjNjFkZjgxMGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhmNzhjZTQyNjIxMjBiOWI2YmE2NDhhM2NmYjIwYjEzMGVmOWJjYzI2MjY5NDg0MGUwM2U0MDgxYTMxNTRiZjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9b9f7d0fd41043e89ef12a42fdcff210",
+      "statement": "Forwarded headers are only honored when the server is started with --forwarded-allow-ips, which affects generated redirect URLs.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/behind-a-proxy.md#L7-L65",
+          "version": "repo-lines-v1:sha256:87289fd36d4d4f1e07275783f17d1be807b09ca06aa631d5b9a7550d12a44a3c:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViYjEzMzc4MjZmNmYxNTVkMTA2NTU5NTVlZGY1MTE2ZWJhYWI3ZDk4YjE0ZGIyNGU4NGM2YWQ3YjFlNThjZmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3ODllZmU0MzBiMmY0Y2FlY2I3MDAwYmIwOTAwMGQ4YjIzNjk4YTFlNDBjNjE2MjM0ZGZmYmJlY2RjZjUxNGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg3ZmQ3ZTE5ZDY0OTUxODFlNTMyNzdlMDFhZjZhYjQ5Y2EwN2Y5MTNlMzA5YTAwZWMyNTJjNmU4MzUyMTBkNjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJkZGZiZmUyZjFhODJkNjVlYzcxYmY4MmYzMmM0MmU5NzMzYzg4N2ZkN2MyM2NiZGM3YjQ3NzAzZjUxNjA5NzIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_feff25a829fe4a5f98e6dec911de1082",
+      "statement": "openapi_prefix is deprecated in favor of root_path.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/applications.py#L951-L968",
+          "version": "repo-lines-v1:sha256:8328f98c5fe0ce1b4e780036176b5fd049a63e9e867a6236d3f402923e332866:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3Njg3NjQ5NzgyOTMwMzE4Y2Q3ZDI3OTI5OGUwOWI1MDhiNTA1NWViY2NlZmI4YTMyMjAxMTZmZWYxYjA3OTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNkMWMzN2FiNWJiOTg4OWNjNGE2OWRlN2UyOTk2NWU5NDcwM2E3ZWQ3NjFjY2FlNGI1YjVkODJkMjgyMTMzZTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE1OTBkNDZmZjdhMDViZmY0Y2FiOGRjYzliNGRkOWVlMTQ3M2ZlZWUwY2YxODA1NDBhNzgyYjA0YmMxMDBiMzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZiNTcxYTA2NzBmMzIzNDNlMDIwYWJjNjRkZjBkMzYxZjUyMjU3ZWE0ODcyMWFlZjgxNDBjN2RiNThlZWM1MDMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2685c2d693644cb285deae8ade606da6",
+      "statement": "WSGI apps such as Flask are mounted by wrapping them in a2wsgi.WSGIMiddleware; fastapi.middleware.wsgi.WSGIMiddleware is a deprecated re-export of Starlette's.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/wsgi.md#L7-L31",
+          "version": "repo-lines-v1:sha256:ea66209d189a739cb28a3342eca0f1c3543b7d0fc895b1cc45f58ee8874b8f69:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM1ZDdmMWJkZjBlYzQ1MjU5MzExMGM1YmVjMjk2ZWJhOWI4OTJmMjNlMDE3MDg0YWI4NDQ2MTRhOTA2OWI5YmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3ODllZmU0MzBiMmY0Y2FlY2I3MDAwYmIwOTAwMGQ4YjIzNjk4YTFlNDBjNjE2MjM0ZGZmYmJlY2RjZjUxNGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU2NDc1M2FiYThjYTcwM2M3MTcxZDhmNDE1MWM1MzljNmVmOTI3MWI1YzEzYzE3ODJiYWNhMmVmMmM2MmM5MmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE2ZDlhZDk1ODVhNTgyY2VjYTk0MGNlYjQ4OGZiNGRiYTZmYzZmNzY0MGZlNzQ4MGE2MzBhM2I1MzM2YzQxMTIifQ"
+        },
+        {
+          "resource": "repo://docs_src/wsgi/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:c25743b01e411e47ce8209f08edcec2ba742991cdcae32c7fa11f45daaee6a53"
+        },
+        {
+          "resource": "repo://fastapi/middleware/wsgi.py",
+          "version": "repo-file-v1:sha256:dc4bee81980ce351a75e1a45a85d55159a14f6dfbbd8d0c110e68044ead65d59"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

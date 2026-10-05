@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:9d923b423442f14cc42e97572f88b4e3cf8d91ec011782e25334080d07dc8102",
+  "claims": [
+    {
+      "id": "claim_957e193281fc4970bc3efd7200465e7a",
+      "statement": "Strawberry's GraphQLRouter is added to a FastAPI app with include_router under a prefix such as /graphql.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/graphql_/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:8d4239c7f8a3199585e7b49c8ea3ba12882f90e2af86ca8c5beebeaa4989454b"
+        }
+      ]
+    },
+    {
+      "id": "claim_eb75eab188694bac9565f97cdd9781ff",
+      "statement": "Strawberry is the recommended GraphQL library, and Starlette's GraphQLApp is deprecated in favor of starlette-graphene3.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/how-to/graphql.md",
+          "version": "repo-file-v1:sha256:14ce6b1918c3c58064d442758017af4c8602141143dd6e9a033094672372202a"
+        }
+      ]
+    },
+    {
+      "id": "claim_e5f919979fba4ae0b334bb1752a27be0",
+      "statement": "FastAPI's telemetry config defaults to tracing, metrics, logs, operation_spans and auto_configure all True, with no explicit providers and no exclude function.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/applications.py#L1033-L1045",
+          "version": "repo-lines-v1:sha256:9eead8f15f0b188fb9482a9ab80377f53442730841c7f59298cca2fe7dd6caae:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmN2I1MzlkNjkzMzM5YjdjYTQxMTg0YmY4MWI3OTJmNGFhNDUyYWU0ZWQ4MjljZDJhZjA4ZTk5YzM3NmIxZjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM2NWQ3Nzk2OGU2YzUwN2YzM2ViMGI2MDM5ZTAzZmM2ZDUyNTZkZWFhYjgxNWY3MzZmNTI2MTRjOWE1OTY4ZDgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU3MjhhNWM1ZWFmN2RlN2QxMmY1ZTgyM2M1MTdmMTU0MzBkMGIwMzRkN2UyNmE2M2Y1ZWRlYzhkYjhlYTM0YmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJjYzRlMDM5NzFlOTBhOGQzZjQxN2JmNGVkMmI2ZGZlZmM4YThmZTU3ZDY1MDJhNDcwMGZmNTg4ZmFhY2JhMTEifQ"
+        },
+        {
+          "resource": "repo://fastapi/telemetry/_api.py#L35-L80",
+          "version": "repo-lines-v1:sha256:a04e1c6c77af7410089bea5808b1307d189f6f6d23528c8f4fd32c4447ae5e71:eyJzZWxlY3RlZExpbmVDb3VudCI6NDYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4MGIxYTI3MDgxYTZkNTQ2YzI1Yjk0MDk5ZTI5ZmZjM2YwY2M2MDA0ZGYxYjY4MTNkNzcwZTcxZDk1YTM3ZTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNlZmFlNWYwY2UxMjRlZDU0Y2EwYzE3N2MwYjNhMzRlZjlhOTU4YzdlZjMwNWNiOWQxMTBhMGRiMjA2YWExYzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhlNmNkMjRmMmVjMWVmNGJkMzhiYzBkZjAxYjhkNThjMjE2ZGI2MDYzOTlhZTNkMGJhNDQ4NDkzNGQ0MTE2YzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNjMzg2NGQ1NzRjMDE3ZmNlMzI0OTliMjU2ZWQ2ZjM2YjkzODUzYTQ0ZTdlODA1MzMxZTM5OWNkZjdhZjIwNzYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_22bf122492784586b176a7bc7d8ef38b",
+      "statement": "OpenTelemetry export is configured via OTEL_SERVICE_NAME and OTEL_EXPORTER_OTLP_ENDPOINT, with traces, metrics and logs sent to /v1/traces, /v1/metrics and /v1/logs.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/opentelemetry.md",
+          "version": "repo-file-v1:sha256:f062145395cd6b61eed1d7e517f836e194b1c20c85fd4c6b5d13a8c9645726cc"
+        }
+      ]
+    },
+    {
+      "id": "claim_5cfb18ab9e164e59b51a064e417211a9",
+      "statement": "Custom providers can be passed via telemetry={'tracer_provider': ...}, and operation spans can be disabled with telemetry={'operation_spans': False}.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/opentelemetry/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:b18098aa2b87433164d0af9db5df2a43e3b96dd1f519efc186eed3f0f3e3852f"
+        },
+        {
+          "resource": "repo://docs_src/opentelemetry/tutorial003_py310.py",
+          "version": "repo-file-v1:sha256:966ed1615816d22ad6f552bff7a4c1606ec2908cbf1c0d3ed91d8c4c5bab638b"
+        }
+      ]
+    },
+    {
+      "id": "claim_ac687a6cb01f4581b654dff19bbf035c",
+      "statement": "get_telemetry_data returns TelemetryData with request, websocket, body, values and errors for the current request context, or None after it finishes, and it is not automatically exported.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/telemetry/_api.py#L85-L144",
+          "version": "repo-lines-v1:sha256:044dfc61fd2b6f1b8b79032bddb3660c528d0d8c7baa4a3ee77db3f484512937:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlMWM3ZmZhZWIzMGZmY2Y3MDYxMDVkY2Q1ODg2ODA5ZDZmM2JiYTQwZmEzY2JkMDhmNmIxYTIzMzgzNzNmZTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkyODczNjE0MjQ0MzUxNzE0ZTA4OTY1NmVhMmUzMDY0ZTNiMDQ1ODBiNmYwN2E2ODM0MmFjZmJkYWNmZDhkNjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhlZGQ3YmM5ZTA4NTY5NTQyZGFhOWVlYjRjYWVmZWU5YjhlZTEzMmUxZjRmYjRkZmJkMDQ0NDFjNWMwMTY2OGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFkOWE4ZmY1MWIxOTkwOWViMzAwYjM4MmJhYzg4NzNmNzUwYjJkZDQ2YmNkNjI2OWY4NTU1MGFlNTk0NTg0ZTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e9cd75cc1a3849dfa4d132511d5a92a3",
+      "statement": "Validation failures are recorded in telemetry with the error count, and the telemetry data stores the body and errors.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/telemetry/_api.py#L147-L160",
+          "version": "repo-lines-v1:sha256:f6f7961a6725a20de6c2ee84b485ee8e781ba24b5de2422e2ca96ed57db61d9b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ0OWNkNjgzY2IyMmJjNzA3ZmEwYjQwOWM5NmQ5Njc1MjgwMzg0YjA0YTg4ZmE2MThhNjMzMjRjMmNiOWE3MzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgyNTFiZmFiY2ZiNmQ4OWZkOWY0ZTNiN2JjNGExNzRmZDkwYzk5ODE4NmU0ZmRlMmM4ZmEzNGU2ZDVjMjkzYWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY4YWM5NmM0OTllOWU5MGE5ZGNjNzFkMWQ0ZDEzODkwNTIwN2ZmZmFmMzViYzAwNWEzNzk5MGViMzM0MWJhYzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE3OTM4YmUwZTBlNTJjMTU5NGRjN2MyNzFmMjY0MmZhN2IxNWI3NTVhMzE1MDkzNGU1NDE5MTFkY2FkYTQyMzgifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

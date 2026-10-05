@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:735d0bd6f1e1387dd6ee6ac024517ecf2684e47d0fc115f89907de331c405242",
+  "claims": [
+    {
+      "id": "claim_c1d511eb79b94d81a16fe9cf44c30ad7",
+      "statement": "fastapi.testclient.TestClient is a re-export of Starlette's TestClient, which is based on HTTPX and requires httpx to be installed.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/testing.md",
+          "version": "repo-file-v1:sha256:e0e37cc9cc6afbb141fc6950d14436cd1473aa5dfc16eaea158283637c49fcf7"
+        },
+        {
+          "resource": "repo://fastapi/testclient.py",
+          "version": "repo-file-v1:sha256:67b65329fff7f900caa8479f5b1473d0d7e7c41e55ecefcdccb03250dd9a0589"
+        }
+      ]
+    },
+    {
+      "id": "claim_d72dc54676f348c19ed650e0a00f3f47",
+      "statement": "Tests create TestClient(app), call methods like client.get('/') and assert on status_code and json(), using normal def test functions even for async endpoints.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/testing.md",
+          "version": "repo-file-v1:sha256:e0e37cc9cc6afbb141fc6950d14436cd1473aa5dfc16eaea158283637c49fcf7"
+        },
+        {
+          "resource": "repo://docs_src/app_testing/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:a55c5d63ac01b95d1eb5c62817f7b337226b122f32199a6ea9350d19c5f7bc03"
+        }
+      ]
+    },
+    {
+      "id": "claim_2c4e81d1af0e42c193cc4b6feefbbc89",
+      "statement": "Tests can live in a separate module importing the app with a relative import from the package.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/app_testing/app_a_py310/test_main.py",
+          "version": "repo-file-v1:sha256:825c7fb29cf596a5170ed27477cb58a4d9c15d59013b4cc7afc6a29cc5ef3506"
+        }
+      ]
+    },
+    {
+      "id": "claim_f13d99279c2b4a9c880bdfbece1c957f",
+      "statement": "Requests in tests pass headers via headers= and JSON bodies via json=, and tests should cover error responses like 400, 404 and 409.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/app_testing/app_b_an_py310/main.py",
+          "version": "repo-file-v1:sha256:e8549b3b2ea7b94c65a14c89f574cc7b0183f0b8e30245a12240ebac823ffc8f"
+        },
+        {
+          "resource": "repo://docs_src/app_testing/app_b_an_py310/test_main.py",
+          "version": "repo-file-v1:sha256:ce6bd7747a66c6b829ea0da5299f764eca03082d1614de98aed98e0ac3d0d680"
+        }
+      ]
+    },
+    {
+      "id": "claim_9bdedc182a7848f4887b45adbd1327a7",
+      "statement": "To send a Pydantic model's data in a test request, it can be converted with jsonable_encoder.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/testing.md",
+          "version": "repo-file-v1:sha256:e0e37cc9cc6afbb141fc6950d14436cd1473aa5dfc16eaea158283637c49fcf7"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

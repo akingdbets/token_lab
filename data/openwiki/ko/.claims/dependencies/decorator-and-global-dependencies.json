@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:0d052f6f7a89e427d08f9db2163f424abf27e85112c8df17f6250bd190597db5",
+  "claims": [
+    {
+      "id": "claim_005db50c483d4fa0a20eb2f63c220e64",
+      "statement": "Path operation decorators accept a dependencies list of Depends() that are executed like normal dependencies but whose return values are not passed to the path operation function.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/dependencies/dependencies-in-path-operation-decorators.md",
+          "version": "repo-file-v1:sha256:3cf120606916eb43d50b55b255c851ed0a4f1e0edff8210b6e5a35b8666ee275"
+        },
+        {
+          "resource": "repo://docs_src/dependencies/tutorial006_an_py310.py#L1-L21",
+          "version": "repo-lines-v1:sha256:ee085eaffb2bbf140e65118e873dcacdf4c46b9a5e580181d9c5b3b34a80125f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkNjU0NmI5NWJjMzAyOTRhZGU0ZDM2OGMxYjNmNjUwNzM4MzVjYjhlMDUzNjYzOTU3ZWYyZTFjYzU1Mzg3ZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFhNmFhOTM3Yjg4M2FiOTUyNzdlMzBkOGExOGVlNDg1Nzc3NTYyZDE0MjIzOGU4YTg0ZjI5MTNhNmZjZTUwMTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d831838ff30e4a469be47018e7d509c8",
+      "statement": "Decorator dependencies can declare request requirements like headers and raise HTTPException to abort the request.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dependencies/tutorial006_an_py310.py#L8-L16",
+          "version": "repo-lines-v1:sha256:321c60f50e97545ba49256f0645bc8654739e1447f6309369ffc6fee1ca2c2b5:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTRiZjdlOTA0MzAzOGRlODNmZDI2M2FlNzA1NTk5NzU1MDJlMjBiNTRkNWQ0NDM2NDhlZTkzNzI2OGJlM2I0MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjVlNTRmZTIzZDhiOTY1MDEzMDllZDlkNTg3ZmZkYTQ0NzQyMGM2YzM4ZmExNGI5MTQwNmNjMDc4ZGZmYWRmYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTk3MjllYzY1YzIxMmQxNWYzZDE0NzQ3NTJjODljOWM2NzdkNGY3ZjRmNDhmZThiMjViYThhOTgxYmQzYTEzNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjMxNTU3ODI4ZDJlNjY3YTg4MTc2MTJkOTBmZWRjNWQ0NGI4ZTgzMTE4NTQ2ZDgxYWVlM2JiOTllNWJkN2YzYyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_0f6aa899c7744c52b1528377ab67402b",
+      "statement": "FastAPI(dependencies=[...]) applies dependencies to every path operation in the application.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dependencies/tutorial012_an_py310.py#L1-L27",
+          "version": "repo-lines-v1:sha256:3d9e02a97f5b73e8031ab7a158b4c20fad206d612838531045c857998557d820:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkNjU0NmI5NWJjMzAyOTRhZGU0ZDM2OGMxYjNmNjUwNzM4MzVjYjhlMDUzNjYzOTU3ZWYyZTFjYzU1Mzg3ZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI1OTUyYzc0OWFjYzEyNDk1OTVjYWRiMzNjOGMyYjg2ZjlmYjI5MTNjMjc3OTNiNGFiOTgyMjE4MzkwNjcwZDgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cb756e84d6da44f4bc70bcc782bcca73",
+      "statement": "Router dependencies run before decorator dependencies, which run before normal parameter dependencies.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/bigger-applications.md#L185-L189",
+          "version": "repo-lines-v1:sha256:f9ab4f82650cc2ebe9561dfd6ea96a2e363145f1abb976530182e635cfeed5d8:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMGJjZjIxYmI0ZGQ2MjZlMzJlOWNkZGZiNzc1YWNlMTUyOWFiNGNhY2M0ODI2MzliODFlMDBlYjk0ZDgzMjI1NSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzRjYzEzYjhkYzMwMzRlODhkMzFhMTdmZmY1NDBkMTc1OTA2MDVmMzc0MjAwMjUyN2JjNzE4YmM0MjE2YzliYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzlkZGNiZWNmMmM5NDhkMmQ4MGU4MzhhN2FmZDA4MDBmYTQ0NWRmODczYTFiZjY5NzRkYjA1YzAwYjVmZDgzNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTVlMzRlNjYwZmI5YTczODMxODQ4OTdmOTY1N2VhNjMwZjQ1Y2ZkMTdjODI4ZjMwODIwNzFiZTRmOTYyNjg1OCJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

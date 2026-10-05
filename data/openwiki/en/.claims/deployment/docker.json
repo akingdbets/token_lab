@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:5a0adac33ca424e51c23d15c6f3acd7778e216adb02cdfe62471ab0fa70295b3",
+  "claims": [
+    {
+      "id": "claim_5a24187d70cb4d079dccd136fc0b5180",
+      "statement": "The recommended Dockerfile copies requirements.txt and installs dependencies before copying the app code, to reuse Docker's layer cache, and starts the app with fastapi run.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/docker.md#L159-L233",
+          "version": "repo-lines-v1:sha256:d33b929db40c71e195fc53454cbe7ec62cbf1c5f90aebb1b4af8664f42554fe5:eyJzZWxlY3RlZExpbmVDb3VudCI6NzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1YTc2YjVkOGE3MDU1NWU0YWVmNjU2OWVjMzRlMDZmNDg3MDlkN2I4NTk5ZjQ1Y2FmNDVmZjg1MWU4MDNkNWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3ODllZmU0MzBiMmY0Y2FlY2I3MDAwYmIwOTAwMGQ4YjIzNjk4YTFlNDBjNjE2MjM0ZGZmYmJlY2RjZjUxNGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQxZDNkNWIxZmYxMjY5MjA0YTU0OTMyN2M4MzExNTNjNmNjMWMzNGQzMDMzM2E5NjI2OTQ3YTI1Mjc1Yjk1ODciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFhNmRmZjlhYjc1YTEyNDA0NjI5YWZhNjA5MDJhNThkNGJjNTQ5NjlmN2MzZTA5YTQ5NjQxN2FjNzdkZTVjYTYifQ"
+        },
+        {
+          "resource": "repo://docs/en/docs/deployment/docker.md#L280-L311",
+          "version": "repo-lines-v1:sha256:89073197d531451b626d0ee73b854bb04bce90bc4e2ffbbfce287a61547e390a:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NmRjYzY2NTE4MDYwNjRhMTVhZDU0OTg5ZTA3MzZjMGFjZjVhYTAxOWVkNGE1ZGM2ZDA1ZTI3MzkxZjBkMjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA4OWUxZWZjMTA4MDZmMTMwYTQ3YWVjZWM2YzMxZTE2Yzk4ZmY0MTJjMmRhY2U4Njg0Mjg3MDM4ODk1YmZhODUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQzMTMyNTVhYzRhNTYwMGY1ZmRhNWJlYTcwNmJhYTJiNjVmNGRhMTZiZjQyNzg1MTMyZDUxZDUzZjgxOTMyZjYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3ec12b9fc7dd49f8a4602206658e2c23",
+      "statement": "CMD must use the exec form so FastAPI can shut down gracefully and lifespan events are triggered.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/docker.md#L235-L257",
+          "version": "repo-lines-v1:sha256:d58535bf1b9eda69f46586006411bd8db1b452c098085f730b024af68954a12c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhjOTI5ZDlhOTU4NGQyYTliZDFmMGE2MjNlYzk0NDU2MTMxYTI2OWFmN2JhOTYyMTJlYzBjNTE3ZDU3ZjAwNmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzM2ExMzBmMTdhNTkzOTcwMTM4ZWZlOTRkYjA2MDQ0NzY5MjVjN2I2YjY2NjBhY2Y2OGVjMDAyZDY2YTM0NTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA3NTc2MTRlMmUyMjVhYzUwMThiYjIwMTFkMzJlYjJkNGI5YzUxZTNkZmYxMzRjODc2YWY1NDI1MTQ1NTg5YWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE5ZTFmZGFkNmZiN2VlOWU0NDZmOTUwZGQwNWM4MzhjYmNlNDg3MTU4NTNlZGUzYmU1OWU2YjU2YThmZGUwOWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0ff7fadf113b49e5a09d61f0242c6b79",
+      "statement": "When running behind a TLS termination proxy, --proxy-headers should be added to the fastapi run command.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/docker.md#L272-L279",
+          "version": "repo-lines-v1:sha256:e8bd119eb1eaaf1c29f01f369080f43591dfb8fc0712fc14058b70433ede0538:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDNlOWE2OGNjNDc5Njg0MjhhOTNkMjU5ZmVlNDM2YmYxMGRlYTkwNzdmNjJkYmYwYWY0ZGEzY2RmOWMyZGYwNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2ViNzAyNTc1OTNkYTA2ZjY4MmEzZGRkYTU0YTlkMjYwZDRmYzUxNGY2NDUyMzdmNWNhNzRiMDhmOGRhNjFhNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzZkN2Y2YzY5Yjc0NWZhNTFkMzliN2FmMTZjNTA4NjcwZjM3NGI1NjFhMmUwZTUwMDJjM2IwOWY1NzE2MTI4NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiY2YwYjg2YWM2YzcwODlkZjMzOTVkZThmMTEyOTZiM2U1OWI2N2FlODBjYzU3OWQ1ZTZlNzcyNTlkNjA3YmY0ZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_02a2199509814b999eefb843389ccb4b",
+      "statement": "In clusters, one Uvicorn process per container is recommended; multiple workers in one container are for special cases such as simple single-server or Docker Compose setups.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/docker.md#L483-L536",
+          "version": "repo-lines-v1:sha256:f6f4fcccd15b5dea70dfe9d93fe27b942cbcc3d8f99cee67d87bed923de93c18:eyJzZWxlY3RlZExpbmVDb3VudCI6NTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJiMTMxNzFiOGJlYmQ2ZTI3YzE4NDQxNzIyYzUyY2IxMThmZTRjNjQ0ODRiNWY5NTZhYTA5ZTdhYTFhNTM2OGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZkZjIwMTEwMzRmYjc4MmI4MmQ2MWM3ZWQzZWU5YWJjYmE2MDYwNzYyZDg5ODk1ZGU3Mzk0MWU2NThlOWM1ZmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxN2I3ZGQxYzNmYzFmNzY4NzU3NDA3M2NkY2IzOWVjZWRhYzIwMWNkMTYyZGViYTVjMThlYjdkNzBkYTc0ZDYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d4e72adbc957403d9ab56212260ccfd4",
+      "statement": "The tiangolo/uvicorn-gunicorn-fastapi base image is deprecated because Uvicorn and the fastapi command now support --workers.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/docker.md#L567-L584",
+          "version": "repo-lines-v1:sha256:b76e31ec99a57c3b8573c5ad3b802ada1f26e2eddb3f88e693791a7f4b890c6f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE5ODVjYzI4MmNjZTIwMTk1MWVkNGRjM2E2MzRjMDhmMGI2N2Y1ZmY0MzJhYTIzODFiY2ZmZDJjYjhjNjk1NzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdhMDg4MzMxODQ2NGIwNzMyYWVmNTJlZDg0Y2Y4YWE3ODRjOTk3MTE2ZWU1OThmZDdhNDRjODdmNGRlMDQzMmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIzZDM0YmY0OWMyZmM2Y2RjM2U2NjAxNDBjZDI3NDYwNTMwNTE2MjM3ZmYwNThhN2Q1MjAxMjIwNGVlNGMwM2MifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4217bb53eb2a428d9674cca57446e973",
+      "statement": "uv-managed projects export locked dependencies to requirements.txt with uv export for the pip-based Dockerfile.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/docker.md#L106-L136",
+          "version": "repo-lines-v1:sha256:a5ccd2c4700ff985b48022d74834a7f67d42b1c9544b5a9894ced68bc9d1a78c:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg0OThmZmI4ZDg1MTQyZWYwYjc2Y2UwZDlmMWI3YThlYThkZjQ0NjYwY2IzMzI1N2M3NDk3NGYzZDcyY2RjZDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM1NGMyNDMxMDAyNzgwN2NjMjNjMjI1ZDM4ZDU3NTc4MDNmY2EyMjQ3MWEzOTU4NGMzMzU2NjNjOWY4ZDJiYTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVmYzEwZGQxMGVkYzI4MDBhYjE4NGVkYjk5MjcxMDJhYWFlZGQzOTVhODYzOTQ3NThkZmZkZjJmMmY5OGRmNzkifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

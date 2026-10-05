@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:3dc67f936ce7d3e2b8b6dec647b87c4f7d7a5e1603f775696377f6ed007393d0",
+  "claims": [
+    {
+      "id": "claim_9abc097862e042deb971adc32e22b39d",
+      "statement": "Generator dependencies are wrapped internally: async generators with asynccontextmanager and sync generators with contextmanager run in a threadpool, then entered into an AsyncExitStack so exit code runs in reverse order.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L565-L574",
+          "version": "repo-lines-v1:sha256:9b81c0fd6a703b0bbea4436c69042b4d45b9203f959b6f95abbdd2ef5fc56754:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMzY2MwNmYxMmFiMTY0YzIyNDVlNWY4MjdjNWFiN2I3NGUwYmU5ODk3ZWMwY2YxMWMwMGE5Y2UzZWUwOTE4OGMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMzMjUyM2U3NzY4YWU2MjJlNjQ0ODIzZDI2YmVkMzgyZGFmMTJhZTM5YzFiNzVmMjg0NDg0YzAwODU4NzBkZmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZmN2ZjZmRhMjcyNzE3MmFiNmQwMDc3NjMxYmIyNmQxY2E0ZTgwOTQ4MzBkMWFjMzk2ZjY4N2QzZGVkM2MzNGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3a25a8413fc045e28e7239b9badaf632",
+      "statement": "Code before yield runs before the response is created, the yielded value is injected, and code after yield runs after the response by default.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/dependencies/dependencies-with-yield.md",
+          "version": "repo-file-v1:sha256:00779c6aee8c7d30bb5f59844ef11337635ac086d0cbb89dca8aaf516eccd409"
+        },
+        {
+          "resource": "repo://docs_src/dependencies/tutorial007_py310.py#L1-L6",
+          "version": "repo-lines-v1:sha256:3c53fee7cda5ff002a3c81261ddb23daa71f282f6927ae104000387ed43591de:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTc3NzQ2MmQ5NDMxMWY2NzZmZTNiMzNkYmVhZWJhNGY2Njk3YWU1NDE5ZjkzNTlhMjI5YWI2MDYyMjAwN2Y3OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiY2E2ZjFjMzMwNTBlNzRiYjRhZTEzODJiYmZjM2Q0NjAxZTdiOWYyY2ZhMDg5YTg4NTk0NzVhNjY0MWU0Mjc2NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7b700d0fe493476eb6d476dbe6472a18",
+      "statement": "A yield dependency can catch an exception raised in the path operation and convert it to an HTTPException.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dependencies/tutorial008b_an_py310.py#L14-L32",
+          "version": "repo-lines-v1:sha256:75e032e2d31fc088cda804d5bb359b2205f58d68bb6729e61f890cb5bcf7a717:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYyOTUzNGIxNGQ4NmI1MmVlMzE1YjA4NDBjN2FiODdiOTNhMzI5NGJmYmQyOTRjZTQ3OTIzNzI3ZmVkNDQwZTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQwNGVjNDQwNGU0NWIyNmJmZjBmYjU5YTVjM2FkNWZkNDdiNjFhYjdmMTQyODBlYTgzZmQ5NDA5NTQ5ODBlOTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIzNzliMjY0OWM1N2NkNzNiYjQ4Y2VmODA2N2QzNGI2ZTA1NWViYjUyMjc4ODU0ZmQyOGVlODZlZWU4NzNlOGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_291e2dd2fb164f83a56bbe21f3c98484",
+      "statement": "If a yield dependency catches an exception with except and does not re-raise, the client gets a 500 but the server has no log of the error; re-raising with raise preserves the log.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dependencies/tutorial008c_an_py310.py#L12-L16",
+          "version": "repo-lines-v1:sha256:feecc99c64baa477918bd6c4e4287d93301ab0473f57c0ac1e84d89548aa5b98:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODI0NDU3MWExYWU2NzZlZDNkODZlN2FjZDM4MjZhYjgzNzE0NjNiMWRlNDgwMzA1ZDliZTk1M2MyOTE3OTIzNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTBjNGJkNDFlM2QxMmY5YzAwMDRkMmZjOTkyYThjYzQ3NzI3NWUxNDc1OTU2ZTJhMTg4ZGUwZTU0NTRiMjA0OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDBkYzc1NGM4NGFjMTZkYzFkMzU5YzNkMTVmYzlkZWI3ZTc3ZjdkM2IyMDNiZGJlZmIwM2Q2NGViYzQ4YzdhNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTU2MGQzNzQ5MGE2MzNkNDNlZmJlNjMzOTM3OTUzYTZlZDQxNmMxYjJiYzZiMGQ0NTRlN2U1NGQ0Y2Y1YThhMSJ9"
+        },
+        {
+          "resource": "repo://docs_src/dependencies/tutorial008d_an_py310.py#L12-L17",
+          "version": "repo-lines-v1:sha256:0ad8e2dcb0a48a8effd7e1d20a8a2c5b460ef18a4514a873286d95d14ba1f0e5:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODI0NDU3MWExYWU2NzZlZDNkODZlN2FjZDM4MjZhYjgzNzE0NjNiMWRlNDgwMzA1ZDliZTk1M2MyOTE3OTIzNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWUwZTU2M2EyZDI2MzdmNmEwNDNmM2ZjNTZhODdhOWIyMDFlYTlkODEwMGVmNDQ4Y2MwZGQwY2EzYWJmOTRmYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDBkYzc1NGM4NGFjMTZkYzFkMzU5YzNkMTVmYzlkZWI3ZTc3ZjdkM2IyMDNiZGJlZmIwM2Q2NGViYzQ4YzdhNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTU2MGQzNzQ5MGE2MzNkNDNlZmJlNjMzOTM3OTUzYTZlZDQxNmMxYjJiYzZiMGQ0NTRlN2U1NGQ0Y2Y1YThhMSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_32991f38b1674403bff18d0f33532187",
+      "statement": "Depends(dep, scope=\"function\") runs the yield dependency's exit code after the path operation function returns but before the response is sent; the default for yield dependencies is \"request\" scope.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dependencies/tutorial008e_an_py310.py#L1-L17",
+          "version": "repo-lines-v1:sha256:09b3d186d0bad2944a5d881e2a4847044cd382508b363a48b77d48358db6dbf2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkNjU0NmI5NWJjMzAyOTRhZGU0ZDM2OGMxYjNmNjUwNzM4MzVjYjhlMDUzNjYzOTU3ZWYyZTFjYzU1Mzg3ZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMwN2ZmZWRiODNhMzZiYzAwMzYwOWZhZjc4MTY1NzI0NTIwYWFjZjJhMzk2MDZkNTMyMmZlMjkzZTNlN2UyZmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b5efdc3bff374693bba68640024a4192",
+      "statement": "A request-scoped generator dependency depending on a function-scoped dependency raises DependencyScopeError when building the dependant graph.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L302-L317",
+          "version": "repo-lines-v1:sha256:b41ddd1e5ef97fe333506c3d3a59b52e87cffcbefac56072b28ac57c4a8e6cb5:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2NGM0NzdjZWYxY2M4ZDQ5NzA4NzlhNDM2NmFhNWUxM2MzNWZiMzQ3MDZhZjZhYzVmNDM3Y2M0NjgzOWEwYzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU5Y2U4NDUxMzIxZjk4MjZmNWQ2OTczZTQ1OTA4ZTc2ZDczNjk0N2M1MTU5NTc0ZGMwMmIyZjZmMTdmNTUyMjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdhYWRiMWJiMGU4NTkwZmVkYjBlMzQ2M2Q3YzBjZTAzOGFiZjVmMDg2N2ZmMTZjNjgwN2E0OTliNjlkYTAxYWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJmZTFmMjViZGZiZTZjMTU1MWY3MWRhNzkwNjI2NWJhMzZmZGI2YTdiNmM0MDRjZTkzODZkN2EyZjRhNDZmMjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2826fe79449a417b8e18b5e28855a27e",
+      "statement": "Request-scoped and function-scoped yield dependencies use separate AsyncExitStacks stored in the request scope as fastapi_inner_astack and fastapi_function_astack.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L601-L608",
+          "version": "repo-lines-v1:sha256:27164161838011c474581aca8414086c93d91230b43337aff840d2db0d421e41:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWQ1YWExNDhjZTNmMmNiMjQyYmExZDQzZDE2Yjc0NjMwY2U4NmM3ZjFkZTMyMTE0ZWMzMjRiNmRjYWU4NTYzMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzkyMjA0YzY1ZjUwMmRjMTY0NTRiNjI0MDg1NmE5YWI3YWRlMDAzYThlOWY4NjMzM2VjMGI3YzllNDA5NDkxZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzViN2NlMzhkYmYwYmE0MGI0MTgzMTVmMTk0OTA5NzI4OTA5ZjRiNzNiYzNjMTAyNjM4MzExYjU1MTM3ODcxZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjJmMDQzMDhhZmUwYWEyNWZjZjgwNTZmNjMxYWNhMWNkNmU5YmY4ZjgxMWQ0MDU4ZjFjODc3Yjc0MDllNjkwYiJ9"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L145-L190",
+          "version": "repo-lines-v1:sha256:91a8b08ddd3765e470fa65d75f2dbba49607282bebbcf305c74523581e0c7397:eyJzZWxlY3RlZExpbmVDb3VudCI6NDYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4OTg2OWMwMjcxNDk3ZDJkYTFiOTg5NGI5MDE4ZWVjMjE0ZjIzMGYwNzAxOTlhMmZkMTgxODAwOWM0ODU5YWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU4YjBmZWVkZGVmNmUzNTZhNjFjN2JkZDVkYWJjN2M4OTJkOGMyMzA3NmY3MjY2MmUzMTI2NTJjMTE4NTdhOTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFlYzFiYWExYThkOTBhNTgyMGVmMjIzMTlmNGFjNzFiYWVmMTg1NGRhMjBkNGZhZGI0NzYwODBkZjk1ZWQwZjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImExZDdiMDkzYTkwNjEwMTVlYWFmMzkwOTU1YjEwMWY1OWJiZjJkNDUzYTIzN2FkOTQ2MzA5NTUxMmNmN2JmODcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

@@ -61,7 +61,7 @@ class Config:
     root: Path = ROOT
     raw_dir: Path = ROOT / "data" / "raw"
     # OpenWiki 로 생성한 위키 (openwiki/ 폴더를 그대로 복사). 실험 입력이므로 생성 후 고정
-    openwiki_dir: Path = ROOT / "data" / "openwiki"
+    openwiki_dir: Path = Path(_env("OPENWIKI_DIR", str(ROOT / "data" / "openwiki" / "en")))
     eval_dir: Path = ROOT / "data" / "eval"
     results_dir: Path = ROOT / "results"
     # FastAPI 저장소 스냅샷 루트 (docs/en 이 있는 곳). 연구 기간 내내 고정
