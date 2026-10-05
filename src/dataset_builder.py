@@ -58,6 +58,15 @@
     python src/dataset_builder.py --types fact,code --docs 5 --dry-run   # 화면 출력만
     python src/dataset_builder.py --only-split dev --docs 10             # dev 문서에서만
 
+외부 생성 후보 (Ollama 대신 다른 모델이 후보를 만들고, 검사·필터·저장은 여기서)
+    python src/dataset_builder.py --list-targets        # 페이지별 split·짝 후보 (+ candidates/targets.json)
+    python src/dataset_builder.py --import data/eval/candidates/claude_20261006.jsonl \
+        --generator claude-opus-5-5 --dry-run
+    한 줄 = 후보 하나: {"type", "persona", "source_pages", "question", "answer",
+                        "key_entities", "key_facts", "evidence"}
+    기본값: --copy-mode drop, 자동 검증 끔(--verify 로 켬), 문서 없이 풀기·종합형 한 페이지
+    검사는 항상 (실험 모델 기준). 통과 문항에 persona 와 gen_log(generator, 파일, 줄 번호) 기록
+
 검수
     python src/dataset_builder.py --review             # 대화형 검수 모드
     python src/dataset_builder.py --stats
@@ -861,9 +870,9 @@ def load_dataset() -> tuple[list[dict], dict]:
     # 근거에 page 가 없던 구 형식은 변환하지 않는다 (시험본이라 버리고 다시 만든다)
     if any("evidence_pages" not in x or any("page" not in e for e in x.get("evidence", []))
            for x in items):
-        raise SystemExit("구 형식 평가셋입니다. data/eval 을 비우고 다시 생성하세요")
+        raise SystemExit(f"구 형식 평가셋입니다. {CFG.eval_dir} 를 비우고 다시 생성하세요")
     meta.setdefault("deleted", [])
-    used = [int(i[1:]) for i in [x["id"] for x in items] + meta["deleted"] if i]
+    used = [int(re.search(r"(\d+)$", i).group(1)) for i in [x["id"] for x in items] + meta["deleted"] if i]
     meta.setdefault("next_id", max(used, default=0) + 1)
     return items, meta
 
@@ -890,9 +899,11 @@ def record_corpus(meta: dict, corpus: Corpus, sha: str):
 
 
 def assign_ids(new_items: list[dict], meta: dict):
-    """새 문항에만 번호를 붙인다. 기존 번호는 절대 바꾸지 않는다."""
+    """새 문항에만 번호를 붙인다. 기존 번호는 절대 바꾸지 않는다.
+    번호 앞 글자는 평가셋마다 meta["id_prefix"] (기본 q). 평가셋끼리 번호가 겹쳐 보이지 않게 한다."""
+    prefix = meta.get("id_prefix", "q")
     for x in new_items:
-        x["id"] = f"q{meta['next_id']:04d}"
+        x["id"] = f"{prefix}{meta['next_id']:04d}"
         meta["next_id"] += 1
 
 
@@ -975,18 +986,7 @@ def cmd_generate(args):
                 all_items.extend(items)
 
                 if args.dry_run:
-                    for x, r in items:
-                        print(f"{indent}  [{'OK ' if not r else '제외'}] Q: {x['question']}")
-                        if x["original_question"]:
-                            print(f"{indent}         (원래 질문: {x['original_question']})")
-                        print(f"{indent}         A: {x['answer']}  entities={x['key_entities']}")
-                        for ev in x["evidence"]:
-                            locs = ", ".join(f"{l['file']}:{l['line']}" for l in ev["locations"][:3])
-                            more = f" 외 {len(ev['locations']) - 3}곳" if len(ev["locations"]) > 3 else ""
-                            print(f"{indent}         근거 [{ev['page']}] "
-                                  f"{locs}{more}")
-                        if r:
-                            print(f"{indent}         사유: {r}")
+                    print_items(items, indent)
 
     kept = [x for x, r in all_items if not r]
     reasons = Counter(r.split(" (")[0] for _, r in all_items if r)
@@ -1001,8 +1001,36 @@ def cmd_generate(args):
         rec.event("run_end", dry_run=True, **summary)
         print(f"\n[dry-run] 평가셋은 저장하지 않음 (로그: {rel_root(rec.path)})")
         return
+    save_kept(rec, kept, corpus, corpus_sha, summary, args.id_prefix)
 
+
+def print_items(items: list[tuple[dict, str | None]], indent: str = "    "):
+    """--dry-run 화면 출력: 후보마다 통과/제외, 질문, 답, 근거 위치, 제외 사유."""
+    for x, r in items:
+        persona = f"  [{x['persona']}]" if x.get("persona") else ""
+        print(f"{indent}  [{'OK ' if not r else '제외'}] Q: {x['question']}{persona}")
+        if x["original_question"]:
+            print(f"{indent}         (원래 질문: {x['original_question']})")
+        print(f"{indent}         A: {x['answer']}  entities={x['key_entities']}")
+        for ev in x["evidence"]:
+            locs = ", ".join(f"{l['file']}:{l['line']}" for l in ev["locations"][:3])
+            more = f" 외 {len(ev['locations']) - 3}곳" if len(ev["locations"]) > 3 else ""
+            print(f"{indent}         근거 [{ev['page']}] "
+                  f"{locs}{more}")
+        if r:
+            print(f"{indent}         사유: {r}")
+
+
+def save_kept(rec: RunLog, kept: list[dict], corpus: Corpus, corpus_sha: str, summary: dict,
+              id_prefix: str | None = None):
+    """통과 문항을 기존 평가셋에 이어 붙인다 (같은 유형·질문은 건너뜀, 새 문항에만 번호).
+    id_prefix 는 새 평가셋에서만 정할 수 있다 (기존 평가셋과 다르면 중단)."""
     items, meta = load_dataset()
+    if id_prefix:
+        cur = meta.get("id_prefix", "q" if items else None)
+        if cur and cur != id_prefix:
+            raise SystemExit(f"이 평가셋의 번호 접두어는 '{cur}' 입니다 (--id-prefix {id_prefix} 와 다름)")
+        meta["id_prefix"] = id_prefix
     seen = {(x["type"], norm(x["question"])) for x in items}
     new = []
     for x in kept:
@@ -1024,6 +1052,158 @@ def cmd_generate(args):
     print("\n※ 다음 단계: python src/dataset_builder.py --review 로 사람 검수를 진행하세요.")
 
 
+# ---------------- 외부 생성 후보 (--list-targets / --import) ----------------
+# 질문 후보를 Ollama 대신 다른 생성기(예: Claude)가 만들고, 검사·필터·저장은 위와 같은
+# process_candidate / save_kept 로 한다. 문서 없이 풀기와 종합형 한 페이지 검사는
+# 실험 모델(config.model) 기준이어야 하므로 그대로 Ollama 로 한다.
+
+CANDIDATES_DIR = "candidates"
+PERSONAS = ("beginner", "intermediate", "advanced")
+
+
+def partner_candidates(d: Doc, docs: dict[str, Doc]) -> tuple[list[str], str]:
+    """종합형 짝 후보 (pick_partner 와 같은 기준, 무작위 선택 없이 전부).
+    같은 split 안에서 이 페이지가 링크하는 본문 페이지, 없으면 이 페이지를 링크하는 본문 페이지."""
+    same = lambda k: k != d.doc_id and k in docs and docs[k].split == d.split
+    links = sorted({k for k in d.links if same(k)})
+    if links:
+        return links, "link"
+    back = sorted(k for k, o in docs.items() if same(k) and d.doc_id in o.links)
+    return back, ("backlink" if back else "")
+
+
+def cmd_list_targets(args):
+    corpus = load_corpus()
+    docs = load_all_docs(corpus, args.min_tokens, args.max_tokens, args.exclude)
+    rows = []
+    for d in sorted(docs.values(), key=lambda d: (d.split, d.doc_id)):
+        partners, how = partner_candidates(d, docs)
+        rows.append({"doc_id": d.doc_id, "split": d.split, "tokens": d.tokens,
+                     "folder": d.folder, "partners": partners, "partners_by": how})
+
+    print(f"{'split':5s} {'tokens':>6s}  {'doc_id':45s} 종합형 짝 후보")
+    for r in rows:
+        by = f" ({r['partners_by']})" if r["partners"] else ""
+        print(f"{r['split']:5s} {r['tokens']:6d}  {r['doc_id']:45s} "
+              f"{', '.join(r['partners']) or '-'}{by}")
+    c = Counter(r["split"] for r in rows)
+    print(f"\n본문 페이지 {len(rows)}개 (dev {c['dev']} / test {c['test']}), "
+          f"짝 후보 있는 페이지 {sum(1 for r in rows if r['partners'])}개")
+
+    out = CFG.eval_dir / CANDIDATES_DIR / "targets.json"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps({"corpus_manifest_sha256": manifest_sha256(corpus),
+                               "min_tokens": args.min_tokens, "max_tokens": args.max_tokens,
+                               "targets": rows}, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"저장: {rel_root(out)}")
+
+
+def import_sources(it: dict, qtype: str, corpus: Corpus,
+                   docs: dict[str, Doc]) -> tuple[list[Doc] | None, str | None]:
+    """후보의 source_pages -> Doc 목록. 쓸 수 없으면 (None, 제외 사유)."""
+    pages = it.get("source_pages") or []
+    pages = [pages] if isinstance(pages, str) else [str(p).strip() for p in pages]
+    need = 2 if qtype == "multi" else 1
+    if len(pages) != need:
+        return None, f"source_pages 개수 오류 ({len(pages)}개, {need}개 필요)"
+    out = []
+    for p in pages:
+        if p not in corpus:
+            return None, f"없는 페이지 ({p})"
+        if corpus.get(p).kind != "page":
+            return None, f"목차 페이지 ({p})"
+        if p not in docs:
+            return None, f"생성 대상 아닌 페이지 ({p})"
+        out.append(docs[p])
+    if qtype == "multi" and out[0].split != out[1].split:
+        return None, "짝이 다른 분할 (dev/test 섞임)"
+    return out, None
+
+
+def cmd_import(args):
+    path = Path(args.import_file)
+    if not path.is_file():
+        raise SystemExit(f"후보 파일이 없습니다: {path}")
+    if not args.generator:
+        raise SystemExit("--import 에는 --generator (후보를 만든 모델 이름)가 필요합니다")
+
+    lines = path.read_text(encoding="utf-8").splitlines()
+    rec = RunLog(LLM(max_tokens=OUTPUT_RESERVE))
+    corpus = load_corpus()
+    corpus_sha = manifest_sha256(corpus)
+    docs = load_all_docs(corpus, args.min_tokens, args.max_tokens, args.exclude)
+    print(f"설정: {CFG.summary()}")
+    print(f"후보: {path.as_posix()} ({sum(1 for l in lines if l.strip())}개, 생성 {args.generator})")
+    print(f"검사: copy-mode {args.copy_mode}, verify {'on' if not args.no_verify else 'off'}, "
+          f"closed-book on ({CFG.model})")
+    print(f"로그: {rel_root(rec.path)}\n")
+    rec.event("run_start", mode="import", candidates_file=path.as_posix(),
+              generator=args.generator, config=config_snapshot(), args=vars(args),
+              corpus={"source": corpus.source, "manifest_sha256": corpus_sha})
+
+    results: list[tuple[dict | None, str | None, str, str, int]] = []  # (문항, 사유, 유형, persona, 줄)
+    for lineno, line in enumerate(lines, 1):
+        if not line.strip():
+            continue
+        cand_id = rec.new_candidate()
+        try:
+            it = json.loads(line)
+        except json.JSONDecodeError as e:
+            rec.event("candidate", cand_id=cand_id, line=lineno, reject=f"JSON 오류: {e}")
+            results.append((None, "JSON 오류", "?", "?", lineno))
+            continue
+        qtype = str(it.get("type", "")).strip()
+        persona = str(it.get("persona", "")).strip()
+        trace: list[dict] = []
+        item, reject, sources = None, None, it.get("source_pages")
+        if qtype not in TYPES:
+            reject = f"알 수 없는 유형 ({qtype})"
+        elif persona not in PERSONAS:
+            reject = f"알 수 없는 persona ({persona})"
+        else:
+            units, reject = import_sources(it, qtype, corpus, docs)
+            if units is not None:
+                sources = [d.doc_id for d in units]
+                doc_text = "\n\n".join(d.text for d in units)
+                item, reject = process_candidate(rec, it, qtype, units, doc_text, args, trace)
+        if item is not None:
+            item["persona"] = persona
+            item["gen_log"] = {"generator": args.generator, "candidates_file": path.as_posix(),
+                               "line": lineno, "run_id": rec.run_id, "cand_id": cand_id,
+                               "log": rel_root(rec.path)}
+        rec.event("candidate", cand_id=cand_id, line=lineno, qtype=qtype, persona=persona,
+                  sources=sources, llm_output=it, trace=trace, item=item, reject=reject)
+        results.append((item, reject, qtype, persona, lineno))
+        mark = "OK " if item is not None and not reject else "제외"
+        print(f"[{lineno:3d}] {mark} {qtype:9s} {persona:12s} "
+              f"{', '.join(sources) if isinstance(sources, list) else sources}"
+              + (f"  - {reject}" if reject else ""), flush=True)
+        if args.dry_run and item is not None:
+            print_items([(item, reject)], "      ")
+
+    kept = [x for x, r, *_ in results if x is not None and not r]
+    reasons = Counter(r.split(" (")[0] for _, r, *_ in results if r)
+    print(f"\n후보 {len(results)}개 -> 통과 {len(kept)}개")
+    for r, c in reasons.most_common():
+        print(f"  제외 {c:3d}  {r}")
+
+    print(f"\n{'유형':10s}" + "".join(f"{p:>14s}" for p in PERSONAS) + f"{'합계':>10s}")
+    for t in TYPES:
+        row = [(sum(1 for x, r, qt, pe, _ in results if qt == t and pe == p and x is not None and not r),
+                sum(1 for _, _, qt, pe, _ in results if qt == t and pe == p)) for p in PERSONAS]
+        tot = (sum(a for a, _ in row), sum(b for _, b in row))
+        print(f"{t:10s}" + "".join(f"{f'{a}/{b}':>14s}" for a, b in row) + f"{f'{tot[0]}/{tot[1]}':>10s}")
+    print("(통과/후보)")
+
+    summary = {"candidates": len(results), "passed": len(kept),
+               "rejected": dict(reasons), "llm_calls": rec.calls}
+    if args.dry_run:
+        rec.event("run_end", dry_run=True, **summary)
+        print(f"\n[dry-run] 평가셋은 저장하지 않음 (로그: {rel_root(rec.path)})")
+        return
+    save_kept(rec, kept, corpus, corpus_sha, summary, args.id_prefix)
+
+
 def cmd_review(args):
     items, meta = load_dataset()
     if not items:
@@ -1037,7 +1217,8 @@ def cmd_review(args):
           f"k=핵심 엔티티 수정  q=저장 후 종료\n")
     removed = 0
     for i, x in enumerate(todo, 1):
-        print(f"--- [{i}/{len(todo)}] {x['id']}  {x['type']}  {x['split']}")
+        print(f"--- [{i}/{len(todo)}] {x['id']}  {x['type']}  {x['split']}  "
+              f"persona {x.get('persona') or '-'}")
         print(f"출처: {', '.join(x['source_files'])}")
         print(f"Q: {x['question']}")
         if x.get("original_question"):
@@ -1086,7 +1267,8 @@ def cmd_stats(args):
     files = {f for x in items for f in x["source_files"]}
     checked = sum(1 for x in items if x["human_checked"])
     toks = [x["doc_tokens"] for x in items]
-    print(f"문항 수    : {len(items)}  (다음 번호 q{meta['next_id']:04d}, 삭제 {len(meta['deleted'])})")
+    print(f"문항 수    : {len(items)}  (다음 번호 {meta.get('id_prefix', 'q')}{meta['next_id']:04d}, "
+          f"삭제 {len(meta['deleted'])})")
     print(f"출처 문서  : {len(files)}개")
     print(f"사람 검수  : {checked}/{len(items)}")
     print(f"문서 길이  : 평균 {sum(toks)//len(toks)} / 최소 {min(toks)} / 최대 {max(toks)} 토큰")
@@ -1095,6 +1277,12 @@ def cmd_stats(args):
     for s in ("dev", "test"):
         c = Counter(x["type"] for x in items if x["split"] == s)
         print(f"{s:10s}" + "".join(f"{c[t]:10d}" for t in TYPES) + f"{sum(c.values()):10d}")
+    print(f"\n{'persona':14s}" + "".join(f"{t:>10s}" for t in TYPES) + f"{'합계':>8s}")
+    for p in PERSONAS + ("-",):
+        c = Counter(x["type"] for x in items if (x.get("persona") or "-") == p)
+        if p == "-" and not c:
+            continue
+        print(f"{p:14s}" + "".join(f"{c[t]:10d}" for t in TYPES) + f"{sum(c.values()):10d}")
     print("\n폴더별: " + ", ".join(f"{k} {v}" for k, v in
                                 sorted(Counter(x["folder"] for x in items).items())))
 
@@ -1114,20 +1302,44 @@ def main():
                     help="추가로 제외할 본문 페이지 패턴 (위키 루트 기준, fnmatch)")
     ap.add_argument("--dev-ratio", type=float, default=0.2,
                     help="개발용 비율 (문서 단위, 경로 해시로 고정)")
-    ap.add_argument("--copy-mode", choices=("rewrite", "drop", "off"), default="rewrite",
-                    help="문서 표현을 베낀 질문 처리: 바꿔 쓰기 / 제거 / 검사 안 함")
+    ap.add_argument("--copy-mode", choices=("rewrite", "drop", "off"),
+                    help="문서 표현을 베낀 질문 처리: 바꿔 쓰기 / 제거 / 검사 안 함 "
+                         "(기본: 생성 rewrite, --import drop)")
     ap.add_argument("--only-split", choices=("dev", "test"),
                     help="이 분할의 문서에서만 생성 (기본: dev 를 --dev-ratio 비율로 섞음)")
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--no-verify", action="store_true", help="LLM 자동 검증 생략(빠름)")
+    ap.add_argument("--verify", action="store_true",
+                    help="--import 에서 LLM 자동 검증 켜기 (기본은 끔: 외부 생성 문항을 7B 로 검증하지 않음)")
     ap.add_argument("--no-closed-book", action="store_true",
                     help="문서 없이도 맞히는 질문 걸러내기 생략(빠름)")
     ap.add_argument("--dry-run", action="store_true", help="저장하지 않고 화면 출력만")
     ap.add_argument("--review", action="store_true", help="대화형 검수 모드")
     ap.add_argument("--stats", action="store_true", help="현재 평가셋 통계")
+    ap.add_argument("--list-targets", action="store_true",
+                    help="본문 페이지별 split·토큰·종합형 짝 후보 출력 (+ data/eval/candidates/targets.json)")
+    ap.add_argument("--import", dest="import_file", metavar="FILE.jsonl",
+                    help="외부에서 만든 후보 파일을 검사·필터해 평가셋에 추가")
+    ap.add_argument("--generator", help="--import 후보를 만든 모델 이름 (gen_log 에 기록)")
+    ap.add_argument("--id-prefix", help="새 평가셋의 문항 번호 앞 글자 (기본 q, 예: c -> c0001)")
     args = ap.parse_args()
 
-    if args.review:
+    if args.import_file:
+        # 외부 생성 문항: 베낀 질문은 Qwen 으로 바꿔 쓰지 않고 제외, 7B 검증은 기본 끔,
+        # 문서 없이 풀기·종합형 한 페이지 검사는 실험 모델 기준이라 항상 한다
+        args.copy_mode = args.copy_mode or "drop"
+        args.no_verify = not args.verify
+        if args.no_closed_book:
+            print("※ --import 에서는 문서 없이 풀기 검사를 끌 수 없습니다 (무시함)")
+        args.no_closed_book = False
+    else:
+        args.copy_mode = args.copy_mode or "rewrite"
+
+    if args.list_targets:
+        cmd_list_targets(args)
+    elif args.import_file:
+        cmd_import(args)
+    elif args.review:
         cmd_review(args)
     elif args.stats:
         cmd_stats(args)
