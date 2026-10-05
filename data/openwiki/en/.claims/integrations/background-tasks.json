@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:48f95fb9e3971753f3ad373f603f659e789f280499e100994dc2054e52aa6db0",
+  "claims": [
+    {
+      "id": "claim_9be8323ad53447da85959b9077714c29",
+      "statement": "Background tasks are added by declaring a BackgroundTasks parameter and calling add_task(func, *args, **kwargs); they run after the response is sent.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/background_tasks/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:b2b609220f5b9bda9663e81369285e385d20e60086e4893b66e74da428548b26"
+        },
+        {
+          "resource": "repo://fastapi/background.py",
+          "version": "repo-file-v1:sha256:0a1b63c4bfbae64ec894f30a01909eb618632620671265be8cd3f0e47e018bd8"
+        }
+      ]
+    },
+    {
+      "id": "claim_8be7b3c2148f4a1c962eb0e4cf9b29f4",
+      "statement": "fastapi.BackgroundTasks subclasses Starlette's BackgroundTasks and its add_task accepts sync or async functions.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/background.py",
+          "version": "repo-file-v1:sha256:0a1b63c4bfbae64ec894f30a01909eb618632620671265be8cd3f0e47e018bd8"
+        }
+      ]
+    },
+    {
+      "id": "claim_ebb754fb130b4211bab743a5eade690f",
+      "statement": "BackgroundTasks can be declared in dependencies and the path operation, and FastAPI reuses the same object so all tasks run together after the response.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/background-tasks.md",
+          "version": "repo-file-v1:sha256:57a23e2a304c4c2d305da19b538fa1c802b037213526149937a254468be55b80"
+        },
+        {
+          "resource": "repo://docs_src/background_tasks/tutorial002_an_py310.py",
+          "version": "repo-file-v1:sha256:268323d6d4e827baa66f170390362dfa1a309cedd2e3f02de398b624911a40ac"
+        }
+      ]
+    },
+    {
+      "id": "claim_6ea400ba752b4517adb94f8ba2b3c924",
+      "statement": "When an endpoint returns a Response, FastAPI attaches collected background tasks only if the response's background is None.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L733-L734",
+          "version": "repo-lines-v1:sha256:4ca5d4082c9079461f3914b0e3163672b23525615669cad0b717f058363522dd:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTJjYmJlODM0ZjdlNDUwOTk5ZDM5ZDBjODhmYmViNjIxYWM2NTFmOTkyYWJhMGE5Mjk2ZDQ1ZmRmODQ4ZDI2YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjY2NGYzMTg3NGJlYWU0NTQwYTJiOWEyMTM1NGZjMjljZWU5MDU4YTA4OGM2NjIxNWUyNjQ0MGQ4Njc3ZjgyYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWUzNGMyM2M1YTcxYzdlMWUzNGI3YTM1M2EwNTE1OTdhMGEwODFjYWY0NTQxODhmZTYyMjc3OWY1MTMwZWIyNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYWQwZDdhZTU3OTA1ODRlZWU5N2UzOTU1N2I4ZTZkNjY2NDgzZTc0ODdkNjlkNmQxZWZiOWJlNWQxYmIyM2E4MCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_dccb24f502324b09babad808c5d530d1",
+      "statement": "For heavy computation not needing shared process state, the docs recommend bigger tools like Celery instead of BackgroundTasks.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/background-tasks.md",
+          "version": "repo-file-v1:sha256:57a23e2a304c4c2d305da19b538fa1c802b037213526149937a254468be55b80"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

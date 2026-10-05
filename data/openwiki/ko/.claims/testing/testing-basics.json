@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:c1c589bff730e80712bbb84c81923fff3bbbb4424cb57f634f4d4e3a8b5cfbda",
+  "claims": [
+    {
+      "id": "claim_0a80a5597213498f985d0726f9f01226",
+      "statement": "fastapi.testclient.TestClient is a re-export of Starlette's HTTPX-based TestClient, used from plain def pytest test functions without await.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/app_testing/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:a55c5d63ac01b95d1eb5c62817f7b337226b122f32199a6ea9350d19c5f7bc03"
+        },
+        {
+          "resource": "repo://fastapi/testclient.py#L1-L1",
+          "version": "repo-lines-v1:sha256:67b65329fff7f900caa8479f5b1473d0d7e7c41e55ecefcdccb03250dd9a0589:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjdiNjUzMjlmZmY3ZjkwMGNhYTg0NzlmNWIxNDczZDBkN2U3YzQxZTU1ZWNlZmNkY2NiMDMyNTBkZDlhMDU4OSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjdiNjUzMjlmZmY3ZjkwMGNhYTg0NzlmNWIxNDczZDBkN2U3YzQxZTU1ZWNlZmNkY2NiMDMyNTBkZDlhMDU4OSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_6632bf3b133d4f32bf69d30c59a4ad92",
+      "statement": "Tests can live in a separate test_main.py importing the app relatively and pass headers= and json= to TestClient requests to exercise header validation, bodies and error responses.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/app_testing/app_a_py310/test_main.py",
+          "version": "repo-file-v1:sha256:825c7fb29cf596a5170ed27477cb58a4d9c15d59013b4cc7afc6a29cc5ef3506"
+        },
+        {
+          "resource": "repo://docs_src/app_testing/app_b_an_py310/test_main.py",
+          "version": "repo-file-v1:sha256:ce6bd7747a66c6b829ea0da5299f764eca03082d1614de98aed98e0ac3d0d680"
+        }
+      ]
+    },
+    {
+      "id": "claim_9494dfb003a04263b6d8e1878c6c0a5c",
+      "statement": "app.dependency_overrides maps an original dependency to a replacement that FastAPI calls instead during resolution, and can be reset by assigning an empty dict.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dependency_testing/tutorial001_an_py310.py#L23-L57",
+          "version": "repo-lines-v1:sha256:f7b898c6d3b07fe496e780d448c2fd9a0ac1bb60ca0700e633cca09f9b95b713:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRkMjlhZWVlMzE0NDlhOGM5ZDY1ZjVmNTUxOGZkOThiZTBhYTEwYTU3N2RiYjk5MDFkNzJjOGY0ODg3Mjg0MjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0MTlhNmRjYzA0ZTIxM2EzYzdhNzdhNDU2YjAxZTc2ZDFlZjc4Y2QwMGJiZWMxZDhmODE0NThmZTkzZWRjNTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY4OWQ5YjIwNjY4ODAxNGQ1Mjk4MTQ1MzIwZDcyOWY3YmRhYzYwYjM2ZWFmZTQ5YWY5OTUxMmQ3MTA1MWQyZjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://fastapi/applications.py#L986-L986",
+          "version": "repo-lines-v1:sha256:4c16d616051793f7512b3ff8c2924421f9a90bdc79617ed2f7aa306ed540db02:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGMxNmQ2MTYwNTE3OTNmNzUxMmIzZmY4YzI5MjQ0MjFmOWE5MGJkYzc5NjE3ZWQyZjdhYTMwNmVkNTQwZGIwMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNGMxNmQ2MTYwNTE3OTNmNzUxMmIzZmY4YzI5MjQ0MjFmOWE5MGJkYzc5NjE3ZWQyZjdhYTMwNmVkNTQwZGIwMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTliOGI0Njk5OWMyZDdkMzcxMzZiNDc1ZWU0YWJlNWZkZTJiNjMzNDNkY2M0NzA2NGY4YTgwMTE0ZjBmZDJkYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMGQ3NDgxMmIwYzY2NzQ0Y2VmYTVhMjIzNWM4Mzk3MDg5OThkNTc1N2NmYTQxOWQ2ZjA3NDM3MTFjYmM2Y2VhZiJ9"
+        },
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L622-L637",
+          "version": "repo-lines-v1:sha256:53041c602cab81a9ae233823fd67c5d015d5970a52d7266a7c7de41340ef45bd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlhNTkwNzYwZjQwMjBjZWI5MWVjMTU1NDBkOWQ4NjUxM2M4MjI0YzE4MTE5ZjE2MmEwMjQwMGIxOWY1YjRjNTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQzMDIzY2FmMjM3MmE5OTFhN2UzMDQ5MjU4MGRlM2RhMmQ0MjFhNTQ4NTQzMjhhZDNjYzgxYWE1MDc4ZDhlOTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQwMDM2MTc2YTAyYzBhOGI3OGViMmI2ODg3ZTE5MmMzYjA3OWMyYmU4Yjc0ZWI3MTczY2M3OTQ2YWNhZjk0OTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkyN2IxMTNiZmE1YzFiYzQ2ODVmNjQyZGE2M2QyM2Q4NzdiNzYwZWE1Zjg5NDE5YWE5ZjRkNDc3OGVjYTVkMzEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_11bd534fbc3641f19536ed266b81871d",
+      "statement": "Using TestClient in a with block runs the app's lifespan (or startup/shutdown events) on entry and exit; without with, they do not run.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/app_testing/tutorial003_py310.py#L20-L24",
+          "version": "repo-lines-v1:sha256:1d309defb13f90936316783c104c9d869693c7f356c1bebe08fe48e2ec5ba85b:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjcyNzU0ZmRkNmJkOWRmMjViMzNmOWU0ODI1Yzk2MTkwMjk3NGQyOWUyNGQ0YWEwZTAzNzMwOTRmMjcyNjc1MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmRkZmIzNzcyYmRmZjA0MzI5ZWRhOTBlMjRjMTc2OGUzYWZmMjgxYWQwMDJiNzEwZjRmOTE3OTRiMTgzMGQ1ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjc0ZTRlNmEyY2U5MWE5NGQ3ZmJkM2EyOGNhNmVjZDU5NTUwOTM0ZGEzZDgzOTVlMmQwOWE0YWE5YWJmZWQyNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://docs_src/app_testing/tutorial004_py310.py#L26-L43",
+          "version": "repo-lines-v1:sha256:b39dc1bd82e35064ddb70af9b2dcb2f24f5e46ae26dc69705bda0a785d7ddb34:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Mjc1NGZkZDZiZDlkZjI1YjMzZjllNDgyNWM5NjE5MDI5NzRkMjllMjRkNGFhMGUwMzczMDk0ZjI3MjY3NTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwMTVlMGFhYmRmNWI4Yjg2Nzk3YTZjMmVmOWY0NTJjZjM1MzEyNTg0YzkwNjE1MjNmMmE2ZjcyZGI2NTAzN2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI3NGU0ZTZhMmNlOTFhOTRkN2ZiZDNhMjhjYTZlY2Q1OTU1MDkzNGRhM2Q4Mzk1ZTJkMDlhNGFhOWFiZmVkMjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_73f59544dcee4df8b52a85c7e70d154f",
+      "statement": "WebSockets are tested with client.websocket_connect(path) in a with block and methods like receive_json().",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/app_testing/tutorial002_py310.py#L27-L31",
+          "version": "repo-lines-v1:sha256:adda2146597c1f1373b82291535a88b877ce9cf9912d64b68e2fd69d1189d1ba:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzZlYzQzZmRlZmExNTg2NGVmZjM1ZGQyMzU4ZjU4MjY3YTM0YTU4M2QyYmU3MTU4OGU0YzA4NTRmMmZiMzFkMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjRiMGFlOTY2ZjBhMmNlYTg5OWY3NTM0YTkxZGU1YTA4NWViZjVhZmUzYTExMGRiNGEwN2UyNWFjOTk3NTdiYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWVkYjIwNTg5YzhjY2E1NzlhNGZmMzY3MjNhZjE2ZjgzMDE5NzQ2NWZlNDM0MGMxZTVjYTA5NzcwOTQxNGU1YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

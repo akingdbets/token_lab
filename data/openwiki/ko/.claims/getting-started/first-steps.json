@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:10c55cccda35ec48466bdc4c754853cae5ee5352ec44aa90c62a5cb5833adf78",
+  "claims": [
+    {
+      "id": "claim_1bc93487ae2d4331b9ff27c90e139556",
+      "statement": "A minimal FastAPI app creates app = FastAPI() and registers a path operation function with the @app.get(\"/\") decorator returning a dict that is sent as JSON.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/first_steps/tutorial001_py310.py#L1-L8",
+          "version": "repo-lines-v1:sha256:b07ced9e58a5143f0c4d8468a61418ff443874f1c0ed5311e2978959dc747f4a:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTk1MmE2N2I1ZjkxZmFhNTE3YjgzYTY3OTgwOTk1MjkxOGU1ZTFmNzliYTMwMTU5MTYxMmVhZWIzZWExNDViMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWJkOWZkNGRkZDE4NWYwMTc4N2Y5Yzk0OGRmNmNhYzljNjdhNTQ5ODkwOWZkMWIwM2EwY2UxNzU3ZjBmZmU5ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_f2d9ada503214f86820eca7718021117",
+      "statement": "Path operation functions may be declared with async def or plain def.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/first_steps/tutorial003_py310.py#L1-L8",
+          "version": "repo-lines-v1:sha256:007c2c2ac79997a0c339d2aab009677c97b23b8d2d5c92698fe130a3af68a6f5:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTk1MmE2N2I1ZjkxZmFhNTE3YjgzYTY3OTgwOTk1MjkxOGU1ZTFmNzliYTMwMTU5MTYxMmVhZWIzZWExNDViMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWJkOWZkNGRkZDE4NWYwMTc4N2Y5Yzk0OGRmNmNhYzljNjdhNTQ5ODkwOWZkMWIwM2EwY2UxNzU3ZjBmZmU5ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_8dc9165cc82c48c2a878d1c49c7941c7",
+      "statement": "FastAPI serves Swagger UI at /docs, ReDoc at /redoc and the OpenAPI schema at /openapi.json by default, generating OpenAPI 3.1.0 with JSON Schema for data models.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/first-steps.md",
+          "version": "repo-file-v1:sha256:12e2a79c194740bbe192a1ff11ebf633b60ce6651b97e2d5891777f6803f8779"
+        },
+        {
+          "resource": "repo://fastapi/applications.py#L1141-L1195",
+          "version": "repo-lines-v1:sha256:8c0abf51d11141c94f4e68730a66c1f03e6caec3ce3c7a554f95f1d17cec61b1:eyJzZWxlY3RlZExpbmVDb3VudCI6NTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjMmJlYzY5M2VlOWU2NjhmM2FhODI1Y2I4YzYzNjUzNWM0ZjdmNDk1ZTU0M2M2ZmZhNDBkZDZiZjhjMzc2YTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRiOGI2Y2Q1ZTY1ZjVhMTM2M2FmYjY2ZDgxNDMyZmY0MWVjMDZlZGFjZmY5NTQ5ZmUzMDllMjJlNjRkYzljNzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJlZjM3YjlmODNmNDk1ZTcxNTliOTdlODg2MDUyYTk3MTQ0MGUxYzQ4ZjBhMDIwNTM5NTgwNzYxNWNiZTRjYjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a959e99b3e924c4cb777eed2922bdafa",
+      "statement": "FastAPI inherits directly from Starlette, so Starlette functionality is available on FastAPI apps.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/applications.py#L48-L48",
+          "version": "repo-lines-v1:sha256:4cc9c7fdee5b57804862935c3e016a936c8570dc8ac743acf53fc0c9bc9b2902:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGNjOWM3ZmRlZTViNTc4MDQ4NjI5MzVjM2UwMTZhOTM2Yzg1NzBkYzhhYzc0M2FjZjUzZmMwYzliYzliMjkwMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNGNjOWM3ZmRlZTViNTc4MDQ4NjI5MzVjM2UwMTZhOTM2Yzg1NzBkYzhhYzc0M2FjZjUzZmMwYzliYzliMjkwMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjc3ZTU1NzQyNGU3ZDYxNWYyMTM0ZDA1MDQxZTkxODcxMGRhYTVlM2YzYTJhMWRmMmVhYjQ3ODk5ODc4NzE1MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNmYWExMWM3OTE5NTlhZGRiZDM4NGRjNmY4N2FjZWQ5MjU3YTE2YzIzNGQxMDA3MmExYTQyMzRjYjI4M2M1NiJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

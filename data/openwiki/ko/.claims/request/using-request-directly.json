@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:a945c0ef13bee8509f6c6d25dd1806b09da30d2f417dc6425c199a264f43e09e",
+  "claims": [
+    {
+      "id": "claim_053b29d372c54e3d9b90ef9306c60e76",
+      "statement": "Declaring a parameter of type Request injects the Starlette Request (e.g. request.client.host) alongside normally validated parameters; data read directly from it is not validated or documented.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/using-request-directly.md",
+          "version": "repo-file-v1:sha256:83fb6eace7305c4d37d2b40ff64dc783881497de7c6a00da24a02feae4ab9fdb"
+        },
+        {
+          "resource": "repo://docs_src/using_request_directly/tutorial001_py310.py#L1-L9",
+          "version": "repo-lines-v1:sha256:1553d1308a1cbf65670e131e7f606362dc95570bd727995a1c34532a04f3ddde:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjY3MzU3MDcxNmZjZDc5MzQwM2JlNTIxMjkzYTFiNzJhY2ViZDk0OTcwYzc4Njk0NDhiOGIxMjgwZmUyOTE5ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZGRhYzQ3ZGVkNTZkNmQzOGNkNWZiNmUyNGNmZGI3ODI3MDQ2NWJlNzRmMDQxNDRlZWQ5NzQ1OGIzNTEzYWE4ZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_fd890bee87124cf4b425bad36b385aef",
+      "statement": "fastapi.requests re-exports Starlette's Request and HTTPConnection.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/requests.py#L1-L2",
+          "version": "repo-lines-v1:sha256:c74b43933f769f31abe45b604e268677fab67836b1f45a25ec39087c7f51e956:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjA5ZDc0NGE3MjlmNWM1YzFiNzQxNzQ0N2YwZDFkYjJkNjIyOGZkYzQ0Mjk5MTUwNDcyY2JmYjlmMjIwNjlmYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWQ4MTk2ZWMyYmQ4NTk1YzhlZjk1MTFlY2UyZDVmYzc2YTNiNGEzMDkwYTQ4NmZlZGMwOThkZmVmZGYxNGFlNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_9384832e038341d88b060dfb6ec42437",
+      "statement": "A Request subclass can override body() (e.g. gzip decompression) and an APIRoute subclass can override get_route_handler() to wrap the original handler, creating the custom request from request.scope and request.receive.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/custom_request_and_route/tutorial001_an_py310.py#L9-L36",
+          "version": "repo-lines-v1:sha256:91bd7d36d59cc3dfea678ace2ec2082705eb0cce427bf61e4fb5b60a909cffbf:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ2NDcxOGRjYzk4MjI5ZWQ4YmZjOTg4NDRhOTYzMGUzMzFiNTNiMmYzZmMyODhjMmQ3ZjQ5Yzc2NDQ1ODIwMGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBlMWQ5MjBmNzA0ZTk1YzI2MzY3M2U4ZjFjNGVhMjZiZTRkNjg3YWFhNTEwNWY4ZWVmZTA4ZTJlOTJkYjVmOWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZkNTllODAwYzExODJkMzRkODBlZjg1NTk1YjRjOTM3YjFlMTFmYmM3OTUzZmQzY2YzZWY1OWQzMWM1NTQ0ZTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2ac46efeef5a4ebbab8d415b81a01eca",
+      "statement": "Setting app.router.route_class applies a custom APIRoute to the app's path operations, while APIRouter(route_class=...) scopes it to one router.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/custom_request_and_route/tutorial001_an_py310.py#L30-L31",
+          "version": "repo-lines-v1:sha256:7b2d4ea4ad4a0dec7439b007f655f1b4ebb73649a04d06adf569e77c02b6629b:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDA0ZDE2Zjg5MzllOWZlYjRhMWY4ZWE5NDc3NGY1YjljYWFjYzM1ZjU0MjNmNTZjYjI3ODJjMjA0YmRhNDk5YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZGE3M2ZlM2E3MDMxZjQ1MjRkMjFjYTgzMGM3MTExOTg0MjUyZGU1YjNkZGRjZmZjMDg5ZTY2MDQ5YjEyODIxZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWQ5MjI4ODkzZjI3MWI1NzRmOTM5MTQ2YTUwZGM5Njg0YTU2ZTA4NzgwNjlhNTEzNzAwZDQ2NDRiNDNiM2Y2MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTdmYzg2MTcxODNiMDI3ZDE3MWE3MTYyMTQ1NzMzMjIyZTk1YTk0MTBhMmE0M2QzNTBlMjRkZDkyYTk1ODQ1NCJ9"
+        },
+        {
+          "resource": "repo://docs_src/custom_request_and_route/tutorial003_py310.py#L25-L39",
+          "version": "repo-lines-v1:sha256:f268567d0a92011ff0a2e7574965793eaf6a2eed24075d6e4f3df9625f503aca:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAwNGQxNmY4OTM5ZTlmZWI0YTFmOGVhOTQ3NzRmNWI5Y2FhY2MzNWY1NDIzZjU2Y2IyNzgyYzIwNGJkYTQ5OWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0NjdmMzJhMGYzZWNkODliM2I0NjgzZDkzYmYxZmEwOTIwMzdjYzBiOGU4MDM5MzdjNzhkNzQ0NjJmMTBmYTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFkOTIyODg5M2YyNzFiNTc0ZjkzOTE0NmE1MGRjOTY4NGE1NmUwODc4MDY5YTUxMzcwMGQ0NjQ0YjQzYjNmNjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5096d7f729a448d299cab5ee5e79b90b",
+      "statement": "A custom route handler can catch RequestValidationError, re-read the body from the same Request and raise an HTTPException including it.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/custom_request_and_route/tutorial002_an_py310.py#L9-L30",
+          "version": "repo-lines-v1:sha256:813104e777a2a59ad324f7029b077c837033aa338fd2eafa0fce1519b6811fd1:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJkOGM0MGEyMTg4ZWVjODU0MjZhMzViMmFkYzU5NDkyNzM3YWExN2IzNTFmMjJiOTMzZWFhMGRhYjA2ZTAzOGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEwYTQxOWFiYjU2OGJhYTMwZWMxMTBmZmNlNDRiYjMxY2FlMmMyZjM4MTY1NjgxYzgzMzU3MDIyZjJhMzM0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZkNTllODAwYzExODJkMzRkODBlZjg1NTk1YjRjOTM3YjFlMTFmYmM3OTUzZmQzY2YzZWY1OWQzMWM1NTQ0ZTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b560cdc9d2704e2a8fc3bf64946614cc",
+      "statement": "The default APIRoute.get_route_handler builds the handler via get_request_handler from the route's dependant, body field, response settings and strict_content_type, using an effective route context for included routes.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L1258-L1282",
+          "version": "repo-lines-v1:sha256:80f3b7d5f5202d5e12635f7112d56de6c173fffb911036a5a6020985b7a5d4dd:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3Njg5ODQyYTE1NDg1ODNiMGFiY2Q5YmIyNmJmZDQ2MzJkZjEzOWYyNDg0ZDUzNDdkZmZhMjVjNmU0YTIxYzAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhOWY4YzJiYzdhMTQxYTAyMmFmM2ZlYjhhYjUwMDhlYzI1NzU3ZWYyNGFjZDA0OWY1MDg5YTc0YjdjOWFlODEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZlNTI5ZmJiNmQ2NGU2ZjI5N2UwZjUyMTY0M2Y4ZDdlNjFiNTY0MzUyNzQ0MzVmNjQwNzhkNDZjYmMzNDc4YmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY2MGIyNmUxYWI1YjliNGRkMDM5MmJlM2I4N2E4Yzg5M2EyNDM5NWFhYmIwNTYxMTg3ZmFjOTViYWE1YmNiYzMifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:1cdae3cfc0ab95a17c61a1a10a92c5b1054706fed9a9e9cc025a8711c143c540",
+  "claims": [
+    {
+      "id": "claim_f21989bf869a4285b09723166598d531",
+      "statement": "Declaring a parameter typed as a Pydantic BaseModel makes FastAPI read the JSON body, validate it, and provide the model instance; fields with defaults are optional.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/body/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:b1e7b166316f7b45d498aff2f6ef0f7644240dd57c1f948527672e1b6f737d2c"
+        },
+        {
+          "resource": "repo://docs_src/body/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:d383536aa38b56e17bd983cdacf4934ee70607bed09562ebe9b5e102d3d1aa5e"
+        }
+      ]
+    },
+    {
+      "id": "claim_8a06ee2e4efa4b86ab429d0bf3b771ec",
+      "statement": "Parameters declared in the path are path params, singular types are query params, and Pydantic model types are the request body, and they can be mixed in one function.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/body.md",
+          "version": "repo-file-v1:sha256:f93940f261696e7112108207f117d2b7079a59391ca426383dce4b0f1462ae62"
+        },
+        {
+          "resource": "repo://docs_src/body/tutorial004_py310.py",
+          "version": "repo-file-v1:sha256:3032809ce28d0e48db3c4d282e56148fcda917c4cb620dbe40f14904a216c3aa"
+        }
+      ]
+    },
+    {
+      "id": "claim_9eaac2f88b8243b0855f850fd648498c",
+      "statement": "With multiple body parameters FastAPI expects a JSON object keyed by parameter names, and singular values can be placed in the body with Body() (supporting validations like gt).",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/body_multiple_params/tutorial003_an_py310.py",
+          "version": "repo-file-v1:sha256:bb1c22a14acf6517bbd271b5fe37e85e920e4fb422e08baca88eff0fc726adc2"
+        },
+        {
+          "resource": "repo://docs_src/body_multiple_params/tutorial004_an_py310.py",
+          "version": "repo-file-v1:sha256:09e833e80ccdd2a8621fc466573a62a1c922173a92faba9acf024377ad668e4b"
+        }
+      ]
+    },
+    {
+      "id": "claim_dfce296461d84d1a85ceeec498610ff4",
+      "statement": "Body(embed=True) makes a single body model expected under a key named after the parameter.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/body_multiple_params/tutorial005_an_py310.py",
+          "version": "repo-file-v1:sha256:01b8dd0aac73d13fc2c7431d19bc304d822a3ed5697068c0675ee7a6d331dd92"
+        }
+      ]
+    },
+    {
+      "id": "claim_bcf8239ff06640a9beda7a2d86e57651",
+      "statement": "pydantic.Field declares validation and metadata (title, max_length, gt, description) for model fields, included in the JSON Schema.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/body_fields/tutorial001_an_py310.py",
+          "version": "repo-file-v1:sha256:d779e0ab0ccf1a970797a9e76bf11af869bfa37a486838727c7ea135fec14a9c"
+        }
+      ]
+    },
+    {
+      "id": "claim_191e7d0bfbcf4e4e847c39f4df484e28",
+      "statement": "By default (strict_content_type=True) JSON bodies are only parsed when Content-Type is application/json or +json, mitigating CSRF via credential-less requests without Content-Type; FastAPI(strict_content_type=False) parses bodies without Content-Type as JSON.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/strict-content-type.md",
+          "version": "repo-file-v1:sha256:1eb09b1b23672f7734bd65cf28bd152449307947e5772b7aed215e52070b3f98"
+        },
+        {
+          "resource": "repo://docs_src/strict_content_type/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:b4997a4ce70a61f93d808b4926c6f625740a82c172e2483d123bf0896bdd0a06"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L444-L460",
+          "version": "repo-lines-v1:sha256:df853c3511cd247614a6ad6f6434e096ab87c464d419ae294338d3b7e1b9e48a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmNWRmYTRkZTdjMTM0MWYzM2RiN2Y3MGUzZmMyNzNiOGUxNTI2MjIyODBlNmEwMzYzYWNhM2NmNDVjMDYxYTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0ZDdjYTAyYzQ3NGJhZmM1ODBkMGQ0Y2YwOTZjOGUxNGQxMThkNzk0MTEzYzdjMTY4ZmZmMjk5Y2UxNWZhMzQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVkNzRmM2JjM2QxOTJhNDYwMGEwMmU1NTE5OTNkNDJjNDBkODBjZDExOGM0MGZhY2U1MWMxNzJhMDBlYTc5MDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ2M2UwNDg5ZDVmNWI3M2ZkNGQ1ODQyNzA5NzZkMzlhYTAyZTUwNzY3NTAwNmJlYTc5MzIxMjY2MzYxZThlOGQifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

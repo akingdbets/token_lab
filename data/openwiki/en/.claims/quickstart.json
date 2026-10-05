@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:3187bd2a09afd59733ff034ee9deb376975583ee0e651f9d40e03858977ec19d",
+  "claims": [
+    {
+      "id": "claim_eef6402b05b44051a7b6b440a1f3af3c",
+      "statement": "The fastapi package top level exports FastAPI, APIRouter, Depends, Security, Path, Query, Header, Cookie, Body, Form, File, UploadFile, Request, Response, WebSocket, WebSocketDisconnect, BackgroundTasks, HTTPException, WebSocketException and status, and the version is 0.142.2.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/__init__.py",
+          "version": "repo-file-v1:sha256:77c4913b2f323c0821519f6cadae6afa43b7398c089fd3a1acd1a9e6a87afa0a"
+        }
+      ]
+    },
+    {
+      "id": "claim_d9f84981f99e4717aed67e45c3ca2e64",
+      "statement": "FastAPI requires Python 3.10+ and is built on Starlette and Pydantic v2.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/applications.py#L48-L48",
+          "version": "repo-lines-v1:sha256:4cc9c7fdee5b57804862935c3e016a936c8570dc8ac743acf53fc0c9bc9b2902:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGNjOWM3ZmRlZTViNTc4MDQ4NjI5MzVjM2UwMTZhOTM2Yzg1NzBkYzhhYzc0M2FjZjUzZmMwYzliYzliMjkwMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNGNjOWM3ZmRlZTViNTc4MDQ4NjI5MzVjM2UwMTZhOTM2Yzg1NzBkYzhhYzc0M2FjZjUzZmMwYzliYzliMjkwMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjc3ZTU1NzQyNGU3ZDYxNWYyMTM0ZDA1MDQxZTkxODcxMGRhYTVlM2YzYTJhMWRmMmVhYjQ3ODk5ODc4NzE1MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNmYWExMWM3OTE5NTlhZGRiZDM4NGRjNmY4N2FjZWQ5MjU3YTE2YzIzNGQxMDA3MmExYTQyMzRjYjI4M2M1NiJ9"
+        },
+        {
+          "resource": "repo://pyproject.toml#L12-L51",
+          "version": "repo-lines-v1:sha256:eb8511bb94eb9e2f6c56d14828851758ee6a9825ef1274ff38709550f05f1f18:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZmYzkzMGRhMzI2MWFjYzNmMTg1MzY5NjU1ZTA0M2JiZWNlOTI4YTgwOTUzOGY1Y2M5NDJmNTMzMmJiYzBlMTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZkM2I2YzViOTQ0MjJhN2MwNGYwMDkzMzgxYmY4ZDE3MDdlNmVjY2E2Zjc4NzMyMWE2Nzk0ZWEzZGYxNjQ1MmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5ZWIxZGFiNTE1NTJjYmRlMjcyYjRhZmVjNTEzZGUxMDYwOGEwOGM2MzY4ZDU1NjIzNDA4MDhhOWI0Mzk0ZjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM2ZTU4ZDMxOWFmZmRmOGVlZGUzYjJjYTcxNWMxOGE3MGFlYmEyMDJkYzNlNGIyZDdhMDVhNDI1YWNlNjgxOTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ff9eb3514a2743f2bc48539d6cb36f99",
+      "statement": "FastAPI is installed with uv add \"fastapi[standard]\" and a development server is started with fastapi dev.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/fastapi-cli.md",
+          "version": "repo-file-v1:sha256:6b21506911e64492c49e59ecd3428490069cf0f04a3e9b70e95dab9732dfb405"
+        },
+        {
+          "resource": "repo://docs/en/docs/index.md",
+          "version": "repo-file-v1:sha256:ba19e43a333dd0387f4ea2533962c2112c98bab4b2c6f015f400d132df10baa4"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

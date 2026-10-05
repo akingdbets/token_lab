@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:742b3e12989ba5ed8295b2a6df160f80d07e26e1d6682825c88771af8219a188",
+  "claims": [
+    {
+      "id": "claim_e632f0b0e9474b27a983bdfd13644b05",
+      "statement": "If no description is given, FastAPI uses the endpoint docstring (inspect.cleandoc) and truncates it at the first form feed character \\f.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/path_operation_advanced_configuration/tutorial004_py310.py",
+          "version": "repo-file-v1:sha256:84dde01e000e82c6d818f580cc8644f6e7bb7e1dfcabdaaff1af1ffc20be31ac"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L1067-L1070",
+          "version": "repo-lines-v1:sha256:e45dca02fff1490a956de82a98cafb78b172ad377aa1923940fc8dc340c6d12e:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDc3NGUxODVlZDM2MjIyOTVjYjIxYzQ2ZDYzNjBiYTUzZmViNzFmYTY0NDM3NjM4NTIyNmY4ZTNhOWNkNDM3YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDBhOTMwMTlkYjdjYjM4OWUwMWU2YzM1NWYzYzgyZGM2YTQ2NTM0ZGNkZmZhMzFkYzNiNDcyZjVlOWZjZDIwNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWQ0MGYzNmQ5YWVkMDAxMzg5NDVlZTMxYjc5NjdlYWIyYzBkNzM3Nzg0ZjYwNjA4Nzc5YzZhMmE5NGVkN2FlYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOThmMmJiMDkzNDUyZmYwZDU2OGZjYjk4MTM2ZmZhNzQwNTM2NzQ1M2FlNGVkMDU1YTNkODg2YTUzZWNlNWU2YSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_e4a30de2173241c68b816adcdb3036ae",
+      "statement": "An explicit operation_id takes precedence over generate_unique_id_function when computing a route's unique_id.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L1061-L1061",
+          "version": "repo-lines-v1:sha256:c53cb76f45eb405bb452837b20a8fc0f06c338380be40264bf22189dad485926:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzUzY2I3NmY0NWViNDA1YmI0NTI4MzdiMjBhOGZjMGYwNmMzMzgzODBiZTQwMjY0YmYyMjE4OWRhZDQ4NTkyNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzUzY2I3NmY0NWViNDA1YmI0NTI4MzdiMjBhOGZjMGYwNmMzMzgzODBiZTQwMjY0YmYyMjE4OWRhZDQ4NTkyNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTg1OWJhZDU0MjdmZjBmMDJlMDQ5YzY3NTNlYmI4M2Q3NTA1M2QyMjRkODZlNjY3NTMxOWY3YTYwODQ1MjJlMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTg0Yjc3ZTdjYzZjOWFlZGNlOWQyZjc0NzVlZTVjYjJiNjk1ODRlMGI1MjI0YmJlNmI1ZDI1ZmMwNzE4NjVjZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_cf0731a3013e4988b941ca72298fa419",
+      "statement": "The default unique ID combines route name and path format with non-word characters replaced by underscores, suffixed with the lowercase HTTP method.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/utils.py#L95-L100",
+          "version": "repo-lines-v1:sha256:cbf3086bd0f75876a831db96144b85c6d61d309f62fa09eaa4b5045d6f8af45d:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmFkNDdjNmQyN2VlMzFmY2FmNDAwOTkwYzNiODQzNTRkOGRjZDFmZDI3ODBlYjZiZWYzNmI5ODRkNDZmYzY1OSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWE0ZTdkNjZkZTI3Y2UxZDM3YTY2ZWYxNmQzZTM4MDAwZmExMzQyZmQ2MzE1Nzk2MTE3MzM1ZWQyNmMyMDA4NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODRhYTc0MGIxYWRmM2FlOTYzNDMyYWVjNzAwNjg0ZTY2N2FlYWY1NWQ3YzNiODIyMTdkOGI5NWYxNzk1Yzc0ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiY2RmZTJiZTIxOTRkN2I0YjA4YmE5YzNmMWU1MjhmOWUzM2QxNzAxMjQ1OTNlYTIyYmI1NDBhYjE5YjA5ZjdkMCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_b46ebcd6234140bface797cf67633961",
+      "statement": "IntEnum status codes such as http.HTTPStatus are normalized to int.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L1062-L1065",
+          "version": "repo-lines-v1:sha256:d3cde22fdae9fd59bcf1eeb13972857d05440004f13423cc8e5a9245ee39196f:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmVhOGM2ZGMxMWEwYjA0MzVkMDViNjExY2I0MzI1NTViYTdjYWY4ZDhiYzE1NDIzNjA1ZjE2YjhlNTAyZTY2OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOWRhZGI4MjMxYTdhYTNiOGMzOTM0ZWViOTYzNmVjNTliOWMwMGVmNTU0ZGM3ZTIwYTdiNGY2NGU3OWE3NGMyNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWYyNWFlM2FmZTJlMGJkNjUyOTgzYTgxMmI0MjY4MTQ4NDA0Y2I0ZjhiMzM2MzQ0ZTg2OWYxNDk4NTFiNTI2MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTcwOWViNzY0ODVkNTYzZmRlNDcwNjU3M2QzZjEzZTZmMmEwMGQ2MDIxN2UxYjU4ZWE2ZTAwNTE3ZDQ5NjEyMiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_808858b0a929416bb4128dc601a12fa9",
+      "statement": "response_description defaults to 'Successful Response'.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L1205-L1205",
+          "version": "repo-lines-v1:sha256:c58487763ada0b5c10d2c08fc81ec663f3f92ab40cc4d92c4fe0a94efe70cbd2:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzU4NDg3NzYzYWRhMGI1YzEwZDJjMDhmYzgxZWM2NjNmM2Y5MmFiNDBjYzRkOTJjNGZlMGE5NGVmZTcwY2JkMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzU4NDg3NzYzYWRhMGI1YzEwZDJjMDhmYzgxZWM2NjNmM2Y5MmFiNDBjYzRkOTJjNGZlMGE5NGVmZTcwY2JkMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTFhOTRkMmE0OGExNzAzZWQyYWEzYTRkYzMxODEyOGE2ZWU1NjRlMjdiMzJmMTZjYTc4YmFhOTY5M2RmZTRhYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDQ4ZjY1MmJjYzIzMjVlMWY0NjRkN2RhZGYwNDRlMjNjYzJkNGRmMzNlMDQ0NmJkY2M3MDczOGVjMmQ1YzEyOSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_b72bab0cb8844a7c984885f8fff57303",
+      "statement": "openapi_extra is deep-merged into the generated OpenAPI operation object.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/openapi/utils.py#L537-L538",
+          "version": "repo-lines-v1:sha256:658fd582e75413ab202a69945f63bcaccec109b1b2948adf81e1598aa2906b91:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjk0NWM2NTQ0MjMwYTc0Y2ZjN2MxZDhlMGRkYzY3MGZlOTMwOGQxMDU5NGRmMDIwMGI0ZWM2NjZmOTc0MTE3NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2YyNTRlZDhjZjdjOGMzYWRkNGNlNGI3NjczOTNkZDE0MmY5NjUwZjkwMWVhNTA0N2I5NjE1YmM1MzRjMmI1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDRmZjUzNTk3YzFkN2ZhNGIxNTkyOTViN2Y4YmU5ZWZmNWUyNjk4NmY0MjRmZjA5NmRlM2IwNjVmNjU0NGE0ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzk3NmQzYWJkMjJjZGY4M2U1MTlhMGVmMmI5ODIwMjE3M2FjZDU3MTIzMmI0ZDIyNmE3MDBhY2VhMWYyOWI3YiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_4cee3f6ed842494987b7d495b15d6a0b",
+      "statement": "openapi_extra can document a request body for an endpoint that reads and validates the raw body itself, e.g. YAML validated with Item.model_validate.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/path_operation_advanced_configuration/tutorial007_py310.py",
+          "version": "repo-file-v1:sha256:3b3b5cddbfc4e027626df445983993a79e750f944f34a084d14d925c860a81b1"
+        }
+      ]
+    },
+    {
+      "id": "claim_92c413475adb4312b6492a6ab5ee6a4c",
+      "statement": "include_in_schema=False excludes a path operation from the OpenAPI schema and docs.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/path-operation-advanced-configuration.md#L33-L37",
+          "version": "repo-lines-v1:sha256:cf1e54b9dec466bd8289bb01865267bd62e2da0f9d945e54d71b29ef2cee03b9:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzAxY2M0YzJiMTVkYzFmMTMzYzE3ZjNiOTVhZjVjNjgwZjJiMDIyZjJhZWI3YmFhMmFiZTgxMWQzODJkMTg1MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTFjZDQ0YTJlYjBiZGRhNzI0YmFhM2U4MGJhN2E0NWJmMjI1ZjRiODMwMjk0Yjg0NDAyZTNhYWMyNDVmNTUwMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDc1NzYxNGUyZTIyNWFjNTAxOGJiMjAxMWQzMmViMmQ0YjljNTFlM2RmZjEzNGM4NzZhZjU0MjUxNDU1ODlhZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTc3ZmIxMjFmOGQ5ODk0YzI2MGMyNTZmYWZhYWIxMjk4MDljMDNjMzk3MmM3MWExZWQ3NjNjN2I5NTIzZjE4NSJ9"
+        },
+        {
+          "resource": "repo://docs_src/path_operation_advanced_configuration/tutorial003_py310.py",
+          "version": "repo-file-v1:sha256:5f7d84a87643828c14ecf311db18c39dec68c3799243e19d3d42571d6fc17190"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

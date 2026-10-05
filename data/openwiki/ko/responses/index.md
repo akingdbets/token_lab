@@ -1,0 +1,8 @@
+# 파일
+
+- [OpenAPI 추가 응답 선언](additional-responses.md) - 경로 작업 데코레이터(및 APIRouter·include_router)의 responses 파라미터로 상태 코드별 응답을 OpenAPI에 문서화하는 방법—model 키로 Pydantic 스키마 참조, 주 응답에 image/png 같은 추가 미디어 타입, response_model·status_code와 정보 결합(description, example), **dict 언패킹으로 사전 정의 응답 재사용—과 실제 응답은 직접 반환해야 한다는 점을 설명한다.
+- [응답 직접 반환과 커스텀 응답 클래스](custom-responses.md) - Response/JSONResponse를 직접 반환할 때 검증·직렬화·문서화가 생략되는 점과 jsonable_encoder 사용, response_class로 HTMLResponse·PlainTextResponse·RedirectResponse·StreamingResponse·FileResponse를 쓰고 OpenAPI 미디어 타입을 문서화하는 방법, render()를 재정의한 사용자 정의 응답 클래스, default_response_class, deprecated된 UJSONResponse/ORJSONResponse와 응답 모델을 통한 최고 성능 JSON 직렬화를 설명한다.
+- [응답 헤더와 쿠키 설정](response-headers-and-cookies.md) - 경로 작업이나 의존성에서 Response 타입 파라미터(임시 응답)로 헤더·쿠키를 설정하면 response_model 필터링을 유지한 채 최종 응답에 복사되는 방식, Response/JSONResponse를 직접 반환하며 headers와 set_cookie()를 쓰는 방식, X- 사용자 정의 헤더와 CORS expose_headers를 설명한다.
+- [응답 모델과 반환 타입](response-model.md) - 반환 타입 주석 또는 response_model로 응답 데이터를 검증·필터링·문서화·고속 직렬화하는 방법, 두 방식의 우선순위, 입력/출력 모델 분리로 비밀번호 같은 필드 숨기기, Response 반환과 response_model=None, response_model_exclude_unset/exclude_defaults/exclude_none, response_model_include/exclude를 설명한다.
+- [상태 코드: 기본·추가·동적 변경](status-codes.md)
+- [스트리밍, JSON Lines, Server-Sent Events](streaming-and-sse.md) - 경로 작업 함수에서 yield로 응답을 스트리밍하는 세 가지 방식—기본 JSON Lines(application/jsonl, AsyncIterable[Item] 반환 타입으로 검증·문서화), response_class=EventSourceResponse와 ServerSentEvent(data/raw_data/event/id/retry/comment)로 SSE, response_class=StreamingResponse로 원시 바이트/텍스트 스트림—과 Last-Event-ID 재개, POST SSE, keep-alive ping, 취소, 파일과 스레드풀을 설명한다.

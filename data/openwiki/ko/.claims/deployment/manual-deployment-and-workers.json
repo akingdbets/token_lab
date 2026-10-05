@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:2f2c587febb6de233afd35e2ba6e292e5e55d34279ca7a4102d8d58db673dd27",
+  "claims": [
+    {
+      "id": "claim_d3c63eeb19ea4d11bb2efb7498d46259",
+      "statement": "fastapi run serves the application in production using Uvicorn by default, detecting the package structure and importing the app object (e.g. from main import app).",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/manually.md",
+          "version": "repo-file-v1:sha256:58e33438ba4cb49154756634108c23b145fee33965deceaf03a37feb5804f5b1"
+        },
+        {
+          "resource": "repo://fastapi/cli.py#L1-L13",
+          "version": "repo-lines-v1:sha256:a444f8922fb65a8da1556df00dd526303536f2368db1edeb972d70f4fba81485:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM1NDdkMTAyZjBjY2M4Yzg5NDNjMDM1ZjViNTkxNGIwZmE0YzlmMzUxYjNhNDg1ODEyYjE0YmNhMjM0YTBiZmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmMDkxOGU1ZjhhM2E0NTM1YmE5OTI1YTg3N2FkYWIxNTRhMjc5MGMyZDhjOWRkNzc0NTk5ZGU5Yjk1MTNmMTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ac9f4ca5e6fd4326907253305286c06e",
+      "statement": "An ASGI server can be run directly with an import string like uvicorn main:app --host 0.0.0.0 --port 80, where main is the module and app the FastAPI instance; --reload should not be used in production.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/manually.md",
+          "version": "repo-file-v1:sha256:58e33438ba4cb49154756634108c23b145fee33965deceaf03a37feb5804f5b1"
+        }
+      ]
+    },
+    {
+      "id": "claim_5df7b05086e24d5abb4612eba6345915",
+      "statement": "Installing fastapi[standard] includes uvicorn[standard], which adds recommended extras such as uvloop.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/manually.md",
+          "version": "repo-file-v1:sha256:58e33438ba4cb49154756634108c23b145fee33965deceaf03a37feb5804f5b1"
+        },
+        {
+          "resource": "repo://pyproject.toml#L65-L80",
+          "version": "repo-lines-v1:sha256:23af202dacd8d0d2ac3c848178d59c056afda7ed466c5d2c783f00c0f620a4e8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmNjM2ZDUzNDJmYWZmODY4ZTQwNjFmYzVjNGQwOGZmYTYwZGVkMjMwMGY0Y2RiZjE0MTJkMzNmOTc2ZTI1MDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU4MzYxNzFkMDdhNzg2MWMyNjk1YmY0NGM2ZGRlYjUwMzQzODA3NjZkNjQzNTA4M2E2ZDdmNjE3NzdiMWE5MWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlkN2Q1MjRiZTViNDQ2YmM0NDM3YjhjZTA1ZGU4MjUzOTM0NTlhZjY1NzRkODhlMzYwY2JkM2Y3ZGQ1NGEzNzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY2NWQ3ZDZjNTNmZDI2ZTEyMTQxNjE4ZjdjOGU3Y2JjZDk2YzRjNWI2MzMwNmVmOTRjOTc3YWI0MGZhMmNlMGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f0e940cb4d9f40b6a5c510dcbf846569",
+      "statement": "The --workers option of fastapi run or uvicorn starts a process manager plus multiple worker processes to use multiple CPU cores; it mainly addresses replication and partly restarts.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/server-workers.md",
+          "version": "repo-file-v1:sha256:57f35681720dbc38c49e1cf43a8db6e6502d4e7c0878d0698d78ef0c356dedba"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

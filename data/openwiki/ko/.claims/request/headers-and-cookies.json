@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:fa05f51c33a018f2798d7309abab92bc573f8dc2cd1d56a14f448321b59d006e",
+  "claims": [
+    {
+      "id": "claim_53ed31b680844d7b8bef2ac5b32b17e3",
+      "statement": "Header and Cookie parameters are declared with Annotated[T, Header()] / Annotated[T, Cookie()]; without them parameters are treated as query parameters.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/cookie_params/tutorial001_an_py310.py#L1-L10",
+          "version": "repo-lines-v1:sha256:cfc7a97509c041181286535890bea6eb1d8e9920edf3fb7efb6f4c4eb9343547:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkNjU0NmI5NWJjMzAyOTRhZGU0ZDM2OGMxYjNmNjUwNzM4MzVjYjhlMDUzNjYzOTU3ZWYyZTFjYzU1Mzg3ZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZhNTE5NGM4M2RmMDQ3M2E3NjhkNjk4OGNiOGUxNGYxZGQ3MmFiZGYxNDY4MjdmMjYwMTU3OWY5N2JkOTE0MzMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://docs_src/header_params/tutorial001_an_py310.py#L1-L10",
+          "version": "repo-lines-v1:sha256:ab987261f0aa24d1c44a6b39e445c9502b6779488516ed1be959fca7cfc24fcd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkNjU0NmI5NWJjMzAyOTRhZGU0ZDM2OGMxYjNmNjUwNzM4MzVjYjhlMDUzNjYzOTU3ZWYyZTFjYzU1Mzg3ZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI4YTg0YjcxMzY1YzkyNjliZjMwZjMzNGE4OTg2MWM2Y2M5NGRkMDFkMjUxYzUyNTY5YmM1NDg4ZWU3ODUyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f40a147fd7204766bee3e7024e0aee84",
+      "statement": "Header converts underscores in the parameter name to hyphens to build the header alias unless an explicit alias is set or convert_underscores=False.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/header_params/tutorial002_an_py310.py#L8-L12",
+          "version": "repo-lines-v1:sha256:52007552927c4dac83b3ed02160d2a79b68e5b351efa312a7ffbcd25c94640ee:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiY2ZlNTU5YzJkY2Y2NTM0YTU3ZDk1MzU4MTE1M2NkY2Y1OTYzMjIyODQ5NjZkMzk3ZjA4MWRkNjdmNmJiN2JhOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOWQ3NDlkYWUwNjVlYjczMzJmYmRlZjkzY2Q3MjRhZGY3ZGQ1Y2ZhM2IxNTEzYWZkYmRkYTA1NjQyMDFhNTIwMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTk3MjllYzY1YzIxMmQxNWYzZDE0NzQ3NTJjODljOWM2NzdkNGY3ZjRmNDhmZThiMjViYThhOTgxYmQzYTEzNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L524-L528",
+          "version": "repo-lines-v1:sha256:2c3bf3bb45218b5a8940cebe658cc7fa2102222f73cb3114328002aa479f615b:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDZhNWQ3NWE1MjYyN2UwZjYyZjQ3MGQwMWMxYjAyYzMxOWI3NWQ3MzI3NzUyZDMwZjc0YTBjZjk0MTNmYThlMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmY1MGI4Mzc3M2UyZjk5MWU4ZmY2ZDg3YmFjM2JkOTZmMWQ4MjQ1YjE2MmNkNTM0YTdjOTc1M2RkZTQzOGMyNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiY2ExNjJlYjJlNTE2YmZhZWRmMTk3Zjk5YTYwMzk3YjQwYmVkNmIyZWUyZjY1MjZmOGMzZWUwOGY4ZWFlNmQ3MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWRjZWY2MmU0NjFlNTdkNzkzMzBmZTFlYjQ2Y2ExMzQ4YTZiMTgxNmU4MDU1ZmYzYzkwYzBhNjNhN2NlMTJjMCJ9"
+        },
+        {
+          "resource": "repo://fastapi/params.py#L303-L352",
+          "version": "repo-lines-v1:sha256:4b44bb7a532382489391d99774ce5a2f96d5e1d5fc60446232030001f3b2fd07:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFlOWU3ZjJkYTBlODlmMDQxNDlmZDc5MjEwZWVjOTY1ODdkNDNjYzYyNTkwNTA2YmE2NDRhYTM4M2FkNmI3ZWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ2NmEzZGQ4MmVhZmEyOGQ4YTdjMDRiMWMzMjM1OTY2M2FmZDcwZGRkZjgwMGMwMTVhNjAyMDM1MDE2OWM1NzUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI2YWQyMzM1ZDM5NGEwMTE2NjAyYjcyMGNiNzJjNDdmN2NiNDk5YTM3MzM0MzMzMmEwNGU4OTRjMDE3MjkxMmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI2ZDcxNWMxNTc4OWI3MDA2NGU4OWZlZWY4ZjRjNTQ5MGZlYWU3Y2EyNDgzYmYwZTU3NGVhYjU0YTNlYjFiOTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c73f7b0a1b2746dd867429c3c49af9ee",
+      "statement": "Declaring a header as list[str] collects all values of a duplicated header.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/header_params/tutorial003_an_py310.py#L8-L10",
+          "version": "repo-lines-v1:sha256:4a45774352154b4645ee816553edd7e3a8243ceeec7f5f797072051184c6544c:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiY2ZlNTU5YzJkY2Y2NTM0YTU3ZDk1MzU4MTE1M2NkY2Y1OTYzMjIyODQ5NjZkMzk3ZjA4MWRkNjdmNmJiN2JhOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmY3NzgxOGRkNGM1ZmI0YmI5ZjIzNGQ2ZTBmNjMzMDg4N2VkY2I3MTQ4MDBmYTc3MWRhZDEyYTA1MTk0ZjFiOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTk3MjllYzY1YzIxMmQxNWYzZDE0NzQ3NTJjODljOWM2NzdkNGY3ZjRmNDhmZThiMjViYThhOTgxYmQzYTEzNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_285311a522d64347bd5f04bfee8473b6",
+      "statement": "A Pydantic model annotated with Header() or Cookie() collects related headers/cookies into the model, and model_config extra=\"forbid\" rejects extra headers/cookies with extra_forbidden errors.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/cookie_param_models/tutorial002_an_py310.py#L9-L19",
+          "version": "repo-lines-v1:sha256:d37cb0b51f59854972aa5537c30265a9b7332430cebd309128abab6154198086:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY3MGQ0YzkwNDcyMDczNTkzMDk1MDM4NDc3NGM4NGRjOGRiNWJmZjY2NDVmNjA3NWRlYWE1MWI5MmVmNjFkNjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlMTI2YWFhMzNmNmY5YmY1NGEyOTE2ZGZiNDZhZWRlNmExNTI5ZTYyZmEwNmMxYTU0MDJjN2VhMGQ0OTRlNDciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU5NzI5ZWM2NWMyMTJkMTVmM2QxNDc0NzUyYzg5YzljNjc3ZDRmN2Y0ZjQ4ZmU4YjI1YmE4YTk4MWJkM2ExMzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://docs_src/header_param_models/tutorial001_an_py310.py#L9-L19",
+          "version": "repo-lines-v1:sha256:6a933d823309aaa05fc63ccf6925b3f27886071ec09ea9999270ff920f979807:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmMDMxOGIxZGU3NDNlNmQ3ODljYmM3MTg4OTA4YjE1ZmJiMjQ0N2VjODRlZTA2YTljOTg0ZTkzZDZmMGNiMGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxNmZmZTY4MmMyM2JmNzhjYTI4YWZkNzljM2VmMjc5N2EyMjk1ZGM5NWZhZDM1NDU2ZmI3ZGVlY2JkMWNjMDAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU5NzI5ZWM2NWMyMTJkMTVmM2QxNDc0NzUyYzg5YzljNjc3ZDRmN2Y0ZjQ4ZmU4YjI1YmE4YTk4MWJkM2ExMzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://docs_src/header_param_models/tutorial002_an_py310.py#L9-L21",
+          "version": "repo-lines-v1:sha256:00c86fd4011a661edd54e770c4ecf443c4797a873bdb120f01a2aaf0cf891ccb:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmMDMxOGIxZGU3NDNlNmQ3ODljYmM3MTg4OTA4YjE1ZmJiMjQ0N2VjODRlZTA2YTljOTg0ZTkzZDZmMGNiMGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxNmZmZTY4MmMyM2JmNzhjYTI4YWZkNzljM2VmMjc5N2EyMjk1ZGM5NWZhZDM1NDU2ZmI3ZGVlY2JkMWNjMDAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU5NzI5ZWM2NWMyMTJkMTVmM2QxNDc0NzUyYzg5YzljNjc3ZDRmN2Y0ZjQ4ZmU4YjI1YmE4YTk4MWJkM2ExMzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7220c48e98a449caa6b113d7469c2ab8",
+      "statement": "For header models, underscore conversion applies to each field by default and can be disabled with Header(convert_underscores=False) at the model parameter; both converted and original names are marked processed for extra checking.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/header_param_models/tutorial003_an_py310.py#L17-L21",
+          "version": "repo-lines-v1:sha256:868eab5242bc7b0d259db65704a425360b406aacea30642815d5f6257d789520:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiY2ZlNTU5YzJkY2Y2NTM0YTU3ZDk1MzU4MTE1M2NkY2Y1OTYzMjIyODQ5NjZkMzk3ZjA4MWRkNjdmNmJiN2JhOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDE2ZmZlNjgyYzIzYmY3OGNhMjhhZmQ3OWMzZWYyNzk3YTIyOTVkYzk1ZmFkMzU0NTZmYjdkZWVjYmQxY2MwMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDhkZGRhMTVlNjRjNDZlNTAyYmE4ZDcyNmYxOWJlZDU0OTk2ODdhNGMwNmQ0ZjI2Y2JmY2ZjYWNjZTUxZTUxYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L793-L830",
+          "version": "repo-lines-v1:sha256:236c2e6575cb2df9c9052e8fb675865f1bba7da3c501bbf0c1a8ec93dafe8a96:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI2YTE5MzRlY2M0MWIyNjk4YzIwNDdiNzBkYWFhNGRmMGEwMzljMGNjZWVlZmQyZTAyYjUyYzE5M2I2MDBlN2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiN2Y1ODE0NjVhY2U3ZjdiZmMwNWU2NzcxMjhmM2QzZTFiNzFjYTczOWRlMzU4OTAwMjkwOTU1MzBiODE1ZTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg2ZDgwOWEzMmVmNzllYmE2Yzk1MTNkNGFjOGQ5ODJmMDVkMTk5NWZiZmU5OGIzZDk3NGRmNTcwODViZWRjMDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJkMzFkNTIwMDEzZDE4YmE0NWZlYmU0ZTUyNDc3ZDA3OTNlMWNkODg3MDYwYmM4YjhjMDg0ZWUzMmFmNWE5OTYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3d1ca42cab3a4ee6ac0c878490978f31",
+      "statement": "The docs UI cannot send cookies because browsers restrict JavaScript cookie access, so cookie parameters show errors when executed from /docs.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/cookie-params.md",
+          "version": "repo-file-v1:sha256:478b9caa27f40b98232c8e9e4e28f1aedf656e7a7293ca181cddd8319638bdac"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:7caa9dd2b848d4b0fa6695d3adeedfe5c653f72662999fd18933f75a33088855",
+  "claims": [
+    {
+      "id": "claim_a9de43cfb38843a9b8391238c9b4b721",
+      "statement": "Async tests mark test functions with @pytest.mark.anyio and use httpx.AsyncClient(transport=ASGITransport(app=app), base_url=\"http://test\") to await requests against the app.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/async_tests/app_a_py310/test_main.py#L1-L14",
+          "version": "repo-lines-v1:sha256:9e00a357d569b8212bab8cdec5eb2df7df77543facab295366e58f065cbc34ad:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYxZTMyNDZkM2VlMzAyOGI5ZGMyYjE5ZjEyZTEyOTE0ZDAyYjIwNzk5YzEzYzEyMzFjZDNhMTdjYTZlMTUwMDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYxNmE5YmYwMTIyMmE3YTcwY2U4OGRjZGQ2MGY3YmE0Mzc5YjM4NzE3ZjhiMGIxNTExMTU4MWY5MDJjNTMwOTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0a2b485c8e564de8b086140f93e7b322",
+      "statement": "TestClient cannot be used inside async test functions, so HTTPX's AsyncClient is used directly instead.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/async-tests.md",
+          "version": "repo-file-v1:sha256:dfcef60778226025f74bd5359d32d03138262a963d895ea8d7d4d0ae6dbb6020"
+        }
+      ]
+    },
+    {
+      "id": "claim_dc9d05463f294c688936d40b3af00c82",
+      "statement": "AsyncClient does not trigger lifespan events; asgi-lifespan's LifespanManager is recommended to run them.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/async-tests.md",
+          "version": "repo-file-v1:sha256:dfcef60778226025f74bd5359d32d03138262a963d895ea8d7d4d0ae6dbb6020"
+        }
+      ]
+    },
+    {
+      "id": "claim_5657b216ef0d4928aae91683641463c1",
+      "statement": "A 'Task attached to a different loop' error in async tests is addressed by instantiating loop-bound objects inside an async function such as a startup callback.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/async-tests.md",
+          "version": "repo-file-v1:sha256:dfcef60778226025f74bd5359d32d03138262a963d895ea8d7d4d0ae6dbb6020"
+        }
+      ]
+    },
+    {
+      "id": "claim_3680c3e581a04e61b98193ed5ef23354",
+      "statement": "The FastAPI docs delegate database testing guidance to the SQLModel tutorial's FastAPI testing section.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/how-to/testing-database.md",
+          "version": "repo-file-v1:sha256:8b14bbd2af4ed99de95b7d6e6b30fdaea97c0421967eee967d3a2fd904b8ce03"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

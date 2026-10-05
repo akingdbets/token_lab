@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:3d1d8a28d2d4f423edc61ed7c25c942675329654b30a85e4d80c10e52face23c",
+  "claims": [
+    {
+      "id": "claim_65bf4723005e4748962ad470b1ffc34c",
+      "statement": "Header() converts parameter-name underscores to hyphens by default (user_agent reads User-Agent), and convert_underscores=False disables this.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/header-params.md",
+          "version": "repo-file-v1:sha256:8ec0728cd6a16226d4513b226c42ba6e9396a5787f8ccec7eaad76090ef20cff"
+        },
+        {
+          "resource": "repo://docs_src/header_params/tutorial001_an_py310.py",
+          "version": "repo-file-v1:sha256:ab987261f0aa24d1c44a6b39e445c9502b6779488516ed1be959fca7cfc24fcd"
+        },
+        {
+          "resource": "repo://docs_src/header_params/tutorial002_an_py310.py",
+          "version": "repo-file-v1:sha256:6dced8a509a92f3bbb9262d16e49c0ac0adb2357fc1007418f80bc9c921f32d6"
+        }
+      ]
+    },
+    {
+      "id": "claim_79446f630a1d4f859f0f0a8d106f9cee",
+      "statement": "Duplicate headers are received as a list when the parameter is declared as list[str].",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/header-params.md#L70-L85",
+          "version": "repo-lines-v1:sha256:97982c3efa8cb910cfe4aa8bb5704e7107007b790a75038fc7a854a931877ba1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVkYjQ5MDhmOTNkNjc5OGE4Mzk4ZWJiYzE0NzVlYzljMGQxMjlkMDM1ZGIxMGY5NzliYmI2MDBhM2Q1ZWViZjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEzODQxMTE4YmZkNTU2ZDhhZWM4MDRjYmM4Y2YzNTVlYzQ1ZDdiMTZhODFhY2E3ODY0NDZkZWJiZTU3ZTViZDcifQ"
+        },
+        {
+          "resource": "repo://docs_src/header_params/tutorial003_an_py310.py",
+          "version": "repo-file-v1:sha256:9b64d9851260558343c57f9c07d99a8e3826bb8bd6b27a90584895f36ac24898"
+        }
+      ]
+    },
+    {
+      "id": "claim_ee7822bff6a94982b4a7e140bfc4178c",
+      "statement": "Cookies are declared with Annotated[str | None, Cookie()], and the docs UI cannot send cookies because browsers restrict JavaScript access.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/cookie-params.md",
+          "version": "repo-file-v1:sha256:478b9caa27f40b98232c8e9e4e28f1aedf656e7a7293ca181cddd8319638bdac"
+        },
+        {
+          "resource": "repo://docs_src/cookie_params/tutorial001_an_py310.py",
+          "version": "repo-file-v1:sha256:cfc7a97509c041181286535890bea6eb1d8e9920edf3fb7efb6f4c4eb9343547"
+        }
+      ]
+    },
+    {
+      "id": "claim_b8852cc34f25499095450277947a750d",
+      "statement": "Header and Cookie, like Path and Query, subclass the Param class in fastapi.params.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/params.py#L26-L387",
+          "version": "repo-lines-v1:sha256:48ca5dca660cc35ff32786e03a04cfb6687ae4d7c9a2ed002c3d4ad52f1dacc7:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIyMWYyZmYwNGY3YTQ5MDE4MjFkYTlkM2MxZjhlYTdjOTFiZTBmZGJjMzg3YjU4NjVjNjcyOGE5OWEyNjIwOWI0IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJhNTk3ZDcyYjFmYjU1MjBiNWUzZTUxZGEyZjVjYWM0MDA2NWQ0NzcyZTk3Yjg4MzBjOWFhNTIwNGE3NDk5YTlhIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI3M2FmYWU2YmQyM2M5MmI5ODc3MzE0MDQ2YTJhNTY2YTUxYWJjZDIwZTAyOGNjZjkyNzQ3OGIzOTY0ZDNiMmRlIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIyOTJjOGE3NGFlYjRkZDkyODE3ZGY4NjU0YmQ0OTMxMjcwOTZiNzQ3ODI5ZTQ3MGI3NmFmYjBiOWRlNGNlZjhkIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_faa3888a67564c07a43b701c994505e6",
+      "statement": "Pydantic models can group headers or cookies via Annotated[Model, Header()] or Annotated[Model, Cookie()], and model_config extra='forbid' rejects undeclared values with an extra_forbidden error.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/cookie-param-models.md#L55-L72",
+          "version": "repo-lines-v1:sha256:6e7c13f0fa747209cb0df7017a28f4182a3cd292725db5eda1a8204fc8efbbe6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcwZGRmN2NiNTM2ZjQ3MjBhYWQzMGNkNmE0NmI4Y2U0YzQxYjViNGZkNzc2YzIzM2RmYTBjYWIxOGY0ZmMyMzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE1ZmJiMjA0ZDdkYTBiZDMyM2U5YmQ3MmEyNjkyMmZiNTE2YjY2MDA0MTQ1MDQ5N2YwZmIzYjRlZWNmMDM2MjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBhNTA5NmViNTMyN2E0ODZmYzU2ZWEzYWQzNWJjYTAwNDRjZjkwMzg3OGI5ZTA0YzhlZjFkOTU0NWMyZWIxZDYifQ"
+        },
+        {
+          "resource": "repo://docs_src/cookie_param_models/tutorial002_an_py310.py",
+          "version": "repo-file-v1:sha256:2869bdd8923eee6e1eeaac0cc7939d3412bc221b114681e46f7c67a3c3b868bc"
+        },
+        {
+          "resource": "repo://docs_src/header_param_models/tutorial001_an_py310.py",
+          "version": "repo-file-v1:sha256:c6811202baa8d251dd12eff803d93532a9259ac645d1cd9ab30a8aea2f1a2e36"
+        },
+        {
+          "resource": "repo://docs_src/header_param_models/tutorial002_an_py310.py",
+          "version": "repo-file-v1:sha256:222566837239f32f8afe666b6d68d6c698da25804c3f532130889da52a680ce6"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

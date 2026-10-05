@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:8584d9f7f18aae7ef3e941ac6a194126200e3a45728d1162fade171e3a4b62be",
+  "claims": [
+    {
+      "id": "claim_57b37dee50a2458384dbb6c50599c339",
+      "statement": "The responses parameter documents additional responses; a 'model' key is converted into a JSON Schema reference, but the endpoint must return a Response like JSONResponse directly to send them.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/additional-responses.md",
+          "version": "repo-file-v1:sha256:97812c50498553a11686068ad619ecba19e0782fb6473a4a8f0ed6b33e09d703"
+        },
+        {
+          "resource": "repo://docs_src/additional_responses/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:17a96f6204148a898f76f9a449603cab0be9244187f8c2d89856353deb644947"
+        }
+      ]
+    },
+    {
+      "id": "claim_c1909b60ccfa4f75accd37efdbc0d075",
+      "statement": "Additional media types for the main response can be documented under responses[200]['content'], and responses info is combined with response_model and status_code.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/additional_responses/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:43bab994b8b1cd80dff54bc59027c106bf67e8d09c38bb11242ec84a90fb5d2e"
+        },
+        {
+          "resource": "repo://docs_src/additional_responses/tutorial003_py310.py",
+          "version": "repo-file-v1:sha256:8ebc99aa07a260a1997853d8888d16cbb48c44078061c525b5c1b1e162b82702"
+        }
+      ]
+    },
+    {
+      "id": "claim_ed0fe725abd348ef898aa1279f12e888",
+      "statement": "The OpenAPI schema can be customized by replacing app.openapi with a function that calls get_openapi and caches the result in app.openapi_schema.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/extending_openapi/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:b8b36f9fac16cd73ff8ac85a18b16d2bb20ab390e72b8ec30327b03a317069fa"
+        }
+      ]
+    },
+    {
+      "id": "claim_9b6fa32101f242ce9297d09958d9d373",
+      "statement": "get_openapi accepts title, version, openapi_version (default 3.1.0), summary, description, routes, webhooks, tags, servers, terms_of_service, contact, license_info, separate_input_output_schemas and external_docs.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/openapi/utils.py#L585-L601",
+          "version": "repo-lines-v1:sha256:c24ee213d7ca0bfbbe6a67b9d9feb4a32c36ff5076c9bf3046dad0d12e5796d3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmYmQ2ZGU5ZGNlYjRmY2JmMDI4N2M2ODc0MzI0Y2MzZWYyZGRkM2E5NmNlNDc0NjVjOGQwMmMwYThkNTVkZmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ3NTMxYzJlZjJhZTBkZmE0YzQ2NWVkYmM4OWM4ODAwMzI3MmQzMjAwY2RjMzNjNDY2NzdlNmIxZDNlYTkxN2YiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlmNmNiNTk4YWYxOTQ0YTMwYTMyNjNhNDU1YjdmNGE3Yzk4NjI2NGI1ODYyZWI5OWVjNWNkNmI2OTRiODA3YjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY1NWY4ZjM0MGE4NjQxMTg5MTJhOTIzNTNiNWQ4YzM5N2ViZjI0ODQ2ZDQwZTE4MmRiOTE4MmFkYTVjN2FjNWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ae3681d1c50b45b59c6bd1da6b8f479b",
+      "statement": "OpenAPI generation warns about duplicate operation IDs.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/openapi/utils.py#L295-L303",
+          "version": "repo-lines-v1:sha256:0f3a7939a133df737a4eca317a2ebeba49908c4c04a3d61b8217b833cc1d07b4:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjA1OTc3NzUwZjA0MzU0YTAzNzA4NTg5NDliOTM1MTMwNjBkZDUyNjBkNzZlYjQyN2VmZGJkYjk1NGNmMDAyOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTk1M2NlOTM1Zjk4NTQ3NWIzNzFkM2MwOGNjYTVkOTVkOGE1MmI4ODM1YTBhZmEwN2Y0NTYyNWJmOTc4ZTZiZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWNhMWM0MWM2Y2U1ZjdkZDQxMmQ4ZTY2OWE5NjhlYzdhOTczZjAxNWY5MzllNjY3ZGRiMzViMTVlY2JiNGMwMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTM5MzM2OTJhZDUzOWJmNGJlMmQ4NTM2ZmFhYzdlNjI2YTc1MjRiZGZhMmMzYjlmMmFmMjQzYzI0YTJiNDM3NCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_797d0c81f63b4eaab4fde93281bd33fb",
+      "statement": "Callbacks are documented by passing callbacks=router.routes where the callback router uses OpenAPI runtime expressions like {$callback_url}/invoices/{$request.body.id}; the callback code is never executed.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/openapi-callbacks.md",
+          "version": "repo-file-v1:sha256:074a2020f80ffd83f674f51de44e0b2d598ccba24d309069ed38b4e589cd3307"
+        },
+        {
+          "resource": "repo://docs_src/openapi_callbacks/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:0bd00ca0834baa2cb75536d3545f3f69b4def95b0d8f7c740c023c72c6b9f31a"
+        }
+      ]
+    },
+    {
+      "id": "claim_248a295a13584d7a8979e17fa5a8c2e6",
+      "statement": "Webhooks are declared with @app.webhooks.post(name) and appear in the OpenAPI schema; they require OpenAPI 3.1 and FastAPI 0.99.0+.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/openapi-webhooks.md",
+          "version": "repo-file-v1:sha256:743f0700dcff572b030a0fa5eeca3152272a601a5f0f914e90b3fe035bb4d60d"
+        },
+        {
+          "resource": "repo://docs_src/openapi_webhooks/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:5f73b044a3d39ee5533d62973b8ed45fe5a9476ff21232069bc4173fb5ba1e6c"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

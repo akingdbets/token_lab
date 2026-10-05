@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:23be7ce73205c4f79068265454c17858032abf3a37ae1f64fdf979ff4198b608",
+  "claims": [
+    {
+      "id": "claim_38051fb692464d68a1d4fe2765ce73c2",
+      "statement": "The JWT tutorial hashes and verifies passwords with pwdlib PasswordHash.recommended() (Argon2), installed as pwdlib[argon2], and uses PyJWT for tokens.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/security/oauth2-jwt.md",
+          "version": "repo-file-v1:sha256:f574e9078f47da3b50d3361b9484f88fb7fbd0d9d4e4237a93dd9fd50818b0a4"
+        },
+        {
+          "resource": "repo://docs_src/security/tutorial004_an_py310.py#L49-L63",
+          "version": "repo-lines-v1:sha256:d1a78b5aa9e2c867b791fd39bd955ee12508a12a38606e58c7fdc2111df61d37:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwNzZkZjliYjE4NDIxNDgyYzUzY2I0ZDhlY2NkZThkYTI0MWU2ZDZlYWJiN2JlYzYzYTZkMTE3YWNkZTE5ODQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJkZGM4MjdiYjQzMTMxMTBiMjZkNTlhMDA5NjI2NmQ4OWQ2ODdmMzVmMjk2MDMzZjEwYjllNjM0OTlkYWExNWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk0ODBjYmFiZWNkYjA5M2NhM2VkYmEyZWUxODRkY2NmNjRkMDBlMmNlODFiNmE2ZWEyZmFmNTgxMWZiMjIxZjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUwYzBhZTk4Y2MwNDEyNTM4YTc3ZjFlOTVlMjY5ZGYyNTIzOGFjYTE2ODUwN2JkZGZkOTNiYjQyODk2NTQyNGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e0e190d723984d049f7e8dbdfd32d68e",
+      "statement": "authenticate_user verifies against a DUMMY_HASH when the user does not exist so response timing does not reveal valid usernames.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/security/oauth2-jwt.md#L60-L66",
+          "version": "repo-lines-v1:sha256:918a19b9c171c8cedbf879d6127f6c67e5dac4197d6d4b13824eb09fc5fd5a86:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2ViNzAyNTc1OTNkYTA2ZjY4MmEzZGRkYTU0YTlkMjYwZDRmYzUxNGY2NDUyMzdmNWNhNzRiMDhmOGRhNjFhNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2ViNzAyNTc1OTNkYTA2ZjY4MmEzZGRkYTU0YTlkMjYwZDRmYzUxNGY2NDUyMzdmNWNhNzRiMDhmOGRhNjFhNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGM4ZGRhZmU3YTk5MjE1ZDBlNWFmY2I3YmE4YWQyNjgyYTExOTI1Yzk5ZWYxMTVmY2IwYjYyMzhhNGY5ZDY4OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYWRkMDcxZTYzY2FhOGNjZDc3MTA3MTNjYTNhZjQ5MjAxMmQ4YzE0MzQ2Y2VjNWNhYmFhYzEyZjNmYzEyYjcwNSJ9"
+        },
+        {
+          "resource": "repo://docs_src/security/tutorial004_an_py310.py#L72-L79",
+          "version": "repo-lines-v1:sha256:492023f1f8122b5ca7f0491774913e85814f19debaf76f45a0d4080a8ef38f4e:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmYwYTAwOWM5M2FkMzNhYmFhN2QwYjM5Mjk3YTA5ZDVmYWEyYmEyYzgwM2E5NjQyNDUzODNiMWViNDY3NmI5MSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiM2M3YTY1N2I2NjJlM2QxZTI3MTU2OWIyYjZjOGEwNTAzMTZmNjlmMGI3NGU0NDg3Yzg3ZjhlZjhkOWYxOGYzYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjA0ZjExNzE5Njk4MzhkMTY1ZTYyMWExMDc1YzA1ODFjNmM5NDFjNTUzZmQ5MTcwNzU4ZDk0YjAxMThjMGMzOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzJjNGQwZWJmNjFiNmI3MDQwZjE1NzU4ZGQ0N2ViMWJiMTdlYWI5YTdkYWUxMjBhZDZjNGU0MjYxY2NlN2I0ZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_d39ebb15c7fc42a196e2d3c545e59e71",
+      "statement": "create_access_token adds a UTC exp claim (default 15 minutes) and signs with jwt.encode using SECRET_KEY and HS256; the login endpoint uses a 30-minute expiry and sub=username.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/security/tutorial004_an_py310.py#L121-L136",
+          "version": "repo-lines-v1:sha256:82c01a5ca96b0a8a1c6fe81ce0a312f2614a4942a34fe5860609804e6b89aa52:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxM2JlNjFiMmY2YThkOTI2MTU1YTgzZWU4MDg4OTk0ZTkzNmViYzZkZjczNGRiZjM1OWRlYzI3YjI5NTQ3MWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3MTA4YWNjN2YwOWFlNDBhZmQ1NjgwNTJiZGYxZjUxYTQyZDlkMGIzN2I2ODE0MmI3NzdmZjFmZDkwOTk0ZGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdlZDM0ZDc1ZTM1MWJlMGMzMjdmMTc1YzVmOTU1NTRiMjlmMzM2MzMyMDk0ZDA4NDhjZjE2N2M4ZGNmOGE1NWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI4MjFjYWE3MTBmY2QzZWJlN2RkMzIzZGJmY2UyN2VlMGVlM2Q4ZDNhNDcwOTUzMTQwZWMxOThhYjg2NDkwYzMifQ"
+        },
+        {
+          "resource": "repo://docs_src/security/tutorial004_an_py310.py#L82-L90",
+          "version": "repo-lines-v1:sha256:48d6a47c3b3f6d7e9c186c09098121438e0764f6535e2710dfeeccfc30920482:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjliNzdlNmIyMzA4MDY2ZjZmMjZhZjRmNDA1NzgwODliYzg2Zjg2ZjU2MDYyMDA4YTJmMTcwNjg0ZDI2ZmM1ZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTAwNjM1NjI0NmNlZTQ2ZDQ1ZjFhYTIxZWZkNDFmOTY2MTVjYTA0OThhM2Q4MzRmZDk2NTcyY2U1MTQ4NjQ4NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTdiM2UwZWRlNjU5MzQ4ZGI0YzRmYjc3Njg5ZjRlNzZhNDJhYTEyYWFiY2UzNDA1ZGFkYTQ5YWU3MmJmYWJlYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjYwNDU1ZjdlZTUwY2ZiODY3YWM1NzRjMmNkZDY4YTA0Njk3NjAwODBmMDI3NjAwNWM2MDFlY2VlMzg2OGM4MSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_be2f8f42c8fe49fa8601ace563fbd262",
+      "statement": "get_current_user decodes the token with jwt.decode and the pinned algorithm, reads sub, and raises 401 with WWW-Authenticate: Bearer on InvalidTokenError, missing sub or unknown user.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/security/tutorial004_an_py310.py#L93-L110",
+          "version": "repo-lines-v1:sha256:6a3d23bf9550b0a1de41a9a590784fb055775a1f4e7b72f40b9c928d5464bdef:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1ZWUzZGIyYzk2OTZkYTY3MjFkNjkxMzllNGZhMGU5NWFiNzA3Njc2ZjEyYmM5YWZjZDIwZTA1MGQ0YjA1NTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjN2E2NTdiNjYyZTNkMWUyNzE1NjliMmI2YzhhMDUwMzE2ZjY5ZjBiNzRlNDQ4N2M4N2Y4ZWY4ZDlmMThmM2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc5NzAzYTIwYTA5MDlkNjk3NTdhYzRhYjFjMTViYmY2Mjg3MDVjYzQxMjlkMjliNGFiMWQ2YmNkYzEzZTU1N2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUyZjZkZDY2M2VhNjVjMWU2NGViYTdmODk2OWUzMDUwN2U4ZTY2YjU1N2ZjYWEzNDIzOGZlZjA1MGI4ODQyMmUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f8a4eb3277314450afb40f7206db79c7",
+      "statement": "The JWT sub claim should be a string unique across the application, optionally prefixed like username:johndoe.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/security/oauth2-jwt.md#L94-L104",
+          "version": "repo-lines-v1:sha256:dee1358fceef4aa802b1ef7c9e845bb3a1390128468035f75dd80e99291399bd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ3ZTNlNjZkNjMyYWJjMWIyYjNiYTYwMGIxMjVkZDIxMDY4MGRmZjcxYWRiNzZhZThkYzViYmQ5YWJiNjU2ZmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI2NDA4MjZkM2FhNTU0ZjBiMGY1NzczNjJkMGJiNmY2Yzc3MjNiMDczZjJmZDM3NzZkMDFiNDI0Zjk5Mzg0ZDcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_684dbe802ab445b4a3c568603336ac7a",
+      "statement": "RSA or ECDSA signature algorithms require installing pyjwt[crypto].",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/security/oauth2-jwt.md#L47-L47",
+          "version": "repo-lines-v1:sha256:3e87e152e9ea58047ddc160f41df357a283ca94572f878dee2471ed47be82da2:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2U4N2UxNTJlOWVhNTgwNDdkZGMxNjBmNDFkZjM1N2EyODNjYTk0NTcyZjg3OGRlZTI0NzFlZDQ3YmU4MmRhMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiM2U4N2UxNTJlOWVhNTgwNDdkZGMxNjBmNDFkZjM1N2EyODNjYTk0NTcyZjg3OGRlZTI0NzFlZDQ3YmU4MmRhMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjY0NGQ4OGIwNWUyNTkyYmUzNTk4NDNlOTk0ZjY3ZWFiOTI3MDhmZDVhZjRlZGFmYmQ5NTk0OWVkYzA4YWE2MyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDY0MzQwNzcxMjMzOWFlNzhmNDNiNWYxNmZjZjViNzZkYmVjNTYwYjM1OTE5NGRhNjVkNWZjM2QzNTE2YzUyNCJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

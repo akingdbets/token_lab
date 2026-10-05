@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:94cd97176024abcb5e4e1938ac376e04cb49f15aa3e3450f5f6ce684fffa8c53",
+  "claims": [
+    {
+      "id": "claim_5234704a8fae46c1997551da5ac9cfdf",
+      "statement": "HTTPS is normally handled by an external TLS Termination Proxy (Traefik, Caddy, Nginx, HAProxy, or a cloud provider) that decrypts requests and forwards plain HTTP to the FastAPI application server; SNI lets one IP serve multiple certificates.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/concepts.md#L26-L57",
+          "version": "repo-lines-v1:sha256:e9463c858e79dbee5de25aa6300bfd349655e3327ea9985d644110bd9c4d2409:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE5NGI2NWUyNWIwYWQ3NzZlNDVjMzBmM2M5MGY2YjhiN2E2YjFmM2YzYWUzY2IxNTBkOTlmYTQ4YTI3ZDg1NjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFjYjEzMjU3NWExMDU0ZjQ2ZGUwNzEwNjk0ODI2NzU1NmFiMDc2ZDA3N2E1NzU5Y2YyN2EzMWMyOWVhMDM3NTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY4MzQ3ZTFiNTg2NDE0MjIzOGZhYzdhM2YzOTViZjU2Y2FmN2I3ZDYwZGVjZTQ2ZjE0NGNiZmI3MDNmMjhiM2EifQ"
+        },
+        {
+          "resource": "repo://docs/en/docs/deployment/https.md#L1-L45",
+          "version": "repo-lines-v1:sha256:e3404482e84356c2c9b2ceb599cc81f64d84154a87e61399c20531dba2b9e6d4:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY4NWE1ZmVkOTQ4NDAyMGZmMWVjNDRhNzhjMDdlMTUxN2RjY2ZkNzg0MTg3MTBkZmJiMjdiMmRkMGY4Y2I2YTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc2ZGQ3Y2E5MDg2ZjMyNzc3MGY3YjhjOGQxMmE2NmVkZmVmYmI1NTU0NzlhZDViMmViNDE2MGVmN2NmNjcwYjAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_498f1dcf0c1c422088ce94d1825c3c0f",
+      "statement": "The application server does not trust X-Forwarded-* proxy headers by default; FastAPI CLI's --forwarded-allow-ips option configures which IPs are trusted so redirects use the correct public URL.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/https.md#L193-L224",
+          "version": "repo-lines-v1:sha256:4c39b27f601061bc86b2d6633d73fddabeb48758ad2922cb95b1679445c92f53:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViYjEzMzc4MjZmNmYxNTVkMTA2NTU5NTVlZGY1MTE2ZWJhYWI3ZDk4YjE0ZGIyNGU4NGM2YWQ3YjFlNThjZmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUwYTVmY2NlYTVkMTg5ZTJhZjM4MWVmOGU1MWUwZTVjMWI1ZDMzMjJhZmJlMDUxNDE2YTQ5MzE5NTAxODhlMzUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY1OWM1N2Y0MDYxNTU5NTQ3NGI1MzExZDdmZjE2MmUxNmMyNGVmYTFhMWMyMzgyMjY0YTMxOGVjMGZjNGRmNzYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f1f275487a084ded9eeefdc59c95ea3c",
+      "statement": "FastAPI contains an error in one request to a 500 response while continuing to serve other requests, but full process crashes require an external tool (Docker, Kubernetes, Systemd, Supervisor, etc.) to restart.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/concepts.md#L128-L178",
+          "version": "repo-lines-v1:sha256:fb25b2cae430f1959804d0253848de5111ffd6c5b146c395ecfd6d5c57642708:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhNDA4YzU4NzQyZDBmYjAxMTRmMTNlZWJkODc4YzY2MWZkNDU5Y2YzMmY5NTUzMDlmZjIwMjdlMmNlNGNlMDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgxMTI0ZjA0Yzk5Y2I3ZTQyMDRiYzgyMGYwZmU0Nzc2ZWNlZjlkMTY5YjJiZWViZTllNzRkMDk3OTA1MWMzYzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE2N2QzNmE5MzZlN2VkOTlkMzU4NWVmMzU5ZThhODAyYzZiMDc1ODlhNmY0ZjU5NzdhZTRhNDlmYTZmNGVlMWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a5553cdeb2f14e2c8f512235c628c4a9",
+      "statement": "Worker processes do not share memory, so memory use scales with the number of workers, and only one process can listen on a given IP/port, requiring a single listener that distributes to workers.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/concepts.md#L185-L249",
+          "version": "repo-lines-v1:sha256:88028b84b6e5152efce6875329365837c0a6343c1d4e9c660ab9fe84a2aa8423:eyJzZWxlY3RlZExpbmVDb3VudCI6NjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0NzA4NTFlYWYwZTZhNDg3YTA1YzQ0MjIwMWNjMDg1ZTg5NmNmMzdhNjhkOGM4ZDQ4YzE4YjYzOTcyODRiMDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhjMmZjYWM0ZTA3NzNlZDNiYWJlZWQ2NzU5MTlmNTQ0NGUxZmQyMGUzOTY2ZWMyM2FkMmI5MjBhYjUxMjFiYWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk5MGE1MjMwOWJmNDM1NTg0NDgxZjliM2YwMTM4MGIzNzAwZTI2YTViNGEyMWU2ZmUzNmMwMDI0YjMxZDc0NWIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0ed634ab3ca84ed7a6c1f75ce017e7d4",
+      "statement": "One-time previous steps such as database migrations should run in a single process before starting multiple workers to avoid duplicated or conflicting execution.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/concepts.md#L250-L287",
+          "version": "repo-lines-v1:sha256:e4e6b94ac57d5b7eae4cc06ff461b10f84c98292431742af1d8887fca0905219:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjczZTYxY2RhNzhjNDg1OTk3ZTkwNmMxMmJiOTNiZDBhNWJkYmJiMjk0NDUxOGRjMTYyZWNhYTE1OTI0MDllNmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA3NTc2MTRlMmUyMjVhYzUwMThiYjIwMTFkMzJlYjJkNGI5YzUxZTNkZmYxMzRjODc2YWY1NDI1MTQ1NTg5YWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ2OGNkZjJiOTI4Yzk4ZjUyZjNlM2YyNmIyODJkODlhMWM2OTI2NzRlMjY2MWExZDg4ODI0N2RkZTJlOTYyNTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_040e5cdcf07f47e8b7158caab57c125d",
+      "statement": "FastAPI is versioned 0.x.x where MINOR versions may include breaking changes and PATCH versions are bug fixes, so apps should pin fastapi (e.g. >=0.112.0,<0.113.0) and should not pin starlette.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/deployment/versions.md#L1-L93",
+          "version": "repo-lines-v1:sha256:60935de7fbc3e51b39baa8fd0f42bbe0f379a9f8d8aa3bf1677f0191000b766f:eyJzZWxlY3RlZExpbmVDb3VudCI6OTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcyMGRmYTY0NjY3NzczNjM2ZTMxMzhiYTJlODdmYmY3N2UwMTAxOWVjMGViODk5MTAwNDAwNTNlNTE3MGE5N2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

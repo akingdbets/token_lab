@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:760949ca4de42da64345013ec7ce96405c6540d4b2934952d81b433a7e667bb5",
+  "claims": [
+    {
+      "id": "claim_0189b0fa88b04cb6932ebff62e7779db",
+      "statement": "Standard library dataclasses can be used as request bodies and response models; Pydantic converts them internally.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/dataclasses.md",
+          "version": "repo-file-v1:sha256:1a9f8896ac94617fb7b18fe87cdb66fc2a41a4a341f9faace17e9abd9f9a16fa"
+        },
+        {
+          "resource": "repo://docs_src/dataclasses_/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:13a868991a983905c3df1de6c345c07310c607b0a29669a491c287db9dce6452"
+        },
+        {
+          "resource": "repo://docs_src/dataclasses_/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:12fb3d27af575beab97cff83b7eb7b3efaed42b450830e6626df76014ee7dd47"
+        }
+      ]
+    },
+    {
+      "id": "claim_4da4a76b4e134e94a75f5956bdf558ef",
+      "statement": "pydantic.dataclasses.dataclass is a drop-in replacement for stdlib dataclasses when generated docs have issues, including nested dataclasses in response_model.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dataclasses_/tutorial003_py310.py",
+          "version": "repo-file-v1:sha256:e22ccea1483f965629dfd448a83c5d3f7abac2f663cf11864cae6999155d80cf"
+        }
+      ]
+    },
+    {
+      "id": "claim_2d9cffc82ec048c48e21b407909fdc88",
+      "statement": "With Pydantic v2, a model with defaults gets separate Item-Input and Item-Output schemas because output fields with defaults are always present and marked required.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/how-to/separate-openapi-schemas.md",
+          "version": "repo-file-v1:sha256:338694575651cd60aa747983d23912b5ae594004b1a819547e9faf52745ede6b"
+        },
+        {
+          "resource": "repo://docs_src/separate_openapi_schemas/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:581760f01004c804612edbb2f27c6e256107cc2ad9b76202c010eb060c69d3d1"
+        }
+      ]
+    },
+    {
+      "id": "claim_eee3f6b241384aa89fbe12a85eddb2da",
+      "statement": "FastAPI(separate_input_output_schemas=False) generates a single schema per model, passed through to get_openapi.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/separate_openapi_schemas/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:123bd064b86c9831d073b92bea6ec88adc7040b53c9672dfde58334d97dedcd4"
+        },
+        {
+          "resource": "repo://fastapi/applications.py#L1122-L1137",
+          "version": "repo-lines-v1:sha256:6d291812da0b218339095282a61b46e958c3754a6d1aebc00218b8f10a5de9d1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyMmQ3ZjEyY2IyMjNiY2UxNGUzYTI0ODQxOGQ3MzVhOTQ1Nzk3ZmM0NjZhN2MxMzQwMTFjYmVkOGJhYWRhNDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZkMDAwNzg3NWRlOGY5MmQ5MmI3ODdhMDE4YzE2YzAwMDQxOGJkNWY5NDk5MjNiOTBmNGQ2M2M3ZWMxNmQ4M2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY2YmY5NjNkZjBkZmU3ZmQ3MjhmZWQ3ZWY5MmVlM2I5ODFmODZiNTQxMWNiYTA3YTY2NzkyODI5MjE5NTdhZjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRiOGI2Y2Q1ZTY1ZjVhMTM2M2FmYjY2ZDgxNDMyZmY0MWVjMDZlZGFjZmY5NTQ5ZmUzMDllMjJlNjRkYzljNzgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1e099ae70aee4186b7ec4657f065cb3f",
+      "statement": "FastAPI 0.128.0 dropped support for pydantic.v1 models; current versions raise PydanticV1NotSupportedError when a pydantic.v1 model is used.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/how-to/migrate-from-pydantic-v1-to-pydantic-v2.md",
+          "version": "repo-file-v1:sha256:d32eeb81809f77fae691dd364f92f2c63c265d1758b45b5147454323b947e24f"
+        },
+        {
+          "resource": "repo://fastapi/exceptions.py#L246-L249",
+          "version": "repo-lines-v1:sha256:764f41ec7e31955a911b955f50206a2df7a7619476a57b0e6702d47f67022936:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTg0ZGUzZWE4ZWExY2JiM2VlMGZjNGVmOTNlOTkxMWRjMjc4Y2FjMjRhN2Q0YjJhNzA1MjNmYWZiYTk3YWZhMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOWY4NzNlOGVkMDU3ZGJmYzlkYmRlMDc1YjVlNDcyZTk1YTcyMzNmYmM4MGJjNjg0Mjc5MmEyZDIxYmJmY2ZmYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMGFkYjMzOTc3NWI3M2IxMGJiZWZjNWFjYjI1YjQwYTRiYjNhZTFkNWU5ZTQ5N2Q5NzMwM2RiNTgzMzE3MjA5YyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGRkOTFmYjI5ZjNmZjYxNWNiN2VlMmNmYzdjODUwZGY0MmU5YjQ0MDE3NTUwNGFhYWQ4MTUxMmYzODg5ODI4NCJ9"
+        },
+        {
+          "resource": "repo://fastapi/utils.py#L66-L70",
+          "version": "repo-lines-v1:sha256:30588d62d926490c3a22cd8899ce7566aa4fae8556d613c12009bcc0fdad356f:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDk3MjJkNDliNDBjMjhjYTc1M2NmMTk5Y2Y0NmMwMzhjNmEzNzYxOWQwMDQ3ZjkyM2JhZWJjZDhlNmI2MGQzYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmE5ZjhjMmJjN2ExNDFhMDIyYWYzZmViOGFiNTAwOGVjMjU3NTdlZjI0YWNkMDQ5ZjUwODlhNzRiN2M5YWU4MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTBjMDA4NjE5MWI4NzkwZTJmNzI1NTJlNTk3NDc1ZjkwZTE2NzY3YzJjMDc4YWY2ZjMzYTVmNWU0Yjc4OGZkOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzU3NjA3YWM3ODYwOGQ5NTMxNzgyOTRmZmVlMDEyMzY1YTA4YzhjYWQwMzE2OTUyYmE2YjYyZjJiOWI3NjNhZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_91020dfceabe4e52bbaa09f13636e277",
+      "statement": "The recommended migration path uses tests, Pydantic's migration guide and the bump-pydantic tool.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/how-to/migrate-from-pydantic-v1-to-pydantic-v2.md",
+          "version": "repo-file-v1:sha256:d32eeb81809f77fae691dd364f92f2c63c265d1758b45b5147454323b947e24f"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

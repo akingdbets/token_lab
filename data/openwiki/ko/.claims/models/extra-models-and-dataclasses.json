@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:29bf86408a3642eb8ce9e2630687dbe4c4c975a925c34fd2ea967e11ee75bdb4",
+  "claims": [
+    {
+      "id": "claim_0cc65b24b062473bb9b67fe32e4c1941",
+      "statement": "Input, output and DB models can share fields via a base class (UserBase) with subclasses adding password (UserIn) or hashed_password (UserInDB), and response_model=UserOut filters the saved UserInDB output.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/extra_models/tutorial002_py310.py#L7-L39",
+          "version": "repo-lines-v1:sha256:a071e1ffc2742cf59f1194de3abd5ade1923620fe2f07beef99457b982e5aed5:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RlYzc5MWVhM2M4MWQ0M2YxOWVhN2E4MDc5ZmIxMmY2NzMzZDA3ZWQxYWYyN2VlODljZjgzN2MxYWQ2OWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3YThhODg4OWJlNGRjZjFjYWRmZWRiODg4Yzc2OTY0NWVkNTgxNGRkMTI0NDM1Mzg3ZWZhNWU5ZTE4NjExNjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU5NzI5ZWM2NWMyMTJkMTVmM2QxNDc0NzUyYzg5YzljNjc3ZDRmN2Y0ZjQ4ZmU4YjI1YmE4YTk4MWJkM2ExMzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f35919dc2482401584e4f0d0534e93f7",
+      "statement": "A model can be built from another model's data with UserInDB(**user_in.model_dump(), hashed_password=...).",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/extra_models/tutorial002_py310.py#L29-L33",
+          "version": "repo-lines-v1:sha256:2337db0c2c43cb0cead26111e5d97f923a69032c51e3469368aff4ef8dcbacf7:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWQ0MGJjMTAwYTQxYWNjZjlhMzhlYzMzZjlkYTQ2MDcyZjJiZTcyNGNjNmY4NTYxYzdlYzQ1ZTJjODIxYWU3NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTlhNjVhNGM4NzU0YjRiMmUwOGMwNzE0ZmUzMzhhZmE2MzhlZmNhNWEwMGNjOGRlNTE1MWJiMzM0NDUzMzI0OSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZmY5NWIxMmM2MmVjZDA0ODVlNjhiM2ZkMWJkMzA3ZmNmMjNhNjU1OGVjNmY0MGExMGNhNGFiMmJjN2Q1NjBhNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOGRkYTk5MTdjYTUzM2U2MTljMzA2ODE5MjI3YWVjNzUzZTk3N2VhNTIzYjdjY2YyNWJhMTA5MTAyNmU2N2M1NiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_fdc02b66e1804034906000d135518cb1",
+      "statement": "A response model can be a union of models (documented as anyOf in OpenAPI), with the more specific model listed first.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/extra-models.md",
+          "version": "repo-file-v1:sha256:2c55fffbcd867e76661c9f0f86f70fdcec507730df087bab45521fa993984fbf"
+        },
+        {
+          "resource": "repo://docs_src/extra_models/tutorial003_py310.py#L7-L33",
+          "version": "repo-lines-v1:sha256:962012efc3aafc92c79bb473dd368e20a5301c5d664409ac40f5acc12436f3b4:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlYzRiMjUzYjc0NTUyMDAzNjkxYTg0M2JiNzA4NjhkMDhkZDM0NDRkMGU4ZjU0YTY3YTYwMGM3ZTkwMThmM2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMyNzM2MTM4NTE5NGEyNWYxZjY2MTBlNjUzNmZlMmIxZjE5MmYyYzRjNmUyZWViZWQzYmM2YWQwZjY4ZWUxZTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU5NzI5ZWM2NWMyMTJkMTVmM2QxNDc0NzUyYzg5YzljNjc3ZDRmN2Y0ZjQ4ZmU4YjI1YmE4YTk4MWJkM2ExMzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_46217730ca034c6c821e07e8da659cb8",
+      "statement": "Responses can be declared as list[Model] or as an arbitrary dict with typed keys/values like dict[str, float].",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/extra_models/tutorial004_py310.py#L18-L20",
+          "version": "repo-lines-v1:sha256:a2d5ceff5da75b40996914bae15754619afb9612303946b4f54e3fccece6e007:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmM3ZDU0YWEzMmQwY2Q2ZGM2NTNkZDgzODc5YmViOWExN2U4MzRhZjlmZDJkZDk0MmQ5ZmRmZGVlODVkM2Y1ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTA3YTI1YjliNTJhZDVkNTI2NTFhM2UwNDk0ZDNjNzBhZDkxNDMzOGQwYTg0MmRkZjA4MDkyNzdiZjBiYmMwNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMGNmNDVjNTRhMWYxZmUyYWQxM2MzZDA2ODY4ZjBhODg3MTU5NmI0YTVkYzlhNWVjYWVhNmNiODI1NzUxZDkxMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://docs_src/extra_models/tutorial005_py310.py#L6-L8",
+          "version": "repo-lines-v1:sha256:cad335fd16a148c8dffe332c8d2feb8c19acfa7ebebae1560e3d23f5a6df0779:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDQ3NzExNmY5N2QyMmZjZDE2MzYyOGUxODYwMjYxNmYwOTFmYzUwZmI1MDFlYWM4MzE4NDgwOWRhMTEyYjliZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDAzZTNkZWRiZGNiYTFiMDcwMjZjYWNiYjFhNWU3NDRkZTVhZjEyZGMxYzg3ODgwMjM0ZTM5MDE5ZTcxMzU2YSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTk3MjllYzY1YzIxMmQxNWYzZDE0NzQ3NTJjODljOWM2NzdkNGY3ZjRmNDhmZThiMjViYThhOTgxYmQzYTEzNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7bd1fca279de4a45b8a06ef7e37c0ad0",
+      "statement": "Standard library dataclasses can be used as request bodies and response_model; FastAPI converts them to Pydantic dataclasses for validation, serialization and docs.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dataclasses_/tutorial001_py310.py#L1-L19",
+          "version": "repo-lines-v1:sha256:13a868991a983905c3df1de6c345c07310c607b0a29669a491c287db9dce6452:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkwZTA0YWNhYmU3MDc0MGJhODZkNGJmMzc1MzFkYTZjZDBmODI4MzhjNjU4NDgyN2VmZTM1NjRmODU5ZjhlMjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQwNGVjNDQwNGU0NWIyNmJmZjBmYjU5YTVjM2FkNWZkNDdiNjFhYjdmMTQyODBlYTgzZmQ5NDA5NTQ5ODBlOTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://docs_src/dataclasses_/tutorial002_py310.py#L1-L25",
+          "version": "repo-lines-v1:sha256:12fb3d27af575beab97cff83b7eb7b3efaed42b450830e6626df76014ee7dd47:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5NDYzOGNkNWVhNTM4NWMxYWUxZDUxZjgyZTRhODY3Zjg4OWZlODk4NWNhMzgyNWM5ZDllN2ZkMTVjNmUyYWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0MTlhNmRjYzA0ZTIxM2EzYzdhNzdhNDU2YjAxZTc2ZDFlZjc4Y2QwMGJiZWMxZDhmODE0NThmZTkzZWRjNTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4a0a13246dac48c6a3fce9cb2b27d839",
+      "statement": "pydantic.dataclasses.dataclass is a drop-in replacement that can be used for nested dataclass structures such as Author containing list[Item].",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dataclasses_/tutorial003_py310.py#L1-L28",
+          "version": "repo-lines-v1:sha256:5b6d670b91ef4c0d65d6e7d737ac28baa74e64d60be15800a70b918acfdf139f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3MzhhZjQ2NDA5ODg1YTM5MDBmZTNkYTAyNWE2YmIyMDlhMDYxZjI0NjRiMWNkMGJmYjM2Y2Y5NGJhNDcyNzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5OWMzODQ4OTg3YjE0ODgyMjRhYTk3NDNiNjE3MzgwMmM1ZWUwNzAxYmQ1ZWIzNTE5OTE2YTBiY2JiYzBlMmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMwZmRlYzE3YjRmMzMzNWYwYjY4NDdhOTUzZGRlNjMxNTljOTIwY2Q5MTAxNGY5YjkzMmFiZjI4ODhhZDNkYjAifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

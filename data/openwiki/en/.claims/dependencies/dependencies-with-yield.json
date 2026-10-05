@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:fb5ef214bf99651ce8f610c882690149a1be74123ee8f74db3ac3afad7cc2d26",
+  "claims": [
+    {
+      "id": "claim_05f9d00ef4ca4c3bbeb96bca79f7286a",
+      "statement": "Async generator dependencies are wrapped with asynccontextmanager and sync generator dependencies with contextmanager run via contextmanager_in_threadpool, then entered on an AsyncExitStack.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/concurrency.py#L18-L41",
+          "version": "repo-lines-v1:sha256:a1f21b6c90affc46abe23ec7a3b0f1b38c6a536646beb2c692434781bedec36f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4NGE0NmNmMTFjZTAzNjM4ZDVlMTQxMDgyOTI5N2MxMDdjNGI5YzVhMWYwZDBkMjcwNWMzOGE3ZDE5YThmNDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhOWY4YzJiYzdhMTQxYTAyMmFmM2ZlYjhhYjUwMDhlYzI1NzU3ZWYyNGFjZDA0OWY1MDg5YTc0YjdjOWFlODEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY0MWVmNGZjOTU1YjQyZGI2YmI1MDJiOTNlZjA5OWQzZjE4YmVjZTVmNzM1NThhMDk5YzY3ZmFmZDhmYmNjZGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L566-L574",
+          "version": "repo-lines-v1:sha256:776742afb4d291b3c4783dd74a4b0b6eaf8544252f28059038f2c1a53a105e63:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzIzZWRlOTk1ZjVhYmRmZmM3NjJjMTI5YmMzNTJmYTAxMDNkYzcxZmM2ZjBkMTY1NjE4MWVlZWJjNzBiOTdiMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzNjYzA2ZjEyYWIxNjRjMjI0NWU1ZjgyN2M1YWI3Yjc0ZTBiZTk4OTdlYzBjZjExYzAwYTljZTNlZTA5MTg4YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWNmYzRhNmZkOGY2MzNhYTVhNWZiZGMxMzFkN2U5NGRmMzgwZjg2MDBhZGNkZTY2ZDE5NTM1MjA4Y2UwMmUzMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNmY3ZmNmZGEyNzI3MTcyYWI2ZDAwNzc2MzFiYjI2ZDFjYTRlODA5NDgzMGQxYWMzOTZmNjg3ZDNkZWQzYzM0ZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7201a568817e4ec1bb6725efa9e01fa6",
+      "statement": "A yield dependency can catch an exception raised in the path operation and convert it into an HTTPException.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dependencies/tutorial008b_an_py310.py",
+          "version": "repo-file-v1:sha256:afb04cef3640167ad09bc880923741aeb0710f38197587d48d7a3f21c7334a7c"
+        }
+      ]
+    },
+    {
+      "id": "claim_fe6018ef105a458a9ee1227ea5712a91",
+      "statement": "If a yield dependency catches an exception without re-raising, the client gets a 500 but the server has no log of the error; re-raising with bare raise preserves the log.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/dependencies/dependencies-with-yield.md",
+          "version": "repo-file-v1:sha256:00779c6aee8c7d30bb5f59844ef11337635ac086d0cbb89dca8aaf516eccd409"
+        },
+        {
+          "resource": "repo://docs_src/dependencies/tutorial008c_an_py310.py",
+          "version": "repo-file-v1:sha256:ff193f5d441430ee870709126f1ed2d31ad75abc4f534293f0a31c14325d4fe5"
+        },
+        {
+          "resource": "repo://docs_src/dependencies/tutorial008d_an_py310.py",
+          "version": "repo-file-v1:sha256:fc5e45b021a1892791d3dbe0bdec30900fea05b398540079fd94d62bb8bead7b"
+        }
+      ]
+    },
+    {
+      "id": "claim_594e9c78eaf64b9ab1efabff76db18cd",
+      "statement": "The default scope for yield dependencies is 'request' (teardown after response is sent); scope='function' tears down after the path operation returns and before sending the response.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/dependencies/dependencies-with-yield.md",
+          "version": "repo-file-v1:sha256:00779c6aee8c7d30bb5f59844ef11337635ac086d0cbb89dca8aaf516eccd409"
+        },
+        {
+          "resource": "repo://docs_src/dependencies/tutorial008e_an_py310.py",
+          "version": "repo-file-v1:sha256:09b3d186d0bad2944a5d881e2a4847044cd382508b363a48b77d48358db6dbf2"
+        }
+      ]
+    },
+    {
+      "id": "claim_ccb5a97d03df4ce49533be1883d2c220",
+      "statement": "Chained yield dependencies are torn down in reverse order so each can use its sub-dependencies during cleanup.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dependencies/tutorial008_an_py310.py",
+          "version": "repo-file-v1:sha256:dbc537253c1804e5c80944c12bb50213c4f1a39ef37ec7ec9fdd71e64dee8308"
+        }
+      ]
+    },
+    {
+      "id": "claim_ca6e101c093040e098089a4eb8fdcbbb",
+      "statement": "Context managers can be used inside yield dependencies with a with statement.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dependencies/tutorial010_py310.py",
+          "version": "repo-file-v1:sha256:b5a8fcc9d5c092b8440403941dd952930043ecd2c7858ef526c6e0a74005c70f"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

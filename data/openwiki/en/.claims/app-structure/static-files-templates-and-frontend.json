@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:dfdf344320bc156f92a37ce74c1b1f84400d3d026fb79f8051d8cd72cd68c573",
+  "claims": [
+    {
+      "id": "claim_2d207168df9b4ace9ca5435589eaa500",
+      "statement": "fastapi.staticfiles.StaticFiles and fastapi.templating.Jinja2Templates are re-exports of Starlette's classes.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/staticfiles.py",
+          "version": "repo-file-v1:sha256:bdf3bc7ea28a932108a1284b14f90609a424f8f977cf759410bfa71dad036935"
+        },
+        {
+          "resource": "repo://fastapi/templating.py",
+          "version": "repo-file-v1:sha256:462cf6f691a125f73df3f5274a5ba146d19c8751746c389f0037081598ca3287"
+        }
+      ]
+    },
+    {
+      "id": "claim_e918a0d36fc045e9bc197cff6d963c54",
+      "statement": "Static files are served by mounting StaticFiles(directory=...) at a sub-path with a name usable by url_for.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/static_files/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:7c284f1223687081cd36e349c34b548f138a2f0b00c56ef9da72fe56b4bae4cf"
+        },
+        {
+          "resource": "repo://docs_src/templates/templates/item.html",
+          "version": "repo-file-v1:sha256:45f1e420516182203cfd78e0e11c942938b83688394ff1c8c06d59b5e51f1c34"
+        }
+      ]
+    },
+    {
+      "id": "claim_144000b2f22e4ba3a1868178536a885b",
+      "statement": "Templates are rendered with templates.TemplateResponse(request=request, name=..., context=...) from a Jinja2Templates instance.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/templates/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:deb669cc100f117ee70879162dd0f9d6e3ac168dcebfa8ad1abddb5e48f21f22"
+        }
+      ]
+    },
+    {
+      "id": "claim_b3e69321edc4437088f87df0e660bf66",
+      "statement": "With frontend fallback, a 404.html fallback is served with status 404, while an index.html fallback is served with status 200 only for requests whose Accept header includes text/html or application/xhtml+xml; 'auto' prefers 404.html then index.html if the files exist.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L2004-L2015",
+          "version": "repo-lines-v1:sha256:32afd204405b6406bc0433c78cc707e9212587a5c0bb5eb527f220aa20fee7bb:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFkODkyZjc2NjM4NWM0YmU3NTIzNDk2YTk5N2ZhODU3YTI0MmI1NjAxMGY5ODNkNWJkMjAzOTg4OWQ3NWNjNzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI3MGE2MTdmYjJhYTE5MDIxOGE2MjZhYzljOWE3Mzc3ZGJkNTExN2I5MmI5MmFjMTEwNzVhNzc1NDMwZjAzYjQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMyZGQ1OGVjMTYyZjM4YTczMzEyMTBhYmMxZDcxZWIwMjk4ZjYwY2I1YWE3NDVhN2I2MTNmYzMyMzNjNzI1YzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY1N2FkNmQ3NmUxMDU3OGIwM2Q2YjE4NDEyN2VkNTYxMGY5MDc3NjQzZTczYWIzNDdiM2YzNjk1NWY1OThjYjcifQ"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L2080-L2087",
+          "version": "repo-lines-v1:sha256:87d85b0a4df0c80b5c6dae7492a4aeb00eaa8aba5854f331e7536bc59e8f9c67:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTJkYzczOGUzMGM0OTZiNWM1ZDRjMDQ5MGI3ZTFhNTgyMDk1YmMyZjNlMDQ4NjM0N2FiODliZGRjZDJjYTg0NyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNGZjOTBiMDQwMmJmNmEzNmQ1MGYwMWE1MWQ5NTgxZjJjMTI2ZDA4NGY3NGQzZmE3ZjEwYjhkYWU4NTVjMDkwZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjZhZDIzMzVkMzk0YTAxMTY2MDJiNzIwY2I3MmM0N2Y3Y2I0OTlhMzczMzQzMzMyYTA0ZTg5NGMwMTcyOTEyYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNWM0NDEyZDE0NWVkOTAxMDc0ZTViMzkzYWE3NTQ5OTQ3Yjc3MWVjZjZkYzYwYjIwZWE3NzAwZjc4NWYxMGM3YiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_1e37e4047d134514ab3104c21c600fb3",
+      "statement": "With check_dir='auto', a missing frontend directory only warns when FASTAPI_ENV is 'development'; otherwise the directory is checked at app creation.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/frontend.md",
+          "version": "repo-file-v1:sha256:acbc8834c1dc5e4c30a0ca9cf886885fec588c9cfb1ae33d565c8248614dbea9"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L1925-L1939",
+          "version": "repo-lines-v1:sha256:589af5ceb402e605d7cb72d7591bfe739dc68ef33d65d1c16e88567ae5527378:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ1MzE0NzA5MTZhY2Y5NzcyMGI5OTJhMTcwNTZiODcwYjc3NDE4YWU5OTc4MzM4NmI1MzZjOTcyZmE0ZDY3ZTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRmYzkwYjA0MDJiZjZhMzZkNTBmMDFhNTFkOTU4MWYyYzEyNmQwODRmNzRkM2ZhN2YxMGI4ZGFlODU1YzA5MGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA3YmQ4M2NhYTBmMzRhNWYzZjI5ZTk1OTViYWI3YzBlZWNkNmFlZjMzYzNlYTI1ZmRjNDc5MGJmMjc1Yjg5MjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEzYzU1Y2U3OGJlMzIxNGMxOWM5ZDU1NTk2NGE3YzMyNWJkN2IxMjNkNGYyNDQwNGUwNzRjNmY4NzcyYzZmMmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4bdd5167dfad477c97a1842d227d01ce",
+      "statement": "Path operations take precedence over frontend routes, and app dependencies and HTTP middleware apply to frontend responses.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/frontend.md",
+          "version": "repo-file-v1:sha256:acbc8834c1dc5e4c30a0ca9cf886885fec588c9cfb1ae33d565c8248614dbea9"
+        }
+      ]
+    },
+    {
+      "id": "claim_1add728dbf7a4792830acb9fbb979b98",
+      "statement": "router.frontend() can serve a frontend through an APIRouter included with a prefix.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/frontend/tutorial004_py310.py",
+          "version": "repo-file-v1:sha256:110ab25fb08dec296bac2f5f225e9385cbe79bd233a518ab12225f3f61f9c259"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

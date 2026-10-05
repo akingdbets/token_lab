@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:21c2661e511a006476654ef72a207ea83b0926beca439f2f6674a696c7729592",
+  "claims": [
+    {
+      "id": "claim_6637cf0e944a40c7ad03a91e641f363c",
+      "statement": "The docs recommend uv to create a project (uv init, uv add \"fastapi[standard]\"), which manages the virtual environment automatically, and uv run to run commands in it.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/virtual-environments.md",
+          "version": "repo-file-v1:sha256:7968b621874f11b55a957bed86ee7587a90a45fa3df3039ec47d8f47a1417d5c"
+        }
+      ]
+    },
+    {
+      "id": "claim_03e53f04b0154b31bd34fcb0f6c8a6d1",
+      "statement": "Environment variables are used for configuration like database URLs and secret keys, with typed handling via Settings.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/environment-variables.md",
+          "version": "repo-file-v1:sha256:c1a4034139fe81354c5f5a11c7bad75bf8a0ae2fec82a318fbcccf9c3d330430"
+        }
+      ]
+    },
+    {
+      "id": "claim_2c2f3e3a30324cafb1ce3c6065d21921",
+      "statement": "For debugging, the app can call uvicorn.run(app, host='0.0.0.0', port=8000) under if __name__ == '__main__' so the file can be launched from an IDE debugger.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/debugging.md",
+          "version": "repo-file-v1:sha256:ce390cf3f49f25a9fed061c56bc8a8be7630b3158b0a849b429e8f3073d4e638"
+        },
+        {
+          "resource": "repo://docs_src/debugging/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:96cc81d2ef212b4dfa220cb4f05cb8688d0468557178ff7da36a0c0f68b3590b"
+        }
+      ]
+    },
+    {
+      "id": "claim_507483567f6f40e08d6eb3b798e61605",
+      "statement": "fastapi dev sets FASTAPI_ENV to development if not already set, while fastapi run leaves it unchanged.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/fastapi-cli.md#L122-L124",
+          "version": "repo-lines-v1:sha256:a865f43a0a622d657de95ec2ca72ccd93b76ecf9a7d5acd82de55f1a84957e16:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWE5OTIzZWI0OTZiY2ZmYTNkZjY4NDJjMzdjZDAxY2ZjNzNlNjBlYjhiODJkMDIxODdlY2Q0MmNiMDhmZjE5MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDNjYjA4YTEzMzY1ZGNmNzA5ZWRhNTUxODk4YjM2YzRmMjM1MTY0NzFhN2M5MGI0NTgxY2MzNjliOWZiMTk3OSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMmU2NjJmNTUyNmUyZmI0Nzk0MWJkNDEzOTQ0M2Q2NTI2YjUzNjZmNWMwNjA0YzVmM2YwNTJkOThiOTIzYzQ2ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDViNjViZGFjZGMyNjhmMmNiYzkyMzRmMzg3NjUyODlhZjA2YTFkZDQ0ZmMxYjYyNjNiM2YyMTNmYTgzN2RhYiJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

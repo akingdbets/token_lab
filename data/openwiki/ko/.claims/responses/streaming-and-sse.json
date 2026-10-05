@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:b5f8a26338226125be197c190ef34867988c0e07fa8ed50f4e9ffb84c824101d",
+  "claims": [
+    {
+      "id": "claim_a9af5d57eccc407f8e09d4ffd1b4045e",
+      "statement": "A generator path operation without a custom response_class streams JSON Lines with media type application/jsonl, serializing each yielded item (validated against AsyncIterable[Item]/Iterable[Item] return types when declared) followed by a newline.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/stream_json_lines/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:5da5e92f0431777ed2d387e7e35c9783d064bd1dc5eb166f6321b36128c06c29"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L670-L702",
+          "version": "repo-lines-v1:sha256:6ba7a62f2576adf45ab2194fb41acbed8611e62c1f3929f6f4b00fb7f46c10eb:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxZjA0MWZmZDFkOTcwY2U1YjUxOGE5MjY1ZGU0ZTBjNTIyZjBiMGZlYTEzNjc2YTM2YjllYzQ4NWVkOGEwZWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU5Y2U4NDUxMzIxZjk4MjZmNWQ2OTczZTQ1OTA4ZTc2ZDczNjk0N2M1MTU5NTc0ZGMwMmIyZjZmMTdmNTUyMjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFlYmRjNzk5MWNmYzZhYTk4MDYxODlhN2NmNDBiMzY2MjkyMDMyOGE0NmM1NjE1NzYxN2IyYzI5MWFjN2M4NWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEzZTMxODY3ZDZlMjdkZWIxNjJkNzAxYjBlZjJjMzc1YTg3ODkwYjBmZTYzMGNkMGU4YzQ3YTRkMGYyMGViNzcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b4b38f8d5caf4582a46f348865d95415",
+      "statement": "OpenAPI documents JSON Lines responses under application/jsonl with an itemSchema derived from the stream item type.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/openapi/utils.py#L420-L436",
+          "version": "repo-lines-v1:sha256:4751d0db4426d03ac448275aa9b190ee8cd32285a61d985489db85db84fe1aa6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMzYzg4NjRmN2RhOGU5MjU4YjdmNGZhNDU0NTRkNmM2NTkzYjUwNjgzMTYyYjI1MzM2NDEwZTg3MmU0ZGZlZWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYwYTM5OGYzYmU5M2JlNmNhNGQ5MjFjM2NlMGIyMTkwNGY5ZGI2Zjc1YmFkMDMwNDMxMmRhODc5YmRiNDVmMzMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM0MWJjMDk5MjI0ZDNhYTg3MmQwZWU1MWRiODQ3NTc2YzYwYjRhYjdjN2RmNDQxODBhYjUxYjMzZTk1YmZhYjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE3M2YwYmM2ZTVmNmQxN2Q2NjE0ZGNmNjI2OGMzNGY0MzU1NzU5MjFkN2JhNjZjYTNjOTI3YmZhMGY2MTlkMDgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f9ecd577bc08443cb071105897ed1037",
+      "statement": "EventSourceResponse is a StreamingResponse subclass with media_type text/event-stream acting as a marker; FastAPI's routing layer encodes yielded items as SSE events.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/server_sent_events/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:18ee4e1c365e7954db837c6cb4d064d66f6da3811b53489fb93d646d33fe8e61"
+        },
+        {
+          "resource": "repo://fastapi/sse.py",
+          "version": "repo-file-v1:sha256:47455fd6c6976fdf9f071dfaf49facd53c5614fba85e0a0eda4892163d63cb51"
+        }
+      ]
+    },
+    {
+      "id": "claim_ea49a39503354c1fa007ceaa2869d56b",
+      "statement": "ServerSentEvent supports data (always JSON-serialized), raw_data (sent as-is, mutually exclusive with data), event, id, retry and comment, with event/id validated as single-line and id free of null characters.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/server_sent_events/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:1a9daa3bed2c33ae4938758fd42c1938bc070cbbd6bfcfd627cefb5a74f2884f"
+        },
+        {
+          "resource": "repo://docs_src/server_sent_events/tutorial003_py310.py",
+          "version": "repo-file-v1:sha256:96440d6040b91e9e04931448fcf46aac4df05b48d03d621b56292766bfe658c4"
+        },
+        {
+          "resource": "repo://fastapi/sse.py",
+          "version": "repo-file-v1:sha256:47455fd6c6976fdf9f071dfaf49facd53c5614fba85e0a0eda4892163d63cb51"
+        }
+      ]
+    },
+    {
+      "id": "claim_77d5c99ef4084cbfacb103102c3d40fc",
+      "statement": "SSE streams send a ': ping' keep-alive comment after 15 seconds without messages and set Cache-Control: no-cache and X-Accel-Buffering: no.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L606-L666",
+          "version": "repo-lines-v1:sha256:ef10c16d62ff90e17a1e98aeb5fce2137de34107f305a6c911be17c9a7f40010:eyJzZWxlY3RlZExpbmVDb3VudCI6NjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFkZWE5M2E3NTBhZDRkNmNhNjdiZjk5Y2UzNjM5YWY4MDUxNzgxMjgyODI2MjI1ZWIyODE0ZjRiNmZhOTllOWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg5Mzg3MThhOGE1OTg4YjU2YzFmNzE1ODFlNzAzYTRiNzU3ZTBmYTUxZDFhNGI2ZTMyNDU5ZGY3YmZlYmQxN2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJlNDcxNDA4OWViYTIxN2ExNWYxMjJkNTJiNmIyOGU1N2IwZTNmNzBkZGEwMjdlZTBlYzVjYmQwODg1M2UwMzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFlYmRjNzk5MWNmYzZhYTk4MDYxODlhN2NmNDBiMzY2MjkyMDMyOGE0NmM1NjE1NzYxN2IyYzI5MWFjN2M4NWEifQ"
+        },
+        {
+          "resource": "repo://fastapi/sse.py#L236-L241",
+          "version": "repo-lines-v1:sha256:54582388b4023f4fa32a93897f4219ad14d4a1452f987746fe6f91e247663cb7:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjAyNTg4ZmIxNTJmZGViODM2Y2EzOTlkNmVmODljMDU0ODJhMzVlZjlmYTAwOWU5NTU1NWE1MjhiOTFkNzc0NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTIxMWQxYjUxMDNmNjA0MWM5NjE4ZjlmMDk2YTkyM2Q4MWRkOGJlMWM2YTg5NzY3NTZkMDE3NWI3YWE5ZTg0NyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDEzOGM0NDBmNDNmNDhjMmU1NTExN2QyOGY0NzZlNzE4YThhZTlkNGRhODgwMjhiZWQwZGViZGQ0ZTFmZTk3NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_21ab26ab526c451abeab809fdb3574dc",
+      "statement": "Clients can resume SSE via the Last-Event-ID header read as a Header parameter, and EventSourceResponse works with POST endpoints.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/server_sent_events/tutorial004_py310.py",
+          "version": "repo-file-v1:sha256:b44411e22b23bd773c67d7411b1386883158b1ddd3c00ab099f34a79c644b01e"
+        },
+        {
+          "resource": "repo://docs_src/server_sent_events/tutorial005_py310.py",
+          "version": "repo-file-v1:sha256:c49945b90df19536f1473cef25f969136cd439f9b8c41cdaf984b15816cbe01b"
+        }
+      ]
+    },
+    {
+      "id": "claim_ed0b48f7c5834787b41af5d9f4c721ab",
+      "statement": "With response_class=StreamingResponse (or a subclass setting media_type such as PNGStreamingResponse), yielded chunks are passed through unchanged; async generators get an anyio.sleep(0) after each chunk to allow cancellation.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/stream_data/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:aa1c8aeb79d3fe298a3bc96df6d38c019f0f5161a07df7f7bdec7b59eba6b276"
+        },
+        {
+          "resource": "repo://docs_src/stream_data/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:9eee15e78c174963da6d1df5e52e16376c1efe59c3ce5594d4e4c279353a3f22"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L704-L724",
+          "version": "repo-lines-v1:sha256:d3825c8d411441488074336a5df0b1f0c86b3ce12e03cb7db1bcb0389e1391f9:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZmOWEwYzQ2OWU3NWRjZWJhOGQ5MTZiYzU0YTkzYmVkMTFiZGU5YTYyMmMzMDBkZWU5OGMzMjA4NWNhMGFjYjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA0YjlhODc4MDBhZTQ5MTIzNmZiYmZhNWUxOGZhNTQ4NzVhNDU2YmViY2RkODQ5ZTY3MjVjYTkxYWU3NTEzNzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVhNWZlZGRiNGY2N2FhNDU4OGJmODM0NTgxZTZlMDgzOTdjOGM5MTFjNjU1NDlmNmYyMGMzY2EzOWJlYTRmMGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhkZjY2ZjZjMTY1NjA0NmE3YjU5YWY1ZWFlYzI2YWVjM2QzZjU4ODI2OWZiZDQ1MmM3MmE4MGM4OTY2ZGVmYmYifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

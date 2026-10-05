@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:442a35b058f4f3360d2bf0bae53515f04abca9d198d6619ceb52c5c7a125d323",
+  "claims": [
+    {
+      "id": "claim_3935a47f49554cec8e540b515bd633c9",
+      "statement": "A Pydantic model parameter is read as the JSON request body, with fields without defaults required.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/body.md",
+          "version": "repo-file-v1:sha256:f93940f261696e7112108207f117d2b7079a59391ca426383dce4b0f1462ae62"
+        },
+        {
+          "resource": "repo://docs_src/body/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:b1e7b166316f7b45d498aff2f6ef0f7644240dd57c1f948527672e1b6f737d2c"
+        }
+      ]
+    },
+    {
+      "id": "claim_e457d5d1c6ba4972941d6ec6f0bed658",
+      "statement": "Parameters declared in the path are path parameters, singular types are query parameters, and Pydantic models are body parameters.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/body.md#L80-L95",
+          "version": "repo-lines-v1:sha256:fec96bd81c3780f38ce5eea0f4746b0c48b1964ca6321a7b561d1c144da9af85:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgzYTVmYzJjOGI1ODFjNmUwNDdlN2MzNDZlNjNhYmExODQ3ZTYyZjRlODY5ZmQzYWQ4NDc1OTgyYTRlZjVhYmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQxYTIwM2QxMWEwMDBkYmFkYTdiNDVhYzIwYWE1MzBjNjYyMWJlYWZhZjAxMGVjZTExYTAyMGFiZWUxZDI4YWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhlYjYwZGFmZjk1ZjlkNjBlYzc2ZDNiOGMyMDljNjg0OWViZjhlNjAxYWQ4YTdhYjZiMzQ1ODQxYWI1YzQ3ODYifQ"
+        },
+        {
+          "resource": "repo://docs_src/body/tutorial004_py310.py",
+          "version": "repo-file-v1:sha256:3032809ce28d0e48db3c4d282e56148fcda917c4cb620dbe40f14904a216c3aa"
+        }
+      ]
+    },
+    {
+      "id": "claim_6f1aaef726e44d50aff6a809f46006d7",
+      "statement": "With multiple body parameters, the body is a JSON object keyed by parameter names, and singular values can be read from the body with Body().",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/body_multiple_params/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:9f4e001ecbf3b1ed352fdcc11dc8a3f50a3c81b1057a561b376281703b3f3ab7"
+        },
+        {
+          "resource": "repo://docs_src/body_multiple_params/tutorial003_an_py310.py",
+          "version": "repo-file-v1:sha256:bb1c22a14acf6517bbd271b5fe37e85e920e4fb422e08baca88eff0fc726adc2"
+        }
+      ]
+    },
+    {
+      "id": "claim_664abab54288485982d214e3bddcf041",
+      "statement": "Body(embed=True) makes a single model parameter expected under a key named after the parameter.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/body_multiple_params/tutorial005_an_py310.py",
+          "version": "repo-file-v1:sha256:01b8dd0aac73d13fc2c7431d19bc304d822a3ed5697068c0675ee7a6d331dd92"
+        }
+      ]
+    },
+    {
+      "id": "claim_7ee64e3a42824d2d9e64693d931ce471",
+      "statement": "Pydantic Field adds validation and metadata like title, max_length, gt and description to model attributes.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/body_fields/tutorial001_an_py310.py",
+          "version": "repo-file-v1:sha256:d779e0ab0ccf1a970797a9e76bf11af869bfa37a486838727c7ea135fec14a9c"
+        }
+      ]
+    },
+    {
+      "id": "claim_505d81b1f59c4be3aed48ee2e4718f06",
+      "statement": "Models can nest submodels, lists and sets of submodels, and special types like HttpUrl; bodies can also be top-level lists or dict[int, float].",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/body_nested_models/tutorial004_py310.py",
+          "version": "repo-file-v1:sha256:399ab0fd1fea0b598c6f9a03918d411aa15bcf7ef90ebe3ba5477639c49d5804"
+        },
+        {
+          "resource": "repo://docs_src/body_nested_models/tutorial006_py310.py",
+          "version": "repo-file-v1:sha256:a0e11e158b0114d41e41506eb8255f0049ad1e8dfdb7215d9ad33c9b5517411a"
+        },
+        {
+          "resource": "repo://docs_src/body_nested_models/tutorial007_py310.py",
+          "version": "repo-file-v1:sha256:d205a4deba0fd92ac5c616981b95d1f8785c954ce344d32e1cd8eb72662f84fb"
+        },
+        {
+          "resource": "repo://docs_src/body_nested_models/tutorial008_py310.py",
+          "version": "repo-file-v1:sha256:ba80ebac0e4a5bba32016e39b66b0a7dbe014f9a6a06c18ef5596668304bf871"
+        },
+        {
+          "resource": "repo://docs_src/body_nested_models/tutorial009_py310.py",
+          "version": "repo-file-v1:sha256:cb073981ce3742ae39c2ed98e7b02a35884137adab6dc123826a0812366a24b2"
+        }
+      ]
+    },
+    {
+      "id": "claim_c96ec7e35bf74c9690c2d4d17b09c341",
+      "statement": "Body is a subclass of Pydantic FieldInfo in fastapi.params.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/params.py#L469-L469",
+          "version": "repo-lines-v1:sha256:2ec38554940682bdf15424231bbfce08b2663902b4aec7d8938adf01e76c90a8:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmVjMzg1NTQ5NDA2ODJiZGYxNTQyNDIzMWJiZmNlMDhiMjY2MzkwMmI0YWVjN2Q4OTM4YWRmMDFlNzZjOTBhOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmVjMzg1NTQ5NDA2ODJiZGYxNTQyNDIzMWJiZmNlMDhiMjY2MzkwMmI0YWVjN2Q4OTM4YWRmMDFlNzZjOTBhOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjZhZDIzMzVkMzk0YTAxMTY2MDJiNzIwY2I3MmM0N2Y3Y2I0OTlhMzczMzQzMzMyYTA0ZTg5NGMwMTcyOTEyYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjYwNTI5ZGYxOWZlZjAzMWY2NTBkMDU1NzY2ODE0M2QzYjdjNDAwN2MyMzBkNDYzMjFhNzZlZDNjNzYyMTlkYiJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

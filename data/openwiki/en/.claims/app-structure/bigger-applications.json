@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:42647ac866d4d535773872d4feac1796078598cc68f2156f20aba2f2b6513193",
+  "claims": [
+    {
+      "id": "claim_8db9b7a1ff42448a8c6657127ab8fda7",
+      "statement": "An APIRouter can declare prefix, tags, dependencies and responses that apply to all its path operations, and route-level tags/responses are added on top.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/bigger-applications.md#L164-L189",
+          "version": "repo-lines-v1:sha256:e98d4aeeb473a0fd5893a5ab96c5c53e6c6c8982849741d685e62c2b242d2453:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2YTNjZThhMTQ4MmVhNzQ0M2YyMmExN2I3NTAzNmJkOWU4N2RkZTJmNjgyNDY1ZTBlMTllODVjY2NkMGQ1ZDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM0Y2MxM2I4ZGMzMDM0ZTg4ZDMxYTE3ZmZmNTQwZDE3NTkwNjA1ZjM3NDIwMDI1MjdiYzcxOGJjNDIxNmM5YmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk4MjcyYjUxODg0ZjYxZGNhN2RlODI4MmYxOWQ2NTRhZDBkMGUxNmU4MGI3YWRhMjM0NTBiZjgzZGMxNjU1MTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU1ZTM0ZTY2MGZiOWE3MzgzMTg0ODk3Zjk2NTdlYTYzMGY0NWNmZDE3YzgyOGYzMDgyMDcxYmU0Zjk2MjY4NTgifQ"
+        },
+        {
+          "resource": "repo://docs_src/bigger_applications/app_an_py310/routers/items.py#L5-L38",
+          "version": "repo-lines-v1:sha256:78a687302136d5c6c27abb9124ca58573134f0b85082cff92c39b6a3bf9c837e:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIyNDhmMjdjOWMyZWIwODQwMDdiNjFjYWNmZmI4MWQ4YTBiYjAyMzA3NDI3MDgzOThlNjU4YzVmZTljMGZmMjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhMjIwYjUwM2I5ODk3NDJjNTgwMzYzMDNlZTBkYTAxZWU5NmUyMmQ1MDdmMmZkODRlZTVlNjk4YmVhNTY4MzkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhmMWU5NTBhMmVhY2E5MzE3OTgwMGZkN2VjNjQ2ZGJkZDdiNDk1NjJjMjZkNWRhZWU2YWIxM2NhNGIzYWE4ZjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3f8c39574b964ff0afb4d6f670149e18",
+      "statement": "A router prefix must start with '/' and must not end with '/', enforced by assertions in APIRouter.__init__ and include_router.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L2585-L2589",
+          "version": "repo-lines-v1:sha256:b5edc35ea0c6f13783aba72ce5ae2e13d6cb641605473f7c3225b3e2d0338a9d:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODIwMzlkOGZjMjI1N2UzMDM1OGIyOTQ4MzU3M2U4NzMwNzMzM2FjOWU1OGM5NDlhNmEzY2ZjNTgzNjhiZTJlZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNmQwMDA3ODc1ZGU4ZjkyZDkyYjc4N2EwMThjMTZjMDAwNDE4YmQ1Zjk0OTkyM2I5MGY0ZDYzYzdlYzE2ZDgzYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODE2MDVmYzVlMmFlODcyMTM3NWIxOWJhNzQ3N2JkNjI3Y2Y4N2E5NGIzMWMyZjA1NTNiMDVkYjhiNGE5ODQ5YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTI2ZmQxYTQxYWQ2Y2FmMTlhOTlkMDdmNDg2NDFlMjQ0YzdmNjEyOWY2N2ZmZTRiZDYyYzM5Y2M3YmNmMDBmOCJ9"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L3356-L3360",
+          "version": "repo-lines-v1:sha256:b5edc35ea0c6f13783aba72ce5ae2e13d6cb641605473f7c3225b3e2d0338a9d:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODIwMzlkOGZjMjI1N2UzMDM1OGIyOTQ4MzU3M2U4NzMwNzMzM2FjOWU1OGM5NDlhNmEzY2ZjNTgzNjhiZTJlZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNmQwMDA3ODc1ZGU4ZjkyZDkyYjc4N2EwMThjMTZjMDAwNDE4YmQ1Zjk0OTkyM2I5MGY0ZDYzYzdlYzE2ZDgzYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjM5NWYzZmIyZDg0MDMyMzg0M2VkZDdiZTE1MzU4MWQwN2VkMGMxMGIzNWRjMmI4YzcxN2ZiYzAwYjFmZDFjMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWNhYmRkNDhiNmIzNDlmYzQ2YWVjYjIxNjE0OWQ5NDIwNWQ2NWVmMWI5MGYwODZhNWMyNjVkODgyMTBmODM0NyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_2add5ecd7ea44660b80cc0774baeed8b",
+      "statement": "include_router raises FastAPIError when both the prefix and a route path are empty.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L3361-L3375",
+          "version": "repo-lines-v1:sha256:61e35bbd4557d6abdf37140d8677393746092ba03e144c934cb6b5cf08320cf9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwOTVlZjA3ZjZlYjZlMDk4ZTZhODQ5YmU1YzkzODMzOTdmNDExM2U5NWI5ZTcwNzlmZDRlOGJjNTQ3ODAxNTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMyMTdlMWM4Y2VkNjE2MDNmYjA5YmFkYzcyNjMzZWQxMzVmNWE4YzllOTE4MDc5YzYzM2Y4MjY1NTc1MWVjMjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIzMzUxOWQ0YzIxNWU2NTI5NjFlZjEzZjg0ODZhYmFiOWMzMmI2YTkyOTdiOTUwMWVkY2FiZTkzYWY2MmNkYWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA0MDZmYjM1YWUwZGViN2NlZjA2MjA4ODZlMTllNzMyZDQxNmMzZDVhMmNmYzZmZjg3ZmU5MDdjZDU3ZDhmMDMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b8ae21ae8a1d4efea90c89945b928981",
+      "statement": "A router cannot include itself or a router that already includes it; include_router asserts against both.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L3348-L3355",
+          "version": "repo-lines-v1:sha256:821c3caf982022df9e7f72037df74e59eebc1708a7aecdb546e69e61a0a2828d:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiY2FkM2U4NWUyOWQxYjIwYzc3YWExZDZmYWQ3NjJiMDg1M2M0ODU3NDUzMGI5NjNjYWM4NzVhYzlmZTJlOGMxNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmE5ZjhjMmJjN2ExNDFhMDIyYWYzZmViOGFiNTAwOGVjMjU3NTdlZjI0YWNkMDQ5ZjUwODlhNzRiN2M5YWU4MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWUwNjRjNjUxZDNhYzI2YTIzNWM3YjRmNzFiOGUyOGM4Mjg3NTMyZTdlYmI2ZDAwNzk5N2FiNzNhZTViODI4NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTRkYjliMzY3YjNjODdiMjU5ZjJjM2EwYzYwYzUzMGI0M2FkYjQ0ZDJkYjJjMGM1NmIwNjBkZmM3NjVjMGZlNyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_f31e43b69d7944929f64158ac11d348b",
+      "statement": "include_router appends an _IncludedRouter that references the original router, so routes added later and nested inclusions remain live in routing and OpenAPI.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/bigger-applications.md#L527-L545",
+          "version": "repo-lines-v1:sha256:437c5ab72cd6403627303c7c8f46a929237edef1f929c0b3ba54ce4a03012ff3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRkMGRkZDhmNWZmMjI4Y2I4NDkxY2RiMWVlMjlhMTVkZGM2ZTc5OTdmZDM1MTM2NjEwMzg4ZWM3YmU1NzllNjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBmYzMxYjZkNmI5MjA0NWQ2NzRiYWZkMDljMDY2ZGQ2ZDM2MWYwZWY3M2QzOTEyYzZkYjk0ZDQ2ZTkzZTU2NTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlkZjUzYzZiZjU5MjFjZTI5OTdlOWU5OWQwMzc3YjQ3NTFkMmNmY2ZhYmZlMGY2MmYwYTJjZjQ4NTZkZDA0OTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNhMzEyZDVhNTBlZmUxNGMyYTBhNWMwNDlhNjg5OTE4NWEzNGVjMjJhNTI0ZDYzODU1YmFmMmQ3NWJjYTAyNDYifQ"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L1623-L1640",
+          "version": "repo-lines-v1:sha256:cd6188ac1340c14367265c4155cb9adbf134068d6ea71f6afbe61bab734a0224:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzODU0MGYwMDUzMWEzNzVkNjFhNmI1NTQ5YWZmNmZkMGQ4MWM0MzFhODNkM2RiZjZiNzU1MGMwNjg0NzRmYmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRkMWE3ODY2ZTQxMjJkMWJjMWRiMjg3MmQyODI0NzkyOWRlNWM5MDFjNDg2MWQ3MTg4YWI5Mjk4NzBhZjhkZTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZmN2ZjZmRhMjcyNzE3MmFiNmQwMDc3NjMxYmIyNmQxY2E0ZTgwOTQ4MzBkMWFjMzk2ZjY4N2QzZGVkM2MzNGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJjMzJjZTE2MzM3MzAyM2ZhNjM2MmY4ZTlmYmZkNjhlYzYwN2U3ZjMwMjc0NWNmMzE2YTRhM2Y2Njk5NWRkZWEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b76b8301e6504e97ba08dcebb253cc3f",
+      "statement": "include_router can apply prefix, tags, dependencies and responses at include time without modifying the original router, and FastAPI(dependencies=...) adds global dependencies.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/bigger_applications/app_an_py310/main.py#L7-L23",
+          "version": "repo-lines-v1:sha256:ff7b4a252e8967926c3f60c7690efcb36b064605ef45dff9675bd5b3967a0364:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwM2I0N2UwMjJmZDUzYTk0ZjgwNWM2ZTJlMGI4NGJhYTY4YmZiZWI4YzBlZjEyYTAyY2Y2Yjk4MmU5Y2MwZDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2ODZlNzdjYjRhNmY0NWFiNWQxZWJiYzg5ZWQ1OTZmOTg4MTE0ZDFmYmEzNjY1NjcyNjhiYzhhZWFiZjc3MzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQzNzQyYTA5MjFkMzc1NTdiYzM1NGJmZDg0MmQyYzI0ODViMGZmZTAxNzA3YjdmOTllMGMwYTI3NmVkMmIxNjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3ef594d4978243aeb14e60529c9d5213",
+      "statement": "Router dependencies run first, then decorator dependencies, then normal parameter dependencies.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/bigger-applications.md#L183-L187",
+          "version": "repo-lines-v1:sha256:b0178ffcd79d63c12cfc2a39b4cad76a282d798231ab0fd14e6d661a321f7995:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmRkZTYzYzUzZGY0OTVlN2UzMGIzMjRkOTZkODNjOGNiODhiYjA4NTUxZjQ0OWFlYTQ5ZmZjNTliNDY3ZGQ4NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMWFiZDM4NjE0ZTE0MDk0NWU5MmI0Njc1NTc1YTk0ZGQ1NThhYWQzMDJkODkwMjM0ZGNjNWNkZTg2MjkzNGJiMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjU1ZmJkOTUzNTc0NGQ2NWIyMzIxNzk0YWM0NTk4NmJjZTUyMmQ3ZjYwMGJjYjU5OGVjY2IxZDM5NGI0ZjRkYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYWIzM2QyMDk4MTEyOGMwOTdmN2EyMjM5ZjlkNDBlODM1ZDA3ZDRkOWExMGNjNGY1Yjg3MWY4YTU4Y2VkNjlmMCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_bcba376d7b5240e5b9a8acf7d6dd774d",
+      "statement": "The app entrypoint can be configured with [tool.fastapi] entrypoint in pyproject.toml so the fastapi command finds it.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/bigger-applications.md#L468-L497",
+          "version": "repo-lines-v1:sha256:edf926462efb329b8d083da2aff370ce2d9575dde38a3c31795d692d9f64723c:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlODM1MmMwMWIwMzZhNjZhM2M4NjVkNjBmYTI2ZjFjYTZiMTIyN2YzYTA3ZTczMTc5YTZlNTk0M2IxOTk1NTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3ODllZmU0MzBiMmY0Y2FlY2I3MDAwYmIwOTAwMGQ4YjIzNjk4YTFlNDBjNjE2MjM0ZGZmYmJlY2RjZjUxNGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA3NTc2MTRlMmUyMjVhYzUwMThiYjIwMTFkMzJlYjJkNGI5YzUxZTNkZmYxMzRjODc2YWY1NDI1MTQ1NTg5YWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI1MGYxMDhjOTFmYTU5MmNkMmM2NWRlNDU1Mjg1ZWEwY2IxMTM5NjEzYjY5MDk4YjZhZTU4MjI3N2M3MWFhNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

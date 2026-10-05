@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:d58fc8440ff605d0e18ea6051cecb4ea23b5fd6b1e1233824e31ebe9f9c38413",
+  "claims": [
+    {
+      "id": "claim_ee7d839de1da45eca0e3d93e9e2bffb1",
+      "statement": "fastapi.Request and HTTPConnection are re-exports from Starlette.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/requests.py",
+          "version": "repo-file-v1:sha256:c74b43933f769f31abe45b604e268677fab67836b1f45a25ec39087c7f51e956"
+        }
+      ]
+    },
+    {
+      "id": "claim_547729789e834723b9e6c9cdddc42212",
+      "statement": "Declaring a parameter typed Request gives direct access to the request (e.g. request.client.host), but data read from it is not validated or documented.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/using-request-directly.md",
+          "version": "repo-file-v1:sha256:83fb6eace7305c4d37d2b40ff64dc783881497de7c6a00da24a02feae4ab9fdb"
+        },
+        {
+          "resource": "repo://docs_src/using_request_directly/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:1553d1308a1cbf65670e131e7f606362dc95570bd727995a1c34532a04f3ddde"
+        }
+      ]
+    },
+    {
+      "id": "claim_489a80264fb040179717307622385066",
+      "statement": "By default JSON bodies require a JSON Content-Type; requests without Content-Type are parsed as JSON only when strict_content_type is False, a behavior added in FastAPI 0.132.0 to mitigate CSRF against unauthenticated local apps.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/strict-content-type.md",
+          "version": "repo-file-v1:sha256:1eb09b1b23672f7734bd65cf28bd152449307947e5772b7aed215e52070b3f98"
+        },
+        {
+          "resource": "repo://docs_src/strict_content_type/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:b4997a4ce70a61f93d808b4926c6f625740a82c172e2483d123bf0896bdd0a06"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L444-L459",
+          "version": "repo-lines-v1:sha256:1ac1e7c9572f0f1812d41b7eac711625ecb14b33d13346c11e98ef99ff3bc469:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmNWRmYTRkZTdjMTM0MWYzM2RiN2Y3MGUzZmMyNzNiOGUxNTI2MjIyODBlNmEwMzYzYWNhM2NmNDVjMDYxYTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM1YjA3ODY1MGQyNmE0ZGE5YTk3ZGZjMTcxZjM3NzU2YWQxNTI1NDA2Zjc1NTRiNTljOTkzZTZmMjA5ZDNjOTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVkNzRmM2JjM2QxOTJhNDYwMGEwMmU1NTE5OTNkNDJjNDBkODBjZDExOGM0MGZhY2U1MWMxNzJhMDBlYTc5MDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFhNzc4ODYwODQ2MTU2ZjUxMGNlYTYwNzk2ZWJkNmQwYTY5NDEwNDJmMTQwZGY4OGIzZDI1YTI5OTg5YWQ3ODkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_57c7c11a16a245d7bf9b6b5b814b84aa",
+      "statement": "strict_content_type is a parameter of FastAPI and APIRouter.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/applications.py#L859-L859",
+          "version": "repo-lines-v1:sha256:5efe3d7b64ca315220dc80b9d1588d7e6fe05290b4302ed1675fb19aa6df824c:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWVmZTNkN2I2NGNhMzE1MjIwZGM4MGI5ZDE1ODhkN2U2ZmUwNTI5MGI0MzAyZWQxNjc1ZmIxOWFhNmRmODI0YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWVmZTNkN2I2NGNhMzE1MjIwZGM4MGI5ZDE1ODhkN2U2ZmUwNTI5MGI0MzAyZWQxNjc1ZmIxOWFhNmRmODI0YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWY2NTc2ODFhNzQ5MjMzMTFlZjk4YzQ4YWMwOGVmODNjNzY0MDQ0NDZiMjJiNWQ1MjFiYmYyOWMyMTQ2OGM1MSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDA3NmI1Zjk4Njk1ODNiMDYzNzQxMzlkMmEwNTQ5ZTBmMTVhNjAxMDBhYjFiNGE2OWRjZDg5OTA2ZGU1YmNiMSJ9"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L2543-L2543",
+          "version": "repo-lines-v1:sha256:5efe3d7b64ca315220dc80b9d1588d7e6fe05290b4302ed1675fb19aa6df824c:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWVmZTNkN2I2NGNhMzE1MjIwZGM4MGI5ZDE1ODhkN2U2ZmUwNTI5MGI0MzAyZWQxNjc1ZmIxOWFhNmRmODI0YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWVmZTNkN2I2NGNhMzE1MjIwZGM4MGI5ZDE1ODhkN2U2ZmUwNTI5MGI0MzAyZWQxNjc1ZmIxOWFhNmRmODI0YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzg0YzMyN2JhODAzNTkwNmMxOTYxNjE5MzE0Y2RiZTFiMTI5OTY0N2ViMmEzZGJmMzFhYTBkNzJkMDNjODQ0NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDA3NmI1Zjk4Njk1ODNiMDYzNzQxMzlkMmEwNTQ5ZTBmMTVhNjAxMDBhYjFiNGE2OWRjZDg5OTA2ZGU1YmNiMSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_8c8497b0ed7a4947ad72eba8e2e3387a",
+      "statement": "Custom APIRoute subclasses override get_route_handler to wrap the original handler, e.g. to decompress gzip bodies via a Request subclass, and are applied via app.router.route_class or APIRouter(route_class=...).",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/custom_request_and_route/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:ec92d4d8c223325306d2366e59bb77e56a4119e3c2b11a557d54842bdd84eb97"
+        },
+        {
+          "resource": "repo://docs_src/custom_request_and_route/tutorial003_py310.py",
+          "version": "repo-file-v1:sha256:bad7ce107ef229a772186f14d34b6c4434fa492b297ee8c4836a84b072faff6c"
+        }
+      ]
+    },
+    {
+      "id": "claim_2ffcdb265c2c4bd090cb80debb7f813e",
+      "statement": "A custom route handler can catch RequestValidationError and include the raw request body in the error.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/custom_request_and_route/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:5ac6da7650ef4cf242d0ca2d60dad88952456536ca71ce0d09b63600fb5f9c83"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

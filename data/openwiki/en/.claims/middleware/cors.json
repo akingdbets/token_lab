@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:e3d9f674c05781d3f2e57755a10e3069e700af0ff9491a265de07bd2a1de12bf",
+  "claims": [
+    {
+      "id": "claim_c51a3da921b24056825b3303081df87c",
+      "statement": "fastapi.middleware.cors.CORSMiddleware is a re-export of Starlette's CORSMiddleware.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/middleware/cors.py",
+          "version": "repo-file-v1:sha256:7b6080ae0767a2609d16f908decd374d1b732db21cae0a94ae969051f3cd3530"
+        }
+      ]
+    },
+    {
+      "id": "claim_c61e777d069c4dd8805e9d994c82977c",
+      "statement": "CORS is configured with app.add_middleware(CORSMiddleware, allow_origins=..., allow_credentials=..., allow_methods=..., allow_headers=...).",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/cors/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:9b015806cce8666cb124bb7409da345e5709d473ac670bbfc5861d582fd1e6d7"
+        }
+      ]
+    },
+    {
+      "id": "claim_50e9421bc88649929de905f0c9babafa",
+      "statement": "CORSMiddleware defaults are restrictive: allow_methods ['GET'], allow_headers [], allow_credentials False, expose_headers [], max_age 600.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/cors.md",
+          "version": "repo-file-v1:sha256:bff162c599f49b23456e39d2d8c8cc843933f940ee75bffc7dba046489870506"
+        }
+      ]
+    },
+    {
+      "id": "claim_9f87580dfca74dc8b718ccf7e5f359ec",
+      "statement": "Wildcard origins exclude credentialed communication, and allow_origins/methods/headers should not be ['*'] when allow_credentials is True.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/cors.md",
+          "version": "repo-file-v1:sha256:bff162c599f49b23456e39d2d8c8cc843933f940ee75bffc7dba046489870506"
+        }
+      ]
+    },
+    {
+      "id": "claim_3d321fa08711487f9a0171bb718d959c",
+      "statement": "The middleware intercepts preflight OPTIONS requests with Origin and Access-Control-Request-Method and responds with 200 or 400, while simple requests pass through with CORS headers added.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/cors.md",
+          "version": "repo-file-v1:sha256:bff162c599f49b23456e39d2d8c8cc843933f940ee75bffc7dba046489870506"
+        }
+      ]
+    },
+    {
+      "id": "claim_369bc9495e8a42218f704d24624072de",
+      "statement": "An origin is the combination of protocol, domain and port.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/cors.md",
+          "version": "repo-file-v1:sha256:bff162c599f49b23456e39d2d8c8cc843933f940ee75bffc7dba046489870506"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

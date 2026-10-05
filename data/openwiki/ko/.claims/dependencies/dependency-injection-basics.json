@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:453cdb2e14269f99c246bbda45be80d76be8cf4bcca4f3af25f0ba9641b11d4d",
+  "claims": [
+    {
+      "id": "claim_208f3ad7bafe402aa24c31dcb7e0af36",
+      "statement": "A dependency is a callable passed (uncalled) to Depends(); FastAPI calls it with request-derived parameters and injects its return value into the path operation parameter.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dependencies/tutorial001_an_py310.py#L1-L19",
+          "version": "repo-lines-v1:sha256:819dbfdaf2efbf0e15454302c8ae46d328e613eff27aebba774bda359c562191:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkNjU0NmI5NWJjMzAyOTRhZGU0ZDM2OGMxYjNmNjUwNzM4MzVjYjhlMDUzNjYzOTU3ZWYyZTFjYzU1Mzg3ZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBkZWIyYjEzNjc1MWIyNTY0N2FkYzE2NTY5OTYyZWUyMzczZTliZTYwNzcxYjRjNzY4Y2JiOGU0NWMyNDNjMjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ab0919c2875d493d96ffe9274ac92ad8",
+      "statement": "An Annotated[..., Depends(...)] value can be stored in a type alias and reused across path operations.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dependencies/tutorial001_02_an_py310.py#L12-L22",
+          "version": "repo-lines-v1:sha256:c2abc822b47ce2bb9cb16d82e486517b629c087e75940d8e8cf42e093a530bf6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxYjFjZGRhNGUyZWUzZWUxODJjYWEwMzM1OWI2ZGUwNjg5OWQyMWI1ZGFkNDJhNzY0M2U1NDRmOWU0YTBkYmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBkZWIyYjEzNjc1MWIyNTY0N2FkYzE2NTY5OTYyZWUyMzczZTliZTYwNzcxYjRjNzY4Y2JiOGU0NWMyNDNjMjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNhMTM5Y2ZjMTdkMTcxZDhkOWZmNGZkZmQwMzY2N2M5YmU5MmU4NzZlNWY2NTI2YzVhMjdiOTA1ZWU4MDUwOWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2adf2ffd075e49c5a458c1582defda4f",
+      "statement": "Classes can be dependencies; FastAPI analyzes __init__ parameters, and Depends() with no argument uses the parameter's type annotation as the dependency.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dependencies/tutorial002_an_py310.py#L11-L25",
+          "version": "repo-lines-v1:sha256:44d5f31d2ce7078e5dd861be5428b08da4462b24b0643d7e921a499202704d6e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5NmRhY2NkODE1NTM3MzUzNDFmNTRjNmRmNTk0MjIxZTQzODQ2ODU0YmFjMjJhNjI2ZGM1YmVlY2Q5YjZmMGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA1MWNjNWRkYzNlZDQ5MTQzZTc2OWY1YTIxNTVhM2I1MmFlMWVmZWY0MGZlZWZiNjA3NTU4ZTdiOGYxNWQwMTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJlMGFhNjZiNDI0MDZjOGIyMzdlYmRjNWVmODM1NTkxYjA4OGJjNTcyYmU1YjM1ZDJiZGU5MjY0N2VlYTFhYjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://docs_src/dependencies/tutorial004_an_py310.py#L18-L19",
+          "version": "repo-lines-v1:sha256:497079d9ca877e61af683c70e9297a9059c332662643f22bebc76f59e5c2e04f:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiY2ZlNTU5YzJkY2Y2NTM0YTU3ZDk1MzU4MTE1M2NkY2Y1OTYzMjIyODQ5NjZkMzk3ZjA4MWRkNjdmNmJiN2JhOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjllYzAxMDI1YzZmYzRmNjhlOWI5N2U3ZjNhOGNjOTIxNmMyMDFkMGRkYjBkZjRkZTg1NzhmMzBhM2Q5MDM5ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzVjZTdiOWJhZTEwNTRmNTJkNDlhMTgxODk0MDdkYjg2YWY3NDUwMjYzNDgxZTEwMDVhNjEwNzU5MzJiOGU4NCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWZkMzZiYTk1NjdkZjU5YTgwMjAzMzBhYzBkMDRhODQ1ZGNkODU2OWM5MTgwZDVlNjQ2ZjMyMTJjMDIwOGVhMyJ9"
+        },
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L468-L471",
+          "version": "repo-lines-v1:sha256:13718e82b54af30e5db5563ae047f7131dc199fd3a24eb116b13ccf6e6c0a2d3:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGZlZTc5NTE3YzAzYjdjMTc5YmU0NzQ4MjQ3YTM1ZThjMTAwYjc4MTkyNzkzMWY4Zjk5ZGYzMDMyMjNjYmRhOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTQ1MzBiYjZiN2MyZTk5ZGZhYTUwMmI3NDFlNGE0Mjk5NTViYWEwZDlhZmYwZDBiYmIzM2QxMmJkNzNjZDY4ZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDY0NjlhMzFlZWY4NGIwN2YyM2NlOTM5ODk4YzJiM2NiMjcyMDc4NDI1NTI2ZjhlMjE2MmRlYzViNTQ3ZDc1YyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzRjM2MxNmI4ZmJlMmRiNmQwZjFmNDYxY2Q1NTAxYWZhMzZkY2ExYzVjOWFhZTJlNmIzOTE4YTc3NzcxMjU3MSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_a955d05a513a4dbca71d2422626f2987",
+      "statement": "Dependencies can have sub-dependencies of arbitrary depth, e.g. a dependency combining a query sub-dependency with a Cookie parameter.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dependencies/tutorial005_an_py310.py#L1-L25",
+          "version": "repo-lines-v1:sha256:0f3076c46f2d005b74a7152ffdc1933ff7ebbf449a47858ebd64f6035c7074b1:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkNjU0NmI5NWJjMzAyOTRhZGU0ZDM2OGMxYjNmNjUwNzM4MzVjYjhlMDUzNjYzOTU3ZWYyZTFjYzU1Mzg3ZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFkNTJkYmQwNzE5MjlhZTM0YWNiMDdiYmMxNjc1YWQ1NmFjZmM3MzgzNDIxNjRhODQ2MjY0NTZjMzczYTBmNDkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b0b3f487e5f24e3ca8a3fde7ae7da4e3",
+      "statement": "Within a request, a dependency's result is cached and reused for all dependants unless Depends(use_cache=False) is set.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L656-L661",
+          "version": "repo-lines-v1:sha256:8a0437b740cc82f15089540ca64db781c379561d114bf8b2d9cfa97671e71959:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWVkNTgyZDgzMzU1OTFkMDg0OWQzZDc5NjMxYzVjOGFlZmY1MDUyMGI1M2VjOTY1ZGNjY2Y1NjQxMTBmN2VhOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTk3M2ZmZDYwOWY4NDA5MzhiOWFlMTQzYzQ4MzMwOTJmMDBiZDMzZGVkNWY3NWQyNWYxMzA0Nzk5MjdmMzQ0MiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjE0MWYxNzJjNTExYmE2M2M4ZTZjNDJiNTFmMGU1NzY4N2QzNDkwOWUyYjFhZWQwZjg1ZDA4ZjVkOTc1NDA1ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMGRjY2ViNWViZWFjOTEzMzZkODg1MWYwODMxYzVjMWE4YWE5YTc5ZDQ2OGEwNGNjMWQ5NjY4ZWMyY2EwMjgyOCJ9"
+        },
+        {
+          "resource": "repo://fastapi/param_functions.py#L2299-L2310",
+          "version": "repo-lines-v1:sha256:92d6826eb66de62bfaae7245afe10e86d9d3bd6f41ec9976129d274ad131df82:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBlMjIyNTRjYzkyYTdmZDE3ZmI4NTI1Y2E0NjA4MTUwZTc5YzdiM2RhMGQxZDE2MzYxN2U2ZDIwN2E4YTliNGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcyNmIxNzRmZWRiNjRmODk2NTcyYmM4MmJkZmIxYTEyMDA2MjBmMDAxOTUxMTA2ZTI1MGMyZTVkNDFlZTVlYjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ2YzRjMTQyNzc5OWY1NTI3MTI3ZWNjOWI5MzBmMjIwOGY0OTJlZGFjNDNiNDk5OWNkNmJmMDA2YzQ2MGU5OTcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a24a5b9ead574e19855191a295f2d661",
+      "statement": "Non-async dependency callables are executed via run_in_threadpool while coroutine dependencies are awaited directly.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L673-L676",
+          "version": "repo-lines-v1:sha256:20f37775d768f94f733e06a0691f5b401a5c9455bff6dc6880b43be19d3456f2:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmY4YmM1ODJiZDg2NGZhZGQzZTE1ZGE5MDE1NDYxNTA5ZWUxZjE2YmIzOTY1ZmE3MzRhNWFmYWIxZGNlNjY5MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzhmZjQzZTNmZTVlZjkyNWVlYjM2YjFiZDQ3YTZkODNmNTNiMDhlZWQ3MTBmZjNlNTQwMDIxOGYwZGYxYjk2ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNGNjMmU0ZjRlNGQzOTZhNDM3NDE0Njk5ZTYxYTg4NzJjYzMxZDIzNjNkYTliNTlhOWVmN2E5ZWI5ZDI0NjliNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZmFiZjk2Njg1MTlkMTMwYjRjOTQ2ZjNiODRiNmNlNTZjMGVjNTZlZTkyNzgwNjg0OGVhYTFhMDZjNTE2NjE2OSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

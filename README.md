@@ -55,7 +55,7 @@ token_lab/
 │   ├── raw/fastapi/          # FastAPI 원문 스냅샷 (git clone, 버전 관리 제외)
 │   ├── corpus_manifest.jsonl # 코퍼스 문서 목록·해시·토큰 수
 │   ├── index/                # 탐색용 인덱스 (nav_v0 등)
-│   ├── openwiki/             # OpenWiki 생성 위키 (예정)
+│   ├── openwiki/             # OpenWiki 생성 위키: en/ (실험용, 고정), ko/ (보관용). 출처는 각 SOURCE.md
 │   └── eval/                 # 평가 데이터셋 (버전 관리 제외)
 ├── src/
 │   ├── config.py             # 모델·경로·실험 조건 통합 설정
@@ -181,7 +181,7 @@ LLM_MODEL=qwen2.5:3b python src/dataset_builder.py --docs 3 --dry-run
 
 - [x] 원문 코퍼스 로더 (574개 파일, 커밋 50113da 고정)
 - [x] 탐색용 인덱스 (nav_v0)
-- [ ] OpenWiki 위키 생성 (영어, 코퍼스 범위에 맞춤)
+- [x] OpenWiki 위키 생성 (영어, 코퍼스 범위에 맞춤)
 - [x] LLM 호출 모듈 (Ollama · OpenAI 호환 백엔드, TTFT 측정)
 - [x] 평가 데이터셋 생성 파이프라인
 - [ ] 평가 데이터셋 확정 (생성 및 검수)

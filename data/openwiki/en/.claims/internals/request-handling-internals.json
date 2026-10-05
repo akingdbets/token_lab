@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:570db1ed57c75d6f2db44a0be5ec792bccdb8c4dd0c1aa100d4817182618d08e",
+  "claims": [
+    {
+      "id": "claim_5f2d3c6d3edd4239ba27964f11f2d319",
+      "statement": "FastAPI's middleware stack is ServerErrorMiddleware, ExceptionTelemetryMiddleware, user middleware, ExceptionMiddleware with exception handlers, and AsyncExitStackMiddleware for closing files, wrapping the router; handlers for 500/Exception go to ServerErrorMiddleware.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/applications.py#L1053-L1104",
+          "version": "repo-lines-v1:sha256:1ac46efcedddb524b94276b567026fc46972f67ae64fa7f58a7843ba40ba5a52:eyJzZWxlY3RlZExpbmVDb3VudCI6NTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBmOTJkY2NlYzNkOTIwMjYwM2NjZDFlMjQ3NWMyODQ2MWYzNWYzZWJhODUxNGMxZTBiNzcwNmRhNjA3MzNkOTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFjY2Q4NWJjZGUxNmMwOWQ5MGUxNTFjM2E0Njc5YWQzNjgzODBhZGIyMWYxY2M1NDdiYjMxNWZkZTQ2ZDUzNGIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAxZmMwNmNkNTE5M2M5NzhhOWJhYzJiOWMxYTUxYzU4N2MzM2MxNzQxOGM5OWEzM2FjYWYyNzViZjczYzkzMGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVlZDMyMzc2YTgwMmQzMzUzY2E4MDA5MTMxYzdhMTQ2ZDI2MzFlMmU3YzhlNjUzOWY5YTJhMTUzZTA3NzI0NzcifQ"
+        },
+        {
+          "resource": "repo://fastapi/middleware/asyncexitstack.py",
+          "version": "repo-file-v1:sha256:e7c7a1c3419eaceabf1401bea9012a9f2791a28109ed76d19660b60b3feb636f"
+        }
+      ]
+    },
+    {
+      "id": "claim_1d97ed69fe6b4d8b8a1d52c605d9b71b",
+      "statement": "request_response opens a request-scoped AsyncExitStack and a function-scoped AsyncExitStack; the function stack closes after the endpoint returns, and the response is awaited inside the request stack.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L128-L168",
+          "version": "repo-lines-v1:sha256:3d4cfb2be0eab3c153f964af936b4f0fcff440702d323f9700b112d8c437b159:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI2N2FkOGZlNzM1NzJkMDgyYWM1N2M2YWE5MzVmZTg0OTFiYWM1ZDY0Y2Y0MmIxYmY4OGMxMmNmZjA4M2YzNGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI2ODU4N2VlNTE4ZTU2YTIyNmMyMTNmZDc3NDAxNGFhZjgxYWJjOGIwOWZkM2RmYTY5NzNiZDE3NGVlMjlmOGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM5MWFkNmM1MGIyMmU4NzFmM2E2OWQ4MmY3NjVkNGE2MGRjNDdjODBhNGNmZTZmZmY5ZTNiMWIyMjYwMGZkNzUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a7c08650d6704bcda35e9687fde26f42",
+      "statement": "If the response was never awaited, FastAPI raises a FastAPIError pointing to a yield dependency swallowing an exception.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L155-L163",
+          "version": "repo-lines-v1:sha256:e1fd4b3bf9617e4338a0c7ca95eb0edd18f5e793833f3211d1f83c8ef1f14006:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzE3M2Y5Mjc5NzlmNGVmNDBkM2QzN2Y0NTczYWJjZTY4NTA5ZGZhNTc3YTk4ZDliYTZkZTI5MTRhNTY4OTYxMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2ViNzAyNTc1OTNkYTA2ZjY4MmEzZGRkYTU0YTlkMjYwZDRmYzUxNGY2NDUyMzdmNWNhNzRiMDhmOGRhNjFhNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODExNTJmZDJkZTM4YjI2YzMyZDU2MTUyMWI5MWM4ZjY5YzNjZGM0MTJkNWZlYzZjZWQzNzE5M2VlMDhjZTdkNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjVmMGIyMmQ3YTQ0YTI1MTRjMDNmMGM5NzY4ZjFiNThlNDNiZjNlN2JkY2U4YTljODkxMDljMjdmZjA1MjdhNCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_44b5c613a5244cdfb8f2036469b67264",
+      "statement": "Form bodies are read with request.form() and closed via the middleware exit stack; JSON is parsed only for application/json or +json content types, or with no content type when strict_content_type is disabled.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L435-L459",
+          "version": "repo-lines-v1:sha256:eb63a982d992fd4e516eb3cad4d8348b3dbbd1c78fa43b85b007534b714f83ec:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyMDQyYjM0ZWEyNzQ5MDVkMmUwZjc3NDM2ZTg1MWUzN2FkZTQzNzRiYmMyN2Y2NGI3NjNiZjc5MzEzY2EwOGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM1YjA3ODY1MGQyNmE0ZGE5YTk3ZGZjMTcxZjM3NzU2YWQxNTI1NDA2Zjc1NTRiNTljOTkzZTZmMjA5ZDNjOTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU2MTY0MWE3YzFmZGFiOWVjMTc1ZDZiODc0ZWQwZTVmN2U4ZmYzY2ZkY2E2Y2U0OTBkYjUzMDNhMDc5YzVmMWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFhNzc4ODYwODQ2MTU2ZjUxMGNlYTYwNzk2ZWJkNmQwYTY5NDEwNDJmMTQwZGY4OGIzZDI1YTI5OTg5YWQ3ODkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_996752591f2b4d1abacb9ba2e09c7e0c",
+      "statement": "Invalid JSON raises RequestValidationError with type json_invalid; other body parsing errors raise HTTPException 400 'There was an error parsing the body'.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L460-L483",
+          "version": "repo-lines-v1:sha256:d014a824797b08933a8de772bebf7ace0733a2fdc2ae63d5ef7de285d217bc65:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0ZDdjYTAyYzQ3NGJhZmM1ODBkMGQ0Y2YwOTZjOGUxNGQxMThkNzk0MTEzYzdjMTY4ZmZmMjk5Y2UxNWZhMzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQwNjE3OTkxZGUxNGUyZWZkODk2OGQwYzgwNGY2YmU2OGUzMDg3Y2FlYzY5M2EwMDkzNzhiY2NlNzg3OWExMmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk1MmE3YzIyMzBjYTkyMmU1NjJmYzQ5YTM5NmFiZDMwYTNiYzZmYjM4MTc4YzkwMzY1NGFmMTk3NTk1NzI2MDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYyMWVjNWJlNzk0ZTkxMTQwZjY0Y2M3OWYzZjM5ZTk4NDg5OTJlODRmZDhjMjIxOTFlNTZhNDI5ZGFiZWMwYTkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ec8fd5bda2d847ba8dd6d551f3c2daca",
+      "statement": "Request validation errors are collected during dependency solving and raised as one RequestValidationError.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L489-L503",
+          "version": "repo-lines-v1:sha256:ee1da58746a812c8267ec066516df0150ec8f5e3b4bee112d6840ba2a06ddfd3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhhYWQ5M2U4MTViZmEyZDk3YTNlMmZjYjNiZTZkZTczZDkwZGRhYzBlODBkNDMxYmMyN2U2YTVhZWI5MTc1ZjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcwNGEzMGRiYzQ4NjJhMzczMjBlMDNlZTM2NjlkNTI0MDE1NWZiNjZmYThmNDhjNjA2NzVkYWRmMzFiZWU0MGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhhNWVkYTk0YmFhMjljN2VhZjRiZmRlMDZiOGUyMjA2ZGQyOGYxOTE4YTM4MjdkZTAwMjIyZWY2YzM1NGY0Y2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUyY2VmYmU0ZDVhOWExODA5Nzk0OTI2ZTczNTg2NWIyNDhlNzY2YWE3ZDg5MmU4YWFmZjUzMjJjZGExYjFmY2UifQ"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L770-L775",
+          "version": "repo-lines-v1:sha256:63d89c681f71cf8035b7aa87a3ffa67b45b0946eb1bc48def835e35066c5a5cf:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTJjODc0OGM2ZjJjMjBjYmExMjViMGVhNjBiNGU5MDVlOWI5MmM0MTVmMWM0YzEyYzMzZGZiYjlhMTY1MGM3NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiM2M1NmNkYzdhNjMzNDdmODdhMmI3ZWEzYTY4YjIyZjBhYTZlNDQ0NTgxNDk2YzhmM2ZlZGFiNGZjOTRkZThmOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMGEwNmZiYmQ5ZTI4YWZmMTIwN2Q3NTgyMTlkZWJiZTEwY2JhMDhjMzgzYTM4MmVkM2RhNzUwY2QyYTg3ZjNlYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDg0NjA3NzgyYjU1M2JhZDVkYmE1MzVhZTdmYzY5YWQzZjdlOTg0OGFjNjRmMzAwY2YyMjYxYzU5ZmExMzZmZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_2611ccc350c04027bad3276be58092bf",
+      "statement": "Returned Response instances are used as-is; otherwise serialize_response validates against the response field (raising ResponseValidationError) and serializes, or uses jsonable_encoder when no response field exists.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L308-L349",
+          "version": "repo-lines-v1:sha256:7f9b09531ba96730212381529c2ad9c44b797272880b93a886217b1f83530864:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQwMjM2YzhjMjAwNWIyMjY4NDQ0OGU2YTAwNjBmNjc5MDBkYjEyZmY5NDcyMTFjNGZjNGQ2ZTQ3N2Q4NTRkYTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI2NDJhNDEwNjlmMWYyNjYzNmQ3MTgxZGE0MTg0YjM2MjY3NDBhNDA4ZDhiMjYyMTljMzc3N2E2ZTBlZjZiYWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdjYzhhODk3ZmRmMGZjNTM1MDFlNDFmMTU2NDNiYjQxNWQwYzJjNjY4YjQ1MjVlYzc4YTE3NTdmYTgzMzhkN2IifQ"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L727-L735",
+          "version": "repo-lines-v1:sha256:13f5f592fa745d7a302e3ed763264a417d0edfe65547d4911cfebd014b098d88:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjFkNWFhZDA3YzFjZTUzM2U4M2MwZmUxM2RmODg2ZWE2OGQ2YTFmNWExMGM2YWE2MGYzNzI5Y2QwNjExNjgxNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTEzYTAwNjg1YzliZTM4YjFiMjAwYjE4YzY1YjAwM2U4MTYxZjBjODdkYmFhN2JkZTE1OGE1ZDdkZGYyYWE3MiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWU3NDRlYzY5M2E4OTQxZGUzY2E5MDQ4NjZiOTc3OTg0ZmMxYWU0NzEyZjIyOWJlNjBlYWQyNGE0ZmY2MzkzNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTAzNDNlZWRiYTFmM2FiMmE2Nzg4YzI0ZGJhNmEwY2I4MmQ0NGQ2NzUwZDA0NzE5OTFjZWM2ZTk0YTM3NDliNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_cfc30b0573f647b8a5244c438ac0aad6",
+      "statement": "With a response field and the default response class, FastAPI serializes directly to JSON bytes via Pydantic and returns a Response with media type application/json.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L739-L768",
+          "version": "repo-lines-v1:sha256:97b8938925afd9c4f58c6ac95d063eb631503d910ddcf3cea6353ff1a8a27f2f:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMyMTdlMWM4Y2VkNjE2MDNmYjA5YmFkYzcyNjMzZWQxMzVmNWE4YzllOTE4MDc5YzYzM2Y4MjY1NTc1MWVjMjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZkNzVhYWNmYTExMWUzMTNhM2I1NjRjNDExNDY3Yzc4ZDViZjViNzZkNDI1NzI3MDk3ZTFhZTI1MGNkMzExMTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEwMzQzZWVkYmExZjNhYjJhNjc4OGMyNGRiYTZhMGNiODJkNDRkNjc1MGQwNDcxOTkxY2VjNmU5NGEzNzQ5YjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNmZmUyOGQ3ODk3YzMwMzZlMzJiMjhlMzRmMDQ3ZTFmM2Y1YmYwNGU2ZjU0MjI4ZmE1NGM5NzU5YjI5NTI1YTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9d24e9baf84a42958209020413e1eb87",
+      "statement": "Dependency overrides from app.dependency_overrides are applied during solve_dependencies.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L620-L646",
+          "version": "repo-lines-v1:sha256:3ce8917080c047c92d0a07fa9daacc72c90dd16c0d64c278bc8a85c72c7aa41e:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmOTRjZmFmYjZjMjQ2ZWI2NWNkNzRmODNlMzI4NzE1MjI5N2UwYzMzYTM5N2JhNzA4NDcxNTg0Yjk5N2ZmZWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3YjI1OTIxZmQ0ZmJjOTFhMmQ1NzRiMDIxYjQwYmY3MDVjMjIwMTFmOTFhNTkxYmM4YmE5MmJjZGMxMzRmZTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlhN2VmMDFkYzAxNTBkMWEwM2YzMTRiMGVkMWM4ZjQ4YmIyZWMzODVmOTA1M2UyODY1MjUwOGZlNTA1YjQ4NDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcxY2JhODliM2IwOTRlZGQ1M2I5Nzg1OTg1NjAzMzUwOTgxY2M5NGIzY2NjOWEyY2IyNDZhNmNiZDc2MTIwNDYifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

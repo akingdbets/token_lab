@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:4a4520599f7526373ea01e74066b25cb8b7c2814c83290aa893874f6ea376f91",
+  "claims": [
+    {
+      "id": "claim_7a9ff5323e7442d69682ce74cb34711c",
+      "statement": "Path parameters are declared with {name} in the path and a typed function argument; values are converted (e.g. to int) and invalid values produce a validation error with loc [\"path\", name].",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/path-params.md",
+          "version": "repo-file-v1:sha256:555eb4692bdfbc864a78c451f4a90bae12217f1c943d9093ab1f8e4bec247b11"
+        },
+        {
+          "resource": "repo://docs_src/path_params/tutorial002_py310.py#L1-L8",
+          "version": "repo-lines-v1:sha256:26e7a8c74692fc37e2269615103ea2a20edc26e645238cffc52e51a931855f2f:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTk1MmE2N2I1ZjkxZmFhNTE3YjgzYTY3OTgwOTk1MjkxOGU1ZTFmNzliYTMwMTU5MTYxMmVhZWIzZWExNDViMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjU4NTc2MjNlN2ViZjY1MzI4MmZiMjI2ZGQ3NzlhYzY0ZjY2OTFhODRlYjczMTE5ZmVmZjY1YWYxYzEyM2U5MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_5050a1705b1d43099f9922246049d36b",
+      "statement": "Path operations are matched in declaration order, so fixed paths like /users/me must be declared before /users/{user_id}, and a duplicated path always uses the first declaration.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/path_params/tutorial003_py310.py#L1-L13",
+          "version": "repo-lines-v1:sha256:e18ef1215eb4bb3b23e945294889eaa56f57265e39c752041c0e4fd8437e7a59:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NTJhNjdiNWY5MWZhYTUxN2I4M2E2Nzk4MDk5NTI5MThlNWUxZjc5YmEzMDE1OTE2MTJlYWViM2VhMTQ1YjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc2YjQwMDNmNWI3ZTRmY2JjNTBlMWFjM2ZlYzJjYjMzZDc5MTFmNDI5MTM5NzgwMDc5MWEwM2QyZjA3ZWQxZGYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://docs_src/path_params/tutorial003b_py310.py#L1-L13",
+          "version": "repo-lines-v1:sha256:9445ba828db1f99538b4447f5f768f8c9118937dacde2106c69f8ba20100d7a3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NTJhNjdiNWY5MWZhYTUxN2I4M2E2Nzk4MDk5NTI5MThlNWUxZjc5YmEzMDE1OTE2MTJlYWViM2VhMTQ1YjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmYjNmMWZlYTUxNjExNDE3M2JjM2MwOWE2MzNmYjEzYWMwYzkyM2E3Njc4NWNmNDEyMzBlNjcxM2NmZWZiYTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fceac9fd0d5c4db59d9bb9d4c8665a09",
+      "statement": "A str+Enum subclass restricts path parameter values; the received value is an enum member and enum members returned in responses are converted to their values.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/path_params/tutorial005_py310.py#L1-L23",
+          "version": "repo-lines-v1:sha256:6273495af05cb3ab5e8c8256ed6ef721beb4d9e7088908496b42cfbd5207446b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk2MTU4ZmUwYjI0Nzk3ZjdmZmQ5YzQ2Y2NkMTFhZTA1MjMyZWYzZjBhN2IxNDAyYmNjY2U2ZGMwODRlODJkNmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwODdiY2JiYWUxMGNjYzc4YzU3M2ZiYjcwYjU3ZjJkZTQ1YmZjNDUxYzViYzNjZTMzMzE4ZWIzZmRhMTgyMGIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_98cf0c8b55ee4f3e8b4a4d7f4d8dd67d",
+      "statement": "The Starlette path converter {file_path:path} lets a path parameter contain slashes.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/path_params/tutorial004_py310.py#L1-L8",
+          "version": "repo-lines-v1:sha256:a612cd14d939374737bb9284a33fa3bca3438625259218aeddfdc8ccb4cd3915:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTk1MmE2N2I1ZjkxZmFhNTE3YjgzYTY3OTgwOTk1MjkxOGU1ZTFmNzliYTMwMTU5MTYxMmVhZWIzZWExNDViMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDcxMjY5NzExMzE0MjkwNTUzOTdmZjJlYjllZDc4Yzg1MDk1ZmM3OTI3Y2NhYWE2OGM1MzM5OGYwMDYxNDVmOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_59f2f44c4af54a3fb1db288f3b9c4342",
+      "statement": "Path() accepts metadata and numeric validations gt, ge, lt, le (also usable with Query, including for floats).",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/path_params_numeric_validations/tutorial005_an_py310.py#L8-L16",
+          "version": "repo-lines-v1:sha256:81f06de72446f8ccd57921a64ca17a224c89cd96a22e5a2417ca1e0035a84195:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWNjZGFhMmE2YjdlZTljMDcwMzU1MjM0NzJjZTIxODY3NTlmMmJhNWMxNDJkNmE4OGE4Y2U1OTYyYjI1MTQ0YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDA3MWU2MmM0MThlNGQwMzFhYTg0OGQyOWU1YTkwMTk3MDljYTEyMGFiYTQ1YjA2NTliYmU0YzRjMTdiNzI2MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTk3MjllYzY1YzIxMmQxNWYzZDE0NzQ3NTJjODljOWM2NzdkNGY3ZjRmNDhmZThiMjViYThhOTgxYmQzYTEzNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://docs_src/path_params_numeric_validations/tutorial006_an_py310.py#L8-L20",
+          "version": "repo-lines-v1:sha256:99d04895a6d1e2eb61a7a5da27196e7bf585d530fd1664fde002724a9d5b95c9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVjY2RhYTJhNmI3ZWU5YzA3MDM1NTIzNDcyY2UyMTg2NzU5ZjJiYTVjMTQyZDZhODhhOGNlNTk2MmIyNTE0NGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQwNzFlNjJjNDE4ZTRkMDMxYWE4NDhkMjllNWE5MDE5NzA5Y2ExMjBhYmE0NWIwNjU5YmJlNGM0YzE3YjcyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU5NzI5ZWM2NWMyMTJkMTVmM2QxNDc0NzUyYzg5YzljNjc3ZDRmN2Y0ZjQ4ZmU4YjI1YmE4YTk4MWJkM2ExMzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_63933ddf879c4f7b8e373c49cd110c67",
+      "statement": "Path parameters are always required: Path() asserts it has no default, and an Annotated path parameter with a default value raises an AssertionError.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L432-L440",
+          "version": "repo-lines-v1:sha256:2400e159804708b4718bcd37a99de781a3684808cbd85f18c55115709dbd1c4f:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzMwOTExNzVjNGQ0ODA3MzU3YzM1NTZiNzY1ZmQ0MzdjZTEyZWUwMGQyM2I1NDJjZDYzY2YwNWEyODdmNTYzOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjdiZWMwZmNjOWRiZGQ4ZGQ2ODgyYjE5NTAyZDBhNzQwMmM3NjYxNWY1ZDM4YzkxNDU4ZjhmODBhYmY0NjM2NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODhiY2YwYzUzZGM4ZDkxNzRhMGRiYTJlNWU1MzgzZDE0NzkxZDc5ZWQ4YWVjMjAyYzAwY2M4OWVlN2FmMzhiMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDFhODAxMTVhOTgxYTI4OGZmOTkxMDNiYWMwMzFlYzlkYWE3NGYwNjNkNTY4ZGE5NGMxNmU4ZDllZTRhMThkZSJ9"
+        },
+        {
+          "resource": "repo://fastapi/params.py#L136-L190",
+          "version": "repo-lines-v1:sha256:653474aa35c0775f535c0e2d38122e6aa0078d87c741f68155797153c6b51fff:eyJzZWxlY3RlZExpbmVDb3VudCI6NTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxOTEyYzFhZGRhMWVjNjQyZGM3M2UyMjQxNzBjMWQxZmJlYzIyNTc1OTIzOTA0ZTI5MDFkMTVkODk3YmYyNTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEwZmVkYmIyNmFmMDc2YjJlN2JmM2Q1OGI0MTY2NjVjYjE5NzVmYzg3N2JlOWE5ZmM5OWU5MTFiMTBjZDc0MDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImExNWE0Njg3MWI4ZDA3M2RkOGY0MGZiYTYzYWRjODg5MzQ4MjUzMjNlMmY1ODFlZmJkYTg4MGY3Mzg0NjM3Y2MifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5c3dc01b2302441ab1d95efef0a2f940",
+      "statement": "Without explicit markers, parameters named in the path become Path params, UploadFile types become File, non-scalar types become Body, and scalar types become Query; using a non-Path marker for a path name raises an assertion.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L490-L515",
+          "version": "repo-lines-v1:sha256:14c12e807e8afadd766d835a342b00258d5d17fd9a5af485c21218ab2003eb3c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcxZjcwMjgyMGQ2NTQ4YjMwNjMwMTIzZmE3ZjU5MmJlNGU3ZmNlODI3MGJkMjljNGViMDM0MTM4ZDVlNmRhYmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZkMDAwNzg3NWRlOGY5MmQ5MmI3ODdhMDE4YzE2YzAwMDQxOGJkNWY5NDk5MjNiOTBmNGQ2M2M3ZWMxNmQ4M2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUwOTIwY2E0MGQxMjVmOTkyMjM0NGI2OWZjMTU3MzNmZDIwYWFiYjg0YTU4YzNjN2M5NDlmMzk4MDkxZmNjYmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMzNTc0YzQzMzE4NTM4NjNlMjdlZGJkYWM4ZTdiYjNiMDIzM2E0NWJkODU0MTllNTZlOWY0NmM5MTFkM2M2MGEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8e3e72090c3a4905b79008fbb9d2616f",
+      "statement": "Parameter order does not matter to FastAPI; a leading * can be used to allow non-default parameters after Path() defaults when not using Annotated.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/path_params_numeric_validations/tutorial002_py310.py#L1-L11",
+          "version": "repo-lines-v1:sha256:b629ebbf4d26bb8176cbc9ef50e21eea032544e2c7ef8b5f35fb3985dfdb4360:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3NjVkZmNmNTAyYTVkM2JkY2Q0YTExYWEwNTJjYzNkYmZiZjA4ZTZkZThmMzI1ODQwZmU3ZjQ1MTVlY2MyNzYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQwNzFlNjJjNDE4ZTRkMDMxYWE4NDhkMjllNWE5MDE5NzA5Y2ExMjBhYmE0NWIwNjU5YmJlNGM0YzE3YjcyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://docs_src/path_params_numeric_validations/tutorial003_py310.py#L1-L11",
+          "version": "repo-lines-v1:sha256:6d580eb55216a0e4f2aebc7f4302876c70fb3baead41ada919b1070e1beff104:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3NjVkZmNmNTAyYTVkM2JkY2Q0YTExYWEwNTJjYzNkYmZiZjA4ZTZkZThmMzI1ODQwZmU3ZjQ1MTVlY2MyNzYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQwNzFlNjJjNDE4ZTRkMDMxYWE4NDhkMjllNWE5MDE5NzA5Y2ExMjBhYmE0NWIwNjU5YmJlNGM0YzE3YjcyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

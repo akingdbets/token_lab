@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:73f85b8aa78a7434f66c93428695581c0ced7957b0799d5752f5a270c13759d9",
+  "claims": [
+    {
+      "id": "claim_33e0902268404e71947a7b29cb0d81d9",
+      "statement": "Static files are served by mounting StaticFiles(directory=...) at a path with a name, e.g. app.mount(\"/static\", StaticFiles(directory=\"static\"), name=\"static\"); fastapi.staticfiles.StaticFiles re-exports Starlette's class.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/static_files/tutorial001_py310.py#L1-L6",
+          "version": "repo-lines-v1:sha256:7c284f1223687081cd36e349c34b548f138a2f0b00c56ef9da72fe56b4bae4cf:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTk1MmE2N2I1ZjkxZmFhNTE3YjgzYTY3OTgwOTk1MjkxOGU1ZTFmNzliYTMwMTU5MTYxMmVhZWIzZWExNDViMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTMwOWUwNDRiMDc3OGRhZGY2MzhkMDczMjE4MDQwMDc0Y2NjNGExMzFjMmE3YTAzZjIwNzZkNDUxMTAyNjJkMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://fastapi/staticfiles.py#L1-L1",
+          "version": "repo-lines-v1:sha256:bdf3bc7ea28a932108a1284b14f90609a424f8f977cf759410bfa71dad036935:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmRmM2JjN2VhMjhhOTMyMTA4YTEyODRiMTRmOTA2MDlhNDI0ZjhmOTc3Y2Y3NTk0MTBiZmE3MWRhZDAzNjkzNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmRmM2JjN2VhMjhhOTMyMTA4YTEyODRiMTRmOTA2MDlhNDI0ZjhmOTc3Y2Y3NTk0MTBiZmE3MWRhZDAzNjkzNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_1848bdf0e179403ab35ff16a2957b7fa",
+      "statement": "Jinja2Templates(directory=...) renders templates via templates.TemplateResponse(request=request, name=..., context={...}), and fastapi.templating.Jinja2Templates re-exports Starlette's class.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/templates/tutorial001_py310.py#L1-L18",
+          "version": "repo-lines-v1:sha256:deb669cc100f117ee70879162dd0f9d6e3ac168dcebfa8ad1abddb5e48f21f22:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI2NzM1NzA3MTZmY2Q3OTM0MDNiZTUyMTI5M2ExYjcyYWNlYmQ5NDk3MGM3ODY5NDQ4YjhiMTI4MGZlMjkxOWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5MjIwNGM2NWY1MDJkYzE2NDU0YjYyNDA4NTZhOWFiN2FkZTAwM2E4ZTlmODYzMzNlYzBiN2M5ZTQwOTQ5MWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://fastapi/templating.py#L1-L1",
+          "version": "repo-lines-v1:sha256:462cf6f691a125f73df3f5274a5ba146d19c8751746c389f0037081598ca3287:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDYyY2Y2ZjY5MWExMjVmNzNkZjNmNTI3NGE1YmExNDZkMTljODc1MTc0NmMzODlmMDAzNzA4MTU5OGNhMzI4NyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDYyY2Y2ZjY5MWExMjVmNzNkZjNmNTI3NGE1YmExNDZkMTljODc1MTc0NmMzODlmMDAzNzA4MTU5OGNhMzI4NyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_2a45a44c07e04d82830765068f44888f",
+      "statement": "Inside templates, url_for('read_item', id=id) builds a URL from a path operation function name and its arguments, and url_for('static', path='/styles.css') targets the mounted StaticFiles named static.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/templates/templates/item.html#L1-L9",
+          "version": "repo-lines-v1:sha256:45f1e420516182203cfd78e0e11c942938b83688394ff1c8c06d59b5e51f1c34:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGU4NzYxMDRkY2QzYzBlYzIzNjA4MDUxNzAzY2Q5YzBmOTdiNjFmYzhiNTBkZTMxMGE5MTM1YWExZDBkZjIxMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzZhOTlkYWFhNWI5ZDJmYzMzMDEwZTE4Yjg1NWVmZjA0Yzg3NGNiMTk0ZjJiYWY2NjQzMjAxMWM3NzRkOTc0MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_38735ebeceae48579ab7dfe5d002fa4c",
+      "statement": "app.frontend()/router.frontend() serve a static frontend build as low-priority routes that are only checked when no normal path operation matches.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/frontend/tutorial001_py310.py#L1-L5",
+          "version": "repo-lines-v1:sha256:6885f0fc063f9b7b0e98fe6e410a0e28c4acaf834c991654adcede850a981520:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTk1MmE2N2I1ZjkxZmFhNTE3YjgzYTY3OTgwOTk1MjkxOGU1ZTFmNzliYTMwMTU5MTYxMmVhZWIzZWExNDViMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjY3OTk3OTE1MTMyOTJmN2M0MzI2ZDYyM2U4NWJjODYzNDEwN2JmM2I1NTljNWJkMTk2MDllOTEwZWMzNjJmYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L2677-L2760",
+          "version": "repo-lines-v1:sha256:3689fe580cc1dc0593e90cc1ce02f7327ae09acedaaae47d36ea101762b6b9e7:eyJzZWxlY3RlZExpbmVDb3VudCI6ODQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVkNTc2N2MxMGE1ZmE4Yzg2YTRkZWY4NGVlZWI1N2FhMjhkZTc1YTYzY2IwODdmMmM0ZDI5OWQyMDFmYmI4ZTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2NzdlZGUxNDMwM2U4Yzg2ZDM3OThlMTBkYzMzZDg5NjQ3NDUxM2VhOWJmZTU1Mjk3MmEzYjE3ZDRkNDZmMDUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI2OWNlMTkxNzdmZDEzMWRhYzAwMzNjN2JmNDM5ZWVlYmIxNDFjMWI5MDdkODRlM2I2OTUxOTliYWJlMDRmMzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgzMDIyNzkzMWZmZmFlYzIyNjA1MDI5NWFjZTlkMjg0NTY2ZTUzZTQzYjBlY2Y3YmRlZDU2YWNkNmNkOWM0NDkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_722f48ecf8494306914b6017bc140641",
+      "statement": "frontend() fallback accepts \"auto\" (default), \"index.html\", \"404.html\" or None; auto serves 404.html with status 404 if present, otherwise index.html for browser navigation, and the index.html fallback only applies to GET/HEAD requests accepting HTML.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/frontend.md",
+          "version": "repo-file-v1:sha256:acbc8834c1dc5e4c30a0ca9cf886885fec588c9cfb1ae33d565c8248614dbea9"
+        },
+        {
+          "resource": "repo://docs_src/frontend/tutorial002_py310.py#L1-L5",
+          "version": "repo-lines-v1:sha256:b2c2638db76c738d2ffd38876b483a8f81cec0dc7874b59f59c181d8faa77a0b:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTk1MmE2N2I1ZjkxZmFhNTE3YjgzYTY3OTgwOTk1MjkxOGU1ZTFmNzliYTMwMTU5MTYxMmVhZWIzZWExNDViMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGE3ZGI1MmZjMDIzYmI0ZGZkZjYxNmJjMDMxNWEyNjRkMjVkOWRkMjFjMjVkNTdlZjdkYzk4ZjExODUxNDQ3MiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://docs_src/frontend/tutorial005_py310.py#L1-L5",
+          "version": "repo-lines-v1:sha256:5648cb2cbbdb9e9fc4d36fd8fa752b671a4f1b3844151619b96d33bfe45236dc:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTk1MmE2N2I1ZjkxZmFhNTE3YjgzYTY3OTgwOTk1MjkxOGU1ZTFmNzliYTMwMTU5MTYxMmVhZWIzZWExNDViMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjhiODllMTRjYjdiMTNiZDc1MzA2ZDQ0Yjk2ZTU5MzY1MDljMzg2YTYyNWQ2NmM5YmZhOGZkYTQxZTNmMTg3ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_bb5d55aecb3a4126a8d64ee0e72043cb",
+      "statement": "frontend() check_dir defaults to \"auto\": it only warns about a missing directory when FASTAPI_ENV is development and raises at app creation otherwise; check_dir=False defers the check to request time.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/frontend/tutorial006_py310.py#L1-L5",
+          "version": "repo-lines-v1:sha256:a34536501a8ca2f2ccecbe582f780c39d2c3c1101923e9fd05f3ad529a1fb153:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTk1MmE2N2I1ZjkxZmFhNTE3YjgzYTY3OTgwOTk1MjkxOGU1ZTFmNzliYTMwMTU5MTYxMmVhZWIzZWExNDViMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNmIwYWMzMjY1NWE2YWY3MWNkYzU4YTYyMDFjMzU2ZTg3ZmI0YzkzNWQ3ZGEwM2RjYjQ3ZjNkOGVhZDMyZDBjMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://fastapi/routing.py#L2677-L2760",
+          "version": "repo-lines-v1:sha256:3689fe580cc1dc0593e90cc1ce02f7327ae09acedaaae47d36ea101762b6b9e7:eyJzZWxlY3RlZExpbmVDb3VudCI6ODQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVkNTc2N2MxMGE1ZmE4Yzg2YTRkZWY4NGVlZWI1N2FhMjhkZTc1YTYzY2IwODdmMmM0ZDI5OWQyMDFmYmI4ZTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2NzdlZGUxNDMwM2U4Yzg2ZDM3OThlMTBkYzMzZDg5NjQ3NDUxM2VhOWJmZTU1Mjk3MmEzYjE3ZDRkNDZmMDUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI2OWNlMTkxNzdmZDEzMWRhYzAwMzNjN2JmNDM5ZWVlYmIxNDFjMWI5MDdkODRlM2I2OTUxOTliYWJlMDRmMzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgzMDIyNzkzMWZmZmFlYzIyNjA1MDI5NWFjZTlkMjg0NTY2ZTUzZTQzYjBlY2Y3YmRlZDU2YWNkNmNkOWM0NDkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4a11082d0ed8460da428c5c2982e7105",
+      "statement": "A router's frontend can be included with a prefix (e.g. /app), and app/router/include_router dependencies and HTTP middleware apply to frontend responses.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/frontend.md",
+          "version": "repo-file-v1:sha256:acbc8834c1dc5e4c30a0ca9cf886885fec588c9cfb1ae33d565c8248614dbea9"
+        },
+        {
+          "resource": "repo://docs_src/frontend/tutorial004_py310.py#L1-L7",
+          "version": "repo-lines-v1:sha256:110ab25fb08dec296bac2f5f225e9385cbe79bd233a518ab12225f3f61f9c259:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjQyMTVmZGZiMzlkODhhMGQ2ZDk3ZTE4MWU0NTExMzAyNDE3NjZiMWU0YjYwMmNlZjk5ODk4YWE0ZGQyYzFmMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiM2MzNTc5ODlhYzhiMDhhMDU1NzYwZjg3Yjk4Zjg1NzZiNzhhNmJiMzI2ZjNjYjgyMjRjZDEzY2JlYWRhMDY1YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

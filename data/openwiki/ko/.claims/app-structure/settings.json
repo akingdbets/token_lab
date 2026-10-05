@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:ee1c053adf5301fd2a934819485b67599909cd2490c1b1a248ee52b4dfbc89d8",
+  "claims": [
+    {
+      "id": "claim_505a715b20df48ce9099c620ee776309",
+      "statement": "Settings are declared by subclassing pydantic_settings.BaseSettings with typed attributes and defaults; fields without defaults (admin_email) are required and values are read from environment variables when Settings() is instantiated.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/settings/tutorial001_py310.py#L1-L21",
+          "version": "repo-lines-v1:sha256:042200c75bf08234f8780f08c4089482529abedaea4680752a7c06fdaf2aae7f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NTJhNjdiNWY5MWZhYTUxN2I4M2E2Nzk4MDk5NTI5MThlNWUxZjc5YmEzMDE1OTE2MTJlYWViM2VhMTQ1YjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0MTlhNmRjYzA0ZTIxM2EzYzdhNzdhNDU2YjAxZTc2ZDFlZjc4Y2QwMGJiZWMxZDhmODE0NThmZTkzZWRjNTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_da7b56777b53407384a1db1982af4c5c",
+      "statement": "Providing settings through a dependency function decorated with functools.lru_cache creates the Settings object only once while allowing tests to replace it via app.dependency_overrides.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/settings/app02_an_py310/main.py#L1-L22",
+          "version": "repo-lines-v1:sha256:9bc5c0a7ce3548ccaa6de1953dadda1216d01c74440286c6f4143ace77c824ef:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBhNjAzMTFjMDMxNDhkMTE0MDZiZDEyNjc3M2M3ZDlkYWM1NDI5MDM4MmU1YjZjYmY5NmMwN2U4NWYyY2Y1MWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0MTlhNmRjYzA0ZTIxM2EzYzdhNzdhNDU2YjAxZTc2ZDFlZjc4Y2QwMGJiZWMxZDhmODE0NThmZTkzZWRjNTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://docs_src/settings/app02_an_py310/test_main.py#L1-L23",
+          "version": "repo-lines-v1:sha256:417a962595fc1fa5fc40313c05e0204d8b9b8abdd937385602d5f6fde3145d24:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjZTRkNjg0MTRjM2Y3ZmYzMDkyNDhiOGRmOTgzYjhiODdkNGIxMDliOTkwMmUzOTBjOTFkNWM0ZjFjYjcxZWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0MTlhNmRjYzA0ZTIxM2EzYzdhNzdhNDU2YjAxZTc2ZDFlZjc4Y2QwMGJiZWMxZDhmODE0NThmZTkzZWRjNTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4bf29a452264427aab82d075bf416859",
+      "statement": "A .env file is read by setting model_config = SettingsConfigDict(env_file=\".env\") on the Settings class.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/settings/app03_an_py310/config.py#L1-L9",
+          "version": "repo-lines-v1:sha256:95a59879a76c23382b1bb53121236948beeeaa9eace33166bf2cf8dd8175de35:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjQ4ZjI0NDViOWVkMGVhOGM4N2Y3MGU2ZTQ2OTE4OWNhNDYxYTViZmVhNzAwZDkzMWVlY2RkNGY3MWVkMjI4NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjAyMDE3MGJkOTdmOGMzOTEzZDRhODFmZjI0ZjliMGYxNjJmZGM2MGRhZmM1ZmQzNzY3ZDI5OTY1NDgzODU0ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_1da2a341502c46b3852a8bd32a4bb36a",
+      "statement": "Without lru_cache, the Settings object (and the .env file) would be re-created/re-read for every request that uses the dependency.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/settings.md",
+          "version": "repo-file-v1:sha256:4332be5169567865493fd707ab4598a810b21592369a68cface7077de33ce620"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

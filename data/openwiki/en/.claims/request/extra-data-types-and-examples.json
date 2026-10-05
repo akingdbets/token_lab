@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:dcfebf7a13539b86af002ef8b95dbc7fcfb6e2d3ce991201085d7d6a7d311031",
+  "claims": [
+    {
+      "id": "claim_43cd034ef18d41b68e5f6d80ea548b08",
+      "statement": "UUID, datetime, time and timedelta can be used as parameter and body types; they are converted to Python objects in the function and back to JSON in responses.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/extra_data_types/tutorial001_an_py310.py",
+          "version": "repo-file-v1:sha256:61d9353255df8b9f8d73bd2b9f68364238d8db574de97e3ed5dee3b408113712"
+        }
+      ]
+    },
+    {
+      "id": "claim_16bcf7777f074fb3abbc724ca588b3c0",
+      "statement": "In requests and responses UUID is a str, datetimes are ISO 8601 strings, timedelta is a float of total seconds, frozenset is a de-duplicated list with uniqueItems, bytes is a binary-format str and Decimal is handled as float.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/extra-data-types.md",
+          "version": "repo-file-v1:sha256:3639c0124edf23f1e37d9ab8003c5a7563447caf0f96402d401513bf5c9082ec"
+        }
+      ]
+    },
+    {
+      "id": "claim_a235ca8e44a945abad57d08d827b9b1c",
+      "statement": "Model-level examples can be declared with model_config json_schema_extra examples, and field-level ones with Field(examples=[...]).",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/schema_extra_example/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:1c25a17738f6b99a794514822064a0a1c1af23919442abb33436f8c189b8f46c"
+        },
+        {
+          "resource": "repo://docs_src/schema_extra_example/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:dae5f5489e62bfa7782d34110fb61a99862487794dc27bb32c8fffa667834f80"
+        }
+      ]
+    },
+    {
+      "id": "claim_47cdb07eaf114bf9b00d2d4041e0874c",
+      "statement": "Body(examples=[...]) adds JSON Schema examples, but Swagger UI shows only one of multiple JSON Schema examples; openapi_examples on Path, Query, Header, Cookie, Body, Form and File adds named OpenAPI examples with summary, description, value or externalValue that Swagger UI displays.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/schema-extra-example.md",
+          "version": "repo-file-v1:sha256:d659e4c5f150b3410b504237e3e054ac871e9356a2573652e71934ae514d6596"
+        },
+        {
+          "resource": "repo://docs_src/schema_extra_example/tutorial004_an_py310.py",
+          "version": "repo-file-v1:sha256:ded723dbc756e19a6cd14dd2bb8058b75b2cbbeefb971658a0dc902703e06408"
+        },
+        {
+          "resource": "repo://docs_src/schema_extra_example/tutorial005_an_py310.py",
+          "version": "repo-file-v1:sha256:73b0e01ccdbfb1a2c29eb53fa8784e31ac74f9b1c251b3a70eb1364144fbbe89"
+        }
+      ]
+    },
+    {
+      "id": "claim_5aefe676d5d8463a83eefd29cfe71277",
+      "statement": "The single 'example' keyword is deprecated in favor of the JSON Schema 'examples' list supported since OpenAPI 3.1.0 (FastAPI 0.99.0).",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/schema-extra-example.md",
+          "version": "repo-file-v1:sha256:d659e4c5f150b3410b504237e3e054ac871e9356a2573652e71934ae514d6596"
+        }
+      ]
+    },
+    {
+      "id": "claim_039fa7a0ed6b4bf89af9f54cf12bdcda",
+      "statement": "bytes fields can be sent in JSON as base64 using model_config val_json_bytes='base64' for input and ser_json_bytes='base64' for output.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/json-base64-bytes.md",
+          "version": "repo-file-v1:sha256:d6c86ff6c86b307c7807628026ad665b1fb63ddce6bfc06143e4c6a3bd7e38b0"
+        },
+        {
+          "resource": "repo://docs_src/json_base64_bytes/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:531dd99b832b57725ebc65a9cfe9ad40970c5f90a5e97d922786ee04553c9690"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

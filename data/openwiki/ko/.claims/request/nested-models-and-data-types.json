@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:0fa3c1772ae9b4a8b24acb01702e747b9f3352b07b70936240e07b965ccff3f3",
+  "claims": [
+    {
+      "id": "claim_cfe845e56c5045799c682de4746be9a3",
+      "statement": "Pydantic body models can nest other models (e.g. image: Image | None) and use typed collections such as set[str] for unique tags.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/body_nested_models/tutorial004_py310.py#L7-L24",
+          "version": "repo-lines-v1:sha256:95b5147f1f7d4d2319a198ce56acbddf2e68cd3fcfec82dbd6ba2ac22c44fa10:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRkNzZlMmQ3NTg4MTg5NDk0OGRiODYxYTk2ZDFhODBiYTFjNzFjZWQwYmUxNjI3ZGFhYjc1NTBkMzNmMTIxN2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQwNzFlNjJjNDE4ZTRkMDMxYWE4NDhkMjllNWE5MDE5NzA5Y2ExMjBhYmE0NWIwNjU5YmJlNGM0YzE3YjcyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU5NzI5ZWM2NWMyMTJkMTVmM2QxNDc0NzUyYzg5YzljNjc3ZDRmN2Y0ZjQ4ZmU4YjI1YmE4YTk4MWJkM2ExMzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0471a24091604028b45d144c939a9d91",
+      "statement": "Special types like pydantic.HttpUrl validate URL fields, and fields can be lists of submodels (images: list[Image] | None) nested to arbitrary depth (Offer -> Item -> Image).",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/body_nested_models/tutorial005_py310.py#L7-L9",
+          "version": "repo-lines-v1:sha256:16294fc1939413e72a3405195c36821d3a20ce6b65c6b7225a8abf63466cb387:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZGQ3NmUyZDc1ODgxODk0OTQ4ZGI4NjFhOTZkMWE4MGJhMWM3MWNlZDBiZTE2MjdkYWFiNzU1MGQzM2YxMjE3YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGIzNzYwMWMyZTFiYzAxY2M2ZDIzZWM3OWZhNmVjODIyMDI5NDBkYjQ5ZjRlMTA2OTc2NzRhNzFlYWQwNjU3NSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTk3MjllYzY1YzIxMmQxNWYzZDE0NzQ3NTJjODljOWM2NzdkNGY3ZjRmNDhmZThiMjViYThhOTgxYmQzYTEzNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYWZiMDA0MzZhYmE4NDFkNWYyNWFmMDg4MDdmYTZhZTA5ODNkNzJmNjA4ODJlMTZiMzRhN2VjOGRjMTY4N2Y4MiJ9"
+        },
+        {
+          "resource": "repo://docs_src/body_nested_models/tutorial007_py310.py#L7-L30",
+          "version": "repo-lines-v1:sha256:2288d7e6c4c80bc4c8f1f74a00a1c87220e23abf860b00a191c27d2bf1d5d07c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRkNzZlMmQ3NTg4MTg5NDk0OGRiODYxYTk2ZDFhODBiYTFjNzFjZWQwYmUxNjI3ZGFhYjc1NTBkMzNmMTIxN2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY4MTJmYTYzNDFkNzA4OWM5YzE0MDNmNjI5NDRjMTA0YzYyMDBlOTk4ZjllNTgyYzgwY2FiNGZmMWFjYzZkZGYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU5NzI5ZWM2NWMyMTJkMTVmM2QxNDc0NzUyYzg5YzljNjc3ZDRmN2Y0ZjQ4ZmU4YjI1YmE4YTk4MWJkM2ExMzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f087b59d80784a91a946f22129a701f7",
+      "statement": "A request body can be a top-level list of models (images: list[Image]) or an arbitrary dict such as dict[int, float], where string JSON keys containing integers are converted to int.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/body-nested-models.md",
+          "version": "repo-file-v1:sha256:cb5b1056bbbc613d268fafee0f141961ff51f535087592f707da066dc2d9f519"
+        },
+        {
+          "resource": "repo://docs_src/body_nested_models/tutorial008_py310.py#L12-L14",
+          "version": "repo-lines-v1:sha256:78322d727ed7fbd5849bd56774585fe1653e523220de448494ee0134d4da1a3a:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGJiYjg5OTFkMTg0NmU0Y2JhZTA5MThjM2NkNDA5ODBlYjFmY2ZlZjE4ODY4MmEwODI4YTk2ZDEwMjU0OGY0MSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWJmNWIyYmVkMTAwYWZjNjE3ZTc0MmE3OWY5ZTY0YjJmZTRmYTI2YjQ3MTdiYzU2NWJlOTk5N2U4NTA4MjlhYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzU3YzdmNzY1YjI2NjE2YjM3MzkzM2IyNTQ5OWM1ODUxZjZhNDEyYjY1NmM5NWM2MWQyZWRhZjM0ODQyZTJhMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://docs_src/body_nested_models/tutorial009_py310.py#L6-L8",
+          "version": "repo-lines-v1:sha256:c261b00fae4db274eb06e764030a7388d7a9dea3ab66525dd88990f43158f316:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjc2NWFkNjM4ZmUzMzBiYzc2ZmQzY2E3NmM5MjlmNzBhNDE5MDc5MjRjMzA1NDg3ODdhOTFkYzgxNjZhMWU5ZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTBhZmQwZjAyOWY3NWRmZGY4ZTQ0MzZlNzc5NGU4ZTRhN2VhZjUxM2FjY2QyMGMwMTMyNDRjZGNkZGY3YjBlZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTk3MjllYzY1YzIxMmQxNWYzZDE0NzQ3NTJjODljOWM2NzdkNGY3ZjRmNDhmZThiMjViYThhOTgxYmQzYTEzNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_cb5aadffb70b4813ab54a42e4fc1a9c1",
+      "statement": "UUID, datetime, time and timedelta can be used as parameter/body types; UUID and dates are represented as strings (ISO 8601) and timedelta as total seconds, while the function receives real Python objects.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/extra-data-types.md",
+          "version": "repo-file-v1:sha256:3639c0124edf23f1e37d9ab8003c5a7563447caf0f96402d401513bf5c9082ec"
+        },
+        {
+          "resource": "repo://docs_src/extra_data_types/tutorial001_an_py310.py#L1-L28",
+          "version": "repo-lines-v1:sha256:61d9353255df8b9f8d73bd2b9f68364238d8db574de97e3ed5dee3b408113712:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0NDFmN2FhMzNhNGM1ODRhZWFjMDY0NmRkY2MzNGRkNWI0YTZkNGY5ZWZmZmVlYzRhYjFmZjJhMWI5NGQyMjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0MTlhNmRjYzA0ZTIxM2EzYzdhNzdhNDU2YjAxZTc2ZDFlZjc4Y2QwMGJiZWMxZDhmODE0NThmZTkzZWRjNTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_84da130d0b944faca55146f39ff57795",
+      "statement": "bytes fields can be accepted and emitted as base64 inside JSON by setting model_config val_json_bytes=\"base64\" (validation) and/or ser_json_bytes=\"base64\" (serialization).",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/json-base64-bytes.md",
+          "version": "repo-file-v1:sha256:d6c86ff6c86b307c7807628026ad665b1fb63ddce6bfc06143e4c6a3bd7e38b0"
+        },
+        {
+          "resource": "repo://docs_src/json_base64_bytes/tutorial001_py310.py#L1-L46",
+          "version": "repo-lines-v1:sha256:531dd99b832b57725ebc65a9cfe9ad40970c5f90a5e97d922786ee04553c9690:eyJzZWxlY3RlZExpbmVDb3VudCI6NDYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NTJhNjdiNWY5MWZhYTUxN2I4M2E2Nzk4MDk5NTI5MThlNWUxZjc5YmEzMDE1OTE2MTJlYWViM2VhMTQ1YjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjljMGI1MTBiYTk0NWQyMWY5NmEwZTU2MWMxZWFmOGM3MWY2ZWE0N2ExMTZiNmE5NDAxYTRhZDY2OTNiZWU2ZTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

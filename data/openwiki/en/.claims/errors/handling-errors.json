@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:13b62e14961315942aaaf8fd22732851bf9ce99cbdbbb67d5133418626afaeb1",
+  "claims": [
+    {
+      "id": "claim_501e727b36c74d9c8e47cae4a5ee7f8c",
+      "statement": "Raising HTTPException returns a JSON response {'detail': ...} with the given status code, and custom headers can be attached via headers=.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/handling_errors/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:d232c68c927c73033c3e8e65b2f0c81beab2460ecf5f79e623f2675255806991"
+        },
+        {
+          "resource": "repo://docs_src/handling_errors/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:a1d1eaaee28e29670a6f68f7bd81a6a1777e4769c0594486525cf84ada6ff241"
+        },
+        {
+          "resource": "repo://fastapi/exception_handlers.py#L11-L17",
+          "version": "repo-lines-v1:sha256:f58e38a5da5e19f02f12b441462c4cd674ba7fe99d3857316410b545077d1aff:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTNmOGRkOTM5YWMwZjMyMjFkYTk4MWZmYWViMzliMzE2YzViYzcxMWFlODdmZmQxOTdjNWEzM2MzM2E0ZTc1NyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzkyMjA0YzY1ZjUwMmRjMTY0NTRiNjI0MDg1NmE5YWI3YWRlMDAzYThlOWY4NjMzM2VjMGI3YzllNDA5NDkxZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNThjZTIzMmNmOWEzMDhmY2U3ZjgzNTFkNDJiMzE2MDQ5YjEyMjFjYTY0NDY1OTU0ZWY5YWQzYmI1ZjBjNzVlNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGEyY2I1MzQyZGNiZWY0NzY0NzA3Njc4MGQzY2ExOGRiNjdhYTNhZDdmNDFlNjRlNWZlYzE3MjFjNDZiZTRlYyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_faea1d4e58cc488e86b97bfc833a3819",
+      "statement": "The default HTTP exception handler returns an empty Response when the status code does not allow a body.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/exception_handlers.py#L11-L17",
+          "version": "repo-lines-v1:sha256:f58e38a5da5e19f02f12b441462c4cd674ba7fe99d3857316410b545077d1aff:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTNmOGRkOTM5YWMwZjMyMjFkYTk4MWZmYWViMzliMzE2YzViYzcxMWFlODdmZmQxOTdjNWEzM2MzM2E0ZTc1NyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzkyMjA0YzY1ZjUwMmRjMTY0NTRiNjI0MDg1NmE5YWI3YWRlMDAzYThlOWY4NjMzM2VjMGI3YzllNDA5NDkxZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNThjZTIzMmNmOWEzMDhmY2U3ZjgzNTFkNDJiMzE2MDQ5YjEyMjFjYTY0NDY1OTU0ZWY5YWQzYmI1ZjBjNzVlNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGEyY2I1MzQyZGNiZWY0NzY0NzA3Njc4MGQzY2ExOGRiNjdhYTNhZDdmNDFlNjRlNWZlYzE3MjFjNDZiZTRlYyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_a0a2fb80e27f4524b6ad8b9f75891d19",
+      "statement": "The default RequestValidationError handler returns status 422 with {'detail': jsonable_encoder(exc.errors())}, and the WebSocket validation handler closes the socket with code 1008.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/exception_handlers.py#L20-L34",
+          "version": "repo-lines-v1:sha256:bcfde289e6085039ff217dd1e16d84d8828d80261fa558986e54458eb7e1c1bc:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxMmNmN2Q2N2I0MWJiYjc2Njk2MjM2NGE3MDVlYWYzZjNhNjFhYjI5ODJiZmNhNThjYTRmODk4NWM2Y2FiMTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5MjIwNGM2NWY1MDJkYzE2NDU0YjYyNDA4NTZhOWFiN2FkZTAwM2E4ZTlmODYzMzNlYzBiN2M5ZTQwOTQ5MWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhiOTc0ZGE0MDg2MzJhNGFhN2UyYWU4MGI4NjAzOTFhM2RjZDgyMTFjNzllY2FkN2NhOGU5NTEyOGIwMDE4MzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_eed7387926904b139db844e4f17a6cca",
+      "statement": "FastAPI registers default handlers with setdefault so user-provided exception handlers take precedence.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/applications.py#L1022-L1031",
+          "version": "repo-lines-v1:sha256:32b67cfb38aa6eddf5043f2cf9b353dcb7e8e356c9032c8449c4b379f49dd5a0:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMzOGNiZTQ3YTJiZjIwNjQwYjVjYTFlMTIzNTc2ODJkZTYyZGUxMmI2ODczN2NlYjBkZGVkNTc3OWVhOTk5YmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc5MmIzZTY0OWNkMDM4ZjhmZjYwYTYxYWE2YjRiNzhmMDUzZThjNjhlMTUyZTc5NzA2ZWE2ZDFiODgwMDllY2UiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVmZmMwNTc2ZTEzMTRlNzg1NzAwMTJlYmEyMDEzNDcxYTNlYzk3NGRhOTFkNTM2YjhlYjE0YmY4NDVkNjA0YmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA0NmU0OWZmOWRlNTUzZDcxNjMwNmNkYTI3Yzg3M2I4YWFhNTM4ODIxYjMzNTdkYWIzYzkwNDA2M2ZmOThkZjEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fc6c5639df33400a8a86a6b48b60ab6b",
+      "statement": "Custom exception handlers are registered with @app.exception_handler(ExcType) and return a Response; default handlers can be reused from fastapi.exception_handlers.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/handling_errors/tutorial003_py310.py",
+          "version": "repo-file-v1:sha256:eda2ac340fef88e58b3c5bce1e9713d2bd671224f88bcdf1ae9927395869e68c"
+        },
+        {
+          "resource": "repo://docs_src/handling_errors/tutorial006_py310.py",
+          "version": "repo-file-v1:sha256:cd651381d4a3df42a88e2b331427b716b513f1ec15e10432b6c69fec6ae56266"
+        }
+      ]
+    },
+    {
+      "id": "claim_006d36f975654e78961a576dbdf4bdcd",
+      "statement": "RequestValidationError and ResponseValidationError carry errors(), body and endpoint context (function, path, file, line) that is included in their string representation.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/exceptions.py#L174-L244",
+          "version": "repo-lines-v1:sha256:3e1a67d9bc0ec03a22d5cec7409a17013e0a27cffa251b04bbbce967855e82bc:eyJzZWxlY3RlZExpbmVDb3VudCI6NzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU0YmI1OTc0ZGE5NDU0NzlkOTdiOGJiOWEzMTJkZjc3MDAwYTRiYWNiZDFkYTJiMmNlZjA5ZGU2YzBkNzAxNmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcwYWE5MzA0YjhiYzk2ZGM3NDU0ZjJkY2NjYWFjZGYxZGVlZTQzYjFlYWU0YzczNThiZmZiOWI5OGJmYzVkMWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE1M2ViYmIxYzZkYWQ5ZTNjYmE5NjdlYTFiZjQ1ZTJhMDk2MzczNzgzYTgxZGMxMWM3MzFhY2EzOWVhZTUwMTMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b358e34d937c426eaf46e1bf6ec47126",
+      "statement": "Since 0.122.0 security utilities return 401 with a WWW-Authenticate header, and overriding make_not_authenticated_error restores 403.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/how-to/authentication-error-status-code.md",
+          "version": "repo-file-v1:sha256:c2cfb3acb15f779e6940973db22e0624fc92ab03c13ee889117e348e4c7a1d69"
+        },
+        {
+          "resource": "repo://docs_src/authentication_error_status_code/tutorial001_an_py310.py",
+          "version": "repo-file-v1:sha256:bc0bd0f9d8dad734ec29ad555da9da137386c92bc1d8eb3ab0735ec57a4dd109"
+        },
+        {
+          "resource": "repo://fastapi/security/http.py#L85-L99",
+          "version": "repo-lines-v1:sha256:8293c3f2d172d65b923ccc8dc6074989443bc90696f48b037bd50f210c287242:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwMDU5ZDU2ZThiYjJmODkxMmYwMTliZmUzMWM1NzYyNTUyZTU4MzkyOGRiNjQ3NTBlM2M3ZWM5MjMwMGUwNDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ5YmM4MzYzYzdjYWQxMmEzYzRmNjE1ZDczYzhkMjI4ZThiNzJmY2ZjNWM1ODdhNDYwMTg4ODRkZWRkZDJmZjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY1YzdlNWQ4OWFhMGQ5YzQ0YjEyNzI0OTc2YmUxZjIyOGE0ZTdjMDVmN2FmMDBmZTU1M2MyMDgyOTQ4N2E4N2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjllOWZjZWJkOTQ3NDQ2ZTkyZGZjMDhhYzNhYTUwODVjOTg3OTAwNTU2NjkzODY1MDcyMDYzMTVkYmI3MjZiNjIifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

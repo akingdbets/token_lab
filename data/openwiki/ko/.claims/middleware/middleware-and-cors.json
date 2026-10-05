@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:66821841e0a899653ee5f45ca37c915b321b61e84eee6629f8496bb22bd3e221",
+  "claims": [
+    {
+      "id": "claim_ab39080638fa49e39b3359381716a55b",
+      "statement": "An HTTP middleware is declared with @app.middleware(\"http\") on an async function receiving request and call_next; it can run code before calling call_next(request) and modify the returned response.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/middleware/tutorial001_py310.py#L1-L14",
+          "version": "repo-lines-v1:sha256:382413034d11412b09a7af9698800cedbd3efaca78b2bad24f2acd2ee8233b27:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0NDdjNWQzZTZjODQ0ZjU1ZjUwZDg0MWUzNTgwZGE1NWJjZmQ4MmJkYWExMzBjOTYxMjVlN2VlOTE5NTM4YzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA1MWNjNWRkYzNlZDQ5MTQzZTc2OWY1YTIxNTVhM2I1MmFlMWVmZWY0MGZlZWZiNjA3NTU4ZTdiOGYxNWQwMTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3292c348744744029d9698b5ad13f856",
+      "statement": "Each added middleware wraps the app, so the last middleware added is outermost: requests pass MiddlewareB then MiddlewareA, responses the reverse.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/middleware.md",
+          "version": "repo-file-v1:sha256:add50be20c3cfd05e6c40eca7966e95d084cdc7540e93e2fb064385bde958f91"
+        }
+      ]
+    },
+    {
+      "id": "claim_74683df34b22456fb3619fc4c26985f9",
+      "statement": "User middleware sits between ServerErrorMiddleware and ExceptionMiddleware in the FastAPI middleware stack.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/applications.py#L1066-L1099",
+          "version": "repo-lines-v1:sha256:eb02e90ba0965a4ccfa1143baa67252438554e4efc6fa3b500972b5270043c25:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM4MWE4MmI2MjkyZmYyZDAyNTZkYjU4OGQxMzE4MWZmNzE2NjEwZjQxMTI3NDczZTA2OWE4NmExOWJjMDdmNzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhOWY4YzJiYzdhMTQxYTAyMmFmM2ZlYjhhYjUwMDhlYzI1NzU3ZWYyNGFjZDA0OWY1MDg5YTc0YjdjOWFlODEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE3OTE4ZjdiNWQ2MDUwZmUxNmU3MjVmYjY4NWJkMDFiOTBkZDhiOTAzNDdmNDVlNzdjMmI3OWEyMDM2ZGM5YzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZkNGFmYjcxNjQ5ZDA0ZDI5OTMzYzk4MzAzMjM0MDE5ZDIxMzlhZTZmOGFjNTM4YWE2OWUyOGExZTk5MmViNDkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c2cb440c06264173a591c76990969d54",
+      "statement": "CORSMiddleware is added with app.add_middleware and configured with allow_origins, allow_credentials, allow_methods and allow_headers; wildcard values cannot be used when allow_credentials is True.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/cors.md",
+          "version": "repo-file-v1:sha256:bff162c599f49b23456e39d2d8c8cc843933f940ee75bffc7dba046489870506"
+        },
+        {
+          "resource": "repo://docs_src/cors/tutorial001_py310.py#L1-L24",
+          "version": "repo-lines-v1:sha256:9b015806cce8666cb124bb7409da345e5709d473ac670bbfc5861d582fd1e6d7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NTJhNjdiNWY5MWZhYTUxN2I4M2E2Nzk4MDk5NTI5MThlNWUxZjc5YmEzMDE1OTE2MTJlYWViM2VhMTQ1YjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViZDlmZDRkZGQxODVmMDE3ODdmOWM5NDhkZjZjYWM5YzY3YTU0OTg5MDlmZDFiMDNhMGNlMTc1N2YwZmZlOWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0140cf253aa94c248c602981ba2a9a0c",
+      "statement": "fastapi.middleware's CORSMiddleware, GZipMiddleware, HTTPSRedirectMiddleware and TrustedHostMiddleware are re-exports of Starlette middlewares.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/middleware/cors.py#L1-L1",
+          "version": "repo-lines-v1:sha256:7b6080ae0767a2609d16f908decd374d1b732db21cae0a94ae969051f3cd3530:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2I2MDgwYWUwNzY3YTI2MDlkMTZmOTA4ZGVjZDM3NGQxYjczMmRiMjFjYWUwYTk0YWU5NjkwNTFmM2NkMzUzMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2I2MDgwYWUwNzY3YTI2MDlkMTZmOTA4ZGVjZDM3NGQxYjczMmRiMjFjYWUwYTk0YWU5NjkwNTFmM2NkMzUzMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://fastapi/middleware/gzip.py#L1-L1",
+          "version": "repo-lines-v1:sha256:a271ff1f0512e018742e85a3916ee7571e91e726ec13dfe718c44217453465a2:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTI3MWZmMWYwNTEyZTAxODc0MmU4NWEzOTE2ZWU3NTcxZTkxZTcyNmVjMTNkZmU3MThjNDQyMTc0NTM0NjVhMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTI3MWZmMWYwNTEyZTAxODc0MmU4NWEzOTE2ZWU3NTcxZTkxZTcyNmVjMTNkZmU3MThjNDQyMTc0NTM0NjVhMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://fastapi/middleware/httpsredirect.py#L1-L3",
+          "version": "repo-lines-v1:sha256:f749cdf329ee58a19d087758020acf7684e9a230209b12e408059d1f4a27b9fa:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWFlMzhiNTQ0OTc3NTJlZDEzZmFiY2U1YTIzYTQ5NDFiYjE0MTc2MDQ5NzU3YzQyMmJiMzQ1Yzk3OTZlZGU2ZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOWIzOWUwMjJlMGQ4NTQxMjAwMDNkNzkwYzI4Yjc1OTYyZWRkMzAzNzU2ZDUxMzMzZGY3NDVjZmI4NmVhMTFjZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://fastapi/middleware/trustedhost.py#L1-L3",
+          "version": "repo-lines-v1:sha256:d49cfb2fafecfe0f040a170d2cc95b68ece54e04835fc087ef924abd0d9be8ce:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmIxYWYxMmFlMTkwODE3NjIyOGViNjdmNTE4M2I4MzI3MTg1NzAxYzA0ODYwYTE3ZGY2YWMxYjQ0MWZmNmEyNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOWIzOWUwMjJlMGQ4NTQxMjAwMDNkNzkwYzI4Yjc1OTYyZWRkMzAzNzU2ZDUxMzMzZGY3NDVjZmI4NmVhMTFjZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_170f103120ee4446a45181e34672c73d",
+      "statement": "TrustedHostMiddleware takes allowed_hosts supporting wildcard subdomains and returns 400 on invalid Host; GZipMiddleware takes minimum_size (default 500) and compresslevel (default 9).",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/middleware.md",
+          "version": "repo-file-v1:sha256:295cd4d4420ff118afe6c7236b13397fbc08b941d5ac09e1f1f9f86b75c250b4"
+        },
+        {
+          "resource": "repo://docs_src/advanced_middleware/tutorial002_py310.py#L1-L13",
+          "version": "repo-lines-v1:sha256:ff4ce0d3e2b4cf7892da1dacb6792b8af97a887b197b5adb32c16924af2ee0c8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NTJhNjdiNWY5MWZhYTUxN2I4M2E2Nzk4MDk5NTI5MThlNWUxZjc5YmEzMDE1OTE2MTJlYWViM2VhMTQ1YjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViZDlmZDRkZGQxODVmMDE3ODdmOWM5NDhkZjZjYWM5YzY3YTU0OTg5MDlmZDFiMDNhMGNlMTc1N2YwZmZlOWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://docs_src/advanced_middleware/tutorial003_py310.py#L1-L11",
+          "version": "repo-lines-v1:sha256:5fb367205e0936f853fa3a1b53e365ef629170962bff49be6ff8ee6d51e6bcce:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NTJhNjdiNWY5MWZhYTUxN2I4M2E2Nzk4MDk5NTI5MThlNWUxZjc5YmEzMDE1OTE2MTJlYWViM2VhMTQ1YjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkMjQzNGZlYzM4M2M5YzllYTUxMjA5MDcxM2EwODcwMzlhM2JmM2Q0MjM2NmNhYTE4NDBkNDg3OTM5OWFhOTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

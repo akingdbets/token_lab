@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:3aed941a580078ffe176b0b23af80ccf8acf44d16fa2c7ed2eba66e913e23a31",
+  "claims": [
+    {
+      "id": "claim_553acd59ece742479da63a2afcac9f3e",
+      "statement": "Declaring a Response parameter gives a temporary response whose headers, cookies and status code FastAPI copies into the final response built from the returned value and filtered by response_model.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/response-headers.md",
+          "version": "repo-file-v1:sha256:0a88b9b47a6968bfa16e9bc923ffae22492273ca210742b9cc7c10cb5f2eb1e5"
+        },
+        {
+          "resource": "repo://docs_src/response_cookies/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:468f15dc0438b28bb457c8c0852aaaa05f048564abb39bd8f8219a5348deea2d"
+        },
+        {
+          "resource": "repo://docs_src/response_headers/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:8423d04f88a29db7f6149e0cc61123a1cb510194870b40572d91630e69eeec9f"
+        }
+      ]
+    },
+    {
+      "id": "claim_4a4dbf740ffd4e38a420242ff09939a1",
+      "statement": "FastAPI appends the injected response's raw headers to the final response.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/routing.py#L766-L768",
+          "version": "repo-lines-v1:sha256:2c6ae634e48d04d7ec11d61d22e20973d396619805cee8e3907c38154770d4a6:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTcxNDFkODgzM2Y3OTNhOTc0M2U0M2ExZGQ4YzI0NDZkYTZhODhhYWQ0NGY1NWZhYzk1OTQ3MWZiYTY3NWU2YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmQ3NWFhY2ZhMTExZTMxM2EzYjU2NGM0MTE0NjdjNzhkNWJmNWI3NmQ0MjU3MjcwOTdlMWFlMjUwY2QzMTExMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWM4ZjRjNjFhYjcwZDQzYzcwMTkzNjEzMTE1YjJjNmIzMzM1ZTU3MzE2OGJmYWUzYjY0ZTUwMzA0NWJjYzc0OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiY2ZmZTI4ZDc4OTdjMzAzNmUzMmIyOGUzNGYwNDdlMWYzZjViZjA0ZTZmNTQyMjhmYTU0Yzk3NTliMjk1MjVhMSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_05e79ff6eeac43b79450142b9312911f",
+      "statement": "Headers and cookies can also be set directly on a returned JSONResponse via headers= and set_cookie().",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/response_cookies/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:6bab4c418f7efd8202f6805c01f7af37754443d5ec4bc789d746e15fbe27c3d3"
+        },
+        {
+          "resource": "repo://docs_src/response_headers/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:2ba72babee1c9b7b290581d6cee35906d333c1506e8311d053fbde2eaae45db1"
+        }
+      ]
+    },
+    {
+      "id": "claim_56de6349d8ec4e82890bbfc7c984d58a",
+      "statement": "Custom headers visible to browser JavaScript across origins must be listed in CORS expose_headers.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/response-headers.md",
+          "version": "repo-file-v1:sha256:0a88b9b47a6968bfa16e9bc923ffae22492273ca210742b9cc7c10cb5f2eb1e5"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

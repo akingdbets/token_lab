@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:321b6b0e80cf39bb8154e4a28b8a409643745910f7e19b768e1c0a65fddd84be",
+  "claims": [
+    {
+      "id": "claim_7356034b73c640d783de8b58fd0882f4",
+      "statement": "A minimal app creates app = FastAPI() and declares a path operation with @app.get('/') on an async or plain function returning a dict.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/first_steps/tutorial001_py310.py",
+          "version": "repo-file-v1:sha256:b07ced9e58a5143f0c4d8468a61418ff443874f1c0ed5311e2978959dc747f4a"
+        },
+        {
+          "resource": "repo://docs_src/first_steps/tutorial003_py310.py",
+          "version": "repo-file-v1:sha256:007c2c2ac79997a0c339d2aab009677c97b23b8d2d5c92698fe130a3af68a6f5"
+        }
+      ]
+    },
+    {
+      "id": "claim_0ec9255ec9b64a1fbc7e251ef5edd733",
+      "statement": "The app location can be configured with [tool.fastapi] entrypoint in pyproject.toml, or passed as a file path or --entrypoint option to fastapi dev.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/first-steps.md#L152-L205",
+          "version": "repo-lines-v1:sha256:545fb148ada4c319d58f06da84eafa05287bd5f979c86cc3422aa48751243262:eyJzZWxlY3RlZExpbmVDb3VudCI6NTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmNWVjMTI0MDA0MmRlOWNiYjk2MGMzNjI3YjNjNmJmYmU0MjZhZDJmODY0Njg4MWJmM2RlYmEwOTI1ZDZmYjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjN2E3NGU1YjkyZDcxNjIwZTVhMGNjYjdlNWI1N2RiOTFlY2EwY2IyNTlhZmQzYjQzMzc2NTY1YWRkNGM2NzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNhYWRlMTZjZmUyNDMyNTVmODJiY2ZlNzBkOWY1NjM4OTIzMjJjYTliM2Y2NDQ1MDczNjYwNmJlZDA2M2IyYTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBiZWUwZDMyODM3MTUwOWFiOGZiYjdkMTc3ZGIxYzQyYzkwYmI0NjFmMzJkNzYwZDk0OWQ0MjBiNjMyNDMyMDMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ace2c552ff904a7e8a435d71732e7fc2",
+      "statement": "fastapi dev runs with auto-reload on 127.0.0.1 and sets FASTAPI_ENV=development if unset; fastapi run disables reload and listens on 0.0.0.0.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/fastapi-cli.md#L116-L132",
+          "version": "repo-lines-v1:sha256:c844e2a019e36e3c5e741d1acf507f14cafab1cfd1ec1e10ba14f3dc2efb6b4f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmOWJhODBiNGFkYzc5NGE2ZWE0ZGMxNDkwZWYyYjE2MDg4YWIyNzk0NzQ1MTRhOWNiZmRmMjkxMzYwMDE0OGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY1NTg2MWU2ZGNjYmJlY2JiMjYyYzViMjE3OGU2NmYzNzJkODMzZjY4MjBjZDI3MTU5ZWZlOTQ4YTYxZmEzZWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVmYjcyNGFhNmM1N2U3ZjZmNzc0ZWZiYTgzNWJkNDBlN2Y2NzY1YmM4N2MzYjdiZTZkMjI1NjljNjFkNWI2YzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU1ZTM0ZTY2MGZiOWE3MzgzMTg0ODk3Zjk2NTdlYTYzMGY0NWNmZDE3YzgyOGYzMDgyMDcxYmU0Zjk2MjY4NTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3b94cf4230a642bc96fc9c826aaea0fb",
+      "statement": "The default OpenAPI version emitted by FastAPI is 3.1.0.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/applications.py#L912-L942",
+          "version": "repo-lines-v1:sha256:f7e9c46cd0fcf26b82c47021fd256d963549dd8def72fbf8949d7f3103ef5a98:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjczYmI3NTcxNmQ2YjZkMTI4NDFjNzY0M2U4NzQ1ZTM2NDE3MmUyYjI1YzhhYTM4NGYxN2Y4NGFkMjFkZDM4NjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ0NmYwYmVmZmVjNGQxYWQxMGFjYTUxYWZkOWNiZDZmNGM3NzJjOTBiNTc5MzRlNDVlYjc4ZDlmNWI3MmQzZTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjczZmQ4YjA0Y2I4OWVhY2RmYjk4MzM2YTk5N2VkMjJmMTc0ODk4OWRlZjhmOTNkNWVlMjFiZDc4ZTJjZDFhMTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU5MzM2MzE1YWFkYzgyYjI4MmI1YTU2ZGQzN2UzZTg3YTE2MDdjNTEwMjU4NTUyNWVmMGM4ZWZiMjkzYjJhYTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_142f13c9e239493e8b107c433a8de346",
+      "statement": "FastAPI provides decorators for all HTTP operations including get, post, put, delete, options, head, patch and trace, without enforcing semantics.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/tutorial/first-steps.md#L279-L360",
+          "version": "repo-lines-v1:sha256:194bb0f10c3d0c00d4d9d84623f5c81378239888464f6dff2e9f01e3a7fbf240:eyJzZWxlY3RlZExpbmVDb3VudCI6ODIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY3MWEwNzM0Mjk2YTA0ZDBjOWQ4NmUzYmFmMTBhOGQ2MDQwMDIzY2QzZWY0ODg1YWEwYTg3NDczZTFlYzA5MmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3ODllZmU0MzBiMmY0Y2FlY2I3MDAwYmIwOTAwMGQ4YjIzNjk4YTFlNDBjNjE2MjM0ZGZmYmJlY2RjZjUxNGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVkNzZmNzM3YTA2NWQ4MmIyYzM3Mjk5OWE4OWIxZjM4NDliOGVhNTFmNDM3Mzk1ODc1ZjFmNzMxNTAxYTAyYmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVmMGE0NzZkYmY2NDc0NjViMmY4NjlhODFmNzQyOWZjMGVlMzdkNGMyNWY5M2UxNGY0NzYwNGY0MDkwMGJjNTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cc8d56e13bb84e469514df9cd75a60a0",
+      "statement": "The fastapi command entry point raises a RuntimeError instructing to install fastapi[standard] when fastapi-cli is not installed.",
+      "evidence": [
+        {
+          "resource": "repo://fastapi/cli.py",
+          "version": "repo-file-v1:sha256:a444f8922fb65a8da1556df00dd526303536f2368db1edeb972d70f4fba81485"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}

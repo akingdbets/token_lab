@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:c62e2691db8c76c8e9460fe3d92398aacc62ef3c74e76764b9463e1744f4684d",
+  "claims": [
+    {
+      "id": "claim_4d119d1558e641fb8c220db961dd17ca",
+      "statement": "The responses parameter maps status codes to response dicts whose model key is converted into a JSON Schema reference under content/application/json/schema; the endpoint must still return a Response such as JSONResponse for those statuses.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/additional-responses.md",
+          "version": "repo-file-v1:sha256:97812c50498553a11686068ad619ecba19e0782fb6473a4a8f0ed6b33e09d703"
+        },
+        {
+          "resource": "repo://docs_src/additional_responses/tutorial001_py310.py#L18-L22",
+          "version": "repo-lines-v1:sha256:f5bf22a678f82f0b413943d9b18262283628104252b957750d8ba8159ab8a9e5:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTk4M2NhZGE0ZjMxZjBiNmE4NTA4MGQ1M2UwYTAwMThjYjNmZTZkYmRjN2ZkZjZlODcwNzIzYzhlN2U2MjRjMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiODYxNzUwNzZmNmI5ZDRkZGRlNTQzMTVlYjYwN2MxZDVkNGM1NTdmZjAyYWE4ZmNhMGIwMzllMjBiZGQ3ZDc2MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTk3MjllYzY1YzIxMmQxNWYzZDE0NzQ3NTJjODljOWM2NzdkNGY3ZjRmNDhmZThiMjViYThhOTgxYmQzYTEzNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_b5d066147c1f4889a3fa05fcd2b96a45",
+      "statement": "responses can add extra media types to the main response, e.g. 200 with content image/png while returning FileResponse for images.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/additional_responses/tutorial002_py310.py#L14-L28",
+          "version": "repo-lines-v1:sha256:30f3f99f0fb8ca34eb0c6e0f508bebd14467f650712c8ec6fdc6d25f8b5c74e6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdiZjExOTRhZmFhZjJjMjA1ZTBkMDc3NTk1ZmFmZTYzMjY3YzBhYzJlMGRkOTQwZjE5NTBiNjE0MTMyYmNiMTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4YzdmNDQxYmMxN2IwZjBmZjY2YjY3YTVhODM0ZTc2YTA3MDJlZWFmMzNhNGExMTRjMWIwZGFmZWYzNWZmNjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU5NzI5ZWM2NWMyMTJkMTVmM2QxNDc0NzUyYzg5YzljNjc3ZDRmN2Y0ZjQ4ZmU4YjI1YmE4YTk4MWJkM2ExMzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e5707fae14dd43ca8a48bb05d0b6b146",
+      "statement": "Information from response_model and responses is combined, allowing custom description and example for the 200 response and a model plus description for 404.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/additional_responses/tutorial003_py310.py#L18-L37",
+          "version": "repo-lines-v1:sha256:63f84e8d4dc0aec2003881dcc5f2fdb95598f3f9a6c3e00d5f618a236c6a153f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdiZjExOTRhZmFhZjJjMjA1ZTBkMDc3NTk1ZmFmZTYzMjY3YzBhYzJlMGRkOTQwZjE5NTBiNjE0MTMyYmNiMTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdiYjczYzIxMWJmMzllMzI3YTNhMTQ2MDk4ZWMyYjM0ODg3ZTRmZTExODNlY2MyMTY5OGY5MzI2ODdlMDUzMGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU5NzI5ZWM2NWMyMTJkMTVmM2QxNDc0NzUyYzg5YzljNjc3ZDRmN2Y0ZjQ4ZmU4YjI1YmE4YTk4MWJkM2ExMzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3ef6488e69f84fbab1473c07586bb170",
+      "statement": "Predefined response dicts can be reused and combined per path operation using **dict unpacking in the responses argument.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/additional_responses/tutorial004_py310.py#L11-L30",
+          "version": "repo-lines-v1:sha256:ab79ea834dd9392850df7e14959e65b407b154909ed82b308239abd08d647dbb:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4NGYwODNhZmZmMDgwYzY0MDBhMjQ5NzVmZjE1YjY3MDNkYTNiNDZjZTZmYjViZTE2OTIwNzdiMGM4NjIxYTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4YzdmNDQxYmMxN2IwZjBmZjY2YjY3YTVhODM0ZTc2YTA3MDJlZWFmMzNhNGExMTRjMWIwZGFmZWYzNWZmNjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhkNThkZWYyZDU3ZjYzODViZDgyYzcwNzA4OTVlNTcyNzM4YWI3N2JlNjkyZDNjZjgwMTg4MThkZWM4M2ViMDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-03T04:04:39.409Z"
+  }
+}

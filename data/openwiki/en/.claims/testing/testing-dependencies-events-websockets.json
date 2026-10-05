@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:94ad3fe028876111ddfc83e441393f6b53d58d5646a46e896823783eae6dab3b",
+  "claims": [
+    {
+      "id": "claim_7f05d9fb803b42d69fc1eedaf4ef2560",
+      "statement": "app.dependency_overrides is a dict mapping original dependency callables to replacement callables, and FastAPI calls the override instead of the original.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/testing-dependencies.md",
+          "version": "repo-file-v1:sha256:6db5182ddac4754aeaa2e6da2b91eb05b4b2a5a7101d8282a17498ede22d539f"
+        },
+        {
+          "resource": "repo://docs_src/dependency_testing/tutorial001_an_py310.py",
+          "version": "repo-file-v1:sha256:ba032576c6a52dc00193233989a84a0e93fcfcd80fd04d5fec646c46ad1c0d03"
+        },
+        {
+          "resource": "repo://fastapi/dependencies/utils.py#L620-L646",
+          "version": "repo-lines-v1:sha256:3ce8917080c047c92d0a07fa9daacc72c90dd16c0d64c278bc8a85c72c7aa41e:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmOTRjZmFmYjZjMjQ2ZWI2NWNkNzRmODNlMzI4NzE1MjI5N2UwYzMzYTM5N2JhNzA4NDcxNTg0Yjk5N2ZmZWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3YjI1OTIxZmQ0ZmJjOTFhMmQ1NzRiMDIxYjQwYmY3MDVjMjIwMTFmOTFhNTkxYmM4YmE5MmJjZGMxMzRmZTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlhN2VmMDFkYzAxNTBkMWEwM2YzMTRiMGVkMWM4ZjQ4YmIyZWMzODVmOTA1M2UyODY1MjUwOGZlNTA1YjQ4NDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcxY2JhODliM2IwOTRlZGQ1M2I5Nzg1OTg1NjAzMzUwOTgxY2M5NGIzY2NjOWEyY2IyNDZhNmNiZDc2MTIwNDYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3c2cf13602a440fbb7fbc968dc084b0c",
+      "statement": "The override's own signature determines which request parameters are read, so query parameters not declared by the override are ignored.",
+      "evidence": [
+        {
+          "resource": "repo://docs_src/dependency_testing/tutorial001_an_py310.py",
+          "version": "repo-file-v1:sha256:ba032576c6a52dc00193233989a84a0e93fcfcd80fd04d5fec646c46ad1c0d03"
+        }
+      ]
+    },
+    {
+      "id": "claim_e8ff66dd2868466cbfd5a3dc2bd1644e",
+      "statement": "Overrides apply to dependencies used anywhere, including path operation decorators and include_router, and are reset by assigning an empty dict.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/testing-dependencies.md",
+          "version": "repo-file-v1:sha256:6db5182ddac4754aeaa2e6da2b91eb05b4b2a5a7101d8282a17498ede22d539f"
+        }
+      ]
+    },
+    {
+      "id": "claim_a96abcb90cc94a06b8034f6f893580b2",
+      "statement": "TestClient runs lifespan (and startup/shutdown handlers) only when used as a context manager; startup runs on entering and shutdown on exiting the with block.",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/testing-events.md",
+          "version": "repo-file-v1:sha256:6bf489dfcc08f61f6601d827628977be85456c46fa5ff518696f219c8814d369"
+        },
+        {
+          "resource": "repo://docs_src/app_testing/tutorial003_py310.py",
+          "version": "repo-file-v1:sha256:50c4473e66640e44cc2581375afcd01a1288b2a7867a3248f06b87a6e54acf18"
+        },
+        {
+          "resource": "repo://docs_src/app_testing/tutorial004_py310.py",
+          "version": "repo-file-v1:sha256:52c902b4a926f0f17ccd2b7fb54dd4e9793097195c87e9aa916e436f5586b2b2"
+        }
+      ]
+    },
+    {
+      "id": "claim_cbb21d63d0b94044b2c5fd0ba0dd4533",
+      "statement": "WebSocket endpoints are tested with client.websocket_connect(path) as a context manager and methods like receive_json().",
+      "evidence": [
+        {
+          "resource": "repo://docs/en/docs/advanced/testing-websockets.md",
+          "version": "repo-file-v1:sha256:f19dd44d3041863fc836dc865538704760918f23f60d234b574488b3804918a1"
+        },
+        {
+          "resource": "repo://docs_src/app_testing/tutorial002_py310.py",
+          "version": "repo-file-v1:sha256:fe6a6674b08455d37f95bd2a7b447478c88893e00a937f94212878cd08000d84"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-10-05T02:25:02.861Z"
+  }
+}
