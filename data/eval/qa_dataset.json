@@ -1,0 +1,553 @@
+[
+  {
+    "id": "q0001",
+    "split": "test",
+    "type": "fact",
+    "question": "What is the default behavior of `Header` regarding underscores in header names?",
+    "answer": "Header converts underscores to hyphens by default.",
+    "key_entities": [
+      "Header"
+    ],
+    "key_facts": [
+      "Header converts underscores to hyphens by default."
+    ],
+    "evidence": [
+      {
+        "quote": "Most HTTP headers use hyphens (`User-Agent`), which aren't valid in Python names. By default `Header` converts underscores to hyphens, so `user_agent` reads the `User-Agent` header.",
+        "page": "request/headers-and-cookies.md",
+        "locations": [
+          {
+            "file": "request/headers-and-cookies.md",
+            "line": 58
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "request/headers-and-cookies.md"
+    ],
+    "source_files": [
+      "request/headers-and-cookies.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "request",
+    "doc_tokens": 1814,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-183516",
+      "cand_id": "20261005-183516-c0001",
+      "log": "results/logs/dataset_20261005-183516.jsonl"
+    }
+  },
+  {
+    "id": "q0002",
+    "split": "dev",
+    "type": "fact",
+    "question": "What is the HTTP status code returned when the token is invalid or missing on protected endpoints in FastAPI?",
+    "answer": "401",
+    "key_entities": [
+      "token",
+      "401"
+    ],
+    "key_facts": [
+      "The token endpoint must return JSON with access_token and token_type.",
+      "Invalid/missing token on protected endpoints → 401 with WWW-Authenticate: Bearer"
+    ],
+    "evidence": [
+      {
+        "quote": "The token endpoint must return JSON with `access_token` and `token_type` (`\"bearer\"`).",
+        "page": "security/oauth2-password-flow.md",
+        "locations": [
+          {
+            "file": "security/oauth2-password-flow.md",
+            "line": 157
+          }
+        ]
+      },
+      {
+        "quote": "Invalid/missing token on protected endpoints → `401` with `WWW-Authenticate: Bearer` — required by the spec for 401s.",
+        "page": "security/oauth2-password-flow.md",
+        "locations": [
+          {
+            "file": "security/oauth2-password-flow.md",
+            "line": 162
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "security/oauth2-password-flow.md"
+    ],
+    "source_files": [
+      "security/oauth2-password-flow.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "security",
+    "doc_tokens": 2114,
+    "copy_overlap": 0.118,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-210310",
+      "cand_id": "20261005-210310-c0001",
+      "log": "results/logs/dataset_20261005-210310.jsonl"
+    }
+  },
+  {
+    "id": "q0003",
+    "split": "dev",
+    "type": "procedure",
+    "question": "In FastAPI, what must I do to receive a JSON object with username and password fields in a login request?",
+    "answer": "1) Import OAuth2PasswordRequestForm from fastapi.security 2) Use it as a dependency in the POST /token endpoint, reading form fields as username and password",
+    "key_entities": [
+      "OAuth2PasswordRequestForm",
+      "Depends",
+      "form fields"
+    ],
+    "key_facts": [
+      "OAuth2PasswordRequestForm reads username and password from form fields",
+      "It is used as a dependency in the POST /token endpoint"
+    ],
+    "evidence": [
+      {
+        "quote": "### The token response\nThe token endpoint must return JSON with `access_token` and `token_type` (`\"bearer\"`). Here the \"token\" is just the username — **insecure**, only to show the flow. Real tokens are covered in [OAuth2 with JWT](oauth2-jwt.md).",
+        "page": "security/oauth2-password-flow.md",
+        "locations": [
+          {
+            "file": "security/oauth2-password-flow.md",
+            "line": 157
+          }
+        ]
+      },
+      {
+        "quote": "### `OAuth2PasswordRequestForm`\nForm fields (attributes): `username`, `password`, `scope` (a space-separated string, exposed as the list `form_data.scopes`), optional `grant_type`, `client_id` and `client_secret`. `OAuth2PasswordRequestFormStrict` additionally **requires** `grant_type=\"password\"`, as the spec says. Needs `python-multipart` ([Forms](../request/forms-and-files.md)).",
+        "page": "security/oauth2-password-flow.md",
+        "locations": [
+          {
+            "file": "security/oauth2-password-flow.md",
+            "line": 153
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "security/oauth2-password-flow.md"
+    ],
+    "source_files": [
+      "security/oauth2-password-flow.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "security",
+    "doc_tokens": 2114,
+    "copy_overlap": 0.056,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-210310",
+      "cand_id": "20261005-210310-c0002",
+      "log": "results/logs/dataset_20261005-210310.jsonl"
+    }
+  },
+  {
+    "id": "q0004",
+    "split": "dev",
+    "type": "code",
+    "question": "In the example code, what is the default value of the `tokenUrl` argument in `OAuth2PasswordBearer`?",
+    "answer": "tokenUrl='token'",
+    "key_entities": [
+      "OAuth2PasswordBearer",
+      "tokenUrl"
+    ],
+    "key_facts": [
+      "The tokenUrl argument is used to specify the relative URL for obtaining a token.",
+      "The default value for tokenUrl is 'token'."
+    ],
+    "evidence": [
+      {
+        "quote": "oauth2_scheme = OAuth2PasswordBearer(tokenUrl=\"token\")",
+        "page": "security/oauth2-password-flow.md",
+        "locations": [
+          {
+            "file": "security/oauth2-password-flow.md",
+            "line": 47
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "security/oauth2-password-flow.md"
+    ],
+    "source_files": [
+      "security/oauth2-password-flow.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "security",
+    "doc_tokens": 2114,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-210310",
+      "cand_id": "20261005-210310-c0003",
+      "log": "results/logs/dataset_20261005-210310.jsonl"
+    }
+  },
+  {
+    "id": "q0005",
+    "split": "test",
+    "type": "code",
+    "question": "What is the default value for the `items_per_user` parameter in the `Settings` class?",
+    "answer": "50",
+    "key_entities": [
+      "items_per_user"
+    ],
+    "key_facts": [
+      "The `items_per_user` parameter has a default value.",
+      "The default value for `items_per_user` is 50."
+    ],
+    "evidence": [
+      {
+        "quote": "items_per_user: int = 50",
+        "page": "app-structure/settings.md",
+        "locations": [
+          {
+            "file": "app-structure/settings.md",
+            "line": 43
+          },
+          {
+            "file": "app-structure/settings.md",
+            "line": 83
+          },
+          {
+            "file": "app-structure/settings.md",
+            "line": 174
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "app-structure/settings.md"
+    ],
+    "source_files": [
+      "app-structure/settings.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "app-structure",
+    "doc_tokens": 1654,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-210310",
+      "cand_id": "20261005-210310-c0006",
+      "log": "results/logs/dataset_20261005-210310.jsonl"
+    }
+  },
+  {
+    "id": "q0006",
+    "split": "test",
+    "type": "code",
+    "question": "Which decorator is used to cache the `get_settings` function in the `main.py` file?",
+    "answer": "@lru_cache",
+    "key_entities": [
+      "@lru_cache"
+    ],
+    "key_facts": [
+      "The `get_settings` function is decorated with `@lru_cache`.",
+      "The `@lru_cache` decorator is used to cache the `get_settings` function."
+    ],
+    "evidence": [
+      {
+        "quote": "@lru_cache\ndef get_settings():",
+        "page": "app-structure/settings.md",
+        "locations": [
+          {
+            "file": "app-structure/settings.md",
+            "line": 114
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "app-structure/settings.md"
+    ],
+    "source_files": [
+      "app-structure/settings.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "app-structure",
+    "doc_tokens": 1654,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-210310",
+      "cand_id": "20261005-210310-c0007",
+      "log": "results/logs/dataset_20261005-210310.jsonl"
+    }
+  },
+  {
+    "id": "q0007",
+    "split": "test",
+    "type": "fact",
+    "question": "What is the default behavior of FastAPI's telemetry configuration?",
+    "answer": "tracing=True, metrics=True, logs=True, operation_spans=True",
+    "key_entities": [
+      "tracing",
+      "metrics",
+      "logs",
+      "operation_spans"
+    ],
+    "key_facts": [
+      "FastAPI has OpenTelemetry support built in and enabled by default for HTTP request traces, metrics and logs.",
+      "The default TelemetryConfig dict includes tracing, metrics, and logs with operation spans."
+    ],
+    "evidence": [
+      {
+        "quote": "| Key | Purpose | Default |\n|-----|---------|---------|\n| `tracing` | HTTP request and WebSocket connection spans | `True` |\n| `metrics` | HTTP request metrics | `True` |\n| `logs` | Logs for validation failures and unhandled exceptions | `True` |\n| `operation_spans` | Child spans for dependency resolution, the endpoint function, response serialization and each `BackgroundTasks` task | `True` |",
+        "page": "integrations/graphql-and-opentelemetry.md",
+        "locations": [
+          {
+            "file": "integrations/graphql-and-opentelemetry.md",
+            "line": 119
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "integrations/graphql-and-opentelemetry.md"
+    ],
+    "source_files": [
+      "integrations/graphql-and-opentelemetry.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "integrations",
+    "doc_tokens": 2015,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-210310",
+      "cand_id": "20261005-210310-c0009",
+      "log": "results/logs/dataset_20261005-210310.jsonl"
+    }
+  },
+  {
+    "id": "q0008",
+    "split": "test",
+    "type": "procedure",
+    "question": "In FastAPI, what steps are needed to configure OpenTelemetry to send traces, metrics, and logs to an OTLP collector via environment variables?",
+    "answer": "1) Export OTEL_SERVICE_NAME with the name of your service 2) Export OTEL_EXPORTER_OTLP_ENDPOINT with the URL of the collector 3) Optionally, export OTEL_EXPORTER_OTLP_HEADERS with any required headers 4) Run the FastAPI app",
+    "key_entities": [
+      "OTEL_SERVICE_NAME",
+      "OTEL_EXPORTER_OTLP_ENDPOINT",
+      "OTEL_EXPORTER_OTLP_HEADERS"
+    ],
+    "key_facts": [
+      "FastAPI has built-in OpenTelemetry support for traces, metrics, and logs",
+      "OTLP is the protocol used for exporting data to the collector",
+      "Environment variables are used to configure the OpenTelemetry exporters"
+    ],
+    "evidence": [
+      {
+        "quote": "export OTEL_SERVICE_NAME=my-api",
+        "page": "integrations/graphql-and-opentelemetry.md",
+        "locations": [
+          {
+            "file": "integrations/graphql-and-opentelemetry.md",
+            "line": 98
+          }
+        ]
+      },
+      {
+        "quote": "export OTEL_EXPORTER_OTLP_ENDPOINT=https://collector.example.com",
+        "page": "integrations/graphql-and-opentelemetry.md",
+        "locations": [
+          {
+            "file": "integrations/graphql-and-opentelemetry.md",
+            "line": 99
+          }
+        ]
+      },
+      {
+        "quote": "export OTEL_EXPORTER_OTLP_HEADERS=api-key=YOUR_API_KEY",
+        "page": "integrations/graphql-and-opentelemetry.md",
+        "locations": [
+          {
+            "file": "integrations/graphql-and-opentelemetry.md",
+            "line": 101
+          }
+        ]
+      },
+      {
+        "quote": "fastapi run",
+        "page": "integrations/graphql-and-opentelemetry.md",
+        "locations": [
+          {
+            "file": "integrations/graphql-and-opentelemetry.md",
+            "line": 103
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "integrations/graphql-and-opentelemetry.md"
+    ],
+    "source_files": [
+      "integrations/graphql-and-opentelemetry.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "integrations",
+    "doc_tokens": 2015,
+    "copy_overlap": 0.15,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-210310",
+      "cand_id": "20261005-210310-c0010",
+      "log": "results/logs/dataset_20261005-210310.jsonl"
+    }
+  },
+  {
+    "id": "q0009",
+    "split": "test",
+    "type": "code",
+    "question": "In the Strawberry example, what is the name of the class used to define the GraphQL schema?",
+    "answer": "Query",
+    "key_entities": [
+      "Query",
+      "strawberry.type"
+    ],
+    "key_facts": [
+      "Query is a class defined using @strawberry.type decorator",
+      "Query class defines a field 'user'"
+    ],
+    "evidence": [
+      {
+        "quote": "@strawberry.type\nclass Query:",
+        "page": "integrations/graphql-and-opentelemetry.md",
+        "locations": [
+          {
+            "file": "integrations/graphql-and-opentelemetry.md",
+            "line": 48
+          },
+          {
+            "file": "integrations/graphql-and-opentelemetry.md",
+            "line": 54
+          }
+        ]
+      },
+      {
+        "quote": "@strawberry.field\ndef user(self) -> User:",
+        "page": "integrations/graphql-and-opentelemetry.md",
+        "locations": [
+          {
+            "file": "integrations/graphql-and-opentelemetry.md",
+            "line": 57
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "integrations/graphql-and-opentelemetry.md"
+    ],
+    "source_files": [
+      "integrations/graphql-and-opentelemetry.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "integrations",
+    "doc_tokens": 2015,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-210310",
+      "cand_id": "20261005-210310-c0011",
+      "log": "results/logs/dataset_20261005-210310.jsonl"
+    }
+  },
+  {
+    "id": "q0010",
+    "split": "test",
+    "type": "fact",
+    "question": "What is the default `samesite` value for cookies in FastAPI's `set_cookie` method?",
+    "answer": "lax",
+    "key_entities": [
+      "set_cookie"
+    ],
+    "key_facts": [
+      "The default value for the `samesite` argument in `Response.set_cookie()` is `lax`."
+    ],
+    "evidence": [
+      {
+        "quote": "Use `response.delete_cookie(key, ...)` to remove one. For session/auth cookies, set `httponly=True`, `secure=True` and a suitable `samesite`.",
+        "page": "responses/response-headers-and-cookies.md",
+        "locations": [
+          {
+            "file": "responses/response-headers-and-cookies.md",
+            "line": 111
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "responses/response-headers-and-cookies.md"
+    ],
+    "source_files": [
+      "responses/response-headers-and-cookies.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "responses",
+    "doc_tokens": 1298,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": true,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "run_id": "20261005-210310",
+      "cand_id": "20261005-210310-c0017",
+      "log": "results/logs/dataset_20261005-210310.jsonl"
+    }
+  }
+]
