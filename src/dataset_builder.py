@@ -97,8 +97,11 @@ GEN_SYSTEM = (
 COMMON_RULES = """
 For each question also give:
 - "key_entities": 1 to 5 exact strings (class/function/parameter names, values,
-  commands, keywords) that any correct answer must contain. Copy each one
-  verbatim from the page.
+  commands, keywords) that are important for answering the question. Copy each
+  one verbatim from the page.
+- "key_facts": a list of the essential facts that a correct answer must convey.
+  Each item must express one independently checkable fact. Write each fact as a
+  short, complete statement. Do not combine multiple facts into one item.
 - "evidence": a list of exact sentences or code lines copied verbatim from the
   page that prove the answer.
 
@@ -116,7 +119,13 @@ General rules:
 
 Output ONLY a JSON array, no markdown fences, no explanation:
 [
-  {"question": "...", "answer": "...", "key_entities": ["..."], "evidence": ["..."]}
+  {
+    "question": "...",
+    "answer": "...",
+    "key_entities": ["..."],
+    "key_facts": ["..."],
+    "evidence": ["..."]
+  }
 ]
 """
 
@@ -674,6 +683,19 @@ def process_candidate(rec: RunLog, it: dict, qtype: str, docs: list[Doc], doc_te
     ev = [ev] if isinstance(ev, str) else [str(e) for e in ev]
     ents = it.get("key_entities") or []
     ents = [ents] if isinstance(ents, str) else [str(e).strip() for e in ents]
+    facts = it.get("key_facts") or []
+    facts = [facts] if isinstance(facts, str) else [str(f).strip() for f in facts]
+    facts = [f for f in facts if f]
+
+    trace.append({
+        "step": "key_facts",
+        "given": facts,
+        "count": len(facts),
+        "pass": bool(facts),
+    })
+
+    if not facts:
+        return None, "핵심 사실 없음"
 
     doc_lower = doc_text.lower()
     # 문서에 실제로 있는 것만 채점 기준으로 남긴다
@@ -692,6 +714,7 @@ def process_candidate(rec: RunLog, it: dict, qtype: str, docs: list[Doc], doc_te
         "question": q,
         "answer": a,
         "key_entities": kept_ents,
+        "key_facts": facts,
         "evidence": [],
         # 근거 page 를 중복 없이 정렬. 채점기가 "근거 페이지를 열었는가" 판정에 바로 쓴다
         "evidence_pages": [],
