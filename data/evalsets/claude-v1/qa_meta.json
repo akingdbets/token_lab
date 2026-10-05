@@ -1,0 +1,18 @@
+{
+  "deleted": [],
+  "next_id": 145,
+  "id_prefix": "c",
+  "corpus_manifest_sha256": "6760d8c0ba68a44e516d9f121959e8a8defb03f566b39c5cc4d7b2bf287c3e57",
+  "corpus_source": {
+    "wiki": "data/openwiki/en",
+    "openwiki": "`openwiki` 0.7.0 (npm)",
+    "method": "Claude Code 연동 (`openwiki integrations install claude`, host agent가 페이지 작성)",
+    "model": "Claude Code host agent (`.last-update.json`: `model: host-agent/claude`, 페이지별 `completedBy: claude-code`).",
+    "generated_at": "2026-10-05 12:09:52 KST (`2026-10-05T03:09:52Z`, `command: init`, `status: complete`)",
+    "language": "en (`INSTRUCTIONS.md` 첫 줄: \"Write every wiki page in English.\")",
+    "input_commit": "`5f9fc5c59a9bb54608aa35376715f3ba9708188e` (v0.142.2).",
+    "wiki_repo_commit": "`3519f526a60f96a35af48c4b1aeb798884f529bf` (`.last-update.json`·`.page-manifest.json`의 `gitHead`)",
+    "input_scope": "`docs/en`, `docs_src`, `fastapi` (+ `README.md`, `pyproject.toml`, `LICENSE`).",
+    "source_md_sha256": "9733b58cc37cb9aece952484e581de697e745f94fb5593b4d13a456f35bd11bb"
+  }
+}

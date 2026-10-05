@@ -1,0 +1,651 @@
+{
+  "corpus_manifest_sha256": "6760d8c0ba68a44e516d9f121959e8a8defb03f566b39c5cc4d7b2bf287c3e57",
+  "min_tokens": 600,
+  "max_tokens": 12000,
+  "targets": [
+    {
+      "doc_id": "dependencies/dependencies-with-yield.md",
+      "split": "dev",
+      "tokens": 2158,
+      "folder": "dependencies",
+      "partners": [],
+      "partners_by": ""
+    },
+    {
+      "doc_id": "middleware/middleware.md",
+      "split": "dev",
+      "tokens": 1960,
+      "folder": "middleware",
+      "partners": [],
+      "partners_by": ""
+    },
+    {
+      "doc_id": "security/oauth2-jwt.md",
+      "split": "dev",
+      "tokens": 2038,
+      "folder": "security",
+      "partners": [
+        "security/oauth2-password-flow.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "security/oauth2-password-flow.md",
+      "split": "dev",
+      "tokens": 2114,
+      "folder": "security",
+      "partners": [
+        "security/oauth2-jwt.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "testing/async-tests-and-database-testing.md",
+      "split": "dev",
+      "tokens": 1497,
+      "folder": "testing",
+      "partners": [
+        "testing/testing-dependencies-events-websockets.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "testing/testing-dependencies-events-websockets.md",
+      "split": "dev",
+      "tokens": 2063,
+      "folder": "testing",
+      "partners": [
+        "testing/async-tests-and-database-testing.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "about/features-and-ecosystem.md",
+      "split": "test",
+      "tokens": 2326,
+      "folder": "about",
+      "partners": [
+        "app-structure/settings.md",
+        "dependencies/dependency-injection-basics.md",
+        "deployment/deployment-concepts-and-servers.md",
+        "deployment/https-and-cloud.md",
+        "getting-started/first-steps.md",
+        "getting-started/python-types-and-async.md",
+        "integrations/graphql-and-opentelemetry.md",
+        "integrations/sql-databases.md",
+        "models/dataclasses-and-pydantic-versions.md",
+        "openapi/metadata-and-docs-ui.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "app-structure/bigger-applications.md",
+      "split": "test",
+      "tokens": 2145,
+      "folder": "app-structure",
+      "partners": [
+        "app-structure/path-operation-configuration.md",
+        "app-structure/sub-applications-proxy-and-wsgi.md",
+        "dependencies/decorator-and-global-dependencies.md",
+        "getting-started/first-steps.md",
+        "request/path-parameters.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "app-structure/lifespan-events.md",
+      "split": "test",
+      "tokens": 1495,
+      "folder": "app-structure",
+      "partners": [
+        "app-structure/settings.md",
+        "app-structure/sub-applications-proxy-and-wsgi.md",
+        "integrations/sql-databases.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "app-structure/path-operation-configuration.md",
+      "split": "test",
+      "tokens": 2303,
+      "folder": "app-structure",
+      "partners": [
+        "app-structure/bigger-applications.md",
+        "dependencies/decorator-and-global-dependencies.md",
+        "models/response-model.md",
+        "openapi/extending-openapi.md",
+        "openapi/generating-clients.md",
+        "openapi/metadata-and-docs-ui.md",
+        "request/query-parameters.md",
+        "responses/custom-responses.md",
+        "responses/status-codes.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "app-structure/settings.md",
+      "split": "test",
+      "tokens": 1654,
+      "folder": "app-structure",
+      "partners": [
+        "app-structure/lifespan-events.md",
+        "getting-started/development-workflow.md",
+        "openapi/metadata-and-docs-ui.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "app-structure/static-files-templates-and-frontend.md",
+      "split": "test",
+      "tokens": 2048,
+      "folder": "app-structure",
+      "partners": [
+        "app-structure/sub-applications-proxy-and-wsgi.md",
+        "middleware/cors.md",
+        "responses/custom-responses.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "app-structure/sub-applications-proxy-and-wsgi.md",
+      "split": "test",
+      "tokens": 2048,
+      "folder": "app-structure",
+      "partners": [
+        "app-structure/bigger-applications.md",
+        "app-structure/lifespan-events.md",
+        "app-structure/static-files-templates-and-frontend.md",
+        "deployment/docker.md",
+        "deployment/https-and-cloud.md",
+        "openapi/metadata-and-docs-ui.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "dependencies/advanced-dependencies.md",
+      "split": "test",
+      "tokens": 1769,
+      "folder": "dependencies",
+      "partners": [
+        "dependencies/dependency-injection-basics.md",
+        "integrations/background-tasks.md",
+        "internals/request-handling-internals.md",
+        "security/oauth2-scopes.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "dependencies/decorator-and-global-dependencies.md",
+      "split": "test",
+      "tokens": 1179,
+      "folder": "dependencies",
+      "partners": [
+        "app-structure/bigger-applications.md",
+        "dependencies/dependency-injection-basics.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "dependencies/dependency-injection-basics.md",
+      "split": "test",
+      "tokens": 2016,
+      "folder": "dependencies",
+      "partners": [
+        "app-structure/settings.md",
+        "dependencies/advanced-dependencies.md",
+        "dependencies/decorator-and-global-dependencies.md",
+        "getting-started/python-types-and-async.md",
+        "integrations/websockets.md",
+        "internals/request-handling-internals.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "deployment/deployment-concepts-and-servers.md",
+      "split": "test",
+      "tokens": 1625,
+      "folder": "deployment",
+      "partners": [
+        "app-structure/lifespan-events.md",
+        "app-structure/sub-applications-proxy-and-wsgi.md",
+        "deployment/docker.md",
+        "deployment/https-and-cloud.md",
+        "getting-started/first-steps.md",
+        "testing/testing-basics.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "deployment/docker.md",
+      "split": "test",
+      "tokens": 1576,
+      "folder": "deployment",
+      "partners": [
+        "app-structure/lifespan-events.md",
+        "app-structure/sub-applications-proxy-and-wsgi.md",
+        "deployment/deployment-concepts-and-servers.md",
+        "deployment/https-and-cloud.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "deployment/https-and-cloud.md",
+      "split": "test",
+      "tokens": 1294,
+      "folder": "deployment",
+      "partners": [
+        "app-structure/sub-applications-proxy-and-wsgi.md",
+        "deployment/deployment-concepts-and-servers.md",
+        "deployment/docker.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "errors/handling-errors.md",
+      "split": "test",
+      "tokens": 2419,
+      "folder": "errors",
+      "partners": [
+        "dependencies/dependency-injection-basics.md",
+        "integrations/websockets.md",
+        "models/response-model.md",
+        "responses/status-codes.md",
+        "security/http-basic-and-api-keys.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "getting-started/development-workflow.md",
+      "split": "test",
+      "tokens": 1199,
+      "folder": "getting-started",
+      "partners": [
+        "about/features-and-ecosystem.md",
+        "app-structure/settings.md",
+        "app-structure/static-files-templates-and-frontend.md",
+        "deployment/deployment-concepts-and-servers.md",
+        "getting-started/first-steps.md",
+        "testing/testing-basics.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "getting-started/first-steps.md",
+      "split": "test",
+      "tokens": 1665,
+      "folder": "getting-started",
+      "partners": [
+        "deployment/deployment-concepts-and-servers.md",
+        "deployment/https-and-cloud.md",
+        "getting-started/development-workflow.md",
+        "getting-started/python-types-and-async.md",
+        "openapi/metadata-and-docs-ui.md",
+        "request/path-parameters.md",
+        "request/query-parameters.md",
+        "request/request-body.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "getting-started/python-types-and-async.md",
+      "split": "test",
+      "tokens": 1971,
+      "folder": "getting-started",
+      "partners": [
+        "deployment/deployment-concepts-and-servers.md",
+        "getting-started/first-steps.md",
+        "internals/request-handling-internals.md",
+        "models/dataclasses-and-pydantic-versions.md",
+        "request/request-body.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "integrations/background-tasks.md",
+      "split": "test",
+      "tokens": 1232,
+      "folder": "integrations",
+      "partners": [
+        "app-structure/lifespan-events.md",
+        "dependencies/advanced-dependencies.md",
+        "dependencies/dependency-injection-basics.md",
+        "responses/custom-responses.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "integrations/graphql-and-opentelemetry.md",
+      "split": "test",
+      "tokens": 2015,
+      "folder": "integrations",
+      "partners": [
+        "app-structure/bigger-applications.md",
+        "integrations/background-tasks.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "integrations/sql-databases.md",
+      "split": "test",
+      "tokens": 1858,
+      "folder": "integrations",
+      "partners": [
+        "about/features-and-ecosystem.md",
+        "app-structure/lifespan-events.md",
+        "dependencies/advanced-dependencies.md",
+        "getting-started/python-types-and-async.md",
+        "models/extra-models-and-updates.md",
+        "models/response-model.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "integrations/websockets.md",
+      "split": "test",
+      "tokens": 1683,
+      "folder": "integrations",
+      "partners": [
+        "dependencies/dependency-injection-basics.md",
+        "errors/handling-errors.md",
+        "integrations/graphql-and-opentelemetry.md",
+        "responses/streaming-and-sse.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "internals/request-handling-internals.md",
+      "split": "test",
+      "tokens": 2119,
+      "folder": "internals",
+      "partners": [
+        "app-structure/bigger-applications.md",
+        "dependencies/advanced-dependencies.md",
+        "dependencies/dependency-injection-basics.md",
+        "errors/handling-errors.md",
+        "getting-started/python-types-and-async.md",
+        "integrations/background-tasks.md",
+        "models/response-model.md",
+        "request/using-request-directly.md",
+        "responses/custom-responses.md",
+        "responses/streaming-and-sse.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "middleware/cors.md",
+      "split": "test",
+      "tokens": 1262,
+      "folder": "middleware",
+      "partners": [
+        "app-structure/static-files-templates-and-frontend.md",
+        "responses/response-headers-and-cookies.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "models/dataclasses-and-pydantic-versions.md",
+      "split": "test",
+      "tokens": 2312,
+      "folder": "models",
+      "partners": [
+        "models/extra-models-and-updates.md",
+        "models/response-model.md",
+        "openapi/generating-clients.md",
+        "testing/testing-basics.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "models/extra-models-and-updates.md",
+      "split": "test",
+      "tokens": 2463,
+      "folder": "models",
+      "partners": [
+        "integrations/sql-databases.md",
+        "models/response-model.md",
+        "request/request-body.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "models/response-model.md",
+      "split": "test",
+      "tokens": 2373,
+      "folder": "models",
+      "partners": [
+        "errors/handling-errors.md",
+        "internals/request-handling-internals.md",
+        "models/dataclasses-and-pydantic-versions.md",
+        "models/extra-models-and-updates.md",
+        "responses/custom-responses.md",
+        "responses/status-codes.md",
+        "responses/streaming-and-sse.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "openapi/extending-openapi.md",
+      "split": "test",
+      "tokens": 2564,
+      "folder": "openapi",
+      "partners": [
+        "app-structure/bigger-applications.md",
+        "app-structure/path-operation-configuration.md",
+        "openapi/generating-clients.md",
+        "openapi/metadata-and-docs-ui.md",
+        "responses/custom-responses.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "openapi/generating-clients.md",
+      "split": "test",
+      "tokens": 1607,
+      "folder": "openapi",
+      "partners": [
+        "app-structure/path-operation-configuration.md",
+        "models/dataclasses-and-pydantic-versions.md",
+        "openapi/extending-openapi.md",
+        "openapi/metadata-and-docs-ui.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "openapi/metadata-and-docs-ui.md",
+      "split": "test",
+      "tokens": 2477,
+      "folder": "openapi",
+      "partners": [
+        "app-structure/path-operation-configuration.md",
+        "app-structure/settings.md",
+        "app-structure/sub-applications-proxy-and-wsgi.md",
+        "getting-started/first-steps.md",
+        "openapi/extending-openapi.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "request/extra-data-types-and-examples.md",
+      "split": "test",
+      "tokens": 2616,
+      "folder": "request",
+      "partners": [
+        "models/extra-models-and-updates.md",
+        "openapi/extending-openapi.md",
+        "request/forms-and-files.md",
+        "request/query-parameters.md",
+        "request/request-body.md",
+        "responses/custom-responses.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "request/forms-and-files.md",
+      "split": "test",
+      "tokens": 2235,
+      "folder": "request",
+      "partners": [
+        "request/extra-data-types-and-examples.md",
+        "request/query-parameters.md",
+        "request/request-body.md",
+        "responses/custom-responses.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "request/headers-and-cookies.md",
+      "split": "test",
+      "tokens": 1814,
+      "folder": "request",
+      "partners": [
+        "request/forms-and-files.md",
+        "request/query-parameters.md",
+        "responses/response-headers-and-cookies.md",
+        "security/http-basic-and-api-keys.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "request/path-parameters.md",
+      "split": "test",
+      "tokens": 2261,
+      "folder": "request",
+      "partners": [
+        "app-structure/bigger-applications.md",
+        "request/query-parameters.md",
+        "request/request-body.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "request/query-parameters.md",
+      "split": "test",
+      "tokens": 2850,
+      "folder": "request",
+      "partners": [
+        "dependencies/dependency-injection-basics.md",
+        "request/extra-data-types-and-examples.md",
+        "request/headers-and-cookies.md",
+        "request/path-parameters.md",
+        "request/request-body.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "request/request-body.md",
+      "split": "test",
+      "tokens": 2808,
+      "folder": "request",
+      "partners": [
+        "models/extra-models-and-updates.md",
+        "models/response-model.md",
+        "request/extra-data-types-and-examples.md",
+        "request/forms-and-files.md",
+        "request/using-request-directly.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "request/using-request-directly.md",
+      "split": "test",
+      "tokens": 2245,
+      "folder": "request",
+      "partners": [
+        "errors/handling-errors.md",
+        "internals/request-handling-internals.md",
+        "middleware/cors.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "responses/custom-responses.md",
+      "split": "test",
+      "tokens": 2534,
+      "folder": "responses",
+      "partners": [
+        "app-structure/static-files-templates-and-frontend.md",
+        "integrations/background-tasks.md",
+        "models/response-model.md",
+        "openapi/extending-openapi.md",
+        "responses/response-headers-and-cookies.md",
+        "responses/status-codes.md",
+        "responses/streaming-and-sse.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "responses/response-headers-and-cookies.md",
+      "split": "test",
+      "tokens": 1298,
+      "folder": "responses",
+      "partners": [
+        "middleware/cors.md",
+        "request/headers-and-cookies.md",
+        "responses/custom-responses.md",
+        "responses/status-codes.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "responses/status-codes.md",
+      "split": "test",
+      "tokens": 1624,
+      "folder": "responses",
+      "partners": [
+        "app-structure/path-operation-configuration.md",
+        "errors/handling-errors.md",
+        "openapi/extending-openapi.md",
+        "responses/custom-responses.md",
+        "responses/response-headers-and-cookies.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "responses/streaming-and-sse.md",
+      "split": "test",
+      "tokens": 2786,
+      "folder": "responses",
+      "partners": [
+        "dependencies/advanced-dependencies.md",
+        "integrations/websockets.md",
+        "models/response-model.md",
+        "responses/custom-responses.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "security/http-basic-and-api-keys.md",
+      "split": "test",
+      "tokens": 2165,
+      "folder": "security",
+      "partners": [
+        "dependencies/decorator-and-global-dependencies.md",
+        "errors/handling-errors.md",
+        "request/headers-and-cookies.md",
+        "security/oauth2-scopes.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "security/oauth2-scopes.md",
+      "split": "test",
+      "tokens": 1814,
+      "folder": "security",
+      "partners": [
+        "dependencies/dependency-injection-basics.md"
+      ],
+      "partners_by": "link"
+    },
+    {
+      "doc_id": "testing/testing-basics.md",
+      "split": "test",
+      "tokens": 1881,
+      "folder": "testing",
+      "partners": [
+        "app-structure/settings.md",
+        "models/extra-models-and-updates.md"
+      ],
+      "partners_by": "link"
+    }
+  ]
+}

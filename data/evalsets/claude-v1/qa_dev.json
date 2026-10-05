@@ -1,0 +1,1741 @@
+[
+  {
+    "id": "c0001",
+    "split": "dev",
+    "type": "fact",
+    "question": "In FastAPI's password hashing tutorial, which precomputed hash is checked against the submitted password when the username is not found?",
+    "answer": "DUMMY_HASH",
+    "key_entities": [
+      "DUMMY_HASH",
+      "authenticate_user"
+    ],
+    "key_facts": [
+      "When the user does not exist, authenticate_user verifies the password against DUMMY_HASH."
+    ],
+    "evidence": [
+      {
+        "quote": "`authenticate_user` still runs `verify_password(password, DUMMY_HASH)` when the user **doesn't exist**. Without that, unknown usernames would be rejected noticeably faster than wrong passwords, letting attackers enumerate valid usernames by timing.",
+        "page": "security/oauth2-jwt.md",
+        "locations": [
+          {
+            "file": "security/oauth2-jwt.md",
+            "line": 186
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "security/oauth2-jwt.md"
+    ],
+    "source_files": [
+      "security/oauth2-jwt.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "security",
+    "doc_tokens": 2038,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 1,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0001",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "advanced"
+  },
+  {
+    "id": "c0002",
+    "split": "dev",
+    "type": "code",
+    "question": "In FastAPI's JWT example, how many minutes of validity does create_access_token fall back to when the caller gives no expires_delta?",
+    "answer": "15",
+    "key_entities": [
+      "timedelta(minutes=15)",
+      "create_access_token"
+    ],
+    "key_facts": [
+      "Without expires_delta, create_access_token sets the expiry to 15 minutes from now."
+    ],
+    "evidence": [
+      {
+        "quote": "expire = datetime.now(timezone.utc) + timedelta(minutes=15)",
+        "page": "security/oauth2-jwt.md",
+        "locations": [
+          {
+            "file": "security/oauth2-jwt.md",
+            "line": 115
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "security/oauth2-jwt.md"
+    ],
+    "source_files": [
+      "security/oauth2-jwt.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "security",
+    "doc_tokens": 2038,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 2,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0002",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "advanced"
+  },
+  {
+    "id": "c0003",
+    "split": "dev",
+    "type": "procedure",
+    "question": "In FastAPI's JWT tutorial, what does the dependency that resolves the logged-in user do with the bearer token, step by step?",
+    "answer": "1) Decode it with jwt.decode using SECRET_KEY and algorithms=[ALGORITHM] 2) Read the sub claim as the username 3) Load that user 4) On any failure raise a 401 with WWW-Authenticate: Bearer",
+    "key_entities": [
+      "jwt.decode",
+      "get_current_user",
+      "WWW-Authenticate: Bearer"
+    ],
+    "key_facts": [
+      "The token is decoded with jwt.decode using SECRET_KEY and the pinned algorithms.",
+      "The username is read from the sub claim.",
+      "The user is then loaded.",
+      "Any problem results in a 401 response with WWW-Authenticate: Bearer."
+    ],
+    "evidence": [
+      {
+        "quote": "`get_current_user` decodes with `jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])` (always pin the accepted algorithms), reads `sub`, and loads the user. Any problem — bad signature, expired token, missing `sub`, unknown user — results in the same `401` with `WWW-Authenticate: Bearer`. `get_current_active_user` additionally rejects disabled users.",
+        "page": "security/oauth2-jwt.md",
+        "locations": [
+          {
+            "file": "security/oauth2-jwt.md",
+            "line": 201
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "security/oauth2-jwt.md"
+    ],
+    "source_files": [
+      "security/oauth2-jwt.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "security",
+    "doc_tokens": 2038,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 3,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0003",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "beginner"
+  },
+  {
+    "id": "c0004",
+    "split": "dev",
+    "type": "fact",
+    "question": "When a FastAPI app registers several middlewares one after another, which of them ends up wrapping all the others?",
+    "answer": "The last one added",
+    "key_entities": [
+      "add_middleware",
+      "The last one added"
+    ],
+    "key_facts": [
+      "The middleware added last is the outermost one."
+    ],
+    "evidence": [
+      {
+        "quote": "Each added middleware wraps the app built so far. **The last one added is the outermost.**",
+        "page": "middleware/middleware.md",
+        "locations": [
+          {
+            "file": "middleware/middleware.md",
+            "line": 96
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "middleware/middleware.md"
+    ],
+    "source_files": [
+      "middleware/middleware.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "middleware",
+    "doc_tokens": 1960,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 4,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0004",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "advanced"
+  },
+  {
+    "id": "c0005",
+    "split": "dev",
+    "type": "code",
+    "question": "In FastAPI's GZip compression example, what compression level is configured for GZipMiddleware?",
+    "answer": "5",
+    "key_entities": [
+      "compresslevel=5",
+      "GZipMiddleware"
+    ],
+    "key_facts": [
+      "The example sets compresslevel to 5."
+    ],
+    "evidence": [
+      {
+        "quote": "app.add_middleware(GZipMiddleware, minimum_size=1000, compresslevel=5)",
+        "page": "middleware/middleware.md",
+        "locations": [
+          {
+            "file": "middleware/middleware.md",
+            "line": 157
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "middleware/middleware.md"
+    ],
+    "source_files": [
+      "middleware/middleware.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "middleware",
+    "doc_tokens": 1960,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 5,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0005",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "advanced"
+  },
+  {
+    "id": "c0006",
+    "split": "dev",
+    "type": "procedure",
+    "question": "In FastAPI, how do I write my own middleware that times every request and reports the duration back to the client in a header?",
+    "answer": "1) Decorate an async function with @app.middleware(\"http\") taking request and call_next 2) Record time.perf_counter() before awaiting call_next(request) 3) Compute the elapsed time afterwards 4) Set response.headers[\"X-Process-Time\"] and return the response",
+    "key_entities": [
+      "call_next",
+      "X-Process-Time",
+      "time.perf_counter()"
+    ],
+    "key_facts": [
+      "The function is decorated with @app.middleware(\"http\") and receives request and call_next.",
+      "The start time is taken with time.perf_counter() before calling call_next.",
+      "The elapsed time is stored in the X-Process-Time response header."
+    ],
+    "evidence": [
+      {
+        "quote": "@app.middleware(\"http\")",
+        "page": "middleware/middleware.md",
+        "locations": [
+          {
+            "file": "middleware/middleware.md",
+            "line": 4
+          },
+          {
+            "file": "middleware/middleware.md",
+            "line": 37
+          },
+          {
+            "file": "middleware/middleware.md",
+            "line": 68
+          },
+          {
+            "file": "middleware/middleware.md",
+            "line": 47
+          }
+        ]
+      },
+      {
+        "quote": "response = await call_next(request)",
+        "page": "middleware/middleware.md",
+        "locations": [
+          {
+            "file": "middleware/middleware.md",
+            "line": 50
+          }
+        ]
+      },
+      {
+        "quote": "response.headers[\"X-Process-Time\"] = str(process_time)",
+        "page": "middleware/middleware.md",
+        "locations": [
+          {
+            "file": "middleware/middleware.md",
+            "line": 52
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "middleware/middleware.md"
+    ],
+    "source_files": [
+      "middleware/middleware.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "middleware",
+    "doc_tokens": 1960,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 6,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0006",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "beginner"
+  },
+  {
+    "id": "c0015",
+    "split": "dev",
+    "type": "multi",
+    "question": "In FastAPI's security tutorials, what does the simple password-flow login hand back as its access token, and what does the JWT version issue instead?",
+    "answer": "The simple flow returns the username itself as an insecure token; the JWT version returns a signed JWT from create_access_token carrying sub and an exp expiry claim",
+    "key_entities": [
+      "create_access_token",
+      "\"access_token\": user.username"
+    ],
+    "key_facts": [
+      "The simple password-flow login returns the username as the access token.",
+      "That token is insecure and only demonstrates the flow.",
+      "The JWT version issues a signed token created by create_access_token.",
+      "The JWT token includes an exp expiry claim."
+    ],
+    "evidence": [
+      {
+        "quote": "`create_access_token` adds an `exp` claim (expiry, UTC); PyJWT rejects expired tokens on decode with an `InvalidTokenError` subclass.",
+        "page": "security/oauth2-jwt.md",
+        "locations": [
+          {
+            "file": "security/oauth2-jwt.md",
+            "line": 192
+          }
+        ]
+      },
+      {
+        "quote": "The token endpoint must return JSON with `access_token` and `token_type` (`\"bearer\"`). Here the \"token\" is just the username — **insecure**, only to show the flow. Real tokens are covered in [OAuth2 with JWT](oauth2-jwt.md).",
+        "page": "security/oauth2-password-flow.md",
+        "locations": [
+          {
+            "file": "security/oauth2-password-flow.md",
+            "line": 157
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "security/oauth2-jwt.md",
+      "security/oauth2-password-flow.md"
+    ],
+    "source_files": [
+      "security/oauth2-jwt.md",
+      "security/oauth2-password-flow.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "security",
+    "doc_tokens": 4152,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 16,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0016",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "intermediate"
+  },
+  {
+    "id": "c0017",
+    "split": "dev",
+    "type": "code",
+    "question": "In FastAPI's JWT example, how many minutes is ACCESS_TOKEN_EXPIRE_MINUTES set to?",
+    "answer": "30",
+    "key_entities": [
+      "ACCESS_TOKEN_EXPIRE_MINUTES = 30"
+    ],
+    "key_facts": [
+      "ACCESS_TOKEN_EXPIRE_MINUTES is 30."
+    ],
+    "evidence": [
+      {
+        "quote": "ACCESS_TOKEN_EXPIRE_MINUTES = 30",
+        "page": "security/oauth2-jwt.md",
+        "locations": [
+          {
+            "file": "security/oauth2-jwt.md",
+            "line": 54
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "security/oauth2-jwt.md"
+    ],
+    "source_files": [
+      "security/oauth2-jwt.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "security",
+    "doc_tokens": 2038,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 19,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0019",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "advanced"
+  },
+  {
+    "id": "c0018",
+    "split": "dev",
+    "type": "fact",
+    "question": "Below what response size, in bytes, does FastAPI's GZip middleware skip compression by default?",
+    "answer": "500",
+    "key_entities": [
+      "minimum_size",
+      "500"
+    ],
+    "key_facts": [
+      "The default minimum_size for GZipMiddleware is 500 bytes."
+    ],
+    "evidence": [
+      {
+        "quote": "- `minimum_size` — don't compress responses smaller than this many bytes (default `500`).",
+        "page": "middleware/middleware.md",
+        "locations": [
+          {
+            "file": "middleware/middleware.md",
+            "line": 160
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "middleware/middleware.md"
+    ],
+    "source_files": [
+      "middleware/middleware.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "middleware",
+    "doc_tokens": 1960,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 20,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0020",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "advanced"
+  },
+  {
+    "id": "c0019",
+    "split": "dev",
+    "type": "code",
+    "question": "In FastAPI's TrustedHostMiddleware example, which wildcard host pattern is allowed in addition to example.com?",
+    "answer": "*.example.com",
+    "key_entities": [
+      "*.example.com",
+      "allowed_hosts"
+    ],
+    "key_facts": [
+      "The example allows the wildcard pattern *.example.com."
+    ],
+    "evidence": [
+      {
+        "quote": "TrustedHostMiddleware, allowed_hosts=[\"example.com\", \"*.example.com\"]",
+        "page": "middleware/middleware.md",
+        "locations": [
+          {
+            "file": "middleware/middleware.md",
+            "line": 138
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "middleware/middleware.md"
+    ],
+    "source_files": [
+      "middleware/middleware.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "middleware",
+    "doc_tokens": 1960,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 21,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0021",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "advanced"
+  },
+  {
+    "id": "c0020",
+    "split": "dev",
+    "type": "fact",
+    "question": "In FastAPI, what scope value do dependencies that use yield get when none is specified?",
+    "answer": "\"request\"",
+    "key_entities": [
+      "\"request\"",
+      "scope"
+    ],
+    "key_facts": [
+      "The default scope for yield dependencies is \"request\".",
+      "With that scope, teardown happens after the response is sent."
+    ],
+    "evidence": [
+      {
+        "quote": "- `\"request\"` (default for `yield` dependencies): setup before the path operation, teardown **after the response is sent**. This means a `StreamingResponse` can keep using the resource while streaming.",
+        "page": "dependencies/dependencies-with-yield.md",
+        "locations": [
+          {
+            "file": "dependencies/dependencies-with-yield.md",
+            "line": 167
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "dependencies/dependencies-with-yield.md"
+    ],
+    "source_files": [
+      "dependencies/dependencies-with-yield.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "dependencies",
+    "doc_tokens": 2158,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 22,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0022",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "advanced"
+  },
+  {
+    "id": "c0021",
+    "split": "dev",
+    "type": "fact",
+    "question": "Which error does FastAPI raise when a request-scoped yield dependency is made to depend on a function-scoped one?",
+    "answer": "DependencyScopeError",
+    "key_entities": [
+      "DependencyScopeError"
+    ],
+    "key_facts": [
+      "Violating the scope rule raises DependencyScopeError when the route is created."
+    ],
+    "evidence": [
+      {
+        "quote": "Sub-dependency rule: a `\"request\"`-scoped dependency may only depend on `\"request\"`-scoped dependencies; a `\"function\"`-scoped dependency may depend on both. Violating it raises `DependencyScopeError` when the route is created. History and edge cases are in [Advanced Dependencies](advanced-dependencies.md).",
+        "page": "dependencies/dependencies-with-yield.md",
+        "locations": [
+          {
+            "file": "dependencies/dependencies-with-yield.md",
+            "line": 185
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "dependencies/dependencies-with-yield.md"
+    ],
+    "source_files": [
+      "dependencies/dependencies-with-yield.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "dependencies",
+    "doc_tokens": 2158,
+    "copy_overlap": 0.111,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 23,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0023",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "advanced"
+  },
+  {
+    "id": "c0022",
+    "split": "dev",
+    "type": "code",
+    "question": "In FastAPI's example where a yield dependency converts an ownership problem into an HTTP error, which status code is used?",
+    "answer": "400",
+    "key_entities": [
+      "status_code=400",
+      "OwnerError"
+    ],
+    "key_facts": [
+      "The OwnerError is converted into an HTTPException with status code 400."
+    ],
+    "evidence": [
+      {
+        "quote": "        raise HTTPException(status_code=400, detail=f\"Owner error: {e}\")",
+        "page": "dependencies/dependencies-with-yield.md",
+        "locations": [
+          {
+            "file": "dependencies/dependencies-with-yield.md",
+            "line": 114
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "dependencies/dependencies-with-yield.md"
+    ],
+    "source_files": [
+      "dependencies/dependencies-with-yield.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "dependencies",
+    "doc_tokens": 2158,
+    "copy_overlap": 0.158,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 24,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0024",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "advanced"
+  },
+  {
+    "id": "c0023",
+    "split": "dev",
+    "type": "code",
+    "question": "In FastAPI's yield-dependency examples, what username value does get_username hand to the path operation?",
+    "answer": "Rick",
+    "key_entities": [
+      "\"Rick\"",
+      "get_username"
+    ],
+    "key_facts": [
+      "get_username yields the value \"Rick\"."
+    ],
+    "evidence": [
+      {
+        "quote": "        yield \"Rick\"",
+        "page": "dependencies/dependencies-with-yield.md",
+        "locations": [
+          {
+            "file": "dependencies/dependencies-with-yield.md",
+            "line": 112
+          },
+          {
+            "file": "dependencies/dependencies-with-yield.md",
+            "line": 136
+          },
+          {
+            "file": "dependencies/dependencies-with-yield.md",
+            "line": 146
+          },
+          {
+            "file": "dependencies/dependencies-with-yield.md",
+            "line": 175
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "dependencies/dependencies-with-yield.md"
+    ],
+    "source_files": [
+      "dependencies/dependencies-with-yield.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "dependencies",
+    "doc_tokens": 2158,
+    "copy_overlap": 0.071,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 25,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0025",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "advanced"
+  },
+  {
+    "id": "c0024",
+    "split": "dev",
+    "type": "procedure",
+    "question": "In FastAPI, how should a yield dependency handle an exception it catches so that the real error still appears in the server logs?",
+    "answer": "1) Put the yield inside a try block 2) Catch the specific exception with except 3) Re-raise it with a bare raise, so the client gets a 500 and the traceback is logged",
+    "key_entities": [
+      "InternalError",
+      "500 Internal Server Error"
+    ],
+    "key_facts": [
+      "The yield is wrapped in try/except.",
+      "The caught exception must be re-raised with a bare raise.",
+      "If it is not re-raised the client still gets a 500 but nothing is logged about the real error."
+    ],
+    "evidence": [
+      {
+        "quote": "The client still gets a `500 Internal Server Error`, but the server logs **nothing** about the real error. Re-raise with a bare `raise` (`tutorial008d_an_py310.py`):",
+        "page": "dependencies/dependencies-with-yield.md",
+        "locations": [
+          {
+            "file": "dependencies/dependencies-with-yield.md",
+            "line": 141
+          }
+        ]
+      },
+      {
+        "quote": "Now the 500 is accompanied by the `InternalError` traceback in the logs. The same applies to `HTTPException`s raised in the path operation: they pass through your `except` too, so re-raise them (or catch only specific exception types).",
+        "page": "dependencies/dependencies-with-yield.md",
+        "locations": [
+          {
+            "file": "dependencies/dependencies-with-yield.md",
+            "line": 152
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "dependencies/dependencies-with-yield.md"
+    ],
+    "source_files": [
+      "dependencies/dependencies-with-yield.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "dependencies",
+    "doc_tokens": 2158,
+    "copy_overlap": 0.143,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 26,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0026",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "beginner"
+  },
+  {
+    "id": "c0025",
+    "split": "dev",
+    "type": "fact",
+    "question": "When writing async FastAPI tests, which pytest marker from the AnyIO plugin makes the test function run asynchronously?",
+    "answer": "@pytest.mark.anyio",
+    "key_entities": [
+      "@pytest.mark.anyio"
+    ],
+    "key_facts": [
+      "The @pytest.mark.anyio marker runs the test function asynchronously.",
+      "It comes from the AnyIO pytest plugin, so pytest-asyncio is not needed."
+    ],
+    "evidence": [
+      {
+        "quote": "- `@pytest.mark.anyio` tells pytest to run the test function asynchronously. It comes from the **AnyIO** pytest plugin (AnyIO is installed with Starlette/FastAPI), so you don't need `pytest-asyncio`.",
+        "page": "testing/async-tests-and-database-testing.md",
+        "locations": [
+          {
+            "file": "testing/async-tests-and-database-testing.md",
+            "line": 63
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "testing/async-tests-and-database-testing.md"
+    ],
+    "source_files": [
+      "testing/async-tests-and-database-testing.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "testing",
+    "doc_tokens": 1497,
+    "copy_overlap": 0.125,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 27,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0027",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "advanced"
+  },
+  {
+    "id": "c0026",
+    "split": "dev",
+    "type": "fact",
+    "question": "When testing FastAPI with httpx.AsyncClient and ASGITransport, which package provides the LifespanManager needed for startup code to run?",
+    "answer": "asgi-lifespan",
+    "key_entities": [
+      "asgi-lifespan",
+      "LifespanManager"
+    ],
+    "key_facts": [
+      "LifespanManager comes from the asgi-lifespan package.",
+      "Lifespan events do not run with AsyncClient and ASGITransport alone."
+    ],
+    "evidence": [
+      {
+        "quote": "- **Lifespan events don't run** with `AsyncClient` + `ASGITransport`. If your app relies on `lifespan`/startup, wrap the app with `LifespanManager` from the `asgi-lifespan` package:",
+        "page": "testing/async-tests-and-database-testing.md",
+        "locations": [
+          {
+            "file": "testing/async-tests-and-database-testing.md",
+            "line": 72
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "testing/async-tests-and-database-testing.md"
+    ],
+    "source_files": [
+      "testing/async-tests-and-database-testing.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "testing",
+    "doc_tokens": 1497,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 28,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0028",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "advanced"
+  },
+  {
+    "id": "c0027",
+    "split": "dev",
+    "type": "code",
+    "question": "In FastAPI's async test example, what base_url is given to AsyncClient?",
+    "answer": "http://test",
+    "key_entities": [
+      "base_url=\"http://test\""
+    ],
+    "key_facts": [
+      "The AsyncClient uses base_url \"http://test\"."
+    ],
+    "evidence": [
+      {
+        "quote": "        transport=ASGITransport(app=app), base_url=\"http://test\"",
+        "page": "testing/async-tests-and-database-testing.md",
+        "locations": [
+          {
+            "file": "testing/async-tests-and-database-testing.md",
+            "line": 56
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "testing/async-tests-and-database-testing.md"
+    ],
+    "source_files": [
+      "testing/async-tests-and-database-testing.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "testing",
+    "doc_tokens": 1497,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 29,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0029",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "advanced"
+  },
+  {
+    "id": "c0028",
+    "split": "dev",
+    "type": "code",
+    "question": "In FastAPI's database testing example, which pool class is passed to create_engine for the in-memory SQLite test database?",
+    "answer": "StaticPool",
+    "key_entities": [
+      "StaticPool",
+      "poolclass=StaticPool"
+    ],
+    "key_facts": [
+      "The test engine is created with poolclass=StaticPool."
+    ],
+    "evidence": [
+      {
+        "quote": "        \"sqlite://\", connect_args={\"check_same_thread\": False}, poolclass=StaticPool",
+        "page": "testing/async-tests-and-database-testing.md",
+        "locations": [
+          {
+            "file": "testing/async-tests-and-database-testing.md",
+            "line": 102
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "testing/async-tests-and-database-testing.md"
+    ],
+    "source_files": [
+      "testing/async-tests-and-database-testing.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "testing",
+    "doc_tokens": 1497,
+    "copy_overlap": 0.056,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 30,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0030",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "advanced"
+  },
+  {
+    "id": "c0029",
+    "split": "dev",
+    "type": "procedure",
+    "question": "In FastAPI, how do I make my tests talk to a separate in-memory database instead of the real one, using pytest fixtures?",
+    "answer": "1) Create an in-memory SQLite engine with StaticPool and create the tables 2) Yield a Session from a session fixture 3) In a client fixture set app.dependency_overrides[get_session] to return that session and yield a TestClient 4) Clear the overrides afterwards",
+    "key_entities": [
+      "app.dependency_overrides",
+      "get_session",
+      "StaticPool"
+    ],
+    "key_facts": [
+      "An in-memory SQLite engine with StaticPool is created and tables are created.",
+      "A session fixture yields a Session.",
+      "app.dependency_overrides[get_session] is set to return the test session.",
+      "The overrides are cleared afterwards."
+    ],
+    "evidence": [
+      {
+        "quote": "    app.dependency_overrides[get_session] = get_session_override",
+        "page": "testing/async-tests-and-database-testing.md",
+        "locations": [
+          {
+            "file": "testing/async-tests-and-database-testing.md",
+            "line": 114
+          }
+        ]
+      },
+      {
+        "quote": "    app.dependency_overrides.clear()",
+        "page": "testing/async-tests-and-database-testing.md",
+        "locations": [
+          {
+            "file": "testing/async-tests-and-database-testing.md",
+            "line": 117
+          }
+        ]
+      },
+      {
+        "quote": "- An in-memory SQLite database (`\"sqlite://\"`) with `StaticPool` gives each test a fresh, fast database shared across threads.",
+        "page": "testing/async-tests-and-database-testing.md",
+        "locations": [
+          {
+            "file": "testing/async-tests-and-database-testing.md",
+            "line": 129
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "testing/async-tests-and-database-testing.md"
+    ],
+    "source_files": [
+      "testing/async-tests-and-database-testing.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "testing",
+    "doc_tokens": 1497,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 31,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0031",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "beginner"
+  },
+  {
+    "id": "c0030",
+    "split": "dev",
+    "type": "fact",
+    "question": "When a FastAPI dependency is overridden in tests, what decides which request parameters get read and validated?",
+    "answer": "The override's own signature",
+    "key_entities": [
+      "own signature",
+      "dependency_overrides"
+    ],
+    "key_facts": [
+      "The override's own signature defines which request parameters are read and validated."
+    ],
+    "evidence": [
+      {
+        "quote": "- The override's **own signature** defines which request parameters are read and validated: here `skip`/`limit` from the URL are ignored because the override doesn't declare them.",
+        "page": "testing/testing-dependencies-events-websockets.md",
+        "locations": [
+          {
+            "file": "testing/testing-dependencies-events-websockets.md",
+            "line": 91
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "testing/testing-dependencies-events-websockets.md"
+    ],
+    "source_files": [
+      "testing/testing-dependencies-events-websockets.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "testing",
+    "doc_tokens": 2063,
+    "copy_overlap": 0.133,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 32,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0032",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "advanced"
+  },
+  {
+    "id": "c0031",
+    "split": "dev",
+    "type": "fact",
+    "question": "When a FastAPI WebSocket endpoint rejects or closes the connection during a test, which exception does the test client raise?",
+    "answer": "WebSocketDisconnect",
+    "key_entities": [
+      "WebSocketDisconnect"
+    ],
+    "key_facts": [
+      "The test client raises WebSocketDisconnect when the server closes or rejects the connection."
+    ],
+    "evidence": [
+      {
+        "quote": "The test session supports `send_text()`, `send_bytes()`, `send_json()`, `receive_text()`, `receive_bytes()`, `receive_json()` and `close()`. Pass query parameters in the URL, and `headers=` / cookies on the client for auth. If the server closes or rejects the connection (e.g. `WebSocketException` with code 1008), the test client raises `WebSocketDisconnect`, which you can assert with `pytest.raises`. See [WebSockets](../integrations/websockets.md).",
+        "page": "testing/testing-dependencies-events-websockets.md",
+        "locations": [
+          {
+            "file": "testing/testing-dependencies-events-websockets.md",
+            "line": 190
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "testing/testing-dependencies-events-websockets.md"
+    ],
+    "source_files": [
+      "testing/testing-dependencies-events-websockets.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "testing",
+    "doc_tokens": 2063,
+    "copy_overlap": 0.056,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 33,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0033",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "advanced"
+  },
+  {
+    "id": "c0032",
+    "split": "dev",
+    "type": "code",
+    "question": "In FastAPI's dependency override test example, what limit value does the replacement dependency return?",
+    "answer": "10",
+    "key_entities": [
+      "\"limit\": 10",
+      "override_dependency"
+    ],
+    "key_facts": [
+      "The override returns limit 10."
+    ],
+    "evidence": [
+      {
+        "quote": "    return {\"q\": q, \"skip\": 5, \"limit\": 10}",
+        "page": "testing/testing-dependencies-events-websockets.md",
+        "locations": [
+          {
+            "file": "testing/testing-dependencies-events-websockets.md",
+            "line": 64
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "testing/testing-dependencies-events-websockets.md"
+    ],
+    "source_files": [
+      "testing/testing-dependencies-events-websockets.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "testing",
+    "doc_tokens": 2063,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 34,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0034",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "advanced"
+  },
+  {
+    "id": "c0033",
+    "split": "dev",
+    "type": "code",
+    "question": "In FastAPI's WebSocket testing example, which test client method opens the connection to /ws?",
+    "answer": "websocket_connect",
+    "key_entities": [
+      "websocket_connect"
+    ],
+    "key_facts": [
+      "The test opens the connection with client.websocket_connect(\"/ws\")."
+    ],
+    "evidence": [
+      {
+        "quote": "    with client.websocket_connect(\"/ws\") as websocket:",
+        "page": "testing/testing-dependencies-events-websockets.md",
+        "locations": [
+          {
+            "file": "testing/testing-dependencies-events-websockets.md",
+            "line": 185
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "testing/testing-dependencies-events-websockets.md"
+    ],
+    "source_files": [
+      "testing/testing-dependencies-events-websockets.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "testing",
+    "doc_tokens": 2063,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 35,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0035",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "advanced"
+  },
+  {
+    "id": "c0034",
+    "split": "dev",
+    "type": "fact",
+    "question": "Which stricter variant of FastAPI's OAuth2 password form class requires grant_type to be password?",
+    "answer": "OAuth2PasswordRequestFormStrict",
+    "key_entities": [
+      "OAuth2PasswordRequestFormStrict"
+    ],
+    "key_facts": [
+      "OAuth2PasswordRequestFormStrict requires grant_type=\"password\"."
+    ],
+    "evidence": [
+      {
+        "quote": "Form fields (attributes): `username`, `password`, `scope` (a space-separated string, exposed as the list `form_data.scopes`), optional `grant_type`, `client_id` and `client_secret`. `OAuth2PasswordRequestFormStrict` additionally **requires** `grant_type=\"password\"`, as the spec says. Needs `python-multipart` ([Forms](../request/forms-and-files.md)).",
+        "page": "security/oauth2-password-flow.md",
+        "locations": [
+          {
+            "file": "security/oauth2-password-flow.md",
+            "line": 153
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "security/oauth2-password-flow.md"
+    ],
+    "source_files": [
+      "security/oauth2-password-flow.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "security",
+    "doc_tokens": 2114,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 37,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0037",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "advanced"
+  },
+  {
+    "id": "c0035",
+    "split": "dev",
+    "type": "fact",
+    "question": "In FastAPI's simple OAuth2 password tutorial, which status code does the token endpoint return for wrong credentials?",
+    "answer": "400",
+    "key_entities": [
+      "400",
+      "/token"
+    ],
+    "key_facts": [
+      "Wrong credentials at /token produce a 400 response in this tutorial."
+    ],
+    "evidence": [
+      {
+        "quote": "- Wrong credentials at `/token` → `400` (per OAuth2's error conventions in this tutorial).",
+        "page": "security/oauth2-password-flow.md",
+        "locations": [
+          {
+            "file": "security/oauth2-password-flow.md",
+            "line": 161
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "security/oauth2-password-flow.md"
+    ],
+    "source_files": [
+      "security/oauth2-password-flow.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "security",
+    "doc_tokens": 2114,
+    "copy_overlap": 0.062,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 38,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0038",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "advanced"
+  },
+  {
+    "id": "c0036",
+    "split": "dev",
+    "type": "code",
+    "question": "In FastAPI's simple password-flow example, what string does fake_hash_password put in front of the password?",
+    "answer": "fakehashed",
+    "key_entities": [
+      "fakehashed",
+      "fake_hash_password"
+    ],
+    "key_facts": [
+      "fake_hash_password prefixes the password with \"fakehashed\"."
+    ],
+    "evidence": [
+      {
+        "quote": "    return \"fakehashed\" + password",
+        "page": "security/oauth2-password-flow.md",
+        "locations": [
+          {
+            "file": "security/oauth2-password-flow.md",
+            "line": 109
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "security/oauth2-password-flow.md"
+    ],
+    "source_files": [
+      "security/oauth2-password-flow.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "security",
+    "doc_tokens": 2114,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 39,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0039",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "advanced"
+  },
+  {
+    "id": "c0037",
+    "split": "dev",
+    "type": "code",
+    "question": "In FastAPI's first bearer-token example, what does the /items/ path operation return?",
+    "answer": "{\"token\": token}",
+    "key_entities": [
+      "{\"token\": token}"
+    ],
+    "key_facts": [
+      "The endpoint returns a dict with the token under the key \"token\"."
+    ],
+    "evidence": [
+      {
+        "quote": "    return {\"token\": token}",
+        "page": "security/oauth2-password-flow.md",
+        "locations": [
+          {
+            "file": "security/oauth2-password-flow.md",
+            "line": 52
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "security/oauth2-password-flow.md"
+    ],
+    "source_files": [
+      "security/oauth2-password-flow.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "security",
+    "doc_tokens": 2114,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 40,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0040",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "advanced"
+  },
+  {
+    "id": "c0038",
+    "split": "dev",
+    "type": "procedure",
+    "question": "With FastAPI's OAuth2PasswordBearer, what sequence of steps happens between the frontend and the API when a user logs in and then calls protected endpoints?",
+    "answer": "1) The user enters credentials in the frontend 2) The frontend POSTs them to tokenUrl 3) The API returns a token 4) The frontend sends Authorization: Bearer <token> on later requests",
+    "key_entities": [
+      "tokenUrl",
+      "Authorization: Bearer <token>"
+    ],
+    "key_facts": [
+      "The frontend sends the credentials to tokenUrl.",
+      "The API returns a token.",
+      "Later requests send Authorization: Bearer <token>."
+    ],
+    "evidence": [
+      {
+        "quote": "The flow: the user enters credentials in the frontend → the frontend POSTs them to `tokenUrl` → the API returns a token → the frontend sends `Authorization: Bearer <token>` on later requests.",
+        "page": "security/oauth2-password-flow.md",
+        "locations": [
+          {
+            "file": "security/oauth2-password-flow.md",
+            "line": 60
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "security/oauth2-password-flow.md"
+    ],
+    "source_files": [
+      "security/oauth2-password-flow.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "security",
+    "doc_tokens": 2114,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 41,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0041",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "beginner"
+  },
+  {
+    "id": "c0039",
+    "split": "dev",
+    "type": "multi",
+    "question": "In FastAPI's security tutorials, how does the response to a failed login at /token differ between the simple password-flow version and the JWT version?",
+    "answer": "The simple version returns 400 Incorrect username or password, while the JWT version's login_for_access_token raises 401 Unauthorized with a WWW-Authenticate: Bearer header",
+    "key_entities": [
+      "login_for_access_token",
+      "status_code=400, detail=\"Incorrect username or password\""
+    ],
+    "key_facts": [
+      "The simple password-flow login returns 400 for wrong credentials.",
+      "The JWT login returns 401 for wrong credentials.",
+      "The JWT login response includes the WWW-Authenticate: Bearer header."
+    ],
+    "evidence": [
+      {
+        "quote": "async def login_for_access_token(",
+        "page": "security/oauth2-jwt.md",
+        "locations": [
+          {
+            "file": "security/oauth2-jwt.md",
+            "line": 150
+          }
+        ]
+      },
+      {
+        "quote": "            status_code=status.HTTP_401_UNAUTHORIZED,",
+        "page": "security/oauth2-jwt.md",
+        "locations": [
+          {
+            "file": "security/oauth2-jwt.md",
+            "line": 123
+          },
+          {
+            "file": "security/oauth2-jwt.md",
+            "line": 156
+          }
+        ]
+      },
+      {
+        "quote": "            status_code=status.HTTP_401_UNAUTHORIZED,",
+        "page": "security/oauth2-password-flow.md",
+        "locations": [
+          {
+            "file": "security/oauth2-password-flow.md",
+            "line": 116
+          }
+        ]
+      },
+      {
+        "quote": "        raise HTTPException(status_code=400, detail=\"Incorrect username or password\")",
+        "page": "security/oauth2-password-flow.md",
+        "locations": [
+          {
+            "file": "security/oauth2-password-flow.md",
+            "line": 135
+          },
+          {
+            "file": "security/oauth2-password-flow.md",
+            "line": 139
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "security/oauth2-jwt.md",
+      "security/oauth2-password-flow.md"
+    ],
+    "source_files": [
+      "security/oauth2-jwt.md",
+      "security/oauth2-password-flow.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "security",
+    "doc_tokens": 4152,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 42,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0042",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "intermediate"
+  },
+  {
+    "id": "c0040",
+    "split": "dev",
+    "type": "multi",
+    "question": "If a FastAPI test must await an async database call itself and also replace one of the app's dependencies, which client should it use and how is the dependency replaced?",
+    "answer": "Use httpx.AsyncClient with ASGITransport in an @pytest.mark.anyio test, and set app.dependency_overrides with the original dependency as key and the replacement callable as value",
+    "key_entities": [
+      "ASGITransport",
+      "replacement"
+    ],
+    "key_facts": [
+      "An async test needs httpx.AsyncClient instead of TestClient.",
+      "AsyncClient is used with ASGITransport.",
+      "app.dependency_overrides maps the original dependency to a replacement callable."
+    ],
+    "evidence": [
+      {
+        "quote": "- `ASGITransport(app=app)` sends requests straight to your ASGI app in-process — no server or network.",
+        "page": "testing/async-tests-and-database-testing.md",
+        "locations": [
+          {
+            "file": "testing/async-tests-and-database-testing.md",
+            "line": 64
+          }
+        ]
+      },
+      {
+        "quote": "Sometimes a dependency must not run in tests — it calls an external service (e.g. an OAuth provider or payment API), needs a real database, or you want a fixed value. `app.dependency_overrides` is a plain `dict` on the `FastAPI` app: key = the **original** dependency callable, value = the **replacement** callable.",
+        "page": "testing/testing-dependencies-events-websockets.md",
+        "locations": [
+          {
+            "file": "testing/testing-dependencies-events-websockets.md",
+            "line": 33
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "testing/async-tests-and-database-testing.md",
+      "testing/testing-dependencies-events-websockets.md"
+    ],
+    "source_files": [
+      "testing/async-tests-and-database-testing.md",
+      "testing/testing-dependencies-events-websockets.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "testing",
+    "doc_tokens": 3560,
+    "copy_overlap": 0.069,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
+      "line": 43,
+      "run_id": "20261006-015454",
+      "cand_id": "20261006-015454-c0043",
+      "log": "results/logs/dataset_20261006-015454.jsonl"
+    },
+    "persona": "intermediate"
+  }
+]
