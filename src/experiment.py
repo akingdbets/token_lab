@@ -5,8 +5,8 @@
 
     질문 -> 근거 문서(평가셋 evidence_pages 의 원문) -> 압축 -> LLM 답변 -> 채점 -> 로그
 
-RAG 검색 단계는 두지 않는다. 문맥은 문항의 정답 근거 페이지를 코퍼스에서 그대로 꺼낸다
-(corpus.expanded_text: 원문 + 예제 코드 펼침). 압축기 "none" 이 기준선(Baseline)이다.
+RAG 검색 단계는 두지 않는다. 문맥은 문항의 정답 근거 페이지를 코퍼스(OpenWiki 위키)에서
+원문 그대로 꺼낸다. 압축기 "none" 이 기준선(Baseline)이다.
 같은 문항을 압축기들에 연달아 돌리므로, 압축기 간 비교는 문항 단위로 짝지어진다.
 
 사용법
@@ -104,14 +104,10 @@ class TrialRecord:
 
 # ---------------- 문맥 ----------------
 
-def page_ref(doc_id: str) -> str:
-    return doc_id.removeprefix("docs/en/docs/")
-
-
 def build_context(corpus, item: dict) -> str:
     parts = []
     for doc_id in item["evidence_pages"]:
-        parts.append(f"## Document: {page_ref(doc_id)}\n\n{corpus.expanded_text(doc_id).strip()}")
+        parts.append(f"## Document: {corpus.page_ref(doc_id)}\n\n{corpus.expanded_text(doc_id).strip()}")
     return "\n\n".join(parts).replace("\r\n", "\n")
 
 

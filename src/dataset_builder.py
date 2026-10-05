@@ -1,13 +1,13 @@
 """
 평가 데이터셋 생성
 
-원본은 corpus.load_corpus() 로만 받는다 (data/raw 를 직접 읽지 않음).
-코퍼스 문서에 예제 코드({* ... *})를 펼친 보기(corpus.expanded_text)를 LLM에 주고
-질문-정답 후보를 뽑는다. 근거(evidence)는 corpus.locate_all 로 찾아 다음 형식으로 기록한다.
-    {"quote": 인용문, "page": 인용문이 발견된 md 페이지 doc_id,
-     "locations": [{"file": 원본 doc_id, "line": 줄 번호}, ...]}   # 일치하는 위치 전부
-page 는 펼친 코드 안에서 찾았어도 그 코드를 펼친 md 페이지다. 종합형에서 두 페이지 모두에서
-발견되면 페이지마다 별도 항목. 문항의 evidence_pages 는 근거 page 를 중복 없이 정렬한 목록으로,
+문서는 corpus.load_corpus() 로만 받는다 (OpenWiki 위키 data/openwiki/en, 가공 없음).
+본문 페이지(kind="page") 원문을 LLM에 주고 질문-정답 후보를 뽑는다. 목차 페이지
+(quickstart, index)는 질문 생성 대상이 아니다. 근거(evidence)는 corpus.locate_all 로 찾아
+다음 형식으로 기록한다.
+    {"quote": 인용문, "page": 인용문이 발견된 페이지 doc_id,
+     "locations": [{"file": 페이지 doc_id, "line": 줄 번호}, ...]}   # 일치하는 위치 전부
+종합형에서 두 페이지 모두에서 발견되면 페이지마다 별도 항목. 문항의 evidence_pages 는 근거 page 를 중복 없이 정렬한 목록으로,
 채점기가 "근거 페이지를 열었는가"를 판정할 때 쓴다.
 
 질문 유형
@@ -19,12 +19,13 @@ page 는 펼친 코드 안에서 찾았어도 그 코드를 펼친 md 페이지�
 처리 단계
     문서 선택(dev/test 비율 맞춘 뒤 폴더별 층화 추출) -> 유형별 생성 -> 순환 질문 제거
     -> 문서 표현 베끼기 검사(바꿔 쓰기 또는 제거) -> 근거 위치 확인(corpus.locate)
-    -> 유형별 근거 위치(사실형=본문 md, 코드형=코드 파일)
+    -> 유형별 근거 위치(사실형=코드 블록 밖 문장, 코드형=코드 블록 안의 줄)
     -> 종합형은 한 페이지에만 있는 핵심 엔티티가 양쪽에 있는지, 그리고 페이지 A만/B만 주고
        풀게 했을 때 어느 한쪽으로도 정답이 나오지 않는지 (single_page_a / single_page_b)
     -> LLM 자동 검증 -> 문서 없이 맞히는 질문 제거 -> 저장
     (답이 "not mentioned" 류인 문항은 초반에 "답이 없는 질문"으로 제외)
-    종합형 짝: 링크된 문서 우선, 없으면 mkdocs nav 의 바로 앞뒤 페이지 (같은 분할·예산 안)
+    종합형 짝: 위키 페이지 간 링크 기준. 이 페이지가 링크하는 본문 페이지 우선, 없으면
+    이 페이지를 링크하는 본문 페이지 (같은 분할·예산 안)
     (질문을 바꿔 쓰면 바꾼 질문으로 순환·복사 검사를 다시 하고, 검증과 문서 없이 풀기도
      바꾼 질문으로 한다)
 
@@ -68,7 +69,6 @@ import argparse
 import fnmatch
 import hashlib
 import json
-import posixpath
 import random
 import re
 import sys
@@ -80,7 +80,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from config import CFG
-from corpus import ANCHOR, DOCS_PREFIX, FENCE, Corpus, load_corpus, load_nav, manifest_sha256
+from corpus import FENCE, Corpus, load_corpus, manifest_sha256
 from grader import closed_book_knows
 from llm import LLM, count_message_tokens, count_tokens
 
@@ -159,7 +159,7 @@ GOOD example:
   A "1) Import BaseModel from pydantic 2) Create a class inheriting BaseModel with name and price attributes 3) Declare a path operation parameter typed with that class"
 """,
     "code": """Create {n} CODE / PARAMETER questions about the example code in the page
-(code blocks, and the Python files that start with a "# file:" line).
+(the code blocks).
 
 - Ask about a concrete detail of the code: an argument name or value, a default,
   a decorator, an import, a type annotation, a return value, a class used.
@@ -252,11 +252,11 @@ def words_of(text: str) -> list[str]:
 @dataclass
 class Doc:
     """생성 대상 문서. 원본은 코퍼스가 갖고, 여기는 LLM에 줄 보기와 선택용 정보만 둔다."""
-    doc_id: str                 # 코퍼스 doc_id (docs/en/docs/tutorial/body.md)
-    text: str                   # corpus.expanded_text: 원문 + 예제 코드만 펼침
+    doc_id: str                 # 코퍼스 doc_id (request/request-body.md)
+    text: str                   # 페이지 원문 그대로
     tokens: int                 # text 의 토큰 수 (길이 범위 필터 기준)
     corpus: Corpus = field(repr=False)
-    links: list[str] = field(default_factory=list)   # 코퍼스 안 다른 문서로의 링크 (doc_id)
+    links: list[str] = field(default_factory=list)   # 이 페이지가 링크하는 본문 페이지 (doc_id)
     section: str | None = None  # 섹션 단위일 때 ## 제목 (여럿을 합쳤으면 " / " 로 연결)
     parts: list[Doc] = field(default_factory=list, repr=False)
     # 길이 상한을 넘는 문서는 ## 섹션 단위로 나눈 parts 로 생성한다. 문서 선택(층화 추출)은
@@ -268,8 +268,8 @@ class Doc:
 
     @property
     def rel(self) -> str:
-        """docs/en/docs 기준 경로 (tutorial/body.md). 폴더 구분과 분할 해시에 쓴다."""
-        return self.doc_id[len(DOCS_PREFIX):]
+        """위키 루트 기준 경로 (= doc_id). 폴더 구분과 분할 해시에 쓴다."""
+        return self.doc_id
 
     @property
     def folder(self) -> str:
@@ -295,21 +295,6 @@ def split_of(rel: str) -> str:
     return "dev" if h < DEV_RATIO * 1000 else "test"
 
 
-LINK = re.compile(r"\]\(([^)\s#]+\.md)(?:#[^)]*)?\)")
-
-
-def doc_links(corpus: Corpus, doc_id: str) -> list[str]:
-    """md 링크 중 코퍼스 안 문서를 가리키는 것 (종합형 짝 문서 후보)."""
-    links = []
-    for target in LINK.findall(corpus.get(doc_id).text):
-        if target.startswith("http"):
-            continue
-        t = posixpath.normpath(posixpath.join(posixpath.dirname(doc_id), target))
-        if t != doc_id and t in corpus and t not in links:
-            links.append(t)
-    return links
-
-
 def split_sections(text: str, min_tokens: int, max_tokens: int) -> list[tuple[str, str]]:
     """펼친 텍스트를 ## 제목 단위로 나눈다 -> [(섹션 제목, 텍스트)].
     - 코드 블록 안의 ## 는 제목으로 치지 않는다.
@@ -331,7 +316,7 @@ def split_sections(text: str, min_tokens: int, max_tokens: int) -> list[tuple[st
             continue
         if s.startswith("## "):
             starts.append(i)
-            heads.append(ANCHOR.sub("", s[3:]).strip())
+            heads.append(s[3:].strip())
         elif s.startswith("# ") and title is None:
             title = s
     starts.append(len(lines))
@@ -364,19 +349,17 @@ def split_sections(text: str, min_tokens: int, max_tokens: int) -> list[tuple[st
 
 def load_all_docs(corpus: Corpus, min_tokens: int, max_tokens: int,
                   exclude: list[str]) -> dict[str, Doc]:
-    """코퍼스 문서 중 min_tokens 이상인 것. max_tokens 를 넘는 문서는 제외하지 않고
-    ## 섹션 단위 parts 로 나눈다. exclude 는 코퍼스에서 추가로 좁히기만 한다
-    (docs/en/docs 기준 fnmatch 패턴). 코퍼스 범위 자체는 config.corpus_exclude."""
+    """본문 페이지(kind="page") 중 min_tokens 이상인 것. 목차 페이지(quickstart, index)는
+    질문 생성 대상이 아니다. max_tokens 를 넘는 문서는 제외하지 않고 ## 섹션 단위 parts 로
+    나눈다. exclude 는 위키 루트 기준 fnmatch 패턴으로 추가로 좁히기만 한다."""
     docs = {}
-    for d in corpus.docs("doc"):
-        rel = d.doc_id[len(DOCS_PREFIX):]
-        if any(fnmatch.fnmatch(rel, pat) for pat in exclude):
+    for d in corpus.docs("page"):
+        if any(fnmatch.fnmatch(d.doc_id, pat) for pat in exclude):
             continue
-        text = corpus.expanded_text(d.doc_id)
-        tokens = count_tokens(text)
+        text, tokens = d.text, d.tokens
         if tokens < min_tokens:
             continue
-        links = doc_links(corpus, d.doc_id)
+        links = [t for t in d.links if corpus.get(t).kind == "page"]
         doc = Doc(d.doc_id, text, tokens, corpus, links)
         if tokens > max_tokens:
             doc.parts = [Doc(d.doc_id, t, count_tokens(t), corpus, links, section=h)
@@ -443,25 +426,10 @@ def _pick_by_folder(docs: dict[str, Doc], n: int, seed: int) -> list[Doc]:
     return picked
 
 
-def nav_order(corpus: Corpus) -> list[str]:
-    """mkdocs nav 에 나오는 순서대로 코퍼스 md 문서 doc_id (index_builder 의 nav 파싱 재사용)."""
-    from index_builder import flatten_doc_ids, parse_nav
-    nav = load_nav()
-    return flatten_doc_ids(parse_nav(nav, corpus).nodes) if nav else []
-
-
-def nav_neighbors(doc_id: str, order: list[str]) -> list[str]:
-    """nav 순서에서 바로 앞, 바로 뒤 페이지 (코퍼스에서 제외된 페이지는 이미 빠진 순서 기준)."""
-    if doc_id not in order:
-        return []
-    i = order.index(doc_id)
-    return [order[j] for j in (i - 1, i + 1) if 0 <= j < len(order)]
-
-
 def pick_partner(unit: Doc, docs: dict[str, Doc], rng: random.Random,
-                 fits=lambda u: True, order: list[str] | None = None) -> tuple[Doc | None, str]:
-    """종합형 질문의 짝 (문서 또는 섹션)과 고른 근거("link" / "nav").
-    1) 이 문서가 링크하는 문서  2) 없으면 mkdocs nav 에서 바로 앞뒤 페이지.
+                 fits=lambda u: True) -> tuple[Doc | None, str]:
+    """종합형 질문의 짝 (문서 또는 섹션)과 고른 근거("link" / "backlink").
+    위키 페이지 간 링크 기준: 1) 이 페이지가 링크하는 페이지  2) 없으면 이 페이지를 링크하는 페이지.
     같은 폴더 무작위 선택은 하지 않는다 (관련 없는 두 페이지를 억지로 엮는 문항이 나옴).
     개발/최종 분할이 섞이지 않도록 같은 split 안에서만 고르고, 두 단위를 합친
     생성 입력이 문맥 예산 안에 드는 것(fits)만 고른다."""
@@ -474,8 +442,9 @@ def pick_partner(unit: Doc, docs: dict[str, Doc], rng: random.Random,
 
     if (p := choose(unit.links)) is not None:
         return p, "link"
-    if (p := choose(nav_neighbors(unit.doc_id, order or []))) is not None:
-        return p, "nav"
+    backlinks = sorted(k for k, d in docs.items() if unit.doc_id in d.links)
+    if (p := choose(backlinks)) is not None:
+        return p, "backlink"
     return None, ""
 
 
@@ -525,10 +494,9 @@ def copy_overlap(q: str, docs: list[Doc]) -> tuple[float, bool]:
 
 
 def locate_evidence(quote: str, docs: list[Doc]) -> list[dict]:
-    """인용문의 근거 항목들. 페이지(md 문서)마다 하나씩:
-        {"quote": 인용문, "page": md 페이지 doc_id,
-         "locations": [{"file": 원본 doc_id, "line": 줄 번호}, ...]}
-    page 는 인용문이 발견된 문서 페이지 (펼친 코드 안에서 찾았어도 그 코드를 펼친 md 페이지).
+    """인용문의 근거 항목들. 페이지마다 하나씩:
+        {"quote": 인용문, "page": 페이지 doc_id,
+         "locations": [{"file": 페이지 doc_id, "line": 줄 번호}, ...]}
     종합형에서 두 페이지 모두에서 발견되면 페이지마다 별도 항목. 못 찾으면 []."""
     out = []
     for d in docs:
@@ -548,8 +516,7 @@ def build_prompt(qtype: str, docs: list[Doc], n: int) -> str:
         return (MULTI_SPEC.replace("{n}", str(n)) + COMMON_RULES
                 + f"\n--- PAGE A START ---\n{a.text}\n--- PAGE A END ---"
                 + f"\n\n--- PAGE B START ---\n{b.text}\n--- PAGE B END ---")
-    return ("Below is a technical documentation page. Python example files are shown "
-            "inline, each starting with a \"# file:\" line.\n\n"
+    return ("Below is a technical documentation page.\n\n"
             + TYPE_SPECS[qtype].replace("{n}", str(n)) + COMMON_RULES
             + f"\n--- DOCUMENT START ---\n{docs[0].text}\n--- DOCUMENT END ---")
 
@@ -562,10 +529,10 @@ NO_ANSWER = re.compile(
     r"|no explicit|(does|do) not (mention|specify|state|say)|(doesn't|don't) (mention|specify|state|say)"
     r"|no information|not covered|cannot be determined)\b", re.I)
 
-# 유형별로 근거 위치가 하나 이상 있어야 하는 파일 종류
-EVIDENCE_KIND = {
-    "fact": lambda f: f.startswith(DOCS_PREFIX) and f.endswith(".md"),   # 본문(md)
-    "code": lambda f: not f.endswith(".md"),                               # 코드 파일
+# 유형별로 근거 위치가 하나 이상 있어야 하는 곳: 코드 블록 밖(False) / 안(True)
+EVIDENCE_IN_CODE = {
+    "fact": False,      # 코드 블록 밖 문장
+    "code": True,       # 코드 블록 안의 줄
 }
 
 # 문맥 예산: 입력(채팅 템플릿 포함) + 출력 <= num_ctx.
@@ -599,7 +566,7 @@ class RunLog:
         llm_call   LLM 호출 1회: 단계, 보낸 메시지 원문, 받은 답변 원문, 토큰·시간
         candidate  후보 문항 1개: LLM이 낸 원본, 단계별 판정(trace), 최종 문항, 제외 사유
         error      예외로 건너뛴 생성 단위
-        partner    종합형 짝 문서와 고른 근거 (link: 링크된 문서, nav: nav 앞뒤 페이지)
+        partner    종합형 짝 문서와 고른 근거 (link: 링크하는 페이지, backlink: 링크받는 페이지)
         saved      후보 ID -> 평가셋 문항 ID 대응
         run_end    집계
 
@@ -787,12 +754,16 @@ def process_candidate(rec: RunLog, it: dict, qtype: str, docs: list[Doc], doc_te
     if not ok:
         return item, "두 페이지 근거가 모두 있지 않음"
 
-    # 유형별 근거 위치: 사실형은 본문(md), 코드형은 코드 파일에 근거가 있어야 한다
-    files = [loc["file"] for e in evidence for loc in e["locations"]]
-    need = EVIDENCE_KIND.get(qtype)
-    if need:
-        ok = any(need(f) for f in files)
-        trace.append({"step": "evidence_kind", "need": qtype, "files": sorted(set(files)),
+    # 유형별 근거 위치: 사실형은 코드 블록 밖 문장, 코드형은 코드 블록 안의 줄에 근거가 있어야 한다
+    corpus = docs[0].corpus
+    locs = [(loc["file"], loc["line"]) for e in evidence for loc in e["locations"]]
+    need = EVIDENCE_IN_CODE.get(qtype)
+    if need is not None:
+        in_code = [corpus.in_code(f, ln) for f, ln in locs]
+        ok = any(c == need for c in in_code)
+        trace.append({"step": "evidence_kind", "need": "code" if need else "prose",
+                      "locations": [{"file": f, "line": ln, "in_code": c}
+                                    for (f, ln), c in zip(locs, in_code)],
                       "pass": ok})
         if not ok:
             return item, "근거 위치가 유형과 맞지 않음"
@@ -945,7 +916,7 @@ def cmd_generate(args):
     print(f"설정: {CFG.summary()}")
     corpus = load_corpus()
     corpus_sha = manifest_sha256(corpus)
-    print(f"코퍼스: {corpus.source}  (문서 {len(corpus.docs('doc'))}개, "
+    print(f"코퍼스: {corpus.source.get('wiki')}  (본문 페이지 {len(corpus.docs('page'))}개, "
           f"매니페스트 {corpus_sha[:12]})")
 
     all_docs = load_all_docs(corpus, args.min_tokens, args.max_tokens, args.exclude)
@@ -963,7 +934,6 @@ def cmd_generate(args):
                     for d in docs])
 
     rng = random.Random(args.seed)
-    order = nav_order(corpus)             # 종합형 짝: 링크가 없을 때 nav 앞뒤 페이지
     all_items = []
     budget = input_budget()
     for i, d in enumerate(docs, 1):
@@ -978,9 +948,9 @@ def cmd_generate(args):
                 group = [unit]
                 if t == "multi":
                     fits = lambda u: gen_input_tokens("multi", [unit, u], args.per_type) <= budget
-                    partner, how = pick_partner(unit, all_docs, rng, fits, order)
+                    partner, how = pick_partner(unit, all_docs, rng, fits)
                     if partner is None:
-                        print(f"{indent}{t:9s} -> 짝 문서 없음 (링크·nav 앞뒤 중 같은 분할·예산 "
+                        print(f"{indent}{t:9s} -> 짝 문서 없음 (링크로 이어진 페이지 중 같은 분할·예산 "
                               f"조건 맞는 문서 없음), 건너뜀")
                         rec.event("error", qtype=t, sources=[unit.doc_id],
                                   sections=[unit.section], error="짝 문서 없음")
@@ -1013,7 +983,7 @@ def cmd_generate(args):
                         for ev in x["evidence"]:
                             locs = ", ".join(f"{l['file']}:{l['line']}" for l in ev["locations"][:3])
                             more = f" 외 {len(ev['locations']) - 3}곳" if len(ev["locations"]) > 3 else ""
-                            print(f"{indent}         근거 [{ev['page'][len(DOCS_PREFIX):]}] "
+                            print(f"{indent}         근거 [{ev['page']}] "
                                   f"{locs}{more}")
                         if r:
                             print(f"{indent}         사유: {r}")
@@ -1141,8 +1111,7 @@ def main():
     ap.add_argument("--max-tokens", type=int, default=12000,
                     help="생성 단위 길이 상한. 넘는 문서는 제외하지 않고 ## 섹션 단위로 나눠 생성")
     ap.add_argument("--exclude", nargs="*", default=[],
-                    help="코퍼스에서 추가로 제외할 문서 패턴 (docs/en/docs 기준, fnmatch). "
-                         "코퍼스 범위 자체는 config.corpus_exclude")
+                    help="추가로 제외할 본문 페이지 패턴 (위키 루트 기준, fnmatch)")
     ap.add_argument("--dev-ratio", type=float, default=0.2,
                     help="개발용 비율 (문서 단위, 경로 해시로 고정)")
     ap.add_argument("--copy-mode", choices=("rewrite", "drop", "off"), default="rewrite",

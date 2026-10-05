@@ -59,40 +59,20 @@ class Config:
 
     # ---------- 경로 ----------
     root: Path = ROOT
-    raw_dir: Path = ROOT / "data" / "raw"
-    # OpenWiki 로 생성한 위키 (openwiki/ 폴더를 그대로 복사). 실험 입력이므로 생성 후 고정
+    # 문서 원천: OpenWiki 로 생성한 영어 위키 (openwiki/ 폴더를 가공 없이 복사). 실험 입력이므로 고정
     openwiki_dir: Path = Path(_env("OPENWIKI_DIR", str(ROOT / "data" / "openwiki" / "en")))
+    # 탐색기가 그대로 읽는 인덱스 = OpenWiki 최상위 목차 페이지 (openwiki_dir 기준 경로)
+    index_page: str = _env("INDEX_PAGE", "quickstart.md")
     eval_dir: Path = ROOT / "data" / "eval"
     results_dir: Path = ROOT / "results"
-    # FastAPI 저장소 스냅샷 루트 (docs/en 이 있는 곳). 연구 기간 내내 고정
-    raw_repo: Path = ROOT / "data" / "raw" / "fastapi"
     corpus_manifest: Path = ROOT / "data" / "corpus_manifest.jsonl"
-    index_dir: Path = ROOT / "data" / "index"        # 탐색용 인덱스 변형들 ({이름}.md)
     ctx_log_path: Path = ROOT / "results" / "ctx_overflow.jsonl"   # num_ctx 초과 기록
 
     # ---------- 실험 조건 ----------
     repeats: int = _env("REPEATS", 1)           # 반복 횟수 (평균·표준편차용)
-    context_lengths: tuple = (4000, 8000, 16000)  # 긴 문맥 실험 조건
 
     # 압축률 목표 (LLMLingua 등)
     compression_rates: tuple = (0.3, 0.5, 0.7)
-
-    # ---------- 코퍼스 범위 ----------
-    # 문서: docs/en/docs/**/*.md 중 아래 corpus_exclude 를 뺀 것
-    # 코드: docs_src 폴더 전체(**/*.py) + 코퍼스 문서가 {* ... *} 로 참조하는 그 외 파일
-    #       (예: fastapi/openapi/docs.py). 참조의 ln[...] 줄 범위는 펼칠 때만 적용하고
-    #       코드 문서 자체는 파일 전체를 원문 그대로 갖는다.
-    # 아래는 기술 설명이 아닌 페이지. docs/en/docs 기준 경로, "/"로 끝나면 폴더 전체
-    corpus_exclude: tuple = (
-        "release-notes.md", "newsletter.md", "help-fastapi.md", "contributing.md",
-        "benchmarks.md", "history-design-future.md", "external-links.md",
-        "fastapi-people.md", "project-generation.md", "management.md",
-        "management-tasks.md", "alternatives.md", "resources/",
-        "about/", "learn/",
-        "reference/",       # 대부분 ::: fastapi.X 자동 생성 구문이라 본문이 거의 없음
-        "_llm-test.md", "translations.md", "translation-banner.md",   # 번역 작업용
-        "environment-variables.md", "virtual-environments.md",   # 일반 파이썬 환경 안내, nav 에 없음
-    )
 
     def ensure_dirs(self):
         for d in (self.eval_dir, self.results_dir):
