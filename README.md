@@ -14,7 +14,7 @@ RAG(Vector DB 검색) 단계를 두지 않고, 질문마다 정답 근거 문서
 검색 결과 후처리 단계에 그대로 연결할 수 있다.
 
 ```
-[준비]  원문 수집(코퍼스) → OpenWiki 생성 → 평가 데이터셋 생성
+[준비]  OpenWiki 위키(코퍼스) → 평가 데이터셋 생성
 [실험]  질문 + 근거 문서 → 압축 → LLM 답변 → 평가·기록 → 대시보드
 ```
 
@@ -52,16 +52,13 @@ ollama pull bge-m3          # 임베딩 (의미 손실률 측정)
 ```
 token_lab/
 ├── data/
-│   ├── raw/fastapi/          # FastAPI 원문 스냅샷 (git clone, 버전 관리 제외)
-│   ├── corpus_manifest.jsonl # 코퍼스 문서 목록·해시·토큰 수
-│   ├── index/                # 탐색용 인덱스 (nav_v0 등)
-│   ├── openwiki/             # OpenWiki 생성 위키: en/ (실험용, 고정), ko/ (보관용). 출처는 각 SOURCE.md
+│   ├── openwiki/             # OpenWiki 생성 위키: en/ (문서 원천, 고정), ko/ (보관용). 출처는 각 SOURCE.md
+│   ├── corpus_manifest.jsonl # 코퍼스 페이지 목록·종류·해시·토큰 수
 │   └── eval/                 # 평가 데이터셋 (버전 관리 제외)
 ├── src/
 │   ├── config.py             # 모델·경로·실험 조건 통합 설정
 │   ├── llm.py                # LLM 호출 (백엔드 교체 가능), 토큰 계산
-│   ├── corpus.py             # 원문 코퍼스 로더 (원본의 단일 출처)
-│   ├── index_builder.py      # 탐색용 인덱스 생성
+│   ├── corpus.py             # 코퍼스 로더 (OpenWiki 위키, 문서의 단일 출처)
 │   ├── dataset_builder.py    # 평가 데이터셋 생성 및 검수
 │   ├── grader.py             # 정답 채점 (단어 일치 + LLM 판정)
 │   ├── experiment.py         # 압축 실험 실행 (A/B 비교)
@@ -72,28 +69,22 @@ token_lab/
 
 ## 사용법
 
-### 1. 원문 수집
+### 1. 코퍼스 (OpenWiki 위키)
 
-코퍼스는 FastAPI 커밋 `50113da` (v0.142.2) 스냅샷으로 고정한다.
+- **문서 원천 = `data/openwiki/en`** (OpenWiki 결과물 그대로). 페이지를 가공하지 않고, 머리말까지 원문 그대로 쓴다.
+  생성 조건(OpenWiki 버전, 모델, 입력 커밋 등)은 `data/openwiki/en/SOURCE.md` 에 있다. 실험 기간 동안 다시 생성하지 않는다.
+- **인덱스 = OpenWiki 최상위 목차 페이지** (`config.index_page`, 기본 `quickstart.md`). 탐색기가 이 페이지를 그대로 인덱스로 읽는다.
+- 페이지 종류(`kind`): `page` 본문 49개(질문 생성 대상) / `quickstart` 최상위 목차 / `index` 루트·폴더 목차(`index.md`).
+  `.claims/` 등 숨김 파일과 `INSTRUCTIONS.md`, `SOURCE.md` 는 코퍼스가 아니다.
 
 ```bash
-git clone -c core.autocrlf=true https://github.com/fastapi/fastapi.git data/raw/fastapi
-git -C data/raw/fastapi checkout 50113da16fec53b66b80d75e80a89296de4fa5a5
-python src/corpus.py --stats
+python src/corpus.py --stats     # 페이지 수·토큰 분포·폴더별 페이지 수, 매니페스트 갱신
 ```
 
-`corpus.py`는 파일 바이트 그대로 해시·토큰 수를 계산한다. `data/corpus_manifest.jsonl`은
-CRLF 줄바꿈으로 체크아웃한 상태에서 만들어졌으므로, OS와 관계없이 `core.autocrlf=true`로
-clone해야 해시와 토큰 수가 일치한다.
+`corpus.py` 는 줄바꿈을 LF 로 통일해서 해시·토큰 수를 계산하므로, OS나 git 줄바꿈 설정과 관계없이
+`data/corpus_manifest.jsonl` 이 같게 나온다. 위키 폴더는 환경변수 `OPENWIKI_DIR` 로 바꿀 수 있다.
 
-### 2. 위키 (OpenWiki)
-
-위키는 OpenWiki로 같은 스냅샷에서 생성하고,
-결과 `openwiki/` 폴더를 `data/openwiki/`에 그대로 둔다. 실험 기간 동안 위키는 고정한다.
-생성 시 `config.corpus_exclude`에 해당하는 페이지(릴리스 노트, reference 등)는 원본에서
-빼고 생성해 위키와 코퍼스의 범위를 맞춘다.
-
-### 3. 평가 데이터셋 생성
+### 2. 평가 데이터셋 생성
 
 ```bash
 python src/dataset_builder.py --docs 30 --per-type 1     # 생성
@@ -102,14 +93,15 @@ python src/dataset_builder.py --stats                    # 통계 확인
 ```
 
 질문 유형은 사실 확인형(`fact`), 절차형(`procedure`), 코드·파라미터형(`code`),
-여러 페이지 종합형(`multi`) 네 가지다. 문항마다 다음 필터를 거친다.
+여러 페이지 종합형(`multi`) 네 가지다. 종합형의 짝 페이지는 위키 페이지 간 링크로 고른다.
+문항마다 다음 필터를 거친다.
 
 | 단계 | 내용 |
 |---|---|
-| 생성 | 코퍼스 문서(예제 코드 펼친 보기)를 LLM에 입력해 질문·정답·근거 문장 생성 |
+| 생성 | 본문 페이지(목차 페이지 제외) 원문을 LLM에 입력해 질문·정답·근거 문장 생성 |
 | 순환 질문 제거 | 정답이 질문 안에 포함된 항목 제외 |
 | 베끼기 검사 | 문서 표현을 그대로 옮긴 질문은 바꿔 쓰거나 제외 |
-| 근거 확인 | 근거 문장이 원문 어디에 있는지 파일·줄 번호로 기록, 못 찾으면 제외 |
+| 근거 확인 | 근거 문장이 페이지 어디에 있는지 줄 번호로 기록, 못 찾으면 제외. 사실형은 코드 블록 밖 문장, 코드형은 코드 블록 안의 줄이어야 함 |
 | 자동 검증 | 정답이 문서에 명시되어 있고 구체적인지 LLM이 판정 |
 | Closed-book 검사 | 문서 없이도 맞히는 질문은 제외 (압축 효과 측정 불가) |
 
@@ -124,15 +116,7 @@ python src/dataset_builder.py --stats                    # 통계 확인
 --no-closed-book   closed-book 검사 생략 (빠르지만 품질 저하)
 ```
 
-### 4. 탐색용 인덱스 생성
-
-```bash
-python src/index_builder.py
-```
-
-mkdocs nav 계층을 목차 형태로 만들어 `data/index/nav_v0.md`에 저장한다.
-
-### 5. 압축 실험 (A/B 비교)
+### 3. 압축 실험 (A/B 비교)
 
 ```bash
 python src/experiment.py                              # dev 문항, none(기준선) vs rule
@@ -141,7 +125,7 @@ python src/experiment.py --compressors none,rule --semantic   # 임베딩 유사
 ```
 
 문항마다 `질문 → 근거 문서 → 압축 → LLM 답변 → 채점 → 로그` 를 압축기별로 실행한다.
-문맥은 문항의 정답 근거 페이지 원문(예제 코드 펼침)이고, `none` 이 기준선이다.
+문맥은 문항의 정답 근거 페이지 원문이고, `none` 이 기준선이다.
 결과는 `results/runs/<run_id>/` 에 저장된다.
 
 - `trials.jsonl` 문항 x 압축기마다 한 줄 (토큰, 절감률, 답변, 채점, TTFT 등)
@@ -153,7 +137,7 @@ python src/experiment.py --compressors none,rule --semantic   # 임베딩 유사
 압축기는 `compress(question, context) -> CompressResult` 인터페이스를 따르고
 `src/compressors/__init__.py` 의 `REGISTRY` 에 등록하면 `--compressors` 로 고를 수 있다.
 
-### 6. LLM 연결 확인
+### 4. LLM 연결 확인
 
 ```bash
 python src/llm.py
@@ -179,9 +163,9 @@ LLM_MODEL=qwen2.5:3b python src/dataset_builder.py --docs 3 --dry-run
 
 ## 진행 현황
 
-- [x] 원문 코퍼스 로더 (574개 파일, 커밋 50113da 고정)
-- [x] 탐색용 인덱스 (nav_v0)
-- [x] OpenWiki 위키 생성 (영어, 코퍼스 범위에 맞춤)
+- [x] OpenWiki 위키 생성 (영어)
+- [x] 코퍼스 OpenWiki 전환 (문서 원천 data/openwiki/en, 인덱스 quickstart.md)
+- [ ] 평가셋 재생성 (OpenWiki 코퍼스 기준)
 - [x] LLM 호출 모듈 (Ollama · OpenAI 호환 백엔드, TTFT 측정)
 - [x] 평가 데이터셋 생성 파이프라인
 - [ ] 평가 데이터셋 확정 (생성 및 검수)

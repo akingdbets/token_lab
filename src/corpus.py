@@ -1,30 +1,35 @@
 """
-raw 코퍼스 로더
+코퍼스 로더 (OpenWiki 위키)
 
-data/raw 의 FastAPI 저장소 스냅샷을 가공 없이 읽어, 모든 실험이 공통으로 쓰는
-"원본 문서의 단일 출처"를 제공한다. 문서를 고치지 않고, 일관된 ID로 읽어 주기만 한다.
+OpenWiki 가 만든 영어 위키(CFG.openwiki_dir, 기본 data/openwiki/en)를 가공 없이 읽어,
+모든 실험이 공통으로 쓰는 "문서의 단일 출처"를 제공한다. 페이지를 고치지 않고,
+일관된 ID로 읽어 주기만 한다.
 
 범위
-    문서      docs/en/docs/**/*.md   (config.corpus_exclude 제외)
-    코드      docs_src/**/*.py 전체 + 코퍼스 문서가 {* ... *} 로 참조하는 그 외 파일
-              (예: fastapi/openapi/docs.py)
+    위키의 .md 페이지 전부 (본문 + 목차)
+    제외: 숨김 폴더·파일(.claims/ 등), OpenWiki 내부 파일(INSTRUCTIONS.md, SOURCE.md)
 
-doc_id 는 저장소 루트 기준 POSIX 경로 (예: "docs/en/docs/tutorial/body.md").
+kind
+    page        본문 페이지 (질문 생성 대상)
+    quickstart  최상위 목차 페이지 (CFG.index_page). 탐색기가 인덱스로 그대로 읽는다
+    index       루트·폴더 목차 페이지 (index.md)
+
+doc_id 는 위키 루트 기준 POSIX 경로 (예: "request/request-body.md").
 평가셋 근거와 실험 로그가 이 ID를 쓰므로 절대 바꾸지 않는다.
+
+줄바꿈은 LF 로 통일해서 읽는다 (git core.autocrlf 설정과 관계없이 해시·토큰 수·줄 번호가 같도록).
 
 사용 예
     from corpus import load_corpus
 
     corpus = load_corpus()
-    doc = corpus.get("docs/en/docs/tutorial/body.md")
-    print(doc.title, doc.tokens, doc.code_refs)
-    print(corpus.section_text(doc.doc_id, "Import Pydantic's BaseModel"))
-    print(corpus.expanded_text(doc.doc_id))          # {* ... *} 를 예제 코드로 펼친 보기
+    doc = corpus.get("request/request-body.md")
+    print(doc.kind, doc.title, doc.tokens, doc.links)
+    print(corpus.section_text(doc.doc_id, "Request Body"))
     print(corpus.locate(doc.doc_id, "class Item(BaseModel):"))
-    # -> {"doc_id": "docs_src/body/tutorial001_py310.py", "line": 5}
-    print(corpus.locate_all(doc.doc_id, "class Item(BaseModel):"))   # 일치하는 위치 전부
-    print(corpus.page_ref(doc.doc_id))                   # -> "tutorial/body.md"
-    print(corpus.resolve_page_ref("tutorial/body.md"))   # -> "docs/en/docs/tutorial/body.md"
+    # -> {"doc_id": "request/request-body.md", "line": 31}
+    print(corpus.in_code(doc.doc_id, 31))                 # 코드 블록 안의 줄인지
+    print(corpus.resolve_page_ref("./request/request-body.md"))   # -> "request/request-body.md"
 
 통계 (매니페스트 data/corpus_manifest.jsonl 도 함께 기록)
     python src/corpus.py --stats
@@ -37,8 +42,8 @@ import hashlib
 import json
 import posixpath
 import re
-import subprocess
 import warnings
+from collections import Counter
 from dataclasses import dataclass, field
 from pathlib import Path
 from statistics import mean, median
@@ -46,16 +51,14 @@ from statistics import mean, median
 from config import CFG
 from llm import count_tokens
 
-DOCS_PREFIX = "docs/en/docs/"
-CODE_PREFIX = "docs_src/"
+# 위키 폴더 안이지만 코퍼스가 아닌 OpenWiki 내부 파일
+INTERNAL_FILES = ("INSTRUCTIONS.md", "SOURCE.md")
 
-# {* ../../docs_src/body/tutorial001_py310.py hl[9] *}
-CODE_REF = re.compile(r"\{\*\s*(\S+?\.py)\b[^*]*\*\}")
-# ln[19:21] / ln[1:2,19:26,29] : 웹사이트에 보이는 줄. 원본 파일 기준 1부터, 끝 포함
-LINE_RANGE = re.compile(r"\bln\[([^\]]*)\]")
 HEADING = re.compile(r"^(#{1,3})\s+(.+?)\s*$")
-ANCHOR = re.compile(r"\s*\{\s*#([\w\-]+)\s*\}\s*$")
 FENCE = re.compile(r"^\s*(`{3,}|~{3,})")
+FRONTMATTER = re.compile(r"\A---\n(.*?)\n---\n", re.S)
+# [글자](대상) 의 대상. 외부 링크·앵커는 _resolve_link 에서 거른다
+LINK = re.compile(r"\]\(([^)\s]+)\)")
 
 
 @dataclass
@@ -63,28 +66,27 @@ class Section:
     """md 제목 하나. 줄 번호는 1부터, end는 포함.
     범위는 다음 같은/상위 레벨 제목 직전까지 (하위 제목 포함)."""
     level: int              # 1 = #, 2 = ##, 3 = ###
-    heading: str            # 앵커 { #id } 를 뗀 제목
-    anchor: str | None      # { #id } 의 id
+    heading: str
     start: int
     end: int
 
 
 @dataclass
 class Document:
-    doc_id: str             # 저장소 루트 기준 POSIX 경로. 불변
-    kind: str               # "doc" | "code"
+    doc_id: str             # 위키 루트 기준 POSIX 경로. 불변
+    kind: str               # "page" | "quickstart" | "index"
     title: str
-    text: str               # 원문 그대로 (줄바꿈 포함 한 글자도 바꾸지 않음)
+    text: str               # 원문 그대로 (줄바꿈만 LF 로 통일)
     tokens: int
     sha256: str
     sections: list[Section] = field(default_factory=list)
-    code_refs: list[str] = field(default_factory=list)       # 참조하는 코드 파일 doc_id
-    unresolved_refs: list[str] = field(default_factory=list)  # 해석 실패한 참조 원문
-    referenced_by: list[str] = field(default_factory=list)    # code: 이 파일을 참조하는 md
+    links: list[str] = field(default_factory=list)          # 코드 블록 밖 위키 내부 링크 (doc_id)
+    broken_links: list[str] = field(default_factory=list)   # 위키 안 파일로 해석되지 않는 링크 원문
+    code_lines: frozenset[int] = frozenset()                # 코드 블록 안의 줄 번호 (``` 줄 포함)
 
     @property
     def path(self) -> Path:
-        return CFG.raw_repo / self.doc_id
+        return CFG.openwiki_dir / self.doc_id
 
 
 # ---------------- 파싱 ----------------
@@ -97,122 +99,122 @@ def _lines(text: str) -> list[str]:
     return lines
 
 
-def parse_sections(text: str) -> list[Section]:
-    """#, ##, ### 제목과 줄 범위. 코드 블록 안의 # 주석은 제목으로 치지 않는다."""
-    lines = _lines(text)
-    found: list[tuple[int, int, str]] = []    # (줄 번호, 레벨, 제목 원문)
+def _fence_lines(lines: list[str]) -> set[int]:
+    """코드 블록에 속한 줄 번호 (1부터). 여는/닫는 ``` 줄도 포함."""
+    inside: set[int] = set()
     fence = None
     for i, ln in enumerate(lines, 1):
-        ln = ln.rstrip("\r")
         m = FENCE.match(ln)
-        if m:
-            mark = m.group(1)
-            if fence is None:
-                fence = mark
-            elif mark[0] == fence[0] and len(mark) >= len(fence):
+        if fence is not None:
+            inside.add(i)
+            if m and m.group(1)[0] == fence[0] and len(m.group(1)) >= len(fence):
                 fence = None
-            continue
-        if fence is None and (h := HEADING.match(ln)):
-            found.append((i, len(h.group(1)), h.group(2)))
+        elif m:
+            fence = m.group(1)
+            inside.add(i)
+    return inside
+
+
+def _frontmatter_end(text: str) -> int:
+    """머리말(--- ... ---)의 마지막 줄 번호. 머리말이 없으면 0."""
+    m = FRONTMATTER.match(text)
+    return m.group(0).count("\n") if m else 0
+
+
+def parse_sections(text: str) -> list[Section]:
+    """#, ##, ### 제목과 줄 범위. 머리말과 코드 블록 안의 # 는 제목으로 치지 않는다."""
+    lines = _lines(text)
+    code = _fence_lines(lines)
+    fm_end = _frontmatter_end(text)
+    found = [(i, len(h.group(1)), h.group(2)) for i, ln in enumerate(lines, 1)
+             if i > fm_end and i not in code and (h := HEADING.match(ln))]
 
     sections = []
-    for k, (start, level, raw) in enumerate(found):
+    for k, (start, level, heading) in enumerate(found):
         end = len(lines)
         for nxt_start, nxt_level, _ in found[k + 1:]:
             if nxt_level <= level:
                 end = nxt_start - 1
                 break
-        a = ANCHOR.search(raw)
-        heading = ANCHOR.sub("", raw).strip() if a else raw
-        sections.append(Section(level, heading, a.group(1) if a else None, start, end))
+        sections.append(Section(level, heading, start, end))
     return sections
 
 
-def parse_line_range(ref_text: str) -> list[tuple[int, int]] | None:
-    """참조 구문의 ln[...] -> [(시작, 끝), ...] (1부터, 끝 포함). 없으면 None (파일 전체).
-    FastAPI 문서 빌드 도구(markdown-include-variants 0.0.8 parse_lines_index)와 같게
-    구간을 정렬해서 돌려준다. 48건 전부 빌드 도구 출력과 코드 줄·생략 위치가 일치함을 확인."""
-    m = LINE_RANGE.search(ref_text)
+def frontmatter_value(text: str, key: str) -> str | None:
+    """머리말의 한 줄짜리 값 (예: title, type). 없으면 None."""
+    m = FRONTMATTER.match(text)
     if not m:
         return None
-    ranges = []
-    for part in m.group(1).split(","):
-        a, _, b = part.strip().partition(":")
-        ranges.append((int(a), int(b or a)))
-    return sorted(ranges)
+    v = re.search(rf"^{re.escape(key)}:\s*(.+?)\s*$", m.group(1), re.M)
+    return v.group(1).strip("\"'") if v else None
 
 
-def resolve_ref(ref: str, doc_id: str) -> str | None:
-    """코드 참조 경로 -> 참조 대상 파일의 doc_id.
-    1) 문서 기준 상대 경로  2) 앞의 ../ 를 뗀 저장소 루트 기준 경로. 이 둘만 시도한다.
-    (파일 이름 검색은 tutorial001.py 같은 동명 파일이 많아 오매칭되므로 쓰지 않음)"""
-    candidates = (
-        posixpath.normpath(posixpath.join(posixpath.dirname(doc_id), ref)),
-        posixpath.normpath(re.sub(r"^(\.\./)+", "", ref)),
-    )
-    for c in candidates:
-        if not c.startswith("../") and (CFG.raw_repo / c).is_file():
-            return c
-    return None
+def _resolve_link(target: str, doc_id: str) -> str | None:
+    """링크 대상 -> 위키 doc_id 후보. 외부 링크·앵커만 있는 링크는 None.
+    폴더 링크("about/")는 그 폴더의 index.md."""
+    if re.match(r"^[a-z][a-z0-9+.-]*:", target, re.I) or target.startswith("#"):
+        return None
+    target = target.split("#", 1)[0]
+    if target.endswith("/"):
+        target += "index.md"
+    return posixpath.normpath(posixpath.join(posixpath.dirname(doc_id), target))
 
 
-def is_excluded(doc_id: str) -> bool:
-    rel = doc_id[len(DOCS_PREFIX):]
-    for pat in CFG.corpus_exclude:
-        if (pat.endswith("/") and rel.startswith(pat)) or rel == pat:
-            return True
-    return False
+def _kind(doc_id: str) -> str:
+    if doc_id == CFG.index_page:
+        return "quickstart"
+    return "index" if posixpath.basename(doc_id) == "index.md" else "page"
 
 
-def _read(doc_id: str) -> tuple[str, str]:
-    """(원문, sha256). 바이트 그대로 디코딩해 줄바꿈 변환도 하지 않는다."""
-    b = (CFG.raw_repo / doc_id).read_bytes()
+def _title(doc_id: str, text: str, sections: list[Section]) -> str:
+    if t := frontmatter_value(text, "title"):
+        return t
+    if posixpath.basename(doc_id) == "index.md":     # 목차 페이지 제목은 모두 "# Files" 라 폴더로 구분
+        folder = posixpath.dirname(doc_id)
+        return f"{folder}/ index" if folder else "index"
+    top = next((s for s in sections if s.level == 1), None)
+    return top.heading if top else doc_id
+
+
+def _read(path: Path) -> tuple[str, str]:
+    """(원문, sha256). 줄바꿈만 LF 로 통일하고 나머지는 바이트 그대로."""
+    b = path.read_bytes().replace(b"\r\n", b"\n")
     return b.decode("utf-8"), hashlib.sha256(b).hexdigest()
 
 
-def _load_md(doc_id: str) -> Document:
-    text, sha = _read(doc_id)
+def _load_page(doc_id: str) -> Document:
+    text, sha = _read(CFG.openwiki_dir / doc_id)
     sections = parse_sections(text)
-    top = next((s for s in sections if s.level == 1), None)
-    title = top.heading if top else posixpath.basename(doc_id)
+    lines = _lines(text)
+    code = _fence_lines(lines)
 
-    refs, unresolved = [], []
-    for m in CODE_REF.finditer(text):
-        target = resolve_ref(m.group(1), doc_id)
-        if target is None:
-            if m.group(0) not in unresolved:
-                unresolved.append(m.group(0))
-        elif target not in refs:
-            refs.append(target)
-
-    return Document(doc_id, "doc", title, text, count_tokens(text), sha,
-                    sections=sections, code_refs=refs, unresolved_refs=unresolved)
-
-
-def _load_code(doc_id: str) -> Document:
-    text, sha = _read(doc_id)
-    return Document(doc_id, "code", doc_id, text, count_tokens(text), sha)
+    raw_links = []
+    for i, ln in enumerate(lines, 1):
+        if i not in code:
+            raw_links += [t for t in LINK.findall(ln) if _resolve_link(t, doc_id) is not None]
+    return Document(doc_id, _kind(doc_id), _title(doc_id, text, sections), text,
+                    count_tokens(text), sha, sections=sections,
+                    links=raw_links, code_lines=frozenset(code))
 
 
 # ---------------- 코퍼스 ----------------
 
-_MARKUP = re.compile(r"\{\s*#[\w\-]+\s*\}|</?[a-zA-Z][^>]*>")
+_MARKUP = re.compile(r"</?[a-zA-Z][^>]*>")
 # LLM 이 인용문을 `...` 나 "..." 로 감싸거나, 원문의 인라인 코드 백틱을 빼먹는 경우 대비
 _QUOTES = re.compile("[`\"'“”‘’]")
 
 
 def match_form(s: str) -> str:
-    """인용문과 원문을 비교할 때만 쓰는 형태. 앵커 { #id }, HTML 태그, 백틱, 따옴표
+    """인용문과 원문을 비교할 때만 쓰는 형태. HTML 태그, 백틱, 따옴표
     (" ' “ ” ‘ ’)를 양쪽에서 똑같이 걷어내고 공백을 하나로 접는다.
     줄 번호는 원본 기준 그대로이고, 이 형태는 비교에만 쓴다."""
     return re.sub(r"\s+", " ", _QUOTES.sub("", _MARKUP.sub("", s))).strip()
 
 
 class Corpus:
-    def __init__(self, documents: list[Document], source: str):
+    def __init__(self, documents: list[Document], source: dict):
         self._docs = {d.doc_id: d for d in sorted(documents, key=lambda d: d.doc_id)}
-        self.source = source        # 스냅샷 출처 (SOURCE.md 내용 또는 git 커밋)
-        self._expanded: dict[str, tuple[str, list]] = {}
+        self.source = source        # 위키 출처 (SOURCE.md 요약)
         self._match_lines: dict[str, list[str]] = {}
 
     def get(self, doc_id: str) -> Document:
@@ -222,130 +224,74 @@ class Corpus:
         return [d for d in self._docs.values() if kind is None or d.kind == kind]
 
     def section_text(self, doc_id: str, heading: str) -> str:
-        """제목(앵커 뗀 텍스트) 또는 앵커 id로 섹션 원문을 돌려준다. 같은 제목이 여럿이면 첫 번째."""
+        """제목 텍스트로 섹션 원문을 돌려준다. 같은 제목이 여럿이면 첫 번째."""
         d = self.get(doc_id)
         key = heading.lstrip("#").strip()
         for s in d.sections:
-            if key in (s.heading, s.anchor):
+            if s.heading == key:
                 return "\n".join(_lines(d.text)[s.start - 1:s.end])
         raise KeyError(f"{doc_id} 에 '{heading}' 섹션이 없습니다")
 
-    # ---------- 코드 참조 펼친 보기 ----------
-
-    def _expand(self, doc_id: str) -> tuple[str, list[tuple[str, int] | None]]:
-        """(펼친 텍스트, 줄별 출처). 출처는 (원본 doc_id, 그 파일의 줄 번호),
-        펼치면서 끼워 넣은 ``` / # file: 줄은 None. Document.text 는 건드리지 않는다."""
-        if doc_id in self._expanded:
-            return self._expanded[doc_id]
-        d = self.get(doc_id)
-        out: list[str] = []
-        origin: list[tuple[str, int] | None] = []
-
-        def emit(line, src):
-            out.append(line)
-            origin.append(src)
-
-        for i, ln in enumerate(_lines(d.text), 1):
-            pos = 0
-            for m in CODE_REF.finditer(ln):
-                target = resolve_ref(m.group(1), doc_id) if d.kind == "doc" else None
-                if target is None or target not in self._docs:
-                    continue                      # 해석 실패 참조는 원문 그대로 둔다
-                if ln[pos:m.start()].strip():
-                    emit(ln[pos:m.start()], (doc_id, i))
-                emit("```python", None)
-                emit(f"# file: {target}", None)
-                code = _lines(self._docs[target].text)
-                # ln[...] 이 있으면 웹사이트처럼 그 줄만 넣고, 빠진 부분은 "# ..." 한 줄로 표시
-                ranges = parse_line_range(m.group(0)) or [(1, len(code))]
-                last = 0
-                for a, b in ranges:
-                    a, b = max(a, 1), min(b, len(code))
-                    if a > b:
-                        continue
-                    if a > last + 1:
-                        emit("# ...", None)
-                    for k in range(a, b + 1):
-                        emit(code[k - 1], (target, k))
-                    last = b
-                if last < len(code):
-                    emit("# ...", None)
-                emit("```", None)
-                pos = m.end()
-            if pos == 0:
-                emit(ln, (doc_id, i))
-            elif ln[pos:].strip():
-                emit(ln[pos:], (doc_id, i))
-
-        self._expanded[doc_id] = ("\n".join(out), origin)
-        return self._expanded[doc_id]
-
     def expanded_text(self, doc_id: str) -> str:
-        """{* ... *} 코드 참조를 실제 코드로 펼친 보기용 텍스트.
-        각 코드 블록은 "```python" / "# file: <doc_id>" 로 시작한다. ln[...] 이 있으면
-        그 줄만 넣고 빠진 부분은 "# ..." 로 표시한다. 원문(Document.text)은 그대로."""
-        return self._expand(doc_id)[0]
+        """원문 그대로 (Document.text). 원본 코퍼스 시절 코드 펼친 보기의 자리를 지키는 함수로,
+        experiment.py 가 쓴다. 위키는 예제 코드를 이미 본문에 담고 있어 펼칠 것이 없다."""
+        return self.get(doc_id).text
+
+    def in_code(self, doc_id: str, line: int) -> bool:
+        """그 줄이 코드 블록 안(``` 줄 포함)인지."""
+        return line in self.get(doc_id).code_lines
 
     def locate_all(self, doc_id: str, quote: str) -> list[dict]:
-        """인용문이 펼친 텍스트에서 일치하는 원본 위치 전부 -> [{"file": 원본 doc_id, "line": 줄 번호}].
-        펼친 코드 안이면 해당 코드 파일과 그 파일의 줄 번호. 못 찾으면 [].
+        """인용문이 페이지에서 일치하는 위치 전부 -> [{"file": doc_id, "line": 줄 번호}]. 못 찾으면 [].
 
         - 비교는 match_form 형태로 하고, 인용문이 여러 줄이면 가장 긴 줄로 찾는다
-          (```, # file: 줄은 제외). 6자 미만이면 어디든 걸리므로 근거로 인정하지 않는다.
-        - 순서: 문서 본문 줄 먼저, 그다음 펼친 코드 줄. 같은 (file, line) 은 한 번만
-          (같은 코드 파일을 여러 번 펼쳐도 한 번).
+          (``` 줄은 제외). 6자 미만이면 어디든 걸리므로 근거로 인정하지 않는다.
+        - 순서: 코드 블록 밖 줄 먼저, 그다음 코드 블록 안 줄.
         """
         parts = [match_form(ln) for ln in quote.split("\n")]
-        parts = [ln for ln in parts if ln and not ln.startswith(("```", "# file:"))]
+        parts = [ln for ln in parts if ln and not ln.startswith("```")]
         if not parts:
             return []
         needle = max(parts, key=len)
         if len(needle) < 6:
             return []
 
-        text, origin = self._expand(doc_id)
+        d = self.get(doc_id)
         if doc_id not in self._match_lines:
-            self._match_lines[doc_id] = [match_form(ln) for ln in text.split("\n")]
-        lines = self._match_lines[doc_id]
-        found: list[dict] = []
-        seen: set[tuple[str, int]] = set()
-        for own in (True, False):
-            for ln, src in zip(lines, origin):
-                if src and (src[0] == doc_id) == own and needle in ln and src not in seen:
-                    seen.add(src)
-                    found.append({"file": src[0], "line": src[1]})
-        return found
+            self._match_lines[doc_id] = [match_form(ln) for ln in _lines(d.text)]
+        hits = [i for i, ln in enumerate(self._match_lines[doc_id], 1) if needle in ln]
+        hits.sort(key=lambda i: i in d.code_lines)          # 코드 밖 먼저 (안정 정렬)
+        return [{"file": doc_id, "line": i} for i in hits]
 
     def locate(self, doc_id: str, quote: str) -> dict | None:
-        """locate_all 의 첫 위치 -> {"doc_id": 원본 파일, "line": 줄 번호}. 못 찾으면 None.
-        (같은 줄이 양쪽에 있으면 본문 우선)"""
+        """locate_all 의 첫 위치 -> {"doc_id": 페이지, "line": 줄 번호}. 못 찾으면 None."""
         found = self.locate_all(doc_id, quote)
         return {"doc_id": found[0]["file"], "line": found[0]["line"]} if found else None
 
     # ---------- 페이지 경로 표기 ----------
-    # 인덱스·탐색기·채점기가 md 페이지를 가리킬 때 쓰는 짧은 표기 (docs/en/docs 기준 경로).
-    # 모두 이 두 함수만 써서 변환한다. 코드 문서는 인덱스에 나오지 않으므로 다루지 않는다.
+    # 인덱스·탐색기·채점기가 페이지를 가리킬 때 쓰는 표기. 위키 루트 기준 경로라 doc_id 와 같다.
+    # 다른 표기가 필요해지면 이 두 함수만 바꾼다.
 
     def page_ref(self, doc_id: str) -> str:
-        """"docs/en/docs/tutorial/body.md" -> "tutorial/body.md". md 문서(kind="doc")만."""
-        d = self.get(doc_id)
-        if d.kind != "doc" or not doc_id.startswith(DOCS_PREFIX):
-            raise KeyError(f"md 문서가 아닙니다: {doc_id}")
-        return doc_id[len(DOCS_PREFIX):]
+        """doc_id -> 페이지 표기 (현재는 같은 값)."""
+        self.get(doc_id)
+        return doc_id
 
     def resolve_page_ref(self, ref: str) -> str:
-        """page_ref 의 반대. "tutorial/body.md" -> "docs/en/docs/tutorial/body.md".
-        앞뒤 공백, 앞의 "./" 나 "/", 실수로 붙은 "docs/en/docs/" 접두어는 허용한다.
-        코퍼스의 md 문서가 아니면 KeyError."""
+        """page_ref 의 반대. 앞뒤 공백, 앞의 "./" 나 "/", 실수로 붙은 위키 폴더 접두어
+        (data/openwiki/en/), 폴더 링크("about/" -> "about/index.md")는 허용한다.
+        코퍼스의 페이지가 아니면 KeyError."""
         r = ref.strip()
         while r.startswith(("./", "/")):
             r = r[2:] if r.startswith("./") else r[1:]
-        if r.startswith(DOCS_PREFIX):
-            r = r[len(DOCS_PREFIX):]
-        doc_id = DOCS_PREFIX + r
-        if doc_id not in self._docs or self._docs[doc_id].kind != "doc":
+        prefix = _wiki_rel() + "/"
+        if r.startswith(prefix):
+            r = r[len(prefix):]
+        if r == "" or r.endswith("/"):
+            r += "index.md"
+        if r not in self._docs:
             raise KeyError(f"코퍼스에 없는 페이지입니다: {ref!r}")
-        return doc_id
+        return r
 
     def __len__(self):
         return len(self._docs)
@@ -357,50 +303,74 @@ class Corpus:
         return doc_id in self._docs
 
 
-def snapshot_source() -> str:
-    """SOURCE.md 가 있으면 그 내용, 없으면 저장소 git 커밋 해시, 둘 다 없으면 unknown."""
-    src = CFG.raw_dir / "SOURCE.md"
-    if src.is_file():
-        return src.read_text(encoding="utf-8").strip()
-    try:
-        # 상위 프로젝트(token_lab) 저장소를 잘못 읽지 않도록 스냅샷 루트가 git 최상위인지 확인
-        top = subprocess.run(["git", "-C", str(CFG.raw_repo), "rev-parse", "--show-toplevel"],
-                             capture_output=True, text=True, check=True).stdout.strip()
-        if Path(top).resolve() == CFG.raw_repo.resolve():
-            return "git:" + subprocess.run(
-                ["git", "-C", str(CFG.raw_repo), "rev-parse", "HEAD"],
-                capture_output=True, text=True, check=True).stdout.strip()
-    except (OSError, subprocess.CalledProcessError):
-        pass
-    warnings.warn("스냅샷 출처를 알 수 없습니다 (SOURCE.md, git 모두 없음)")
-    return "unknown"
+def _wiki_rel() -> str:
+    """위키 폴더의 프로젝트 루트 기준 경로 (data/openwiki/en). 루트 밖이면 절대 경로."""
+    p = CFG.openwiki_dir.resolve()
+    return p.relative_to(CFG.root).as_posix() if p.is_relative_to(CFG.root) else p.as_posix()
+
+
+# SOURCE.md 표에서 매니페스트에 남길 항목 (표의 첫 칸 -> 키)
+_SOURCE_KEYS = {
+    "OpenWiki": "openwiki",
+    "생성 방식": "method",
+    "생성 모델": "model",
+    "생성 일시": "generated_at",
+    "언어": "language",
+    "입력 FastAPI 커밋": "input_commit",
+    "복사본 저장소 커밋": "wiki_repo_commit",
+    "입력 범위": "input_scope",
+}
+
+
+def wiki_source() -> dict:
+    """위키 출처 요약: SOURCE.md 표의 주요 항목 첫 문장 + 파일 해시."""
+    src = {"wiki": _wiki_rel()}
+    path = CFG.openwiki_dir / "SOURCE.md"
+    if not path.is_file():
+        warnings.warn(f"위키 출처를 알 수 없습니다 (SOURCE.md 없음): {path}")
+        return src
+    text, sha = _read(path)
+    for m in re.finditer(r"^\|\s*([^|]+?)\s*\|\s*(.+?)\s*\|\s*$", text, re.M):
+        key = _SOURCE_KEYS.get(m.group(1))
+        if key:
+            src[key] = re.split(r"(?<=[.)])\s", m.group(2), maxsplit=1)[0]
+    src["source_md_sha256"] = sha
+    return src
 
 
 def load_corpus() -> Corpus:
-    root = CFG.raw_repo
-    if not (root / "docs" / "en").is_dir():
-        raise FileNotFoundError(f"저장소 루트가 아닙니다 (docs/en 없음): {root}")
+    root = CFG.openwiki_dir
+    if not (root / CFG.index_page).is_file():
+        raise FileNotFoundError(f"OpenWiki 위키가 아닙니다 ({CFG.index_page} 없음): {root}")
 
-    md_ids = sorted(p.relative_to(root).as_posix() for p in (root / DOCS_PREFIX).rglob("*.md"))
-    code_ids = sorted(p.relative_to(root).as_posix() for p in (root / CODE_PREFIX).rglob("*.py"))
+    ids = sorted(
+        p.relative_to(root).as_posix() for p in root.rglob("*.md")
+        if not any(part.startswith(".") for part in p.relative_to(root).parts)
+        and p.relative_to(root).as_posix() not in INTERNAL_FILES)
+    docs = [_load_page(i) for i in ids]
 
-    docs = [_load_md(i) for i in md_ids if not is_excluded(i)]
-    # 코드 범위: docs_src 전체 + 문서가 참조하는 그 외 파일 (config.corpus_exclude 주석 참고)
-    extra = sorted({r for d in docs for r in d.code_refs} - set(code_ids))
-    codes = {i: _load_code(i) for i in sorted(code_ids + extra)}
-    for d in docs:                       # doc_id 순으로 돌므로 referenced_by 도 정렬됨
-        for ref in d.code_refs:
-            if ref in codes:
-                codes[ref].referenced_by.append(d.doc_id)
+    # 링크를 doc_id 로 확정. 위키 안 파일로 해석되지 않으면 broken_links 로
+    known = set(ids)
+    for d in docs:
+        resolved, broken = [], []
+        for t in d.links:
+            r = _resolve_link(t, d.doc_id)
+            if r in known:
+                if r != d.doc_id and r not in resolved:
+                    resolved.append(r)
+            elif t not in broken:
+                broken.append(t)
+        d.links, d.broken_links = resolved, broken
 
-    return Corpus(docs + list(codes.values()), snapshot_source())
+    return Corpus(docs, wiki_source())
 
 
 def manifest_text(corpus: Corpus) -> str:
-    """첫 줄은 스냅샷 출처, 이후 문서별 한 줄. 같은 스냅샷이면 바이트 단위로 동일."""
-    rows = [{"source": corpus.source, "documents": len(corpus)}]
+    """첫 줄은 위키 출처, 이후 문서별 한 줄. 같은 위키면 바이트 단위로 동일."""
+    rows = [{"source": corpus.source, "documents": len(corpus),
+             "kinds": dict(sorted(Counter(d.kind for d in corpus).items()))}]
     rows += [{"doc_id": d.doc_id, "kind": d.kind, "title": d.title, "tokens": d.tokens,
-              "sha256": d.sha256, "code_refs": len(d.code_refs)} for d in corpus]
+              "sha256": d.sha256, "links": len(d.links)} for d in corpus]
     return "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows)
 
 
@@ -418,111 +388,54 @@ def write_manifest(corpus: Corpus, path: Path | None = None) -> Path:
 
 # ---------------- 통계 ----------------
 
-MKDOCS_YML = "docs/en/mkdocs.yml"
-
-
-def load_nav() -> list | None:
-    """docs/en/mkdocs.yml 의 nav 원형 (pyyaml 파싱 결과). 페이지 경로는 docs/en/docs 기준.
-    nav 블록만 떼어 읽는다 (파일 전체에는 !!python/name 태그가 있어 safe_load가 실패한다).
-    파일이나 nav 가 없으면 None."""
-    import yaml
-    mk = CFG.raw_repo / MKDOCS_YML
-    if not mk.is_file():
-        return None
-    lines = mk.read_text(encoding="utf-8").splitlines()
-    try:
-        s = next(i for i, ln in enumerate(lines) if ln.startswith("nav:"))
-    except StopIteration:
-        return None
-    e = s + 1
-    while e < len(lines) and (not lines[e].strip() or lines[e][0] in " -#"):
-        e += 1
-    return yaml.safe_load("\n".join(lines[s:e]))["nav"]
-
-
-def _nav_pages() -> tuple[int, list[str]] | None:
-    """nav: (최상위 항목 수, 페이지 경로 목록)."""
-    try:
-        nav = load_nav()
-    except ImportError:
-        return None
-    if nav is None:
-        return None
-
-    pages = []
-
-    def walk(node):
-        if isinstance(node, str):
-            pages.append(node)
-        elif isinstance(node, list):
-            for x in node:
-                walk(x)
-        elif isinstance(node, dict):
-            for v in node.values():
-                walk(v)
-
-    walk(nav)
-    return len(nav), pages
-
-
 def _dist(xs: list[int]) -> str:
     return (f"최소 {min(xs):,} / 중앙 {int(median(xs)):,} / "
             f"평균 {int(mean(xs)):,} / 최대 {max(xs):,}")
 
 
 def print_stats(corpus: Corpus):
-    docs, codes = corpus.docs("doc"), corpus.docs("code")
-    print(f"출처       : {corpus.source}")
-    print(f"문서(md)   : {len(docs)}개   코드(py): {len(codes)}개")
-    dt, ct = sum(d.tokens for d in docs), sum(d.tokens for d in codes)
-    print(f"총 토큰    : {dt + ct:,}  (문서 {dt:,} / 코드 {ct:,})")
-    print(f"문서 토큰  : {_dist([d.tokens for d in docs])}")
-    print(f"코드 토큰  : {_dist([d.tokens for d in codes])}")
-    unref = sum(1 for c in codes if not c.referenced_by)
-    print(f"참조 없는 코드 파일: {unref}개")
+    print("출처")
+    for k, v in corpus.source.items():
+        print(f"  {k:18s} {v}")
 
-    print("\n폴더별 문서")
+    kinds = Counter(d.kind for d in corpus)
+    print(f"\n페이지     : {len(corpus)}개 (본문 page {kinds['page']} / "
+          f"최상위 목차 quickstart {kinds['quickstart']} / 목차 index {kinds['index']})")
+    for k in ("page", "quickstart", "index"):
+        g = corpus.docs(k)
+        if g:
+            print(f"  {k:10s} 토큰 합 {sum(d.tokens for d in g):>8,}   {_dist([d.tokens for d in g])}")
+    print(f"  전체       토큰 합 {sum(d.tokens for d in corpus):>8,}")
+
+    print("\n폴더별 페이지 (본문 / 목차)")
     folders: dict[str, list[Document]] = {}
-    for d in docs:
-        rel = d.doc_id[len(DOCS_PREFIX):]
-        folders.setdefault(rel.split("/")[0] if "/" in rel else "(root)", []).append(d)
+    for d in corpus:
+        folders.setdefault(d.doc_id.split("/")[0] if "/" in d.doc_id else "(root)", []).append(d)
     for k in sorted(folders):
         g = folders[k]
-        print(f"  {k:12s} {len(g):4d}개  {sum(d.tokens for d in g):>9,} 토큰")
+        pages = [d for d in g if d.kind == "page"]
+        print(f"  {k:16s} {len(pages):3d} / {len(g) - len(pages)}   "
+              f"본문 {sum(d.tokens for d in pages):>7,} 토큰")
 
-    refs = [m.group(0) for d in docs for m in CODE_REF.finditer(d.text)]
-    ranged = sum(1 for r in refs if LINE_RANGE.search(r))
-    outside = sorted({c.doc_id for c in codes if not c.doc_id.startswith(CODE_PREFIX)})
-    print(f"\n코드 참조  : {len(refs)}건 (줄 범위 ln[...] 지정 {ranged}건)")
-    print(f"docs_src 밖 코드 문서: {len(outside)}개 {outside if outside else ''}")
+    top = corpus.get(CFG.index_page) if CFG.index_page in corpus else None
+    print(f"\n최상위 목차 페이지 (CFG.index_page): {CFG.index_page}"
+          + (f"  ({top.tokens:,} 토큰)" if top else "  ※ 코퍼스에 없음"))
+    if top:
+        pages = {d.doc_id for d in corpus.docs("page")}
+        missing = sorted(pages - set(top.links))
+        print(f"  링크하는 본문 페이지 {len(pages & set(top.links))} / {len(pages)}"
+              + (f"  (빠진 페이지: {', '.join(missing)})" if missing else ""))
 
-    bad = [(d.doc_id, r) for d in docs for r in d.unresolved_refs]
-    print(f"\n해석 실패 코드 참조: {len(bad)}개")
-    for doc_id, r in bad[:20]:
-        print(f"  {doc_id}: {r}")
+    n_links = sum(len(d.links) for d in corpus)
+    code = sum(len(d.code_lines) for d in corpus)
+    total = sum(len(_lines(d.text)) for d in corpus)
+    print(f"\n내부 링크  : {n_links}개 (코드 블록 밖)")
+    print(f"코드 블록 줄 비율: {100 * code / total:.1f}% ({code:,} / {total:,}줄)")
 
-    mk = CFG.raw_repo / MKDOCS_YML
-    print(f"\nmkdocs.yml : {'있음' if mk.is_file() else '없음'} ({mk.relative_to(CFG.root).as_posix()})")
-    if mk.is_file():
-        nav = _nav_pages()
-        if nav is None:
-            print("  nav 파싱 불가 (pyyaml 없음 또는 nav 없음)")
-        else:
-            top, pages = nav
-            md_pages = {DOCS_PREFIX + p for p in pages if p.endswith(".md")}
-            in_corpus = {d.doc_id for d in docs}
-            print(f"  nav 최상위 {top}개 / 페이지 {len(pages)}개 (md {len(md_pages)}개)")
-            print(f"  코퍼스 문서 중 nav 에 있음 {len(in_corpus & md_pages)} / "
-                  f"없음 {len(in_corpus - md_pages)}")
-            missing = sorted(in_corpus - md_pages)
-            if missing:
-                print("  nav 에 없는 코퍼스 문서: " + ", ".join(m[len(DOCS_PREFIX):] for m in missing))
-
-    idx = CFG.raw_repo / DOCS_PREFIX / "index.md"
-    print(f"\n{DOCS_PREFIX}index.md 첫 20줄")
-    if idx.is_file():
-        for ln in _lines(_read(DOCS_PREFIX + "index.md")[0])[:20]:
-            print("  | " + ln.rstrip("\r")[:120])
+    bad = [(d.doc_id, t) for d in corpus for t in d.broken_links]
+    print(f"\n깨진 링크  : {len(bad)}개" + ("  ※ 경고: 위키 원본이라 고치지 않는다" if bad else ""))
+    for doc_id, t in bad:
+        print(f"  ※ {doc_id}: ({t})")
 
 
 def main():
