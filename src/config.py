@@ -38,6 +38,10 @@ class Config:
     backend: str = _env("LLM_BACKEND", "ollama")
     base_url: str = _env("LLM_BASE_URL", "http://localhost:11434")
     api_key: str = _env("LLM_API_KEY", "")
+    # 평가셋 생성 호출 전용 접속 정보 (dataset_builder --gen-backend openai 일 때만 쓴다).
+    # 실험용 LLM_BASE_URL/LLM_API_KEY 와 섞이지 않게 따로 둔다. 모델·백엔드는 명령 인자로만 고른다
+    gen_base_url: str = _env("GEN_BASE_URL", "")
+    gen_api_key: str = _env("GEN_API_KEY", "")
 
     # ---------- 모델 ----------
     model: str = _env("LLM_MODEL", "qwen2.5:7b")          # 답변 생성
