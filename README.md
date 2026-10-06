@@ -20,12 +20,15 @@ RAG(Vector DB 검색) 단계를 두지 않고, 질문마다 정답 근거 문서
 
 ### 정량 목표
 
-| 지표 | 정의 | 목표 |
-|---|---|---|
-| 토큰 절감률 | (1 − 압축 후 토큰 / 원본 토큰) × 100 | 50% 이상 |
-| 의미 손실률 | 임베딩 코사인 유사도 및 핵심 엔티티 보존율 기반 | 5% 이내 |
-| 답변 정확도 유지율 | 압축 문맥 정답률 / 원본 문맥 정답률 × 100 | 90% 이상 |
-| 순 토큰 절감률 | 압축에 소모된 토큰까지 차감한 실질 절감률 | 측정·보고 |
+| 지표 | 정의 | 목표 | `summary.json` 필드 |
+|---|---|---|---|
+| 토큰 절감률 | (1 − 압축 후 토큰 / 원본 토큰) × 100 | 50% 이상 | `reduction_pct` |
+| 의미 손실률 | 임베딩 코사인 유사도(손실률 = 1 − 유사도) 및 핵심 엔티티 보존율 기반 | 5% 이내 | `semantic_sim`, `entity_retention` |
+| 답변 정확도 유지율 | 압축 문맥 답변 정확도 / 원본 문맥(`none`) 답변 정확도 × 100 | 90% 이상 | `answer_accuracy_retention_pct` |
+| 순 토큰 절감률 | 압축에 소모된 LLM 토큰까지 차감한 실질 절감률 | 측정·보고 | `net_reduction_pct` |
+
+답변 정확도(`answer_accuracy`)는 정답/오답이 아니라, 문항의 핵심 사실(`key_facts`) 중
+답변이 전달한 비율(0~1)이다. 자세한 내용은 [3. 압축 실험](#3-압축-실험-ab-비교) 참고.
 
 ### 압축 기법
 
@@ -60,7 +63,7 @@ token_lab/
 │   ├── llm.py                # LLM 호출 (백엔드 교체 가능), 토큰 계산
 │   ├── corpus.py             # 코퍼스 로더 (OpenWiki 위키, 문서의 단일 출처)
 │   ├── dataset_builder.py    # 평가 데이터셋 생성 및 검수
-│   ├── grader.py             # 정답 채점 (단어 일치 + LLM 판정)
+│   ├── grader.py             # 답변 채점 (key_facts 단위 LLM 판정 + 단어 일치)
 │   ├── experiment.py         # 압축 실험 실행 (A/B 비교)
 │   └── compressors/          # 압축 기법 (none, rule)
 ├── results/                  # 실험 로그 (runs/<run_id>/)
@@ -105,6 +108,10 @@ python src/dataset_builder.py --stats                    # 통계 확인
 | 자동 검증 | 정답이 문서에 명시되어 있고 구체적인지 LLM이 판정 |
 | Closed-book 검사 | 문서 없이도 맞히는 질문은 제외 (압축 효과 측정 불가) |
 
+문항마다 정답과 함께 `key_entities`(핵심 용어·이름·값, 압축 후 남았는지 확인용)와
+`key_facts`(정답이 전달해야 할 사실을 하나씩 나눈 목록, 답변 정확도 채점용)를 만든다.
+`key_facts` 가 없는 후보는 제외된다.
+
 주요 옵션 (전체는 `--help`)
 
 ```
@@ -128,11 +135,34 @@ python src/experiment.py --compressors none,rule --semantic   # 임베딩 유사
 문맥은 문항의 정답 근거 페이지 원문이고, `none` 이 기준선이다.
 결과는 `results/runs/<run_id>/` 에 저장된다.
 
-- `trials.jsonl` 문항 x 압축기마다 한 줄 (토큰, 절감률, 답변, 채점, TTFT 등)
-- `summary.json` 압축기별 집계 (절감률, 순 절감률, 정확도, 정확도 유지율, 엔티티 보존율)
+- `trials.jsonl` 문항 x 압축기마다 한 줄 (토큰, 절감률, 답변, 문항별 지표, key_fact별 판정, TTFT 등)
+- `summary.json` 압축기별 집계 (아래 표)
 - `contexts/` 압축 전후 문맥 (압축 결과를 눈으로 확인할 때)
 
-채점은 짧은 정답(5단어 이하)은 단어 일치, 긴 정답은 LLM 판정(`judge_model`)을 쓴다.
+#### 평가 지표 (`summary.json`)
+
+| # | 필드 | 의미 | 계산 |
+|---|---|---|---|
+| 1 | `reduction_pct` | 토큰 절감률 | 1 − 압축 후 문맥 토큰 / 원문 문맥 토큰 (Qwen 토크나이저) |
+| 2 | `net_reduction_pct` | 순 토큰 절감률 | 압축 과정에서 LLM 이 쓴 토큰까지 더해서 계산 (LLM 안 쓰는 압축기는 1과 같음) |
+| 3 | `semantic_sim` | 의미 유사도 | 압축 전후 문맥 임베딩(bge-m3)의 코사인 유사도. `--semantic` 일 때만 |
+| 4 | `entity_retention` | 핵심 엔티티 보존율 | 문항의 `key_entities` 중 압축 문맥에 남은 비율 |
+| 5 | `answer_accuracy` | 답변 정확도 | 문항마다 `key_facts` 중 답변이 전달한 비율(0~1)의 평균 |
+| 6 | `answer_accuracy_retention_pct` | 답변 정확도 유지율 | 같은 문항끼리 짝지어 압축기 / `none` 답변 정확도 × 100 (`none` 자신은 null) |
+
+보조 기록 (지표 아님, 비교·디버깅용)
+
+- `binary_accuracy` 예전 방식의 정답/오답 비율 (짧은 정답은 단어 일치, 긴 정답은 LLM YES/NO 판정)
+- `answer_in_context` 짧은 정답이 압축 문맥에 단어 그대로 남은 비율
+- `baseline_answer_accuracy`, `paired_answer_accuracy` 유지율 계산에 쓴 짝지은 문항의 두 정확도
+- `ctx_tokens_raw`, `ctx_tokens`, `compress_llm_tokens`, `ttft_sec`, `latency_sec`, `ctx_overflow`
+
+#### 채점 방식
+
+- 답변 정확도는 LLM judge(`judge_model`)가 `key_fact` 하나하나를 충족/불충족으로 판정한다.
+  표현이 달라도 뜻이 같으면 충족이고, 판정 결과를 읽지 못한 fact 는 불충족으로 센다. v0 은 fact 별 가중치가 같다.
+- 판정 결과는 `trials.jsonl` 의 `fact_results`, `satisfied_facts`, `total_facts` 에 남는다.
+- 평가셋 문항에 `key_facts` 가 있어야 한다. 없는 문항이나 `--no-judge` 로 실행하면 5·6번 지표는 `null` 이다.
 
 압축기는 `compress(question, context) -> CompressResult` 인터페이스를 따르고
 `src/compressors/__init__.py` 의 `REGISTRY` 에 등록하면 `--compressors` 로 고를 수 있다.
@@ -176,5 +206,5 @@ LLM_MODEL=qwen2.5:3b python src/dataset_builder.py --docs 3 --dry-run
 - [ ] 압축 기법 2 — 재귀 요약
 - [ ] 하이브리드 파이프라인
 - [ ] 멀티 에이전트 오케스트레이션 검증
-- [ ] 평가 지표 모듈 (의미 손실률 · 정답 채점) — 채점·엔티티 보존율 구현, 의미 손실률은 bge-m3 필요
+- [x] 평가 지표 모듈 (6개 지표, key_facts 기반 답변 정확도) — 의미 유사도는 bge-m3 필요, judge 신뢰도 검증 전
 - [ ] Streamlit 대시보드
