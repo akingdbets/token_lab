@@ -132,6 +132,30 @@ python src/dataset_builder.py --import 후보.jsonl --generator 모델이름 --d
   문서 없이 풀기와 종합형 한 페이지 검사는 실험 모델 기준이라 항상 실행한다.
 - 통과 문항에는 `persona` 와 `gen_log`(생성 모델, 후보 파일, 줄 번호)가 붙는다.
 
+#### 생성 모델 따로 고르기 (`--gen-model`, `--gen-backend`)
+
+생성 호출만 다른 모델로 보내고, 바꿔 쓰기·자동 검증·문서 없이 풀기·한 페이지 검사는 실험 모델 그대로 한다.
+
+```bash
+python src/dataset_builder.py --gen-model <Ollama 모델> --docs 5 --dry-run    # 로컬 Ollama (무료)
+
+# OpenAI 호환 API (OpenAI, Anthropic 호환 엔드포인트 등). 키는 GEN_API_KEY 에서만 읽는다
+GEN_BASE_URL=<API 주소> GEN_API_KEY=<키> \
+  python src/dataset_builder.py --gen-backend openai --gen-model <모델> --docs 5          # 예상치만 출력하고 멈춤
+GEN_BASE_URL=<API 주소> GEN_API_KEY=<키> \
+  python src/dataset_builder.py --gen-backend openai --gen-model <모델> --docs 5 --yes    # 실제 호출
+```
+
+요금이 나갈 수 있는 호출(로컬이 아닌 OpenAI 호환 서버)에 대한 안전장치
+
+- `--yes` 가 없으면 예상 호출 수·입력/출력 토큰만 출력하고 아무것도 호출하지 않는다.
+  실험 모델 자체가 원격 API 로 설정돼 있을 때(`LLM_BACKEND=openai` + 원격 `LLM_BASE_URL`)도 같다 (`--import` 포함).
+- 생성 호출 수는 `--max-gen-calls` 를 넘지 않는다 (원격 기본값: 계획한 호출 수, JSON 재시도 포함).
+  상한에 닿으면 생성을 멈추고 그때까지 만든 문항만 처리한다.
+- 원격 생성 호출은 실패해도 다시 보내지 않는다. 생성 출력은 호출당 2048 토큰으로 자른다.
+- 실험용 `LLM_API_KEY` 는 생성에 쓰지 않는다. `--dry-run` 도 LLM 호출은 한다.
+- 확실히 막으려면 API 콘솔에서 월 사용 한도를 걸어 둔다.
+
 #### 평가셋 폴더 (`EVAL_DIR`)
 
 기본 `data/eval/` 은 git 밖 작업 공간이다. git 으로 공유하는 평가셋은 `data/evalsets/<이름>/` 에 두고
