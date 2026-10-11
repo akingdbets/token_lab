@@ -10,22 +10,27 @@
 
 RAG(Vector DB 검색) 단계를 두지 않고, 질문마다 정답 근거 문서를 직접 입력한다.
 검색 품질이라는 변수를 제거하여, 성능 변화가 압축 기법에 의한 것만 측정되도록 통제하기 위함이다.
-압축 모듈은 문자열을 받아 문자열을 반환하는 독립 구조이므로, 추후 RAG 파이프라인의
+압축 대상은 LLM 입력 전체(지시문 + 근거 문서 + 질문)이고, 기법마다 어느 부분을 줄일지 고른다.
+압축 모듈은 입력 세 부분을 받아 압축된 세 부분을 돌려주는 독립 구조이므로, 추후 RAG 파이프라인의
 검색 결과 후처리 단계에 그대로 연결할 수 있다.
 
 ```
 [준비]  OpenWiki 위키(코퍼스) → 평가 데이터셋 생성
-[실험]  질문 + 근거 문서 → 압축 → LLM 답변 → 평가·기록 → 대시보드
+[실험]  지시문 + 근거 문서 + 질문 → 압축 → LLM 답변 → 평가·기록 → 대시보드
 ```
 
 ### 정량 목표
 
 | 지표 | 정의 | 목표 | `summary.json` 필드 |
 |---|---|---|---|
-| 토큰 절감률 | (1 − 압축 후 토큰 / 원본 토큰) × 100 | 50% 이상 | `reduction_pct` |
-| 의미 손실률 | 임베딩 코사인 유사도(손실률 = 1 − 유사도) 및 핵심 엔티티 보존율 기반 | 5% 이내 | `semantic_sim`, `entity_retention` |
-| 답변 정확도 유지율 | 압축 문맥 답변 정확도 / 원본 문맥(`none`) 답변 정확도 × 100 | 90% 이상 | `answer_accuracy_retention_pct` |
-| 순 토큰 절감률 | 압축에 소모된 LLM 토큰까지 차감한 실질 절감률 | 측정·보고 | `net_reduction_pct` |
+| 입력 토큰 절감률 | (1 − 압축 후 입력 토큰 / 원본 입력 토큰) × 100. 지시문 + 문서 + 질문 전체 메시지 기준 | 50% 이상 | `input_reduction_pct` |
+| 의미 손실률 | max(1 − 의미 유사도, 1 − 핵심 엔티티 보존율), 문맥 기준 | 5% 이내 | `semantic_loss`, `semantic_loss_within_5pct` |
+| 답변 정확도 유지율 | 압축 입력 답변 정확도 / 원본 입력(`none`) 답변 정확도 × 100 | 90% 이상 | `answer_accuracy_retention_pct` |
+| 순 입력 토큰 절감률 | 압축에 소모된 LLM 토큰까지 차감한 실질 절감률 | 측정·보고 | `net_input_reduction_pct` |
+
+주 지표가 **문맥 토큰 절감률(`reduction_pct`)에서 입력 토큰 절감률(`input_reduction_pct`)로 바뀌었다.**
+문맥만 줄인 압축기도 지시문·질문·채팅 템플릿 토큰이 분모에 들어가므로 입력 토큰 절감률은 문맥 절감률보다 낮게 나온다.
+`reduction_pct` 는 보조 지표로 남긴다.
 
 답변 정확도(`answer_accuracy`)는 정답/오답이 아니라, 문항의 핵심 사실(`key_facts`) 중
 답변이 전달한 비율(0~1)이다. 자세한 내용은 [3. 압축 실험](#3-압축-실험-ab-비교) 참고.
@@ -67,7 +72,7 @@ token_lab/
 │   ├── grader.py             # 답변 채점 (key_facts 단위 LLM 판정 + 단어 일치)
 │   ├── experiment.py         # 압축 실험 실행 (A/B 비교)
 │   ├── prompts/              # 답변 지시문 (answer_v1.md ...), --answer-prompt 로 선택
-│   └── compressors/          # 압축 기법 (none, rule)
+│   └── compressors/          # 입력 압축 기법 (none, rule) 과 조합(">")
 ├── results/                  # 실험 로그 (runs/<run_id>/)
 └── dashboard/                # Streamlit 대시보드 (예정)
 ```
@@ -180,6 +185,7 @@ python src/experiment.py                              # dev 문항, none(기준�
 python src/experiment.py --split all --limit 5        # 연결 확인용
 python src/experiment.py --compressors none,rule --semantic   # 임베딩 유사도 포함 (bge-m3)
 python src/experiment.py --answer-prompt v1           # 답변 지시문 버전 (기본 v1)
+python src/experiment.py --compressors "none,rule>llmlingua2"  # ">" 로 압축기를 순서대로 이어 붙임 (따옴표 필수)
 ```
 
 > **답변 지시문 v1 이전 결과와는 비교 불가.** v1 부터 답변 지시문을 `src/prompts/answer_v1.md` 로 분리하고
@@ -192,8 +198,10 @@ python src/experiment.py --answer-prompt v1           # 답변 지시문 버전 
 마지막 규칙(`{persona_format}` 자리)에 들어간다. persona 가 없는 문항은 `default` 줄(`Answer concisely.`)을 쓴다.
 user 메시지는 문서와 질문만 담는다.
 
-문항마다 `질문 → 근거 문서 → 압축 → LLM 답변 → 채점 → 로그` 를 압축기별로 실행한다.
+문항마다 `질문 → 근거 문서 → 입력 압축 → LLM 답변 → 채점 → 로그` 를 압축기별로 실행한다.
 문맥은 문항의 정답 근거 페이지 원문이고, `none` 이 기준선이다.
+압축기는 system 지시문(persona 줄을 끼운 뒤 전체), 문맥, 질문 중 자기 `targets` 에 든 부분만 줄이고,
+답변 메시지는 압축된 세 부분으로 다시 조립한다. `a>b` 조합은 a 의 출력이 b 의 입력이 된다.
 결과는 `results/runs/<run_id>/` 에 저장된다.
 
 - `trials.jsonl` 문항 x 압축기마다 한 줄 (토큰, 절감률, 답변, 문항별 지표, key_fact별 판정, TTFT 등)
@@ -204,12 +212,16 @@ user 메시지는 문서와 질문만 담는다.
 
 | # | 필드 | 의미 | 계산 |
 |---|---|---|---|
-| 1 | `reduction_pct` | 토큰 절감률 | 1 − 압축 후 문맥 토큰 / 원문 문맥 토큰 (Qwen 토크나이저) |
-| 2 | `net_reduction_pct` | 순 토큰 절감률 | 압축 과정에서 LLM 이 쓴 토큰까지 더해서 계산 (LLM 안 쓰는 압축기는 1과 같음) |
+| 1 | `input_reduction_pct` | 입력 토큰 절감률 (**주 지표**) | 1 − 압축 후 입력 토큰 / 원본 입력 토큰. 입력 토큰은 `llm.count_message_tokens` 로 센 실제 메시지 전체(채팅 템플릿 포함, Qwen 토크나이저). 문항 합 기준 |
+| 2 | `net_input_reduction_pct` | 순 입력 토큰 절감률 | 압축 과정에서 LLM 이 쓴 입출력 토큰까지 압축 후 입력에 더해서 계산 (LLM 안 쓰는 압축기는 1과 같음) |
 | 3 | `semantic_sim` | 의미 유사도 | 압축 전후 문맥 임베딩(bge-m3)의 코사인 유사도. `--semantic` 일 때만 |
 | 4 | `entity_retention` | 핵심 엔티티 보존율 | 문항의 `key_entities` 중 압축 문맥에 남은 비율 |
 | 5 | `answer_accuracy` | 답변 정확도 | 문항마다 `key_facts` 중 답변이 전달한 비율(0~1)의 평균 |
 | 6 | `answer_accuracy_retention_pct` | 답변 정확도 유지율 | 같은 문항끼리 짝지어 압축기 / `none` 답변 정확도 × 100 (`none` 자신은 null) |
+| 7 | `semantic_loss` | 의미 손실률 | 문항마다 max(1 − `semantic_sim`, 1 − `entity_retention`) 의 평균. 둘 다 있을 때만. `semantic_loss_within_5pct` 는 5% 이내 문항 비율 |
+
+3·4·7번은 문맥 기준이다. 질문이 압축된 문항은 `trials.jsonl` 에 `question_changed=True` 와 압축된 질문
+(`question_compressed`)이 남고, summary 에는 `question_changed_rate` 로 집계된다.
 
 보조 기록 (지표 아님, 비교·디버깅용)
 
@@ -220,7 +232,10 @@ user 메시지는 문서와 질문만 담는다.
   (judge 판정 원래 값은 `trials.jsonl` 의 `answer_accuracy_judged`)
 - `completion_tokens` 답변 출력 토큰 평균
 - `by_persona` persona 별 `n`, `answer_accuracy`, `binary_accuracy`, `not_found_rate`, `completion_tokens` (persona 없는 문항은 `default`)
-- `ctx_tokens_raw`, `ctx_tokens`, `compress_llm_tokens`, `ttft_sec`, `latency_sec`, `ctx_overflow`
+- `reduction_pct` 문맥 토큰 절감률 (예전 주 지표)
+- `tokens` 부분별(`input`, `system`, `context`, `question`) 문항 평균 토큰, 압축 전(`raw`)·후(`compressed`).
+  `trials.jsonl` 에는 문항마다 `input_tokens_raw`/`input_tokens`, `system_tokens_raw`/`system_tokens` 등으로 남는다
+- `compress_llm_tokens`, `ttft_sec`, `latency_sec`, `ctx_overflow`
 
 #### 채점 방식
 
@@ -229,8 +244,10 @@ user 메시지는 문서와 질문만 담는다.
 - 판정 결과는 `trials.jsonl` 의 `fact_results`, `satisfied_facts`, `total_facts` 에 남는다.
 - 평가셋 문항에 `key_facts` 가 있어야 한다. 없는 문항이나 `--no-judge` 로 실행하면 5·6번 지표는 `null` 이다.
 
-압축기는 `compress(question, context) -> CompressResult` 인터페이스를 따르고
+압축기는 `compress(PromptParts(system, context, question)) -> CompressResult` 인터페이스를 따르고
 `src/compressors/__init__.py` 의 `REGISTRY` 에 등록하면 `--compressors` 로 고를 수 있다.
+각 압축기는 `targets`(`"context"`, `"question"`, `"system"` 의 부분집합)를 정하고 해당 훅
+(`compress_context` / `compress_question` / `compress_system`)만 구현하면 된다. 예시는 `src/compressors/__init__.py` 상단 설명 참고.
 
 ### 4. LLM 연결 확인
 
