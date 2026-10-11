@@ -21,7 +21,7 @@ from __future__ import annotations
 import re
 from collections import Counter
 
-from compressors.base import CompressResult, Compressor
+from compressors.base import Compressor
 
 FENCE = re.compile(r"^\s*(`{3,}|~{3,})")
 FRONTMATTER = re.compile(r"^---[ \t]*\n(?:[\w-]+:.*\n)(?:(?!---[ \t]*\n).*\n)*?---[ \t]*\n", re.M)
@@ -62,6 +62,7 @@ def split_fences(text: str) -> list[tuple[bool, str]]:
 
 class RuleCompressor(Compressor):
     name = "rule"
+    targets = ("context",)
     RULES = ("frontmatter", "anchors", "html", "links", "emphasis",
              "admonitions", "dedup_code", "whitespace")
 
@@ -74,7 +75,7 @@ class RuleCompressor(Compressor):
     def config(self) -> dict:
         return dict(self.enabled)
 
-    def compress(self, question: str, context: str) -> CompressResult:
+    def compress_context(self, question: str, context: str) -> str:
         hits: Counter = Counter()
         on = self.enabled
         out: list[str] = []
@@ -99,7 +100,8 @@ class RuleCompressor(Compressor):
             text, n = re.subn(r"\n{3,}", "\n\n", text)
             hits["whitespace"] += n
             text = text.strip() + "\n"
-        return CompressResult(text=text, info={"rule_hits": dict(hits)})
+        self.add_info(rule_hits=dict(hits))
+        return text
 
     def _prose(self, s: str, hits: Counter) -> str:
         on = self.enabled

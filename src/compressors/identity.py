@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
-from compressors.base import CompressResult, Compressor
+from compressors.base import Compressor
 
 
 class NoCompression(Compressor):
     name = "none"
+    targets = ("context",)
 
-    def compress(self, question: str, context: str) -> CompressResult:
-        return CompressResult(text=context)
+    def compress_context(self, question: str, context: str) -> str:
+        return context
