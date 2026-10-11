@@ -10,7 +10,7 @@ verdict 별 처리
              final_answer         -> answer
              final_key_facts      -> key_facts     (한 칸 안에서 줄바꿈으로 구분)
              final_key_entities   -> key_entities  (한 칸 안에서 줄바꿈으로 구분)
-             final_question       -> question      (검수표에 이 열을 추가했을 때만)
+             final_question       -> question      (질문 수정: 기존 결과는 답변부터 재실행 대상)
     delete   문항 제거, qa_meta.json 의 deleted 에 번호 기록 (번호는 재사용하지 않는다)
     (빈칸)   건드리지 않고 목록으로 출력
 
