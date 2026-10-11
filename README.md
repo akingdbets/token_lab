@@ -72,8 +72,10 @@ token_lab/
 │   ├── apply_review.py       # 사람 검수표(CSV) 반영 (keep/edit/delete)
 │   ├── grader.py             # 답변 채점 (key_facts 단위 LLM 판정 + 단어 일치)
 │   ├── experiment.py         # 압축 실험 실행 (A/B 비교)
+│   ├── rejudge.py            # 기존 trials.jsonl 답변을 key_facts judge 로 재채점 (답변 재생성 없음)
 │   ├── prompts/              # 답변 지시문 (answer_v1.md ...), --answer-prompt 로 선택
 │   └── compressors/          # 입력 압축 기법 (none, rule) 과 조합(">")
+├── tests/                    # 단위 테스트 (python -m unittest discover -s tests)
 ├── results/                  # 실험 로그 (runs/<run_id>/)
 └── dashboard/                # Streamlit 대시보드 (예정)
 ```
@@ -192,6 +194,8 @@ python src/experiment.py --split all --limit 5        # 연결 확인용
 python src/experiment.py --compressors none,rule --semantic   # 임베딩 유사도 포함 (bge-m3)
 python src/experiment.py --answer-prompt v1           # 답변 지시문 버전 (기본 v1)
 python src/experiment.py --compressors "none,rule>llmlingua2"  # ">" 로 압축기를 순서대로 이어 붙임 (따옴표 필수)
+python src/experiment.py --judge-mode per_fact        # key_facts 를 fact 하나당 judge 호출 1회로 판정 (기본 batch)
+python src/rejudge.py <run_id> [--judge-mode per_fact] [--judge-model M] [--out path]  # 기존 결과 재채점
 ```
 
 > **답변 지시문 v1 이전 결과와는 비교 불가.** v1 부터 답변 지시문을 `src/prompts/answer_v1.md` 로 분리하고
@@ -254,6 +258,12 @@ user 메시지는 문서와 질문만 담는다.
 - 답변 정확도는 LLM judge(`judge_model`)가 `key_fact` 하나하나를 충족/불충족으로 판정한다.
   표현이 달라도 뜻이 같으면 충족이고, 판정 결과를 읽지 못한 fact 는 불충족으로 센다. v0 은 fact 별 가중치가 같다.
 - 판정 결과는 `trials.jsonl` 의 `fact_results`, `satisfied_facts`, `total_facts` 에 남는다.
+- judge 프롬프트는 `fact_judge_v2` 다. fact 에 `[i]` 번호를 붙이고 출력 예시를 fact 개수 N 에 맞춰 0..N-1 전부로 만든다.
+  응답 index 집합이 정확히 {0..N-1} 이 아니면 (누락·중복·범위 밖) 누락 index 를 명시해 1회 재요청하고,
+  그래도 아니면 fact 하나씩 YES/NO 로 판정한다. `trials.jsonl` 의 `judge_mode`(batch | retry | per_fact_fallback | per_fact),
+  `judge_retries`, `judge_missing_before_fix`, `judge_prompt_version`, `judge_prompt_hash` 에 남는다.
+  > **v1 (`judge_prompt_version` 없음) 결과는 비교 불가.** v1 은 출력 예시가 index 0, 1 뿐이라 key_facts 가 3개 이상이면
+  > 결과가 2개만 와서 procedure·multi 정확도가 낮게 나왔다. 예전 run 은 `src/rejudge.py` 로 재채점한다.
 - 평가셋 문항에 `key_facts` 가 있어야 한다. 없는 문항이나 `--no-judge` 로 실행하면 5·6번 지표는 `null` 이다.
 
 압축기는 `compress(PromptParts(system, context, question)) -> CompressResult` 인터페이스를 따르고

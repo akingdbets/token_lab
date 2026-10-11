@@ -14,6 +14,7 @@ v0에서는 key_fact마다 동일한 가중치를 사용한다.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 from dataclasses import dataclass, field
@@ -185,6 +186,16 @@ def grade(
 # 신규 v0: key_facts 기반 답변 정확도 평가
 # ============================================================
 
+#
+# fact_judge_v2
+#   v1 은 출력 예시에 index 0, 1 두 개만 있어서 key_facts 가 3개 이상이어도
+#   judge 가 결과를 2개만 돌려주는 경우가 많았다 (누락 index 는 불충족 처리 -> 정확도 과소 측정).
+#   v2 는 key_facts 에 [i] 번호를 붙이고, 출력 예시를 실제 개수 N 에 맞춰 0..N-1 전부로 만들며,
+#   "Return exactly N results" 를 명시한다.
+#   응답의 index 집합이 {0..N-1} 과 다르면 1회 재요청하고, 그래도 다르면 fact 별 개별 판정으로 폴백한다.
+
+FACT_JUDGE_PROMPT_VERSION = "fact_judge_v2"
+
 FACT_JUDGE_PROMPT = """You are evaluating an answer to a technical question.
 
 Question:
@@ -196,7 +207,7 @@ Reference answer:
 Candidate answer:
 {candidate_answer}
 
-Below are the essential facts that a correct answer should convey.
+Below are the {n} essential facts that a correct answer should convey, numbered [0] to [{last}].
 
 {facts}
 
@@ -211,15 +222,56 @@ Rules:
 - Do not give credit merely because related keywords appear.
 - Evaluate each fact independently.
 
+Return exactly {n} results, one per index, for every index from 0 to {last}.
+Each index must appear exactly once. Replace each <true|false> with your judgement.
+
 Return ONLY valid JSON in exactly this format:
 
-{{
-  "results": [
-    {{"index": 0, "satisfied": true}},
-    {{"index": 1, "satisfied": false}}
-  ]
-}}
+{example}
 """
+
+FACT_JUDGE_RETRY_PROMPT = """Your previous reply was incomplete or invalid: {problems}.
+
+There are {n} facts, numbered [0] to [{last}]. Return exactly {n} results, one per index,
+every index from 0 to {last} exactly once{missing_hint}.
+
+Return ONLY valid JSON in exactly this format:
+
+{example}
+"""
+
+FACT_JUDGE_SINGLE_PROMPT = """You are evaluating an answer to a technical question.
+
+Question:
+{question}
+
+Reference answer:
+{reference_answer}
+
+Candidate answer:
+{candidate_answer}
+
+Fact:
+{fact}
+
+Does the candidate answer convey this fact correctly?
+
+Rules:
+- Judge meaning, not exact wording. Paraphrases are acceptable.
+- The fact is satisfied only if the candidate answer actually conveys it.
+- If the candidate answer contradicts the fact, answer NO.
+- Do not give credit merely because related keywords appear.
+
+Reply with exactly one word: YES or NO."""
+
+# 프롬프트 문구가 같은 버전 이름으로 바뀌었는지 확인용 (trial 기록에 남긴다)
+FACT_JUDGE_PROMPT_HASH = hashlib.sha256(
+    "\n---\n".join(
+        (FACT_JUDGE_PROMPT, FACT_JUDGE_RETRY_PROMPT, FACT_JUDGE_SINGLE_PROMPT)
+    ).encode("utf-8")
+).hexdigest()[:12]
+
+JUDGE_MODES = ("batch", "per_fact")
 
 
 @dataclass
@@ -237,6 +289,12 @@ class AnswerAccuracyResult:
 
     answer_accuracy
         = 충족한 key_facts 수 / 전체 key_facts 수
+
+    judge_mode
+        batch              첫 응답이 바로 완전했음
+        retry              재요청 1회로 완전해짐
+        per_fact_fallback  재요청도 불완전해서 fact 별 개별 판정으로 채움
+        per_fact           처음부터 fact 별 개별 판정 (--judge-mode per_fact)
     """
 
     answer_accuracy: float
@@ -251,26 +309,73 @@ class AnswerAccuracyResult:
     judge_prompt_tokens: int = 0
     judge_completion_tokens: int = 0
 
+    judge_prompt_version: str = FACT_JUDGE_PROMPT_VERSION
+    judge_prompt_hash: str = FACT_JUDGE_PROMPT_HASH
+    judge_mode: str = "batch"
+    judge_retries: int = 0
+    judge_missing_before_fix: list[int] = field(default_factory=list)  # 첫 응답에서 빠진 index
+    judge_calls: int = 0
+
 
 def _build_facts_text(key_facts: list[str]) -> str:
-    """Judge prompt에 넣을 key_facts 목록 생성."""
+    """Judge prompt에 넣을 key_facts 목록 생성. [0], [1], ... 번호를 붙인다."""
 
     return "\n".join(
-        f"{i}. {fact}"
+        f"[{i}] {fact}"
         for i, fact in enumerate(key_facts)
     )
 
 
-def _parse_fact_judgement(
-    raw: str,
-    key_facts: list[str],
-) -> list[FactResult]:
-    """
-    LLM Judge의 JSON 결과를 FactResult 목록으로 변환한다.
+def _build_output_example(n: int) -> str:
+    """index 0..n-1 전부를 담은 출력 예시. satisfied 값은 placeholder."""
 
-    잘못된 JSON이나 누락된 index가 있으면 해당 fact는
-    안전하게 불충족(False)으로 처리한다.
+    rows = ",\n".join(
+        f'    {{"index": {i}, "satisfied": <true|false>}}'
+        for i in range(n)
+    )
+
+    return '{\n  "results": [\n' + rows + "\n  ]\n}"
+
+
+@dataclass
+class _Parsed:
+    """judge JSON 응답 파싱 결과와 index 검증 정보."""
+
+    values: dict[int, bool]          # 중복 없이 범위 안에 있는 index 의 판정
+    missing: list[int]
+    duplicates: list[int]
+    out_of_range: list
+    invalid: int = 0                 # index/satisfied 형식이 잘못된 항목 수
+    json_error: bool = False
+
+    @property
+    def ok(self) -> bool:
+        return not (self.missing or self.duplicates or self.out_of_range
+                    or self.invalid or self.json_error)
+
+    def problems(self) -> str:
+        p = []
+        if self.json_error:
+            p.append("the reply was not valid JSON")
+        if self.missing:
+            p.append(f"missing index {self.missing}")
+        if self.duplicates:
+            p.append(f"duplicated index {self.duplicates}")
+        if self.out_of_range:
+            p.append(f"out-of-range index {self.out_of_range}")
+        if self.invalid:
+            p.append(f"{self.invalid} malformed item(s)")
+        return "; ".join(p) or "unknown problem"
+
+
+def _parse_fact_judgement(raw: str, n: int) -> _Parsed:
     """
+    LLM Judge의 JSON 결과를 파싱하고 index 집합이 정확히 {0..n-1} 인지 검사한다.
+
+    중복된 index 는 판정을 믿을 수 없으므로 values 에서 빼고 missing 으로도 센다.
+    """
+
+    json_error = False
 
     try:
         text = raw.strip()
@@ -284,35 +389,72 @@ def _parse_fact_judgement(
         )
 
         data = json.loads(text)
-
         raw_results = data.get("results", [])
+        if not isinstance(raw_results, list):
+            raise TypeError
 
-    except (json.JSONDecodeError, AttributeError):
+    except (json.JSONDecodeError, AttributeError, TypeError):
         raw_results = []
+        json_error = True
 
-    result_map: dict[int, bool] = {}
+    seen: dict[int, bool] = {}
+    duplicates: set[int] = set()
+    out_of_range = []
+    invalid = 0
 
     for item in raw_results:
         if not isinstance(item, dict):
+            invalid += 1
             continue
 
         index = item.get("index")
         satisfied = item.get("satisfied")
 
-        if (
-            isinstance(index, int)
-            and 0 <= index < len(key_facts)
-            and isinstance(satisfied, bool)
-        ):
-            result_map[index] = satisfied
+        if isinstance(index, bool) or not isinstance(index, int) or not isinstance(satisfied, bool):
+            invalid += 1
+            continue
 
-    return [
-        FactResult(
+        if not 0 <= index < n:
+            out_of_range.append(index)
+            continue
+
+        if index in seen:
+            duplicates.add(index)
+            continue
+
+        seen[index] = satisfied
+
+    values = {i: v for i, v in seen.items() if i not in duplicates}
+
+    return _Parsed(
+        values=values,
+        missing=[i for i in range(n) if i not in values and i not in duplicates],
+        duplicates=sorted(duplicates),
+        out_of_range=out_of_range,
+        invalid=invalid,
+        json_error=json_error,
+    )
+
+
+def _judge_single_fact(
+    question: str,
+    reference_answer: str,
+    fact: str,
+    candidate_answer: str,
+    judge_llm,
+):
+    """fact 하나만 YES/NO 로 판정. (satisfied, LLMResult) 반환."""
+
+    res = judge_llm.ask(
+        FACT_JUDGE_SINGLE_PROMPT.format(
+            question=question,
+            reference_answer=reference_answer,
+            candidate_answer=candidate_answer,
             fact=fact,
-            satisfied=result_map.get(i, False),
         )
-        for i, fact in enumerate(key_facts)
-    ]
+    )
+
+    return res.text.strip().upper().startswith("YES"), res
 
 
 def grade_answer_accuracy(
@@ -321,6 +463,7 @@ def grade_answer_accuracy(
     key_facts: list[str],
     candidate_answer: str,
     judge_llm,
+    mode: str = "batch",
 ) -> AnswerAccuracyResult:
     """
     key_facts를 기준으로 Candidate Answer의 답변 정확도를 계산한다.
@@ -331,7 +474,15 @@ def grade_answer_accuracy(
         answer_accuracy = 3 / 4 = 0.75
 
     v0에서는 모든 key_fact의 가중치를 동일하게 둔다.
+
+    mode
+        batch     한 번의 호출로 모든 fact 판정. 응답 index 가 {0..N-1} 과 다르면
+                  누락 index 를 명시해 1회 재요청하고, 그래도 다르면 fact 별 개별 판정으로 폴백.
+        per_fact  처음부터 fact 하나당 호출 1회 (YES/NO).
     """
+
+    if mode not in JUDGE_MODES:
+        raise ValueError(f"알 수 없는 judge mode: {mode} ({JUDGE_MODES})")
 
     key_facts = [
         str(fact).strip()
@@ -349,45 +500,111 @@ def grade_answer_accuracy(
             "key_facts 평가를 위해 judge_llm이 필요합니다."
         )
 
-    facts_text = _build_facts_text(key_facts)
+    n = len(key_facts)
+    last = n - 1
+    example = _build_output_example(n)
 
-    prompt = FACT_JUDGE_PROMPT.format(
-        question=question,
-        reference_answer=reference_answer,
-        candidate_answer=candidate_answer,
-        facts=facts_text,
-    )
+    pt = ct = calls = retries = 0
+    raws: list[str] = []
+    missing_before: list[int] = []
+    values: dict[int, bool] | None = None
+    judge_mode = mode
 
-    res = judge_llm.ask(prompt)
+    def _use(res):
+        nonlocal pt, ct, calls
+        pt += res.prompt_tokens
+        ct += res.completion_tokens
+        calls += 1
 
-    raw = res.text.strip()
+    if mode == "batch":
+        prompt = FACT_JUDGE_PROMPT.format(
+            question=question,
+            reference_answer=reference_answer,
+            candidate_answer=candidate_answer,
+            facts=_build_facts_text(key_facts),
+            n=n,
+            last=last,
+            example=example,
+        )
 
-    fact_results = _parse_fact_judgement(
-        raw,
-        key_facts,
-    )
+        res = judge_llm.ask(prompt)
+        _use(res)
+        raws.append(res.text.strip())
+        first = _parse_fact_judgement(res.text, n)
+
+        if first.ok:
+            values = first.values
+        else:
+            # 중복된 index 도 다시 받아야 하므로 누락에 포함
+            missing_before = sorted(set(first.missing) | set(first.duplicates))
+            retries = 1
+
+            retry_prompt = FACT_JUDGE_RETRY_PROMPT.format(
+                problems=first.problems(),
+                n=n,
+                last=last,
+                missing_hint=(
+                    f", including the missing index {missing_before}"
+                    if missing_before
+                    else ""
+                ),
+                example=example,
+            )
+
+            res = judge_llm.chat([
+                {"role": "user", "content": prompt},
+                {"role": "assistant", "content": raws[0]},
+                {"role": "user", "content": retry_prompt},
+            ])
+            _use(res)
+            raws.append(res.text.strip())
+            second = _parse_fact_judgement(res.text, n)
+
+            # 재요청에는 누락분만 돌려줄 수도 있으므로 첫 응답의 유효한 판정과 합친다.
+            # 단 재요청 응답 자체에 중복·범위 밖·형식 오류가 있으면 믿지 않는다.
+            merged = {**first.values, **second.values}
+            if (
+                not (second.duplicates or second.out_of_range or second.invalid or second.json_error)
+                and set(merged) == set(range(n))
+            ):
+                values = merged
+                judge_mode = "retry"
+            else:
+                judge_mode = "per_fact_fallback"
+
+    if values is None:
+        # per_fact 모드이거나 batch 재요청까지 실패한 경우: fact 하나씩 판정
+        values = {}
+        for i, fact in enumerate(key_facts):
+            ok, res = _judge_single_fact(
+                question, reference_answer, fact, candidate_answer, judge_llm,
+            )
+            _use(res)
+            raws.append(f"[{i}] {res.text.strip()}")
+            values[i] = ok
+
+    fact_results = [
+        FactResult(fact=fact, satisfied=values[i])
+        for i, fact in enumerate(key_facts)
+    ]
 
     satisfied_count = sum(
         result.satisfied
         for result in fact_results
     )
 
-    total_count = len(fact_results)
-
-    answer_accuracy = (
-        satisfied_count / total_count
-        if total_count
-        else 0.0
-    )
-
     return AnswerAccuracyResult(
-        answer_accuracy=answer_accuracy,
+        answer_accuracy=satisfied_count / n,
         satisfied_count=satisfied_count,
-        total_count=total_count,
+        total_count=n,
         fact_results=fact_results,
-        judge_raw=raw,
-        judge_prompt_tokens=res.prompt_tokens,
-        judge_completion_tokens=res.completion_tokens,
+        judge_raw="\n---\n".join(raws),
+        judge_prompt_tokens=pt,
+        judge_completion_tokens=ct,
+        judge_mode=judge_mode,
+        judge_retries=retries,
+        judge_missing_before_fix=missing_before,
+        judge_calls=calls,
     )
 
 
