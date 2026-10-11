@@ -181,6 +181,12 @@ RAG 검색 단계는 두지 않는다.
         LLM judge를 사용하지 않는다.
         key_facts 기반 답변 정확도 역시 LLM judge가 없으면 계산되지 않는다.
 
+    python3 src/experiment.py --judge-mode per_fact
+
+        key_facts 를 처음부터 fact 하나당 judge 호출 1회로 판정한다 (기본 batch).
+        batch 는 응답 index 가 0..N-1 과 다르면 1회 재요청하고, 그래도 다르면 fact 별 판정으로 폴백한다.
+        사용한 judge 프롬프트 버전·해시·모드는 trials.jsonl 의 judge_* 필드에 남는다.
+
 
 저장 위치
 
@@ -223,6 +229,9 @@ from compressors import PromptParts, get_compressor
 from config import CFG
 from corpus import load_corpus
 from grader import (
+    FACT_JUDGE_PROMPT_HASH,
+    FACT_JUDGE_PROMPT_VERSION,
+    JUDGE_MODES,
     contains_words,
     grade,
     grade_answer_accuracy,
@@ -232,6 +241,7 @@ from grader import (
 from llm import LLM, count_message_tokens, count_tokens
 
 ANSWER_MAX_TOKENS = 512
+FACT_JUDGE_MAX_TOKENS = 512      # key_facts judge JSON 출력 한도
 TYPES = ("fact", "code", "procedure", "multi")   # 유형별 집계 순서
 
 # 답변 지시문은 src/prompts/answer_<버전>.md 에 둔다 (바꾸면 이전 결과와 비교할 수 없으므로 새 버전으로)
@@ -351,6 +361,13 @@ class TrialRecord:
     satisfied_facts: int | None
     total_facts: int | None
     fact_results: list[dict] = field(default_factory=list)
+    # key_facts judge 기록 (grader.grade_answer_accuracy)
+    judge_prompt_version: str | None = None   # fact_judge_v2 ...
+    judge_prompt_hash: str | None = None      # 프롬프트 문구 해시 앞 12자리
+    judge_mode: str | None = None             # batch | retry | per_fact_fallback | per_fact
+    judge_retries: int = 0                    # 재요청 횟수 (0 또는 1)
+    judge_missing_before_fix: list[int] = field(default_factory=list)  # 첫 응답에서 빠진(중복 포함) index
+    judge_calls: int = 0                      # key_facts 판정에 쓴 judge 호출 수
 
     info: dict = field(default_factory=dict)
 
@@ -413,6 +430,38 @@ def load_items(split: str, limit: int | None, ids: list[str] | None) -> list[dic
     return items[:limit] if limit else items
 
 
+def judge_fields(fact_grade) -> dict:
+    """AnswerAccuracyResult 에서 TrialRecord 의 judge_* 필드를 뽑는다 (없으면 기본값)."""
+    if fact_grade is None:
+        return {}
+    return {
+        "judge_prompt_version": fact_grade.judge_prompt_version,
+        "judge_prompt_hash": fact_grade.judge_prompt_hash,
+        "judge_mode": fact_grade.judge_mode,
+        "judge_retries": fact_grade.judge_retries,
+        "judge_missing_before_fix": fact_grade.judge_missing_before_fix,
+        "judge_calls": fact_grade.judge_calls,
+    }
+
+
+def judge_counts(rs) -> dict:
+    """judge_mode 별 문항 수와 재요청·누락 합계. rs 는 TrialRecord 또는 같은 키를 가진 dict."""
+    get = (lambda r, k: r[k] if isinstance(r, dict) else getattr(r, k))
+    judged = [r for r in rs if get(r, "judge_mode")]
+    modes: dict[str, int] = {}
+    for r in judged:
+        modes[get(r, "judge_mode")] = modes.get(get(r, "judge_mode"), 0) + 1
+    return {
+        "n_judged": len(judged),
+        "modes": modes,
+        "retries": sum(get(r, "judge_retries") for r in judged),
+        "per_fact_fallbacks": modes.get("per_fact_fallback", 0),
+        "items_with_missing": sum(bool(get(r, "judge_missing_before_fix")) for r in judged),
+        "missing_indices": sum(len(get(r, "judge_missing_before_fix")) for r in judged),
+        "calls": sum(get(r, "judge_calls") for r in judged),
+    }
+
+
 def git_head() -> str | None:
     try:
         return subprocess.run(["git", "-C", str(CFG.root), "rev-parse", "--short", "HEAD"],
@@ -447,18 +496,21 @@ def run(args) -> Path:
 
     # key_facts 기반 답변 정확도 평가용 Judge
     # JSON 형식의 평가 결과를 생성해야 하므로 충분한 출력 토큰을 허용한다.
+    # (fact 하나당 결과 한 줄이라 key_facts 가 많으면 256 으로는 잘릴 수 있다)
     fact_judge = (
         None
         if args.no_judge
         else LLM(
             model=CFG.judge_model,
-            max_tokens=256,
+            max_tokens=FACT_JUDGE_MAX_TOKENS,
         )
     )
     embedder = LLM() if args.semantic else None
 
     print(f"설정: {CFG.summary()}  judge={'off' if judge is None else CFG.judge_model}")
     print(f"답변 지시문: {prompt.version} ({prompt.sha256})")
+    if fact_judge is not None:
+        print(f"key_facts judge: {FACT_JUDGE_PROMPT_VERSION} ({FACT_JUDGE_PROMPT_HASH})  mode={args.judge_mode}")
     print(f"문항 {len(items)}개 x 압축기 {names}  ->  {out_dir.relative_to(CFG.root).as_posix()}")
     print("모델 로딩 (첫 호출은 측정에서 제외)...", flush=True)
     llm.ask("Reply with OK.")
@@ -505,6 +557,7 @@ def run(args) -> Path:
                         key_facts=facts,
                         candidate_answer=res.text,
                         judge_llm=fact_judge,
+                        mode=args.judge_mode,
                     )
 
                 judged_accuracy = fact_grade.answer_accuracy if fact_grade is not None else None
@@ -570,6 +623,7 @@ def run(args) -> Path:
                         if fact_grade is not None
                         else []
                     ),
+                    **judge_fields(fact_grade),
 
                     info=cres.info,
                 )
@@ -587,6 +641,11 @@ def run(args) -> Path:
         "config": {"llm": CFG.summary(), "judge_model": None if judge is None else CFG.judge_model,
                    "answer_max_tokens": ANSWER_MAX_TOKENS,
                    "answer_prompt": {"version": prompt.version, "sha256": prompt.sha256},
+                   "fact_judge": (None if fact_judge is None else
+                                  {"prompt_version": FACT_JUDGE_PROMPT_VERSION,
+                                   "prompt_hash": FACT_JUDGE_PROMPT_HASH,
+                                   "mode": args.judge_mode,
+                                   "max_tokens": FACT_JUDGE_MAX_TOKENS}),
                    "semantic": bool(embedder),
                    "split": args.split, "n_items": len(items)},
         "corpus_source": corpus.source,
@@ -702,6 +761,9 @@ def summarize(records: list[TrialRecord], names: list[str]) -> dict:
             "ttft_sec": _mean(r.ttft_sec for r in rs),
             "latency_sec": _mean(r.latency_sec for r in rs),
             "ctx_overflow": sum(r.ctx_overflow for r in rs),
+
+            # key_facts judge 응답 보정 횟수 (재요청 / fact 별 폴백 / 첫 응답 누락 index 합)
+            "fact_judge": judge_counts(rs),
         }
 
         # --------------------------------------------------
@@ -835,6 +897,8 @@ def main():
     ap.add_argument("--limit", type=int, help="앞에서부터 N 문항만")
     ap.add_argument("--ids", nargs="*", help="특정 문항만 (예: q0001 q0003). --split 무시")
     ap.add_argument("--no-judge", action="store_true", help="LLM 채점 생략 (긴 정답도 단어 일치로 판정)")
+    ap.add_argument("--judge-mode", default="batch", choices=JUDGE_MODES,
+                    help="key_facts 판정 방식: batch (한 번에, 불완전하면 재요청/개별 폴백) | per_fact (fact 별 개별 호출)")
     ap.add_argument("--semantic", action="store_true", help="압축 전후 임베딩 유사도 계산 (bge-m3 필요)")
     ap.add_argument("--answer-prompt", default="v1", choices=answer_prompt_versions(),
                     help="답변 지시문 버전 (src/prompts/answer_<버전>.md)")
