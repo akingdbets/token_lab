@@ -1,0 +1,433 @@
+﻿qid,assignee,type,question,answer,key_facts,key_entities,evidence_page,evidence_quote,none_answer,none_accuracy,ai_flag,ai_reason,ai_suggested_answer,ai_suggested_key_facts,ai_suggested_key_entities,verdict,final_answer,final_key_facts,final_key_entities,reviewer,note
+c0020,D,fact,"In FastAPI, what scope value do dependencies that use yield get when none is specified?","""request""","The default scope for yield dependencies is ""request"".
+With that scope, teardown happens after the response is sent.","""request""
+scope",dependencies/dependencies-with-yield.md,"[dependencies/dependencies-with-yield.md:167] - `""request""` (default for `yield` dependencies): setup before the path operation, teardown **after the response is sent**. This means a `StreamingResponse` can keep using the resource while streaming.","""request""",0.5,problem,key_facts 2번(teardown 이 응답 후)은 질문이 묻지 않은 사실이다. fact 유형은 값만 답하도록 지시하므로 원문을 줘도 정확도가 0.5 로 묶인다 (none 0.5).,,"The default scope for yield dependencies is ""request"".","""request""",,,,,,
+c0025,B,fact,"When writing async FastAPI tests, which pytest marker from the AnyIO plugin makes the test function run asynchronously?",@pytest.mark.anyio,"The @pytest.mark.anyio marker runs the test function asynchronously.
+It comes from the AnyIO pytest plugin, so pytest-asyncio is not needed.",@pytest.mark.anyio,testing/async-tests-and-database-testing.md,"[testing/async-tests-and-database-testing.md:63] - `@pytest.mark.anyio` tells pytest to run the test function asynchronously. It comes from the **AnyIO** pytest plugin (AnyIO is installed with Starlette/FastAPI), so you don't need `pytest-asyncio`.",@pytest.mark.anyio,0.5,problem,key_facts 2번(AnyIO 플러그인이라 pytest-asyncio 불필요)은 질문에 이미 들어 있는 전제이고 질문이 묻지 않는다. 값만 답하면 0.5 로 묶인다 (none 0.5).,,The @pytest.mark.anyio marker runs the test function asynchronously.,,,,,,,
+c0026,C,fact,"When testing FastAPI with httpx.AsyncClient and ASGITransport, which package provides the LifespanManager needed for startup code to run?",asgi-lifespan,"LifespanManager comes from the asgi-lifespan package.
+Lifespan events do not run with AsyncClient and ASGITransport alone.","asgi-lifespan
+LifespanManager",testing/async-tests-and-database-testing.md,"[testing/async-tests-and-database-testing.md:72] - **Lifespan events don't run** with `AsyncClient` + `ASGITransport`. If your app relies on `lifespan`/startup, wrap the app with `LifespanManager` from the `asgi-lifespan` package:",asgi_lifespan,0.5,problem,"key_facts 2번(AsyncClient+ASGITransport 만으로는 lifespan 이 안 돈다)은 질문의 전제다. 값만 답하면 0.5 로 묶인다 (none 0.5, 답 asgi_lifespan 은 모듈 이름 표기라 정답으로 볼 만함).",,LifespanManager comes from the asgi-lifespan package.,,,,,,,
+c0148,C,multi,"In FastAPI tests, what stops lifespan code from running with a client created at module level, and what must wrap the app for it to run with the async HTTPX client?","A module-level client = TestClient(app) used without a with block skips lifespan; with AsyncClient, wrap the app in asgi-lifespan's LifespanManager and pass manager.app to ASGITransport","A module-level TestClient used without with does not run lifespan.
+With AsyncClient the app is wrapped in LifespanManager from asgi-lifespan.
+manager.app is passed to ASGITransport.","module-level
+manager.app
+LifespanManager","testing/async-tests-and-database-testing.md
+testing/testing-dependencies-events-websockets.md","[testing/testing-dependencies-events-websockets.md:162] A module-level `client = TestClient(app)` used without `with` does **not** run lifespan.
+[testing/async-tests-and-database-testing.md:78] async with AsyncClient(transport=ASGITransport(app=manager.app), base_url=""http://test"") as ac:",NOT FOUND,0.0,problem,"원문 두 페이지를 다 줬는데 none 이 NOT FOUND (정확도 0). 앞부분 'what stops lifespan code from running with a client created at module level' 이 어색해서 무엇을 묻는지 흐리다. 질문 수정 제안: ""In FastAPI tests, why doesn't lifespan code run for a TestClient created at module level, and how do you make it run with httpx.AsyncClient?"" (검수표에 final_question 열을 추가하면 apply_review.py 가 반영, 질문 수정이라 재실행 필요)",,"A TestClient created at module level and used without a with block does not run lifespan.
+With httpx.AsyncClient, the app is wrapped in LifespanManager from asgi-lifespan.
+manager.app is passed to ASGITransport.",,,,,,,
+c0003,D,procedure,"In FastAPI's JWT tutorial, what does the dependency that resolves the logged-in user do with the bearer token, step by step?",1) Decode it with jwt.decode using SECRET_KEY and algorithms=[ALGORITHM] 2) Read the sub claim as the username 3) Load that user 4) On any failure raise a 401 with WWW-Authenticate: Bearer,"The token is decoded with jwt.decode using SECRET_KEY and the pinned algorithms.
+The username is read from the sub claim.
+The user is then loaded.
+Any problem results in a 401 response with WWW-Authenticate: Bearer.","jwt.decode
+get_current_user
+WWW-Authenticate: Bearer",security/oauth2-jwt.md,"[security/oauth2-jwt.md:201] `get_current_user` decodes with `jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])` (always pin the accepted algorithms), reads `sub`, and loads the user. Any problem — bad signature, expired token, missing `sub`, unknown user — results in the same `401` with `WWW-Authenticate: Bearer`. `get_current_active_user` additionally rejects disabled users.","1. The dependency `get_current_user` receives the bearer token as a string via `Depends(oauth2_scheme)`.
+2. It attempts to decode the token using `jwt.decode` with the secret key and the specified algorithm.
+3. If decoding fails due to invalid signature, expired token, or missing/invalid `sub` claim, it raises an `HTTPException` with status code 401.
+4. If decoding succeeds, it extracts the `sub` (subject) claim, which is the username.
+5. It uses the username to fetch the corresponding user from the database with `get_user`.
+6. If the user is found, it returns the user object; otherwise, it raises an `HTTPException` with status code 401.",0.5,check,정답·근거는 맞다. key_facts 3번 'The user is then loaded.' 가 너무 짧고 모호해서 judge 가 답변의 'fetch the user ... with get_user' 를 놓쳤다 (none 0.5). 4번도 실패 경우를 구체적으로 쓰면 판정이 안정된다.,,"The token is decoded with jwt.decode using SECRET_KEY and algorithms=[ALGORITHM].
+The username is read from the sub claim.
+The user is looked up by that username (get_user).
+A bad signature, expired token, missing sub or unknown user all give the same 401 with WWW-Authenticate: Bearer.",,,,,,,
+c0006,A,procedure,"In FastAPI, how do I write my own middleware that times every request and reports the duration back to the client in a header?","1) Decorate an async function with @app.middleware(""http"") taking request and call_next 2) Record time.perf_counter() before awaiting call_next(request) 3) Compute the elapsed time afterwards 4) Set response.headers[""X-Process-Time""] and return the response","The function is decorated with @app.middleware(""http"") and receives request and call_next.
+The start time is taken with time.perf_counter() before calling call_next.
+The elapsed time is stored in the X-Process-Time response header.","call_next
+X-Process-Time
+time.perf_counter()",middleware/middleware.md,"[middleware/middleware.md:4] @app.middleware(""http"")
+[middleware/middleware.md:50] response = await call_next(request)
+[middleware/middleware.md:52] response.headers[""X-Process-Time""] = str(process_time)","1. Import the necessary modules and classes.
+2. Define an asynchronous function that will act as your middleware.
+3. Use `@app.middleware(""http"")` to decorate your function.
+4. Inside the function, capture the start time before calling `call_next`.
+5. After `call_next`, calculate the duration and add it to the response headers.
+6. Return the response.
+
+Here is the step-by-step code:
+
+1. Import the necessary modules and classes.
+```python
+from fastapi import FastAPI, Request
+import time
+```
+
+2. Define an asynchronous function that will act as your middleware.
+```python
+@app.middleware(""http"")
+async def add_process_time_header(request: Request, call_next):
+```
+
+3. Inside the function, capture the start time before calling `call_next`.
+```python
+    start_time = time.perf_counter()
+```
+
+4. After `call_next`, calculate the duration and add it to the response headers.
+```python
+    response = await call_next(request)
+    process_time = time.perf_counter() - start_time
+    response.headers[""X-Process-Time""] = str(process_time)
+```
+
+5. Return the response.
+```python
+    return response
+```
+
+Putting it all together:
+```python
+import time
+
+from fastapi import FastAPI, Request
+
+app = FastAPI()
+
+@app.middleware(""http"")
+async def add_process_time_header(request: Request, call_next):
+    start_time = time.perf_counter()
+    response = await call_next(request)
+    process_time = time.perf_counter() - start_time
+    response.headers[""X-Process-Time""] = str(process_time)
+    return response
+```",0.67,check,FastAPI 문서의 대표 예제(X-Process-Time 타이밍 미들웨어)라 사용자가 문서 없이도 알 법하다. 문서 없이 풀기 검사는 통과했지만 판단 필요. none 0.67 은 judge 오판 (답변에 X-Process-Time 헤더 설정이 있음). 답의 '경과 시간 계산' 단계가 key_facts 에 없다.,,"The function is decorated with @app.middleware(""http"") and receives request and call_next.
+The start time is taken with time.perf_counter() before calling call_next.
+The elapsed time is computed after call_next returns.
+The elapsed time is stored in the X-Process-Time response header.",,,,,,,
+c0015,D,multi,"In FastAPI's security tutorials, what does the simple password-flow login hand back as its access token, and what does the JWT version issue instead?",The simple flow returns the username itself as an insecure token; the JWT version returns a signed JWT from create_access_token carrying sub and an exp expiry claim,"The simple password-flow login returns the username as the access token.
+That token is insecure and only demonstrates the flow.
+The JWT version issues a signed token created by create_access_token.
+The JWT token includes an exp expiry claim.","create_access_token
+""access_token"": user.username","security/oauth2-jwt.md
+security/oauth2-password-flow.md","[security/oauth2-jwt.md:192] `create_access_token` adds an `exp` claim (expiry, UTC); PyJWT rejects expired tokens on decode with an `InvalidTokenError` subclass.
+[security/oauth2-password-flow.md:157] The token endpoint must return JSON with `access_token` and `token_type` (`""bearer""`). Here the ""token"" is just the username — **insecure**, only to show the flow. Real tokens are covered in [OAuth2 with JWT](oauth2-jwt.md).","In the simple OAuth2 password flow tutorial:
+
+- The `/token` endpoint returns a JSON object with `access_token` and `token_type` properties. For example, it might return: 
+  ```json
+  {""access_token"": ""johndoe"", ""token_type"": ""bearer""}
+  ```
+
+In the OAuth2 with JWT tutorial:
+
+- The `/token` endpoint issues a signed JWT token instead. For example:
+  ```python
+  return {""access_token"": access_token, ""token_type"": ""bearer""}
+  ```
+
+The JWT token is a compact, signed JSON string that includes claims like the subject (`sub`), expiration time (`exp`), etc. It is more secure than just returning the username as the access token.",0.25,check,"질문은 '각각 무엇을 돌려주나' 인데 key_facts 가 insecure, exp 클레임까지 요구한다 (질문이 묻지 않음). none 0.25 중 'signed JWT' 누락 판정은 judge 오판 (답변에 'issues a signed JWT token' 있음). key_facts 를 질문 범위로 줄이는 것을 제안.",The simple flow returns the username itself as the access token; the JWT version returns a signed JWT created by create_access_token (with sub and exp claims),"The simple password-flow login returns the username itself as the access token.
+The JWT version returns a signed JWT created by create_access_token.",,,,,,,
+c0031,A,fact,"When a FastAPI WebSocket endpoint rejects or closes the connection during a test, which exception does the test client raise?",WebSocketDisconnect,The test client raises WebSocketDisconnect when the server closes or rejects the connection.,WebSocketDisconnect,testing/testing-dependencies-events-websockets.md,"[testing/testing-dependencies-events-websockets.md:190] The test session supports `send_text()`, `send_bytes()`, `send_json()`, `receive_text()`, `receive_bytes()`, `receive_json()` and `close()`. Pass query parameters in the URL, and `headers=` / cookies on the client for auth. If the server closes or rejects the connection (e.g. `WebSocketException` with code 1008), the test client raises `WebSocketDisconnect`, which you can assert with `pytest.raises`. See [WebSockets](../integrations/websockets.md).",WebSocketDisconnect,1.0,check,WebSocketDisconnect 는 FastAPI WebSocket 을 써 본 사용자라면 문서 없이도 떠올릴 이름이다 (문서 없이 풀기 검사는 통과). keep/delete 판단 필요.,,,,,,,,,
+c0033,A,code,"In FastAPI's WebSocket testing example, which test client method opens the connection to /ws?",websocket_connect,"The test opens the connection with client.websocket_connect(""/ws"").",websocket_connect,testing/testing-dependencies-events-websockets.md,"[testing/testing-dependencies-events-websockets.md:185] with client.websocket_connect(""/ws"") as websocket:",client.websocket_connect,1.0,check,"websocket_connect 는 TestClient 의 표준 메서드라 문서 없이도 알 법하고, 질문이 'opens the connection to /ws' 로 답을 거의 알려 준다. keep/delete 판단 필요.",,,,,,,,,
+c0039,A,multi,"In FastAPI's security tutorials, how does the response to a failed login at /token differ between the simple password-flow version and the JWT version?","The simple version returns 400 Incorrect username or password, while the JWT version's login_for_access_token raises 401 Unauthorized with a WWW-Authenticate: Bearer header","The simple password-flow login returns 400 for wrong credentials.
+The JWT login returns 401 for wrong credentials.
+The JWT login response includes the WWW-Authenticate: Bearer header.","login_for_access_token
+status_code=400, detail=""Incorrect username or password""","security/oauth2-jwt.md
+security/oauth2-password-flow.md","[security/oauth2-jwt.md:150] async def login_for_access_token(
+[security/oauth2-jwt.md:123] status_code=status.HTTP_401_UNAUTHORIZED,
+[security/oauth2-password-flow.md:116] status_code=status.HTTP_401_UNAUTHORIZED,
+[security/oauth2-password-flow.md:135] raise HTTPException(status_code=400, detail=""Incorrect username or password"")","In the simple OAuth2 password flow tutorial:
+
+- If login credentials are incorrect, the response is a `400` Bad Request with the detail ""Incorrect username or password"".
+
+In the OAuth2 with JWT Tokens and Password Hashing tutorial:
+
+- If login credentials are incorrect, the response is also a `400` Bad Request, but with the detail ""Incorrect username or password"" as well.
+
+So, the status code is the same (400 Bad Request) in both cases, but the response detail is identical in the provided snippets. The key difference is in how the tokens are handled and validated, with JWT providing signed tokens that include expiration and other claims, while the simple password flow uses plain username strings as tokens.",0.33,check,"문항은 맞다. 다만 401 근거 인용 status_code=status.HTTP_401_UNAUTHORIZED 가 두 페이지 모두 get_current_user 의 줄(jwt:123, password-flow:116)을 가리켜 로그인 실패와 무관하다. JWT 로그인 근거는 login_for_access_token 안의 detail=""Incorrect username or password"" 와 headers={""WWW-Authenticate"": ""Bearer""} 줄이 맞다 (evidence 는 검수표로 못 고치므로 수동 수정 필요). none 0.33 은 모델이 JWT 도 400 이라고 잘못 답한 것 (문항 문제 아님).",,,,,,,,,
+c0040,B,multi,"If a FastAPI test must await an async database call itself and also replace one of the app's dependencies, which client should it use and how is the dependency replaced?","Use httpx.AsyncClient with ASGITransport in an @pytest.mark.anyio test, and set app.dependency_overrides with the original dependency as key and the replacement callable as value","An async test needs httpx.AsyncClient instead of TestClient.
+AsyncClient is used with ASGITransport.
+app.dependency_overrides maps the original dependency to a replacement callable.","ASGITransport
+replacement","testing/async-tests-and-database-testing.md
+testing/testing-dependencies-events-websockets.md","[testing/async-tests-and-database-testing.md:64] - `ASGITransport(app=app)` sends requests straight to your ASGI app in-process — no server or network.
+[testing/testing-dependencies-events-websockets.md:33] Sometimes a dependency must not run in tests — it calls an external service (e.g. an OAuth provider or payment API), needs a real database, or you want a fixed value. `app.dependency_overrides` is a plain `dict` on the `FastAPI` app: key = the **original** dependency callable, value = the **replacement** callable.","For a test that needs to await async database calls and replace one of the app's dependencies, you should use `httpx.AsyncClient` in combination with `app.dependency_overrides`.
+
+Here’s how it works:
+
+1. **Using `httpx.AsyncClient`**: Since the test itself needs to `await` something (like an async database call), the test function must be `async`. Use `httpx.AsyncClient` to make HTTP requests to your ASGI app.
+
+2. **Replacing Dependencies with `app.dependency_overrides`**: To replace a dependency in the app, use `app.dependency_overrides`. This is a dictionary where the keys are the original dependency callables, and the values are the replacement callables.
+
+Here’s an example combining both:
+
+```python
+import pytest
+from httpx import AsyncClient
+from fastapi import FastAPI
+from sqlmodel import Session, SQLModel, create_engine
+from sqlmodel.pool import StaticPool
+
+from .main import app, get_session
+
+# Define a test database engine
+test_engine = create_engine(
+    ""sqlite://"", connect_args={""check_same_thread"": False}, poolclass=StaticPool
+)
+
+# Fixture to create and manage a test session
+@pytest.fixture(name=""session"")
+def session_fixture():
+    SQLModel.metadata.create_all(test_engine)
+    with Session(test_engine) as session:
+        yield session
+
+# Fixture to override the session dependency
+@pytest.fixture(name=""client"")
+def client_fixture(session: Session):
+    def get_session_override():
+        return session
+
+    app.dependency_overrides[get_session] = get_session_override
+    client = AsyncClient(app=app, base_url=""http://test"")
+    yield client
+    app.dependency_overrides.clear()
+
+# Test function
+@pytest.mark.anyio
+async def test_create_hero(client: AsyncClient):
+    response = await client.post(""/heroes/"", json={""name"": ""Deadpond"", ""secret_name"": ""Dive Wilson""})
+    assert response.status_code == 200
+    assert response.json()[""name""] == ""Deadpond""
+```
+
+In this example:
+- `session_fixture` creates a test database and manages the session.
+- `client_fixture` overrides the `get_session` dependency with a test session and uses `AsyncClient` to make requests.
+- `test_create_hero` is an `@pytest.mark.anyio` async test that uses the `client` fixture to make a POST request and assert the response.",0.33,check,key_entities 의 'replacement' 는 일반 단어다. none 0.33 중 'original→replacement 매핑' 누락 판정은 judge 오판 (답변에 그대로 있음). ASGITransport 누락은 실제 누락.,,,"ASGITransport
+app.dependency_overrides",,,,,,
+c0147,C,procedure,"In FastAPI, how do I make a yield dependency's cleanup run before the response goes out rather than after?","1) Write the dependency with try, yield and finally 2) Put the cleanup code in finally 3) Declare it with Depends(get_username, scope=""function"") so teardown runs right after the path operation returns, before the response is sent","The dependency uses try/yield/finally.
+The cleanup goes in the finally block.
+The dependency is declared with Depends(..., scope=""function"").
+With function scope, teardown runs before the response is sent.","scope=""function""",dependencies/dependencies-with-yield.md,"[dependencies/dependencies-with-yield.md:168] - `""function""`: teardown right after the path operation function returns, **before** the response is sent.
+[dependencies/dependencies-with-yield.md:181] def get_user_me(username: Annotated[str, Depends(get_username, scope=""function"")]):","1. Use the `scope` parameter when calling `Depends()` to set it to `""function""`.
+2. Define your yield dependency as usual.
+3. The cleanup code after `yield` will now run before the response is sent.",0.25,check,"핵심은 Depends(..., scope=""function"") 인데 key_facts 가 try/finally 구성을 따로 요구해 잘게 쪼개져 있다. none 0.25 중 scope=""function"" 누락 판정은 judge 오판 (답변 1단계에 있음).",,"The dependency is declared with Depends(..., scope=""function"").
+With scope=""function"", the cleanup after yield runs right after the path operation returns, before the response is sent.",,,,,,,
+c0001,A,fact,"In FastAPI's password hashing tutorial, which precomputed hash is checked against the submitted password when the username is not found?",DUMMY_HASH,"When the user does not exist, authenticate_user verifies the password against DUMMY_HASH.","DUMMY_HASH
+authenticate_user",security/oauth2-jwt.md,"[security/oauth2-jwt.md:186] `authenticate_user` still runs `verify_password(password, DUMMY_HASH)` when the user **doesn't exist**. Without that, unknown usernames would be rejected noticeably faster than wrong passwords, letting attackers enumerate valid usernames by timing.",DUMMY_HASH,1.0,ok,"질문-정답 대응, 위키 근거, 인용 위치, key_facts·key_entities 모두 문제 없음.",,,,,,,,,
+c0002,D,code,"In FastAPI's JWT example, how many minutes of validity does create_access_token fall back to when the caller gives no expires_delta?",15,"Without expires_delta, create_access_token sets the expiry to 15 minutes from now.","timedelta(minutes=15)
+create_access_token",security/oauth2-jwt.md,[security/oauth2-jwt.md:115] expire = datetime.now(timezone.utc) + timedelta(minutes=15),15,1.0,ok,"질문-정답 대응, 위키 근거, 인용 위치, key_facts·key_entities 모두 문제 없음.",,,,,,,,,
+c0004,B,fact,"When a FastAPI app registers several middlewares one after another, which of them ends up wrapping all the others?",The last one added,The middleware added last is the outermost one.,"add_middleware
+The last one added",middleware/middleware.md,[middleware/middleware.md:96] Each added middleware wraps the app built so far. **The last one added is the outermost.**,Middleware registered last ends up wrapping all the others.,1.0,ok,정답·근거 일치. binary 판정(match)은 표현 차이로 X 지만 key_facts 정확도 1.0.,,,,,,,,,
+c0005,A,code,"In FastAPI's GZip compression example, what compression level is configured for GZipMiddleware?",5,The example sets compresslevel to 5.,"compresslevel=5
+GZipMiddleware",middleware/middleware.md,"[middleware/middleware.md:157] app.add_middleware(GZipMiddleware, minimum_size=1000, compresslevel=5)",5,1.0,ok,"질문-정답 대응, 위키 근거, 인용 위치, key_facts·key_entities 모두 문제 없음.",,,,,,,,,
+c0017,B,code,"In FastAPI's JWT example, how many minutes is ACCESS_TOKEN_EXPIRE_MINUTES set to?",30,ACCESS_TOKEN_EXPIRE_MINUTES is 30.,ACCESS_TOKEN_EXPIRE_MINUTES = 30,security/oauth2-jwt.md,[security/oauth2-jwt.md:54] ACCESS_TOKEN_EXPIRE_MINUTES = 30,30,1.0,ok,"질문-정답 대응, 위키 근거, 인용 위치, key_facts·key_entities 모두 문제 없음.",,,,,,,,,
+c0018,C,fact,"Below what response size, in bytes, does FastAPI's GZip middleware skip compression by default?",500,The default minimum_size for GZipMiddleware is 500 bytes.,"minimum_size
+500",middleware/middleware.md,[middleware/middleware.md:160] - `minimum_size` — don't compress responses smaller than this many bytes (default `500`).,500,1.0,ok,"질문-정답 대응, 위키 근거, 인용 위치, key_facts·key_entities 모두 문제 없음.",,,,,,,,,
+c0019,C,code,"In FastAPI's TrustedHostMiddleware example, which wildcard host pattern is allowed in addition to example.com?",*.example.com,The example allows the wildcard pattern *.example.com.,"*.example.com
+allowed_hosts",middleware/middleware.md,"[middleware/middleware.md:138] TrustedHostMiddleware, allowed_hosts=[""example.com"", ""*.example.com""]",*.example.com,1.0,ok,"질문-정답 대응, 위키 근거, 인용 위치, key_facts·key_entities 모두 문제 없음.",,,,,,,,,
+c0021,A,fact,Which error does FastAPI raise when a request-scoped yield dependency is made to depend on a function-scoped one?,DependencyScopeError,Violating the scope rule raises DependencyScopeError when the route is created.,DependencyScopeError,dependencies/dependencies-with-yield.md,"[dependencies/dependencies-with-yield.md:185] Sub-dependency rule: a `""request""`-scoped dependency may only depend on `""request""`-scoped dependencies; a `""function""`-scoped dependency may depend on both. Violating it raises `DependencyScopeError` when the route is created. History and edge cases are in [Advanced Dependencies](advanced-dependencies.md).",DependencyScopeError,1.0,ok,"질문-정답 대응, 위키 근거, 인용 위치, key_facts·key_entities 모두 문제 없음.",,,,,,,,,
+c0022,D,code,"In FastAPI's example where a yield dependency converts an ownership problem into an HTTP error, which status code is used?",400,The OwnerError is converted into an HTTPException with status code 400.,"status_code=400
+OwnerError",dependencies/dependencies-with-yield.md,"[dependencies/dependencies-with-yield.md:114] raise HTTPException(status_code=400, detail=f""Owner error: {e}"")",400,1.0,ok,"질문-정답 대응, 위키 근거, 인용 위치, key_facts·key_entities 모두 문제 없음.",,,,,,,,,
+c0023,A,code,"In FastAPI's yield-dependency examples, what username value does get_username hand to the path operation?",Rick,"get_username yields the value ""Rick"".","""Rick""
+get_username",dependencies/dependencies-with-yield.md,"[dependencies/dependencies-with-yield.md:112] yield ""Rick""","""Rick""",1.0,ok,"질문-정답 대응, 위키 근거, 인용 위치, key_facts·key_entities 모두 문제 없음.",,,,,,,,,
+c0024,B,procedure,"In FastAPI, how should a yield dependency handle an exception it catches so that the real error still appears in the server logs?","1) Put the yield inside a try block 2) Catch the specific exception with except 3) Re-raise it with a bare raise, so the client gets a 500 and the traceback is logged","The yield is wrapped in try/except.
+The caught exception must be re-raised with a bare raise.
+If it is not re-raised the client still gets a 500 but nothing is logged about the real error.","InternalError
+500 Internal Server Error",dependencies/dependencies-with-yield.md,"[dependencies/dependencies-with-yield.md:141] The client still gets a `500 Internal Server Error`, but the server logs **nothing** about the real error. Re-raise with a bare `raise` (`tutorial008d_an_py310.py`):
+[dependencies/dependencies-with-yield.md:152] Now the 500 is accompanied by the `InternalError` traceback in the logs. The same applies to `HTTPException`s raised in the path operation: they pass through your `except` too, so re-raise them (or catch only specific exception types).","1. Catch the exception in the yield dependency.
+2. Re-raise the exception using `raise` without any additional arguments to ensure the original exception, including its traceback, is logged.",0.33,ok,문항은 맞다. none 0.33 은 judge 오판 (답변에 'Re-raise ... using raise without any additional arguments' 가 있음).,,,,,,,,,
+c0027,B,code,"In FastAPI's async test example, what base_url is given to AsyncClient?",http://test,"The AsyncClient uses base_url ""http://test"".","base_url=""http://test""",testing/async-tests-and-database-testing.md,"[testing/async-tests-and-database-testing.md:56] transport=ASGITransport(app=app), base_url=""http://test""","""http://test""",1.0,ok,"질문-정답 대응, 위키 근거, 인용 위치, key_facts·key_entities 모두 문제 없음.",,,,,,,,,
+c0028,C,code,"In FastAPI's database testing example, which pool class is passed to create_engine for the in-memory SQLite test database?",StaticPool,The test engine is created with poolclass=StaticPool.,"StaticPool
+poolclass=StaticPool",testing/async-tests-and-database-testing.md,"[testing/async-tests-and-database-testing.md:102] ""sqlite://"", connect_args={""check_same_thread"": False}, poolclass=StaticPool",StaticPool,1.0,ok,"질문-정답 대응, 위키 근거, 인용 위치, key_facts·key_entities 모두 문제 없음.",,,,,,,,,
+c0029,C,procedure,"In FastAPI, how do I make my tests talk to a separate in-memory database instead of the real one, using pytest fixtures?",1) Create an in-memory SQLite engine with StaticPool and create the tables 2) Yield a Session from a session fixture 3) In a client fixture set app.dependency_overrides[get_session] to return that session and yield a TestClient 4) Clear the overrides afterwards,"An in-memory SQLite engine with StaticPool is created and tables are created.
+A session fixture yields a Session.
+app.dependency_overrides[get_session] is set to return the test session.
+The overrides are cleared afterwards.","app.dependency_overrides
+get_session
+StaticPool",testing/async-tests-and-database-testing.md,"[testing/async-tests-and-database-testing.md:114] app.dependency_overrides[get_session] = get_session_override
+[testing/async-tests-and-database-testing.md:117] app.dependency_overrides.clear()
+[testing/async-tests-and-database-testing.md:129] - An in-memory SQLite database (`""sqlite://""`) with `StaticPool` gives each test a fresh, fast database shared across threads.","1. Import necessary modules and functions.
+2. Define a fixture for the database session.
+3. Define a fixture for the test client, using the session fixture.
+4. Use the client fixture in your test functions.
+
+Here are the steps in detail:
+
+1. Import necessary modules and functions.
+```python
+import pytest
+from fastapi.testclient import TestClient
+from sqlmodel import Session, SQLModel, create_engine
+from sqlmodel.pool import StaticPool
+from .main import app, get_session
+```
+
+2. Define a fixture for the database session.
+```python
+@pytest.fixture(name=""session"")
+def session_fixture():
+    engine = create_engine(
+        ""sqlite://"", connect_args={""check_same_thread"": False}, poolclass=StaticPool
+    )
+    SQLModel.metadata.create_all(engine)
+    with Session(engine) as session:
+        yield session
+```
+
+3. Define a fixture for the test client, using the session fixture.
+```python
+@pytest.fixture(name=""client"")
+def client_fixture(session: Session):
+    def get_session_override():
+        return session
+
+    app.dependency_overrides[get_session] = get_session_override
+    client = TestClient(app)
+    yield client
+    app.dependency_overrides.clear()
+```
+
+4. Use the client fixture in your test functions.
+```python
+def test_create_hero(client: TestClient):
+    response = client.post(""/heroes/"", json={""name"": ""Deadpond"", ""secret_name"": ""Dive Wilson""})
+    assert response.status_code == 200
+    assert response.json()[""name""] == ""Deadpond""
+```",1.0,ok,"질문-정답 대응, 위키 근거, 인용 위치, key_facts·key_entities 모두 문제 없음.",,,,,,,,,
+c0030,D,fact,"When a FastAPI dependency is overridden in tests, what decides which request parameters get read and validated?",The override's own signature,The override's own signature defines which request parameters are read and validated.,"own signature
+dependency_overrides",testing/testing-dependencies-events-websockets.md,[testing/testing-dependencies-events-websockets.md:91] - The override's **own signature** defines which request parameters are read and validated: here `skip`/`limit` from the URL are ignored because the override doesn't declare them.,The override's own signature defines which request parameters are read and validated.,1.0,ok,"질문-정답 대응, 위키 근거, 인용 위치, key_facts·key_entities 모두 문제 없음.",,,,,,,,,
+c0032,D,code,"In FastAPI's dependency override test example, what limit value does the replacement dependency return?",10,The override returns limit 10.,"""limit"": 10
+override_dependency",testing/testing-dependencies-events-websockets.md,"[testing/testing-dependencies-events-websockets.md:64] return {""q"": q, ""skip"": 5, ""limit"": 10}",10,1.0,ok,"질문-정답 대응, 위키 근거, 인용 위치, key_facts·key_entities 모두 문제 없음.",,,,,,,,,
+c0034,B,fact,Which stricter variant of FastAPI's OAuth2 password form class requires grant_type to be password?,OAuth2PasswordRequestFormStrict,"OAuth2PasswordRequestFormStrict requires grant_type=""password"".",OAuth2PasswordRequestFormStrict,security/oauth2-password-flow.md,"[security/oauth2-password-flow.md:153] Form fields (attributes): `username`, `password`, `scope` (a space-separated string, exposed as the list `form_data.scopes`), optional `grant_type`, `client_id` and `client_secret`. `OAuth2PasswordRequestFormStrict` additionally **requires** `grant_type=""password""`, as the spec says. Needs `python-multipart` ([Forms](../request/forms-and-files.md)).",OAuth2PasswordRequestFormStrict,1.0,ok,"질문-정답 대응, 위키 근거, 인용 위치, key_facts·key_entities 모두 문제 없음.",,,,,,,,,
+c0035,C,fact,"In FastAPI's simple OAuth2 password tutorial, which status code does the token endpoint return for wrong credentials?",400,Wrong credentials at /token produce a 400 response in this tutorial.,"400
+/token",security/oauth2-password-flow.md,[security/oauth2-password-flow.md:161] - Wrong credentials at `/token` → `400` (per OAuth2's error conventions in this tutorial).,400,1.0,ok,"질문-정답 대응, 위키 근거, 인용 위치, key_facts·key_entities 모두 문제 없음.",,,,,,,,,
+c0036,B,code,"In FastAPI's simple password-flow example, what string does fake_hash_password put in front of the password?",fakehashed,"fake_hash_password prefixes the password with ""fakehashed"".","fakehashed
+fake_hash_password",security/oauth2-password-flow.md,"[security/oauth2-password-flow.md:109] return ""fakehashed"" + password",fakehashed,1.0,ok,"질문-정답 대응, 위키 근거, 인용 위치, key_facts·key_entities 모두 문제 없음.",,,,,,,,,
+c0037,C,code,"In FastAPI's first bearer-token example, what does the /items/ path operation return?","{""token"": token}","The endpoint returns a dict with the token under the key ""token"".","{""token"": token}",security/oauth2-password-flow.md,"[security/oauth2-password-flow.md:52] return {""token"": token}","{""token"": token}",1.0,ok,"질문-정답 대응, 위키 근거, 인용 위치, key_facts·key_entities 모두 문제 없음.",,,,,,,,,
+c0038,D,procedure,"With FastAPI's OAuth2PasswordBearer, what sequence of steps happens between the frontend and the API when a user logs in and then calls protected endpoints?",1) The user enters credentials in the frontend 2) The frontend POSTs them to tokenUrl 3) The API returns a token 4) The frontend sends Authorization: Bearer <token> on later requests,"The frontend sends the credentials to tokenUrl.
+The API returns a token.
+Later requests send Authorization: Bearer <token>.","tokenUrl
+Authorization: Bearer <token>",security/oauth2-password-flow.md,[security/oauth2-password-flow.md:60] The flow: the user enters credentials in the frontend → the frontend POSTs them to `tokenUrl` → the API returns a token → the frontend sends `Authorization: Bearer <token>` on later requests.,"1. User enters credentials (username and password) in the frontend.
+2. Frontend POSTs these credentials to the relative URL `token` (resolved against the API root).
+3. API receives the POST request at the `/token` endpoint.
+4. API validates the username and password.
+5. If valid, API returns a token (e.g., the username) as JSON with `access_token` and `token_type` (e.g., ""bearer"").
+6. Frontend stores the token and includes it in the `Authorization` header as `Bearer <token>` for subsequent requests.
+7. For protected endpoints, the frontend sends `Authorization: Bearer <token>` in the header.
+8. API receives the request and uses `OAuth2PasswordBearer` to validate the token.
+9. If the token is valid, the dependency returns the decoded user information.
+10. The protected endpoint's function can then use this user information as needed.",0.67,ok,정답·근거 일치. none 0.67 은 답변이 길어 마지막 단계(Authorization: Bearer)를 다르게 표현한 탓.,,,,,,,,,
+c0145,A,procedure,"In FastAPI, how do I write a test that actually exercises the app's lifespan startup and cleanup with the synchronous test client?",1) Create the client in a with block: with TestClient(app) as client 2) Startup runs when the block is entered 3) Send requests through client inside the block 4) Shutdown runs when the block exits,"The TestClient must be used as a context manager in a with block.
+Lifespan startup runs on entering the with block.
+Requests are sent inside the block.
+Shutdown runs on leaving the with block.",with TestClient(app) as client,testing/testing-dependencies-events-websockets.md,"[testing/testing-dependencies-events-websockets.md:107] runs the app's **lifespan** only when used as a **context manager**
+[testing/testing-dependencies-events-websockets.md:139] with TestClient(app) as client:","1. Define an asynchronous context manager for the lifespan.
+2. Use the `TestClient` as a context manager to run the app's lifespan.
+3. Assert the state of the app before and after the `TestClient` context manager.
+
+Steps:
+
+1. Define an asynchronous context manager for the lifespan:
+
+```python
+from contextlib import asynccontextmanager
+
+from fastapi import FastAPI
+
+items = {}
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    items[""foo""] = {""name"": ""Fighters""}
+    items[""bar""] = {""name"": ""Tenders""}
+    yield
+    items.clear()
+```
+
+2. Use the `TestClient` as a context manager to run the app's lifespan:
+
+```python
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
+
+app = FastAPI(lifespan=lifespan)
+
+@app.get(""/items/{item_id}"")
+async def read_items(item_id: str):
+    return items[item_id]
+```
+
+3. Assert the state of the app before and after the `TestClient` context manager:
+
+```python
+def test_read_items():
+    # Before the lifespan starts, ""items"" is still empty
+    assert items == {}
+
+    with TestClient(app) as client:
+        # Inside the ""with TestClient"" block, the lifespan starts and items added
+        assert items == {""foo"": {""name"": ""Fighters""}, ""bar"": {""name"": ""Tenders""}}
+
+        response = client.get(""/items/foo"")
+        assert response.status_code == 200
+        assert response.json() == {""name"": ""Fighters""}
+
+    # The end of the ""with TestClient"" block simulates terminating the app, so
+    # the lifespan ends and items are cleaned up
+    assert items == {}
+```",0.5,ok,정답·근거 일치. none 0.5 는 답변이 블록 안 요청·종료 시 shutdown 을 말하지 않은 실제 누락.,,,,,,,,,
+c0146,B,procedure,"In FastAPI, how do I swap out a dependency in only some of my tests while keeping the remaining tests unaffected?","1) At the start of the test or in a pytest fixture, set app.dependency_overrides[original] = replacement 2) Run the requests 3) At the end, reset with app.dependency_overrides.clear() or assign {}","The override is set at the start of the test or in a pytest fixture.
+app.dependency_overrides maps the original dependency to the replacement.
+The overrides are cleared at the end, e.g. with app.dependency_overrides.clear().","app.dependency_overrides
+app.dependency_overrides.clear()",testing/testing-dependencies-events-websockets.md,"[testing/testing-dependencies-events-websockets.md:103] To override only in some tests, set the override at the start of the test (or in a pytest fixture) and clear it at the end.
+[testing/testing-dependencies-events-websockets.md:100] app.dependency_overrides.clear()","1. Import the necessary modules and functions.
+2. Define the dependency you want to override.
+3. Create a pytest fixture to set the override before the test and clear it after.
+4. Use this fixture in your tests where you need the override.
+5. Use `app.dependency_overrides` to apply the override.
+6. After the test, clear the override to ensure isolation.
+
+Here's how you can do it:
+
+1. Import the necessary modules and functions.
+2. Define the dependency you want to override.
+3. Create a pytest fixture to set the override before the test and clear it after.
+4. Use this fixture in your tests where you need the override.
+5. Use `app.dependency_overrides` to apply the override.
+6. After the test, clear the override to ensure isolation.
+
+```python
+import pytest
+from fastapi import Depends, FastAPI
+from fastapi.testclient import TestClient
+
+app = FastAPI()
+
+async def common_parameters(q: str | None = None, skip: int = 0, limit: int = 100):
+    return {""q"": q, ""skip"": skip, ""limit"": limit}
+
+@app.get(""/items/"")
+async def read_items(commons: Annotated[dict, Depends(common_parameters)]):
+    return {""message"": ""Hello Items!"", ""params"": commons}
+
+async def override_dependency(q: str | None = None):
+    return {""q"": q, ""skip"": 5, ""limit"": 10}
+
+# Create a pytest fixture to set and clear the override
+@pytest.fixture
+def override_common_parameters():
+    original = app.dependency_overrides.get(common_parameters)
+
+    def override():
+        app.dependency_overrides[common_parameters] = override_dependency
+
+    yield override
+
+    if original is not None:
+        app.dependency_overrides[common_parameters] = original
+    else:
+        app.dependency_overrides.pop(common_parameters, None)
+
+def test_override_in_items(override_common_parameters):
+    with override_common_parameters():
+        client = TestClient(app)
+        response = client.get(""/items/"")
+        assert response.status_code == 200
+        assert response.json() == {
+            ""message"": ""Hello Items!"",
+            ""params"": {""q"": None, ""skip"": 5, ""limit"": 10},
+        }
+
+def test_no_override_in_items():
+    client = TestClient(app)
+    response = client.get(""/items/"")
+    assert response.status_code == 200",0.67,ok,정답·근거 일치. none 0.67 은 clear() 를 구체적으로 말하지 않아서.,,,,,,,,,

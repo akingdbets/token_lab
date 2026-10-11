@@ -62,13 +62,14 @@ token_lab/
 ├── data/
 │   ├── openwiki/             # OpenWiki 생성 위키: en/ (문서 원천, 고정), ko/ (보관용). 출처는 각 SOURCE.md
 │   ├── corpus_manifest.jsonl # 코퍼스 페이지 목록·종류·해시·토큰 수
-│   ├── evalsets/claude-v1/   # 평가셋 (git 관리, EVAL_DIR 로 선택). 후보 원본·생성 규칙은 candidates/
+│   ├── evalsets/claude-v1/   # 평가셋 (git 관리, EVAL_DIR 로 선택). 후보 원본·생성 규칙은 candidates/, 사람 검수는 review/
 │   └── eval/                 # 평가셋 작업 공간 (기본 EVAL_DIR, 버전 관리 제외)
 ├── src/
 │   ├── config.py             # 모델·경로·실험 조건 통합 설정
 │   ├── llm.py                # LLM 호출 (백엔드 교체 가능), 토큰 계산
 │   ├── corpus.py             # 코퍼스 로더 (OpenWiki 위키, 문서의 단일 출처)
 │   ├── dataset_builder.py    # 평가 데이터셋 생성 및 검수
+│   ├── apply_review.py       # 사람 검수표(CSV) 반영 (keep/edit/delete)
 │   ├── grader.py             # 답변 채점 (key_facts 단위 LLM 판정 + 단어 일치)
 │   ├── experiment.py         # 압축 실험 실행 (A/B 비교)
 │   ├── prompts/              # 답변 지시문 (answer_v1.md ...), --answer-prompt 로 선택
