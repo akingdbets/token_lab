@@ -1737,5 +1737,261 @@
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
     "persona": "intermediate"
+  },
+  {
+    "id": "c0145",
+    "split": "dev",
+    "type": "procedure",
+    "question": "In FastAPI, how do I write a test that actually exercises the app's lifespan startup and cleanup with the synchronous test client?",
+    "answer": "1) Create the client in a with block: with TestClient(app) as client 2) Startup runs when the block is entered 3) Send requests through client inside the block 4) Shutdown runs when the block exits",
+    "key_entities": [
+      "with TestClient(app) as client"
+    ],
+    "key_facts": [
+      "The TestClient must be used as a context manager in a with block.",
+      "Lifespan startup runs on entering the with block.",
+      "Requests are sent inside the block.",
+      "Shutdown runs on leaving the with block."
+    ],
+    "evidence": [
+      {
+        "quote": "runs the app's **lifespan** only when used as a **context manager**",
+        "page": "testing/testing-dependencies-events-websockets.md",
+        "locations": [
+          {
+            "file": "testing/testing-dependencies-events-websockets.md",
+            "line": 107
+          }
+        ]
+      },
+      {
+        "quote": "    with TestClient(app) as client:",
+        "page": "testing/testing-dependencies-events-websockets.md",
+        "locations": [
+          {
+            "file": "testing/testing-dependencies-events-websockets.md",
+            "line": 139
+          },
+          {
+            "file": "testing/testing-dependencies-events-websockets.md",
+            "line": 156
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "testing/testing-dependencies-events-websockets.md"
+    ],
+    "source_files": [
+      "testing/testing-dependencies-events-websockets.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "testing",
+    "doc_tokens": 2063,
+    "copy_overlap": 0.095,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 1,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0001",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0146",
+    "split": "dev",
+    "type": "procedure",
+    "question": "In FastAPI, how do I swap out a dependency in only some of my tests while keeping the remaining tests unaffected?",
+    "answer": "1) At the start of the test or in a pytest fixture, set app.dependency_overrides[original] = replacement 2) Run the requests 3) At the end, reset with app.dependency_overrides.clear() or assign {}",
+    "key_entities": [
+      "app.dependency_overrides",
+      "app.dependency_overrides.clear()"
+    ],
+    "key_facts": [
+      "The override is set at the start of the test or in a pytest fixture.",
+      "app.dependency_overrides maps the original dependency to the replacement.",
+      "The overrides are cleared at the end, e.g. with app.dependency_overrides.clear()."
+    ],
+    "evidence": [
+      {
+        "quote": "To override only in some tests, set the override at the start of the test (or in a pytest fixture) and clear it at the end.",
+        "page": "testing/testing-dependencies-events-websockets.md",
+        "locations": [
+          {
+            "file": "testing/testing-dependencies-events-websockets.md",
+            "line": 103
+          }
+        ]
+      },
+      {
+        "quote": "app.dependency_overrides.clear()",
+        "page": "testing/testing-dependencies-events-websockets.md",
+        "locations": [
+          {
+            "file": "testing/testing-dependencies-events-websockets.md",
+            "line": 100
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "testing/testing-dependencies-events-websockets.md"
+    ],
+    "source_files": [
+      "testing/testing-dependencies-events-websockets.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "testing",
+    "doc_tokens": 2063,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 2,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0002",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0147",
+    "split": "dev",
+    "type": "procedure",
+    "question": "In FastAPI, how do I make a yield dependency's cleanup run before the response goes out rather than after?",
+    "answer": "1) Write the dependency with try, yield and finally 2) Put the cleanup code in finally 3) Declare it with Depends(get_username, scope=\"function\") so teardown runs right after the path operation returns, before the response is sent",
+    "key_entities": [
+      "scope=\"function\""
+    ],
+    "key_facts": [
+      "The dependency uses try/yield/finally.",
+      "The cleanup goes in the finally block.",
+      "The dependency is declared with Depends(..., scope=\"function\").",
+      "With function scope, teardown runs before the response is sent."
+    ],
+    "evidence": [
+      {
+        "quote": "- `\"function\"`: teardown right after the path operation function returns, **before** the response is sent.",
+        "page": "dependencies/dependencies-with-yield.md",
+        "locations": [
+          {
+            "file": "dependencies/dependencies-with-yield.md",
+            "line": 168
+          }
+        ]
+      },
+      {
+        "quote": "def get_user_me(username: Annotated[str, Depends(get_username, scope=\"function\")]):",
+        "page": "dependencies/dependencies-with-yield.md",
+        "locations": [
+          {
+            "file": "dependencies/dependencies-with-yield.md",
+            "line": 181
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "dependencies/dependencies-with-yield.md"
+    ],
+    "source_files": [
+      "dependencies/dependencies-with-yield.md"
+    ],
+    "sections": [
+      null
+    ],
+    "folder": "dependencies",
+    "doc_tokens": 2158,
+    "copy_overlap": 0.111,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 6,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0006",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0148",
+    "split": "dev",
+    "type": "multi",
+    "question": "In FastAPI tests, what stops lifespan code from running with a client created at module level, and what must wrap the app for it to run with the async HTTPX client?",
+    "answer": "A module-level client = TestClient(app) used without a with block skips lifespan; with AsyncClient, wrap the app in asgi-lifespan's LifespanManager and pass manager.app to ASGITransport",
+    "key_entities": [
+      "module-level",
+      "manager.app",
+      "LifespanManager"
+    ],
+    "key_facts": [
+      "A module-level TestClient used without with does not run lifespan.",
+      "With AsyncClient the app is wrapped in LifespanManager from asgi-lifespan.",
+      "manager.app is passed to ASGITransport."
+    ],
+    "evidence": [
+      {
+        "quote": "A module-level `client = TestClient(app)` used without `with` does **not** run lifespan.",
+        "page": "testing/testing-dependencies-events-websockets.md",
+        "locations": [
+          {
+            "file": "testing/testing-dependencies-events-websockets.md",
+            "line": 162
+          }
+        ]
+      },
+      {
+        "quote": "      async with AsyncClient(transport=ASGITransport(app=manager.app), base_url=\"http://test\") as ac:",
+        "page": "testing/async-tests-and-database-testing.md",
+        "locations": [
+          {
+            "file": "testing/async-tests-and-database-testing.md",
+            "line": 78
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "testing/async-tests-and-database-testing.md",
+      "testing/testing-dependencies-events-websockets.md"
+    ],
+    "source_files": [
+      "testing/async-tests-and-database-testing.md",
+      "testing/testing-dependencies-events-websockets.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "testing",
+    "doc_tokens": 3560,
+    "copy_overlap": 0.069,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 8,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0008",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
   }
 ]

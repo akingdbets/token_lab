@@ -17,6 +17,7 @@
 | `claude_20261006_pilot.jsonl` | 시험 생성 17개 (페이지 5개 + 종합형 2쌍). 전체 파일에 그대로 포함됨 |
 | `claude_20261006.jsonl` | 전체 후보 175개 (fact 55, code 55, procedure 48, multi 17) |
 | `targets.json` | 페이지별 split·토큰 수·종합형 짝 후보 |
+| `claude_20261011_balance.jsonl` | 유형 균형 맞추기 후보 72개 (procedure 6, multi 66). 아래 "2026-10-11 유형 균형 맞추기" 참고 |
 
 ## 분량과 예외
 
@@ -58,3 +59,43 @@ multi 는 짝 15쌍 내외.
 - 문서 없이 풀기 검사가 느슨하다. Qwen이 특정 문서를 가리키는 질문에 `UNKNOWN` 으로 답하는 경우가 많고,
   단어가 그대로 이어져야 정답으로 보는 규칙이라 뜻은 맞게 답해도 "모른다"로 판정될 수 있다 (채점 개선은 별도 작업).
 - 정답은 위키(OpenWiki 생성물) 기준이다. 위키 내용이 FastAPI 원문과 다르면 위키를 따른다.
+
+## 2026-10-11 유형 균형 맞추기 (`claude_20261011_balance.jsonl`)
+
+| 항목 | 값 |
+|---|---|
+| 생성 모델 | Claude Opus 5.5 (`claude-opus-5-5`, Claude Code 세션) |
+| 생성 일시 | 2026-10-11 (KST) |
+| 목표 | 유형마다 dev 8개 이상, test 30개 이상. fact·code 는 이미 충분해서 추가하지 않음 |
+| 규칙 | 위 "생성 규칙" 그대로. 단 **persona 필드는 넣지 않음** (persona 는 기록용, 답변 형식·분석은 type 기준) |
+
+조사 (`--list-targets`, 같은 split + 링크로 연결된 짝)
+
+- dev 짝 2쌍 (jwt↔password-flow, async-tests↔testing-dependencies), 둘 다 기존 multi 가 사용 중 (2개, 1개).
+  같은 짝 최대 2개 규칙으로 dev multi 는 3 → **최대 4** 까지만 가능 (목표 8 불가).
+- test 짝 136쌍, 기존 multi 가 쓴 4쌍 제외 132쌍 남음.
+- dev 본문 페이지 6개의 기존 procedure: jwt, password-flow, middleware, dependencies-with-yield, async-tests 각 1개, testing-dependencies 0개.
+
+후보 72개: dev procedure 6 (testing-dependencies 3, async-tests 1, middleware 1, dependencies-with-yield 1),
+dev multi 2 (async-tests↔testing-dependencies), test multi 64 (서로 다른 짝 64개, 페이지당 2~4번).
+같은 짝의 dev multi 2개는 서로 다른 정보(세션 override 함수와 그 시그니처 / lifespan 이 도는 조건)를 묻는다.
+
+통과율을 감안한 분량: 지난 multi 후보 17개를 다시 돌리면 7개만 통과(41%)하고, 대부분 "한 페이지로 풀 수 있음"이었다.
+이 검사는 한 페이지만 준 Qwen 답에 핵심 엔티티가 절반 이상 나오면 탈락인데, 엔티티를 두 페이지에 나누면 어느 한쪽이
+항상 절반 이상을 갖기 때문에 Qwen 이 받은 페이지의 이름만 말해도 탈락한다. 그래서 목표(+26)의 1.5배가 아니라 약 2.5배를 만들었다.
+
+가져오기
+
+```bash
+EVAL_DIR=data/evalsets/claude-v1 python src/dataset_builder.py     --import data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl     --generator claude-opus-5-5 --id-prefix c     --cap dev:procedure=8,dev:multi=8,test:multi=30 --max-per-pair 2
+```
+
+| | 후보 | 통과 | 목표 초과로 뺌 | 추가 |
+|---|---|---|---|---|
+| dev procedure | 6 | 4 | 1 | 3 |
+| dev multi | 2 | 1 | 0 | 1 |
+| test multi | 64 | 28 | 2 | 26 |
+| 합계 | 72 | 33 | 3 | 30 (c0145–c0174) |
+
+제외 사유: 한 페이지로 풀 수 있음 37 (모두 multi), 문서 없이도 정답 2 (procedure: testing-dependencies 의 WebSocket 테스트,
+middleware 의 ASGI 미들웨어 추가). 기존 144문항은 그대로다.
