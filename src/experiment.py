@@ -128,6 +128,17 @@ RAG 검색 단계는 두지 않는다.
     ctx_overflow
         LLM 문맥 길이 초과 여부
 
+    persona / completion_tokens / not_found
+        문항 persona, 답변 출력 토큰, 답변이 "NOT FOUND" 로 시작했는지.
+        not_found 이면 answer_accuracy 를 0 으로 둔다 (judge 판정은 answer_accuracy_judged).
+
+
+답변 지시문
+
+    src/prompts/answer_<버전>.md 에서 읽는다 (--answer-prompt, 기본 v1).
+    사용한 버전은 trials.jsonl 의 answer_prompt, summary.json 의 config.answer_prompt 에 남는다.
+    지시문 v1 이전 결과와는 비교할 수 없다.
+
 
 사용법
 
@@ -171,7 +182,9 @@ RAG 검색 단계는 두지 않는다.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import re
 import math
 import subprocess
 import sys
@@ -198,15 +211,58 @@ from llm import LLM, count_tokens
 
 ANSWER_MAX_TOKENS = 512
 
-# 답변 프롬프트. 실험 내내 고정 (바꾸면 이전 결과와 비교할 수 없다)
-ANSWER_SYSTEM = "You are an assistant that answers questions about FastAPI using the given documentation."
-ANSWER_PROMPT = """Answer the question using only the documentation below. Be concise.
+# 답변 지시문은 src/prompts/answer_<버전>.md 에 둔다 (바꾸면 이전 결과와 비교할 수 없으므로 새 버전으로)
+PROMPTS_DIR = Path(__file__).resolve().parent / "prompts"
+NOT_FOUND = "NOT FOUND"
 
-<documentation>
-{context}
-</documentation>
 
-Question: {question}"""
+@dataclass
+class AnswerPrompt:
+    version: str
+    sha256: str                     # 파일 해시 앞 12자리 (같은 버전 이름으로 내용이 바뀌었는지 확인용)
+    system: str                     # {persona_format} 자리에 persona 형식 줄을 넣는다
+    user: str                       # {context}, {question} 를 채우는 틀 (문서 + 질문만)
+    persona_format: dict[str, str]  # persona -> 지시 한 줄. "default" 는 persona 없는 문항용
+
+    def messages(self, context: str, question: str, persona: str | None) -> list[dict]:
+        fmt = self.persona_format[persona if persona in self.persona_format else "default"]
+        system = self.system.replace("{persona_format}", fmt)
+        user = self.user.format(context=context, question=question)
+        return [{"role": "system", "content": system}, {"role": "user", "content": user}]
+
+
+def answer_prompt_versions() -> list[str]:
+    return sorted(p.stem.removeprefix("answer_") for p in PROMPTS_DIR.glob("answer_*.md"))
+
+
+def load_answer_prompt(version: str) -> AnswerPrompt:
+    path = PROMPTS_DIR / f"answer_{version}.md"
+    text = path.read_text(encoding="utf-8").replace("\r\n", "\n")
+    sections, cur = {}, None
+    for line in text.split("\n"):
+        m = re.match(r"## (\w+)\s*$", line)
+        if m:
+            cur = m.group(1)
+            sections[cur] = []
+        elif cur:
+            sections[cur].append(line)
+    sections = {k: "\n".join(v).strip() for k, v in sections.items()}
+    missing = {"system", "persona_format", "user"} - sections.keys()
+    if "{persona_format}" not in sections.get("system", ""):
+        missing.add("system 의 {persona_format}")
+    if missing:
+        sys.exit(f"{path}: 섹션이 없습니다: {sorted(missing)}")
+    fmt = dict(re.findall(r"^- (\w+):[ \t]*(.+?)\s*$", sections["persona_format"], re.M))
+    if "default" not in fmt:
+        sys.exit(f"{path}: persona_format 에 default 줄이 없습니다")
+    if "TODO:" in sections["system"] or any("TODO:" in v for v in fmt.values()):
+        sys.exit(f"{path}: 아직 채우지 않은 TODO 가 있습니다")
+    return AnswerPrompt(version=version, sha256=hashlib.sha256(text.encode("utf-8")).hexdigest()[:12],
+                        system=sections["system"], user=sections["user"], persona_format=fmt)
+
+
+def is_not_found(response: str) -> bool:
+    return response.strip().startswith(NOT_FOUND)
 
 
 # ---------------- 로그 형식 (팀 Spec 이 정해지면 여기만 고친다) ----------------
@@ -217,6 +273,8 @@ class TrialRecord:
     qid: str
     split: str
     qtype: str
+    persona: str | None             # 문항 persona (없으면 None -> default 형식)
+    answer_prompt: str              # 답변 지시문 버전 (src/prompts/answer_<버전>.md)
     compressor: str
     question: str
     answer: str
@@ -234,7 +292,8 @@ class TrialRecord:
     # 답변
     response: str
     prompt_tokens: int              # 답변 LLM 입력 토큰 (서버 보고값)
-    completion_tokens: int
+    completion_tokens: int          # 답변 출력 토큰
+    not_found: bool                 # 답변이 "NOT FOUND" 로 시작 (이 경우 answer_accuracy = 0)
     ttft_sec: float | None
     latency_sec: float
     ctx_overflow: bool              # 입력이 num_ctx 를 넘어 잘렸는지
@@ -245,8 +304,9 @@ class TrialRecord:
     judge: bool | None
     judge_raw: str
 
-    # key_facts 기반 답변 정확도
+    # key_facts 기반 답변 정확도 (not_found 이면 0)
     answer_accuracy: float | None
+    answer_accuracy_judged: float | None  # not_found 처리 전 judge 판정 그대로
     satisfied_facts: int | None
     total_facts: int | None
     fact_results: list[dict] = field(default_factory=list)
@@ -331,6 +391,7 @@ def run(args) -> Path:
     if not items:
         sys.exit(f"실행할 문항이 없습니다 (split={args.split}). --split all 또는 평가셋 생성을 확인하세요")
 
+    prompt = load_answer_prompt(args.answer_prompt)
     corpus = load_corpus()
     llm = LLM(max_tokens=ANSWER_MAX_TOKENS)
     # 기존 O/X 판정용 Judge
@@ -356,6 +417,7 @@ def run(args) -> Path:
     embedder = LLM() if args.semantic else None
 
     print(f"설정: {CFG.summary()}  judge={'off' if judge is None else CFG.judge_model}")
+    print(f"답변 지시문: {prompt.version} ({prompt.sha256})")
     print(f"문항 {len(items)}개 x 압축기 {names}  ->  {out_dir.relative_to(CFG.root).as_posix()}")
     print("모델 로딩 (첫 호출은 측정에서 제외)...", flush=True)
     llm.ask("Reply with OK.")
@@ -367,7 +429,9 @@ def run(args) -> Path:
             raw_tokens = count_tokens(raw)
             raw_emb, raw_chunks = embed_long(embedder, raw) if embedder else (None, None)
             ents = item.get("key_entities", [])
-            print(f"[{i}/{len(items)}] {item['id']} {item['type']:<9} ctx {raw_tokens} tok", flush=True)
+            persona = item.get("persona")
+            print(f"[{i}/{len(items)}] {item['id']} {item['type']:<9} {persona or '-':<12} ctx {raw_tokens} tok",
+                  flush=True)
 
             for comp in compressors:
                 t0 = time.perf_counter()
@@ -378,10 +442,8 @@ def run(args) -> Path:
                 ctx_words = word_tokens(ctx)
                 (out_dir / "contexts" / f"{item['id']}.{comp.name}.md").write_text(ctx, encoding="utf-8")
 
-                res = llm.chat([
-                    {"role": "system", "content": ANSWER_SYSTEM},
-                    {"role": "user", "content": ANSWER_PROMPT.format(context=ctx, question=item["question"])},
-                ], stream_ttft=True)
+                res = llm.chat(prompt.messages(ctx, item["question"], persona), stream_ttft=True)
+                not_found = is_not_found(res.text)
                 g = grade(item["question"], item["answer"], ents, res.text, judge_llm=judge)
 
                 # key_facts 기반 답변 정확도
@@ -397,8 +459,11 @@ def run(args) -> Path:
                         judge_llm=fact_judge,
                     )
 
+                judged_accuracy = fact_grade.answer_accuracy if fact_grade is not None else None
+                answer_accuracy = 0.0 if not_found and facts else judged_accuracy
+
                 sim = chunks = None
-                
+
                 if embedder:
                     if ctx == raw:
                         sim, chunks = 1.0, raw_chunks
@@ -408,7 +473,7 @@ def run(args) -> Path:
 
                 rec = TrialRecord(
                     run_id=run_id, qid=item["id"], split=item["split"], qtype=item["type"],
-                    compressor=comp.name, question=item["question"], answer=item["answer"],
+                    persona=persona, answer_prompt=prompt.version, compressor=comp.name, question=item["question"], answer=item["answer"],
                     evidence_pages=item["evidence_pages"],
                     ctx_tokens_raw=raw_tokens, ctx_tokens=ctx_tokens,
                     reduction_pct=round(100 * (1 - ctx_tokens / raw_tokens), 2) if raw_tokens else 0.0,
@@ -418,7 +483,7 @@ def run(args) -> Path:
                     answer_in_context=contains_words(ctx_words, item["answer"]) if is_short(item["answer"]) else None,
                     semantic_sim=sim, semantic_chunks=chunks,
                     response=res.text.strip(), prompt_tokens=res.prompt_tokens,
-                    completion_tokens=res.completion_tokens,
+                    completion_tokens=res.completion_tokens, not_found=not_found,
                     ttft_sec=round(res.ttft, 3) if res.ttft is not None else None,
                     latency_sec=round(res.latency, 3), ctx_overflow=res.ctx_overflow,
                     correct=g.correct,
@@ -427,11 +492,8 @@ def run(args) -> Path:
                     judge=g.judge,
                     judge_raw=g.judge_raw,
 
-                    answer_accuracy=(
-                        fact_grade.answer_accuracy
-                        if fact_grade is not None
-                        else None
-                    ),
+                    answer_accuracy=answer_accuracy,
+                    answer_accuracy_judged=judged_accuracy,
                     satisfied_facts=(
                         fact_grade.satisfied_count
                         if fact_grade is not None
@@ -454,14 +516,17 @@ def run(args) -> Path:
                 f.write(json.dumps(asdict(rec), ensure_ascii=False) + "\n")
                 f.flush()
                 print(f"    {comp.name:<6} {raw_tokens:>6} -> {ctx_tokens:<6} ({rec.reduction_pct:5.1f}%)  "
-                      f"{'O' if g.correct else 'X'} [{g.method}]  ttft {rec.ttft_sec}s", flush=True)
+                      f"{'O' if g.correct else 'X'} [{g.method}]  out {rec.completion_tokens} tok"
+                      f"{'  NOT FOUND' if not_found else ''}  ttft {rec.ttft_sec}s", flush=True)
 
     summary = {
         "run_id": run_id,
         "time": datetime.now().isoformat(timespec="seconds"),
         "git_head": git_head(),
         "config": {"llm": CFG.summary(), "judge_model": None if judge is None else CFG.judge_model,
-                   "answer_max_tokens": ANSWER_MAX_TOKENS, "semantic": bool(embedder),
+                   "answer_max_tokens": ANSWER_MAX_TOKENS,
+                   "answer_prompt": {"version": prompt.version, "sha256": prompt.sha256},
+                   "semantic": bool(embedder),
                    "split": args.split, "n_items": len(items)},
         "corpus_source": corpus.source,
         "compressors": {c.name: c.config() for c in compressors},
@@ -557,6 +622,10 @@ def summarize(records: list[TrialRecord], names: list[str]) -> dict:
                 for r in rs
             ),
 
+            # 답변이 "NOT FOUND" 로 시작한 비율 (이 문항들은 answer_accuracy 0)
+            "not_found_rate": round(sum(r.not_found for r in rs) / len(rs), 4),
+            "completion_tokens": _mean(r.completion_tokens for r in rs),
+
             "ttft_sec": _mean(r.ttft_sec for r in rs),
             "latency_sec": _mean(r.latency_sec for r in rs),
             "ctx_overflow": sum(r.ctx_overflow for r in rs),
@@ -616,6 +685,18 @@ def summarize(records: list[TrialRecord], names: list[str]) -> dict:
             # baseline 자신은 유지율 비교 대상이 아님
             s["answer_accuracy_retention_pct"] = None
 
+        # persona 별 정답률·출력 토큰 (persona 없는 문항은 "default")
+        s["by_persona"] = {}
+        for p in sorted({r.persona or "default" for r in rs}):
+            ps = [r for r in rs if (r.persona or "default") == p]
+            s["by_persona"][p] = {
+                "n": len(ps),
+                "answer_accuracy": _mean(r.answer_accuracy for r in ps),
+                "binary_accuracy": round(sum(r.correct for r in ps) / len(ps), 4),
+                "not_found_rate": round(sum(r.not_found for r in ps) / len(ps), 4),
+                "completion_tokens": _mean(r.completion_tokens for r in ps),
+            }
+
         out[n] = s
 
     return out
@@ -654,6 +735,11 @@ def print_summary(results: dict, names: list[str]):
         print(f"  핵심 엔티티 보존율 : {entity_s}")
         print(f"  답변 정확도        : {accuracy_s}")
         print(f"  답변 정확도 유지율 : {retention_s}")
+        print(f"  NOT FOUND 비율     : {s['not_found_rate'] * 100:.1f}%")
+        for p, ps in s.get("by_persona", {}).items():
+            acc = "-" if ps["answer_accuracy"] is None else f"{ps['answer_accuracy'] * 100:.1f}%"
+            print(f"    {p:<12} n={ps['n']:<3} 정확도 {acc:>6}  정답 {ps['binary_accuracy'] * 100:5.1f}%  "
+                  f"출력 {ps['completion_tokens']} tok")
 
     print("\n" + "=" * 64)
 
@@ -666,6 +752,8 @@ def main():
     ap.add_argument("--ids", nargs="*", help="특정 문항만 (예: q0001 q0003). --split 무시")
     ap.add_argument("--no-judge", action="store_true", help="LLM 채점 생략 (긴 정답도 단어 일치로 판정)")
     ap.add_argument("--semantic", action="store_true", help="압축 전후 임베딩 유사도 계산 (bge-m3 필요)")
+    ap.add_argument("--answer-prompt", default="v1", choices=answer_prompt_versions(),
+                    help="답변 지시문 버전 (src/prompts/answer_<버전>.md)")
     run(ap.parse_args())
 
 

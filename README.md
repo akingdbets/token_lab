@@ -66,6 +66,7 @@ token_lab/
 │   ├── dataset_builder.py    # 평가 데이터셋 생성 및 검수
 │   ├── grader.py             # 답변 채점 (key_facts 단위 LLM 판정 + 단어 일치)
 │   ├── experiment.py         # 압축 실험 실행 (A/B 비교)
+│   ├── prompts/              # 답변 지시문 (answer_v1.md ...), --answer-prompt 로 선택
 │   └── compressors/          # 압축 기법 (none, rule)
 ├── results/                  # 실험 로그 (runs/<run_id>/)
 └── dashboard/                # Streamlit 대시보드 (예정)
@@ -178,7 +179,18 @@ EVAL_DIR=data/evalsets/claude-v1 python src/experiment.py --split dev --semantic
 python src/experiment.py                              # dev 문항, none(기준선) vs rule
 python src/experiment.py --split all --limit 5        # 연결 확인용
 python src/experiment.py --compressors none,rule --semantic   # 임베딩 유사도 포함 (bge-m3)
+python src/experiment.py --answer-prompt v1           # 답변 지시문 버전 (기본 v1)
 ```
+
+> **답변 지시문 v1 이전 결과와는 비교 불가.** v1 부터 답변 지시문을 `src/prompts/answer_v1.md` 로 분리하고
+> 문항 persona 별 답변 형식과 `NOT FOUND` 처리를 넣었다. 지시문이 바뀌면 답변 길이·정확도가 달라지므로
+> `summary.json` 의 `config.answer_prompt` (버전, 파일 해시) 가 같은 결과끼리만 비교한다.
+> 지시문을 고칠 때는 파일을 수정하지 말고 `answer_v2.md` 처럼 새 버전을 만든다.
+
+답변 지시문 파일은 `## system`, `## persona_format`, `## user` 세 부분이다.
+`persona_format` 은 beginner / intermediate / advanced 한 줄씩이고, 문항 persona 에 맞는 줄이 system 의
+마지막 규칙(`{persona_format}` 자리)에 들어간다. persona 가 없는 문항은 `default` 줄(`Answer concisely.`)을 쓴다.
+user 메시지는 문서와 질문만 담는다.
 
 문항마다 `질문 → 근거 문서 → 압축 → LLM 답변 → 채점 → 로그` 를 압축기별로 실행한다.
 문맥은 문항의 정답 근거 페이지 원문이고, `none` 이 기준선이다.
@@ -204,6 +216,10 @@ python src/experiment.py --compressors none,rule --semantic   # 임베딩 유사
 - `binary_accuracy` 예전 방식의 정답/오답 비율 (짧은 정답은 단어 일치, 긴 정답은 LLM YES/NO 판정)
 - `answer_in_context` 짧은 정답이 압축 문맥에 단어 그대로 남은 비율
 - `baseline_answer_accuracy`, `paired_answer_accuracy` 유지율 계산에 쓴 짝지은 문항의 두 정확도
+- `not_found_rate` 답변이 (앞뒤 공백 제거 후) `NOT FOUND` 로 시작한 비율. 이 문항은 채점은 하되 `answer_accuracy` 를 0 으로 둔다
+  (judge 판정 원래 값은 `trials.jsonl` 의 `answer_accuracy_judged`)
+- `completion_tokens` 답변 출력 토큰 평균
+- `by_persona` persona 별 `n`, `answer_accuracy`, `binary_accuracy`, `not_found_rate`, `completion_tokens` (persona 없는 문항은 `default`)
 - `ctx_tokens_raw`, `ctx_tokens`, `compress_llm_tokens`, `ttft_sec`, `latency_sec`, `ctx_overflow`
 
 #### 채점 방식
@@ -230,7 +246,7 @@ python src/llm.py
 
 - 동일 모델, `temperature=0`, `seed` 고정
 - `num_ctx=16384` (Ollama 기본값 4096은 긴 문서를 잘라내므로 반드시 지정)
-- 답변·채점 프롬프트 고정 (지시문 변경이 정확도에 영향을 주므로 실험 내내 동일하게 유지)
+- 답변·채점 프롬프트 고정 (지시문 변경이 정확도에 영향을 주므로 실험 내내 동일하게 유지). 답변 지시문은 `src/prompts/` 에 버전별로 두고 결과에 버전을 기록
 - 압축하지 않은 원본 입력 결과를 기준선(Baseline)으로 삼음
 - 조건별 반복 실행 후 평균·표준편차 보고
 
