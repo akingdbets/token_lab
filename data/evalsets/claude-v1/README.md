@@ -5,7 +5,8 @@ OpenWiki 영어 위키(`data/openwiki/en`) 기준 평가셋. 질문 후보는 Cl
 생성 규칙과 후보 원본은 `candidates/README.md` 참고.
 
 - 문항 번호는 `c0001` 형식 (Ollama로 만든 이전 평가셋의 `q0001` 과 구분)
-- persona 필드: beginner / intermediate / advanced
+- persona 필드: beginner / intermediate / advanced. **기록용**이다. 실험의 답변 형식·집계·검수는 type 기준이며,
+  2026-10-11 유형 균형 맞추기로 추가한 문항에는 persona 가 없다
 - 사람 검수 전 (`human_checked` 전부 false)
 
 ## 파일
@@ -35,6 +36,8 @@ EVAL_DIR=data/evalsets/claude-v1 python src/dataset_builder.py --list-targets
 EVAL_DIR=data/evalsets/claude-v1 python src/dataset_builder.py \
     --import data/evalsets/claude-v1/candidates/claude_20261006.jsonl \
     --generator claude-opus-5-5 --id-prefix c
+# 2026-10-11 유형 균형 맞추기 (c0145-c0174)
+EVAL_DIR=data/evalsets/claude-v1 python src/dataset_builder.py     --import data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl     --generator claude-opus-5-5 --id-prefix c     --cap dev:procedure=8,dev:multi=8,test:multi=30 --max-per-pair 2
 ```
 
 후보 파일이 같아도 문서 없이 풀기 검사는 Qwen 응답에 따르므로, 실행 환경(Ollama 버전, 하드웨어)이 다르면

@@ -6488,5 +6488,1681 @@
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
     "persona": "intermediate"
+  },
+  {
+    "id": "c0149",
+    "split": "test",
+    "type": "multi",
+    "question": "Which earlier framework does FastAPI credit for its dependency injection idea, and how do you force such a dependency to be called again instead of reused within one request?",
+    "answer": "NestJS / Angular inspired it; declare the dependency with use_cache=False, e.g. Depends(get_value, use_cache=False)",
+    "key_entities": [
+      "NestJS",
+      "use_cache=False"
+    ],
+    "key_facts": [
+      "FastAPI's dependency injection idea is credited to NestJS / Angular.",
+      "Passing use_cache=False to Depends forces a fresh call each time."
+    ],
+    "evidence": [
+      {
+        "quote": "- **NestJS / Angular** — dependency injection; FastAPI's is type-hint based and less verbose.",
+        "page": "about/features-and-ecosystem.md",
+        "locations": [
+          {
+            "file": "about/features-and-ecosystem.md",
+            "line": 112
+          }
+        ]
+      },
+      {
+        "quote": "async def needy_dependency(fresh_value: Annotated[str, Depends(get_value, use_cache=False)]):",
+        "page": "dependencies/dependency-injection-basics.md",
+        "locations": [
+          {
+            "file": "dependencies/dependency-injection-basics.md",
+            "line": 166
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "about/features-and-ecosystem.md",
+      "dependencies/dependency-injection-basics.md"
+    ],
+    "source_files": [
+      "about/features-and-ecosystem.md",
+      "dependencies/dependency-injection-basics.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "about",
+    "doc_tokens": 4342,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 9,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0009",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0150",
+    "split": "test",
+    "type": "multi",
+    "question": "Which proxy is bundled in the Full Stack FastAPI Template, and what can that proxy do about TLS certificates by itself?",
+    "answer": "The Full Stack FastAPI Template includes Traefik, which can obtain and renew certificates automatically, e.g. from Let's Encrypt",
+    "key_entities": [
+      "Full Stack FastAPI Template",
+      "renew certificates automatically"
+    ],
+    "key_facts": [
+      "The Full Stack FastAPI Template includes Traefik.",
+      "Traefik can renew certificates automatically."
+    ],
+    "evidence": [
+      {
+        "quote": "Docker Compose, JWT auth, password hashing, Pytest tests, Traefik and GitHub Actions CI/CD.",
+        "page": "about/features-and-ecosystem.md",
+        "locations": [
+          {
+            "file": "about/features-and-ecosystem.md",
+            "line": 129
+          }
+        ]
+      },
+      {
+        "quote": "Options include **Traefik** and **Caddy** (both can renew certificates automatically)",
+        "page": "deployment/https-and-cloud.md",
+        "locations": [
+          {
+            "file": "deployment/https-and-cloud.md",
+            "line": 42
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "about/features-and-ecosystem.md",
+      "deployment/https-and-cloud.md"
+    ],
+    "source_files": [
+      "about/features-and-ecosystem.md",
+      "deployment/https-and-cloud.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "about",
+    "doc_tokens": 3620,
+    "copy_overlap": 0.158,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 10,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0010",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0151",
+    "split": "test",
+    "type": "multi",
+    "question": "How is Strawberry's GraphQL router added to a FastAPI app, and what happens to path operations registered on a router once it has already been included?",
+    "answer": "GraphQLRouter is an APIRouter, so it is added with app.include_router(graphql_app, prefix=\"/graphql\"); operations added later are still visible through the earlier inclusion",
+    "key_entities": [
+      "GraphQLRouter",
+      "still visible"
+    ],
+    "key_facts": [
+      "GraphQLRouter is an APIRouter added with include_router.",
+      "The GraphQL endpoint is at /graphql.",
+      "Operations added to a router after inclusion are still visible."
+    ],
+    "evidence": [
+      {
+        "quote": "app.include_router(graphql_app, prefix=\"/graphql\")",
+        "page": "integrations/graphql-and-opentelemetry.md",
+        "locations": [
+          {
+            "file": "integrations/graphql-and-opentelemetry.md",
+            "line": 67
+          }
+        ]
+      },
+      {
+        "quote": "- Path operations added to a router **after** it was included are still visible through the earlier inclusion.",
+        "page": "app-structure/bigger-applications.md",
+        "locations": [
+          {
+            "file": "app-structure/bigger-applications.md",
+            "line": 183
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "app-structure/bigger-applications.md",
+      "integrations/graphql-and-opentelemetry.md"
+    ],
+    "source_files": [
+      "app-structure/bigger-applications.md",
+      "integrations/graphql-and-opentelemetry.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "app-structure",
+    "doc_tokens": 4160,
+    "copy_overlap": 0.08,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 14,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0014",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0152",
+    "split": "test",
+    "type": "multi",
+    "question": "The SQLModel tutorial creates tables from an on_event startup handler; which internal FastAPI object runs such handlers when no lifespan is passed?",
+    "answer": "FastAPI's internal _DefaultLifespan runs the on_startup handlers, so the tutorial's handler calls create_db_and_tables() at startup",
+    "key_entities": [
+      "_DefaultLifespan",
+      "create_db_and_tables"
+    ],
+    "key_facts": [
+      "Without a lifespan, FastAPI uses _DefaultLifespan to run on_startup handlers.",
+      "The tutorial's startup handler calls create_db_and_tables()."
+    ],
+    "evidence": [
+      {
+        "quote": "FastAPI uses an internal `_DefaultLifespan` that runs the `on_startup` / `on_shutdown` handlers",
+        "page": "app-structure/lifespan-events.md",
+        "locations": [
+          {
+            "file": "app-structure/lifespan-events.md",
+            "line": 131
+          }
+        ]
+      },
+      {
+        "quote": "    create_db_and_tables()",
+        "page": "integrations/sql-databases.md",
+        "locations": [
+          {
+            "file": "integrations/sql-databases.md",
+            "line": 44
+          },
+          {
+            "file": "integrations/sql-databases.md",
+            "line": 69
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "app-structure/lifespan-events.md",
+      "integrations/sql-databases.md"
+    ],
+    "source_files": [
+      "app-structure/lifespan-events.md",
+      "integrations/sql-databases.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "app-structure",
+    "doc_tokens": 3353,
+    "copy_overlap": 0.1,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 17,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0017",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0153",
+    "split": "test",
+    "type": "multi",
+    "question": "What text documents an operation's main response when no response_description is given, and which status codes make FastAPI send an empty body?",
+    "answer": "It defaults to \"Successful Response\"; codes below 200, plus 204, 205 and 304, are treated as forbidding a body",
+    "key_entities": [
+      "Successful Response",
+      "205"
+    ],
+    "key_facts": [
+      "response_description defaults to Successful Response.",
+      "Status codes below 200 and 204, 205 and 304 forbid a body."
+    ],
+    "evidence": [
+      {
+        "quote": "`response_description` describes the main response; it defaults to `\"Successful Response\"`.",
+        "page": "app-structure/path-operation-configuration.md",
+        "locations": [
+          {
+            "file": "app-structure/path-operation-configuration.md",
+            "line": 126
+          }
+        ]
+      },
+      {
+        "quote": "(`is_body_allowed_for_status_code`: below 200, `204`, `205`, `304`)",
+        "page": "responses/status-codes.md",
+        "locations": [
+          {
+            "file": "responses/status-codes.md",
+            "line": 76
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "app-structure/path-operation-configuration.md",
+      "responses/status-codes.md"
+    ],
+    "source_files": [
+      "app-structure/path-operation-configuration.md",
+      "responses/status-codes.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "app-structure",
+    "doc_tokens": 3927,
+    "copy_overlap": 0.048,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 19,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0019",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0154",
+    "split": "test",
+    "type": "multi",
+    "question": "How does serving a built SPA with app.frontend() differ from mounting a Flask app under /v1 in whether FastAPI routes get the request first?",
+    "answer": "With app.frontend(), path operations always win and frontend files are used only when no route matched; with a /v1 mount via a2wsgi's WSGIMiddleware, everything under /v1/ goes to Flask",
+    "key_entities": [
+      "always win",
+      "a2wsgi"
+    ],
+    "key_facts": [
+      "With app.frontend(), path operations always take precedence over frontend files.",
+      "A Flask app mounted with WSGIMiddleware at /v1 receives all requests under /v1/."
+    ],
+    "evidence": [
+      {
+        "quote": "**Path operations always win.** Frontend files are only considered when no normal route matched",
+        "page": "app-structure/static-files-templates-and-frontend.md",
+        "locations": [
+          {
+            "file": "app-structure/static-files-templates-and-frontend.md",
+            "line": 120
+          }
+        ]
+      },
+      {
+        "quote": "Requests under `/v1/` go to Flask; everything else goes to FastAPI.",
+        "page": "app-structure/sub-applications-proxy-and-wsgi.md",
+        "locations": [
+          {
+            "file": "app-structure/sub-applications-proxy-and-wsgi.md",
+            "line": 165
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "app-structure/static-files-templates-and-frontend.md",
+      "app-structure/sub-applications-proxy-and-wsgi.md"
+    ],
+    "source_files": [
+      "app-structure/static-files-templates-and-frontend.md",
+      "app-structure/sub-applications-proxy-and-wsgi.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "app-structure",
+    "doc_tokens": 4096,
+    "copy_overlap": 0.087,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 22,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0022",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0155",
+    "split": "test",
+    "type": "multi",
+    "question": "If app.frontend(\"/\", directory=\"dist\") points at a missing folder, what happens under fastapi dev versus fastapi run, given how each handles FASTAPI_ENV?",
+    "answer": "fastapi dev sets FASTAPI_ENV=development, so check_dir=\"auto\" only emits a warning; fastapi run leaves it unchanged, so otherwise the missing directory raises an error at app creation",
+    "key_entities": [
+      "emits a warning",
+      "leaves it unchanged"
+    ],
+    "key_facts": [
+      "fastapi dev sets FASTAPI_ENV to development.",
+      "In development, a missing frontend directory only emits a warning.",
+      "fastapi run leaves FASTAPI_ENV unchanged, so a missing directory raises an error when the app is created."
+    ],
+    "evidence": [
+      {
+        "quote": "a missing directory only emits a warning",
+        "page": "app-structure/static-files-templates-and-frontend.md",
+        "locations": [
+          {
+            "file": "app-structure/static-files-templates-and-frontend.md",
+            "line": 145
+          }
+        ]
+      },
+      {
+        "quote": "`fastapi run` leaves it unchanged.",
+        "page": "getting-started/development-workflow.md",
+        "locations": [
+          {
+            "file": "getting-started/development-workflow.md",
+            "line": 68
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "app-structure/static-files-templates-and-frontend.md",
+      "getting-started/development-workflow.md"
+    ],
+    "source_files": [
+      "app-structure/static-files-templates-and-frontend.md",
+      "getting-started/development-workflow.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "app-structure",
+    "doc_tokens": 3247,
+    "copy_overlap": 0.095,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 23,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0023",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0156",
+    "split": "test",
+    "type": "multi",
+    "question": "Behind a TLS proxy, which flag do the Docker docs add to the container command so forwarded headers are trusted, and which CLI option tells the server about a stripped /api/v1 prefix?",
+    "answer": "Add --proxy-headers to the exec-form CMD, e.g. CMD [\"fastapi\", \"run\", \"app/main.py\", \"--proxy-headers\", \"--port\", \"80\"]; pass --root-path /api/v1 for the prefix",
+    "key_entities": [
+      "\"--proxy-headers\", \"--port\"",
+      "--root-path /api/v1"
+    ],
+    "key_facts": [
+      "The Dockerfile CMD adds --proxy-headers behind a TLS proxy.",
+      "A stripped path prefix is given with --root-path /api/v1."
+    ],
+    "evidence": [
+      {
+        "quote": "CMD [\"fastapi\", \"run\", \"app/main.py\", \"--proxy-headers\", \"--port\", \"80\"]",
+        "page": "deployment/docker.md",
+        "locations": [
+          {
+            "file": "deployment/docker.md",
+            "line": 87
+          }
+        ]
+      },
+      {
+        "quote": "fastapi run main.py --forwarded-allow-ips=\"*\" --root-path /api/v1",
+        "page": "app-structure/sub-applications-proxy-and-wsgi.md",
+        "locations": [
+          {
+            "file": "app-structure/sub-applications-proxy-and-wsgi.md",
+            "line": 91
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "app-structure/sub-applications-proxy-and-wsgi.md",
+      "deployment/docker.md"
+    ],
+    "source_files": [
+      "app-structure/sub-applications-proxy-and-wsgi.md",
+      "deployment/docker.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "app-structure",
+    "doc_tokens": 3624,
+    "copy_overlap": 0.065,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 25,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0025",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0157",
+    "split": "test",
+    "type": "multi",
+    "question": "When a class is the dependency versus a configured instance of a class, which method's signature does FastAPI inspect in each case?",
+    "answer": "For Depends(CommonQueryParams) it inspects __init__ and you receive the new instance; for Depends(checker), a FixedContentQueryChecker instance, it ignores __init__ and inspects __call__",
+    "key_entities": [
+      "CommonQueryParams",
+      "FixedContentQueryChecker"
+    ],
+    "key_facts": [
+      "For a class dependency such as CommonQueryParams, FastAPI inspects __init__.",
+      "For a callable instance such as a FixedContentQueryChecker, FastAPI inspects __call__.",
+      "FastAPI never looks at the instance's __init__."
+    ],
+    "evidence": [
+      {
+        "quote": "async def read_items(commons: Annotated[CommonQueryParams, Depends(CommonQueryParams)]):",
+        "page": "dependencies/dependency-injection-basics.md",
+        "locations": [
+          {
+            "file": "dependencies/dependency-injection-basics.md",
+            "line": 101
+          }
+        ]
+      },
+      {
+        "quote": "- FastAPI never looks at `__init__`; **you** call it to configure the instance (`\"bar\"`).",
+        "page": "dependencies/advanced-dependencies.md",
+        "locations": [
+          {
+            "file": "dependencies/advanced-dependencies.md",
+            "line": 73
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "dependencies/advanced-dependencies.md",
+      "dependencies/dependency-injection-basics.md"
+    ],
+    "source_files": [
+      "dependencies/advanced-dependencies.md",
+      "dependencies/dependency-injection-basics.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "dependencies",
+    "doc_tokens": 3785,
+    "copy_overlap": 0.19,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 26,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0026",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0158",
+    "split": "test",
+    "type": "multi",
+    "question": "FastAPI's hand-rolled header check in the decorator dependencies example rejects a bad token with one status; which security class reads an API key header instead, and what status does it give when the key is missing?",
+    "answer": "The hand-rolled check raises 400 \"X-Token header invalid\"; APIKeyHeader(name=...) raises 401 Not authenticated with a WWW-Authenticate: APIKey header when the key is missing",
+    "key_entities": [
+      "X-Token header invalid",
+      "APIKeyHeader"
+    ],
+    "key_facts": [
+      "The hand-rolled check returns 400 with X-Token header invalid.",
+      "APIKeyHeader reads a named API key header.",
+      "Missing credentials give 401 Not authenticated."
+    ],
+    "evidence": [
+      {
+        "quote": "        raise HTTPException(status_code=400, detail=\"X-Token header invalid\")",
+        "page": "dependencies/decorator-and-global-dependencies.md",
+        "locations": [
+          {
+            "file": "dependencies/decorator-and-global-dependencies.md",
+            "line": 39
+          }
+        ]
+      },
+      {
+        "quote": "api_key_header = APIKeyHeader(name=\"X-API-Key\")",
+        "page": "security/http-basic-and-api-keys.md",
+        "locations": [
+          {
+            "file": "security/http-basic-and-api-keys.md",
+            "line": 162
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "dependencies/decorator-and-global-dependencies.md",
+      "security/http-basic-and-api-keys.md"
+    ],
+    "source_files": [
+      "dependencies/decorator-and-global-dependencies.md",
+      "security/http-basic-and-api-keys.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "dependencies",
+    "doc_tokens": 3344,
+    "copy_overlap": 0.028,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 29,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0029",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0159",
+    "split": "test",
+    "type": "multi",
+    "question": "In a FastAPI WebSocket endpoint, which exception should a dependency raise to reject a missing token, and which default handler closes the socket when parameter validation fails?",
+    "answer": "Raise WebSocketException(code=status.WS_1008_POLICY_VIOLATION); websocket_request_validation_exception_handler closes the connection with code 1008",
+    "key_entities": [
+      "WS_1008_POLICY_VIOLATION",
+      "websocket_request_validation_exception_handler"
+    ],
+    "key_facts": [
+      "A WebSocket dependency raises WebSocketException with status.WS_1008_POLICY_VIOLATION.",
+      "websocket_request_validation_exception_handler closes the socket with code 1008."
+    ],
+    "evidence": [
+      {
+        "quote": "        raise WebSocketException(code=status.WS_1008_POLICY_VIOLATION)",
+        "page": "integrations/websockets.md",
+        "locations": [
+          {
+            "file": "integrations/websockets.md",
+            "line": 94
+          }
+        ]
+      },
+      {
+        "quote": "| `WebSocketRequestValidationError` | `websocket_request_validation_exception_handler` | closes the socket with code `1008` (policy violation) |",
+        "page": "errors/handling-errors.md",
+        "locations": [
+          {
+            "file": "errors/handling-errors.md",
+            "line": 121
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "errors/handling-errors.md",
+      "integrations/websockets.md"
+    ],
+    "source_files": [
+      "errors/handling-errors.md",
+      "integrations/websockets.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "errors",
+    "doc_tokens": 4102,
+    "copy_overlap": 0.12,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 34,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0034",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0160",
+    "split": "test",
+    "type": "multi",
+    "question": "Why do the docs say to register HTTP error handlers for Starlette's exception class, and where do exception handlers sit relative to your own middleware?",
+    "answer": "Handlers for StarletteHTTPException also catch errors Starlette raises internally, like 404 for unknown routes and 405; they run in ExceptionMiddleware, inside your middleware, so middleware sees their responses",
+    "key_entities": [
+      "StarletteHTTPException",
+      "ExceptionMiddleware"
+    ],
+    "key_facts": [
+      "Handlers should be registered for Starlette's HTTPException.",
+      "This catches Starlette's internal errors such as 404 and 405.",
+      "Exception handlers run in ExceptionMiddleware inside user middleware."
+    ],
+    "evidence": [
+      {
+        "quote": "so they also catch errors Starlette raises internally (e.g. 404 for unknown routes, 405)",
+        "page": "errors/handling-errors.md",
+        "locations": [
+          {
+            "file": "errors/handling-errors.md",
+            "line": 75
+          }
+        ]
+      },
+      {
+        "quote": "ExceptionMiddleware          ← your exception handlers (HTTPException, RequestValidationError, custom…)",
+        "page": "internals/request-handling-internals.md",
+        "locations": [
+          {
+            "file": "internals/request-handling-internals.md",
+            "line": 44
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "errors/handling-errors.md",
+      "internals/request-handling-internals.md"
+    ],
+    "source_files": [
+      "errors/handling-errors.md",
+      "internals/request-handling-internals.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "errors",
+    "doc_tokens": 4538,
+    "copy_overlap": 0.083,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 35,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0035",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0161",
+    "split": "test",
+    "type": "multi",
+    "question": "To include the raw request body in a 422 error, what does the custom APIRoute approach read, and what simpler handler-based alternative returns it?",
+    "answer": "ValidationErrorLoggingRoute catches RequestValidationError and calls await request.body(); the simpler way is a RequestValidationError handler returning {\"detail\": exc.errors(), \"body\": exc.body}",
+    "key_entities": [
+      "ValidationErrorLoggingRoute",
+      "\"body\": exc.body"
+    ],
+    "key_facts": [
+      "The custom route class is ValidationErrorLoggingRoute.",
+      "It reads the raw body with await request.body().",
+      "A RequestValidationError handler can return exc.body instead."
+    ],
+    "evidence": [
+      {
+        "quote": "class ValidationErrorLoggingRoute(APIRoute):",
+        "page": "request/using-request-directly.md",
+        "locations": [
+          {
+            "file": "request/using-request-directly.md",
+            "line": 149
+          }
+        ]
+      },
+      {
+        "quote": "        content=jsonable_encoder({\"detail\": exc.errors(), \"body\": exc.body}),",
+        "page": "errors/handling-errors.md",
+        "locations": [
+          {
+            "file": "errors/handling-errors.md",
+            "line": 158
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "errors/handling-errors.md",
+      "request/using-request-directly.md"
+    ],
+    "source_files": [
+      "errors/handling-errors.md",
+      "request/using-request-directly.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "errors",
+    "doc_tokens": 4664,
+    "copy_overlap": 0.087,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 36,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0036",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0162",
+    "split": "test",
+    "type": "multi",
+    "question": "Which FastAPI telemetry setting creates a child span for each background task, and in what order do those tasks execute?",
+    "answer": "operation_spans (on by default) adds a child span per BackgroundTasks task; the tasks run in the order they were added, after the response is sent",
+    "key_entities": [
+      "operation_spans",
+      "order they were added"
+    ],
+    "key_facts": [
+      "operation_spans creates child spans for each BackgroundTasks task.",
+      "Background tasks run in the order they were added."
+    ],
+    "evidence": [
+      {
+        "quote": "| `operation_spans` | Child spans for dependency resolution, the endpoint function, response serialization and each `BackgroundTasks` task | `True` |",
+        "page": "integrations/graphql-and-opentelemetry.md",
+        "locations": [
+          {
+            "file": "integrations/graphql-and-opentelemetry.md",
+            "line": 119
+          }
+        ]
+      },
+      {
+        "quote": "- Tasks run in the order they were added, in the same process, after the response is sent.",
+        "page": "integrations/background-tasks.md",
+        "locations": [
+          {
+            "file": "integrations/background-tasks.md",
+            "line": 52
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "integrations/background-tasks.md",
+      "integrations/graphql-and-opentelemetry.md"
+    ],
+    "source_files": [
+      "integrations/background-tasks.md",
+      "integrations/graphql-and-opentelemetry.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "integrations",
+    "doc_tokens": 3247,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 40,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0040",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0163",
+    "split": "test",
+    "type": "multi",
+    "question": "How does a FastAPI WebSocket endpoint learn that the client went away, and how does a reconnecting Server-Sent Events client tell the server where to resume?",
+    "answer": "receive_*() raises WebSocketDisconnect, which you catch to clean up; the browser sends the last event id in the Last-Event-ID header",
+    "key_entities": [
+      "WebSocketDisconnect",
+      "Last-Event-ID"
+    ],
+    "key_facts": [
+      "A disconnect makes receive methods raise WebSocketDisconnect.",
+      "On SSE reconnect the browser sends the Last-Event-ID header."
+    ],
+    "evidence": [
+      {
+        "quote": "When the client disconnects, `receive_*()` raises `WebSocketDisconnect`.",
+        "page": "integrations/websockets.md",
+        "locations": [
+          {
+            "file": "integrations/websockets.md",
+            "line": 126
+          }
+        ]
+      },
+      {
+        "quote": "On reconnect the browser sends the last received `id` in the `Last-Event-ID` header",
+        "page": "responses/streaming-and-sse.md",
+        "locations": [
+          {
+            "file": "responses/streaming-and-sse.md",
+            "line": 214
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "integrations/websockets.md",
+      "responses/streaming-and-sse.md"
+    ],
+    "source_files": [
+      "integrations/websockets.md",
+      "responses/streaming-and-sse.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "integrations",
+    "doc_tokens": 4469,
+    "copy_overlap": 0.042,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 43,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0043",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0164",
+    "split": "test",
+    "type": "multi",
+    "question": "Which internal step validates an endpoint's return value against its response field, and how do you keep a Response | dict annotation without FastAPI building a model from it?",
+    "answer": "serialize_response validates the value (a failure raises ResponseValidationError, giving a 500); set response_model=None on the decorator",
+    "key_entities": [
+      "serialize_response",
+      "response_model=None"
+    ],
+    "key_facts": [
+      "serialize_response validates the return value against the response field.",
+      "A failure raises ResponseValidationError and a 500.",
+      "response_model=None disables the response model."
+    ],
+    "evidence": [
+      {
+        "quote": "- Otherwise `serialize_response()`:",
+        "page": "internals/request-handling-internals.md",
+        "locations": [
+          {
+            "file": "internals/request-handling-internals.md",
+            "line": 102
+          }
+        ]
+      },
+      {
+        "quote": "@app.get(\"/portal\", response_model=None)",
+        "page": "models/response-model.md",
+        "locations": [
+          {
+            "file": "models/response-model.md",
+            "line": 170
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "internals/request-handling-internals.md",
+      "models/response-model.md"
+    ],
+    "source_files": [
+      "internals/request-handling-internals.md",
+      "models/response-model.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "internals",
+    "doc_tokens": 4492,
+    "copy_overlap": 0.074,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 44,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0044",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0165",
+    "split": "test",
+    "type": "multi",
+    "question": "If a regenerated TypeScript client breaks because the schema now has Item-Input and Item-Output, which app setting restores a single schema, and which command generates that client?",
+    "answer": "FastAPI(separate_input_output_schemas=False) gives one Item schema; generate with npx @hey-api/openapi-ts -i http://localhost:8000/openapi.json -o src/client",
+    "key_entities": [
+      "separate_input_output_schemas=False",
+      "npx @hey-api/openapi-ts"
+    ],
+    "key_facts": [
+      "separate_input_output_schemas=False produces a single schema.",
+      "The TypeScript client is generated with npx @hey-api/openapi-ts."
+    ],
+    "evidence": [
+      {
+        "quote": "app = FastAPI(separate_input_output_schemas=False)",
+        "page": "models/dataclasses-and-pydantic-versions.md",
+        "locations": [
+          {
+            "file": "models/dataclasses-and-pydantic-versions.md",
+            "line": 164
+          }
+        ]
+      },
+      {
+        "quote": "npx @hey-api/openapi-ts -i http://localhost:8000/openapi.json -o src/client",
+        "page": "openapi/generating-clients.md",
+        "locations": [
+          {
+            "file": "openapi/generating-clients.md",
+            "line": 77
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "models/dataclasses-and-pydantic-versions.md",
+      "openapi/generating-clients.md"
+    ],
+    "source_files": [
+      "models/dataclasses-and-pydantic-versions.md",
+      "openapi/generating-clients.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "models",
+    "doc_tokens": 3919,
+    "copy_overlap": 0.148,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 48,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0048",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0166",
+    "split": "test",
+    "type": "multi",
+    "question": "When jsonable_encoder converts a set field, what does it become, and how does the OpenAPI schema mark a set-typed field?",
+    "answer": "jsonable_encoder turns sets (like tuples and generators) into lists; the schema marks the field with uniqueItems",
+    "key_entities": [
+      "sets/tuples/generators",
+      "uniqueItems"
+    ],
+    "key_facts": [
+      "jsonable_encoder converts sets to lists.",
+      "A set field's schema has uniqueItems."
+    ],
+    "evidence": [
+      {
+        "quote": "sets/tuples/generators → lists",
+        "page": "models/extra-models-and-updates.md",
+        "locations": [
+          {
+            "file": "models/extra-models-and-updates.md",
+            "line": 195
+          }
+        ]
+      },
+      {
+        "quote": "| `frozenset` / `set` | request: a list, de-duplicated; response: a list; schema has `uniqueItems` |",
+        "page": "request/extra-data-types-and-examples.md",
+        "locations": [
+          {
+            "file": "request/extra-data-types-and-examples.md",
+            "line": 44
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "models/extra-models-and-updates.md",
+      "request/extra-data-types-and-examples.md"
+    ],
+    "source_files": [
+      "models/extra-models-and-updates.md",
+      "request/extra-data-types-and-examples.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "models",
+    "doc_tokens": 5079,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 49,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0049",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0167",
+    "split": "test",
+    "type": "multi",
+    "question": "If an endpoint switches to 201 by setting status_code on an injected Response, is its return value still filtered by the response model, and which decorator option would drop fields never explicitly set?",
+    "answer": "Yes, it is still serialized through the response model (the injected status overrides the decorator's in _build_response_args); add response_model_exclude_unset=True",
+    "key_entities": [
+      "_build_response_args",
+      "response_model_exclude_unset"
+    ],
+    "key_facts": [
+      "The return value is still serialized through the response model.",
+      "The injected Response status overrides the decorator status.",
+      "response_model_exclude_unset omits fields not explicitly set."
+    ],
+    "evidence": [
+      {
+        "quote": "(`_build_response_args` in `fastapi/routing.py`). Your return value is still serialized through the response model.",
+        "page": "responses/status-codes.md",
+        "locations": [
+          {
+            "file": "responses/status-codes.md",
+            "line": 137
+          }
+        ]
+      },
+      {
+        "quote": "| `response_model_exclude_unset` | Omit fields not explicitly set |",
+        "page": "models/response-model.md",
+        "locations": [
+          {
+            "file": "models/response-model.md",
+            "line": 205
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "models/response-model.md",
+      "responses/status-codes.md"
+    ],
+    "source_files": [
+      "models/response-model.md",
+      "responses/status-codes.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "models",
+    "doc_tokens": 3997,
+    "copy_overlap": 0.097,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 51,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0051",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0168",
+    "split": "test",
+    "type": "multi",
+    "question": "What warning does FastAPI emit while generating OpenAPI if two operations share an ID, and how does the docs' preprocessing script shorten IDs before generating a client?",
+    "answer": "It warns Duplicate Operation ID ... for function ...; the script slices off to_remove = f\"{tag}-\" from each operationId",
+    "key_entities": [
+      "Duplicate Operation ID",
+      "to_remove"
+    ],
+    "key_facts": [
+      "FastAPI warns about duplicate operation IDs.",
+      "The preprocessing script removes the tag prefix from each operationId."
+    ],
+    "evidence": [
+      {
+        "quote": "FastAPI warns about duplicate operation IDs (`Duplicate Operation ID ... for function ...`)",
+        "page": "openapi/extending-openapi.md",
+        "locations": [
+          {
+            "file": "openapi/extending-openapi.md",
+            "line": 173
+          }
+        ]
+      },
+      {
+        "quote": "        to_remove = f\"{tag}-\"",
+        "page": "openapi/generating-clients.md",
+        "locations": [
+          {
+            "file": "openapi/generating-clients.md",
+            "line": 143
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "openapi/extending-openapi.md",
+      "openapi/generating-clients.md"
+    ],
+    "source_files": [
+      "openapi/extending-openapi.md",
+      "openapi/generating-clients.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "openapi",
+    "doc_tokens": 4171,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 52,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0052",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0169",
+    "split": "test",
+    "type": "multi",
+    "question": "In FastAPI's parameter-model docs, which unexpected form field value and which unexpected cookie illustrate the extra_forbidden error?",
+    "answer": "An extra form field such as extra=Mr. Poopybutthole, and a santa_tracker cookie",
+    "key_entities": [
+      "Mr. Poopybutthole",
+      "santa_tracker"
+    ],
+    "key_facts": [
+      "The form example sends an extra field with the value Mr. Poopybutthole.",
+      "The cookie example sends an unexpected santa_tracker cookie."
+    ],
+    "evidence": [
+      {
+        "quote": "A client sending an extra field (e.g. `extra=Mr. Poopybutthole`) gets a 422 error",
+        "page": "request/forms-and-files.md",
+        "locations": [
+          {
+            "file": "request/forms-and-files.md",
+            "line": 208
+          }
+        ]
+      },
+      {
+        "quote": "A request with an unexpected cookie (e.g. a `santa_tracker` cookie)",
+        "page": "request/headers-and-cookies.md",
+        "locations": [
+          {
+            "file": "request/headers-and-cookies.md",
+            "line": 166
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "request/forms-and-files.md",
+      "request/headers-and-cookies.md"
+    ],
+    "source_files": [
+      "request/forms-and-files.md",
+      "request/headers-and-cookies.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "request",
+    "doc_tokens": 4049,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 56,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0056",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0170",
+    "split": "test",
+    "type": "multi",
+    "question": "How does FastAPI collect every value of a header that is sent several times, and which query values count as True for a bool parameter?",
+    "answer": "Declare it as a list, e.g. x_token: Annotated[list[str] | None, Header()]; 1, True, true, on and yes (e.g. short=yes) all become True",
+    "key_entities": [
+      "list[str] | None, Header()",
+      "short=yes"
+    ],
+    "key_facts": [
+      "Duplicate headers are collected by declaring a list type with Header().",
+      "1, True, true, on and yes are converted to True."
+    ],
+    "evidence": [
+      {
+        "quote": "async def read_items(x_token: Annotated[list[str] | None, Header()] = None):",
+        "page": "request/headers-and-cookies.md",
+        "locations": [
+          {
+            "file": "request/headers-and-cookies.md",
+            "line": 78
+          }
+        ]
+      },
+      {
+        "quote": "`short=1`, `short=True`, `short=true`, `short=on` and `short=yes` all become `True`",
+        "page": "request/query-parameters.md",
+        "locations": [
+          {
+            "file": "request/query-parameters.md",
+            "line": 89
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "request/headers-and-cookies.md",
+      "request/query-parameters.md"
+    ],
+    "source_files": [
+      "request/headers-and-cookies.md",
+      "request/query-parameters.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "request",
+    "doc_tokens": 4664,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 58,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0058",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0171",
+    "split": "test",
+    "type": "multi",
+    "question": "If you build a Response object yourself, which length header is added for you, and which set_cookie flag keeps the cookie away from browser scripts?",
+    "answer": "Content-Length is added (plus the charset in Content-Type for text types); httponly=True hides the cookie from JavaScript",
+    "key_entities": [
+      "Content-Length",
+      "httponly"
+    ],
+    "key_facts": [
+      "FastAPI/Starlette add Content-Length to a Response.",
+      "httponly makes a cookie inaccessible to JavaScript."
+    ],
+    "evidence": [
+      {
+        "quote": "FastAPI/Starlette add `Content-Length` and, for text types, the charset in `Content-Type`.",
+        "page": "responses/custom-responses.md",
+        "locations": [
+          {
+            "file": "responses/custom-responses.md",
+            "line": 90
+          }
+        ]
+      },
+      {
+        "quote": "| `httponly` | Not accessible to JavaScript |",
+        "page": "responses/response-headers-and-cookies.md",
+        "locations": [
+          {
+            "file": "responses/response-headers-and-cookies.md",
+            "line": 108
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "responses/custom-responses.md",
+      "responses/response-headers-and-cookies.md"
+    ],
+    "source_files": [
+      "responses/custom-responses.md",
+      "responses/response-headers-and-cookies.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "responses",
+    "doc_tokens": 3832,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 62,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0062",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0172",
+    "split": "test",
+    "type": "multi",
+    "question": "With HTTPBasic, what WWW-Authenticate value accompanies a 401 so browsers re-prompt, and what value does the scopes example send when me and items are both required?",
+    "answer": "Basic, or Basic realm=\"...\" when a realm is set; the scopes example sends Bearer scope=\"me items\"",
+    "key_entities": [
+      "Basic realm=",
+      "Bearer scope=\"me items\""
+    ],
+    "key_facts": [
+      "HTTPBasic sends WWW-Authenticate: Basic (with a realm if set).",
+      "The scopes example sends Bearer scope=\"me items\"."
+    ],
+    "evidence": [
+      {
+        "quote": "- `HTTPBasic`: `Basic` (or `Basic realm=\"...\"` if `realm` is set)",
+        "page": "security/http-basic-and-api-keys.md",
+        "locations": [
+          {
+            "file": "security/http-basic-and-api-keys.md",
+            "line": 48
+          }
+        ]
+      },
+      {
+        "quote": "the `WWW-Authenticate` header includes the required scopes: `Bearer scope=\"me items\"`.",
+        "page": "security/oauth2-scopes.md",
+        "locations": [
+          {
+            "file": "security/oauth2-scopes.md",
+            "line": 157
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "security/http-basic-and-api-keys.md",
+      "security/oauth2-scopes.md"
+    ],
+    "source_files": [
+      "security/http-basic-and-api-keys.md",
+      "security/oauth2-scopes.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "security",
+    "doc_tokens": 3979,
+    "copy_overlap": 0.115,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 64,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0064",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0173",
+    "split": "test",
+    "type": "multi",
+    "question": "Where is Swagger UI served by default when running fastapi dev, and how would you move it to /documentation while disabling ReDoc?",
+    "answer": "At http://127.0.0.1:8000/docs; use FastAPI(docs_url=\"/documentation\", redoc_url=None)",
+    "key_entities": [
+      "127.0.0.1:8000/docs",
+      "docs_url=\"/documentation\""
+    ],
+    "key_facts": [
+      "Swagger UI is at http://127.0.0.1:8000/docs by default.",
+      "docs_url=\"/documentation\" with redoc_url=None moves Swagger UI and disables ReDoc."
+    ],
+    "evidence": [
+      {
+        "quote": "- **Swagger UI** at `http://127.0.0.1:8000/docs` — try requests from the browser.",
+        "page": "getting-started/first-steps.md",
+        "locations": [
+          {
+            "file": "getting-started/first-steps.md",
+            "line": 97
+          }
+        ]
+      },
+      {
+        "quote": "app = FastAPI(docs_url=\"/documentation\", redoc_url=None)   # tutorial003",
+        "page": "openapi/metadata-and-docs-ui.md",
+        "locations": [
+          {
+            "file": "openapi/metadata-and-docs-ui.md",
+            "line": 126
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "getting-started/first-steps.md",
+      "openapi/metadata-and-docs-ui.md"
+    ],
+    "source_files": [
+      "getting-started/first-steps.md",
+      "openapi/metadata-and-docs-ui.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "getting-started",
+    "doc_tokens": 4142,
+    "copy_overlap": 0.0,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 68,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0068",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
+  },
+  {
+    "id": "c0174",
+    "split": "test",
+    "type": "multi",
+    "question": "When posting a Pydantic model through TestClient's json= argument, which model method can stand in for jsonable_encoder, and what does jsonable_encoder turn a timedelta into?",
+    "answer": "model.model_dump(mode=\"json\"); a timedelta becomes its total seconds as a float",
+    "key_entities": [
+      "model_dump(mode=\"json\")",
+      "total seconds"
+    ],
+    "key_facts": [
+      "model.model_dump(mode=\"json\") can be used instead of jsonable_encoder.",
+      "jsonable_encoder converts timedelta to total seconds."
+    ],
+    "evidence": [
+      {
+        "quote": "or `model.model_dump(mode=\"json\")`.",
+        "page": "testing/testing-basics.md",
+        "locations": [
+          {
+            "file": "testing/testing-basics.md",
+            "line": 219
+          }
+        ]
+      },
+      {
+        "quote": "`timedelta` → total seconds (`float`)",
+        "page": "models/extra-models-and-updates.md",
+        "locations": [
+          {
+            "file": "models/extra-models-and-updates.md",
+            "line": 195
+          }
+        ]
+      }
+    ],
+    "evidence_pages": [
+      "models/extra-models-and-updates.md",
+      "testing/testing-basics.md"
+    ],
+    "source_files": [
+      "testing/testing-basics.md",
+      "models/extra-models-and-updates.md"
+    ],
+    "sections": [
+      null,
+      null
+    ],
+    "folder": "testing",
+    "doc_tokens": 4344,
+    "copy_overlap": 0.042,
+    "original_question": null,
+    "verified": null,
+    "closed_book_ok": true,
+    "human_checked": false,
+    "gen_log": {
+      "generator": "claude-opus-5-5",
+      "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
+      "line": 69,
+      "run_id": "20261011-140427",
+      "cand_id": "20261011-140427-c0069",
+      "log": "results/logs/dataset_20261011-140427.jsonl"
+    }
   }
 ]

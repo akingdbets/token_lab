@@ -142,9 +142,17 @@ RAG 검색 단계는 두지 않는다.
     reduction_pct
         문맥 토큰 절감률 (예전 주 지표, 지금은 보조)
 
-    persona / completion_tokens / not_found
-        문항 persona, 답변 출력 토큰, 답변이 "NOT FOUND" 로 시작했는지.
+    answer_format / completion_tokens / not_found
+        답변 형식 줄 키(문항 type, 없거나 모르면 default), 답변 출력 토큰, 답변이 "NOT FOUND" 로 시작했는지.
         not_found 이면 answer_accuracy 를 0 으로 둔다 (judge 판정은 answer_accuracy_judged).
+        평가셋의 persona 필드는 기록용이라 실험·집계에 쓰지 않는다.
+
+
+유형별 집계
+
+    summary 의 by_type 에 type 별 답변 정확도, 정답률, NOT FOUND 비율, 평균 출력 토큰을 남기고,
+    같은 네 값의 type 균등 가중 평균(유형별 평균의 평균)을 *_type_avg 로 전체 값 옆에 둔다.
+    평가셋의 유형별 문항 수가 달라도 유형 간 비교가 한쪽으로 쏠리지 않게 하기 위함이다.
 
 
 답변 지시문
@@ -224,6 +232,7 @@ from grader import (
 from llm import LLM, count_message_tokens, count_tokens
 
 ANSWER_MAX_TOKENS = 512
+TYPES = ("fact", "code", "procedure", "multi")   # 유형별 집계 순서
 
 # 답변 지시문은 src/prompts/answer_<버전>.md 에 둔다 (바꾸면 이전 결과와 비교할 수 없으므로 새 버전으로)
 PROMPTS_DIR = Path(__file__).resolve().parent / "prompts"
@@ -234,14 +243,17 @@ NOT_FOUND = "NOT FOUND"
 class AnswerPrompt:
     version: str
     sha256: str                     # 파일 해시 앞 12자리 (같은 버전 이름으로 내용이 바뀌었는지 확인용)
-    system: str                     # {persona_format} 자리에 persona 형식 줄을 넣는다
+    system: str                     # {answer_format} 자리에 문항 type 의 형식 줄을 넣는다
     user: str                       # {context}, {question} 를 채우는 틀 (문서 + 질문만)
-    persona_format: dict[str, str]  # persona -> 지시 한 줄. "default" 는 persona 없는 문항용
+    format: dict[str, str]          # type -> 지시 한 줄. "default" 는 type 이 없거나 모르는 값일 때
 
-    def parts(self, context: str, question: str, persona: str | None) -> PromptParts:
-        """압축 전 입력 세 부분. system 은 persona 줄을 끼운 뒤의 전체 (압축 대상)."""
-        fmt = self.persona_format[persona if persona in self.persona_format else "default"]
-        return PromptParts(system=self.system.replace("{persona_format}", fmt), context=context, question=question)
+    def format_key(self, qtype: str | None) -> str:
+        return qtype if qtype in self.format and qtype != "default" else "default"
+
+    def parts(self, context: str, question: str, qtype: str | None) -> PromptParts:
+        """압축 전 입력 세 부분. system 은 형식 줄을 끼운 뒤의 전체 (압축 대상)."""
+        fmt = self.format[self.format_key(qtype)]
+        return PromptParts(system=self.system.replace("{answer_format}", fmt), context=context, question=question)
 
     def messages(self, parts: PromptParts) -> list[dict]:
         user = self.user.format(context=parts.context, question=parts.question)
@@ -264,18 +276,18 @@ def load_answer_prompt(version: str) -> AnswerPrompt:
         elif cur:
             sections[cur].append(line)
     sections = {k: "\n".join(v).strip() for k, v in sections.items()}
-    missing = {"system", "persona_format", "user"} - sections.keys()
-    if "{persona_format}" not in sections.get("system", ""):
-        missing.add("system 의 {persona_format}")
+    missing = {"system", "format", "user"} - sections.keys()
+    if "{answer_format}" not in sections.get("system", ""):
+        missing.add("system 의 {answer_format}")
     if missing:
         sys.exit(f"{path}: 섹션이 없습니다: {sorted(missing)}")
-    fmt = dict(re.findall(r"^- (\w+):[ \t]*(.+?)\s*$", sections["persona_format"], re.M))
+    fmt = dict(re.findall(r"^- (\w+):[ \t]*(.+?)\s*$", sections["format"], re.M))
     if "default" not in fmt:
-        sys.exit(f"{path}: persona_format 에 default 줄이 없습니다")
+        sys.exit(f"{path}: format 에 default 줄이 없습니다")
     if "TODO:" in sections["system"] or any("TODO:" in v for v in fmt.values()):
         sys.exit(f"{path}: 아직 채우지 않은 TODO 가 있습니다")
     return AnswerPrompt(version=version, sha256=hashlib.sha256(text.encode("utf-8")).hexdigest()[:12],
-                        system=sections["system"], user=sections["user"], persona_format=fmt)
+                        system=sections["system"], user=sections["user"], format=fmt)
 
 
 def is_not_found(response: str) -> bool:
@@ -290,8 +302,8 @@ class TrialRecord:
     qid: str
     split: str
     qtype: str
-    persona: str | None             # 문항 persona (없으면 None -> default 형식)
     answer_prompt: str              # 답변 지시문 버전 (src/prompts/answer_<버전>.md)
+    answer_format: str              # 사용한 형식 줄 키 (문항 type, 없거나 모르면 default)
     compressor: str
     question: str
     answer: str
@@ -456,12 +468,12 @@ def run(args) -> Path:
         for i, item in enumerate(items, 1):
             raw = build_context(corpus, item)
             ents = item.get("key_entities", [])
-            persona = item.get("persona")
-            raw_parts = prompt.parts(raw, item["question"], persona)
+            fmt_key = prompt.format_key(item.get("type"))
+            raw_parts = prompt.parts(raw, item["question"], item.get("type"))
             raw_part_tokens = {k: count_tokens(getattr(raw_parts, k)) for k in ("system", "context", "question")}
             input_raw = count_message_tokens(prompt.messages(raw_parts))
             raw_emb, raw_chunks = embed_long(embedder, raw) if embedder else (None, None)
-            print(f"[{i}/{len(items)}] {item['id']} {item['type']:<9} {persona or '-':<12} "
+            print(f"[{i}/{len(items)}] {item['id']} {item['type']:<9} "
                   f"input {input_raw} tok (ctx {raw_part_tokens['context']})", flush=True)
 
             for comp in compressors:
@@ -512,7 +524,8 @@ def run(args) -> Path:
 
                 rec = TrialRecord(
                     run_id=run_id, qid=item["id"], split=item["split"], qtype=item["type"],
-                    persona=persona, answer_prompt=prompt.version, compressor=comp.name, question=item["question"], answer=item["answer"],
+                    answer_prompt=prompt.version, answer_format=fmt_key, compressor=comp.name,
+                    question=item["question"], answer=item["answer"],
                     evidence_pages=item["evidence_pages"],
                     input_tokens_raw=input_raw, input_tokens=input_tokens,
                     input_reduction_pct=round(100 * (1 - input_tokens / input_raw), 2),
@@ -745,17 +758,19 @@ def summarize(records: list[TrialRecord], names: list[str]) -> dict:
             # baseline 자신은 유지율 비교 대상이 아님
             s["answer_accuracy_retention_pct"] = None
 
-        # persona 별 정답률·출력 토큰 (persona 없는 문항은 "default")
-        s["by_persona"] = {}
-        for p in sorted({r.persona or "default" for r in rs}):
-            ps = [r for r in rs if (r.persona or "default") == p]
-            s["by_persona"][p] = {
-                "n": len(ps),
-                "answer_accuracy": _mean(r.answer_accuracy for r in ps),
-                "binary_accuracy": round(sum(r.correct for r in ps) / len(ps), 4),
-                "not_found_rate": round(sum(r.not_found for r in ps) / len(ps), 4),
-                "completion_tokens": _mean(r.completion_tokens for r in ps),
+        # type 별 정답률·출력 토큰, 그리고 type 균등 가중 평균 (유형별 평균의 평균)
+        s["by_type"] = {}
+        for t in sorted({r.qtype for r in rs}, key=lambda t: (TYPES.index(t) if t in TYPES else len(TYPES), t)):
+            ts = [r for r in rs if r.qtype == t]
+            s["by_type"][t] = {
+                "n": len(ts),
+                "answer_accuracy": _mean(r.answer_accuracy for r in ts),
+                "binary_accuracy": round(sum(r.correct for r in ts) / len(ts), 4),
+                "not_found_rate": round(sum(r.not_found for r in ts) / len(ts), 4),
+                "completion_tokens": _mean(r.completion_tokens for r in ts),
             }
+        for k in ("answer_accuracy", "binary_accuracy", "not_found_rate", "completion_tokens"):
+            s[f"{k}_type_avg"] = _mean(v[k] for v in s["by_type"].values())
 
         out[n] = s
 
@@ -803,10 +818,12 @@ def print_summary(results: dict, names: list[str]):
         print(f"  답변 정확도 유지율 : {retention_s}")
         print(f"  의미 손실률        : {loss_s}")
         print(f"  NOT FOUND 비율     : {s['not_found_rate'] * 100:.1f}%")
-        for p, ps in s.get("by_persona", {}).items():
-            acc = "-" if ps["answer_accuracy"] is None else f"{ps['answer_accuracy'] * 100:.1f}%"
-            print(f"    {p:<12} n={ps['n']:<3} 정확도 {acc:>6}  정답 {ps['binary_accuracy'] * 100:5.1f}%  "
-                  f"출력 {ps['completion_tokens']} tok")
+        tavg = s.get("answer_accuracy_type_avg")
+        print(f"  답변 정확도 (type 균등): {'-' if tavg is None else f'{tavg * 100:.1f}%'}")
+        for t, ts in s.get("by_type", {}).items():
+            acc = "-" if ts["answer_accuracy"] is None else f"{ts['answer_accuracy'] * 100:.1f}%"
+            print(f"    {t:<10} n={ts['n']:<3} 정확도 {acc:>6}  정답 {ts['binary_accuracy'] * 100:5.1f}%  "
+                  f"NOT FOUND {ts['not_found_rate'] * 100:5.1f}%  출력 {ts['completion_tokens']} tok")
 
     print("\n" + "=" * 64)
 

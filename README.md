@@ -138,12 +138,17 @@ python src/dataset_builder.py --stats                    # 통계 확인
 ```bash
 python src/dataset_builder.py --list-targets      # 페이지별 split·토큰·종합형 짝 후보 (+ candidates/targets.json)
 python src/dataset_builder.py --import 후보.jsonl --generator 모델이름 --dry-run
+python src/dataset_builder.py --import 후보.jsonl --generator 모델이름 \
+    --cap dev:procedure=8,test:multi=30 --max-per-pair 2   # 목표 수까지만 추가
 ```
 
-- 후보 한 줄: `type`, `persona`, `source_pages`, `question`, `answer`, `key_entities`, `key_facts`, `evidence`
+- 후보 한 줄: `type`, `source_pages`, `question`, `answer`, `key_entities`, `key_facts`, `evidence` (`persona` 는 선택, 기록용)
 - 기본값: 베낀 질문은 바꿔 쓰지 않고 제외(`--copy-mode drop`), 7B 자동 검증 끔(`--verify` 로 켬).
   문서 없이 풀기와 종합형 한 페이지 검사는 실험 모델 기준이라 항상 실행한다.
-- 통과 문항에는 `persona` 와 `gen_log`(생성 모델, 후보 파일, 줄 번호)가 붙는다.
+- 통과 문항에는 `gen_log`(생성 모델, 후보 파일, 줄 번호)가 붙는다. 후보에 `persona` 가 있으면 그대로 기록만 한다.
+- `--cap` 은 split x type 별 목표 문항 수(기존 포함)다. 이미 목표에 닿은 칸은 추가하지 않고, 넘는 통과 문항은
+  넣지 않는다. 같은 칸 안에서는 기존·새 문항과 페이지가 덜 겹치는 것부터 고른다.
+  `--max-per-pair` 는 같은 종합형 짝(두 페이지)의 문항 수 상한(기존 포함)이다. 뺀 문항은 로그에 `capped` 로 남는다.
 
 #### 생성 모델 따로 고르기 (`--gen-model`, `--gen-backend`)
 
@@ -189,18 +194,22 @@ python src/experiment.py --compressors "none,rule>llmlingua2"  # ">" 로 압축�
 ```
 
 > **답변 지시문 v1 이전 결과와는 비교 불가.** v1 부터 답변 지시문을 `src/prompts/answer_v1.md` 로 분리하고
-> 문항 persona 별 답변 형식과 `NOT FOUND` 처리를 넣었다. 지시문이 바뀌면 답변 길이·정확도가 달라지므로
+> 문항 유형(type)별 답변 형식과 `NOT FOUND` 처리를 넣었다. 지시문이 바뀌면 답변 길이·정확도가 달라지므로
 > `summary.json` 의 `config.answer_prompt` (버전, 파일 해시) 가 같은 결과끼리만 비교한다.
 > 지시문을 고칠 때는 파일을 수정하지 말고 `answer_v2.md` 처럼 새 버전을 만든다.
 
-답변 지시문 파일은 `## system`, `## persona_format`, `## user` 세 부분이다.
-`persona_format` 은 beginner / intermediate / advanced 한 줄씩이고, 문항 persona 에 맞는 줄이 system 의
-마지막 규칙(`{persona_format}` 자리)에 들어간다. persona 가 없는 문항은 `default` 줄(`Answer concisely.`)을 쓴다.
+답변 지시문 파일은 `## system`, `## format`, `## user` 세 부분이다.
+`format` 은 유형별 한 줄(fact·code: 값·이름·코드만, procedure: 번호 목록 단계, multi: 설정과 연결을 짧은 문장으로)이고,
+문항 type 에 맞는 줄이 system 의 마지막 규칙(`{answer_format}` 자리)에 들어간다. type 이 없거나 모르는 값이면
+`default` 줄(`Answer concisely.`)을 쓴다. 사용한 형식 키는 `trials.jsonl` 의 `answer_format` 에 남는다.
+
+> **persona 는 기록용, 답변 형식과 분석은 type 기준.** 평가셋의 `persona` 필드는 지우지 않고 남겨 두지만,
+> 실험(답변 형식)·집계(`by_type`)·검수 화면에서는 쓰지 않는다. 새 후보에는 persona 를 넣지 않는다.
 user 메시지는 문서와 질문만 담는다.
 
 문항마다 `질문 → 근거 문서 → 입력 압축 → LLM 답변 → 채점 → 로그` 를 압축기별로 실행한다.
 문맥은 문항의 정답 근거 페이지 원문이고, `none` 이 기준선이다.
-압축기는 system 지시문(persona 줄을 끼운 뒤 전체), 문맥, 질문 중 자기 `targets` 에 든 부분만 줄이고,
+압축기는 system 지시문(형식 줄을 끼운 뒤 전체), 문맥, 질문 중 자기 `targets` 에 든 부분만 줄이고,
 답변 메시지는 압축된 세 부분으로 다시 조립한다. `a>b` 조합은 a 의 출력이 b 의 입력이 된다.
 결과는 `results/runs/<run_id>/` 에 저장된다.
 
@@ -231,7 +240,9 @@ user 메시지는 문서와 질문만 담는다.
 - `not_found_rate` 답변이 (앞뒤 공백 제거 후) `NOT FOUND` 로 시작한 비율. 이 문항은 채점은 하되 `answer_accuracy` 를 0 으로 둔다
   (judge 판정 원래 값은 `trials.jsonl` 의 `answer_accuracy_judged`)
 - `completion_tokens` 답변 출력 토큰 평균
-- `by_persona` persona 별 `n`, `answer_accuracy`, `binary_accuracy`, `not_found_rate`, `completion_tokens` (persona 없는 문항은 `default`)
+- `by_type` 유형(type)별 `n`, `answer_accuracy`, `binary_accuracy`, `not_found_rate`, `completion_tokens`
+- `answer_accuracy_type_avg`, `binary_accuracy_type_avg`, `not_found_rate_type_avg`, `completion_tokens_type_avg`
+  type 균등 가중 평균 (유형별 평균의 평균). 평가셋의 유형별 문항 수가 달라도 한 유형에 쏠리지 않게 비교할 때 쓴다
 - `reduction_pct` 문맥 토큰 절감률 (예전 주 지표)
 - `tokens` 부분별(`input`, `system`, `context`, `question`) 문항 평균 토큰, 압축 전(`raw`)·후(`compressed`).
   `trials.jsonl` 에는 문항마다 `input_tokens_raw`/`input_tokens`, `system_tokens_raw`/`system_tokens` 등으로 남는다

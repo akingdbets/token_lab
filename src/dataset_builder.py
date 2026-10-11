@@ -62,10 +62,13 @@
     python src/dataset_builder.py --list-targets        # 페이지별 split·짝 후보 (+ candidates/targets.json)
     python src/dataset_builder.py --import data/eval/candidates/claude_20261006.jsonl \
         --generator claude-opus-5-5 --dry-run
-    한 줄 = 후보 하나: {"type", "persona", "source_pages", "question", "answer",
-                        "key_entities", "key_facts", "evidence"}
+    python src/dataset_builder.py --import FILE.jsonl --generator claude-opus-5-5 \
+        --cap dev:procedure=8,dev:multi=8,test:multi=30 --max-per-pair 2   # 유형별 목표 수까지만 추가
+    한 줄 = 후보 하나: {"type", "source_pages", "question", "answer",
+                        "key_entities", "key_facts", "evidence"}  (+ 선택: "persona")
     기본값: --copy-mode drop, 자동 검증 끔(--verify 로 켬), 문서 없이 풀기·종합형 한 페이지
-    검사는 항상 (실험 모델 기준). 통과 문항에 persona 와 gen_log(generator, 파일, 줄 번호) 기록
+    검사는 항상 (실험 모델 기준). 통과 문항에 gen_log(generator, 파일, 줄 번호) 기록.
+    persona 는 선택 필드로, 있으면 검사 후 그대로 기록만 한다 (답변 형식·분석은 type 기준)
 
 생성 모델 따로 고르기 (생성 호출만 다른 모델로, 나머지 검사는 실험 모델 그대로)
     python src/dataset_builder.py --gen-model <모델> --docs 5 --dry-run          # 로컬 Ollama
@@ -1133,8 +1136,7 @@ def cmd_generate(args):
 def print_items(items: list[tuple[dict, str | None]], indent: str = "    "):
     """--dry-run 화면 출력: 후보마다 통과/제외, 질문, 답, 근거 위치, 제외 사유."""
     for x, r in items:
-        persona = f"  [{x['persona']}]" if x.get("persona") else ""
-        print(f"{indent}  [{'OK ' if not r else '제외'}] Q: {x['question']}{persona}")
+        print(f"{indent}  [{'OK ' if not r else '제외'}] Q: {x['question']}")
         if x["original_question"]:
             print(f"{indent}         (원래 질문: {x['original_question']})")
         print(f"{indent}         A: {x['answer']}  entities={x['key_entities']}")
@@ -1184,6 +1186,7 @@ def save_kept(rec: RunLog, kept: list[dict], corpus: Corpus, corpus_sha: str, su
 # 실험 모델(config.model) 기준이어야 하므로 그대로 Ollama 로 한다.
 
 CANDIDATES_DIR = "candidates"
+# persona 는 기록용 선택 필드 (답변 형식·분석은 type 기준). 있으면 이 값 중 하나여야 한다
 PERSONAS = ("beginner", "intermediate", "advanced")
 
 
@@ -1246,6 +1249,56 @@ def import_sources(it: dict, qtype: str, corpus: Corpus,
     return out, None
 
 
+def parse_caps(spec: str | None) -> dict[tuple[str, str], int]:
+    """"dev:procedure=8,test:multi=30" -> {("dev", "procedure"): 8, ("test", "multi"): 30}"""
+    caps = {}
+    for part in (spec or "").split(","):
+        if not part.strip():
+            continue
+        key, _, n = part.partition("=")
+        sp, _, qt = key.strip().partition(":")
+        if sp not in ("dev", "test") or qt not in TYPES or not n.strip().isdigit():
+            raise SystemExit(f"--cap 형식 오류: {part!r} (예: dev:procedure=8,test:multi=30)")
+        caps[(sp, qt)] = int(n)
+    return caps
+
+
+def select_capped(kept: list[dict], existing: list[dict], caps: dict[tuple[str, str], int],
+                  max_per_pair: int | None) -> tuple[list[dict], list[tuple[dict, str]]]:
+    """통과 문항 중 평가셋에 넣을 것을 고른다 (기존 문항은 건드리지 않음).
+    - caps: split x type 별 목표 수 (기존 문항 포함). 목표에 이미 닿았으면 그 칸은 추가하지 않는다.
+      caps 에 없는 칸은 제한 없음
+    - max_per_pair: 같은 종합형 짝(두 페이지)의 문항 수 상한 (기존 포함)
+    - 같은 칸 안에서는 이미 고른 문항(기존 + 새)과 페이지가 덜 겹치는 것부터, 같으면 후보 순서대로
+    (고른 문항, [(뺀 문항, 사유)])"""
+    pair = lambda x: tuple(sorted(x["source_files"]))
+    have = Counter((x["split"], x["type"]) for x in existing)
+    pairs = Counter(pair(x) for x in existing if x["type"] == "multi")
+    pages = Counter(f for x in existing for f in x["source_files"])
+    chosen, dropped = [], []
+    todo = list(kept)
+    while todo:
+        # 페이지 겹침이 가장 적은 후보 (기존 + 이미 고른 문항 기준)
+        best = min(range(len(todo)), key=lambda i: (sum(pages[f] for f in todo[i]["source_files"]), i))
+        x = todo.pop(best)
+        cell = (x["split"], x["type"])
+        if cell in caps and have[cell] >= caps[cell]:
+            dropped.append((x, f"목표 수 초과 ({cell[0]} {cell[1]} {caps[cell]})"))
+            continue
+        if x["type"] == "multi" and max_per_pair is not None and pairs[pair(x)] >= max_per_pair:
+            dropped.append((x, f"같은 짝 {max_per_pair}개 초과"))
+            continue
+        chosen.append(x)
+        have[cell] += 1
+        if x["type"] == "multi":
+            pairs[pair(x)] += 1
+        for f in x["source_files"]:
+            pages[f] += 1
+    order = {id(x): i for i, x in enumerate(kept)}
+    chosen.sort(key=lambda x: order[id(x)])
+    return chosen, dropped
+
+
 def cmd_import(args):
     path = Path(args.import_file)
     if not path.is_file():
@@ -1268,7 +1321,7 @@ def cmd_import(args):
               generator=args.generator, config=config_snapshot(), args=vars(args),
               corpus={"source": corpus.source, "manifest_sha256": corpus_sha})
 
-    results: list[tuple[dict | None, str | None, str, str, int]] = []  # (문항, 사유, 유형, persona, 줄)
+    results: list[tuple[dict | None, str | None, str, str, int]] = []  # (문항, 사유, 유형, split, 줄)
     for lineno, line in enumerate(lines, 1):
         if not line.strip():
             continue
@@ -1280,29 +1333,31 @@ def cmd_import(args):
             results.append((None, "JSON 오류", "?", "?", lineno))
             continue
         qtype = str(it.get("type", "")).strip()
-        persona = str(it.get("persona", "")).strip()
+        persona = str(it.get("persona") or "").strip()     # 선택 필드 (기록용)
         trace: list[dict] = []
-        item, reject, sources = None, None, it.get("source_pages")
+        item, reject, sources, split = None, None, it.get("source_pages"), "?"
         if qtype not in TYPES:
             reject = f"알 수 없는 유형 ({qtype})"
-        elif persona not in PERSONAS:
+        elif persona and persona not in PERSONAS:
             reject = f"알 수 없는 persona ({persona})"
         else:
             units, reject = import_sources(it, qtype, corpus, docs)
             if units is not None:
                 sources = [d.doc_id for d in units]
+                split = units[0].split
                 doc_text = "\n\n".join(d.text for d in units)
                 item, reject = process_candidate(rec, it, qtype, units, doc_text, args, trace)
         if item is not None:
-            item["persona"] = persona
+            if persona:
+                item["persona"] = persona
             item["gen_log"] = {"generator": args.generator, "candidates_file": path.as_posix(),
                                "line": lineno, "run_id": rec.run_id, "cand_id": cand_id,
                                "log": rel_root(rec.path)}
         rec.event("candidate", cand_id=cand_id, line=lineno, qtype=qtype, persona=persona,
                   sources=sources, llm_output=it, trace=trace, item=item, reject=reject)
-        results.append((item, reject, qtype, persona, lineno))
+        results.append((item, reject, qtype, split, lineno))
         mark = "OK " if item is not None and not reject else "제외"
-        print(f"[{lineno:3d}] {mark} {qtype:9s} {persona:12s} "
+        print(f"[{lineno:3d}] {mark} {qtype:9s} {split:5s} "
               f"{', '.join(sources) if isinstance(sources, list) else sources}"
               + (f"  - {reject}" if reject else ""), flush=True)
         if args.dry_run and item is not None:
@@ -1314,16 +1369,28 @@ def cmd_import(args):
     for r, c in reasons.most_common():
         print(f"  제외 {c:3d}  {r}")
 
-    print(f"\n{'유형':10s}" + "".join(f"{p:>14s}" for p in PERSONAS) + f"{'합계':>10s}")
+    caps = parse_caps(args.cap)
+    capped: list[tuple[dict, str]] = []
+    if caps or args.max_per_pair is not None:
+        kept, capped = select_capped(kept, load_dataset()[0], caps, args.max_per_pair)
+        print(f"\n목표 수·짝 상한 적용 -> 추가 대상 {len(kept)}개, 뺀 통과 문항 {len(capped)}개")
+        for r, c in Counter(r.split(" (")[0] for _, r in capped).most_common():
+            print(f"  뺌   {c:3d}  {r}")
+        for x, r in capped:
+            rec.event("capped", cand_id=x["gen_log"]["cand_id"], line=x["gen_log"]["line"], reason=r)
+
+    splits = ("dev", "test")
+    print(f"\n{'유형':10s}" + "".join(f"{sp:>14s}" for sp in splits) + f"{'합계':>10s}")
     for t in TYPES:
-        row = [(sum(1 for x, r, qt, pe, _ in results if qt == t and pe == p and x is not None and not r),
-                sum(1 for _, _, qt, pe, _ in results if qt == t and pe == p)) for p in PERSONAS]
+        row = [(sum(1 for x, r, qt, sp, _ in results if qt == t and sp == sp_ and x is not None and not r),
+                sum(1 for _, _, qt, sp, _ in results if qt == t and sp == sp_)) for sp_ in splits]
         tot = (sum(a for a, _ in row), sum(b for _, b in row))
         print(f"{t:10s}" + "".join(f"{f'{a}/{b}':>14s}" for a, b in row) + f"{f'{tot[0]}/{tot[1]}':>10s}")
     print("(통과/후보)")
 
-    summary = {"candidates": len(results), "passed": len(kept),
-               "rejected": dict(reasons), "llm_calls": rec.calls}
+    summary = {"candidates": len(results), "passed": len(kept) + len(capped), "selected": len(kept),
+               "rejected": dict(reasons),
+               "capped": dict(Counter(r.split(" (")[0] for _, r in capped)), "llm_calls": rec.calls}
     if args.dry_run:
         rec.event("run_end", dry_run=True, **summary)
         print(f"\n[dry-run] 평가셋은 저장하지 않음 (로그: {rel_root(rec.path)})")
@@ -1344,8 +1411,7 @@ def cmd_review(args):
           f"k=핵심 엔티티 수정  q=저장 후 종료\n")
     removed = 0
     for i, x in enumerate(todo, 1):
-        print(f"--- [{i}/{len(todo)}] {x['id']}  {x['type']}  {x['split']}  "
-              f"persona {x.get('persona') or '-'}")
+        print(f"--- [{i}/{len(todo)}] {x['id']}  {x['type']}  {x['split']}")
         print(f"출처: {', '.join(x['source_files'])}")
         print(f"Q: {x['question']}")
         if x.get("original_question"):
@@ -1404,12 +1470,6 @@ def cmd_stats(args):
     for s in ("dev", "test"):
         c = Counter(x["type"] for x in items if x["split"] == s)
         print(f"{s:10s}" + "".join(f"{c[t]:10d}" for t in TYPES) + f"{sum(c.values()):10d}")
-    print(f"\n{'persona':14s}" + "".join(f"{t:>10s}" for t in TYPES) + f"{'합계':>8s}")
-    for p in PERSONAS + ("-",):
-        c = Counter(x["type"] for x in items if (x.get("persona") or "-") == p)
-        if p == "-" and not c:
-            continue
-        print(f"{p:14s}" + "".join(f"{c[t]:10d}" for t in TYPES) + f"{sum(c.values()):10d}")
     print("\n폴더별: " + ", ".join(f"{k} {v}" for k, v in
                                 sorted(Counter(x["folder"] for x in items).items())))
 
@@ -1448,6 +1508,11 @@ def main():
     ap.add_argument("--import", dest="import_file", metavar="FILE.jsonl",
                     help="외부에서 만든 후보 파일을 검사·필터해 평가셋에 추가")
     ap.add_argument("--generator", help="--import 후보를 만든 모델 이름 (gen_log 에 기록)")
+    ap.add_argument("--cap", metavar="SPLIT:TYPE=N,...",
+                    help="--import 에서 split x type 별 목표 문항 수 (기존 포함). 넘는 통과 문항은 넣지 않고, "
+                         "페이지가 덜 겹치는 것부터 고른다 (예: dev:procedure=8,test:multi=30)")
+    ap.add_argument("--max-per-pair", type=int,
+                    help="--import 에서 같은 종합형 짝(두 페이지)의 문항 수 상한 (기존 포함)")
     ap.add_argument("--id-prefix", help="새 평가셋의 문항 번호 앞 글자 (기본 q, 예: c -> c0001)")
     ap.add_argument("--gen-model",
                     help="생성 호출만 보낼 모델 (기본: 실험 모델). 검사는 실험 모델 그대로")
