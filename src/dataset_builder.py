@@ -67,6 +67,16 @@
     기본값: --copy-mode drop, 자동 검증 끔(--verify 로 켬), 문서 없이 풀기·종합형 한 페이지
     검사는 항상 (실험 모델 기준). 통과 문항에 persona 와 gen_log(generator, 파일, 줄 번호) 기록
 
+생성 모델 따로 고르기 (생성 호출만 다른 모델로, 나머지 검사는 실험 모델 그대로)
+    python src/dataset_builder.py --gen-model <모델> --docs 5 --dry-run          # 로컬 Ollama
+    GEN_BASE_URL=<API 주소> GEN_API_KEY=<키> python src/dataset_builder.py \
+        --gen-backend openai --gen-model <모델> --docs 5                         # 예상치만 출력
+        ... --yes                                                                # 실제 호출
+    원격 OpenAI 호환 API(유료일 수 있음)는 --yes 가 없으면 예상 호출 수·토큰만 출력하고
+    아무것도 호출하지 않는다. 생성 호출은 --max-gen-calls(원격 기본: 계획한 호출 수)를 넘지 않고,
+    원격 생성 호출은 실패해도 다시 보내지 않는다. 키는 GEN_API_KEY 에서만 읽는다
+    (실험용 LLM_API_KEY 는 생성에 쓰지 않음). --dry-run 도 LLM 호출은 한다.
+
 검수
     python src/dataset_builder.py --review             # 대화형 검수 모드
     python src/dataset_builder.py --stats
@@ -85,6 +95,7 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
+from urllib.parse import urlparse
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
@@ -583,8 +594,12 @@ class RunLog:
     이벤트는 발생 즉시 기록하므로 중간에 멈춰도 그때까지의 기록은 남는다.
     """
 
-    def __init__(self, llm: LLM):
+    def __init__(self, llm: LLM, gen_llm: LLM | None = None, max_gen_calls: int | None = None):
         self.llm = llm
+        # 생성(generate) 단계만 gen_llm 으로 보낸다. 없으면 실험 모델로 생성
+        self.gen_llm = gen_llm or llm
+        self.max_gen_calls = max_gen_calls
+        self.gen_calls = 0
         self.run_id = datetime.now().strftime("%Y%m%d-%H%M%S")
         log_dir = CFG.results_dir / "logs"
         log_dir.mkdir(parents=True, exist_ok=True)
@@ -604,19 +619,25 @@ class RunLog:
 
     def ask(self, step: str, prompt: str, system: str | None = None, **ctx) -> tuple[str, int]:
         """LLM 호출 + 기록. (답변 원문, call 번호)를 돌려준다."""
+        llm = self.gen_llm if step == "generate" else self.llm
+        if step == "generate":
+            if self.max_gen_calls is not None and self.gen_calls >= self.max_gen_calls:
+                raise GenCallLimit(f"생성 호출 상한 {self.max_gen_calls}회에 닿음 (--max-gen-calls)")
+            self.gen_calls += 1
         self.calls += 1
         call = self.calls
         messages = ([{"role": "system", "content": system}] if system else []) \
             + [{"role": "user", "content": prompt}]
         base = {
             "call": call, "step": step, **ctx,
-            "model": getattr(self.llm, "model", None),
-            "temperature": getattr(self.llm, "temperature", None),
-            "seed": CFG.seed, "num_ctx": getattr(self.llm, "num_ctx", None),
+            "backend": getattr(llm, "backend", None),
+            "model": getattr(llm, "model", None),
+            "temperature": getattr(llm, "temperature", None),
+            "seed": CFG.seed, "num_ctx": getattr(llm, "num_ctx", None),
             "messages": messages,
         }
         try:
-            res = self.llm.ask(prompt, system=system)
+            res = llm.ask(prompt, system=system)
         except Exception as e:
             self.event("llm_call", **base, error=f"{type(e).__name__}: {e}")
             raise
@@ -637,9 +658,84 @@ class RunLog:
 
 def config_snapshot() -> dict:
     snap = {k: (str(v) if isinstance(v, Path) else v) for k, v in vars(CFG).items()}
-    if snap.get("api_key"):
-        snap["api_key"] = "***"
+    for k in ("api_key", "gen_api_key"):
+        if snap.get(k):
+            snap[k] = "***"
     return snap
+
+
+# ---------------- 생성 모델 (--gen-model / --gen-backend) ----------------
+# 생성(generate) 호출만 이 모델로 보낸다. 바꿔 쓰기·자동 검증·문서 없이 풀기·한 페이지 검사는
+# 실험 모델(config.model) 기준이어야 하므로 그대로 둔다.
+# 요금이 나갈 수 있는 호출(원격 OpenAI 호환 API)은 --yes 없이는 하지 않는다.
+
+LOCAL_HOSTS = {"localhost", "127.0.0.1", "::1"}
+
+
+class GenCallLimit(Exception):
+    """생성 호출 수가 --max-gen-calls 에 닿음. 이후 생성은 하지 않는다."""
+
+
+def may_bill(backend: str, base_url: str) -> bool:
+    """요금이 나갈 수 있는 호출인지. Ollama 와 로컬 서버(LM Studio, vLLM 등)는 아니라고 본다."""
+    return backend != "ollama" and (urlparse(base_url).hostname or "") not in LOCAL_HOSTS
+
+
+def make_gen_llm(args) -> tuple[LLM | None, bool]:
+    """(생성 전용 LLM, 요금 가능 여부). 옵션이 없으면 (None, False) = 실험 모델로 생성."""
+    if not args.gen_model and not args.gen_backend:
+        return None, False
+    if not args.gen_model:
+        raise SystemExit("--gen-backend 에는 --gen-model 이 필요합니다")
+    backend = args.gen_backend or "ollama"
+    if backend == "ollama":
+        base = CFG.gen_base_url or (CFG.base_url if CFG.backend == "ollama"
+                                    else "http://localhost:11434")
+        key = ""
+    else:
+        base, key = CFG.gen_base_url, CFG.gen_api_key
+        if not base:
+            raise SystemExit("--gen-backend openai 에는 GEN_BASE_URL 이 필요합니다")
+    billed = may_bill(backend, base)
+    if billed and not key:
+        raise SystemExit("원격 API 에는 GEN_API_KEY 가 필요합니다 (LLM_API_KEY 는 생성에 쓰지 않음)")
+    # 원격 API 는 실패해도 다시 보내지 않는다 (재시도마다 요금)
+    llm = LLM(model=args.gen_model, backend=backend, base_url=base, api_key=key,
+              max_tokens=OUTPUT_RESERVE, max_retries=1 if billed else None)
+    return llm, billed
+
+
+def billed_calls(gen_llm: LLM | None, gen_billed: bool) -> list[str]:
+    """이번 실행에서 요금이 나갈 수 있는 호출 목록 (화면 표시용)."""
+    out = []
+    if gen_billed:
+        out.append(f"생성 {gen_llm.model} ({gen_llm.base_url})")
+    if may_bill(CFG.backend, CFG.base_url):
+        out.append(f"실험 모델 {CFG.model} ({CFG.base_url}): 바꿔 쓰기·검증·문서 없이 풀기·한 페이지 검사")
+    return out
+
+
+def confirm_billed(args, billed: list[str]):
+    """요금이 나갈 수 있는 호출이 있으면 --yes 가 있어야 진행한다. 없으면 아무것도 호출하지 않고 끝낸다."""
+    if not billed:
+        return
+    print("\n※ 요금이 나갈 수 있는 원격 API 호출:")
+    for b in billed:
+        print(f"    - {b}")
+    if not args.yes:
+        raise SystemExit("호출하지 않고 멈춥니다. 위 예상치를 확인했으면 --yes 를 붙여 다시 실행하세요.")
+
+
+def gen_plan(docs: list[Doc], types: list[str], per_type: int) -> tuple[int, int]:
+    """생성 호출 계획: (첫 호출 수, 입력 토큰 상한). 종합형은 짝이 정해지기 전이라 입력 예산으로 잡는다.
+    토큰은 Qwen 토크나이저 기준이라 다른 모델에서는 어림값이다."""
+    calls = tokens = 0
+    for d in docs:
+        for unit in d.units():
+            for t in types:
+                calls += 1
+                tokens += input_budget() if t == "multi" else gen_input_tokens(t, [unit], per_type)
+    return calls, tokens
 
 
 # ---------------- 생성 ----------------
@@ -820,8 +916,11 @@ def process_candidate(rec: RunLog, it: dict, qtype: str, docs: list[Doc], doc_te
     return item, None
 
 
+GEN_RETRIES = 2   # 생성 답변을 JSON 으로 못 읽었을 때 다시 묻는 횟수
+
+
 def generate(rec: RunLog, qtype: str, docs: list[Doc], n: int, args,
-             retries: int = 2) -> list[tuple[dict, str | None]]:
+             retries: int = GEN_RETRIES) -> list[tuple[dict, str | None]]:
     """한 문서(종합형은 두 문서)에서 한 유형의 문항을 만든다.
     [(문항, 제외 사유 또는 None)]을 돌려준다. 모든 후보는 로그에 candidate 로 남는다."""
     prompt = build_prompt(qtype, docs, n)
@@ -851,6 +950,8 @@ def generate(rec: RunLog, qtype: str, docs: list[Doc], n: int, args,
         if item is not None:
             item["gen_log"] = {"run_id": rec.run_id, "cand_id": cand_id,
                                "log": rel_root(rec.path)}
+            if rec.gen_llm is not rec.llm:
+                item["gen_log"]["generator"] = rec.gen_llm.model
             out.append((item, reject))
     return out
 
@@ -922,9 +1023,11 @@ def cmd_generate(args):
                          f"있습니다 (문항당 약 {TOKENS_PER_ITEM}). "
                          f"{OUTPUT_RESERVE // TOKENS_PER_ITEM} 이하로 주세요.")
 
-    # 모든 호출의 답변 원문은 실행 로그에 남긴다. 출력 상한으로 입력+출력 <= num_ctx 보장
-    rec = RunLog(LLM(max_tokens=OUTPUT_RESERVE))
+    gen_llm, gen_billed = make_gen_llm(args)
     print(f"설정: {CFG.summary()}")
+    if gen_llm is not None:
+        print(f"생성 모델: {gen_llm.backend} {gen_llm.model} ({gen_llm.base_url}), "
+              f"검사는 실험 모델 {CFG.model}")
     corpus = load_corpus()
     corpus_sha = manifest_sha256(corpus)
     print(f"코퍼스: {corpus.source.get('wiki')}  (본문 페이지 {len(corpus.docs('page'))}개, "
@@ -938,8 +1041,25 @@ def cmd_generate(args):
     print(f"대상 문서 {len(docs)}개 / 후보 {len(all_docs)}개  "
           f"({', '.join(f'{k} {v}' for k, v in sorted(by_folder.items()))})")
     print(f"유형 {','.join(types)} x {args.per_type}문항")
+
+    calls, in_tokens = gen_plan(docs, types, args.per_type)
+    max_calls = args.max_gen_calls
+    if max_calls is None and gen_billed:
+        max_calls = calls
+    worst = calls * (GEN_RETRIES + 1) if max_calls is None else min(max_calls, calls * (GEN_RETRIES + 1))
+    print(f"생성 호출 {calls}회 계획, 최대 {worst}회 (JSON 재시도 포함, --max-gen-calls "
+          f"{max_calls if max_calls is not None else '없음'})")
+    print(f"  입력 약 {in_tokens:,} 토큰 (계획한 호출 기준, Qwen 토크나이저 어림값), "
+          f"출력 최대 {worst * OUTPUT_RESERVE:,} 토큰")
+    confirm_billed(args, billed_calls(gen_llm, gen_billed))
+
+    # 모든 호출의 답변 원문은 실행 로그에 남긴다. 출력 상한으로 입력+출력 <= num_ctx 보장
+    rec = RunLog(LLM(max_tokens=OUTPUT_RESERVE), gen_llm, max_calls)
     print(f"로그: {rel_root(rec.path)}\n")
-    rec.event("run_start", config=config_snapshot(), args=vars(args), types=types,
+    gen_info = None if gen_llm is None else {
+        "backend": gen_llm.backend, "model": gen_llm.model, "base_url": gen_llm.base_url,
+        "billed": gen_billed, "max_gen_calls": max_calls, "planned_calls": calls}
+    rec.event("run_start", config=config_snapshot(), args=vars(args), types=types, gen=gen_info,
               corpus={"source": corpus.source, "manifest_sha256": corpus_sha},
               docs=[{"doc_id": d.doc_id, "split": d.split, "tokens": d.tokens}
                     for d in docs])
@@ -947,46 +1067,52 @@ def cmd_generate(args):
     rng = random.Random(args.seed)
     all_items = []
     budget = input_budget()
-    for i, d in enumerate(docs, 1):
-        split_note = f", 섹션 {len(d.parts)}개로 나눔" if d.parts else ""
-        print(f"[{i}/{len(docs)}] {d.rel} ({d.split}, {d.tokens} tok{split_note})")
-        for unit in d.units():
-            indent = "    "
-            if unit.section is not None:
-                print(f"    § {unit.section} ({unit.tokens} tok)")
-                indent = "      "
-            for t in types:
-                group = [unit]
-                if t == "multi":
-                    fits = lambda u: gen_input_tokens("multi", [unit, u], args.per_type) <= budget
-                    partner, how = pick_partner(unit, all_docs, rng, fits)
-                    if partner is None:
-                        print(f"{indent}{t:9s} -> 짝 문서 없음 (링크로 이어진 페이지 중 같은 분할·예산 "
-                              f"조건 맞는 문서 없음), 건너뜀")
-                        rec.event("error", qtype=t, sources=[unit.doc_id],
-                                  sections=[unit.section], error="짝 문서 없음")
+    try:
+        for i, d in enumerate(docs, 1):
+            split_note = f", 섹션 {len(d.parts)}개로 나눔" if d.parts else ""
+            print(f"[{i}/{len(docs)}] {d.rel} ({d.split}, {d.tokens} tok{split_note})")
+            for unit in d.units():
+                indent = "    "
+                if unit.section is not None:
+                    print(f"    § {unit.section} ({unit.tokens} tok)")
+                    indent = "      "
+                for t in types:
+                    group = [unit]
+                    if t == "multi":
+                        fits = lambda u: gen_input_tokens("multi", [unit, u], args.per_type) <= budget
+                        partner, how = pick_partner(unit, all_docs, rng, fits)
+                        if partner is None:
+                            print(f"{indent}{t:9s} -> 짝 문서 없음 (링크로 이어진 페이지 중 같은 분할·예산 "
+                                  f"조건 맞는 문서 없음), 건너뜀")
+                            rec.event("error", qtype=t, sources=[unit.doc_id],
+                                      sections=[unit.section], error="짝 문서 없음")
+                            continue
+                        group = [unit, partner]
+                        rec.event("partner", sources=[unit.doc_id, partner.doc_id],
+                                  sections=[unit.section, partner.section], chosen_by=how)
+                    try:
+                        items = generate(rec, t, group, args.per_type, args)
+                    except GenCallLimit:
+                        raise
+                    except Exception as e:
+                        print(f"{indent}{t:9s} -> 실패: {e}")
+                        rec.event("error", qtype=t, sources=[x.doc_id for x in group],
+                                  sections=[x.section for x in group],
+                                  error=f"{type(e).__name__}: {e}")
                         continue
-                    group = [unit, partner]
-                    rec.event("partner", sources=[unit.doc_id, partner.doc_id],
-                              sections=[unit.section, partner.section], chosen_by=how)
-                try:
-                    items = generate(rec, t, group, args.per_type, args)
-                except Exception as e:
-                    print(f"{indent}{t:9s} -> 실패: {e}")
-                    rec.event("error", qtype=t, sources=[x.doc_id for x in group],
-                              sections=[x.section for x in group],
-                              error=f"{type(e).__name__}: {e}")
-                    continue
-                ok = sum(1 for _, r in items if not r)
-                extra = ""
-                if t == "multi":
-                    p = group[1]
-                    extra = f"  (+ {p.rel}{' § ' + p.section if p.section else ''}, {how})"
-                print(f"{indent}{t:9s} -> {len(items)}문항 (통과 {ok}){extra}")
-                all_items.extend(items)
+                    ok = sum(1 for _, r in items if not r)
+                    extra = ""
+                    if t == "multi":
+                        p = group[1]
+                        extra = f"  (+ {p.rel}{' § ' + p.section if p.section else ''}, {how})"
+                    print(f"{indent}{t:9s} -> {len(items)}문항 (통과 {ok}){extra}")
+                    all_items.extend(items)
 
-                if args.dry_run:
-                    print_items(items, indent)
+                    if args.dry_run:
+                        print_items(items, indent)
+    except GenCallLimit as e:
+        print(f"\n※ {e}. 생성을 멈추고 여기까지 만든 문항만 처리합니다.")
+        rec.event("gen_call_limit", gen_calls=rec.gen_calls, max_gen_calls=rec.max_gen_calls)
 
     kept = [x for x, r in all_items if not r]
     reasons = Counter(r.split(" (")[0] for _, r in all_items if r)
@@ -996,7 +1122,7 @@ def cmd_generate(args):
         print(f"  제외 {c:3d}  {r}")
 
     summary = {"candidates": len(all_items), "passed": len(kept),
-               "rejected": dict(reasons), "llm_calls": rec.calls}
+               "rejected": dict(reasons), "llm_calls": rec.calls, "gen_calls": rec.gen_calls}
     if args.dry_run:
         rec.event("run_end", dry_run=True, **summary)
         print(f"\n[dry-run] 평가셋은 저장하지 않음 (로그: {rel_root(rec.path)})")
@@ -1128,6 +1254,7 @@ def cmd_import(args):
         raise SystemExit("--import 에는 --generator (후보를 만든 모델 이름)가 필요합니다")
 
     lines = path.read_text(encoding="utf-8").splitlines()
+    confirm_billed(args, billed_calls(None, False))
     rec = RunLog(LLM(max_tokens=OUTPUT_RESERVE))
     corpus = load_corpus()
     corpus_sha = manifest_sha256(corpus)
@@ -1322,7 +1449,20 @@ def main():
                     help="외부에서 만든 후보 파일을 검사·필터해 평가셋에 추가")
     ap.add_argument("--generator", help="--import 후보를 만든 모델 이름 (gen_log 에 기록)")
     ap.add_argument("--id-prefix", help="새 평가셋의 문항 번호 앞 글자 (기본 q, 예: c -> c0001)")
+    ap.add_argument("--gen-model",
+                    help="생성 호출만 보낼 모델 (기본: 실험 모델). 검사는 실험 모델 그대로")
+    ap.add_argument("--gen-backend", choices=("ollama", "openai"),
+                    help="생성 모델 백엔드 (기본 ollama). openai 는 GEN_BASE_URL·GEN_API_KEY 를 쓴다")
+    ap.add_argument("--max-gen-calls", type=int,
+                    help="생성 호출 수 상한 (파싱 재시도 포함). 원격 API 기본값: 계획한 호출 수")
+    ap.add_argument("--yes", action="store_true",
+                    help="요금이 나갈 수 있는 원격 API 호출을 확인함. 없으면 예상치만 출력하고 멈춤")
     args = ap.parse_args()
+
+    if args.max_gen_calls is not None and args.max_gen_calls < 1:
+        raise SystemExit("--max-gen-calls 는 1 이상이어야 합니다")
+    if args.import_file and (args.gen_model or args.gen_backend):
+        raise SystemExit("--import 는 생성을 하지 않으므로 --gen-model/--gen-backend 를 쓸 수 없습니다")
 
     if args.import_file:
         # 외부 생성 문항: 베낀 질문은 Qwen 으로 바꿔 쓰지 않고 제외, 7B 검증은 기본 끔,

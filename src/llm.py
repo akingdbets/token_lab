@@ -78,17 +78,21 @@ class LLM:
     def __init__(self, model: str | None = None, backend: str | None = None,
                  base_url: str | None = None, num_ctx: int | None = None,
                  temperature: float | None = None, api_key: str | None = None,
-                 timeout: int | None = None, max_tokens: int | None = None):
+                 timeout: int | None = None, max_tokens: int | None = None,
+                 max_retries: int | None = None):
         self.backend = backend or CFG.backend
         self.model = model or CFG.model
         self.base_url = (base_url or CFG.base_url).rstrip("/")
         self.num_ctx = num_ctx or CFG.num_ctx
         self.temperature = CFG.temperature if temperature is None else temperature
-        self.api_key = api_key or CFG.api_key
+        # None 일 때만 config 값을 쓴다. 빈 문자열을 넘기면 키 없이 호출 (다른 키가 섞이지 않게)
+        self.api_key = CFG.api_key if api_key is None else api_key
         self.timeout = timeout or CFG.timeout
         # 출력 토큰 상한. None 이면 서버 기본값(Ollama 는 무제한). 입력+출력이
         # num_ctx 안에 들어가야 하는 호출(긴 문서 입력 등)에서 지정한다
         self.max_tokens = max_tokens
+        # 실패 시 다시 보내는 횟수 (첫 호출 포함). 유료 API 는 1 로 두어 재시도 비용을 막는다
+        self.max_retries = max_retries or CFG.max_retries
 
     # ---------------- 공개 메서드 ----------------
 
@@ -110,16 +114,16 @@ class LLM:
         return res
 
     def _call_with_retry(self, messages: list[dict], stream_ttft: bool) -> LLMResult:
-        for attempt in range(CFG.max_retries):
+        for attempt in range(self.max_retries):
             try:
                 if self.backend == "ollama":
                     return self._ollama_chat(messages, stream_ttft)
                 return self._openai_chat(messages, stream_ttft)
             except Exception as e:
-                if attempt == CFG.max_retries - 1:
+                if attempt == self.max_retries - 1:
                     raise
                 wait = 2 ** attempt
-                print(f"  [재시도 {attempt + 1}/{CFG.max_retries}] {type(e).__name__}: {e} ({wait}초 후)")
+                print(f"  [재시도 {attempt + 1}/{self.max_retries}] {type(e).__name__}: {e} ({wait}초 후)")
                 time.sleep(wait)
         raise RuntimeError("unreachable")
 
