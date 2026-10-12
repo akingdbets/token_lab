@@ -1,0 +1,1014 @@
+﻿qid,assignee,type,fact_idx,key_fact,answer,human,note,j7b_batch,j7b_perfact,j14b_batch,j14b_perfact
+c0001,D,fact,0,"When the user does not exist, authenticate_user verifies the password against DUMMY_HASH.",DUMMY_HASH,,,O,O,O,O
+c0002,A,code,0,"Without expires_delta, create_access_token sets the expiry to 15 minutes from now.",15,,,O,O,O,O
+c0003,A,procedure,0,The token is decoded with jwt.decode using SECRET_KEY and algorithms=[ALGORITHM].,"1. The dependency `get_current_user` receives the bearer token as a string via `Depends(oauth2_scheme)`.
+2. It attempts to decode the token using `jwt.decode` with the secret key and the specified algorithm.
+3. If decoding fails due to invalid signature, expired token, or missing/invalid `sub` claim, it raises an `HTTPException` with status code 401.
+4. If decoding succeeds, it extracts the `sub` (subject) claim, which is the username.
+5. It uses the username to fetch the corresponding user from the database with `get_user`.
+6. If the user is found, it returns the user object; otherwise, it raises an `HTTPException` with status code 401.",,,O,O,O,O
+c0003,A,procedure,1,The username is read from the sub claim.,"1. The dependency `get_current_user` receives the bearer token as a string via `Depends(oauth2_scheme)`.
+2. It attempts to decode the token using `jwt.decode` with the secret key and the specified algorithm.
+3. If decoding fails due to invalid signature, expired token, or missing/invalid `sub` claim, it raises an `HTTPException` with status code 401.
+4. If decoding succeeds, it extracts the `sub` (subject) claim, which is the username.
+5. It uses the username to fetch the corresponding user from the database with `get_user`.
+6. If the user is found, it returns the user object; otherwise, it raises an `HTTPException` with status code 401.",,,O,O,O,O
+c0003,A,procedure,2,The user is looked up by that username (get_user).,"1. The dependency `get_current_user` receives the bearer token as a string via `Depends(oauth2_scheme)`.
+2. It attempts to decode the token using `jwt.decode` with the secret key and the specified algorithm.
+3. If decoding fails due to invalid signature, expired token, or missing/invalid `sub` claim, it raises an `HTTPException` with status code 401.
+4. If decoding succeeds, it extracts the `sub` (subject) claim, which is the username.
+5. It uses the username to fetch the corresponding user from the database with `get_user`.
+6. If the user is found, it returns the user object; otherwise, it raises an `HTTPException` with status code 401.",,,O,O,O,O
+c0003,A,procedure,3,"A bad signature, expired token, missing sub or unknown user all give the same 401 with WWW-Authenticate: Bearer.","1. The dependency `get_current_user` receives the bearer token as a string via `Depends(oauth2_scheme)`.
+2. It attempts to decode the token using `jwt.decode` with the secret key and the specified algorithm.
+3. If decoding fails due to invalid signature, expired token, or missing/invalid `sub` claim, it raises an `HTTPException` with status code 401.
+4. If decoding succeeds, it extracts the `sub` (subject) claim, which is the username.
+5. It uses the username to fetch the corresponding user from the database with `get_user`.
+6. If the user is found, it returns the user object; otherwise, it raises an `HTTPException` with status code 401.",,,O,O,O,O
+c0004,B,fact,0,The middleware added last is the outermost one.,Middleware registered last ends up wrapping all the others.,,,O,O,O,O
+c0005,C,code,0,The example sets compresslevel to 5.,5,,,O,O,O,O
+c0006,B,procedure,0,"The function is decorated with @app.middleware(""http"") and receives request and call_next.","1. Import the necessary modules and classes.
+2. Define an asynchronous function that will act as your middleware.
+3. Use `@app.middleware(""http"")` to decorate your function.
+4. Inside the function, capture the start time before calling `call_next`.
+5. After `call_next`, calculate the duration and add it to the response headers.
+6. Return the response.
+
+Here is the step-by-step code:
+
+1. Import the necessary modules and classes.
+```python
+from fastapi import FastAPI, Request
+import time
+```
+
+2. Define an asynchronous function that will act as your middleware.
+```python
+@app.middleware(""http"")
+async def add_process_time_header(request: Request, call_next):
+```
+
+3. Inside the function, capture the start time before calling `call_next`.
+```python
+    start_time = time.perf_counter()
+```
+
+4. After `call_next`, calculate the duration and add it to the response headers.
+```python
+    response = await call_next(request)
+    process_time = time.perf_counter() - start_time
+    response.headers[""X-Process-Time""] = str(process_time)
+```
+
+5. Return the response.
+```python
+    return response
+```
+
+Putting it all together:
+```python
+import time
+
+from fastapi import FastAPI, Request
+
+app = FastAPI()
+
+@app.middleware(""http"")
+async def add_process_time_header(request: Request, call_next):
+    start_time = time.perf_counter()
+    response = await call_next(request)
+    process_time = time.perf_counter() - start_time
+    response.headers[""X-Process-Time""] = str(process_time)
+    return response
+```",,,O,O,O,O
+c0006,B,procedure,1,The start time is taken with time.perf_counter() before calling call_next.,"1. Import the necessary modules and classes.
+2. Define an asynchronous function that will act as your middleware.
+3. Use `@app.middleware(""http"")` to decorate your function.
+4. Inside the function, capture the start time before calling `call_next`.
+5. After `call_next`, calculate the duration and add it to the response headers.
+6. Return the response.
+
+Here is the step-by-step code:
+
+1. Import the necessary modules and classes.
+```python
+from fastapi import FastAPI, Request
+import time
+```
+
+2. Define an asynchronous function that will act as your middleware.
+```python
+@app.middleware(""http"")
+async def add_process_time_header(request: Request, call_next):
+```
+
+3. Inside the function, capture the start time before calling `call_next`.
+```python
+    start_time = time.perf_counter()
+```
+
+4. After `call_next`, calculate the duration and add it to the response headers.
+```python
+    response = await call_next(request)
+    process_time = time.perf_counter() - start_time
+    response.headers[""X-Process-Time""] = str(process_time)
+```
+
+5. Return the response.
+```python
+    return response
+```
+
+Putting it all together:
+```python
+import time
+
+from fastapi import FastAPI, Request
+
+app = FastAPI()
+
+@app.middleware(""http"")
+async def add_process_time_header(request: Request, call_next):
+    start_time = time.perf_counter()
+    response = await call_next(request)
+    process_time = time.perf_counter() - start_time
+    response.headers[""X-Process-Time""] = str(process_time)
+    return response
+```",,,O,O,O,O
+c0006,B,procedure,2,The elapsed time is computed after call_next returns.,"1. Import the necessary modules and classes.
+2. Define an asynchronous function that will act as your middleware.
+3. Use `@app.middleware(""http"")` to decorate your function.
+4. Inside the function, capture the start time before calling `call_next`.
+5. After `call_next`, calculate the duration and add it to the response headers.
+6. Return the response.
+
+Here is the step-by-step code:
+
+1. Import the necessary modules and classes.
+```python
+from fastapi import FastAPI, Request
+import time
+```
+
+2. Define an asynchronous function that will act as your middleware.
+```python
+@app.middleware(""http"")
+async def add_process_time_header(request: Request, call_next):
+```
+
+3. Inside the function, capture the start time before calling `call_next`.
+```python
+    start_time = time.perf_counter()
+```
+
+4. After `call_next`, calculate the duration and add it to the response headers.
+```python
+    response = await call_next(request)
+    process_time = time.perf_counter() - start_time
+    response.headers[""X-Process-Time""] = str(process_time)
+```
+
+5. Return the response.
+```python
+    return response
+```
+
+Putting it all together:
+```python
+import time
+
+from fastapi import FastAPI, Request
+
+app = FastAPI()
+
+@app.middleware(""http"")
+async def add_process_time_header(request: Request, call_next):
+    start_time = time.perf_counter()
+    response = await call_next(request)
+    process_time = time.perf_counter() - start_time
+    response.headers[""X-Process-Time""] = str(process_time)
+    return response
+```",,,O,O,O,O
+c0006,B,procedure,3,The elapsed time is stored in the X-Process-Time response header.,"1. Import the necessary modules and classes.
+2. Define an asynchronous function that will act as your middleware.
+3. Use `@app.middleware(""http"")` to decorate your function.
+4. Inside the function, capture the start time before calling `call_next`.
+5. After `call_next`, calculate the duration and add it to the response headers.
+6. Return the response.
+
+Here is the step-by-step code:
+
+1. Import the necessary modules and classes.
+```python
+from fastapi import FastAPI, Request
+import time
+```
+
+2. Define an asynchronous function that will act as your middleware.
+```python
+@app.middleware(""http"")
+async def add_process_time_header(request: Request, call_next):
+```
+
+3. Inside the function, capture the start time before calling `call_next`.
+```python
+    start_time = time.perf_counter()
+```
+
+4. After `call_next`, calculate the duration and add it to the response headers.
+```python
+    response = await call_next(request)
+    process_time = time.perf_counter() - start_time
+    response.headers[""X-Process-Time""] = str(process_time)
+```
+
+5. Return the response.
+```python
+    return response
+```
+
+Putting it all together:
+```python
+import time
+
+from fastapi import FastAPI, Request
+
+app = FastAPI()
+
+@app.middleware(""http"")
+async def add_process_time_header(request: Request, call_next):
+    start_time = time.perf_counter()
+    response = await call_next(request)
+    process_time = time.perf_counter() - start_time
+    response.headers[""X-Process-Time""] = str(process_time)
+    return response
+```",,,O,O,O,O
+c0015,D,multi,0,The simple password-flow login returns the username itself as the access token.,"In the simple OAuth2 password flow tutorial:
+
+- The `/token` endpoint returns a JSON object with `access_token` and `token_type` properties. For example, it might return: 
+  ```json
+  {""access_token"": ""johndoe"", ""token_type"": ""bearer""}
+  ```
+
+In the OAuth2 with JWT tutorial:
+
+- The `/token` endpoint issues a signed JWT token instead. For example:
+  ```python
+  return {""access_token"": access_token, ""token_type"": ""bearer""}
+  ```
+
+The JWT token is a compact, signed JSON string that includes claims like the subject (`sub`), expiration time (`exp`), etc. It is more secure than just returning the username as the access token.",,,O,O,X,X
+c0015,D,multi,1,The JWT version returns a signed JWT created by create_access_token.,"In the simple OAuth2 password flow tutorial:
+
+- The `/token` endpoint returns a JSON object with `access_token` and `token_type` properties. For example, it might return: 
+  ```json
+  {""access_token"": ""johndoe"", ""token_type"": ""bearer""}
+  ```
+
+In the OAuth2 with JWT tutorial:
+
+- The `/token` endpoint issues a signed JWT token instead. For example:
+  ```python
+  return {""access_token"": access_token, ""token_type"": ""bearer""}
+  ```
+
+The JWT token is a compact, signed JSON string that includes claims like the subject (`sub`), expiration time (`exp`), etc. It is more secure than just returning the username as the access token.",,,O,O,O,O
+c0017,D,code,0,ACCESS_TOKEN_EXPIRE_MINUTES is 30.,30,,,O,O,O,O
+c0018,A,fact,0,The default minimum_size for GZipMiddleware is 500 bytes.,500,,,O,O,O,O
+c0019,B,code,0,The example allows the wildcard pattern *.example.com.,*.example.com,,,O,O,O,O
+c0020,C,fact,0,"The default scope for yield dependencies is ""request"".","""request""",,,O,O,O,O
+c0021,D,fact,0,Making a request-scoped yield dependency depend on a function-scoped one raises DependencyScopeError.,DependencyScopeError,,,O,O,O,O
+c0022,A,code,0,The OwnerError is converted into an HTTPException with status code 400.,400,,,O,O,O,O
+c0023,B,code,0,"get_username yields the value ""Rick"".","""Rick""",,,O,O,O,O
+c0024,A,procedure,0,The yield is wrapped in try/except.,"1. Catch the exception in the yield dependency.
+2. Re-raise the exception using `raise` without any additional arguments to ensure the original exception, including its traceback, is logged.",,,O,O,O,X
+c0024,A,procedure,1,The caught exception is re-raised with a bare raise.,"1. Catch the exception in the yield dependency.
+2. Re-raise the exception using `raise` without any additional arguments to ensure the original exception, including its traceback, is logged.",,,O,O,O,O
+c0025,C,fact,0,The @pytest.mark.anyio marker runs the test function asynchronously.,@pytest.mark.anyio,,,O,O,O,O
+c0026,D,fact,0,LifespanManager comes from the asgi-lifespan package.,asgi_lifespan,,,O,O,O,O
+c0027,A,code,0,"The AsyncClient uses base_url ""http://test"".","""http://test""",,,O,O,O,O
+c0028,B,code,0,The test engine is created with poolclass=StaticPool.,StaticPool,,,O,O,O,O
+c0029,C,procedure,0,An in-memory SQLite engine with StaticPool is created and tables are created.,"1. Import necessary modules and functions.
+2. Define a fixture for the database session.
+3. Define a fixture for the test client, using the session fixture.
+4. Use the client fixture in your test functions.
+
+Here are the steps in detail:
+
+1. Import necessary modules and functions.
+```python
+import pytest
+from fastapi.testclient import TestClient
+from sqlmodel import Session, SQLModel, create_engine
+from sqlmodel.pool import StaticPool
+from .main import app, get_session
+```
+
+2. Define a fixture for the database session.
+```python
+@pytest.fixture(name=""session"")
+def session_fixture():
+    engine = create_engine(
+        ""sqlite://"", connect_args={""check_same_thread"": False}, poolclass=StaticPool
+    )
+    SQLModel.metadata.create_all(engine)
+    with Session(engine) as session:
+        yield session
+```
+
+3. Define a fixture for the test client, using the session fixture.
+```python
+@pytest.fixture(name=""client"")
+def client_fixture(session: Session):
+    def get_session_override():
+        return session
+
+    app.dependency_overrides[get_session] = get_session_override
+    client = TestClient(app)
+    yield client
+    app.dependency_overrides.clear()
+```
+
+4. Use the client fixture in your test functions.
+```python
+def test_create_hero(client: TestClient):
+    response = client.post(""/heroes/"", json={""name"": ""Deadpond"", ""secret_name"": ""Dive Wilson""})
+    assert response.status_code == 200
+    assert response.json()[""name""] == ""Deadpond""
+```",,,O,O,O,O
+c0029,C,procedure,1,A session fixture yields a Session.,"1. Import necessary modules and functions.
+2. Define a fixture for the database session.
+3. Define a fixture for the test client, using the session fixture.
+4. Use the client fixture in your test functions.
+
+Here are the steps in detail:
+
+1. Import necessary modules and functions.
+```python
+import pytest
+from fastapi.testclient import TestClient
+from sqlmodel import Session, SQLModel, create_engine
+from sqlmodel.pool import StaticPool
+from .main import app, get_session
+```
+
+2. Define a fixture for the database session.
+```python
+@pytest.fixture(name=""session"")
+def session_fixture():
+    engine = create_engine(
+        ""sqlite://"", connect_args={""check_same_thread"": False}, poolclass=StaticPool
+    )
+    SQLModel.metadata.create_all(engine)
+    with Session(engine) as session:
+        yield session
+```
+
+3. Define a fixture for the test client, using the session fixture.
+```python
+@pytest.fixture(name=""client"")
+def client_fixture(session: Session):
+    def get_session_override():
+        return session
+
+    app.dependency_overrides[get_session] = get_session_override
+    client = TestClient(app)
+    yield client
+    app.dependency_overrides.clear()
+```
+
+4. Use the client fixture in your test functions.
+```python
+def test_create_hero(client: TestClient):
+    response = client.post(""/heroes/"", json={""name"": ""Deadpond"", ""secret_name"": ""Dive Wilson""})
+    assert response.status_code == 200
+    assert response.json()[""name""] == ""Deadpond""
+```",,,O,O,O,O
+c0029,C,procedure,2,app.dependency_overrides[get_session] is set to return the test session.,"1. Import necessary modules and functions.
+2. Define a fixture for the database session.
+3. Define a fixture for the test client, using the session fixture.
+4. Use the client fixture in your test functions.
+
+Here are the steps in detail:
+
+1. Import necessary modules and functions.
+```python
+import pytest
+from fastapi.testclient import TestClient
+from sqlmodel import Session, SQLModel, create_engine
+from sqlmodel.pool import StaticPool
+from .main import app, get_session
+```
+
+2. Define a fixture for the database session.
+```python
+@pytest.fixture(name=""session"")
+def session_fixture():
+    engine = create_engine(
+        ""sqlite://"", connect_args={""check_same_thread"": False}, poolclass=StaticPool
+    )
+    SQLModel.metadata.create_all(engine)
+    with Session(engine) as session:
+        yield session
+```
+
+3. Define a fixture for the test client, using the session fixture.
+```python
+@pytest.fixture(name=""client"")
+def client_fixture(session: Session):
+    def get_session_override():
+        return session
+
+    app.dependency_overrides[get_session] = get_session_override
+    client = TestClient(app)
+    yield client
+    app.dependency_overrides.clear()
+```
+
+4. Use the client fixture in your test functions.
+```python
+def test_create_hero(client: TestClient):
+    response = client.post(""/heroes/"", json={""name"": ""Deadpond"", ""secret_name"": ""Dive Wilson""})
+    assert response.status_code == 200
+    assert response.json()[""name""] == ""Deadpond""
+```",,,O,O,O,O
+c0029,C,procedure,3,The overrides are cleared afterwards.,"1. Import necessary modules and functions.
+2. Define a fixture for the database session.
+3. Define a fixture for the test client, using the session fixture.
+4. Use the client fixture in your test functions.
+
+Here are the steps in detail:
+
+1. Import necessary modules and functions.
+```python
+import pytest
+from fastapi.testclient import TestClient
+from sqlmodel import Session, SQLModel, create_engine
+from sqlmodel.pool import StaticPool
+from .main import app, get_session
+```
+
+2. Define a fixture for the database session.
+```python
+@pytest.fixture(name=""session"")
+def session_fixture():
+    engine = create_engine(
+        ""sqlite://"", connect_args={""check_same_thread"": False}, poolclass=StaticPool
+    )
+    SQLModel.metadata.create_all(engine)
+    with Session(engine) as session:
+        yield session
+```
+
+3. Define a fixture for the test client, using the session fixture.
+```python
+@pytest.fixture(name=""client"")
+def client_fixture(session: Session):
+    def get_session_override():
+        return session
+
+    app.dependency_overrides[get_session] = get_session_override
+    client = TestClient(app)
+    yield client
+    app.dependency_overrides.clear()
+```
+
+4. Use the client fixture in your test functions.
+```python
+def test_create_hero(client: TestClient):
+    response = client.post(""/heroes/"", json={""name"": ""Deadpond"", ""secret_name"": ""Dive Wilson""})
+    assert response.status_code == 200
+    assert response.json()[""name""] == ""Deadpond""
+```",,,O,O,O,O
+c0030,C,fact,0,The override's own signature defines which request parameters are read and validated.,The override's own signature defines which request parameters are read and validated.,,,O,O,O,O
+c0031,D,fact,0,The test client raises WebSocketDisconnect when the server closes or rejects the connection.,WebSocketDisconnect,,,O,O,O,O
+c0032,A,code,0,The override returns limit 10.,10,,,O,O,O,O
+c0033,B,code,0,"The test opens the connection with client.websocket_connect(""/ws"").",client.websocket_connect,,,O,O,X,O
+c0034,C,fact,0,"OAuth2PasswordRequestFormStrict requires grant_type=""password"".",OAuth2PasswordRequestFormStrict,,,O,O,X,O
+c0035,D,fact,0,Wrong credentials at /token produce a 400 response in this tutorial.,400,,,O,O,O,O
+c0036,A,code,0,"fake_hash_password prefixes the password with ""fakehashed"".",fakehashed,,,O,O,O,O
+c0037,B,code,0,"The endpoint returns a dict with the token under the key ""token"".","{""token"": token}",,,O,O,O,O
+c0038,D,procedure,0,The frontend sends the credentials to tokenUrl.,"1. User enters credentials (username and password) in the frontend.
+2. Frontend POSTs these credentials to the relative URL `token` (resolved against the API root).
+3. API receives the POST request at the `/token` endpoint.
+4. API validates the username and password.
+5. If valid, API returns a token (e.g., the username) as JSON with `access_token` and `token_type` (e.g., ""bearer"").
+6. Frontend stores the token and includes it in the `Authorization` header as `Bearer <token>` for subsequent requests.
+7. For protected endpoints, the frontend sends `Authorization: Bearer <token>` in the header.
+8. API receives the request and uses `OAuth2PasswordBearer` to validate the token.
+9. If the token is valid, the dependency returns the decoded user information.
+10. The protected endpoint's function can then use this user information as needed.",,,O,O,O,O
+c0038,D,procedure,1,The API returns a token.,"1. User enters credentials (username and password) in the frontend.
+2. Frontend POSTs these credentials to the relative URL `token` (resolved against the API root).
+3. API receives the POST request at the `/token` endpoint.
+4. API validates the username and password.
+5. If valid, API returns a token (e.g., the username) as JSON with `access_token` and `token_type` (e.g., ""bearer"").
+6. Frontend stores the token and includes it in the `Authorization` header as `Bearer <token>` for subsequent requests.
+7. For protected endpoints, the frontend sends `Authorization: Bearer <token>` in the header.
+8. API receives the request and uses `OAuth2PasswordBearer` to validate the token.
+9. If the token is valid, the dependency returns the decoded user information.
+10. The protected endpoint's function can then use this user information as needed.",,,O,O,O,O
+c0038,D,procedure,2,Later requests send Authorization: Bearer <token>.,"1. User enters credentials (username and password) in the frontend.
+2. Frontend POSTs these credentials to the relative URL `token` (resolved against the API root).
+3. API receives the POST request at the `/token` endpoint.
+4. API validates the username and password.
+5. If valid, API returns a token (e.g., the username) as JSON with `access_token` and `token_type` (e.g., ""bearer"").
+6. Frontend stores the token and includes it in the `Authorization` header as `Bearer <token>` for subsequent requests.
+7. For protected endpoints, the frontend sends `Authorization: Bearer <token>` in the header.
+8. API receives the request and uses `OAuth2PasswordBearer` to validate the token.
+9. If the token is valid, the dependency returns the decoded user information.
+10. The protected endpoint's function can then use this user information as needed.",,,O,O,O,O
+c0039,D,multi,0,The simple password-flow login returns 400 for wrong credentials.,"In the simple OAuth2 password flow tutorial:
+
+- If login credentials are incorrect, the response is a `400` Bad Request with the detail ""Incorrect username or password"".
+
+In the OAuth2 with JWT Tokens and Password Hashing tutorial:
+
+- If login credentials are incorrect, the response is also a `400` Bad Request, but with the detail ""Incorrect username or password"" as well.
+
+So, the status code is the same (400 Bad Request) in both cases, but the response detail is identical in the provided snippets. The key difference is in how the tokens are handled and validated, with JWT providing signed tokens that include expiration and other claims, while the simple password flow uses plain username strings as tokens.",,,O,X,O,X
+c0039,D,multi,1,The JWT login returns 401 for wrong credentials.,"In the simple OAuth2 password flow tutorial:
+
+- If login credentials are incorrect, the response is a `400` Bad Request with the detail ""Incorrect username or password"".
+
+In the OAuth2 with JWT Tokens and Password Hashing tutorial:
+
+- If login credentials are incorrect, the response is also a `400` Bad Request, but with the detail ""Incorrect username or password"" as well.
+
+So, the status code is the same (400 Bad Request) in both cases, but the response detail is identical in the provided snippets. The key difference is in how the tokens are handled and validated, with JWT providing signed tokens that include expiration and other claims, while the simple password flow uses plain username strings as tokens.",,,X,X,X,X
+c0039,D,multi,2,The JWT login response includes the WWW-Authenticate: Bearer header.,"In the simple OAuth2 password flow tutorial:
+
+- If login credentials are incorrect, the response is a `400` Bad Request with the detail ""Incorrect username or password"".
+
+In the OAuth2 with JWT Tokens and Password Hashing tutorial:
+
+- If login credentials are incorrect, the response is also a `400` Bad Request, but with the detail ""Incorrect username or password"" as well.
+
+So, the status code is the same (400 Bad Request) in both cases, but the response detail is identical in the provided snippets. The key difference is in how the tokens are handled and validated, with JWT providing signed tokens that include expiration and other claims, while the simple password flow uses plain username strings as tokens.",,,X,X,X,X
+c0040,A,multi,0,An async test needs httpx.AsyncClient instead of TestClient.,"For a test that needs to await async database calls and replace one of the app's dependencies, you should use `httpx.AsyncClient` in combination with `app.dependency_overrides`.
+
+Here’s how it works:
+
+1. **Using `httpx.AsyncClient`**: Since the test itself needs to `await` something (like an async database call), the test function must be `async`. Use `httpx.AsyncClient` to make HTTP requests to your ASGI app.
+
+2. **Replacing Dependencies with `app.dependency_overrides`**: To replace a dependency in the app, use `app.dependency_overrides`. This is a dictionary where the keys are the original dependency callables, and the values are the replacement callables.
+
+Here’s an example combining both:
+
+```python
+import pytest
+from httpx import AsyncClient
+from fastapi import FastAPI
+from sqlmodel import Session, SQLModel, create_engine
+from sqlmodel.pool import StaticPool
+
+from .main import app, get_session
+
+# Define a test database engine
+test_engine = create_engine(
+    ""sqlite://"", connect_args={""check_same_thread"": False}, poolclass=StaticPool
+)
+
+# Fixture to create and manage a test session
+@pytest.fixture(name=""session"")
+def session_fixture():
+    SQLModel.metadata.create_all(test_engine)
+    with Session(test_engine) as session:
+        yield session
+
+# Fixture to override the session dependency
+@pytest.fixture(name=""client"")
+def client_fixture(session: Session):
+    def get_session_override():
+        return session
+
+    app.dependency_overrides[get_session] = get_session_override
+    client = AsyncClient(app=app, base_url=""http://test"")
+    yield client
+    app.dependency_overrides.clear()
+
+# Test function
+@pytest.mark.anyio
+async def test_create_hero(client: AsyncClient):
+    response = await client.post(""/heroes/"", json={""name"": ""Deadpond"", ""secret_name"": ""Dive Wilson""})
+    assert response.status_code == 200
+    assert response.json()[""name""] == ""Deadpond""
+```
+
+In this example:
+- `session_fixture` creates a test database and manages the session.
+- `client_fixture` overrides the `get_session` dependency with a test session and uses `AsyncClient` to make requests.
+- `test_create_hero` is an `@pytest.mark.anyio` async test that uses the `client` fixture to make a POST request and assert the response.",,,O,O,O,O
+c0040,A,multi,1,AsyncClient is used with ASGITransport.,"For a test that needs to await async database calls and replace one of the app's dependencies, you should use `httpx.AsyncClient` in combination with `app.dependency_overrides`.
+
+Here’s how it works:
+
+1. **Using `httpx.AsyncClient`**: Since the test itself needs to `await` something (like an async database call), the test function must be `async`. Use `httpx.AsyncClient` to make HTTP requests to your ASGI app.
+
+2. **Replacing Dependencies with `app.dependency_overrides`**: To replace a dependency in the app, use `app.dependency_overrides`. This is a dictionary where the keys are the original dependency callables, and the values are the replacement callables.
+
+Here’s an example combining both:
+
+```python
+import pytest
+from httpx import AsyncClient
+from fastapi import FastAPI
+from sqlmodel import Session, SQLModel, create_engine
+from sqlmodel.pool import StaticPool
+
+from .main import app, get_session
+
+# Define a test database engine
+test_engine = create_engine(
+    ""sqlite://"", connect_args={""check_same_thread"": False}, poolclass=StaticPool
+)
+
+# Fixture to create and manage a test session
+@pytest.fixture(name=""session"")
+def session_fixture():
+    SQLModel.metadata.create_all(test_engine)
+    with Session(test_engine) as session:
+        yield session
+
+# Fixture to override the session dependency
+@pytest.fixture(name=""client"")
+def client_fixture(session: Session):
+    def get_session_override():
+        return session
+
+    app.dependency_overrides[get_session] = get_session_override
+    client = AsyncClient(app=app, base_url=""http://test"")
+    yield client
+    app.dependency_overrides.clear()
+
+# Test function
+@pytest.mark.anyio
+async def test_create_hero(client: AsyncClient):
+    response = await client.post(""/heroes/"", json={""name"": ""Deadpond"", ""secret_name"": ""Dive Wilson""})
+    assert response.status_code == 200
+    assert response.json()[""name""] == ""Deadpond""
+```
+
+In this example:
+- `session_fixture` creates a test database and manages the session.
+- `client_fixture` overrides the `get_session` dependency with a test session and uses `AsyncClient` to make requests.
+- `test_create_hero` is an `@pytest.mark.anyio` async test that uses the `client` fixture to make a POST request and assert the response.",,,X,O,X,O
+c0040,A,multi,2,app.dependency_overrides maps the original dependency to a replacement callable.,"For a test that needs to await async database calls and replace one of the app's dependencies, you should use `httpx.AsyncClient` in combination with `app.dependency_overrides`.
+
+Here’s how it works:
+
+1. **Using `httpx.AsyncClient`**: Since the test itself needs to `await` something (like an async database call), the test function must be `async`. Use `httpx.AsyncClient` to make HTTP requests to your ASGI app.
+
+2. **Replacing Dependencies with `app.dependency_overrides`**: To replace a dependency in the app, use `app.dependency_overrides`. This is a dictionary where the keys are the original dependency callables, and the values are the replacement callables.
+
+Here’s an example combining both:
+
+```python
+import pytest
+from httpx import AsyncClient
+from fastapi import FastAPI
+from sqlmodel import Session, SQLModel, create_engine
+from sqlmodel.pool import StaticPool
+
+from .main import app, get_session
+
+# Define a test database engine
+test_engine = create_engine(
+    ""sqlite://"", connect_args={""check_same_thread"": False}, poolclass=StaticPool
+)
+
+# Fixture to create and manage a test session
+@pytest.fixture(name=""session"")
+def session_fixture():
+    SQLModel.metadata.create_all(test_engine)
+    with Session(test_engine) as session:
+        yield session
+
+# Fixture to override the session dependency
+@pytest.fixture(name=""client"")
+def client_fixture(session: Session):
+    def get_session_override():
+        return session
+
+    app.dependency_overrides[get_session] = get_session_override
+    client = AsyncClient(app=app, base_url=""http://test"")
+    yield client
+    app.dependency_overrides.clear()
+
+# Test function
+@pytest.mark.anyio
+async def test_create_hero(client: AsyncClient):
+    response = await client.post(""/heroes/"", json={""name"": ""Deadpond"", ""secret_name"": ""Dive Wilson""})
+    assert response.status_code == 200
+    assert response.json()[""name""] == ""Deadpond""
+```
+
+In this example:
+- `session_fixture` creates a test database and manages the session.
+- `client_fixture` overrides the `get_session` dependency with a test session and uses `AsyncClient` to make requests.
+- `test_create_hero` is an `@pytest.mark.anyio` async test that uses the `client` fixture to make a POST request and assert the response.",,,O,O,O,O
+c0145,B,procedure,0,The TestClient is used as a context manager: with TestClient(app) as client.,"1. Define an asynchronous context manager for the lifespan.
+2. Use the `TestClient` as a context manager to run the app's lifespan.
+3. Assert the state of the app before and after the `TestClient` context manager.
+
+Steps:
+
+1. Define an asynchronous context manager for the lifespan:
+
+```python
+from contextlib import asynccontextmanager
+
+from fastapi import FastAPI
+
+items = {}
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    items[""foo""] = {""name"": ""Fighters""}
+    items[""bar""] = {""name"": ""Tenders""}
+    yield
+    items.clear()
+```
+
+2. Use the `TestClient` as a context manager to run the app's lifespan:
+
+```python
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
+
+app = FastAPI(lifespan=lifespan)
+
+@app.get(""/items/{item_id}"")
+async def read_items(item_id: str):
+    return items[item_id]
+```
+
+3. Assert the state of the app before and after the `TestClient` context manager:
+
+```python
+def test_read_items():
+    # Before the lifespan starts, ""items"" is still empty
+    assert items == {}
+
+    with TestClient(app) as client:
+        # Inside the ""with TestClient"" block, the lifespan starts and items added
+        assert items == {""foo"": {""name"": ""Fighters""}, ""bar"": {""name"": ""Tenders""}}
+
+        response = client.get(""/items/foo"")
+        assert response.status_code == 200
+        assert response.json() == {""name"": ""Fighters""}
+
+    # The end of the ""with TestClient"" block simulates terminating the app, so
+    # the lifespan ends and items are cleaned up
+    assert items == {}
+```",,,X,X,O,O
+c0145,B,procedure,1,Lifespan startup runs when the with block is entered and shutdown when it exits.,"1. Define an asynchronous context manager for the lifespan.
+2. Use the `TestClient` as a context manager to run the app's lifespan.
+3. Assert the state of the app before and after the `TestClient` context manager.
+
+Steps:
+
+1. Define an asynchronous context manager for the lifespan:
+
+```python
+from contextlib import asynccontextmanager
+
+from fastapi import FastAPI
+
+items = {}
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    items[""foo""] = {""name"": ""Fighters""}
+    items[""bar""] = {""name"": ""Tenders""}
+    yield
+    items.clear()
+```
+
+2. Use the `TestClient` as a context manager to run the app's lifespan:
+
+```python
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
+
+app = FastAPI(lifespan=lifespan)
+
+@app.get(""/items/{item_id}"")
+async def read_items(item_id: str):
+    return items[item_id]
+```
+
+3. Assert the state of the app before and after the `TestClient` context manager:
+
+```python
+def test_read_items():
+    # Before the lifespan starts, ""items"" is still empty
+    assert items == {}
+
+    with TestClient(app) as client:
+        # Inside the ""with TestClient"" block, the lifespan starts and items added
+        assert items == {""foo"": {""name"": ""Fighters""}, ""bar"": {""name"": ""Tenders""}}
+
+        response = client.get(""/items/foo"")
+        assert response.status_code == 200
+        assert response.json() == {""name"": ""Fighters""}
+
+    # The end of the ""with TestClient"" block simulates terminating the app, so
+    # the lifespan ends and items are cleaned up
+    assert items == {}
+```",,,O,X,O,O
+c0146,B,procedure,0,The override is set at the start of the test or in a pytest fixture.,"1. Import the necessary modules and functions.
+2. Define the dependency you want to override.
+3. Create a pytest fixture to set the override before the test and clear it after.
+4. Use this fixture in your tests where you need the override.
+5. Use `app.dependency_overrides` to apply the override.
+6. After the test, clear the override to ensure isolation.
+
+Here's how you can do it:
+
+1. Import the necessary modules and functions.
+2. Define the dependency you want to override.
+3. Create a pytest fixture to set the override before the test and clear it after.
+4. Use this fixture in your tests where you need the override.
+5. Use `app.dependency_overrides` to apply the override.
+6. After the test, clear the override to ensure isolation.
+
+```python
+import pytest
+from fastapi import Depends, FastAPI
+from fastapi.testclient import TestClient
+
+app = FastAPI()
+
+async def common_parameters(q: str | None = None, skip: int = 0, limit: int = 100):
+    return {""q"": q, ""skip"": skip, ""limit"": limit}
+
+@app.get(""/items/"")
+async def read_items(commons: Annotated[dict, Depends(common_parameters)]):
+    return {""message"": ""Hello Items!"", ""params"": commons}
+
+async def override_dependency(q: str | None = None):
+    return {""q"": q, ""skip"": 5, ""limit"": 10}
+
+# Create a pytest fixture to set and clear the override
+@pytest.fixture
+def override_common_parameters():
+    original = app.dependency_overrides.get(common_parameters)
+
+    def override():
+        app.dependency_overrides[common_parameters] = override_dependency
+
+    yield override
+
+    if original is not None:
+        app.dependency_overrides[common_parameters] = original
+    else:
+        app.dependency_overrides.pop(common_parameters, None)
+
+def test_override_in_items(override_common_parameters):
+    with override_common_parameters():
+        client = TestClient(app)
+        response = client.get(""/items/"")
+        assert response.status_code == 200
+        assert response.json() == {
+            ""message"": ""Hello Items!"",
+            ""params"": {""q"": None, ""skip"": 5, ""limit"": 10},
+        }
+
+def test_no_override_in_items():
+    client = TestClient(app)
+    response = client.get(""/items/"")
+    assert response.status_code == 200",,,O,O,O,O
+c0146,B,procedure,1,app.dependency_overrides maps the original dependency to the replacement.,"1. Import the necessary modules and functions.
+2. Define the dependency you want to override.
+3. Create a pytest fixture to set the override before the test and clear it after.
+4. Use this fixture in your tests where you need the override.
+5. Use `app.dependency_overrides` to apply the override.
+6. After the test, clear the override to ensure isolation.
+
+Here's how you can do it:
+
+1. Import the necessary modules and functions.
+2. Define the dependency you want to override.
+3. Create a pytest fixture to set the override before the test and clear it after.
+4. Use this fixture in your tests where you need the override.
+5. Use `app.dependency_overrides` to apply the override.
+6. After the test, clear the override to ensure isolation.
+
+```python
+import pytest
+from fastapi import Depends, FastAPI
+from fastapi.testclient import TestClient
+
+app = FastAPI()
+
+async def common_parameters(q: str | None = None, skip: int = 0, limit: int = 100):
+    return {""q"": q, ""skip"": skip, ""limit"": limit}
+
+@app.get(""/items/"")
+async def read_items(commons: Annotated[dict, Depends(common_parameters)]):
+    return {""message"": ""Hello Items!"", ""params"": commons}
+
+async def override_dependency(q: str | None = None):
+    return {""q"": q, ""skip"": 5, ""limit"": 10}
+
+# Create a pytest fixture to set and clear the override
+@pytest.fixture
+def override_common_parameters():
+    original = app.dependency_overrides.get(common_parameters)
+
+    def override():
+        app.dependency_overrides[common_parameters] = override_dependency
+
+    yield override
+
+    if original is not None:
+        app.dependency_overrides[common_parameters] = original
+    else:
+        app.dependency_overrides.pop(common_parameters, None)
+
+def test_override_in_items(override_common_parameters):
+    with override_common_parameters():
+        client = TestClient(app)
+        response = client.get(""/items/"")
+        assert response.status_code == 200
+        assert response.json() == {
+            ""message"": ""Hello Items!"",
+            ""params"": {""q"": None, ""skip"": 5, ""limit"": 10},
+        }
+
+def test_no_override_in_items():
+    client = TestClient(app)
+    response = client.get(""/items/"")
+    assert response.status_code == 200",,,O,O,O,O
+c0146,B,procedure,2,"The overrides are cleared at the end, e.g. with app.dependency_overrides.clear().","1. Import the necessary modules and functions.
+2. Define the dependency you want to override.
+3. Create a pytest fixture to set the override before the test and clear it after.
+4. Use this fixture in your tests where you need the override.
+5. Use `app.dependency_overrides` to apply the override.
+6. After the test, clear the override to ensure isolation.
+
+Here's how you can do it:
+
+1. Import the necessary modules and functions.
+2. Define the dependency you want to override.
+3. Create a pytest fixture to set the override before the test and clear it after.
+4. Use this fixture in your tests where you need the override.
+5. Use `app.dependency_overrides` to apply the override.
+6. After the test, clear the override to ensure isolation.
+
+```python
+import pytest
+from fastapi import Depends, FastAPI
+from fastapi.testclient import TestClient
+
+app = FastAPI()
+
+async def common_parameters(q: str | None = None, skip: int = 0, limit: int = 100):
+    return {""q"": q, ""skip"": skip, ""limit"": limit}
+
+@app.get(""/items/"")
+async def read_items(commons: Annotated[dict, Depends(common_parameters)]):
+    return {""message"": ""Hello Items!"", ""params"": commons}
+
+async def override_dependency(q: str | None = None):
+    return {""q"": q, ""skip"": 5, ""limit"": 10}
+
+# Create a pytest fixture to set and clear the override
+@pytest.fixture
+def override_common_parameters():
+    original = app.dependency_overrides.get(common_parameters)
+
+    def override():
+        app.dependency_overrides[common_parameters] = override_dependency
+
+    yield override
+
+    if original is not None:
+        app.dependency_overrides[common_parameters] = original
+    else:
+        app.dependency_overrides.pop(common_parameters, None)
+
+def test_override_in_items(override_common_parameters):
+    with override_common_parameters():
+        client = TestClient(app)
+        response = client.get(""/items/"")
+        assert response.status_code == 200
+        assert response.json() == {
+            ""message"": ""Hello Items!"",
+            ""params"": {""q"": None, ""skip"": 5, ""limit"": 10},
+        }
+
+def test_no_override_in_items():
+    client = TestClient(app)
+    response = client.get(""/items/"")
+    assert response.status_code == 200",,,X,O,O,O
+c0147,C,procedure,0,"The dependency is declared with Depends(..., scope=""function"").","1. Use the `scope` parameter when calling `Depends()` to set it to `""function""`.
+2. Define your yield dependency as usual.
+3. The cleanup code after `yield` will now run before the response is sent.",,,O,O,O,O
+c0147,C,procedure,1,"With scope=""function"", the cleanup after yield runs right after the path operation returns, before the response is sent.","1. Use the `scope` parameter when calling `Depends()` to set it to `""function""`.
+2. Define your yield dependency as usual.
+3. The cleanup code after `yield` will now run before the response is sent.",,,O,O,O,O
+c0148,C,multi,0,A TestClient created at module level and used without a with block does not run lifespan.,NOT FOUND,,,X,X,X,X
+c0148,C,multi,1,"With httpx.AsyncClient, the app is wrapped in LifespanManager from asgi-lifespan.",NOT FOUND,,,O,X,X,X
+c0148,C,multi,2,manager.app is passed to ASGITransport.,NOT FOUND,,,O,X,X,X
