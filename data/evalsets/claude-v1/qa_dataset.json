@@ -39,7 +39,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -90,7 +90,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -113,10 +113,10 @@
       "WWW-Authenticate: Bearer"
     ],
     "key_facts": [
-      "The token is decoded with jwt.decode using SECRET_KEY and the pinned algorithms.",
+      "The token is decoded with jwt.decode using SECRET_KEY and algorithms=[ALGORITHM].",
       "The username is read from the sub claim.",
-      "The user is then loaded.",
-      "Any problem results in a 401 response with WWW-Authenticate: Bearer."
+      "The user is looked up by that username (get_user).",
+      "A bad signature, expired token, missing sub or unknown user all give the same 401 with WWW-Authenticate: Bearer."
     ],
     "evidence": [
       {
@@ -145,7 +145,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -196,7 +196,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -247,7 +247,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -272,6 +272,7 @@
     "key_facts": [
       "The function is decorated with @app.middleware(\"http\") and receives request and call_next.",
       "The start time is taken with time.perf_counter() before calling call_next.",
+      "The elapsed time is computed after call_next returns.",
       "The elapsed time is stored in the X-Process-Time response header."
     ],
     "evidence": [
@@ -333,7 +334,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -813,16 +814,14 @@
     "split": "dev",
     "type": "multi",
     "question": "In FastAPI's security tutorials, what does the simple password-flow login hand back as its access token, and what does the JWT version issue instead?",
-    "answer": "The simple flow returns the username itself as an insecure token; the JWT version returns a signed JWT from create_access_token carrying sub and an exp expiry claim",
+    "answer": "The simple password-flow login returns the username itself as the access token, while the JWT version returns a signed JWT created by create_access_token.",
     "key_entities": [
       "create_access_token",
       "\"access_token\": user.username"
     ],
     "key_facts": [
-      "The simple password-flow login returns the username as the access token.",
-      "That token is insecure and only demonstrates the flow.",
-      "The JWT version issues a signed token created by create_access_token.",
-      "The JWT token includes an exp expiry claim."
+      "The simple password-flow login returns the username itself as the access token.",
+      "The JWT version returns a signed JWT created by create_access_token."
     ],
     "evidence": [
       {
@@ -864,7 +863,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -979,7 +978,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -1030,7 +1029,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -1081,7 +1080,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -1099,12 +1098,10 @@
     "question": "In FastAPI, what scope value do dependencies that use yield get when none is specified?",
     "answer": "\"request\"",
     "key_entities": [
-      "\"request\"",
-      "scope"
+      "\"request\""
     ],
     "key_facts": [
-      "The default scope for yield dependencies is \"request\".",
-      "With that scope, teardown happens after the response is sent."
+      "The default scope for yield dependencies is \"request\"."
     ],
     "evidence": [
       {
@@ -1133,7 +1130,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -1154,7 +1151,7 @@
       "DependencyScopeError"
     ],
     "key_facts": [
-      "Violating the scope rule raises DependencyScopeError when the route is created."
+      "Making a request-scoped yield dependency depend on a function-scoped one raises DependencyScopeError."
     ],
     "evidence": [
       {
@@ -1183,7 +1180,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -1234,7 +1231,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -1297,7 +1294,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -1320,8 +1317,7 @@
     ],
     "key_facts": [
       "The yield is wrapped in try/except.",
-      "The caught exception must be re-raised with a bare raise.",
-      "If it is not re-raised the client still gets a 500 but nothing is logged about the real error."
+      "The caught exception is re-raised with a bare raise."
     ],
     "evidence": [
       {
@@ -1360,7 +1356,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -1381,8 +1377,7 @@
       "@pytest.mark.anyio"
     ],
     "key_facts": [
-      "The @pytest.mark.anyio marker runs the test function asynchronously.",
-      "It comes from the AnyIO pytest plugin, so pytest-asyncio is not needed."
+      "The @pytest.mark.anyio marker runs the test function asynchronously."
     ],
     "evidence": [
       {
@@ -1411,7 +1406,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -1433,8 +1428,7 @@
       "LifespanManager"
     ],
     "key_facts": [
-      "LifespanManager comes from the asgi-lifespan package.",
-      "Lifespan events do not run with AsyncClient and ASGITransport alone."
+      "LifespanManager comes from the asgi-lifespan package."
     ],
     "evidence": [
       {
@@ -1463,7 +1457,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -1513,7 +1507,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -1564,7 +1558,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -1639,7 +1633,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -1690,7 +1684,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -1740,7 +1734,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -1791,7 +1785,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -1841,7 +1835,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -1891,7 +1885,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -1942,7 +1936,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -1993,7 +1987,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -2043,7 +2037,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -2096,7 +2090,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -2190,7 +2184,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -2208,8 +2202,9 @@
     "question": "If a FastAPI test must await an async database call itself and also replace one of the app's dependencies, which client should it use and how is the dependency replaced?",
     "answer": "Use httpx.AsyncClient with ASGITransport in an @pytest.mark.anyio test, and set app.dependency_overrides with the original dependency as key and the replacement callable as value",
     "key_entities": [
+      "AsyncClient",
       "ASGITransport",
-      "replacement"
+      "app.dependency_overrides"
     ],
     "key_facts": [
       "An async test needs httpx.AsyncClient instead of TestClient.",
@@ -2256,7 +2251,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -8238,10 +8233,8 @@
       "with TestClient(app) as client"
     ],
     "key_facts": [
-      "The TestClient must be used as a context manager in a with block.",
-      "Lifespan startup runs on entering the with block.",
-      "Requests are sent inside the block.",
-      "Shutdown runs on leaving the with block."
+      "The TestClient is used as a context manager: with TestClient(app) as client.",
+      "Lifespan startup runs when the with block is entered and shutdown when it exits."
     ],
     "evidence": [
       {
@@ -8284,7 +8277,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
@@ -8346,7 +8339,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
@@ -8361,15 +8354,13 @@
     "split": "dev",
     "type": "procedure",
     "question": "In FastAPI, how do I make a yield dependency's cleanup run before the response goes out rather than after?",
-    "answer": "1) Write the dependency with try, yield and finally 2) Put the cleanup code in finally 3) Declare it with Depends(get_username, scope=\"function\") so teardown runs right after the path operation returns, before the response is sent",
+    "answer": "1) Declare the yield dependency with Depends(get_username, scope=\"function\"). 2) FastAPI then runs its teardown immediately after the path operation returns, before sending the response.",
     "key_entities": [
       "scope=\"function\""
     ],
     "key_facts": [
-      "The dependency uses try/yield/finally.",
-      "The cleanup goes in the finally block.",
       "The dependency is declared with Depends(..., scope=\"function\").",
-      "With function scope, teardown runs before the response is sent."
+      "With scope=\"function\", the cleanup after yield runs right after the path operation returns, before the response is sent."
     ],
     "evidence": [
       {
@@ -8408,7 +8399,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
@@ -8422,7 +8413,7 @@
     "id": "c0148",
     "split": "dev",
     "type": "multi",
-    "question": "In FastAPI tests, what stops lifespan code from running with a client created at module level, and what must wrap the app for it to run with the async HTTPX client?",
+    "question": "In FastAPI tests, which TestClient usage does not run lifespan, and how should the app be wrapped when using httpx.AsyncClient so that lifespan runs?",
     "answer": "A module-level client = TestClient(app) used without a with block skips lifespan; with AsyncClient, wrap the app in asgi-lifespan's LifespanManager and pass manager.app to ASGITransport",
     "key_entities": [
       "module-level",
@@ -8430,8 +8421,8 @@
       "LifespanManager"
     ],
     "key_facts": [
-      "A module-level TestClient used without with does not run lifespan.",
-      "With AsyncClient the app is wrapped in LifespanManager from asgi-lifespan.",
+      "A TestClient created at module level and used without a with block does not run lifespan.",
+      "With httpx.AsyncClient, the app is wrapped in LifespanManager from asgi-lifespan.",
       "manager.app is passed to ASGITransport."
     ],
     "evidence": [
@@ -8474,7 +8465,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
