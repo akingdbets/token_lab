@@ -1,32 +1,32 @@
 ﻿qid,assignee,type,fact_idx,key_fact,answer,human,note,j7b_batch,j7b_perfact,j14b_batch,j14b_perfact
-c0001,D,fact,0,"When the user does not exist, authenticate_user verifies the password against DUMMY_HASH.",DUMMY_HASH,,,O,O,O,O
-c0002,A,code,0,"Without expires_delta, create_access_token sets the expiry to 15 minutes from now.",15,,,O,O,O,O
+c0001,D,fact,0,"When the user does not exist, authenticate_user verifies the password against DUMMY_HASH.",DUMMY_HASH,O,,O,O,O,O
+c0002,A,code,0,"Without expires_delta, create_access_token sets the expiry to 15 minutes from now.",15,O,,O,O,O,O
 c0003,A,procedure,0,The token is decoded with jwt.decode using SECRET_KEY and algorithms=[ALGORITHM].,"1. The dependency `get_current_user` receives the bearer token as a string via `Depends(oauth2_scheme)`.
 2. It attempts to decode the token using `jwt.decode` with the secret key and the specified algorithm.
 3. If decoding fails due to invalid signature, expired token, or missing/invalid `sub` claim, it raises an `HTTPException` with status code 401.
 4. If decoding succeeds, it extracts the `sub` (subject) claim, which is the username.
 5. It uses the username to fetch the corresponding user from the database with `get_user`.
-6. If the user is found, it returns the user object; otherwise, it raises an `HTTPException` with status code 401.",,,O,O,O,O
+6. If the user is found, it returns the user object; otherwise, it raises an `HTTPException` with status code 401.",O,,O,O,O,O
 c0003,A,procedure,1,The username is read from the sub claim.,"1. The dependency `get_current_user` receives the bearer token as a string via `Depends(oauth2_scheme)`.
 2. It attempts to decode the token using `jwt.decode` with the secret key and the specified algorithm.
 3. If decoding fails due to invalid signature, expired token, or missing/invalid `sub` claim, it raises an `HTTPException` with status code 401.
 4. If decoding succeeds, it extracts the `sub` (subject) claim, which is the username.
 5. It uses the username to fetch the corresponding user from the database with `get_user`.
-6. If the user is found, it returns the user object; otherwise, it raises an `HTTPException` with status code 401.",,,O,O,O,O
+6. If the user is found, it returns the user object; otherwise, it raises an `HTTPException` with status code 401.",O,,O,O,O,O
 c0003,A,procedure,2,The user is looked up by that username (get_user).,"1. The dependency `get_current_user` receives the bearer token as a string via `Depends(oauth2_scheme)`.
 2. It attempts to decode the token using `jwt.decode` with the secret key and the specified algorithm.
 3. If decoding fails due to invalid signature, expired token, or missing/invalid `sub` claim, it raises an `HTTPException` with status code 401.
 4. If decoding succeeds, it extracts the `sub` (subject) claim, which is the username.
 5. It uses the username to fetch the corresponding user from the database with `get_user`.
-6. If the user is found, it returns the user object; otherwise, it raises an `HTTPException` with status code 401.",,,O,O,O,O
+6. If the user is found, it returns the user object; otherwise, it raises an `HTTPException` with status code 401.",O,,O,O,O,O
 c0003,A,procedure,3,"A bad signature, expired token, missing sub or unknown user all give the same 401 with WWW-Authenticate: Bearer.","1. The dependency `get_current_user` receives the bearer token as a string via `Depends(oauth2_scheme)`.
 2. It attempts to decode the token using `jwt.decode` with the secret key and the specified algorithm.
 3. If decoding fails due to invalid signature, expired token, or missing/invalid `sub` claim, it raises an `HTTPException` with status code 401.
 4. If decoding succeeds, it extracts the `sub` (subject) claim, which is the username.
 5. It uses the username to fetch the corresponding user from the database with `get_user`.
-6. If the user is found, it returns the user object; otherwise, it raises an `HTTPException` with status code 401.",,,O,O,O,O
-c0004,B,fact,0,The middleware added last is the outermost one.,Middleware registered last ends up wrapping all the others.,,,O,O,O,O
-c0005,C,code,0,The example sets compresslevel to 5.,5,,,O,O,O,O
+6. If the user is found, it returns the user object; otherwise, it raises an `HTTPException` with status code 401.",O,,O,O,O,O
+c0004,B,fact,0,The middleware added last is the outermost one.,Middleware registered last ends up wrapping all the others.,O,,O,O,O,O
+c0005,C,code,0,The example sets compresslevel to 5.,5,O,,O,O,O,O
 c0006,B,procedure,0,"The function is decorated with @app.middleware(""http"") and receives request and call_next.","1. Import the necessary modules and classes.
 2. Define an asynchronous function that will act as your middleware.
 3. Use `@app.middleware(""http"")` to decorate your function.
@@ -80,7 +80,7 @@ async def add_process_time_header(request: Request, call_next):
     process_time = time.perf_counter() - start_time
     response.headers[""X-Process-Time""] = str(process_time)
     return response
-```",,,O,O,O,O
+```",O,,O,O,O,O
 c0006,B,procedure,1,The start time is taken with time.perf_counter() before calling call_next.,"1. Import the necessary modules and classes.
 2. Define an asynchronous function that will act as your middleware.
 3. Use `@app.middleware(""http"")` to decorate your function.
@@ -134,7 +134,7 @@ async def add_process_time_header(request: Request, call_next):
     process_time = time.perf_counter() - start_time
     response.headers[""X-Process-Time""] = str(process_time)
     return response
-```",,,O,O,O,O
+```",O,,O,O,O,O
 c0006,B,procedure,2,The elapsed time is computed after call_next returns.,"1. Import the necessary modules and classes.
 2. Define an asynchronous function that will act as your middleware.
 3. Use `@app.middleware(""http"")` to decorate your function.
@@ -188,7 +188,7 @@ async def add_process_time_header(request: Request, call_next):
     process_time = time.perf_counter() - start_time
     response.headers[""X-Process-Time""] = str(process_time)
     return response
-```",,,O,O,O,O
+```",O,,O,O,O,O
 c0006,B,procedure,3,The elapsed time is stored in the X-Process-Time response header.,"1. Import the necessary modules and classes.
 2. Define an asynchronous function that will act as your middleware.
 3. Use `@app.middleware(""http"")` to decorate your function.
@@ -242,7 +242,7 @@ async def add_process_time_header(request: Request, call_next):
     process_time = time.perf_counter() - start_time
     response.headers[""X-Process-Time""] = str(process_time)
     return response
-```",,,O,O,O,O
+```",O,,O,O,O,O
 c0015,D,multi,0,The simple password-flow login returns the username itself as the access token.,"In the simple OAuth2 password flow tutorial:
 
 - The `/token` endpoint returns a JSON object with `access_token` and `token_type` properties. For example, it might return: 
@@ -257,7 +257,7 @@ In the OAuth2 with JWT tutorial:
   return {""access_token"": access_token, ""token_type"": ""bearer""}
   ```
 
-The JWT token is a compact, signed JSON string that includes claims like the subject (`sub`), expiration time (`exp`), etc. It is more secure than just returning the username as the access token.",,,O,O,X,X
+The JWT token is a compact, signed JSON string that includes claims like the subject (`sub`), expiration time (`exp`), etc. It is more secure than just returning the username as the access token.",O,,O,O,X,X
 c0015,D,multi,1,The JWT version returns a signed JWT created by create_access_token.,"In the simple OAuth2 password flow tutorial:
 
 - The `/token` endpoint returns a JSON object with `access_token` and `token_type` properties. For example, it might return: 
@@ -272,22 +272,22 @@ In the OAuth2 with JWT tutorial:
   return {""access_token"": access_token, ""token_type"": ""bearer""}
   ```
 
-The JWT token is a compact, signed JSON string that includes claims like the subject (`sub`), expiration time (`exp`), etc. It is more secure than just returning the username as the access token.",,,O,O,O,O
-c0017,D,code,0,ACCESS_TOKEN_EXPIRE_MINUTES is 30.,30,,,O,O,O,O
-c0018,A,fact,0,The default minimum_size for GZipMiddleware is 500 bytes.,500,,,O,O,O,O
-c0019,B,code,0,The example allows the wildcard pattern *.example.com.,*.example.com,,,O,O,O,O
-c0020,C,fact,0,"The default scope for yield dependencies is ""request"".","""request""",,,O,O,O,O
-c0021,D,fact,0,Making a request-scoped yield dependency depend on a function-scoped one raises DependencyScopeError.,DependencyScopeError,,,O,O,O,O
-c0022,A,code,0,The OwnerError is converted into an HTTPException with status code 400.,400,,,O,O,O,O
-c0023,B,code,0,"get_username yields the value ""Rick"".","""Rick""",,,O,O,O,O
+The JWT token is a compact, signed JSON string that includes claims like the subject (`sub`), expiration time (`exp`), etc. It is more secure than just returning the username as the access token.",O,JWT를 signed token이라고 명시함. 다만 create_access_token 함수명은 답변에 없어 엄격한 '모든 요소 명시' 기준에서는 X도 가능하므로 재검토 권장.,O,O,O,O
+c0017,D,code,0,ACCESS_TOKEN_EXPIRE_MINUTES is 30.,30,O,,O,O,O,O
+c0018,A,fact,0,The default minimum_size for GZipMiddleware is 500 bytes.,500,O,,O,O,O,O
+c0019,B,code,0,The example allows the wildcard pattern *.example.com.,*.example.com,O,,O,O,O,O
+c0020,C,fact,0,"The default scope for yield dependencies is ""request"".","""request""",O,,O,O,O,O
+c0021,D,fact,0,Making a request-scoped yield dependency depend on a function-scoped one raises DependencyScopeError.,DependencyScopeError,O,,O,O,O,O
+c0022,A,code,0,The OwnerError is converted into an HTTPException with status code 400.,400,O,,O,O,O,O
+c0023,B,code,0,"get_username yields the value ""Rick"".","""Rick""",O,,O,O,O,O
 c0024,A,procedure,0,The yield is wrapped in try/except.,"1. Catch the exception in the yield dependency.
-2. Re-raise the exception using `raise` without any additional arguments to ensure the original exception, including its traceback, is logged.",,,O,O,O,X
+2. Re-raise the exception using `raise` without any additional arguments to ensure the original exception, including its traceback, is logged.",O,,O,O,O,X
 c0024,A,procedure,1,The caught exception is re-raised with a bare raise.,"1. Catch the exception in the yield dependency.
-2. Re-raise the exception using `raise` without any additional arguments to ensure the original exception, including its traceback, is logged.",,,O,O,O,O
-c0025,C,fact,0,The @pytest.mark.anyio marker runs the test function asynchronously.,@pytest.mark.anyio,,,O,O,O,O
-c0026,D,fact,0,LifespanManager comes from the asgi-lifespan package.,asgi_lifespan,,,O,O,O,O
-c0027,A,code,0,"The AsyncClient uses base_url ""http://test"".","""http://test""",,,O,O,O,O
-c0028,B,code,0,The test engine is created with poolclass=StaticPool.,StaticPool,,,O,O,O,O
+2. Re-raise the exception using `raise` without any additional arguments to ensure the original exception, including its traceback, is logged.",O,,O,O,O,O
+c0025,C,fact,0,The @pytest.mark.anyio marker runs the test function asynchronously.,@pytest.mark.anyio,O,,O,O,O,O
+c0026,D,fact,0,LifespanManager comes from the asgi-lifespan package.,asgi_lifespan,O,,O,O,O,O
+c0027,A,code,0,"The AsyncClient uses base_url ""http://test"".","""http://test""",O,,O,O,O,O
+c0028,B,code,0,The test engine is created with poolclass=StaticPool.,StaticPool,O,,O,O,O,O
 c0029,C,procedure,0,An in-memory SQLite engine with StaticPool is created and tables are created.,"1. Import necessary modules and functions.
 2. Define a fixture for the database session.
 3. Define a fixture for the test client, using the session fixture.
@@ -335,7 +335,7 @@ def test_create_hero(client: TestClient):
     response = client.post(""/heroes/"", json={""name"": ""Deadpond"", ""secret_name"": ""Dive Wilson""})
     assert response.status_code == 200
     assert response.json()[""name""] == ""Deadpond""
-```",,,O,O,O,O
+```",O,,O,O,O,O
 c0029,C,procedure,1,A session fixture yields a Session.,"1. Import necessary modules and functions.
 2. Define a fixture for the database session.
 3. Define a fixture for the test client, using the session fixture.
@@ -383,7 +383,7 @@ def test_create_hero(client: TestClient):
     response = client.post(""/heroes/"", json={""name"": ""Deadpond"", ""secret_name"": ""Dive Wilson""})
     assert response.status_code == 200
     assert response.json()[""name""] == ""Deadpond""
-```",,,O,O,O,O
+```",O,,O,O,O,O
 c0029,C,procedure,2,app.dependency_overrides[get_session] is set to return the test session.,"1. Import necessary modules and functions.
 2. Define a fixture for the database session.
 3. Define a fixture for the test client, using the session fixture.
@@ -431,7 +431,7 @@ def test_create_hero(client: TestClient):
     response = client.post(""/heroes/"", json={""name"": ""Deadpond"", ""secret_name"": ""Dive Wilson""})
     assert response.status_code == 200
     assert response.json()[""name""] == ""Deadpond""
-```",,,O,O,O,O
+```",O,,O,O,O,O
 c0029,C,procedure,3,The overrides are cleared afterwards.,"1. Import necessary modules and functions.
 2. Define a fixture for the database session.
 3. Define a fixture for the test client, using the session fixture.
@@ -479,15 +479,15 @@ def test_create_hero(client: TestClient):
     response = client.post(""/heroes/"", json={""name"": ""Deadpond"", ""secret_name"": ""Dive Wilson""})
     assert response.status_code == 200
     assert response.json()[""name""] == ""Deadpond""
-```",,,O,O,O,O
-c0030,C,fact,0,The override's own signature defines which request parameters are read and validated.,The override's own signature defines which request parameters are read and validated.,,,O,O,O,O
-c0031,D,fact,0,The test client raises WebSocketDisconnect when the server closes or rejects the connection.,WebSocketDisconnect,,,O,O,O,O
-c0032,A,code,0,The override returns limit 10.,10,,,O,O,O,O
-c0033,B,code,0,"The test opens the connection with client.websocket_connect(""/ws"").",client.websocket_connect,,,O,O,X,O
-c0034,C,fact,0,"OAuth2PasswordRequestFormStrict requires grant_type=""password"".",OAuth2PasswordRequestFormStrict,,,O,O,X,O
-c0035,D,fact,0,Wrong credentials at /token produce a 400 response in this tutorial.,400,,,O,O,O,O
-c0036,A,code,0,"fake_hash_password prefixes the password with ""fakehashed"".",fakehashed,,,O,O,O,O
-c0037,B,code,0,"The endpoint returns a dict with the token under the key ""token"".","{""token"": token}",,,O,O,O,O
+```",O,,O,O,O,O
+c0030,C,fact,0,The override's own signature defines which request parameters are read and validated.,The override's own signature defines which request parameters are read and validated.,O,,O,O,O,O
+c0031,D,fact,0,The test client raises WebSocketDisconnect when the server closes or rejects the connection.,WebSocketDisconnect,O,,O,O,O,O
+c0032,A,code,0,The override returns limit 10.,10,O,,O,O,O,O
+c0033,B,code,0,"The test opens the connection with client.websocket_connect(""/ws"").",client.websocket_connect,O,,O,O,X,O
+c0034,C,fact,0,"OAuth2PasswordRequestFormStrict requires grant_type=""password"".",OAuth2PasswordRequestFormStrict,O,,O,O,X,O
+c0035,D,fact,0,Wrong credentials at /token produce a 400 response in this tutorial.,400,O,,O,O,O,O
+c0036,A,code,0,"fake_hash_password prefixes the password with ""fakehashed"".",fakehashed,O,,O,O,O,O
+c0037,B,code,0,"The endpoint returns a dict with the token under the key ""token"".","{""token"": token}",O,,O,O,O,O
 c0038,D,procedure,0,The frontend sends the credentials to tokenUrl.,"1. User enters credentials (username and password) in the frontend.
 2. Frontend POSTs these credentials to the relative URL `token` (resolved against the API root).
 3. API receives the POST request at the `/token` endpoint.
@@ -497,7 +497,7 @@ c0038,D,procedure,0,The frontend sends the credentials to tokenUrl.,"1. User ent
 7. For protected endpoints, the frontend sends `Authorization: Bearer <token>` in the header.
 8. API receives the request and uses `OAuth2PasswordBearer` to validate the token.
 9. If the token is valid, the dependency returns the decoded user information.
-10. The protected endpoint's function can then use this user information as needed.",,,O,O,O,O
+10. The protected endpoint's function can then use this user information as needed.",O,,O,O,O,O
 c0038,D,procedure,1,The API returns a token.,"1. User enters credentials (username and password) in the frontend.
 2. Frontend POSTs these credentials to the relative URL `token` (resolved against the API root).
 3. API receives the POST request at the `/token` endpoint.
@@ -507,7 +507,7 @@ c0038,D,procedure,1,The API returns a token.,"1. User enters credentials (userna
 7. For protected endpoints, the frontend sends `Authorization: Bearer <token>` in the header.
 8. API receives the request and uses `OAuth2PasswordBearer` to validate the token.
 9. If the token is valid, the dependency returns the decoded user information.
-10. The protected endpoint's function can then use this user information as needed.",,,O,O,O,O
+10. The protected endpoint's function can then use this user information as needed.",O,,O,O,O,O
 c0038,D,procedure,2,Later requests send Authorization: Bearer <token>.,"1. User enters credentials (username and password) in the frontend.
 2. Frontend POSTs these credentials to the relative URL `token` (resolved against the API root).
 3. API receives the POST request at the `/token` endpoint.
@@ -517,7 +517,7 @@ c0038,D,procedure,2,Later requests send Authorization: Bearer <token>.,"1. User 
 7. For protected endpoints, the frontend sends `Authorization: Bearer <token>` in the header.
 8. API receives the request and uses `OAuth2PasswordBearer` to validate the token.
 9. If the token is valid, the dependency returns the decoded user information.
-10. The protected endpoint's function can then use this user information as needed.",,,O,O,O,O
+10. The protected endpoint's function can then use this user information as needed.",O,,O,O,O,O
 c0039,D,multi,0,The simple password-flow login returns 400 for wrong credentials.,"In the simple OAuth2 password flow tutorial:
 
 - If login credentials are incorrect, the response is a `400` Bad Request with the detail ""Incorrect username or password"".
@@ -526,7 +526,7 @@ In the OAuth2 with JWT Tokens and Password Hashing tutorial:
 
 - If login credentials are incorrect, the response is also a `400` Bad Request, but with the detail ""Incorrect username or password"" as well.
 
-So, the status code is the same (400 Bad Request) in both cases, but the response detail is identical in the provided snippets. The key difference is in how the tokens are handled and validated, with JWT providing signed tokens that include expiration and other claims, while the simple password flow uses plain username strings as tokens.",,,O,X,O,X
+So, the status code is the same (400 Bad Request) in both cases, but the response detail is identical in the provided snippets. The key difference is in how the tokens are handled and validated, with JWT providing signed tokens that include expiration and other claims, while the simple password flow uses plain username strings as tokens.",O,,O,X,O,X
 c0039,D,multi,1,The JWT login returns 401 for wrong credentials.,"In the simple OAuth2 password flow tutorial:
 
 - If login credentials are incorrect, the response is a `400` Bad Request with the detail ""Incorrect username or password"".
@@ -535,7 +535,7 @@ In the OAuth2 with JWT Tokens and Password Hashing tutorial:
 
 - If login credentials are incorrect, the response is also a `400` Bad Request, but with the detail ""Incorrect username or password"" as well.
 
-So, the status code is the same (400 Bad Request) in both cases, but the response detail is identical in the provided snippets. The key difference is in how the tokens are handled and validated, with JWT providing signed tokens that include expiration and other claims, while the simple password flow uses plain username strings as tokens.",,,X,X,X,X
+So, the status code is the same (400 Bad Request) in both cases, but the response detail is identical in the provided snippets. The key difference is in how the tokens are handled and validated, with JWT providing signed tokens that include expiration and other claims, while the simple password flow uses plain username strings as tokens.",X,JWT 로그인은 401이어야 하는데 답변은 400이라고 명시하여 반대됨.,X,X,X,X
 c0039,D,multi,2,The JWT login response includes the WWW-Authenticate: Bearer header.,"In the simple OAuth2 password flow tutorial:
 
 - If login credentials are incorrect, the response is a `400` Bad Request with the detail ""Incorrect username or password"".
@@ -544,7 +544,7 @@ In the OAuth2 with JWT Tokens and Password Hashing tutorial:
 
 - If login credentials are incorrect, the response is also a `400` Bad Request, but with the detail ""Incorrect username or password"" as well.
 
-So, the status code is the same (400 Bad Request) in both cases, but the response detail is identical in the provided snippets. The key difference is in how the tokens are handled and validated, with JWT providing signed tokens that include expiration and other claims, while the simple password flow uses plain username strings as tokens.",,,X,X,X,X
+So, the status code is the same (400 Bad Request) in both cases, but the response detail is identical in the provided snippets. The key difference is in how the tokens are handled and validated, with JWT providing signed tokens that include expiration and other claims, while the simple password flow uses plain username strings as tokens.",X,JWT 로그인 오류의 WWW-Authenticate: Bearer 헤더가 답변에 없음.,X,X,X,X
 c0040,A,multi,0,An async test needs httpx.AsyncClient instead of TestClient.,"For a test that needs to await async database calls and replace one of the app's dependencies, you should use `httpx.AsyncClient` in combination with `app.dependency_overrides`.
 
 Here’s how it works:
@@ -598,7 +598,7 @@ async def test_create_hero(client: AsyncClient):
 In this example:
 - `session_fixture` creates a test database and manages the session.
 - `client_fixture` overrides the `get_session` dependency with a test session and uses `AsyncClient` to make requests.
-- `test_create_hero` is an `@pytest.mark.anyio` async test that uses the `client` fixture to make a POST request and assert the response.",,,O,O,O,O
+- `test_create_hero` is an `@pytest.mark.anyio` async test that uses the `client` fixture to make a POST request and assert the response.",O,,O,O,O,O
 c0040,A,multi,1,AsyncClient is used with ASGITransport.,"For a test that needs to await async database calls and replace one of the app's dependencies, you should use `httpx.AsyncClient` in combination with `app.dependency_overrides`.
 
 Here’s how it works:
@@ -652,7 +652,7 @@ async def test_create_hero(client: AsyncClient):
 In this example:
 - `session_fixture` creates a test database and manages the session.
 - `client_fixture` overrides the `get_session` dependency with a test session and uses `AsyncClient` to make requests.
-- `test_create_hero` is an `@pytest.mark.anyio` async test that uses the `client` fixture to make a POST request and assert the response.",,,X,O,X,O
+- `test_create_hero` is an `@pytest.mark.anyio` async test that uses the `client` fixture to make a POST request and assert the response.",X,,X,O,X,O
 c0040,A,multi,2,app.dependency_overrides maps the original dependency to a replacement callable.,"For a test that needs to await async database calls and replace one of the app's dependencies, you should use `httpx.AsyncClient` in combination with `app.dependency_overrides`.
 
 Here’s how it works:
@@ -706,7 +706,7 @@ async def test_create_hero(client: AsyncClient):
 In this example:
 - `session_fixture` creates a test database and manages the session.
 - `client_fixture` overrides the `get_session` dependency with a test session and uses `AsyncClient` to make requests.
-- `test_create_hero` is an `@pytest.mark.anyio` async test that uses the `client` fixture to make a POST request and assert the response.",,,O,O,O,O
+- `test_create_hero` is an `@pytest.mark.anyio` async test that uses the `client` fixture to make a POST request and assert the response.",O,,O,O,O,O
 c0145,B,procedure,0,The TestClient is used as a context manager: with TestClient(app) as client.,"1. Define an asynchronous context manager for the lifespan.
 2. Use the `TestClient` as a context manager to run the app's lifespan.
 3. Assert the state of the app before and after the `TestClient` context manager.
@@ -761,7 +761,7 @@ def test_read_items():
     # The end of the ""with TestClient"" block simulates terminating the app, so
     # the lifespan ends and items are cleaned up
     assert items == {}
-```",,,X,X,O,O
+```",O,,X,X,O,O
 c0145,B,procedure,1,Lifespan startup runs when the with block is entered and shutdown when it exits.,"1. Define an asynchronous context manager for the lifespan.
 2. Use the `TestClient` as a context manager to run the app's lifespan.
 3. Assert the state of the app before and after the `TestClient` context manager.
@@ -816,7 +816,7 @@ def test_read_items():
     # The end of the ""with TestClient"" block simulates terminating the app, so
     # the lifespan ends and items are cleaned up
     assert items == {}
-```",,,O,X,O,O
+```",O,,O,X,O,O
 c0146,B,procedure,0,The override is set at the start of the test or in a pytest fixture.,"1. Import the necessary modules and functions.
 2. Define the dependency you want to override.
 3. Create a pytest fixture to set the override before the test and clear it after.
@@ -878,7 +878,7 @@ def test_override_in_items(override_common_parameters):
 def test_no_override_in_items():
     client = TestClient(app)
     response = client.get(""/items/"")
-    assert response.status_code == 200",,,O,O,O,O
+    assert response.status_code == 200",O,,O,O,O,O
 c0146,B,procedure,1,app.dependency_overrides maps the original dependency to the replacement.,"1. Import the necessary modules and functions.
 2. Define the dependency you want to override.
 3. Create a pytest fixture to set the override before the test and clear it after.
@@ -940,7 +940,7 @@ def test_override_in_items(override_common_parameters):
 def test_no_override_in_items():
     client = TestClient(app)
     response = client.get(""/items/"")
-    assert response.status_code == 200",,,O,O,O,O
+    assert response.status_code == 200",O,,O,O,O,O
 c0146,B,procedure,2,"The overrides are cleared at the end, e.g. with app.dependency_overrides.clear().","1. Import the necessary modules and functions.
 2. Define the dependency you want to override.
 3. Create a pytest fixture to set the override before the test and clear it after.
@@ -1002,13 +1002,13 @@ def test_override_in_items(override_common_parameters):
 def test_no_override_in_items():
     client = TestClient(app)
     response = client.get(""/items/"")
-    assert response.status_code == 200",,,X,O,O,O
+    assert response.status_code == 200",O,,X,O,O,O
 c0147,C,procedure,0,"The dependency is declared with Depends(..., scope=""function"").","1. Use the `scope` parameter when calling `Depends()` to set it to `""function""`.
 2. Define your yield dependency as usual.
-3. The cleanup code after `yield` will now run before the response is sent.",,,O,O,O,O
+3. The cleanup code after `yield` will now run before the response is sent.",O,,O,O,O,O
 c0147,C,procedure,1,"With scope=""function"", the cleanup after yield runs right after the path operation returns, before the response is sent.","1. Use the `scope` parameter when calling `Depends()` to set it to `""function""`.
 2. Define your yield dependency as usual.
-3. The cleanup code after `yield` will now run before the response is sent.",,,O,O,O,O
-c0148,C,multi,0,A TestClient created at module level and used without a with block does not run lifespan.,NOT FOUND,,,X,X,X,X
-c0148,C,multi,1,"With httpx.AsyncClient, the app is wrapped in LifespanManager from asgi-lifespan.",NOT FOUND,,,O,X,X,X
-c0148,C,multi,2,manager.app is passed to ASGITransport.,NOT FOUND,,,O,X,X,X
+3. The cleanup code after `yield` will now run before the response is sent.",X,"before the response is sent는 포함하지만, right after the path operation returns는 답변에 없음",O,O,O,O
+c0148,C,multi,0,A TestClient created at module level and used without a with block does not run lifespan.,NOT FOUND,X,,X,X,X,X
+c0148,C,multi,1,"With httpx.AsyncClient, the app is wrapped in LifespanManager from asgi-lifespan.",NOT FOUND,X,,O,X,X,X
+c0148,C,multi,2,manager.app is passed to ASGITransport.,NOT FOUND,X,,O,X,X,X

@@ -196,7 +196,7 @@ def main():
     ap = argparse.ArgumentParser(description="기존 trials.jsonl 의 답변을 key_facts judge 로 재채점 (답변 재생성 없음)")
     ap.add_argument("run", nargs="?", help="run_id 또는 trials.jsonl / 답변 jsonl 경로")
     ap.add_argument("--judge-model", default=CFG.judge_model, help=f"기본 {CFG.judge_model}")
-    ap.add_argument("--judge-mode", default="batch", choices=JUDGE_MODES)
+    ap.add_argument("--judge-mode", default=CFG.judge_mode, choices=JUDGE_MODES, help=f"기본 {CFG.judge_mode}")
     ap.add_argument("--out", help="재채점 결과 jsonl 경로 (기본 results/runs/<run_id>/rejudge-<시각>-<mode>.jsonl)")
     ap.add_argument("--answers-from-csv", metavar="SHEET",
                     help="검수표의 none_answer 를 답변으로 사용 (key_facts 는 현재 qa_dev.json)")

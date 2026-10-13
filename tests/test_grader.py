@@ -246,6 +246,44 @@ class PerFactModeTest(unittest.TestCase):
             grade(FakeJudge(), mode="bogus")
 
 
+class NotFoundTest(unittest.TestCase):
+
+    def grade_answer(self, answer, mode):
+        judge = FakeJudge(replies=[reply([(i, True) for i in range(len(FACTS))])])
+        g = grade_answer_accuracy(question="Q?", reference_answer="A.", key_facts=FACTS,
+                                  candidate_answer=answer, judge_llm=judge, mode=mode)
+        return g, judge
+
+    def test_not_found_skips_judge_in_both_modes(self):
+        for answer in ("NOT FOUND", "not found", "  Not Found.  ", "NOT FOUND.", ".not  found\n"):
+            for mode in ("batch", "per_fact"):
+                with self.subTest(answer=answer, mode=mode):
+                    g, judge = self.grade_answer(answer, mode)
+                    self.assertEqual(judge.batch_prompts, [])
+                    self.assertEqual(judge.single_facts, [])
+                    self.assertEqual(judge.chat_calls, [])
+                    self.assertEqual(g.judge_calls, 0)
+                    self.assertEqual(g.judge_skipped, "not_found")
+                    self.assertEqual(g.judge_mode, "skipped")
+                    self.assertEqual(g.answer_accuracy, 0.0)
+                    self.assertEqual((g.satisfied_count, g.total_count), (0, len(FACTS)))
+                    self.assertEqual([r.fact for r in g.fact_results], FACTS)
+                    self.assertTrue(all(not r.satisfied for r in g.fact_results))
+
+    def test_not_found_without_judge_llm_is_fine(self):
+        g = grade_answer_accuracy(question="Q?", reference_answer="A.", key_facts=FACTS,
+                                  candidate_answer="NOT FOUND", judge_llm=None)
+        self.assertEqual(g.judge_skipped, "not_found")
+
+    def test_answer_that_only_mentions_not_found_is_judged(self):
+        for answer in ("NOT FOUND in the first page, but the value is 5", "The value is not found"):
+            with self.subTest(answer=answer):
+                g, judge = self.grade_answer(answer, "batch")
+                self.assertEqual(len(judge.batch_prompts), 1)
+                self.assertIsNone(g.judge_skipped)
+                self.assertEqual(g.answer_accuracy, 1.0)
+
+
 class ParseTest(unittest.TestCase):
 
     def test_parse_reports_problems(self):

@@ -181,10 +181,11 @@ RAG 검색 단계는 두지 않는다.
         LLM judge를 사용하지 않는다.
         key_facts 기반 답변 정확도 역시 LLM judge가 없으면 계산되지 않는다.
 
-    python3 src/experiment.py --judge-mode per_fact
+    python3 src/experiment.py --judge-mode batch
 
-        key_facts 를 처음부터 fact 하나당 judge 호출 1회로 판정한다 (기본 batch).
-        batch 는 응답 index 가 0..N-1 과 다르면 1회 재요청하고, 그래도 다르면 fact 별 판정으로 폴백한다.
+        key_facts 판정 방식. 기본 per_fact (config JUDGE_MODE): fact 하나당 judge 호출 1회.
+        batch 는 한 번에 판정하고, 응답 index 가 0..N-1 과 다르면 1회 재요청, 그래도 다르면 fact 별 판정으로 폴백한다.
+        답변이 NOT FOUND 뿐이면 judge 를 부르지 않고 모두 불충족 (judge_skipped="not_found").
         사용한 judge 프롬프트 버전·해시·모드는 trials.jsonl 의 judge_* 필드에 남는다.
 
 
@@ -368,6 +369,7 @@ class TrialRecord:
     judge_retries: int = 0                    # 재요청 횟수 (0 또는 1)
     judge_missing_before_fix: list[int] = field(default_factory=list)  # 첫 응답에서 빠진(중복 포함) index
     judge_calls: int = 0                      # key_facts 판정에 쓴 judge 호출 수
+    judge_skipped: str | None = None          # judge 를 부르지 않은 사유 (not_found: 답변이 NOT FOUND 뿐)
 
     info: dict = field(default_factory=dict)
 
@@ -441,6 +443,7 @@ def judge_fields(fact_grade) -> dict:
         "judge_retries": fact_grade.judge_retries,
         "judge_missing_before_fix": fact_grade.judge_missing_before_fix,
         "judge_calls": fact_grade.judge_calls,
+        "judge_skipped": fact_grade.judge_skipped,
     }
 
 
@@ -639,6 +642,7 @@ def run(args) -> Path:
         "time": datetime.now().isoformat(timespec="seconds"),
         "git_head": git_head(),
         "config": {"llm": CFG.summary(), "judge_model": None if judge is None else CFG.judge_model,
+                   "judge_mode": None if fact_judge is None else args.judge_mode,
                    "answer_max_tokens": ANSWER_MAX_TOKENS,
                    "answer_prompt": {"version": prompt.version, "sha256": prompt.sha256},
                    "fact_judge": (None if fact_judge is None else
@@ -897,8 +901,9 @@ def main():
     ap.add_argument("--limit", type=int, help="앞에서부터 N 문항만")
     ap.add_argument("--ids", nargs="*", help="특정 문항만 (예: q0001 q0003). --split 무시")
     ap.add_argument("--no-judge", action="store_true", help="LLM 채점 생략 (긴 정답도 단어 일치로 판정)")
-    ap.add_argument("--judge-mode", default="batch", choices=JUDGE_MODES,
-                    help="key_facts 판정 방식: batch (한 번에, 불완전하면 재요청/개별 폴백) | per_fact (fact 별 개별 호출)")
+    ap.add_argument("--judge-mode", default=CFG.judge_mode, choices=JUDGE_MODES,
+                    help="key_facts 판정 방식: batch (한 번에, 불완전하면 재요청/개별 폴백) | per_fact (fact 별 개별 호출). "
+                         f"기본 {CFG.judge_mode} (JUDGE_MODE)")
     ap.add_argument("--semantic", action="store_true", help="압축 전후 임베딩 유사도 계산 (bge-m3 필요)")
     ap.add_argument("--answer-prompt", default="v1", choices=answer_prompt_versions(),
                     help="답변 지시문 버전 (src/prompts/answer_<버전>.md)")

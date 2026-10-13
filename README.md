@@ -194,7 +194,7 @@ python src/experiment.py --split all --limit 5        # 연결 확인용
 python src/experiment.py --compressors none,rule --semantic   # 임베딩 유사도 포함 (bge-m3)
 python src/experiment.py --answer-prompt v1           # 답변 지시문 버전 (기본 v1)
 python src/experiment.py --compressors "none,rule>llmlingua2"  # ">" 로 압축기를 순서대로 이어 붙임 (따옴표 필수)
-python src/experiment.py --judge-mode per_fact        # key_facts 를 fact 하나당 judge 호출 1회로 판정 (기본 batch)
+python src/experiment.py --judge-mode batch           # key_facts 를 한 번에 판정 (기본 per_fact: fact 하나당 judge 호출 1회)
 python src/rejudge.py <run_id> [--judge-mode per_fact] [--judge-model M] [--out path]  # 기존 결과 재채점
 ```
 

@@ -273,6 +273,13 @@ FACT_JUDGE_PROMPT_HASH = hashlib.sha256(
 
 JUDGE_MODES = ("batch", "per_fact")
 
+# 답변 전체가 NOT FOUND 인지 (대소문자·앞뒤 공백·마침표 무시). 이 경우 judge 를 부르지 않는다
+_NOT_FOUND_ONLY = re.compile(r"[\s.]*not\s+found[\s.]*", re.IGNORECASE)
+
+
+def is_not_found_answer(answer: str) -> bool:
+    return bool(_NOT_FOUND_ONLY.fullmatch(answer or ""))
+
 
 @dataclass
 class FactResult:
@@ -295,6 +302,11 @@ class AnswerAccuracyResult:
         retry              재요청 1회로 완전해짐
         per_fact_fallback  재요청도 불완전해서 fact 별 개별 판정으로 채움
         per_fact           처음부터 fact 별 개별 판정 (--judge-mode per_fact)
+        skipped            judge 를 부르지 않음 (judge_skipped 에 사유)
+
+    judge_skipped
+        not_found          답변이 NOT FOUND 뿐이라 judge 없이 모든 key_fact 를 불충족으로 처리
+                           (judge 가 NOT FOUND 답변에 fact 를 충족으로 주는 오판 방지)
     """
 
     answer_accuracy: float
@@ -315,6 +327,7 @@ class AnswerAccuracyResult:
     judge_retries: int = 0
     judge_missing_before_fix: list[int] = field(default_factory=list)  # 첫 응답에서 빠진 index
     judge_calls: int = 0
+    judge_skipped: str | None = None
 
 
 def _build_facts_text(key_facts: list[str]) -> str:
@@ -479,6 +492,8 @@ def grade_answer_accuracy(
         batch     한 번의 호출로 모든 fact 판정. 응답 index 가 {0..N-1} 과 다르면
                   누락 index 를 명시해 1회 재요청하고, 그래도 다르면 fact 별 개별 판정으로 폴백.
         per_fact  처음부터 fact 하나당 호출 1회 (YES/NO).
+
+    답변이 NOT FOUND 뿐이면 mode 와 상관없이 judge 를 부르지 않고 모두 불충족 (judge_skipped="not_found").
     """
 
     if mode not in JUDGE_MODES:
@@ -493,6 +508,16 @@ def grade_answer_accuracy(
     if not key_facts:
         raise ValueError(
             "답변 정확도를 계산하려면 key_facts가 1개 이상 필요합니다."
+        )
+
+    if is_not_found_answer(candidate_answer):
+        return AnswerAccuracyResult(
+            answer_accuracy=0.0,
+            satisfied_count=0,
+            total_count=len(key_facts),
+            fact_results=[FactResult(fact=fact, satisfied=False) for fact in key_facts],
+            judge_mode="skipped",
+            judge_skipped="not_found",
         )
 
     if judge_llm is None:

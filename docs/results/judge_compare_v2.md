@@ -42,6 +42,38 @@
 | c0148 | multi | 1 | O | X | X | X | With httpx.AsyncClient, the app is wrapped in LifespanManager from asgi-lifespan. |
 | c0148 | multi | 2 | O | X | X | X | manager.app is passed to ASGITransport. |
 
+## 사람 라벨 대비 일치율
+
+`python src/judge_agreement.py docs/results/judge_check_v2.csv --by-type` (key_fact 58행 모두 라벨, 빈 행 0개 제외).
+사람 라벨 O 51, X 7. FP = 사람 X·judge O, FN = 사람 O·judge X.
+
+| 조합 | n | 일치율 | FP | FN | Cohen's kappa |
+|---|---|---|---|---|---|
+| j7b_batch | 58 | 0.914 (53/58) | 3 | 2 | 0.567 |
+| j7b_perfact | 58 | 0.914 (53/58) | 2 | 3 | 0.617 |
+| j14b_batch | 58 | 0.931 (54/58) | 1 | 3 | 0.711 |
+| j14b_perfact | 58 | 0.914 (53/58) | 2 | 3 | 0.617 |
+
+type 별 일치율
+
+| 조합 | fact (11) | code (12) | procedure (24) | multi (11) |
+|---|---|---|---|---|
+| j7b_batch | 1.000 | 1.000 | 0.875 | 0.818 |
+| j7b_perfact | 1.000 | 1.000 | 0.875 | 0.818 |
+| j14b_batch | 0.909 | 0.917 | 0.958 | 0.909 |
+| j14b_perfact | 1.000 | 1.000 | 0.917 | 0.727 |
+
+- 사람 X 가 7행뿐이라 kappa 는 FP 한두 개에도 크게 흔들린다 (type 별 kappa 는 생략, 스크립트 출력 참고).
+- j7b_batch 는 NOT FOUND 답변(c0148)의 fact 2개를 충족으로 판정했다 (FP). 이후 grader 는 NOT FOUND 답변이면
+  judge 를 부르지 않고 모두 불충족으로 처리한다 (`judge_skipped="not_found"`).
+
+## 결정
+
+판정 모델 qwen2.5:7b, per_fact 로 확정. 근거: 4조합 모두 일치율 90% 이상, 최고(14b batch 93.1%)와 1.7%p(1행) 차이,
+판정 시간 243초 vs 926초(3.8배).
+
+- config 기본값: `JUDGE_MODEL=qwen2.5:7b`, `JUDGE_MODE=per_fact` (`experiment.py`·`rejudge.py` 의 `--judge-mode` 기본값도 이 값)
+
 ## 실행 환경
 
 - git commit: `7553bba61ef3f92accd519805a5131ee65c19540` + 커밋 전 변경 `src/rejudge.py`, `src/judge_agreement.py`, `src/judge_compare.py`
