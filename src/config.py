@@ -46,6 +46,8 @@ class Config:
     # ---------- 모델 ----------
     model: str = _env("LLM_MODEL", "qwen2.5:7b")          # 답변 생성
     judge_model: str = _env("JUDGE_MODEL", "qwen2.5:7b")  # 채점
+    # key_facts 판정 방식 (batch | per_fact). 7b per_fact 로 확정: docs/results/judge_compare_v2.md
+    judge_mode: str = _env("JUDGE_MODE", "per_fact")
     summary_model: str = _env("SUMMARY_MODEL", "qwen2.5:3b")  # 재귀 요약용
     embed_model: str = _env("EMBED_MODEL", "bge-m3")  # Cosine Similarity 계산용 임베딩 모델
     embed_ctx: int = _env("EMBED_CTX", 8192)              # 임베딩 입력 한도 (bge-m3 최대 8192)
