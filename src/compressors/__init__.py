@@ -48,11 +48,23 @@ from __future__ import annotations
 
 from compressors.base import PARTS, Chain, CompressResult, Compressor, PromptParts
 from compressors.identity import NoCompression
+from compressors.llmlingua2 import LLMLingua2Compressor
 from compressors.rule import RuleCompressor
+from config import CFG
 
 REGISTRY: dict[str, Compressor] = {
     "none": NoCompression(),        # 기준선 (Baseline): 원문 그대로
     "rule": RuleCompressor(),       # 규칙 기반 문맥 정제 (마크다운 휴리스틱)
+    "llmlingua2": LLMLingua2Compressor(
+        name="llmlingua2",
+        retain_ratio=0.5,
+    ),
+    **{
+        f"llmlingua2_r{round(rate * 100):02d}": LLMLingua2Compressor(
+            retain_ratio=rate,
+        )
+        for rate in CFG.compression_rates
+    },
 }
 
 
@@ -67,4 +79,7 @@ def get_compressor(name: str) -> Compressor:
     return Chain([REGISTRY[n] for n in stages])
 
 
-__all__ = ["PARTS", "Chain", "CompressResult", "Compressor", "PromptParts", "REGISTRY", "get_compressor"]
+__all__ = [
+    "PARTS", "Chain", "CompressResult", "Compressor", "PromptParts",
+    "LLMLingua2Compressor", "REGISTRY", "get_compressor",
+]
