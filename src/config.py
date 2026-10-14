@@ -18,8 +18,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 
 
-def _env(key: str, default):
-    v = os.getenv(key)
+def _env(key: str | tuple[str, ...], default):
+    """환경변수 값. key 가 여러 개면 앞에서부터 처음 설정된 값 (새 이름, 옛 이름 순)."""
+    keys = (key,) if isinstance(key, str) else key
+    v = next((os.getenv(k) for k in keys if os.getenv(k) is not None), None)
     if v is None:
         return default
     if isinstance(default, bool):
@@ -34,26 +36,38 @@ def _env(key: str, default):
 @dataclass
 class Config:
     # ---------- 백엔드 ----------
-    # "ollama" | "openai"  ("openai"는 LM Studio, vLLM, 상용 API 모두 해당)
-    backend: str = _env("LLM_BACKEND", "ollama")
-    base_url: str = _env("LLM_BASE_URL", "http://localhost:11434")
-    api_key: str = _env("LLM_API_KEY", "")
+    # 역할별 접속 정보: 답변(ANSWER_*), 채점(JUDGE_*), 임베딩(EMBED_*).
+    # 역할 이름이 없으면 옛 공용 이름 LLM_* 를 쓴다 (기존 .env 그대로 동작).
+    # backend: "ollama" | "openai"  ("openai"는 LM Studio, vLLM, OpenAI·DeepSeek 등 상용 API 모두 해당)
+    # base_url 에는 /v1 을 붙이지 않는다 (예: https://api.openai.com, https://api.deepseek.com)
+    backend: str = _env(("ANSWER_BACKEND", "LLM_BACKEND"), "ollama")              # 답변
+    base_url: str = _env(("ANSWER_BASE_URL", "LLM_BASE_URL"), "http://localhost:11434")
+    api_key: str = _env(("ANSWER_API_KEY", "LLM_API_KEY"), "")
+    judge_backend: str = _env(("JUDGE_BACKEND", "LLM_BACKEND"), "ollama")         # 채점
+    judge_base_url: str = _env(("JUDGE_BASE_URL", "LLM_BASE_URL"), "http://localhost:11434")
+    judge_api_key: str = _env(("JUDGE_API_KEY", "LLM_API_KEY"), "")
+    embed_backend: str = _env(("EMBED_BACKEND", "LLM_BACKEND"), "ollama")         # 의미 유사도 임베딩
+    embed_base_url: str = _env(("EMBED_BASE_URL", "LLM_BASE_URL"), "http://localhost:11434")
+    embed_api_key: str = _env(("EMBED_API_KEY", "LLM_API_KEY"), "")
     # 평가셋 생성 호출 전용 접속 정보 (dataset_builder --gen-backend openai 일 때만 쓴다).
     # 실험용 LLM_BASE_URL/LLM_API_KEY 와 섞이지 않게 따로 둔다. 모델·백엔드는 명령 인자로만 고른다
     gen_base_url: str = _env("GEN_BASE_URL", "")
     gen_api_key: str = _env("GEN_API_KEY", "")
 
     # ---------- 모델 ----------
-    model: str = _env("LLM_MODEL", "qwen2.5:7b")          # 답변 생성
+    model: str = _env(("ANSWER_MODEL", "LLM_MODEL"), "qwen2.5:7b")  # 답변 생성
     judge_model: str = _env("JUDGE_MODEL", "qwen2.5:7b")  # 채점
     # key_facts 판정 방식 (batch | per_fact). 7b per_fact 로 확정: docs/results/judge_compare_v2.md
     judge_mode: str = _env("JUDGE_MODE", "per_fact")
     summary_model: str = _env("SUMMARY_MODEL", "qwen2.5:3b")  # 재귀 요약용
     embed_model: str = _env("EMBED_MODEL", "bge-m3")  # Cosine Similarity 계산용 임베딩 모델
     embed_ctx: int = _env("EMBED_CTX", 8192)              # 임베딩 입력 한도 (bge-m3 최대 8192)
-    # 토큰 계산 기준. 모델 가중치 없이 토크나이저만 내려받는다
+    # 토큰 계산 기준 (llm.count_tokens). 답변 모델과 같은 토크나이저를 고른다
+    #   hf:<저장소>          허깅페이스 토크나이저 (모델 가중치 없이 토크나이저만 내려받음). 접두사 없으면 hf
+    #   tiktoken:<인코딩>    OpenAI 토크나이저 (예: tiktoken:o200k_base). 채팅 템플릿은 근사치로 센다
+    # 실제 과금 토큰은 API 응답의 usage 가 기준이고, 이 값은 호출 전 추정·부분별 통계용이다
     tokenizer: str = _env("TOKENIZER", "Qwen/Qwen2.5-7B-Instruct")
-    # 토크나이저 리비전(허깅페이스 커밋 해시) 고정. 저장소가 갱신돼도 토큰 수가 바뀌지 않게 한다
+    # 토크나이저 리비전(허깅페이스 커밋 해시) 고정. 저장소가 갱신돼도 토큰 수가 바뀌지 않게 한다 (hf 만)
     tokenizer_revision: str = _env("TOKENIZER_REVISION", "a09a35458c702b33eeacc393d103063234e8bc28")
 
     # ---------- 생성 조건 (실험 통제) ----------
@@ -89,6 +103,38 @@ class Config:
     def summary(self) -> str:
         return (f"backend={self.backend} model={self.model} "
                 f"ctx={self.num_ctx} temp={self.temperature} seed={self.seed}")
+
+    def endpoint(self, role: str) -> dict:
+        """역할(answer | judge | embed)별 접속 정보 {backend, base_url, api_key}."""
+        if role == "answer":
+            return {"backend": self.backend, "base_url": self.base_url, "api_key": self.api_key}
+        if role == "judge":
+            return {"backend": self.judge_backend, "base_url": self.judge_base_url,
+                    "api_key": self.judge_api_key}
+        if role == "embed":
+            return {"backend": self.embed_backend, "base_url": self.embed_base_url,
+                    "api_key": self.embed_api_key}
+        raise ValueError(f"알 수 없는 역할: {role} (answer | judge | embed)")
+
+    def models_info(self) -> dict:
+        """결과 파일에 남길 모델·접속·토큰 단위 정보 (API 키는 남기지 않는다)."""
+        return {
+            "answer": {"model": self.model, "backend": self.backend, "base_url": self.base_url},
+            "judge": {"model": self.judge_model, "backend": self.judge_backend,
+                      "base_url": self.judge_base_url},
+            "embed": {"model": self.embed_model, "backend": self.embed_backend,
+                      "base_url": self.embed_base_url},
+            "tokenizer": self.tokenizer,
+            "tokenizer_revision": self.tokenizer_revision if tokenizer_kind(self.tokenizer)[0] == "hf" else None,
+        }
+
+
+def tokenizer_kind(spec: str) -> tuple[str, str]:
+    """TOKENIZER 값 -> (종류, 이름). 접두사 없으면 hf."""
+    kind, sep, name = spec.partition(":")
+    if sep and kind in ("hf", "tiktoken"):
+        return kind, name
+    return "hf", spec
 
 
 CFG = Config()

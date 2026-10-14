@@ -55,6 +55,41 @@ ollama pull qwen2.5:3b      # 요약 전용 (재귀 요약 비용 비교용)
 ollama pull bge-m3          # 임베딩 (의미 손실률 측정)
 ```
 
+#### 모델 바꿔 끼우기 (답변 · 채점 · 토크나이저)
+
+답변 모델, 채점 모델, 임베딩, 토크나이저를 환경변수로 각각 고른다. 아무것도 설정하지 않으면 위의 Ollama + qwen2.5:7b + Qwen 토크나이저 그대로다.
+역할 이름(`ANSWER_*`, `JUDGE_*`, `EMBED_*`)이 없으면 옛 공용 이름(`LLM_BACKEND`, `LLM_BASE_URL`, `LLM_API_KEY`, `LLM_MODEL`)을 쓴다.
+
+| 역할 | backend | base_url | api_key | 모델 |
+|---|---|---|---|---|
+| 답변 | `ANSWER_BACKEND` | `ANSWER_BASE_URL` | `ANSWER_API_KEY` | `ANSWER_MODEL` |
+| 채점 | `JUDGE_BACKEND` | `JUDGE_BASE_URL` | `JUDGE_API_KEY` | `JUDGE_MODEL` |
+| 임베딩 | `EMBED_BACKEND` | `EMBED_BASE_URL` | `EMBED_API_KEY` | `EMBED_MODEL` |
+
+- `backend` 는 `ollama` 또는 `openai` (OpenAI·DeepSeek 등 `/v1/chat/completions` 호환 API). `base_url` 에는 `/v1` 을 붙이지 않는다.
+- `TOKENIZER` 는 `hf:<허깅페이스 저장소>`(접두사 없으면 hf) 또는 `tiktoken:<인코딩>`. 답변 모델과 같은 토크나이저를 고른다.
+  `input_tokens`, `input_reduction_pct` 등 호출 전에 세는 값의 단위이고, tiktoken 은 채팅 템플릿을 근사치로 센다.
+- 실제 과금 토큰은 서버 보고값이다 (`prompt_tokens`, `completion_tokens`, `judge_*_tokens`). 서버가 보고하지 않으면
+  `TOKENIZER` 로 추정하고 경고하며 `*_usage_source` 에 `estimate` 로 남긴다.
+- 실행에 쓴 역할별 모델·주소·토크나이저는 `summary.json` 의 `config.models` 에 남는다 (API 키는 남기지 않음).
+- 역할별 연결 확인: `python src/llm.py answer`, `python src/llm.py judge`
+
+```bash
+# 예: 답변 OpenAI, 채점 DeepSeek (공식 API), 임베딩은 로컬 Ollama 그대로
+ANSWER_BACKEND=openai
+ANSWER_BASE_URL=https://api.openai.com
+ANSWER_API_KEY=...
+ANSWER_MODEL=<OpenAI 모델 이름>
+JUDGE_BACKEND=openai
+JUDGE_BASE_URL=https://api.deepseek.com
+JUDGE_API_KEY=...
+JUDGE_MODEL=<DeepSeek 모델 이름>
+TOKENIZER=tiktoken:<답변 모델의 인코딩>
+```
+
+> 모델을 바꾸면 토큰 단위와 judge 가 달라지므로 Qwen 으로 낸 기존 결과(`docs/results/`)와 숫자를 직접 비교하지 않는다.
+> 새 모델로 기준선(`none`, `rule`)을 다시 돌리고, 새 judge 는 `docs/results/judge_check_v2.csv` 사람 라벨로 일치율을 다시 확인한다.
+
 ## 프로젝트 구조
 
 ```
@@ -226,7 +261,7 @@ user 메시지는 문서와 질문만 담는다.
 
 | # | 필드 | 의미 | 계산 |
 |---|---|---|---|
-| 1 | `input_reduction_pct` | 입력 토큰 절감률 (**주 지표**) | 1 − 압축 후 입력 토큰 / 원본 입력 토큰. 입력 토큰은 `llm.count_message_tokens` 로 센 실제 메시지 전체(채팅 템플릿 포함, Qwen 토크나이저). 문항 합 기준 |
+| 1 | `input_reduction_pct` | 입력 토큰 절감률 (**주 지표**) | 1 − 압축 후 입력 토큰 / 원본 입력 토큰. 입력 토큰은 `llm.count_message_tokens` 로 센 실제 메시지 전체(채팅 템플릿 포함, `TOKENIZER` 기준). 문항 합 기준 |
 | 2 | `net_input_reduction_pct` | 순 입력 토큰 절감률 | 압축 과정에서 LLM 이 쓴 입출력 토큰까지 압축 후 입력에 더해서 계산 (LLM 안 쓰는 압축기는 1과 같음) |
 | 3 | `semantic_sim` | 의미 유사도 | 압축 전후 문맥 임베딩(bge-m3)의 코사인 유사도. `--semantic` 일 때만 |
 | 4 | `entity_retention` | 핵심 엔티티 보존율 | 문항의 `key_entities` 중 압축 문맥에 남은 비율 |
@@ -252,6 +287,13 @@ user 메시지는 문서와 질문만 담는다.
 - `tokens` 부분별(`input`, `system`, `context`, `question`) 문항 평균 토큰, 압축 전(`raw`)·후(`compressed`).
   `trials.jsonl` 에는 문항마다 `input_tokens_raw`/`input_tokens`, `system_tokens_raw`/`system_tokens` 등으로 남는다
 - `compress_llm_tokens`, `ttft_sec`, `latency_sec`, `ctx_overflow`
+- `usage` 서버 보고 토큰 합계: 답변 `answer_prompt_tokens`/`answer_completion_tokens`, 채점 `judge_prompt_tokens`/`judge_completion_tokens`
+  (key_facts judge + O/X judge), 추정치로 채운 trial 수 `answer_usage_estimated`/`judge_usage_estimated`.
+  답변·채점 모델은 토크나이저가 달라 서로 더하지 않는다
+- `billed_input_reduction_pct` 서버 보고 입력 토큰(`prompt_tokens`) 기준 입력 토큰 절감률 (같은 문항의 `none` 과 짝지어 계산).
+  토크나이저 추정 없이 과금 단위로 본 절감률
+- `trials.jsonl` 문항별: `answer_model`(서버가 응답에 적은 모델), `answer_usage_source`, `judge_prompt_tokens`/`judge_completion_tokens`
+  (key_facts judge), `ox_judge_prompt_tokens`/`ox_judge_completion_tokens`, `judge_usage_source`
 
 #### 채점 방식
 
@@ -274,10 +316,11 @@ user 메시지는 문서와 질문만 담는다.
 ### 4. LLM 연결 확인
 
 ```bash
-python src/llm.py
+python src/llm.py          # 답변 모델
+python src/llm.py judge    # 채점 모델
 ```
 
-응답, 입출력 토큰 수, TTFT(첫 토큰까지 시간), 임베딩 차원을 출력한다.
+응답, 입출력 토큰 수(서버 보고값인지 추정치인지), TTFT(첫 토큰까지 시간), 임베딩 차원을 출력한다.
 
 ## 실험 통제 조건
 

@@ -118,6 +118,15 @@ class Grade:
     judge_raw: str = ""
     judge_prompt_tokens: int = 0
     judge_completion_tokens: int = 0
+    judge_usage_source: str | None = None   # api | estimate (judge 를 안 불렀으면 None)
+
+
+def usage_source_of(sources, attr: str = "usage_source") -> str | None:
+    """여러 호출(LLMResult 등)의 usage_source -> api | estimate | mixed (호출이 없으면 None)."""
+    found = {getattr(x, attr, None) or "api" for x in sources}
+    if not found:
+        return None
+    return found.pop() if len(found) == 1 else "mixed"
 
 
 def grade(
@@ -149,6 +158,7 @@ def grade(
     raw = ""
     pt = 0
     ct = 0
+    usage_source = None
 
     if need_judge:
         res = judge_llm.ask(
@@ -164,6 +174,7 @@ def grade(
 
         pt = res.prompt_tokens
         ct = res.completion_tokens
+        usage_source = usage_source_of([res])
 
     use_judge = (
         j is not None
@@ -179,6 +190,7 @@ def grade(
         judge_raw=raw,
         judge_prompt_tokens=pt,
         judge_completion_tokens=ct,
+        judge_usage_source=usage_source,
     )
 
 
@@ -320,6 +332,7 @@ class AnswerAccuracyResult:
 
     judge_prompt_tokens: int = 0
     judge_completion_tokens: int = 0
+    judge_usage_source: str | None = None   # api | estimate | mixed (judge 를 안 불렀으면 None)
 
     judge_prompt_version: str = FACT_JUDGE_PROMPT_VERSION
     judge_prompt_hash: str = FACT_JUDGE_PROMPT_HASH
@@ -530,6 +543,7 @@ def grade_answer_accuracy(
     example = _build_output_example(n)
 
     pt = ct = calls = retries = 0
+    responses = []
     raws: list[str] = []
     missing_before: list[int] = []
     values: dict[int, bool] | None = None
@@ -540,6 +554,7 @@ def grade_answer_accuracy(
         pt += res.prompt_tokens
         ct += res.completion_tokens
         calls += 1
+        responses.append(res)
 
     if mode == "batch":
         prompt = FACT_JUDGE_PROMPT.format(
@@ -626,6 +641,7 @@ def grade_answer_accuracy(
         judge_raw="\n---\n".join(raws),
         judge_prompt_tokens=pt,
         judge_completion_tokens=ct,
+        judge_usage_source=usage_source_of(responses),
         judge_mode=judge_mode,
         judge_retries=retries,
         judge_missing_before_fix=missing_before,
