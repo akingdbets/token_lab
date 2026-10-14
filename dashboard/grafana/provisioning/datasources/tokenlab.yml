@@ -1,0 +1,17 @@
+apiVersion: 1
+
+datasources:
+  - name: TokenLab PostgreSQL
+    uid: tokenlab-postgres
+    type: postgres
+    access: proxy
+    url: db:5432
+    user: $POSTGRES_USER
+    isDefault: true
+    jsonData:
+      database: $POSTGRES_DB
+      sslmode: disable
+      postgresVersion: 1700
+      timescaledb: false
+    secureJsonData:
+      password: $POSTGRES_PASSWORD

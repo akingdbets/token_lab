@@ -1,0 +1,155 @@
+{
+  "uid": "tokenlab-experiment-mvp",
+  "title": "TokenLab Experiment Dashboard",
+  "description": "One-run-at-a-time comparison of imported TokenLab experiments. Missing current-schema metrics are never substituted with legacy context metrics.",
+  "tags": ["tokenlab", "experiments"],
+  "timezone": "browser",
+  "schemaVersion": 42,
+  "version": 1,
+  "refresh": "",
+  "time": { "from": "now-6h", "to": "now" },
+  "templating": {
+    "list": [
+      {
+        "name": "run_pk", "label": "실험 ID (Run ID)", "type": "query", "hide": 0,
+        "datasource": { "type": "postgres", "uid": "tokenlab-postgres" },
+        "query": "SELECT run_id || ' · ' || source_namespace || ' · #' || run_pk::text AS __text, run_pk AS __value FROM runs ORDER BY run_pk DESC",
+        "definition": "SELECT run_id || ' · ' || source_namespace || ' · #' || run_pk::text AS __text, run_pk AS __value FROM runs ORDER BY run_pk DESC",
+        "refresh": 1, "sort": 0, "multi": false, "includeAll": false,
+        "current": { "selected": false, "text": "", "value": "" }, "options": []
+      },
+      {
+        "name": "compressor", "label": "압축기 (Compressor)", "type": "query", "hide": 0,
+        "datasource": { "type": "postgres", "uid": "tokenlab-postgres" },
+        "query": "SELECT compressor AS __text, compressor AS __value FROM run_compressor_metrics WHERE run_pk = NULLIF(${run_pk:sqlstring}, '')::bigint ORDER BY compressor",
+        "definition": "SELECT compressor AS __text, compressor AS __value FROM run_compressor_metrics WHERE run_pk = NULLIF(${run_pk:sqlstring}, '')::bigint ORDER BY compressor",
+        "refresh": 1, "sort": 0, "multi": false, "includeAll": false,
+        "current": { "selected": false, "text": "", "value": "" }, "options": []
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 1, "type": "table", "title": "실험 정보 (Run Metadata)", "gridPos": { "x": 0, "y": 40, "w": 12, "h": 10 },
+      "datasource": { "type": "postgres", "uid": "tokenlab-postgres" },
+      "targets": [{ "refId": "A", "datasource": { "type": "postgres", "uid": "tokenlab-postgres" }, "editorMode": "code", "format": "table", "rawQuery": true,
+        "rawSql": "WITH selected AS (SELECT * FROM runs WHERE run_pk = NULLIF(${run_pk:sqlstring}, '')::bigint) SELECT v.field AS \"Field\", v.value AS \"Value\" FROM selected r CROSS JOIN LATERAL (VALUES ('Run ID', r.run_id, 1), ('Execution Date', COALESCE(NULLIF(r.run_time_text, ''), 'Unknown'), 2), ('Git Head', COALESCE(NULLIF(r.git_head, ''), 'Unknown'), 3), ('Schema Version', r.schema_version, 4), ('Dataset', COALESCE(NULLIF(r.dataset_name, ''), 'Unknown'), 5), ('Requested Split', COALESCE(NULLIF(r.requested_split, ''), 'Unknown'), 6), ('Observed Split', COALESCE(NULLIF(array_to_string(r.observed_splits, ', '), ''), 'Unknown'), 7), ('LLM Model', COALESCE(substring(r.llm_config from 'model=([^[:space:]]+)'), 'Unknown'), 8), ('Judge Model', COALESCE(NULLIF(r.judge_model, ''), 'Unknown'), 9), ('Judge Mode', COALESCE(NULLIF(r.judge_mode, ''), 'Unknown'), 10), ('Answer Prompt Version', COALESCE(NULLIF(r.answer_prompt_version, ''), 'Unknown'), 11), ('Semantic Enabled', CASE WHEN r.semantic_enabled IS TRUE THEN 'Yes' WHEN r.semantic_enabled IS FALSE THEN 'No' ELSE 'Unknown' END, 12)) AS v(field, value, position) ORDER BY v.position"
+      }],
+      "fieldConfig": { "defaults": { "custom": { "align": "left", "cellOptions": { "type": "auto" } } }, "overrides": [
+        { "matcher": { "id": "byName", "options": "Field" }, "properties": [
+          { "id": "displayName", "value": "항목 (Field)" },
+          { "id": "custom.width", "value": 270 },
+          { "id": "mappings", "value": [{ "type": "value", "options": {
+            "Run ID": { "index": 0, "text": "실험 ID (Run ID)" },
+            "Execution Date": { "index": 1, "text": "실행 일시 (Execution Date)" },
+            "Git Head": { "index": 2, "text": "Git 커밋 (Git Head)" },
+            "Schema Version": { "index": 3, "text": "스키마 버전 (Schema Version)" },
+            "Dataset": { "index": 4, "text": "평가셋 (Dataset)" },
+            "Requested Split": { "index": 5, "text": "요청 분할 (Requested Split)" },
+            "Observed Split": { "index": 6, "text": "실제 분할 (Observed Split)" },
+            "LLM Model": { "index": 7, "text": "답변 모델 (LLM Model)" },
+            "Judge Model": { "index": 8, "text": "평가 모델 (Judge Model)" },
+            "Judge Mode": { "index": 9, "text": "평가 방식 (Judge Mode)" },
+            "Answer Prompt Version": { "index": 10, "text": "답변 프롬프트 버전 (Answer Prompt Version)" },
+            "Semantic Enabled": { "index": 11, "text": "의미 유사도 활성화 (Semantic Enabled)" }
+          } }] }
+        ] },
+        { "matcher": { "id": "byName", "options": "Value" }, "properties": [{ "id": "displayName", "value": "값 (Value)" }] }
+      ] },
+      "options": { "showHeader": true, "cellHeight": "sm", "footer": { "show": false } }
+    },
+    {
+      "id": 2, "type": "table", "title": "데이터 상태 (Data Availability)", "description": "Warnings are derived from the selected run and compressor; they disappear when the corresponding data exists.", "gridPos": { "x": 12, "y": 40, "w": 12, "h": 10 },
+      "datasource": { "type": "postgres", "uid": "tokenlab-postgres" },
+      "targets": [{ "refId": "A", "datasource": { "type": "postgres", "uid": "tokenlab-postgres" }, "editorMode": "code", "format": "table", "rawQuery": true,
+        "rawSql": "WITH selected AS (SELECT r.*, m.input_reduction_pct, m.net_input_reduction_pct, m.semantic_sim FROM runs r JOIN run_compressor_metrics m ON m.run_pk = r.run_pk WHERE r.run_pk = NULLIF(${run_pk:sqlstring}, '')::bigint AND m.compressor = ${compressor:sqlstring}), warnings AS (SELECT v.area, v.status FROM selected s CROSS JOIN LATERAL (VALUES ('Input Token Reduction', CASE WHEN s.input_reduction_pct IS NULL THEN CASE WHEN s.schema_version = 'legacy' THEN 'Not available in this legacy run' ELSE 'Not available' END END), ('Net Input Token Reduction', CASE WHEN s.net_input_reduction_pct IS NULL THEN CASE WHEN s.schema_version = 'legacy' THEN 'Not available in this legacy run' ELSE 'Not available' END END), ('Dataset Version', CASE WHEN s.dataset_sha256 IS NULL THEN 'Unknown' END), ('Judge Mode', CASE WHEN s.judge_mode IS NULL THEN 'Unknown' END), ('Semantic Similarity', CASE WHEN s.semantic_sim IS NULL THEN CASE WHEN s.semantic_enabled IS FALSE THEN 'Not calculated' ELSE 'Not available' END END)) AS v(area, status) WHERE v.status IS NOT NULL) SELECT area AS \"Check\", status AS \"Status\" FROM warnings UNION ALL SELECT 'Availability', 'No data availability warnings' WHERE EXISTS (SELECT 1 FROM selected) AND NOT EXISTS (SELECT 1 FROM warnings) UNION ALL SELECT 'Selection', 'No matching Run / Compressor data' WHERE EXISTS (SELECT 1 FROM runs) AND NOT EXISTS (SELECT 1 FROM selected) UNION ALL SELECT 'Runs', 'No imported runs found. Run the importer first.' WHERE NOT EXISTS (SELECT 1 FROM runs) ORDER BY \"Check\""
+      }],
+      "fieldConfig": { "defaults": { "custom": { "align": "left", "cellOptions": { "type": "auto" } } }, "overrides": [
+        { "matcher": { "id": "byName", "options": "Check" }, "properties": [{ "id": "displayName", "value": "확인 항목 (Check)" }, { "id": "custom.width", "value": 210 }] },
+        { "matcher": { "id": "byName", "options": "Status" }, "properties": [{ "id": "displayName", "value": "상태 (Status)" }] }
+      ] },
+      "options": { "showHeader": true, "cellHeight": "sm", "footer": { "show": false } }
+    },
+    {
+      "id": 3, "type": "stat", "title": "입력 토큰 절감률 (Input Reduction)", "description": "선택한 압축기의 전체 문항에서 압축 전·후 실제 답변 입력 토큰(채팅 템플릿 포함)을 각각 합산해 100 × (1 − 압축 후 합계 / 압축 전 합계)로 계산합니다. 문항별 절감률의 단순 평균이 아닙니다. 압축 전 합계가 0이면 N/A이며, 레거시 문맥 절감률로 대체하지 않습니다.", "gridPos": { "x": 0, "y": 0, "w": 8, "h": 4 },
+      "datasource": { "type": "postgres", "uid": "tokenlab-postgres" },
+      "targets": [{ "refId": "A", "datasource": { "type": "postgres", "uid": "tokenlab-postgres" }, "editorMode": "code", "format": "table", "rawQuery": true, "rawSql": "SELECT input_reduction_pct AS \"Value\" FROM run_compressor_metrics WHERE run_pk = NULLIF(${run_pk:sqlstring}, '')::bigint AND compressor = ${compressor:sqlstring}" }],
+      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2, "noValue": "N/A", "color": { "mode": "fixed", "fixedColor": "blue" } }, "overrides": [] },
+      "options": { "reduceOptions": { "values": false, "calcs": ["last"], "fields": "" }, "orientation": "auto", "textMode": "value", "colorMode": "value", "graphMode": "none", "justifyMode": "center" }
+    },
+    {
+      "id": 4, "type": "stat", "title": "순 입력 토큰 절감률 (Net Input Reduction)", "description": "100 × [1 − (압축 후 답변 입력 토큰 합계 + 압축 과정에서 사용한 LLM 입력·출력 토큰 합계) / 압축 전 답변 입력 토큰 합계]입니다. 압축 과정에서 LLM을 사용하지 않으면 추가 토큰은 0이며, 분모가 0이면 N/A입니다.", "gridPos": { "x": 8, "y": 0, "w": 8, "h": 4 },
+      "datasource": { "type": "postgres", "uid": "tokenlab-postgres" },
+      "targets": [{ "refId": "A", "datasource": { "type": "postgres", "uid": "tokenlab-postgres" }, "editorMode": "code", "format": "table", "rawQuery": true, "rawSql": "SELECT net_input_reduction_pct AS \"Value\" FROM run_compressor_metrics WHERE run_pk = NULLIF(${run_pk:sqlstring}, '')::bigint AND compressor = ${compressor:sqlstring}" }],
+      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 2, "noValue": "N/A", "color": { "mode": "fixed", "fixedColor": "blue" } }, "overrides": [] },
+      "options": { "reduceOptions": { "values": false, "calcs": ["last"], "fields": "" }, "orientation": "auto", "textMode": "value", "colorMode": "value", "graphMode": "none", "justifyMode": "center" }
+    },
+    {
+      "id": 5, "type": "stat", "title": "의미 유사도 (Semantic Similarity)", "description": "문항별 원문 문맥과 압축 후 문맥의 임베딩 코사인 유사도를 계산한 뒤, 값이 있는 문항만 평균합니다. 실험에서 --semantic 옵션을 사용한 경우에만 계산하며, 문맥이 동일하면 1입니다. 값이 없으면 N/A입니다.", "gridPos": { "x": 16, "y": 0, "w": 8, "h": 4 },
+      "datasource": { "type": "postgres", "uid": "tokenlab-postgres" },
+      "targets": [{ "refId": "A", "datasource": { "type": "postgres", "uid": "tokenlab-postgres" }, "editorMode": "code", "format": "table", "rawQuery": true, "rawSql": "SELECT semantic_sim AS \"Value\" FROM run_compressor_metrics WHERE run_pk = NULLIF(${run_pk:sqlstring}, '')::bigint AND compressor = ${compressor:sqlstring}" }],
+      "fieldConfig": { "defaults": { "unit": "none", "decimals": 4, "noValue": "N/A", "color": { "mode": "fixed", "fixedColor": "purple" } }, "overrides": [] },
+      "options": { "reduceOptions": { "values": false, "calcs": ["last"], "fields": "" }, "orientation": "auto", "textMode": "value", "colorMode": "value", "graphMode": "none", "justifyMode": "center" }
+    },
+    {
+      "id": 6, "type": "stat", "title": "핵심 엔티티 보존율 (Entity Retention)", "description": "문항의 key_entities 중 압축 후 문맥에 단어 기준으로 남은 항목의 비율을 구하고, 값이 있는 문항만 평균합니다(0~1을 %로 표시). 유효한 엔티티가 없는 문항은 집계에서 제외합니다.", "gridPos": { "x": 0, "y": 4, "w": 8, "h": 4 },
+      "datasource": { "type": "postgres", "uid": "tokenlab-postgres" },
+      "targets": [{ "refId": "A", "datasource": { "type": "postgres", "uid": "tokenlab-postgres" }, "editorMode": "code", "format": "table", "rawQuery": true, "rawSql": "SELECT entity_retention AS \"Value\" FROM run_compressor_metrics WHERE run_pk = NULLIF(${run_pk:sqlstring}, '')::bigint AND compressor = ${compressor:sqlstring}" }],
+      "fieldConfig": { "defaults": { "unit": "percentunit", "decimals": 1, "noValue": "N/A", "color": { "mode": "fixed", "fixedColor": "green" } }, "overrides": [] },
+      "options": { "reduceOptions": { "values": false, "calcs": ["last"], "fields": "" }, "orientation": "auto", "textMode": "value", "colorMode": "value", "graphMode": "none", "justifyMode": "center" }
+    },
+    {
+      "id": 7, "type": "stat", "title": "답변 정확도 (Answer Accuracy)", "description": "생성 답변이 문항의 key_facts를 충족한 개수 / 전체 key_facts 개수를 문항별로 계산한 뒤, 값이 있는 문항만 평균합니다(0~1을 %로 표시). 답변이 NOT FOUND로 시작하고 key_facts가 있으면 0으로 기록합니다.", "gridPos": { "x": 8, "y": 4, "w": 8, "h": 4 },
+      "datasource": { "type": "postgres", "uid": "tokenlab-postgres" },
+      "targets": [{ "refId": "A", "datasource": { "type": "postgres", "uid": "tokenlab-postgres" }, "editorMode": "code", "format": "table", "rawQuery": true, "rawSql": "SELECT answer_accuracy AS \"Value\" FROM run_compressor_metrics WHERE run_pk = NULLIF(${run_pk:sqlstring}, '')::bigint AND compressor = ${compressor:sqlstring}" }],
+      "fieldConfig": { "defaults": { "unit": "percentunit", "decimals": 1, "noValue": "N/A", "color": { "mode": "fixed", "fixedColor": "green" } }, "overrides": [] },
+      "options": { "reduceOptions": { "values": false, "calcs": ["last"], "fields": "" }, "orientation": "auto", "textMode": "value", "colorMode": "value", "graphMode": "none", "justifyMode": "center" }
+    },
+    {
+      "id": 8, "type": "stat", "title": "답변 정확도 유지율 (Accuracy Retention)", "description": "같은 문항의 none 기준선과 선택 압축기에서 답변 정확도가 모두 있는 문항만 짝지어 각각 평균한 뒤, 100 × (압축기 평균 / none 평균)으로 계산합니다. none 자체는 비교 대상이 아니며, 짝이 없거나 none 평균이 0이면 N/A입니다.", "gridPos": { "x": 16, "y": 4, "w": 8, "h": 4 },
+      "datasource": { "type": "postgres", "uid": "tokenlab-postgres" },
+      "targets": [{ "refId": "A", "datasource": { "type": "postgres", "uid": "tokenlab-postgres" }, "editorMode": "code", "format": "table", "rawQuery": true, "rawSql": "SELECT answer_accuracy_retention_pct AS \"Value\" FROM run_compressor_metrics WHERE run_pk = NULLIF(${run_pk:sqlstring}, '')::bigint AND compressor = ${compressor:sqlstring}" }],
+      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 1, "noValue": "N/A", "color": { "mode": "fixed", "fixedColor": "orange" } }, "overrides": [] },
+      "options": { "reduceOptions": { "values": false, "calcs": ["last"], "fields": "" }, "orientation": "auto", "textMode": "value", "colorMode": "value", "graphMode": "none", "justifyMode": "center" }
+    },
+    {
+      "id": 9, "type": "barchart", "title": "압축기별 토큰 절감률 (Token Reduction by Compressor)", "description": "선택 Run의 모든 압축기를 비교합니다. 현행 입력 토큰 절감률이 NULL인 압축기는 표시하지 않으며, 레거시 문맥 절감률로 대체하지 않습니다.", "gridPos": { "x": 0, "y": 8, "w": 12, "h": 9 },
+      "datasource": { "type": "postgres", "uid": "tokenlab-postgres" },
+      "targets": [{ "refId": "A", "datasource": { "type": "postgres", "uid": "tokenlab-postgres" }, "editorMode": "code", "format": "table", "rawQuery": true, "rawSql": "SELECT compressor AS \"Compressor\", input_reduction_pct AS \"Token Reduction (%)\" FROM run_compressor_metrics WHERE run_pk = NULLIF(${run_pk:sqlstring}, '')::bigint AND input_reduction_pct IS NOT NULL ORDER BY CASE compressor WHEN 'none' THEN 0 WHEN 'rule' THEN 1 WHEN 'llmlingua2' THEN 2 ELSE 3 END, compressor" }],
+      "fieldConfig": { "defaults": { "unit": "percent", "decimals": 1, "color": { "mode": "fixed", "fixedColor": "blue" }, "custom": { "axisLabel": "입력 토큰 절감률 (Input Reduction, %)" } }, "overrides": [] },
+      "options": { "orientation": "vertical", "xField": "Compressor", "showValue": "always", "groupWidth": 0.7, "barWidth": 0.7, "barRadius": 2, "tooltip": { "mode": "single" }, "legend": { "showLegend": false } }
+    },
+    {
+      "id": 10, "type": "barchart", "title": "압축기별 답변 정확도 (Answer Accuracy by Compressor)", "gridPos": { "x": 12, "y": 8, "w": 12, "h": 9 },
+      "datasource": { "type": "postgres", "uid": "tokenlab-postgres" },
+      "targets": [{ "refId": "A", "datasource": { "type": "postgres", "uid": "tokenlab-postgres" }, "editorMode": "code", "format": "table", "rawQuery": true, "rawSql": "SELECT compressor AS \"Compressor\", answer_accuracy AS \"Answer Accuracy\" FROM run_compressor_metrics WHERE run_pk = NULLIF(${run_pk:sqlstring}, '')::bigint AND answer_accuracy IS NOT NULL ORDER BY CASE compressor WHEN 'none' THEN 0 WHEN 'rule' THEN 1 WHEN 'llmlingua2' THEN 2 ELSE 3 END, compressor" }],
+      "fieldConfig": { "defaults": { "unit": "percentunit", "decimals": 1, "min": 0, "max": 1, "color": { "mode": "fixed", "fixedColor": "green" }, "custom": { "axisLabel": "답변 정확도 (Answer Accuracy, %)" } }, "overrides": [] },
+      "options": { "orientation": "vertical", "xField": "Compressor", "showValue": "always", "groupWidth": 0.7, "barWidth": 0.7, "barRadius": 2, "tooltip": { "mode": "single" }, "legend": { "showLegend": false } }
+    },
+    {
+      "id": 11, "type": "xychart", "title": "압축률과 정확도 비교 (Compression vs Accuracy)", "description": "선택 Run에서 입력 토큰 절감률(X)과 답변 정확도(Y)가 모두 있는 압축기를 각각 점으로 표시합니다. Compressor 변수와 관계없이 모든 압축기를 비교하며, NULL을 0으로 대체하지 않습니다.", "gridPos": { "x": 0, "y": 17, "w": 24, "h": 11 },
+      "datasource": { "type": "postgres", "uid": "tokenlab-postgres" },
+      "targets": [{ "refId": "A", "datasource": { "type": "postgres", "uid": "tokenlab-postgres" }, "editorMode": "code", "format": "table", "rawQuery": true, "rawSql": "SELECT compressor AS \"Compressor\", input_reduction_pct AS \"Token Reduction (%)\", answer_accuracy AS \"Answer Accuracy\" FROM run_compressor_metrics WHERE run_pk = NULLIF(${run_pk:sqlstring}, '')::bigint ORDER BY CASE compressor WHEN 'none' THEN 0 WHEN 'rule' THEN 1 WHEN 'llmlingua2' THEN 2 ELSE 3 END, compressor" }],
+      "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "custom": { "show": "points", "pointSize": { "fixed": 12 }, "pointShape": "circle", "pointStrokeWidth": 1, "fillOpacity": 80, "axisPlacement": "auto", "scaleDistribution": { "type": "linear" } } }, "overrides": [{ "matcher": { "id": "byName", "options": "Token Reduction (%)" }, "properties": [{ "id": "unit", "value": "percent" }, { "id": "custom.axisLabel", "value": "입력 토큰 절감률 (Input Reduction, %)" }] }, { "matcher": { "id": "byName", "options": "Answer Accuracy" }, "properties": [{ "id": "unit", "value": "percentunit" }, { "id": "custom.axisLabel", "value": "답변 정확도 (Answer Accuracy, %)" }] }] },
+      "options": { "mapping": "auto", "series": [{}], "tooltip": { "mode": "single" }, "legend": { "showLegend": true, "displayMode": "list", "placement": "bottom", "calcs": [] } }
+    },
+    {
+      "id": 12, "type": "table", "title": "문항별 평가 결과 (Question Results)", "description": "선택 Run·압축기의 문항별 결과입니다. 문항 ID=Question ID, 문항 유형=Question Type, 입력 절감률=Input Token Reduction(%), 레거시 문맥 절감률=Legacy Context Reduction(%), 충족/전체 사실 수=Satisfied/Total Facts, 생성 답변=Generated Response입니다. 답변 정확도는 0~1 저장값을 %로 표시합니다. 결측값은 0으로 대체하지 않으며, NOT FOUND는 원본 trial의 값을 읽습니다.", "gridPos": { "x": 0, "y": 28, "w": 24, "h": 12 },
+      "datasource": { "type": "postgres", "uid": "tokenlab-postgres" },
+      "targets": [{ "refId": "A", "datasource": { "type": "postgres", "uid": "tokenlab-postgres" }, "editorMode": "code", "format": "table", "rawQuery": true, "rawSql": "SELECT qid AS \"Question ID\", COALESCE(qtype, 'Unknown') AS \"Question Type\", compressor AS \"Compressor\", answer_accuracy AS \"Answer Accuracy\", input_reduction_pct AS \"Input Token Reduction\", context_reduction_pct AS \"Legacy Context Reduction\", satisfied_facts AS \"Satisfied Facts\", total_facts AS \"Total Facts\", raw_record->>'not_found' AS \"NOT FOUND\", response AS \"Generated Response\" FROM trials WHERE run_pk = NULLIF(${run_pk:sqlstring}, '')::bigint AND compressor = ${compressor:sqlstring} ORDER BY qid, repeat_index, turn_index" }],
+      "fieldConfig": { "defaults": { "custom": { "align": "left", "cellOptions": { "type": "auto" } } }, "overrides": [
+        { "matcher": { "id": "byName", "options": "Question ID" }, "properties": [{ "id": "displayName", "value": "문항 ID" }, { "id": "custom.width", "value": 100 }] },
+        { "matcher": { "id": "byName", "options": "Question Type" }, "properties": [{ "id": "displayName", "value": "문항 유형" }, { "id": "custom.width", "value": 110 }] },
+        { "matcher": { "id": "byName", "options": "Compressor" }, "properties": [{ "id": "displayName", "value": "압축기" }, { "id": "custom.width", "value": 120 }] },
+        { "matcher": { "id": "byName", "options": "Answer Accuracy" }, "properties": [{ "id": "displayName", "value": "답변 정확도" }, { "id": "custom.width", "value": 130 }, { "id": "unit", "value": "percentunit" }, { "id": "decimals", "value": 1 }, { "id": "noValue", "value": "N/A" }, { "id": "custom.cellOptions", "value": { "type": "color-background", "mode": "basic" } }, { "id": "thresholds", "value": { "mode": "absolute", "steps": [{ "color": "red", "value": null }, { "color": "orange", "value": 0.5 }, { "color": "green", "value": 0.8 }] } }] },
+        { "matcher": { "id": "byName", "options": "Input Token Reduction" }, "properties": [{ "id": "displayName", "value": "입력 절감률" }, { "id": "custom.width", "value": 130 }, { "id": "unit", "value": "percent" }, { "id": "decimals", "value": 1 }, { "id": "noValue", "value": "N/A" }] },
+        { "matcher": { "id": "byName", "options": "Legacy Context Reduction" }, "properties": [{ "id": "displayName", "value": "레거시 문맥 절감률" }, { "id": "custom.width", "value": 155 }, { "id": "unit", "value": "percent" }, { "id": "decimals", "value": 1 }, { "id": "noValue", "value": "N/A" }] },
+        { "matcher": { "id": "byName", "options": "Satisfied Facts" }, "properties": [{ "id": "displayName", "value": "충족 사실 수" }, { "id": "custom.width", "value": 110 }, { "id": "unit", "value": "none" }, { "id": "decimals", "value": 0 }, { "id": "noValue", "value": "N/A" }] },
+        { "matcher": { "id": "byName", "options": "Total Facts" }, "properties": [{ "id": "displayName", "value": "전체 사실 수" }, { "id": "custom.width", "value": 110 }, { "id": "unit", "value": "none" }, { "id": "decimals", "value": 0 }, { "id": "noValue", "value": "N/A" }] },
+        { "matcher": { "id": "byName", "options": "NOT FOUND" }, "properties": [{ "id": "displayName", "value": "NOT FOUND" }, { "id": "custom.width", "value": 110 }] },
+        { "matcher": { "id": "byName", "options": "Generated Response" }, "properties": [{ "id": "displayName", "value": "생성 답변" }, { "id": "custom.width", "value": 420 }, { "id": "custom.cellOptions", "value": { "type": "auto", "wrapText": false } }] }
+      ] },
+      "options": { "showHeader": true, "cellHeight": "sm", "footer": { "show": false }, "sortBy": [{ "displayName": "문항 ID", "desc": false }] }
+    }
+  ]
+}

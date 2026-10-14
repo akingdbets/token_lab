@@ -1,0 +1,12 @@
+apiVersion: 1
+
+providers:
+  - name: TokenLab dashboards
+    orgId: 1
+    type: file
+    folder: TokenLab
+    disableDeletion: true
+    allowUiUpdates: false
+    updateIntervalSeconds: 10
+    options:
+      path: /etc/grafana/dashboards
