@@ -3,6 +3,8 @@
 claude-v1 평가셋 dev 35문항에 대해 압축 없음(none)과 규칙 기반 압축(rule)을 비교한 기준선.
 판정은 `judge_compare_v2.md` 에서 확정한 qwen2.5:7b per_fact.
 
+- 이 문서의 rule 은 머리말을 통째로 지우던 버전이다. 이후 rule 기본값은 머리말의 title·description·tags 를 남기며,
+  이 문서의 rule 과 같은 동작은 `rule_fm_all` 로 남아 있다
 - run: `20261013-103450` (none, rule), 재현성 확인용 `20261013-140130` (none 한 번 더). `results/` 는 커밋하지 않음
 - 실행: `EVAL_DIR=data/evalsets/claude-v1 python src/experiment.py --split dev --compressors none,rule --semantic`
 - 답변: qwen2.5:7b, temperature 0, seed 42, num_ctx 16384, answer_prompt v1, 답변 최대 512 토큰
