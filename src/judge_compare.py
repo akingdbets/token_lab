@@ -129,7 +129,7 @@ def environment(models: list[str]) -> dict:
             check=True).stdout.splitlines()]
     except (OSError, subprocess.CalledProcessError):
         env["git_commit"], env["git_dirty"] = None, []
-    base = CFG.base_url.rstrip("/")
+    base = CFG.judge_base_url.rstrip("/")
     try:
         env["ollama_version"] = requests.get(f"{base}/api/version", timeout=10).json().get("version")
         tags = requests.get(f"{base}/api/tags", timeout=10).json().get("models", [])

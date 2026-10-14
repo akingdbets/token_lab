@@ -43,8 +43,11 @@ RAG 검색 단계는 두지 않는다.
 
 최종 평가 지표 (v1)
 
-토큰은 모두 Qwen 토크나이저로 센다. 입력 토큰(input_tokens)은 llm.count_message_tokens 로 센
-실제 답변 메시지 전체(채팅 템플릿 포함)이고, 부분별 토큰(system/context/question_tokens)은 각 부분 글자만 센다.
+입력 토큰(input_tokens)과 부분별 토큰은 config.tokenizer(TOKENIZER) 로 센다. 답변 모델과 같은 토크나이저를
+고른다 (기본 Qwen). input_tokens 는 llm.count_message_tokens 로 센 실제 답변 메시지 전체(채팅 템플릿 포함)이고,
+부분별 토큰(system/context/question_tokens)은 각 부분 글자만 센다.
+답변·채점 모델이 실제로 쓴 토큰은 서버 보고값(prompt_tokens, completion_tokens, judge_*_tokens)이고,
+서버가 보고하지 않아 추정한 경우 *_usage_source 가 "estimate" 다.
 
 1. 입력 토큰 절감률 (input_reduction_pct)  <- 주 지표 (목표 50%)
 
@@ -237,6 +240,7 @@ from grader import (
     grade,
     grade_answer_accuracy,
     is_short,
+    usage_source_of,
     word_tokens,
 )
 from llm import LLM, count_message_tokens, count_tokens
@@ -370,6 +374,14 @@ class TrialRecord:
     judge_missing_before_fix: list[int] = field(default_factory=list)  # 첫 응답에서 빠진(중복 포함) index
     judge_calls: int = 0                      # key_facts 판정에 쓴 judge 호출 수
     judge_skipped: str | None = None          # judge 를 부르지 않은 사유 (not_found: 답변이 NOT FOUND 뿐)
+    judge_prompt_tokens: int = 0              # key_facts judge 입력 토큰 합 (서버 보고값)
+    judge_completion_tokens: int = 0          # key_facts judge 출력 토큰 합
+    ox_judge_prompt_tokens: int = 0           # 기존 O/X judge 입력 토큰 (긴 정답만 호출)
+    ox_judge_completion_tokens: int = 0
+    judge_usage_source: str | None = None     # api | estimate | mixed (judge 를 안 불렀으면 None)
+    # 답변 모델 기록
+    answer_model: str = ""                    # 서버가 응답에 적은 모델 (없으면 요청한 모델)
+    answer_usage_source: str = "api"          # api | estimate (prompt/completion_tokens 출처)
 
     info: dict = field(default_factory=dict)
 
@@ -444,6 +456,8 @@ def judge_fields(fact_grade) -> dict:
         "judge_missing_before_fix": fact_grade.judge_missing_before_fix,
         "judge_calls": fact_grade.judge_calls,
         "judge_skipped": fact_grade.judge_skipped,
+        "judge_prompt_tokens": fact_grade.judge_prompt_tokens,
+        "judge_completion_tokens": fact_grade.judge_completion_tokens,
     }
 
 
@@ -492,7 +506,7 @@ def run(args) -> Path:
         None
         if args.no_judge
         else LLM(
-            model=CFG.judge_model,
+            role="judge",
             max_tokens=8,
         )
     )
@@ -504,13 +518,14 @@ def run(args) -> Path:
         None
         if args.no_judge
         else LLM(
-            model=CFG.judge_model,
+            role="judge",
             max_tokens=FACT_JUDGE_MAX_TOKENS,
         )
     )
-    embedder = LLM() if args.semantic else None
+    embedder = LLM(role="embed") if args.semantic else None
 
-    print(f"설정: {CFG.summary()}  judge={'off' if judge is None else CFG.judge_model}")
+    print(f"설정: {CFG.summary()}  judge={'off' if judge is None else f'{CFG.judge_model} ({CFG.judge_backend})'}"
+          f"  tokenizer={CFG.tokenizer}")
     print(f"답변 지시문: {prompt.version} ({prompt.sha256})")
     if fact_judge is not None:
         print(f"key_facts judge: {FACT_JUDGE_PROMPT_VERSION} ({FACT_JUDGE_PROMPT_HASH})  mode={args.judge_mode}")
@@ -627,6 +642,13 @@ def run(args) -> Path:
                         else []
                     ),
                     **judge_fields(fact_grade),
+                    ox_judge_prompt_tokens=g.judge_prompt_tokens,
+                    ox_judge_completion_tokens=g.judge_completion_tokens,
+                    judge_usage_source=usage_source_of(
+                        [x for x in (g, fact_grade) if x is not None and x.judge_usage_source],
+                        attr="judge_usage_source"),
+                    answer_model=res.model,
+                    answer_usage_source=res.usage_source,
 
                     info=cres.info,
                 )
@@ -642,6 +664,8 @@ def run(args) -> Path:
         "time": datetime.now().isoformat(timespec="seconds"),
         "git_head": git_head(),
         "config": {"llm": CFG.summary(), "judge_model": None if judge is None else CFG.judge_model,
+                   # 역할별 모델·접속 주소·토크나이저 (input_tokens 등의 단위 = tokenizer)
+                   "models": CFG.models_info(),
                    "judge_mode": None if fact_judge is None else args.judge_mode,
                    "answer_max_tokens": ANSWER_MAX_TOKENS,
                    "answer_prompt": {"version": prompt.version, "sha256": prompt.sha256},
@@ -713,6 +737,16 @@ def summarize(records: list[TrialRecord], names: list[str]) -> dict:
                 for k in ("input", "system", "context", "question")
             },
             "compress_llm_tokens": extra,
+            # 서버 보고 토큰 합계 (과금 기준). 답변 모델과 채점 모델은 토크나이저가 달라 서로 더하지 않는다
+            "usage": {
+                "answer_prompt_tokens": sum(r.prompt_tokens for r in rs),
+                "answer_completion_tokens": sum(r.completion_tokens for r in rs),
+                "judge_prompt_tokens": sum(r.judge_prompt_tokens + r.ox_judge_prompt_tokens for r in rs),
+                "judge_completion_tokens": sum(r.judge_completion_tokens + r.ox_judge_completion_tokens
+                                               for r in rs),
+                "answer_usage_estimated": sum(r.answer_usage_source != "api" for r in rs),
+                "judge_usage_estimated": sum(r.judge_usage_source not in (None, "api") for r in rs),
+            },
             "question_changed_rate": round(sum(r.question_changed for r in rs) / len(rs), 4),
 
             # ===== 최종 평가 지표 =====
@@ -776,6 +810,13 @@ def summarize(records: list[TrialRecord], names: list[str]) -> dict:
         # 같은 질문의 none 결과와 압축 결과를 짝지어 비교
         # --------------------------------------------------
         if base and n != "none":
+            billed = [(base[r.qid], r) for r in rs if r.qid in base]
+            billed_raw = sum(b.prompt_tokens for b, _ in billed)
+            s["billed_input_reduction_pct"] = (
+                round(100 * (1 - sum(r.prompt_tokens for _, r in billed) / billed_raw), 2)
+                if billed_raw else None
+            )
+
             paired = [
                 (base[r.qid], r)
                 for r in rs

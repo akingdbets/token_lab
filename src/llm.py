@@ -8,11 +8,14 @@ LLM 호출 모듈
 사용 예
     from llm import LLM, count_tokens
 
-    llm = LLM()                      # config.py 설정 사용
+    llm = LLM()                      # config.py 설정 사용 (답변 모델)
+    judge = LLM(role="judge")        # 채점 모델 접속 정보 (JUDGE_*)
     answer = llm.ask("파이썬이 뭐야?")
     print(count_tokens(answer))
 
-토큰 수는 모두 Qwen 토크나이저 기준(config.tokenizer).
+count_tokens / count_message_tokens 는 config.tokenizer 기준 (hf:<저장소> 또는 tiktoken:<인코딩>).
+LLMResult 의 prompt_tokens / completion_tokens 는 서버가 보고한 값(usage_source="api")이고,
+서버가 보고하지 않았을 때만 config.tokenizer 추정치로 채운다(usage_source="estimate").
 응답 캐시는 두지 않는다. 호출 기록은 호출하는 쪽의 실험 로그에 남긴다.
 """
 
@@ -27,26 +30,47 @@ from functools import lru_cache
 
 import requests
 
-from config import CFG
+from config import CFG, tokenizer_kind
 
 # ---------------- 토큰 계산 ----------------
-# 실험 모델(qwen2.5)과 같은 토크나이저로 통일. 대략치 대체 계산은 두지 않는다.
+# 답변 모델과 같은 토크나이저로 센다 (config.tokenizer). 대략치 대체 계산은 두지 않는다.
+# tiktoken 은 채팅 템플릿이 공개돼 있지 않아 메시지마다 고정 오버헤드를 더하는 근사치다.
+
+# OpenAI 채팅 메시지 오버헤드 (OpenAI cookbook 기준): 메시지당 3, 답변 시작 3
+_TIKTOKEN_PER_MESSAGE = 3
+_TIKTOKEN_REPLY_PRIMING = 3
+
 
 @lru_cache(maxsize=1)
 def _tokenizer():
+    kind, name = tokenizer_kind(CFG.tokenizer)
+    if kind == "tiktoken":
+        import tiktoken
+        return tiktoken.get_encoding(name)
     from transformers import AutoTokenizer
     # 모델 가중치 없이 토크나이저만 받음. 리비전을 고정해 토큰 수가 재현되게 한다
-    return AutoTokenizer.from_pretrained(CFG.tokenizer, revision=CFG.tokenizer_revision)
+    return AutoTokenizer.from_pretrained(name, revision=CFG.tokenizer_revision)
+
+
+def _is_tiktoken() -> bool:
+    return tokenizer_kind(CFG.tokenizer)[0] == "tiktoken"
 
 
 def count_tokens(text: str) -> int:
     """순수 텍스트 토큰 수 (특수 토큰 제외)."""
+    if _is_tiktoken():
+        return len(_tokenizer().encode(text, disallowed_special=()))
     return len(_tokenizer().encode(text, add_special_tokens=False))
 
 
 def count_message_tokens(messages: list[dict], add_generation_prompt: bool = True) -> int:
     """채팅 템플릿(역할 태그·기본 system 포함)을 적용한 실제 입력 토큰 수.
-    add_generation_prompt=True면 모델에 실제로 들어가는 assistant 시작 태그까지 센다."""
+    add_generation_prompt=True면 모델에 실제로 들어가는 assistant 시작 태그까지 센다.
+    tiktoken 이면 메시지당 오버헤드를 더한 근사치."""
+    if _is_tiktoken():
+        n = sum(_TIKTOKEN_PER_MESSAGE + count_tokens(m["role"]) + count_tokens(m["content"])
+                for m in messages)
+        return n + (_TIKTOKEN_REPLY_PRIMING if add_generation_prompt else 0)
     ids = _tokenizer().apply_chat_template(
         messages, tokenize=True, add_generation_prompt=add_generation_prompt)
     if not isinstance(ids, list):   # transformers 버전에 따라 BatchEncoding으로 옴
@@ -64,7 +88,8 @@ class LLMResult:
     ttft: float | None = None   # 첫 토큰까지 시간(초). 스트리밍일 때만
     model: str = ""
     raw: dict = field(default_factory=dict, repr=False)
-    est_prompt_tokens: int = 0      # Qwen 토크나이저로 센 입력 토큰 (템플릿 포함)
+    usage_source: str = "api"       # api: 서버 보고값 | estimate: 서버가 안 줘서 config.tokenizer 로 추정
+    est_prompt_tokens: int = 0      # config.tokenizer 로 센 입력 토큰 (템플릿 포함)
     ctx_overflow: bool = False      # 입력이 num_ctx를 넘었는지 (Ollama는 조용히 잘라냄)
 
     @property
@@ -73,20 +98,28 @@ class LLMResult:
 
 
 class LLM:
-    """단일 LLM 인스턴스. 모델·백엔드를 인자로 덮어쓸 수 있다."""
+    """단일 LLM 인스턴스. 모델·백엔드를 인자로 덮어쓸 수 있다.
+
+    role 은 접속 정보(backend, base_url, api_key)와 기본 모델을 고른다:
+        answer (기본)  ANSWER_* / LLM_*, 모델 CFG.model
+        judge          JUDGE_*  / LLM_*, 모델 CFG.judge_model
+        embed          EMBED_*  / LLM_*, 임베딩 전용 (embed 메서드, 모델 CFG.embed_model)
+    """
 
     def __init__(self, model: str | None = None, backend: str | None = None,
                  base_url: str | None = None, num_ctx: int | None = None,
                  temperature: float | None = None, api_key: str | None = None,
                  timeout: int | None = None, max_tokens: int | None = None,
-                 max_retries: int | None = None):
-        self.backend = backend or CFG.backend
-        self.model = model or CFG.model
-        self.base_url = (base_url or CFG.base_url).rstrip("/")
+                 max_retries: int | None = None, role: str = "answer"):
+        ep = CFG.endpoint(role)
+        self.role = role
+        self.backend = backend or ep["backend"]
+        self.model = model or (CFG.judge_model if role == "judge" else CFG.model)
+        self.base_url = (base_url or ep["base_url"]).rstrip("/")
         self.num_ctx = num_ctx or CFG.num_ctx
         self.temperature = CFG.temperature if temperature is None else temperature
         # None 일 때만 config 값을 쓴다. 빈 문자열을 넘기면 키 없이 호출 (다른 키가 섞이지 않게)
-        self.api_key = CFG.api_key if api_key is None else api_key
+        self.api_key = ep["api_key"] if api_key is None else api_key
         self.timeout = timeout or CFG.timeout
         # 출력 토큰 상한. None 이면 서버 기본값(Ollama 는 무제한). 입력+출력이
         # num_ctx 안에 들어가야 하는 호출(긴 문서 입력 등)에서 지정한다
@@ -236,6 +269,9 @@ class LLM:
             "temperature": self.temperature,
             "stream": stream_ttft,
         }
+        if stream_ttft:
+            # OpenAI 는 이 옵션이 있어야 스트리밍 마지막 청크에 usage 를 보낸다
+            payload["stream_options"] = {"include_usage": True}
         if self.max_tokens is not None:
             payload["max_tokens"] = self.max_tokens
         url = f"{self.base_url}/v1/chat/completions"
@@ -245,17 +281,19 @@ class LLM:
             r = requests.post(url, headers=self._headers(), json=payload, timeout=self.timeout)
             r.raise_for_status()
             d = r.json()
-            usage = d.get("usage", {})
+            text = d["choices"][0]["message"]["content"] or ""
+            pt, ct, source = _usage_or_estimate(d.get("usage"), messages, text, self.model)
             return LLMResult(
-                text=d["choices"][0]["message"]["content"],
-                prompt_tokens=usage.get("prompt_tokens", 0),
-                completion_tokens=usage.get("completion_tokens", 0),
+                text=text,
+                prompt_tokens=pt,
+                completion_tokens=ct,
                 latency=time.perf_counter() - t0,
-                model=self.model,
+                model=d.get("model") or self.model,
                 raw=d,
+                usage_source=source,
             )
 
-        chunks, ttft, usage = [], None, {}
+        chunks, ttft, usage, served_model = [], None, {}, None
         with requests.post(url, headers=self._headers(), json=payload,
                            stream=True, timeout=self.timeout) as r:
             r.raise_for_status()
@@ -268,39 +306,60 @@ class LLM:
                 d = json.loads(body)
                 if d.get("usage"):
                     usage = d["usage"]
-                delta = d["choices"][0].get("delta", {})
-                piece = delta.get("content", "")
+                if d.get("model"):
+                    served_model = d["model"]
+                if not d.get("choices"):   # include_usage 의 마지막 청크는 choices 가 비어 있다
+                    continue
+                piece = d["choices"][0].get("delta", {}).get("content") or ""
                 if piece and ttft is None:
                     ttft = time.perf_counter() - t0
                 chunks.append(piece)
         text = "".join(chunks)
+        pt, ct, source = _usage_or_estimate(usage, messages, text, self.model)
         return LLMResult(
             text=text,
-            # 스트리밍 응답에 usage를 안 주는 서버가 있어 Qwen 토크나이저로 보완
-            prompt_tokens=usage.get("prompt_tokens", 0) or count_message_tokens(messages),
-            completion_tokens=usage.get("completion_tokens", 0) or count_tokens(text),
+            prompt_tokens=pt,
+            completion_tokens=ct,
             latency=time.perf_counter() - t0,
             ttft=ttft,
-            model=self.model,
+            model=served_model or self.model,
+            usage_source=source,
         )
+
+
+def _usage_or_estimate(usage: dict | None, messages: list[dict], text: str,
+                       model: str) -> tuple[int, int, str]:
+    """서버 usage -> (입력, 출력, 출처). 없으면 config.tokenizer 로 추정하고 경고한다.
+    추정치는 서버 토크나이저와 단위가 다를 수 있으므로 usage_source="estimate" 로 표시한다."""
+    usage = usage or {}
+    if usage.get("prompt_tokens") is not None and usage.get("completion_tokens") is not None:
+        return int(usage["prompt_tokens"]), int(usage["completion_tokens"]), "api"
+    warnings.warn(f"서버가 usage 를 보내지 않아 {CFG.tokenizer} 로 추정합니다 (model={model})",
+                  stacklevel=3)
+    return count_message_tokens(messages), count_tokens(text), "estimate"
 
 
 # ---------------- 연결 확인용 ----------------
 
 if __name__ == "__main__":
-    print(f"backend={CFG.backend}  model={CFG.model}  ctx={CFG.num_ctx}")
+    import sys
 
-    llm = LLM()
+    # python src/llm.py [answer|judge]  역할별 연결 확인
+    role = sys.argv[1] if len(sys.argv) > 1 else "answer"
+    llm = LLM(role=role)
+    print(f"role={role}  backend={llm.backend}  model={llm.model}  base_url={llm.base_url}  "
+          f"tokenizer={CFG.tokenizer}")
+
     res = llm.ask("Reply with exactly one short sentence about FastAPI.",
                   stream_ttft=True)
-    print(f"\n응답: {res.text.strip()}")
-    print(f"입력 {res.prompt_tokens} (Qwen 토크나이저 {res.est_prompt_tokens}) "
+    print(f"\n응답: {res.text.strip()}  (서버 모델: {res.model})")
+    print(f"입력 {res.prompt_tokens} [{res.usage_source}] (토크나이저 추정 {res.est_prompt_tokens}) "
           f"/ 출력 {res.completion_tokens} 토큰")
     print(f"소요 {res.latency:.2f}초", end="")
     print(f" (첫 토큰 {res.ttft:.2f}초)" if res.ttft else "")
 
     try:
-        v = llm.embed("hello world")
+        v = LLM(role="embed").embed("hello world")
         print(f"임베딩 차원: {len(v)}  (모델: {CFG.embed_model})")
     except Exception as e:
         print(f"임베딩 실패: {e}\n  -> ollama pull {CFG.embed_model} 확인")
