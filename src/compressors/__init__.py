@@ -52,6 +52,7 @@ from compressors.rule import RuleCompressor
 
 REGISTRY: dict[str, Compressor] = {
     "none": NoCompression(),        # 기준선 (Baseline): 원문 그대로
+    "rule_fm_all": RuleCompressor(frontmatter_keep=(), name="rule_fm_all"),  # rule 비교용: 머리말 통째 제거 (dev baseline v1 의 rule)
     "rule": RuleCompressor(),       # 규칙 기반 문맥 정제 (마크다운 휴리스틱)
 }
 
