@@ -218,6 +218,7 @@ import hashlib
 import json
 import re
 import math
+import shutil
 import subprocess
 import sys
 import time
@@ -509,6 +510,29 @@ def run(args) -> Path:
     run_id = datetime.now().strftime("%Y%m%d-%H%M%S")
     out_dir = CFG.results_dir / "runs" / run_id
     (out_dir / "contexts").mkdir(parents=True, exist_ok=True)
+    try:
+        return _run(args, run_id, out_dir)
+    except BaseException as e:   # Ctrl-C·프로세스 중단 포함
+        _report_failed_run(out_dir, e)
+        raise
+
+
+def _report_failed_run(out_dir: Path, e: BaseException) -> None:
+    """실행이 끝까지 못 가면 이유를 출력한다. trial 기록이 하나도 없으면 빈 run 폴더를 지운다
+    (빈 trials.jsonl 만 남은 폴더가 실패한 run 인지 알아보기 어렵기 때문)."""
+    why = f"{type(e).__name__}: {e}" if str(e) else type(e).__name__
+    trials = out_dir / "trials.jsonl"
+    n = sum(1 for line in open(trials, encoding="utf-8") if line.strip()) if trials.exists() else 0
+    rel = out_dir.relative_to(CFG.root).as_posix()
+    if n == 0:
+        shutil.rmtree(out_dir, ignore_errors=True)
+        print(f"\n[실패] trial 기록 없이 중단되어 {rel}/ 를 지웠습니다 ({why})", file=sys.stderr)
+    else:
+        print(f"\n[중단] {rel}/trials.jsonl 에 {n}개 기록, summary.json 은 만들지 못했습니다 ({why})",
+              file=sys.stderr)
+
+
+def _run(args, run_id: str, out_dir: Path) -> Path:
 
     names = [n.strip() for n in args.compressors.split(",") if n.strip()]
     compressors = [get_compressor(n) for n in names]
