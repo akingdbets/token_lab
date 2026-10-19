@@ -175,6 +175,7 @@ class OpenAIUnsupportedParamTest(unittest.TestCase):
         last = post.call_args.kwargs["json"]
         self.assertNotIn("temperature", last)
         self.assertNotIn("max_tokens", last)
+        self.assertEqual(last["seed"], CFG.seed)
         self.assertEqual(last["max_completion_tokens"], 64)
         self.assertIsNone(res.temperature)
         info = self.llm.sampling_info()
@@ -193,7 +194,7 @@ class OpenAIUnsupportedParamTest(unittest.TestCase):
         with mock.patch.object(llm.requests, "post", return_value=self.ok) as post:
             res = self.llm._openai_chat(MESSAGES, stream_ttft=False)
         sent = post.call_args.kwargs["json"]
-        self.assertEqual((sent["temperature"], sent["max_tokens"]), (0.0, 64))
+        self.assertEqual((sent["temperature"], sent["max_tokens"], sent["seed"]), (0.0, 64, CFG.seed))
         self.assertEqual(res.temperature, 0.0)
 
 

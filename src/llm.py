@@ -131,6 +131,7 @@ class LLM:
         # OpenAI 호환 서버가 거부한 요청 인자 (_openai_chat 이 400 응답을 보고 채운다).
         #   "temperature" -> 보내지 않음 (서버 기본값)
         #   "max_tokens"  -> max_completion_tokens 로 보냄
+        #   "seed"        -> 보내지 않음
         self.unsupported: set[str] = set()
 
     def sampling_info(self) -> dict:
@@ -139,6 +140,7 @@ class LLM:
             "model": self.model,
             "temperature": self._sent_temperature(),   # None = 보내지 않음 (서버 기본값)
             "temperature_requested": self.temperature,
+            "seed": None if "seed" in self.unsupported else CFG.seed,   # None = 보내지 않음
             "max_tokens": self.max_tokens,
             "max_tokens_param": ("num_predict" if self.backend == "ollama" else
                                  "max_completion_tokens" if "max_tokens" in self.unsupported
@@ -290,6 +292,9 @@ class LLM:
         payload = {"model": self.model, "messages": messages, "stream": stream}
         if "temperature" not in self.unsupported:
             payload["temperature"] = self.temperature
+        if "seed" not in self.unsupported:
+            # OpenAI·DeepSeek 은 받지만 같은 답을 보장하지는 않는다 (best effort)
+            payload["seed"] = CFG.seed
         if stream:
             # OpenAI 는 이 옵션이 있어야 스트리밍 마지막 청크에 usage 를 보낸다
             payload["stream_options"] = {"include_usage": True}
@@ -299,7 +304,7 @@ class LLM:
         return payload
 
     def _learn_unsupported(self, r) -> bool:
-        """400 응답이 temperature / max_tokens 를 거부한 것이면 기억하고 True (다시 보낼 것).
+        """400 응답이 temperature / max_tokens / seed 를 거부한 것이면 기억하고 True (다시 보낼 것).
         예: gpt-6 계열은 temperature 기본값(1)만 받고, max_tokens 대신 max_completion_tokens 를 쓴다."""
         if r.status_code != 400:
             return False
@@ -308,13 +313,13 @@ class LLM:
         except ValueError:
             return False
         param = err.get("param")
-        if param not in ("temperature", "max_tokens") or param in self.unsupported:
+        if param not in ("temperature", "max_tokens", "seed") or param in self.unsupported:
             return False
         if param == "max_tokens" and self.max_tokens is None:
             return False
         self.unsupported.add(param)
-        how = ("보내지 않고 서버 기본값을 씁니다" if param == "temperature"
-               else "max_completion_tokens 로 보냅니다")
+        how = ("max_completion_tokens 로 보냅니다" if param == "max_tokens"
+               else "보내지 않고 서버 기본값을 씁니다")
         warnings.warn(f"{self.model} 가 {param} 를 거부해 {how}: {err.get('message', '')}",
                       stacklevel=4)
         return True
