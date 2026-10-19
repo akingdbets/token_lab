@@ -242,9 +242,9 @@ def main():
         trials_path.parent / f"rejudge-{datetime.now():%Y%m%d-%H%M%S}-{args.judge_mode}.jsonl")
     out.parent.mkdir(parents=True, exist_ok=True)
 
-    judge = LLM(model=args.judge_model, max_tokens=FACT_JUDGE_MAX_TOKENS)
+    judge = LLM(role="judge", model=args.judge_model, max_tokens=FACT_JUDGE_MAX_TOKENS)
     print(f"입력: {trials_path}  ({len(trials)} trials)")
-    print(f"judge: {args.judge_model}  {FACT_JUDGE_PROMPT_VERSION} ({FACT_JUDGE_PROMPT_HASH})  mode={args.judge_mode}")
+    print(f"judge: {args.judge_model} ({judge.backend} {judge.base_url})  {FACT_JUDGE_PROMPT_VERSION} ({FACT_JUDGE_PROMPT_HASH})  mode={args.judge_mode}")
 
     rows: list[dict] = []
     no_facts = 0
@@ -281,9 +281,9 @@ def main():
                 "total_facts": g.total_count,
                 "fact_results": [{"fact": r.fact, "satisfied": r.satisfied} for r in g.fact_results],
                 "judge_model": args.judge_model,
+                "judge_backend": judge.backend,
                 **judge_fields(g),
-                "judge_prompt_tokens": g.judge_prompt_tokens,
-                "judge_completion_tokens": g.judge_completion_tokens,
+                "judge_usage_source": g.judge_usage_source,
                 "judge_raw": g.judge_raw,
                 "judge_sec": round(judge_sec, 3),
                 "answer_source": t.get("answer_source"),
