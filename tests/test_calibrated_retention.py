@@ -12,7 +12,19 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from experiment import calibrated_retention  # noqa: E402
+from experiment import answer_core_in_context, calibrated_retention, memory_suspect  # noqa: E402
+
+
+class MemorySuspectTest(unittest.TestCase):
+    def test_core_missing_but_correct_is_suspect(self):
+        item = {"answer": "DUMMY_HASH", "key_entities": ["DUMMY_HASH"]}
+        self.assertTrue(answer_core_in_context("it checks DUMMY_HASH here", item))
+        self.assertFalse(answer_core_in_context("nothing relevant", item))
+        self.assertTrue(memory_suspect(False, 1.0))
+        self.assertTrue(memory_suspect(False, 0.5))
+        self.assertFalse(memory_suspect(False, 0.4))
+        self.assertFalse(memory_suspect(True, 1.0))
+        self.assertFalse(memory_suspect(False, None))
 
 
 class CalibratedRetentionTest(unittest.TestCase):

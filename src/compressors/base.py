@@ -13,6 +13,8 @@ class PromptParts:
     system: str                         # system 지시문 전체 (persona 줄을 끼운 뒤)
     context: str                        # 근거 문서 문맥 (여러 문서면 이미 합쳐진 문자열)
     question: str                       # 사용자 질문
+    # 문항의 근거 인용문 (평가셋 evidence[].quote). 압축 대상이 아니라 drop_evidence 같은 진단용 압축기만 읽는다
+    evidence: tuple[str, ...] = ()
 
 
 @dataclass
@@ -103,7 +105,9 @@ class Chain(Compressor):
         info = {}
         for i, stage in enumerate(self.stages):
             res = stage.compress(parts)
-            parts = res.parts
+            nxt = res.parts
+            nxt.evidence = parts.evidence     # 근거 인용문은 다음 단계에도 그대로 넘긴다
+            parts = nxt
             pt += res.llm_prompt_tokens
             ct += res.llm_completion_tokens
             info[f"{i + 1}:{stage.name}"] = res.info

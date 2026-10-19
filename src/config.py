@@ -74,8 +74,10 @@ class Config:
     judge_mode: str = _env("JUDGE_MODE", "per_fact")
     # 생각(reasoning) 토큰 양. OpenAI 호환 서버의 reasoning_effort 로 보낸다 (Ollama 는 무시).
     # 빈 값이면 보내지 않음 (서버 기본값). gpt-6-luna 가장 낮은 값은 "none".
-    # 생각 토큰도 출력 한도에 들어가 한도를 다 쓰면 답변 본문이 비므로, 답변 모델은 낮게 둘 수 있다
-    answer_reasoning_effort: str = _env("ANSWER_REASONING_EFFORT", "")
+    # 답변 기본값 none: 생각 토큰이 출력 한도를 다 써서 답변 본문이 비는 일을 막고, gpt-6-luna 는 none 일 때
+    # temperature 0 을 받는다. 받지 않는 서버는 llm.py 가 빼고 다시 보낸다 (summary config.sampling 에 기록).
+    # 채점 기본값은 서버 기본값 그대로 (사람 라벨 검증 중인 설정을 바꾸지 않음)
+    answer_reasoning_effort: str = _env("ANSWER_REASONING_EFFORT", "none")
     judge_reasoning_effort: str = _env("JUDGE_REASONING_EFFORT", "")
     summary_model: str = _env("SUMMARY_MODEL", "qwen2.5:3b")  # 재귀 요약용
     embed_model: str = _env("EMBED_MODEL", "bge-m3")  # Cosine Similarity 계산용 임베딩 모델

@@ -73,6 +73,8 @@ ollama pull bge-m3          # 임베딩 (의미 손실률 측정)
   `TOKENIZER` 로 추정하고 경고하며 `*_usage_source` 에 `estimate` 로 남긴다.
 - 실행에 쓴 역할별 모델·주소·토크나이저는 `summary.json` 의 `config.models` 에 남는다 (API 키는 남기지 않음).
 - 값은 셸 환경변수나 프로젝트 최상위 `.env` 에 넣는다 (아래 예시 형식 그대로, git 제외). 셸 값이 `.env` 보다 우선한다.
+- 생각(reasoning) 토큰: `ANSWER_REASONING_EFFORT` (기본 `none`), `JUDGE_REASONING_EFFORT` (기본 빈 값 = 서버 기본값). OpenAI 호환 `reasoning_effort` 로 보내고,
+  서버가 거부하면 빼고 다시 보낸다. gpt-6-luna 는 `none` 일 때 생각 토큰 0 에 temperature 0 을 받는다. 실제 적용값은 `summary.json` 의 `config.sampling`
 - 역할별 연결 확인: `python src/llm.py answer`, `python src/llm.py judge`
 
 ```bash

@@ -237,6 +237,7 @@ from grader import (
     FACT_JUDGE_PROMPT_HASH,
     FACT_JUDGE_PROMPT_VERSION,
     JUDGE_MODES,
+    closed_book_knows,
     contains_words,
     grade,
     grade_answer_accuracy,
@@ -270,10 +271,13 @@ class AnswerPrompt:
     def format_key(self, qtype: str | None) -> str:
         return qtype if qtype in self.format and qtype != "default" else "default"
 
-    def parts(self, context: str, question: str, qtype: str | None) -> PromptParts:
-        """압축 전 입력 세 부분. system 은 형식 줄을 끼운 뒤의 전체 (압축 대상)."""
+    def parts(self, context: str, question: str, qtype: str | None,
+              evidence: tuple[str, ...] = ()) -> PromptParts:
+        """압축 전 입력 세 부분. system 은 형식 줄을 끼운 뒤의 전체 (압축 대상).
+        evidence 는 문항의 근거 인용문 (drop_evidence 압축기가 읽는다, 메시지에는 들어가지 않음)."""
         fmt = self.format[self.format_key(qtype)]
-        return PromptParts(system=self.system.replace("{answer_format}", fmt), context=context, question=question)
+        return PromptParts(system=self.system.replace("{answer_format}", fmt), context=context, question=question,
+                           evidence=tuple(evidence))
 
     def messages(self, parts: PromptParts) -> list[dict]:
         user = self.user.format(context=parts.context, question=parts.question)
@@ -391,6 +395,9 @@ class TrialRecord:
     answer_model: str = ""                    # 서버가 응답에 적은 모델 (없으면 요청한 모델)
     answer_usage_source: str = "api"          # api | estimate (prompt/completion_tokens 출처)
     answer_finish_reason: str | None = None   # length 면 ANSWER_MAX_TOKENS 에 걸려 답변이 잘림
+    # 기억 의존 의심: 압축 문맥에 정답 핵심어가 없는데 answer_accuracy >= 0.5 (memory_suspect())
+    answer_core_in_context: bool | None = None  # 짧은 답은 정답 단어, 긴 답은 핵심 개체 절반 이상이 문맥에 있는지
+    memory_suspect: bool = False
 
     info: dict = field(default_factory=dict)
 
@@ -402,6 +409,18 @@ def build_context(corpus, item: dict) -> str:
     for doc_id in item["evidence_pages"]:
         parts.append(f"## Document: {corpus.page_ref(doc_id)}\n\n{corpus.expanded_text(doc_id).strip()}")
     return "\n\n".join(parts).replace("\r\n", "\n")
+
+
+def answer_core_in_context(context: str, item: dict) -> bool:
+    """압축 문맥에 정답 핵심어가 있는지. 평가셋의 문서 없이 풀기 필터와 같은 기준(grader.closed_book_knows)을
+    답변 대신 문맥에 적용한다: 짧은 답은 정답 단어, 긴 답은 핵심 개체(key_entities) 절반 이상."""
+    return closed_book_knows(context, item["answer"], item.get("key_entities") or [item["answer"]])[0]
+
+
+def memory_suspect(core_in_context: bool | None, answer_accuracy: float | None,
+                   threshold: float = 0.5) -> bool:
+    """압축 문맥에 정답 핵심어가 없는데 맞혔으면(정확도 >= threshold) 기억으로 답했을 수 있다."""
+    return core_in_context is False and answer_accuracy is not None and answer_accuracy >= threshold
 
 
 def entity_retention(entities: list[str], ctx_words: list[str]) -> float | None:
@@ -581,7 +600,8 @@ def _run(args, run_id: str, out_dir: Path) -> Path:
             raw = build_context(corpus, item)
             ents = item.get("key_entities", [])
             fmt_key = prompt.format_key(item.get("type"))
-            raw_parts = prompt.parts(raw, item["question"], item.get("type"))
+            raw_parts = prompt.parts(raw, item["question"], item.get("type"),
+                                     evidence=tuple(e["quote"] for e in item.get("evidence") or [] if e.get("quote")))
             raw_part_tokens = {k: count_tokens(getattr(raw_parts, k)) for k in ("system", "context", "question")}
             input_raw = count_message_tokens(prompt.messages(raw_parts))
             raw_emb, raw_chunks = embed_long(embedder, raw) if embedder else (None, None)
@@ -622,12 +642,16 @@ def _run(args, run_id: str, out_dir: Path) -> Path:
 
                 judged_accuracy = fact_grade.answer_accuracy if fact_grade is not None else None
                 answer_accuracy = 0.0 if not_found and facts else judged_accuracy
+                core_in_ctx = answer_core_in_context(ctx, item)
 
                 sim = chunks = None
 
                 if embedder:
                     if ctx == raw:
                         sim, chunks = 1.0, raw_chunks
+                    elif not ctx.strip():
+                        # 빈 문맥(empty)은 임베딩할 수 없다. 남은 내용이 없으므로 유사도 0 으로 둔다
+                        sim, chunks = 0.0, 0
                     else:
                         emb, n = embed_long(embedder, ctx)
                         sim, chunks = round(cosine(raw_emb, emb), 4), max(raw_chunks, n)
@@ -692,6 +716,8 @@ def _run(args, run_id: str, out_dir: Path) -> Path:
                     answer_model=res.model,
                     answer_usage_source=res.usage_source,
                     answer_finish_reason=res.finish_reason,
+                    answer_core_in_context=core_in_ctx,
+                    memory_suspect=memory_suspect(core_in_ctx, answer_accuracy),
                     ox_judge_error=g.judge_error,
 
                     info=cres.info,
@@ -850,6 +876,9 @@ def summarize(records: list[TrialRecord], names: list[str]) -> dict:
             "ctx_overflow": sum(r.ctx_overflow for r in rs),
             # 답변이 ANSWER_MAX_TOKENS 에 걸려 잘린 수 (생각 토큰도 한도에 들어가는 모델은 꼭 확인)
             "answer_truncated": sum(r.answer_finish_reason == "length" for r in rs),
+            # 기억 의존 의심 (압축 문맥에 정답 핵심어가 없는데 정확도 >= 0.5) 수와 비율
+            "memory_suspect": sum(r.memory_suspect for r in rs),
+            "memory_suspect_rate": round(sum(r.memory_suspect for r in rs) / len(rs), 4),
             # O/X judge 응답을 못 읽어 단어 일치로 채점한 수
             "ox_judge_errors": sum(r.ox_judge_error is not None for r in rs),
 

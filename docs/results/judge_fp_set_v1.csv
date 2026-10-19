@@ -1,0 +1,89 @@
+﻿qid,type,method,how,fact_idx,key_fact,wrong_answer,expected,human,note
+c0001,fact,value_swap,DUMMY_HASH -> FAKE_HASH,0,"When the user does not exist, authenticate_user verifies the password against DUMMY_HASH.","When the username is not found, authenticate_user verifies the password against FAKE_HASH.",X,,
+c0002,code,value_swap,15분 -> 30분 (ACCESS_TOKEN_EXPIRE_MINUTES 값과 혼동),0,"Without expires_delta, create_access_token sets the expiry to 15 minutes from now.",30,X,,
+c0003,procedure,step_drop+wrong_value,"사용자 조회 단계 삭제, 401 -> 403, WWW-Authenticate 생략",0,The token is decoded with jwt.decode using SECRET_KEY and algorithms=[ALGORITHM].,"1. Decode the token with jwt.decode using SECRET_KEY and algorithms=[ALGORITHM].
+2. Read the username from the sub claim.
+3. If decoding fails, raise HTTPException with 403 Forbidden.",O,,
+c0003,procedure,step_drop+wrong_value,"사용자 조회 단계 삭제, 401 -> 403, WWW-Authenticate 생략",1,The username is read from the sub claim.,"1. Decode the token with jwt.decode using SECRET_KEY and algorithms=[ALGORITHM].
+2. Read the username from the sub claim.
+3. If decoding fails, raise HTTPException with 403 Forbidden.",O,,
+c0003,procedure,step_drop+wrong_value,"사용자 조회 단계 삭제, 401 -> 403, WWW-Authenticate 생략",2,The user is looked up by that username (get_user).,"1. Decode the token with jwt.decode using SECRET_KEY and algorithms=[ALGORITHM].
+2. Read the username from the sub claim.
+3. If decoding fails, raise HTTPException with 403 Forbidden.",X,,
+c0003,procedure,step_drop+wrong_value,"사용자 조회 단계 삭제, 401 -> 403, WWW-Authenticate 생략",3,"A bad signature, expired token, missing sub or unknown user all give the same 401 with WWW-Authenticate: Bearer.","1. Decode the token with jwt.decode using SECRET_KEY and algorithms=[ALGORITHM].
+2. Read the username from the sub claim.
+3. If decoding fails, raise HTTPException with 403 Forbidden.",X,,
+c0004,fact,reversal,마지막에 추가한 것이 바깥 -> 처음 추가한 것이 바깥,0,The middleware added last is the outermost one.,The first middleware added is the outermost one; the ones added later are wrapped inside it.,X,,
+c0005,code,value_swap,compresslevel 5 -> 9,0,The example sets compresslevel to 5.,9,X,,
+c0006,procedure,step_wrong,X-Process-Time 헤더 대신 JSON 본문에 넣음,0,"The function is decorated with @app.middleware(""http"") and receives request and call_next.","1. Decorate an async function with @app.middleware(""http"") that takes request and call_next.
+2. Record time.perf_counter() before awaiting call_next(request).
+3. Compute the elapsed time after call_next returns.
+4. Put the elapsed time in the JSON response body.",O,,
+c0006,procedure,step_wrong,X-Process-Time 헤더 대신 JSON 본문에 넣음,1,The start time is taken with time.perf_counter() before calling call_next.,"1. Decorate an async function with @app.middleware(""http"") that takes request and call_next.
+2. Record time.perf_counter() before awaiting call_next(request).
+3. Compute the elapsed time after call_next returns.
+4. Put the elapsed time in the JSON response body.",O,,
+c0006,procedure,step_wrong,X-Process-Time 헤더 대신 JSON 본문에 넣음,2,The elapsed time is computed after call_next returns.,"1. Decorate an async function with @app.middleware(""http"") that takes request and call_next.
+2. Record time.perf_counter() before awaiting call_next(request).
+3. Compute the elapsed time after call_next returns.
+4. Put the elapsed time in the JSON response body.",O,,
+c0006,procedure,step_wrong,X-Process-Time 헤더 대신 JSON 본문에 넣음,3,The elapsed time is stored in the X-Process-Time response header.,"1. Decorate an async function with @app.middleware(""http"") that takes request and call_next.
+2. Record time.perf_counter() before awaiting call_next(request).
+3. Compute the elapsed time after call_next returns.
+4. Put the elapsed time in the JSON response body.",X,,
+c0015,multi,part_swap,단순 버전 토큰: username -> 무작위 UUID,0,The simple password-flow login returns the username itself as the access token.,"The simple password-flow login returns a random UUID as the access token, while the JWT version returns a signed JWT created by create_access_token.",X,,
+c0015,multi,part_swap,단순 버전 토큰: username -> 무작위 UUID,1,The JWT version returns a signed JWT created by create_access_token.,"The simple password-flow login returns a random UUID as the access token, while the JWT version returns a signed JWT created by create_access_token.",O,,
+c0018,fact,value_swap,500 -> 1024 bytes,0,The default minimum_size for GZipMiddleware is 500 bytes.,1024,X,,
+c0019,code,value_swap,*.example.com -> *.example.org,0,The example allows the wildcard pattern *.example.com.,*.example.org,X,,
+c0020,fact,value_swap,"""request"" -> ""function""",0,"The default scope for yield dependencies is ""request"".","""function""",X,,
+c0022,code,value_swap,400 -> 403,0,The OwnerError is converted into an HTTPException with status code 400.,403,X,,
+c0024,procedure,contradiction,다시 raise 하지 않고 로그만 남기고 정상 반환,0,The yield is wrapped in try/except.,"1. Put the yield inside a try block.
+2. Catch the exception with except.
+3. Log it and return normally without re-raising, so the client gets a 200.",O,,
+c0024,procedure,contradiction,다시 raise 하지 않고 로그만 남기고 정상 반환,1,The caught exception is re-raised with a bare raise.,"1. Put the yield inside a try block.
+2. Catch the exception with except.
+3. Log it and return normally without re-raising, so the client gets a 200.",X,,
+c0025,fact,near_miss_name,@pytest.mark.anyio -> @pytest.mark.asyncio,0,The @pytest.mark.anyio marker runs the test function asynchronously.,@pytest.mark.asyncio,X,,
+c0026,fact,near_miss_name,asgi-lifespan -> pytest-asyncio,0,LifespanManager comes from the asgi-lifespan package.,pytest-asyncio,X,,
+c0027,code,value_swap,http://test -> http://localhost:8000,0,"The AsyncClient uses base_url ""http://test"".",http://localhost:8000,X,,
+c0028,code,near_miss_name,StaticPool -> NullPool,0,The test engine is created with poolclass=StaticPool.,NullPool,X,,
+c0029,procedure,step_drop,마지막 overrides 정리 단계 삭제,0,An in-memory SQLite engine with StaticPool is created and tables are created.,"1. Create an in-memory SQLite engine with StaticPool and create the tables.
+2. Yield a Session from a session fixture.
+3. In a client fixture, set app.dependency_overrides[get_session] to return that session and yield a TestClient.",O,,
+c0029,procedure,step_drop,마지막 overrides 정리 단계 삭제,1,A session fixture yields a Session.,"1. Create an in-memory SQLite engine with StaticPool and create the tables.
+2. Yield a Session from a session fixture.
+3. In a client fixture, set app.dependency_overrides[get_session] to return that session and yield a TestClient.",O,,
+c0029,procedure,step_drop,마지막 overrides 정리 단계 삭제,2,app.dependency_overrides[get_session] is set to return the test session.,"1. Create an in-memory SQLite engine with StaticPool and create the tables.
+2. Yield a Session from a session fixture.
+3. In a client fixture, set app.dependency_overrides[get_session] to return that session and yield a TestClient.",O,,
+c0029,procedure,step_drop,마지막 overrides 정리 단계 삭제,3,The overrides are cleared afterwards.,"1. Create an in-memory SQLite engine with StaticPool and create the tables.
+2. Yield a Session from a session fixture.
+3. In a client fixture, set app.dependency_overrides[get_session] to return that session and yield a TestClient.",X,,
+c0031,fact,near_miss_name,WebSocketDisconnect -> WebSocketException,0,The test client raises WebSocketDisconnect when the server closes or rejects the connection.,WebSocketException,X,,
+c0033,code,near_miss_name,websocket_connect -> websocket_open,0,"The test opens the connection with client.websocket_connect(""/ws"").",websocket_open,X,,
+c0035,fact,value_swap,400 -> 401 (JWT 버전 값과 혼동),0,Wrong credentials at /token produce a 400 response in this tutorial.,401,X,,
+c0038,procedure,step_wrong,토큰 대신 세션 쿠키를 주고받음,0,The frontend sends the credentials to tokenUrl.,"1. The user enters credentials in the frontend.
+2. The frontend sends them to tokenUrl.
+3. The API sets a session cookie.
+4. Later requests send that cookie.",O,,
+c0038,procedure,step_wrong,토큰 대신 세션 쿠키를 주고받음,1,The API returns a token.,"1. The user enters credentials in the frontend.
+2. The frontend sends them to tokenUrl.
+3. The API sets a session cookie.
+4. Later requests send that cookie.",X,,
+c0038,procedure,step_wrong,토큰 대신 세션 쿠키를 주고받음,2,Later requests send Authorization: Bearer <token>.,"1. The user enters credentials in the frontend.
+2. The frontend sends them to tokenUrl.
+3. The API sets a session cookie.
+4. Later requests send that cookie.",X,,
+c0039,multi,part_swap,단순 버전도 401 + WWW-Authenticate 라고 함,0,The simple password-flow login returns 400 for wrong credentials.,Both versions return 401 Unauthorized with a WWW-Authenticate: Bearer header.,X,,
+c0039,multi,part_swap,단순 버전도 401 + WWW-Authenticate 라고 함,1,The JWT login returns 401 for wrong credentials.,Both versions return 401 Unauthorized with a WWW-Authenticate: Bearer header.,O,,
+c0039,multi,part_swap,단순 버전도 401 + WWW-Authenticate 라고 함,2,The JWT login response includes the WWW-Authenticate: Bearer header.,Both versions return 401 Unauthorized with a WWW-Authenticate: Bearer header.,O,,
+c0040,multi,part_swap,AsyncClient 대신 동기 TestClient,0,An async test needs httpx.AsyncClient instead of TestClient.,"Use the synchronous TestClient in a normal test, and set app.dependency_overrides with the original dependency as key and the replacement callable as value.",X,,
+c0040,multi,part_swap,AsyncClient 대신 동기 TestClient,1,AsyncClient is used with ASGITransport.,"Use the synchronous TestClient in a normal test, and set app.dependency_overrides with the original dependency as key and the replacement callable as value.",X,,
+c0040,multi,part_swap,AsyncClient 대신 동기 TestClient,2,app.dependency_overrides maps the original dependency to a replacement callable.,"Use the synchronous TestClient in a normal test, and set app.dependency_overrides with the original dependency as key and the replacement callable as value.",O,,
+c0147,procedure,value_swap,"scope=""function"" -> scope=""request""",0,"The dependency is declared with Depends(..., scope=""function"").","1. Declare the yield dependency with Depends(get_username, scope=""request"").
+2. FastAPI then runs its teardown right after the path operation returns, before sending the response.",X,,
+c0147,procedure,value_swap,"scope=""function"" -> scope=""request""",1,"With scope=""function"", the cleanup after yield runs right after the path operation returns, before the response is sent.","1. Declare the yield dependency with Depends(get_username, scope=""request"").
+2. FastAPI then runs its teardown right after the path operation returns, before sending the response.",X,,
+c0148,multi,contradiction,AsyncClient 는 감싸지 않아도 lifespan 이 돈다고 함,0,A TestClient created at module level and used without a with block does not run lifespan.,"A module-level client = TestClient(app) used without a with block skips lifespan; with httpx.AsyncClient, lifespan runs automatically, so no wrapping is needed.",O,,
+c0148,multi,contradiction,AsyncClient 는 감싸지 않아도 lifespan 이 돈다고 함,1,"With httpx.AsyncClient, the app is wrapped in LifespanManager from asgi-lifespan.","A module-level client = TestClient(app) used without a with block skips lifespan; with httpx.AsyncClient, lifespan runs automatically, so no wrapping is needed.",X,,
+c0148,multi,contradiction,AsyncClient 는 감싸지 않아도 lifespan 이 돈다고 함,2,manager.app is passed to ASGITransport.,"A module-level client = TestClient(app) used without a with block skips lifespan; with httpx.AsyncClient, lifespan runs automatically, so no wrapping is needed.",X,,
