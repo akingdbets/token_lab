@@ -12,6 +12,11 @@ judge 조합(j 로 시작하는 열)마다 사람 대비 일치율, false positi
     python src/judge_agreement.py docs/results/judge_check_v2.csv
     python src/judge_agreement.py docs/results/judge_check_v2.csv --by-type
 
+judge 판정을 시트와 따로 둔 경우(label_sheet.py) --judged 로 판정 파일을 붙인다
+(qid, compressor, fact_idx 로 맞춤. 값 ? 는 judge 응답을 못 읽은 행이라 그 조합에서 빼고 개수를 표시).
+
+    python src/judge_agreement.py docs/results/judge_check_v3.csv --judged docs/results/judge_check_v3_judged.csv
+
 human 이 빈 행은 제외하고 몇 행이 빠졌는지 표시한다. O/X 외의 값이 있으면 그 행을 알려 주고 멈춘다.
 시트를 Excel 이 CP949 로 다시 저장해도 읽는다.
 """
@@ -25,6 +30,8 @@ import sys
 from pathlib import Path
 
 LABELS = {"O": True, "X": False}
+UNREAD = "?"   # judge 응답을 못 읽음 (label_sheet.py 판정 파일)
+KEY = ("qid", "compressor", "fact_idx")
 
 
 def read_sheet(path: Path) -> list[dict]:
@@ -72,11 +79,20 @@ def main():
     ap = argparse.ArgumentParser(description="judge 판정 vs 사람 라벨 (일치율, FP, FN, Cohen's kappa)")
     ap.add_argument("sheet", help="라벨링 시트 csv (human 열 O/X)")
     ap.add_argument("--by-type", action="store_true", help="문항 type 별로도 출력")
+    ap.add_argument("--judged", help="시트와 따로 둔 judge 판정 csv (qid, compressor, fact_idx, j...)")
     args = ap.parse_args()
 
     rows = read_sheet(Path(args.sheet))
     if not rows or "human" not in rows[0]:
         sys.exit("human 열이 없습니다")
+    if args.judged:
+        judged = {tuple(r[k] for k in KEY): r for r in read_sheet(Path(args.judged))}
+        missing = [tuple(r.get(k) for k in KEY) for r in rows if tuple(r.get(k) for k in KEY) not in judged]
+        if missing:
+            sys.exit(f"판정 파일에 없는 행 {len(missing)}개: {missing[:5]}")
+        for r in rows:
+            j = judged[tuple(r[k] for k in KEY)]
+            r.update({c: v for c, v in j.items() if c.startswith("j")})
     combos = [c for c in rows[0] if c.startswith("j")]
     if not combos:
         sys.exit("judge 열(j 로 시작)이 없습니다")
@@ -85,7 +101,7 @@ def main():
     for i, r in enumerate(rows, 2):
         for c in ["human", *combos]:
             v = (r.get(c) or "").strip()
-            if v and v.upper() not in LABELS:
+            if v and v.upper() not in LABELS and not (c != "human" and v == UNREAD):
                 bad.append(f"{i}행 {r.get('qid')} {c}={v!r}")
     if bad:
         sys.exit("O/X 가 아닌 값:\n  " + "\n  ".join(bad))
@@ -97,6 +113,11 @@ def main():
         return
     n_o = sum(label(r["human"]) for r in labeled)
     print(f"사람 라벨: O {n_o}, X {len(labeled) - n_o}\n")
+
+    for c in combos:
+        n_unread = sum((r.get(c) or "").strip() == UNREAD for r in labeled)
+        if n_unread:
+            print(f"{c}: judge 응답을 못 읽은 행 {n_unread}개 제외")
 
     groups = [("전체", labeled)]
     if args.by_type:
