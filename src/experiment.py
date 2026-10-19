@@ -666,6 +666,10 @@ def run(args) -> Path:
         "config": {"llm": CFG.summary(), "judge_model": None if judge is None else CFG.judge_model,
                    # 역할별 모델·접속 주소·토크나이저 (input_tokens 등의 단위 = tokenizer)
                    "models": CFG.models_info(),
+                   # 실제로 보낸 생성 조건. 서버가 거부해 바꾼 인자가 드러난다 (temperature None = 서버 기본값)
+                   "sampling": {"answer": llm.sampling_info(),
+                                "judge": None if judge is None else judge.sampling_info(),
+                                "fact_judge": None if fact_judge is None else fact_judge.sampling_info()},
                    "judge_mode": None if fact_judge is None else args.judge_mode,
                    "answer_max_tokens": ANSWER_MAX_TOKENS,
                    "answer_prompt": {"version": prompt.version, "sha256": prompt.sha256},

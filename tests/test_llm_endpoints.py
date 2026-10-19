@@ -81,6 +81,7 @@ class RoleTest(unittest.TestCase):
 class _FakeStream:
     def __init__(self, lines):
         self.lines = lines
+        self.ok = True
 
     def __enter__(self):
         return self
@@ -140,6 +141,60 @@ class OpenAIUsageTest(unittest.TestCase):
             res = self.llm._openai_chat(MESSAGES, stream_ttft=False)
         self.assertNotIn("stream_options", post.call_args.kwargs["json"])
         self.assertEqual((res.prompt_tokens, res.completion_tokens, res.usage_source), (9, 1, "api"))
+
+
+def _resp(status, body):
+    r = mock.Mock(status_code=status, ok=status < 400, text=json.dumps(body))
+    r.json.return_value = body
+    return r
+
+
+def _unsupported(param):
+    return _resp(400, {"error": {"message": f"{param} not supported", "param": param,
+                                 "code": "unsupported_parameter"}})
+
+
+class OpenAIUnsupportedParamTest(unittest.TestCase):
+    """gpt-6 계열처럼 temperature / max_tokens 를 거부하는 서버."""
+
+    def setUp(self):
+        self.llm = LLM(backend="openai", base_url="http://x", api_key="", model="m",
+                       temperature=0.0, max_tokens=64, max_retries=3)
+        self.ok = _resp(200, {"model": "m", "choices": [{"message": {"content": "ok"}}],
+                              "usage": {"prompt_tokens": 9, "completion_tokens": 1}})
+
+    def test_adapts_and_remembers(self):
+        with mock.patch.object(llm.requests, "post",
+                               side_effect=[_unsupported("temperature"), _unsupported("max_tokens"),
+                                            self.ok, self.ok]) as post:
+            with warnings.catch_warnings(record=True):
+                warnings.simplefilter("always")
+                res = self.llm._openai_chat(MESSAGES, stream_ttft=False)
+                self.llm._openai_chat(MESSAGES, stream_ttft=False)
+        self.assertEqual(post.call_count, 4)   # 거부 2번 + 성공 2번 (두 번째 호출은 바로 성공)
+        last = post.call_args.kwargs["json"]
+        self.assertNotIn("temperature", last)
+        self.assertNotIn("max_tokens", last)
+        self.assertEqual(last["max_completion_tokens"], 64)
+        self.assertIsNone(res.temperature)
+        info = self.llm.sampling_info()
+        self.assertEqual((info["temperature"], info["temperature_requested"], info["max_tokens_param"]),
+                         (None, 0.0, "max_completion_tokens"))
+
+    def test_other_4xx_raises_with_body_and_no_retry(self):
+        bad = _resp(401, {"error": {"message": "invalid key", "param": None}})
+        with mock.patch.object(llm.requests, "post", return_value=bad) as post:
+            with self.assertRaises(llm.requests.HTTPError) as cm:
+                self.llm._call_with_retry(MESSAGES, stream_ttft=False)
+        self.assertIn("invalid key", str(cm.exception))
+        self.assertEqual(post.call_count, 1)
+
+    def test_supported_server_keeps_params(self):
+        with mock.patch.object(llm.requests, "post", return_value=self.ok) as post:
+            res = self.llm._openai_chat(MESSAGES, stream_ttft=False)
+        sent = post.call_args.kwargs["json"]
+        self.assertEqual((sent["temperature"], sent["max_tokens"]), (0.0, 64))
+        self.assertEqual(res.temperature, 0.0)
 
 
 @dataclass

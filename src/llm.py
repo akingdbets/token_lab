@@ -88,6 +88,7 @@ class LLMResult:
     ttft: float | None = None   # 첫 토큰까지 시간(초). 스트리밍일 때만
     model: str = ""
     raw: dict = field(default_factory=dict, repr=False)
+    temperature: float | None = None   # 실제로 보낸 값. None 이면 안 보냄 (서버 기본값, 예: gpt-6 계열은 1)
     usage_source: str = "api"       # api: 서버 보고값 | estimate: 서버가 안 줘서 config.tokenizer 로 추정
     est_prompt_tokens: int = 0      # config.tokenizer 로 센 입력 토큰 (템플릿 포함)
     ctx_overflow: bool = False      # 입력이 num_ctx를 넘었는지 (Ollama는 조용히 잘라냄)
@@ -126,6 +127,22 @@ class LLM:
         self.max_tokens = max_tokens
         # 실패 시 다시 보내는 횟수 (첫 호출 포함). 유료 API 는 1 로 두어 재시도 비용을 막는다
         self.max_retries = max_retries or CFG.max_retries
+        # OpenAI 호환 서버가 거부한 요청 인자 (_openai_chat 이 400 응답을 보고 채운다).
+        #   "temperature" -> 보내지 않음 (서버 기본값)
+        #   "max_tokens"  -> max_completion_tokens 로 보냄
+        self.unsupported: set[str] = set()
+
+    def sampling_info(self) -> dict:
+        """결과 파일에 남길 실제 생성 조건. 서버가 거부해 바꾼 인자가 있으면 그대로 드러난다."""
+        return {
+            "model": self.model,
+            "temperature": self._sent_temperature(),   # None = 보내지 않음 (서버 기본값)
+            "temperature_requested": self.temperature,
+            "max_tokens": self.max_tokens,
+            "max_tokens_param": ("num_predict" if self.backend == "ollama" else
+                                 "max_completion_tokens" if "max_tokens" in self.unsupported
+                                 else "max_tokens"),
+        }
 
     # ---------------- 공개 메서드 ----------------
 
@@ -153,7 +170,10 @@ class LLM:
                     return self._ollama_chat(messages, stream_ttft)
                 return self._openai_chat(messages, stream_ttft)
             except Exception as e:
-                if attempt == self.max_retries - 1:
+                # 4xx(429 제외)는 다시 보내도 같은 결과라 바로 올린다
+                status = getattr(getattr(e, "response", None), "status_code", None)
+                if attempt == self.max_retries - 1 or (
+                        isinstance(status, int) and 400 <= status < 500 and status != 429):
                     raise
                 wait = 2 ** attempt
                 print(f"  [재시도 {attempt + 1}/{self.max_retries}] {type(e).__name__}: {e} ({wait}초 후)")
@@ -235,6 +255,7 @@ class LLM:
                 latency=time.perf_counter() - t0,
                 model=self.model,
                 raw=d,
+                temperature=self.temperature,
             )
 
         # 스트리밍: 첫 토큰 도착 시각(TTFT)을 재기 위함
@@ -259,27 +280,64 @@ class LLM:
             ttft=ttft,
             model=self.model,
             raw=last,
+            temperature=self.temperature,
         )
 
-    def _openai_chat(self, messages: list[dict], stream_ttft: bool) -> LLMResult:
-        """LM Studio, vLLM, OpenAI 등 /v1/chat/completions 호환 서버."""
-        payload = {
-            "model": self.model,
-            "messages": messages,
-            "temperature": self.temperature,
-            "stream": stream_ttft,
-        }
-        if stream_ttft:
+    def _openai_payload(self, messages: list[dict], stream: bool) -> dict:
+        payload = {"model": self.model, "messages": messages, "stream": stream}
+        if "temperature" not in self.unsupported:
+            payload["temperature"] = self.temperature
+        if stream:
             # OpenAI 는 이 옵션이 있어야 스트리밍 마지막 청크에 usage 를 보낸다
             payload["stream_options"] = {"include_usage": True}
         if self.max_tokens is not None:
-            payload["max_tokens"] = self.max_tokens
+            key = "max_completion_tokens" if "max_tokens" in self.unsupported else "max_tokens"
+            payload[key] = self.max_tokens
+        return payload
+
+    def _learn_unsupported(self, r) -> bool:
+        """400 응답이 temperature / max_tokens 를 거부한 것이면 기억하고 True (다시 보낼 것).
+        예: gpt-6 계열은 temperature 기본값(1)만 받고, max_tokens 대신 max_completion_tokens 를 쓴다."""
+        if r.status_code != 400:
+            return False
+        try:
+            err = r.json().get("error") or {}
+        except ValueError:
+            return False
+        param = err.get("param")
+        if param not in ("temperature", "max_tokens") or param in self.unsupported:
+            return False
+        if param == "max_tokens" and self.max_tokens is None:
+            return False
+        self.unsupported.add(param)
+        how = ("보내지 않고 서버 기본값을 씁니다" if param == "temperature"
+               else "max_completion_tokens 로 보냅니다")
+        warnings.warn(f"{self.model} 가 {param} 를 거부해 {how}: {err.get('message', '')}",
+                      stacklevel=4)
+        return True
+
+    def _openai_post(self, url: str, messages: list[dict], stream: bool):
+        """요청을 보내고 응답을 돌려준다. 서버가 거부한 인자는 바꿔서 다시 보낸다 (400 은 과금되지 않음).
+        실패하면 서버의 오류 메시지를 담은 HTTPError 를 낸다."""
+        while True:
+            r = requests.post(url, headers=self._headers(), json=self._openai_payload(messages, stream),
+                              stream=stream, timeout=self.timeout)
+            if r.ok:
+                return r
+            if self._learn_unsupported(r):
+                r.close()
+                continue
+            body = r.text[:500]
+            r.close()
+            raise requests.HTTPError(f"{r.status_code} {url}: {body}", response=r)
+
+    def _openai_chat(self, messages: list[dict], stream_ttft: bool) -> LLMResult:
+        """LM Studio, vLLM, OpenAI 등 /v1/chat/completions 호환 서버."""
         url = f"{self.base_url}/v1/chat/completions"
         t0 = time.perf_counter()
 
         if not stream_ttft:
-            r = requests.post(url, headers=self._headers(), json=payload, timeout=self.timeout)
-            r.raise_for_status()
+            r = self._openai_post(url, messages, stream=False)
             d = r.json()
             text = d["choices"][0]["message"]["content"] or ""
             pt, ct, source = _usage_or_estimate(d.get("usage"), messages, text, self.model)
@@ -290,13 +348,12 @@ class LLM:
                 latency=time.perf_counter() - t0,
                 model=d.get("model") or self.model,
                 raw=d,
+                temperature=self._sent_temperature(),
                 usage_source=source,
             )
 
         chunks, ttft, usage, served_model = [], None, {}, None
-        with requests.post(url, headers=self._headers(), json=payload,
-                           stream=True, timeout=self.timeout) as r:
-            r.raise_for_status()
+        with self._openai_post(url, messages, stream=True) as r:
             for line in r.iter_lines():
                 if not line or not line.startswith(b"data: "):
                     continue
@@ -323,8 +380,12 @@ class LLM:
             latency=time.perf_counter() - t0,
             ttft=ttft,
             model=served_model or self.model,
+            temperature=self._sent_temperature(),
             usage_source=source,
         )
+
+    def _sent_temperature(self) -> float | None:
+        return None if "temperature" in self.unsupported else self.temperature
 
 
 def _usage_or_estimate(usage: dict | None, messages: list[dict], text: str,
