@@ -113,7 +113,7 @@ token_lab/
 │   └── compressors/          # 입력 압축 기법 (none, rule) 과 조합(">")
 ├── tests/                    # 단위 테스트 (python -m unittest discover -s tests)
 ├── results/                  # 실험 로그 (runs/<run_id>/)
-└── dashboard/                # Streamlit 대시보드 (예정)
+└── dashboard/                # Grafana 실험 대시보드 (MVP)
 ```
 
 ## 사용법
@@ -348,11 +348,11 @@ LLM_MODEL=qwen2.5:3b python src/dataset_builder.py --docs 3 --dry-run
 - [x] 평가 데이터셋 생성 파이프라인
 - [ ] 평가 데이터셋 확정 (생성 및 검수)
 - [x] 압축 실험 실행기 (A/B 비교, 채점, 로그)
-- [ ] 기준선(Baseline) 측정
-- [x] 압축 기법 1 — 규칙 기반 문맥 정제 (구현, 측정 전)
-- [ ] 압축 기법 3 — LLMLingua
+- [x] 기준선(Baseline) 측정 — dev, gpt-6-luna 답변 · deepseek-flash 채점 (`docs/results/baseline_dev_v2.md`, 정확도는 채점 사람 검증 전 잠정)
+- [x] 압축 기법 1 — 규칙 기반 문맥 정제 (dev 측정: rule 19.9%, rule_fm_all 24.0% 절감)
+- [ ] 압축 기법 3 — LLMLingua (LLMLingua-2 구현 완료, 측정 전)
 - [ ] 압축 기법 2 — 재귀 요약
 - [ ] 하이브리드 파이프라인
 - [ ] 멀티 에이전트 오케스트레이션 검증
-- [x] 평가 지표 모듈 (6개 지표, key_facts 기반 답변 정확도) — 의미 유사도는 bge-m3 필요, judge 신뢰도 검증 전
-- [ ] Streamlit 대시보드
+- [x] 평가 지표 모듈 (6개 지표, key_facts 기반 답변 정확도) — 의미 유사도는 bge-m3 필요, deepseek-flash judge 사람 라벨 검증 중 (`docs/results/judge_check_v3.csv`)
+- [x] 대시보드 — Grafana MVP (`dashboard/`)
