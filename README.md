@@ -72,6 +72,7 @@ ollama pull bge-m3          # 임베딩 (의미 손실률 측정)
 - 실제 과금 토큰은 서버 보고값이다 (`prompt_tokens`, `completion_tokens`, `judge_*_tokens`). 서버가 보고하지 않으면
   `TOKENIZER` 로 추정하고 경고하며 `*_usage_source` 에 `estimate` 로 남긴다.
 - 실행에 쓴 역할별 모델·주소·토크나이저는 `summary.json` 의 `config.models` 에 남는다 (API 키는 남기지 않음).
+- 값은 셸 환경변수나 프로젝트 최상위 `.env` 에 넣는다. `.env.example` 을 `.env` 로 복사해 채우면 되고(git 제외), 셸 값이 `.env` 보다 우선한다.
 - 역할별 연결 확인: `python src/llm.py answer`, `python src/llm.py judge`
 
 ```bash

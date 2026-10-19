@@ -6,16 +6,29 @@
 
 환경변수로도 덮어쓸 수 있다.
     $env:LLM_MODEL = "qwen2.5:3b"     (PowerShell, 노트북에서 실행할 때)
+
+프로젝트 최상위의 .env 도 읽는다 (API 키 등, git 제외). 형식은 .env.example 참고.
+셸에 이미 설정된 환경변수가 .env 보다 우선한다.
 """
 
 from __future__ import annotations
 
 import os
+import warnings
 from dataclasses import dataclass, field
 from pathlib import Path
 
 # 프로젝트 최상위 경로 (config.py는 src/ 안에 있으므로 한 단계 위)
 ROOT = Path(__file__).resolve().parent.parent
+
+if (ROOT / ".env").exists():
+    try:
+        from dotenv import load_dotenv
+    except ImportError:
+        warnings.warn(".env 가 있지만 python-dotenv 가 없어 읽지 않습니다 "
+                      "(pip install -r requirements.txt)")
+    else:
+        load_dotenv(ROOT / ".env", override=False)
 
 
 def _env(key: str | tuple[str, ...], default):
