@@ -246,7 +246,11 @@ from grader import (
 from llm import LLM, count_message_tokens, count_tokens
 
 ANSWER_MAX_TOKENS = 512
-FACT_JUDGE_MAX_TOKENS = 512      # key_facts judge JSON 출력 한도
+# judge 출력 한도. 생각(reasoning) 토큰을 쓰는 judge(deepseek-flash 등)는 YES/NO 한 단어 앞에
+# 생각 토큰을 수백~천여 개 쓰고 그것도 한도에 들어간다 (실측: O/X 최대 1662, fact 최대 560).
+# 한도에 걸리면 빈 답이 나오므로 넉넉히 둔다. 못 읽은 응답은 grader.parse_yes_no 가 실패로 기록한다
+OX_JUDGE_MAX_TOKENS = 4096       # 기존 O/X judge
+FACT_JUDGE_MAX_TOKENS = 4096     # key_facts judge (YES/NO 또는 JSON)
 TYPES = ("fact", "code", "procedure", "multi")   # 유형별 집계 순서
 
 # 답변 지시문은 src/prompts/answer_<버전>.md 에 둔다 (바꾸면 이전 결과와 비교할 수 없으므로 새 버전으로)
@@ -374,6 +378,9 @@ class TrialRecord:
     judge_missing_before_fix: list[int] = field(default_factory=list)  # 첫 응답에서 빠진(중복 포함) index
     judge_calls: int = 0                      # key_facts 판정에 쓴 judge 호출 수
     judge_skipped: str | None = None          # judge 를 부르지 않은 사유 (not_found: 답변이 NOT FOUND 뿐)
+    judge_failed: list[int] = field(default_factory=list)  # YES/NO 를 못 읽은 fact index (있으면 answer_accuracy None)
+    judge_errors: list[str] = field(default_factory=list)  # 그 사유 (length | empty | unparsed)
+    ox_judge_error: str | None = None         # O/X judge 응답을 못 읽은 사유 (그러면 grade_method=match)
     judge_prompt_tokens: int = 0              # key_facts judge 입력 토큰 합 (서버 보고값)
     judge_completion_tokens: int = 0          # key_facts judge 출력 토큰 합
     ox_judge_prompt_tokens: int = 0           # 기존 O/X judge 입력 토큰 (긴 정답만 호출)
@@ -382,6 +389,7 @@ class TrialRecord:
     # 답변 모델 기록
     answer_model: str = ""                    # 서버가 응답에 적은 모델 (없으면 요청한 모델)
     answer_usage_source: str = "api"          # api | estimate (prompt/completion_tokens 출처)
+    answer_finish_reason: str | None = None   # length 면 ANSWER_MAX_TOKENS 에 걸려 답변이 잘림
 
     info: dict = field(default_factory=dict)
 
@@ -456,6 +464,8 @@ def judge_fields(fact_grade) -> dict:
         "judge_missing_before_fix": fact_grade.judge_missing_before_fix,
         "judge_calls": fact_grade.judge_calls,
         "judge_skipped": fact_grade.judge_skipped,
+        "judge_failed": fact_grade.judge_failed,
+        "judge_errors": fact_grade.judge_errors,
         "judge_prompt_tokens": fact_grade.judge_prompt_tokens,
         "judge_completion_tokens": fact_grade.judge_completion_tokens,
     }
@@ -476,7 +486,15 @@ def judge_counts(rs) -> dict:
         "items_with_missing": sum(bool(get(r, "judge_missing_before_fix")) for r in judged),
         "missing_indices": sum(len(get(r, "judge_missing_before_fix")) for r in judged),
         "calls": sum(get(r, "judge_calls") for r in judged),
+        # YES/NO 를 못 읽은 fact (이 문항들은 answer_accuracy None 이라 평균에서 빠진다)
+        "items_with_failed_facts": sum(bool(_get_opt(r, "judge_failed")) for r in judged),
+        "failed_facts": sum(len(_get_opt(r, "judge_failed") or []) for r in judged),
     }
+
+
+def _get_opt(r, k):
+    """예전 기록에는 없는 필드를 위한 get (없으면 None)."""
+    return r.get(k) if isinstance(r, dict) else getattr(r, k, None)
 
 
 def git_head() -> str | None:
@@ -507,7 +525,7 @@ def run(args) -> Path:
         if args.no_judge
         else LLM(
             role="judge",
-            max_tokens=8,
+            max_tokens=OX_JUDGE_MAX_TOKENS,
         )
     )
 
@@ -649,6 +667,8 @@ def run(args) -> Path:
                         attr="judge_usage_source"),
                     answer_model=res.model,
                     answer_usage_source=res.usage_source,
+                    answer_finish_reason=res.finish_reason,
+                    ox_judge_error=g.judge_error,
 
                     info=cres.info,
                 )
@@ -666,8 +686,13 @@ def run(args) -> Path:
         "config": {"llm": CFG.summary(), "judge_model": None if judge is None else CFG.judge_model,
                    # 역할별 모델·접속 주소·토크나이저 (input_tokens 등의 단위 = tokenizer)
                    "models": CFG.models_info(),
+                   # 실제로 보낸 생성 조건. 서버가 거부해 바꾼 인자가 드러난다 (temperature None = 서버 기본값)
+                   "sampling": {"answer": llm.sampling_info(),
+                                "judge": None if judge is None else judge.sampling_info(),
+                                "fact_judge": None if fact_judge is None else fact_judge.sampling_info()},
                    "judge_mode": None if fact_judge is None else args.judge_mode,
                    "answer_max_tokens": ANSWER_MAX_TOKENS,
+                   "ox_judge_max_tokens": None if judge is None else OX_JUDGE_MAX_TOKENS,
                    "answer_prompt": {"version": prompt.version, "sha256": prompt.sha256},
                    "fact_judge": (None if fact_judge is None else
                                   {"prompt_version": FACT_JUDGE_PROMPT_VERSION,
@@ -799,6 +824,10 @@ def summarize(records: list[TrialRecord], names: list[str]) -> dict:
             "ttft_sec": _mean(r.ttft_sec for r in rs),
             "latency_sec": _mean(r.latency_sec for r in rs),
             "ctx_overflow": sum(r.ctx_overflow for r in rs),
+            # 답변이 ANSWER_MAX_TOKENS 에 걸려 잘린 수 (생각 토큰도 한도에 들어가는 모델은 꼭 확인)
+            "answer_truncated": sum(r.answer_finish_reason == "length" for r in rs),
+            # O/X judge 응답을 못 읽어 단어 일치로 채점한 수
+            "ox_judge_errors": sum(r.ox_judge_error is not None for r in rs),
 
             # key_facts judge 응답 보정 횟수 (재요청 / fact 별 폴백 / 첫 응답 누락 index 합)
             "fact_judge": judge_counts(rs),

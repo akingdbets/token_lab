@@ -309,6 +309,7 @@ def main():
         "judge": {"model": args.judge_model, "mode": args.judge_mode,
                   "prompt_version": FACT_JUDGE_PROMPT_VERSION, "prompt_hash": FACT_JUDGE_PROMPT_HASH,
                   "max_tokens": FACT_JUDGE_MAX_TOKENS},
+        "sampling": judge.sampling_info(),
         "n_trials": len(rows), "skipped_test": len(skipped_test), "skipped_no_facts": no_facts,
         "results": results,
     }

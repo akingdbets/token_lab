@@ -2,4 +2,5 @@ requests>=2.31          # LLM calls (Ollama / OpenAI-compatible API)
 transformers>=4.43      # Qwen tokenizer for token counts (no model weights downloaded)
 jinja2>=3.1             # tokenizer chat template (count_message_tokens)
 tiktoken>=0.7           # OpenAI tokenizer when TOKENIZER=tiktoken:<encoding>
+python-dotenv>=1.0      # load API keys etc. from .env (src/config.py)
 llmlingua==0.2.2        # LLMLingua/LongLLMLingua/LLMLingua-2 prompt compression

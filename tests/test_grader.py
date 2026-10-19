@@ -12,6 +12,7 @@ from __future__ import annotations
 import json
 import sys
 import unittest
+import warnings
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -22,7 +23,9 @@ from grader import (  # noqa: E402
     FACT_JUDGE_PROMPT_VERSION,
     _build_output_example,
     _parse_fact_judgement,
+    grade,
     grade_answer_accuracy,
+    parse_yes_no,
 )
 
 FACTS = [f"fact number {i}" for i in range(5)]
@@ -33,6 +36,7 @@ class FakeResult:
     text: str
     prompt_tokens: int = 10
     completion_tokens: int = 5
+    finish_reason: str | None = "stop"
 
 
 class FakeJudge:
@@ -66,7 +70,7 @@ def reply(pairs) -> str:
     return json.dumps({"results": [{"index": i, "satisfied": s} for i, s in pairs]})
 
 
-def grade(judge, facts=FACTS, mode="batch"):
+def grade_facts(judge, facts=FACTS, mode="batch"):
     return grade_answer_accuracy(
         question="Q?",
         reference_answer="A.",
@@ -81,7 +85,7 @@ class PromptTest(unittest.TestCase):
 
     def test_prompt_numbers_facts_and_example_covers_all_indices(self):
         judge = FakeJudge([reply((i, True) for i in range(5))])
-        grade(judge)
+        grade_facts(judge)
         prompt = judge.batch_prompts[0]
 
         for i, fact in enumerate(FACTS):
@@ -95,7 +99,7 @@ class PromptTest(unittest.TestCase):
         self.assertEqual(_build_output_example(8).count('"index"'), 8)
 
     def test_version_and_hash_recorded(self):
-        g = grade(FakeJudge([reply((i, True) for i in range(5))]))
+        g = grade_facts(FakeJudge([reply((i, True) for i in range(5))]))
         self.assertEqual(g.judge_prompt_version, "fact_judge_v2")
         self.assertEqual(g.judge_prompt_version, FACT_JUDGE_PROMPT_VERSION)
         self.assertEqual(g.judge_prompt_hash, FACT_JUDGE_PROMPT_HASH)
@@ -106,7 +110,7 @@ class BatchTest(unittest.TestCase):
 
     def test_five_facts_five_results_pass_through(self):
         judge = FakeJudge([reply([(0, True), (1, False), (2, True), (3, True), (4, False)])])
-        g = grade(judge)
+        g = grade_facts(judge)
 
         self.assertEqual(g.judge_mode, "batch")
         self.assertEqual(g.judge_retries, 0)
@@ -120,7 +124,7 @@ class BatchTest(unittest.TestCase):
 
     def test_code_fenced_json_is_accepted(self):
         raw = "```json\n" + reply((i, True) for i in range(5)) + "\n```"
-        g = grade(FakeJudge([raw]))
+        g = grade_facts(FakeJudge([raw]))
         self.assertEqual(g.judge_mode, "batch")
         self.assertEqual(g.satisfied_count, 5)
 
@@ -129,7 +133,7 @@ class BatchTest(unittest.TestCase):
             reply([(0, True), (1, True)]),
             reply([(0, True), (1, True), (2, False), (3, True), (4, True)]),
         ])
-        g = grade(judge)
+        g = grade_facts(judge)
 
         self.assertEqual(g.judge_mode, "retry")
         self.assertEqual(g.judge_retries, 1)
@@ -150,7 +154,7 @@ class BatchTest(unittest.TestCase):
             reply([(0, True), (1, False)]),
             reply([(2, True), (3, False), (4, True)]),
         ])
-        g = grade(judge)
+        g = grade_facts(judge)
 
         self.assertEqual(g.judge_mode, "retry")
         self.assertEqual([r.satisfied for r in g.fact_results], [True, False, True, False, True])
@@ -161,7 +165,7 @@ class BatchTest(unittest.TestCase):
             [reply([(0, True), (1, True)]), reply([(0, True), (1, True), (2, True)])],
             per_fact=lambda fact: verdicts[fact],
         )
-        g = grade(judge)
+        g = grade_facts(judge)
 
         self.assertEqual(g.judge_mode, "per_fact_fallback")
         self.assertEqual(g.judge_retries, 1)
@@ -177,7 +181,7 @@ class BatchTest(unittest.TestCase):
 
     def test_invalid_json_then_invalid_again_falls_back(self):
         judge = FakeJudge(["not json at all", "still not json"])
-        g = grade(judge)
+        g = grade_facts(judge)
 
         self.assertEqual(g.judge_mode, "per_fact_fallback")
         self.assertEqual(g.judge_missing_before_fix, [0, 1, 2, 3, 4])
@@ -188,7 +192,7 @@ class BatchTest(unittest.TestCase):
             reply([(0, True), (1, True), (1, False), (2, True), (3, True), (4, True)]),
             reply([(0, True), (1, False), (2, True), (3, True), (4, True)]),
         ])
-        g = grade(judge)
+        g = grade_facts(judge)
 
         self.assertEqual(g.judge_mode, "retry")
         self.assertEqual(g.judge_missing_before_fix, [1])
@@ -200,7 +204,7 @@ class BatchTest(unittest.TestCase):
             reply([(0, True), (1, True), (2, True), (3, True), (5, True)]),
             reply([(0, True), (1, True), (2, True), (3, True), (4, False)]),
         ])
-        g = grade(judge)
+        g = grade_facts(judge)
 
         self.assertEqual(g.judge_mode, "retry")
         self.assertEqual(g.judge_missing_before_fix, [4])
@@ -213,7 +217,7 @@ class BatchTest(unittest.TestCase):
             reply([(0, True), (1, True), (2, True), (3, True), (4, True), (-1, False)]),
             reply((i, True) for i in range(5)),
         ])
-        g = grade(judge)
+        g = grade_facts(judge)
         self.assertEqual(g.judge_mode, "retry")
         self.assertEqual(g.judge_missing_before_fix, [])
 
@@ -222,7 +226,7 @@ class BatchTest(unittest.TestCase):
             reply([(0, True), (1, True)]),
             reply([(0, True), (1, True), (2, True), (2, False), (3, True), (4, True)]),
         ], per_fact=lambda fact: "NO")
-        g = grade(judge)
+        g = grade_facts(judge)
 
         self.assertEqual(g.judge_mode, "per_fact_fallback")
         self.assertEqual(g.satisfied_count, 0)
@@ -232,7 +236,7 @@ class PerFactModeTest(unittest.TestCase):
 
     def test_per_fact_mode_calls_once_per_fact(self):
         judge = FakeJudge(per_fact=lambda fact: "NO" if fact.endswith("2") else "YES")
-        g = grade(judge, mode="per_fact")
+        g = grade_facts(judge, mode="per_fact")
 
         self.assertEqual(g.judge_mode, "per_fact")
         self.assertEqual(g.judge_retries, 0)
@@ -243,7 +247,7 @@ class PerFactModeTest(unittest.TestCase):
 
     def test_unknown_mode_rejected(self):
         with self.assertRaises(ValueError):
-            grade(FakeJudge(), mode="bogus")
+            grade_facts(FakeJudge(), mode="bogus")
 
 
 class NotFoundTest(unittest.TestCase):
@@ -309,6 +313,40 @@ class ParseTest(unittest.TestCase):
         p = _parse_fact_judgement(reply([(1, False), (0, True)]), 2)
         self.assertTrue(p.ok)
         self.assertEqual(p.values, {0: True, 1: False})
+
+
+class UnreadableJudgeTest(unittest.TestCase):
+    """생각 토큰으로 출력 한도를 다 써서 빈 답이 온 경우 등. NO 로 치지 않는다."""
+
+    def setUp(self):
+        w = warnings.catch_warnings()
+        w.__enter__()
+        warnings.simplefilter("ignore")
+        self.addCleanup(w.__exit__, None, None, None)
+
+    def test_parse_yes_no(self):
+        self.assertEqual(parse_yes_no(FakeResult("YES.")), (True, None))
+        self.assertEqual(parse_yes_no(FakeResult(" no")), (False, None))
+        self.assertEqual(parse_yes_no(FakeResult("", finish_reason="length")), (None, "length"))
+        self.assertEqual(parse_yes_no(FakeResult("")), (None, "empty"))
+        self.assertEqual(parse_yes_no(FakeResult("Maybe")), (None, "unparsed"))
+
+    def test_per_fact_failure_is_not_counted_as_unsatisfied(self):
+        judge = FakeJudge(per_fact=lambda fact: "" if fact.endswith("2") else "YES")
+        g = grade_facts(judge, mode="per_fact")
+        self.assertIsNone(g.answer_accuracy)
+        self.assertEqual((g.judge_failed, g.judge_errors), ([2], ["empty"]))
+        self.assertIsNone(g.fact_results[2].satisfied)
+        self.assertEqual(g.satisfied_count, 4)
+
+    def test_ox_failure_falls_back_to_match(self):
+        class Judge:
+            def ask(self, prompt):
+                return FakeResult("", finish_reason="length")
+        g = grade("Q?", "use the Depends function for injection", [],
+                  "use the Depends function for injection", Judge())
+        self.assertIsNone(g.judge)
+        self.assertEqual((g.method, g.judge_error, g.correct), ("match", "length", g.match))
 
 
 if __name__ == "__main__":
