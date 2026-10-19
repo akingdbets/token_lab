@@ -47,13 +47,14 @@ LLM 입력(지시문 + 문서 + 질문)을 압축한다. 모든 압축기는 같
 from __future__ import annotations
 
 from compressors.base import PARTS, Chain, CompressResult, Compressor, PromptParts
-from compressors.identity import NoCompression
+from compressors.identity import EmptyContext, NoCompression
 from compressors.llmlingua2 import LLMLingua2Compressor
 from compressors.rule import RuleCompressor
 from config import CFG
 
 REGISTRY: dict[str, Compressor] = {
     "none": NoCompression(),        # 기준선 (Baseline): 원문 그대로
+    "empty": EmptyContext(),        # 바닥값: 문서를 비움 (보정 유지율 기준점)
     "rule_fm_all": RuleCompressor(frontmatter_keep=(), name="rule_fm_all"),  # rule 비교용: 머리말 통째 제거 (dev baseline v1 의 rule)
     "rule": RuleCompressor(),       # 규칙 기반 문맥 정제 (마크다운 휴리스틱)
     "llmlingua2": LLMLingua2Compressor(

@@ -339,6 +339,20 @@ class UnreadableJudgeTest(unittest.TestCase):
         self.assertIsNone(g.fact_results[2].satisfied)
         self.assertEqual(g.satisfied_count, 4)
 
+    def test_empty_answer_skips_judge(self):
+        judge = FakeJudge(per_fact=lambda fact: "YES")
+        g = grade_answer_accuracy("Q?", "A.", FACTS, "  ", judge, mode="per_fact")
+        self.assertEqual((g.answer_accuracy, g.judge_skipped, judge.single_facts), (0.0, "empty", []))
+
+        class Judge:
+            calls = 0
+
+            def ask(self, prompt):
+                Judge.calls += 1
+                return FakeResult("YES")
+        o = grade("Q?", "a long reference answer with many words here", [], "", Judge())
+        self.assertEqual((Judge.calls, o.judge, o.method), (0, None, "match"))
+
     def test_ox_failure_falls_back_to_match(self):
         class Judge:
             def ask(self, prompt):

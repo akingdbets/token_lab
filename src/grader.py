@@ -167,8 +167,11 @@ def grade(
         entities,
     )
 
+    # 빈 답변(출력 한도를 생각 토큰에 다 씀 등)은 judge 를 부르지 않는다.
+    # judge 프롬프트에 정답이 있어 빈 답변에도 YES 를 줄 수 있다 (docs/results/closed_book_luna.md)
     need_judge = (
         judge_llm is not None
+        and bool(response.strip())
         and (always_judge or not is_short(answer))
     )
 
@@ -340,6 +343,7 @@ class AnswerAccuracyResult:
     judge_skipped
         not_found          답변이 NOT FOUND 뿐이라 judge 없이 모든 key_fact 를 불충족으로 처리
                            (judge 가 NOT FOUND 답변에 fact 를 충족으로 주는 오판 방지)
+        empty              답변이 비어 있어 judge 없이 모두 불충족 (judge 가 정답만 보고 YES 를 주는 오판 방지)
     """
 
     answer_accuracy: float | None   # judge_failed 가 있으면 None (평균·비교에서 빠진다)
@@ -530,7 +534,8 @@ def grade_answer_accuracy(
                   누락 index 를 명시해 1회 재요청하고, 그래도 다르면 fact 별 개별 판정으로 폴백.
         per_fact  처음부터 fact 하나당 호출 1회 (YES/NO).
 
-    답변이 NOT FOUND 뿐이면 mode 와 상관없이 judge 를 부르지 않고 모두 불충족 (judge_skipped="not_found").
+    답변이 NOT FOUND 뿐이거나 비어 있으면 mode 와 상관없이 judge 를 부르지 않고 모두 불충족
+    (judge_skipped="not_found" | "empty").
     """
 
     if mode not in JUDGE_MODES:
@@ -547,14 +552,16 @@ def grade_answer_accuracy(
             "답변 정확도를 계산하려면 key_facts가 1개 이상 필요합니다."
         )
 
-    if is_not_found_answer(candidate_answer):
+    skip = ("empty" if not (candidate_answer or "").strip()
+            else "not_found" if is_not_found_answer(candidate_answer) else None)
+    if skip:
         return AnswerAccuracyResult(
             answer_accuracy=0.0,
             satisfied_count=0,
             total_count=len(key_facts),
             fact_results=[FactResult(fact=fact, satisfied=False) for fact in key_facts],
             judge_mode="skipped",
-            judge_skipped="not_found",
+            judge_skipped=skip,
         )
 
     if judge_llm is None:
