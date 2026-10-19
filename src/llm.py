@@ -128,10 +128,14 @@ class LLM:
         self.max_tokens = max_tokens
         # 실패 시 다시 보내는 횟수 (첫 호출 포함). 유료 API 는 1 로 두어 재시도 비용을 막는다
         self.max_retries = max_retries or CFG.max_retries
+        # 생각 토큰 양 (OpenAI 호환 reasoning_effort). 빈 값이면 보내지 않는다
+        self.reasoning_effort = (CFG.judge_reasoning_effort if role == "judge"
+                                 else CFG.answer_reasoning_effort if role == "answer" else "")
         # OpenAI 호환 서버가 거부한 요청 인자 (_openai_chat 이 400 응답을 보고 채운다).
         #   "temperature" -> 보내지 않음 (서버 기본값)
         #   "max_tokens"  -> max_completion_tokens 로 보냄
         #   "seed"        -> 보내지 않음
+        #   "reasoning_effort" -> 보내지 않음 (서버 기본값)
         self.unsupported: set[str] = set()
 
     def sampling_info(self) -> dict:
@@ -141,6 +145,8 @@ class LLM:
             "temperature": self._sent_temperature(),   # None = 보내지 않음 (서버 기본값)
             "temperature_requested": self.temperature,
             "seed": None if "seed" in self.unsupported else CFG.seed,   # None = 보내지 않음
+            "reasoning_effort": self._sent_reasoning_effort(),           # None = 보내지 않음 (서버 기본값)
+            "reasoning_effort_requested": self.reasoning_effort or None,
             "max_tokens": self.max_tokens,
             "max_tokens_param": ("num_predict" if self.backend == "ollama" else
                                  "max_completion_tokens" if "max_tokens" in self.unsupported
@@ -292,6 +298,8 @@ class LLM:
         payload = {"model": self.model, "messages": messages, "stream": stream}
         if "temperature" not in self.unsupported:
             payload["temperature"] = self.temperature
+        if self._sent_reasoning_effort():
+            payload["reasoning_effort"] = self.reasoning_effort
         if "seed" not in self.unsupported:
             # OpenAI·DeepSeek 은 받지만 같은 답을 보장하지는 않는다 (best effort)
             payload["seed"] = CFG.seed
@@ -313,7 +321,7 @@ class LLM:
         except ValueError:
             return False
         param = err.get("param")
-        if param not in ("temperature", "max_tokens", "seed") or param in self.unsupported:
+        if param not in ("temperature", "max_tokens", "seed", "reasoning_effort") or param in self.unsupported:
             return False
         if param == "max_tokens" and self.max_tokens is None:
             return False
@@ -394,6 +402,11 @@ class LLM:
             temperature=self._sent_temperature(),
             usage_source=source,
         )
+
+    def _sent_reasoning_effort(self) -> str | None:
+        if self.backend == "ollama" or not self.reasoning_effort or "reasoning_effort" in self.unsupported:
+            return None
+        return self.reasoning_effort
 
     def _sent_temperature(self) -> float | None:
         return None if "temperature" in self.unsupported else self.temperature

@@ -934,7 +934,43 @@ def summarize(records: list[TrialRecord], names: list[str]) -> dict:
 
         out[n] = s
 
+    # 보정 유지율: 같은 run 에 empty(문서 없음) 가 있으면 압축기마다 바닥값을 뺀 유지율
+    if by.get("empty") and base:
+        floor = {r.qid: r.answer_accuracy for r in by["empty"]}
+        none_acc = {q: r.answer_accuracy for q, r in base.items()}
+        for n, rs in by.items():
+            if n in ("none", "empty") or n not in out:
+                continue
+            out[n]["calibration"] = calibrated_retention(
+                none_acc, floor, {r.qid: r.answer_accuracy for r in rs})
+            out[n]["calibrated_retention_pct"] = out[n]["calibration"]["calibrated_retention_pct"]
+
     return out
+
+
+# 보정 유지율의 분모(none − empty 정확도)가 이보다 작으면 null. 문서가 정확도에 거의 기여하지 않아 값이 불안정하다
+CALIBRATION_MIN_GAP = 0.05
+
+
+def calibrated_retention(none_acc: dict, empty_acc: dict, comp_acc: dict) -> dict:
+    """(압축 정확도 − empty 정확도) / (none 정확도 − empty 정확도) × 100.
+    세 정확도가 모두 있는 문항만 짝지어 평균을 낸다. 인자는 qid -> answer_accuracy (None 은 제외).
+    다른 run 의 empty 와 묶어 계산할 수도 있다 (calibrate.py)."""
+    qids = [q for q in comp_acc
+            if comp_acc[q] is not None and none_acc.get(q) is not None and empty_acc.get(q) is not None]
+    if not qids:
+        return {"n_paired": 0, "none": None, "empty": None, "compressed": None, "gap": None,
+                "calibrated_retention_pct": None}
+    m = lambda d: sum(d[q] for q in qids) / len(qids)
+    none, empty, comp = m(none_acc), m(empty_acc), m(comp_acc)
+    gap = none - empty
+    return {
+        "n_paired": len(qids),
+        "none": round(none, 4), "empty": round(empty, 4), "compressed": round(comp, 4),
+        "gap": round(gap, 4),   # 문서가 정확도에 기여한 몫
+        "calibrated_retention_pct": (round(100 * (comp - empty) / gap, 2)
+                                     if gap >= CALIBRATION_MIN_GAP else None),
+    }
 
 
 def print_summary(results: dict, names: list[str]):

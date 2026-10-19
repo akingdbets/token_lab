@@ -190,6 +190,27 @@ class OpenAIUnsupportedParamTest(unittest.TestCase):
         self.assertIn("invalid key", str(cm.exception))
         self.assertEqual(post.call_count, 1)
 
+    def test_reasoning_effort_sent_and_dropped_when_rejected(self):
+        self.llm.reasoning_effort = "none"
+        with mock.patch.object(llm.requests, "post",
+                               side_effect=[self.ok, _unsupported("reasoning_effort"), self.ok]) as post:
+            with warnings.catch_warnings(record=True):
+                warnings.simplefilter("always")
+                self.llm._openai_chat(MESSAGES, stream_ttft=False)
+                self.assertEqual(post.call_args.kwargs["json"]["reasoning_effort"], "none")
+                self.assertEqual(self.llm.sampling_info()["reasoning_effort"], "none")
+                self.llm.unsupported.discard("reasoning_effort")
+                self.llm._openai_chat(MESSAGES, stream_ttft=False)   # 이번엔 서버가 거부
+        self.assertNotIn("reasoning_effort", post.call_args.kwargs["json"])
+        info = self.llm.sampling_info()
+        self.assertEqual((info["reasoning_effort"], info["reasoning_effort_requested"]), (None, "none"))
+
+    def test_reasoning_effort_not_sent_by_default(self):
+        self.llm.reasoning_effort = ""   # .env 설정과 무관하게
+        with mock.patch.object(llm.requests, "post", return_value=self.ok) as post:
+            self.llm._openai_chat(MESSAGES, stream_ttft=False)
+        self.assertNotIn("reasoning_effort", post.call_args.kwargs["json"])
+
     def test_supported_server_keeps_params(self):
         with mock.patch.object(llm.requests, "post", return_value=self.ok) as post:
             res = self.llm._openai_chat(MESSAGES, stream_ttft=False)

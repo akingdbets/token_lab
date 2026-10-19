@@ -72,6 +72,11 @@ class Config:
     judge_model: str = _env("JUDGE_MODEL", "qwen2.5:7b")  # 채점
     # key_facts 판정 방식 (batch | per_fact). 7b per_fact 로 확정: docs/results/judge_compare_v2.md
     judge_mode: str = _env("JUDGE_MODE", "per_fact")
+    # 생각(reasoning) 토큰 양. OpenAI 호환 서버의 reasoning_effort 로 보낸다 (Ollama 는 무시).
+    # 빈 값이면 보내지 않음 (서버 기본값). gpt-6-luna 가장 낮은 값은 "none".
+    # 생각 토큰도 출력 한도에 들어가 한도를 다 쓰면 답변 본문이 비므로, 답변 모델은 낮게 둘 수 있다
+    answer_reasoning_effort: str = _env("ANSWER_REASONING_EFFORT", "")
+    judge_reasoning_effort: str = _env("JUDGE_REASONING_EFFORT", "")
     summary_model: str = _env("SUMMARY_MODEL", "qwen2.5:3b")  # 재귀 요약용
     embed_model: str = _env("EMBED_MODEL", "bge-m3")  # Cosine Similarity 계산용 임베딩 모델
     embed_ctx: int = _env("EMBED_CTX", 8192)              # 임베딩 입력 한도 (bge-m3 최대 8192)
