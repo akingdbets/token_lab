@@ -88,6 +88,7 @@ class LLMResult:
     ttft: float | None = None   # 첫 토큰까지 시간(초). 스트리밍일 때만
     model: str = ""
     raw: dict = field(default_factory=dict, repr=False)
+    finish_reason: str | None = None   # stop | length(출력 상한에 걸려 잘림) ... 서버가 안 주면 None
     temperature: float | None = None   # 실제로 보낸 값. None 이면 안 보냄 (서버 기본값, 예: gpt-6 계열은 1)
     usage_source: str = "api"       # api: 서버 보고값 | estimate: 서버가 안 줘서 config.tokenizer 로 추정
     est_prompt_tokens: int = 0      # config.tokenizer 로 센 입력 토큰 (템플릿 포함)
@@ -255,6 +256,7 @@ class LLM:
                 latency=time.perf_counter() - t0,
                 model=self.model,
                 raw=d,
+                finish_reason=d.get("done_reason"),
                 temperature=self.temperature,
             )
 
@@ -280,6 +282,7 @@ class LLM:
             ttft=ttft,
             model=self.model,
             raw=last,
+            finish_reason=last.get("done_reason"),
             temperature=self.temperature,
         )
 
@@ -348,11 +351,12 @@ class LLM:
                 latency=time.perf_counter() - t0,
                 model=d.get("model") or self.model,
                 raw=d,
+                finish_reason=d["choices"][0].get("finish_reason"),
                 temperature=self._sent_temperature(),
                 usage_source=source,
             )
 
-        chunks, ttft, usage, served_model = [], None, {}, None
+        chunks, ttft, usage, served_model, finish = [], None, {}, None, None
         with self._openai_post(url, messages, stream=True) as r:
             for line in r.iter_lines():
                 if not line or not line.startswith(b"data: "):
@@ -367,6 +371,7 @@ class LLM:
                     served_model = d["model"]
                 if not d.get("choices"):   # include_usage 의 마지막 청크는 choices 가 비어 있다
                     continue
+                finish = d["choices"][0].get("finish_reason") or finish
                 piece = d["choices"][0].get("delta", {}).get("content") or ""
                 if piece and ttft is None:
                     ttft = time.perf_counter() - t0
@@ -380,6 +385,7 @@ class LLM:
             latency=time.perf_counter() - t0,
             ttft=ttft,
             model=served_model or self.model,
+            finish_reason=finish,
             temperature=self._sent_temperature(),
             usage_source=source,
         )

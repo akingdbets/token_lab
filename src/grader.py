@@ -17,6 +17,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import warnings
 from dataclasses import dataclass, field
 
 
@@ -119,6 +120,23 @@ class Grade:
     judge_prompt_tokens: int = 0
     judge_completion_tokens: int = 0
     judge_usage_source: str | None = None   # api | estimate (judge 를 안 불렀으면 None)
+    judge_error: str | None = None          # judge 응답에서 YES/NO 를 못 읽은 사유 (parse_yes_no)
+
+
+def parse_yes_no(res) -> tuple[bool | None, str | None]:
+    """judge 응답(LLMResult) -> (YES 면 True / NO 면 False / 못 읽으면 None, 못 읽은 사유).
+    빈 답이나 출력 상한에 잘린 답(finish_reason=length)을 NO 로 치지 않는다.
+    생각(reasoning) 토큰을 쓰는 모델은 상한을 생각에 다 써서 빈 답을 낼 수 있다."""
+    text = res.text.strip().upper()
+    if text.startswith("YES"):
+        return True, None
+    if text.startswith("NO"):
+        return False, None
+    finish = getattr(res, "finish_reason", None)
+    reason = ("length" if finish == "length" else "empty" if not text else "unparsed")
+    warnings.warn(f"judge 응답에서 YES/NO 를 읽지 못했습니다 ({reason}, finish_reason={finish}, "
+                  f"출력 {res.completion_tokens} 토큰): {res.text.strip()[:80]!r}", stacklevel=3)
+    return None, reason
 
 
 def usage_source_of(sources, attr: str = "usage_source") -> str | None:
@@ -159,6 +177,7 @@ def grade(
     pt = 0
     ct = 0
     usage_source = None
+    error = None
 
     if need_judge:
         res = judge_llm.ask(
@@ -170,7 +189,8 @@ def grade(
         )
 
         raw = res.text.strip()
-        j = raw.upper().startswith("YES")
+        # 못 읽으면 None -> 아래에서 단어 일치(match)로 채점하고 judge_error 에 사유를 남긴다
+        j, error = parse_yes_no(res)
 
         pt = res.prompt_tokens
         ct = res.completion_tokens
@@ -191,6 +211,7 @@ def grade(
         judge_prompt_tokens=pt,
         judge_completion_tokens=ct,
         judge_usage_source=usage_source,
+        judge_error=error,
     )
 
 
@@ -298,7 +319,7 @@ class FactResult:
     """key_fact 하나에 대한 평가 결과."""
 
     fact: str
-    satisfied: bool
+    satisfied: bool | None          # None: judge 응답을 못 읽음 (AnswerAccuracyResult.judge_failed)
 
 
 @dataclass
@@ -321,7 +342,7 @@ class AnswerAccuracyResult:
                            (judge 가 NOT FOUND 답변에 fact 를 충족으로 주는 오판 방지)
     """
 
-    answer_accuracy: float
+    answer_accuracy: float | None   # judge_failed 가 있으면 None (평균·비교에서 빠진다)
 
     satisfied_count: int
     total_count: int
@@ -341,6 +362,8 @@ class AnswerAccuracyResult:
     judge_missing_before_fix: list[int] = field(default_factory=list)  # 첫 응답에서 빠진 index
     judge_calls: int = 0
     judge_skipped: str | None = None
+    judge_failed: list[int] = field(default_factory=list)  # YES/NO 를 못 읽은 fact index (per_fact 판정)
+    judge_errors: list[str] = field(default_factory=list)  # 그 사유 (length | empty | unparsed)
 
 
 def _build_facts_text(key_facts: list[str]) -> str:
@@ -469,7 +492,7 @@ def _judge_single_fact(
     candidate_answer: str,
     judge_llm,
 ):
-    """fact 하나만 YES/NO 로 판정. (satisfied, LLMResult) 반환."""
+    """fact 하나만 YES/NO 로 판정. (satisfied, 못 읽은 사유, LLMResult) 반환. 못 읽으면 satisfied=None."""
 
     res = judge_llm.ask(
         FACT_JUDGE_SINGLE_PROMPT.format(
@@ -480,7 +503,8 @@ def _judge_single_fact(
         )
     )
 
-    return res.text.strip().upper().startswith("YES"), res
+    ok, error = parse_yes_no(res)
+    return ok, error, res
 
 
 def grade_answer_accuracy(
@@ -548,6 +572,8 @@ def grade_answer_accuracy(
     missing_before: list[int] = []
     values: dict[int, bool] | None = None
     judge_mode = mode
+    failed: list[int] = []
+    errors: list[str] = []
 
     def _use(res):
         nonlocal pt, ct, calls
@@ -616,12 +642,15 @@ def grade_answer_accuracy(
         # per_fact 모드이거나 batch 재요청까지 실패한 경우: fact 하나씩 판정
         values = {}
         for i, fact in enumerate(key_facts):
-            ok, res = _judge_single_fact(
+            ok, error, res = _judge_single_fact(
                 question, reference_answer, fact, candidate_answer, judge_llm,
             )
             _use(res)
             raws.append(f"[{i}] {res.text.strip()}")
             values[i] = ok
+            if ok is None:
+                failed.append(i)
+                errors.append(error)
 
     fact_results = [
         FactResult(fact=fact, satisfied=values[i])
@@ -629,12 +658,13 @@ def grade_answer_accuracy(
     ]
 
     satisfied_count = sum(
-        result.satisfied
+        bool(result.satisfied)
         for result in fact_results
     )
 
     return AnswerAccuracyResult(
-        answer_accuracy=satisfied_count / n,
+        # 못 읽은 fact 가 있으면 불충족으로 치지 않고 정확도를 비운다
+        answer_accuracy=None if failed else satisfied_count / n,
         satisfied_count=satisfied_count,
         total_count=n,
         fact_results=fact_results,
@@ -646,6 +676,8 @@ def grade_answer_accuracy(
         judge_retries=retries,
         judge_missing_before_fix=missing_before,
         judge_calls=calls,
+        judge_failed=failed,
+        judge_errors=errors,
     )
 
 
