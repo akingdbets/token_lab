@@ -5,6 +5,9 @@ claude-v1 평가셋은 만들 때 qwen2.5:7b 로 문서 없이 풀기 검사를 
 
 **결론: gpt-6-luna 는 문서 없이도 평가셋의 66%(판정 A)를 맞힌다. 판정 B 로는 79% 가 절반 이상 맞는다.** 오염 기준(30%)을 크게 넘는다.
 
+**다만 실험과 같은 답변 지시문(answer_v1)에서 문서를 비우면 dev 35문항 모두 NOT FOUND 로 답해 정확도 바닥값이 0.000 이다** ([아래](#실험-지시문으로-문서를-비우면-empty)).
+자기 지식을 쓰라고 하면 맞히지만, 문서에서만 답하라는 지시는 지킨다. 그래서 최종 판단은 **현재 평가셋 유지 + 보정 유지율 병기**다 ([최종 판단](#최종-판단)).
+
 - 실행: `EVAL_DIR=data/evalsets/claude-v1 python src/closed_book_check.py --split all`
 - 결과: `results/closed_book_luna/closed_book.jsonl` (문항별), `summary.json`, `subset_report.json` (커밋 안 함)
 - 프롬프트: `dataset_builder.CLOSED_BOOK_PROMPT` 그대로 ("Answer the question from your own knowledge. Be brief. If you do not know, reply exactly: UNKNOWN")
@@ -220,11 +223,11 @@ claude-v1 평가셋은 만들 때 qwen2.5:7b 로 문서 없이 풀기 검사를 
 - 답변 출력이 실행 전 예상(0.5~1.5만)의 약 3.5배였다. 짧게 답하라는 프롬프트인데도 생각 토큰을 쓰고 (출력 중앙값 171.5 토큰, 답변 본문 중앙값 47자),
   4건은 2048 한도를 다 썼다
 
-## 권고
+## 1차 권고 (closed-book 결과만 보고 낸 것, 아래 empty 결과로 보류)
 
 **오염 비율이 기준(30%)의 두 배 이상이라, 지금 평가셋으로는 "답변 정확도 유지율" 을 압축 품질 지표로 쓰기 어렵다.** 평가셋 v2 를 만드는 쪽을 권한다.
 
-근거
+근거 (1번은 아래 empty 결과로 성립하지 않는다)
 1. **유지율이 압축과 상관없이 높게 나온다.** dev 에서 문서를 아예 안 줘도 판정 B 평균이 0.887 이다.
    압축이 문맥을 다 지워도 정확도가 0.89 근처에 머물 수 있으므로, 유지율 목표(90%)는 문서 내용을 지키지 않아도 거의 채워진다
 2. **기준선이 천장에 붙어 있다.** none·rule 정확도가 모두 1.000 이라 기법 간 차이가 드러나지 않는다 (baseline_dev_v2)
@@ -239,3 +242,98 @@ v2 를 만들 때 판단할 것
 - **대안 (평가셋을 바꾸지 않을 경우)**: 문항마다 closed-book 정확도를 빼고 문서의 기여분만 보는 유지율
   `(압축 정확도 − closed-book 정확도) / (none 정확도 − closed-book 정확도)` 을 함께 보고하고, 오염 문항은 표시만 한다.
   다만 dev 는 none − closed-book 차이가 대부분 0 이라 분모가 작아 값이 불안정하다
+
+## 실험 지시문으로 문서를 비우면 (empty)
+
+closed-book 검사는 "자기 지식으로 답하라" 는 프롬프트였다. 실제 실험의 answer_v1 은 "문서에서만 답하고, 없으면 NOT FOUND" 다.
+그래서 실험과 같은 지시문에서 문서만 비우는 압축기 `empty` 를 만들어 dev 35문항을 돌렸다.
+
+- run: `20261019-224924` (none, empty). 실행: `ANSWER_REASONING_EFFORT=none EVAL_DIR=data/evalsets/claude-v1 python src/experiment.py --split dev --compressors none,empty`
+- empty: `<documentation>` 안을 빈 문자열로 바꾼다. system·question 은 그대로 (평균 입력 120.9 토큰)
+- git commit `da9bf4e`
+- **생성 조건이 기준선 v2 와 다르다**: 답변 `reasoning_effort=none` (생각 토큰 0) 이고, 이 설정에서는 gpt-6-luna 가 **temperature 0 을 받는다**
+  (summary.json `config.sampling.answer`: temperature 0.0, seed 42, reasoning_effort none, max_completion_tokens 512).
+  기준선 v2 는 reasoning_effort 를 보내지 않았고(서버 기본값) temperature 는 서버 기본값 1 이었다. 채점(deepseek-flash)은 기준선 v2 와 같다
+
+### 결과
+
+| 지표 | none | empty |
+|---|---|---|
+| 답변 정확도 (잠정) | 0.986 | **0.000** |
+| NOT FOUND 비율 | 0.0% | **100.0% (35/35)** |
+| 정확도 fact (n=11) | 1.000 | 0.000 |
+| 정확도 code (n=12) | 1.000 | 0.000 |
+| 정확도 procedure (n=8) | 1.000 | 0.000 |
+| 정확도 multi (n=4) | 0.875 | 0.000 |
+| 평균 출력 토큰 | 38.8 | 5.0 |
+| 답변 잘림 | 0 | 0 |
+
+- **closed-book 에서 맞힌 문항도 empty 에서는 모두 NOT FOUND**: 판정 A 로 맞힌 dev 26문항 중 26, 판정 B ≥ 0.5 인 32문항 중 32
+- none 정확도 0.986 은 c0015 fact 1 이 또 X 를 받은 것이다 (baseline_dev_v2 에서 반복 실행마다 갈린 그 fact).
+  reasoning_effort none·temperature 0 인 이번 none 답변은 기준선 v2 none 과 15문항에서 문자열이 다르다
+- 생각 토큰: closed-book 빈 답변 4건(c0001, c0096, c0155, c0168)을 `reasoning_effort=none` 으로 다시 보내면 모두 16~45 토큰의 정상 답변이 나왔다 (생각 토큰 0).
+  원인은 생각 토큰이 출력 한도를 다 쓴 것이었다. gpt-6-luna 의 가장 낮은 값은 `none` (`minimal` 은 거부).
+  deepseek-flash 도 `reasoning_effort` 를 받지만(low: 생각 토큰 40 → 32) 채점은 사람 라벨 검증 중이라 바꾸지 않았다
+
+### 보정 유지율
+
+`보정 유지율 = (압축 정확도 − empty 정확도) / (none 정확도 − empty 정확도) × 100` (문항 짝 평균, 분모 < 0.05 면 null).
+같은 run 에 empty 가 있으면 summary.json 에 `calibrated_retention_pct` 로 들어가고, 기존 run 은 `src/calibrate.py` 로 묶어 계산한다.
+
+기준선 v2 run(`20261019-203350`) 에 이번 empty 를 묶은 결과 (`python src/calibrate.py <v2 trials> --floor <empty trials>`):
+
+| 압축기 | 짝 문항 | none | empty | 압축 | 분모 (none − empty) | 보정 유지율 | 기존 유지율 |
+|---|---|---|---|---|---|---|---|
+| rule | 35 | 1.000 | 0.000 | 1.000 | 1.000 | 100.0% | 100.0% |
+| rule_fm_all | 35 | 1.000 | 0.000 | 0.986 | 1.000 | 98.57% | 98.57% |
+
+- 바닥값이 0 이라 보정 유지율과 기존 유지율이 같다. 바닥값이 0 보다 커지는 설정(다른 지시문, 다른 모델)에서 차이가 난다
+- 두 run 의 답변 생성 조건이 다르다 (위). 바닥값은 문서가 없으면 NOT FOUND 라는 지시 준수 여부라 조건 영향이 작을 것으로 보지만,
+  기준선을 `reasoning_effort=none` 으로 다시 돌리면 같은 run 안에서 계산할 수 있다
+
+### 채점기 확인
+
+- 빈 답변·NOT FOUND 는 judge 를 부르지 않는다: empty 35문항 모두 `judge_skipped="not_found"`, key_facts judge 호출 0회.
+  빈 답변 생략(`judge_skipped="empty"`)은 이번에 `grader.py` 에도 넣었다 (전에는 `closed_book_check.py` 에만 있었다). 이번 run 에는 빈 답변이 없었다
+- O/X judge 는 긴 정답 12문항에서 NOT FOUND 답변을 받아 12번 모두 NO 를 줬다
+- empty 답변 중 NOT FOUND 가 아닌 것은 0개라, 이번 run 에서 "judge 가 정답만 보고 점수를 주는" 사례는 뽑을 수 없었다.
+  대신 closed-book 검사의 빈 답변 4건에서 judge 가 준 판정이 그 사례다 (답변 본문이 비어 있는데 충족으로 판정):
+
+| qid | type | fact | judge |
+|---|---|---|---|
+| c0001 | fact | When the user does not exist, authenticate_user verifies the password against DUMMY_HASH. | O |
+| c0096 | procedure | Function-scoped yield dependencies are torn down first. | O |
+| c0096 | procedure | Request-scoped yield dependencies are torn down after that. | O |
+| c0155 | multi | In development, a missing frontend directory only emits a warning. | O |
+| c0168 | multi | FastAPI warns about duplicate operation IDs. | O |
+| c0168 | multi | The preprocessing script removes the tag prefix from each operationId. | O |
+
+  빈 답변 4건의 fact 10개 중 7개를 충족으로 줬다. 채점 프롬프트에 정답(reference answer)이 함께 들어가 있어 답변 대신 정답을 보고 판정하는 것으로 보인다.
+  실험 경로에서는 빈 답변·NOT FOUND 를 judge 없이 처리하므로 이 오판이 점수에 들어가지 않지만, **짧거나 일부만 맞은 답변에서도 같은 경향이 있는지는**
+  judge_check_v3 사람 라벨(FP 수)로 확인해야 한다
+
+### API 사용 토큰 (서버 보고값, run 20261019-224924)
+
+| | 답변 입력 | 답변 출력 | 채점 입력 | 채점 출력 |
+|---|---|---|---|---|
+| none | 77,273 | 1,358 | 18,668 | 4,938 |
+| empty | 4,198 | 175 | 1,995 | 350 |
+
+- 그 밖에 reasoning_effort 지원 확인 7회, 빈 답변 재시도 4회 (짧은 호출)
+
+## 최종 판단
+
+**empty 바닥값이 0.000 (기준 0.3 이하) 이므로 현재 평가셋을 유지하고, 보정 유지율을 함께 적는다.** 평가셋 v2 계획은 보류한다.
+
+- closed-book 오염(66~79%)은 "모델이 답을 안다" 는 뜻이지, 실험 지시문에서 "문서 없이 답한다" 는 뜻이 아니었다.
+  문서가 비면 35문항 모두 NOT FOUND 라서, 지금 정확도·유지율은 문서 내용에서 나온 것으로 볼 수 있다
+- 오염 문항은 문항별로 표시만 한다 (`results/closed_book_luna/closed_book.jsonl` 의 knows, cb_accuracy)
+
+남는 위험과 확인할 것
+1. **문서가 일부만 남은 경우**: empty 는 문서가 완전히 없을 때만 본다. 압축으로 정답 근거만 빠지고 주제 문맥은 남으면,
+   모델이 NOT FOUND 대신 기억으로 빈칸을 채울 수 있다. 압축 결과에서 정답 근거가 빠졌는데 정답을 맞힌 문항(압축 문맥에 key_fact 근거가 없는데 충족)을 따로 세는 검사가 필요하다.
+   LLMLingua-2 처럼 많이 지우는 기법에서 특히 중요하다
+2. **천장 효과**: none·rule 이 1.000 근처라 기법 간 차이는 여전히 작게 보인다. test split 과 multi 문항을 포함한 측정이 필요하다
+3. **생성 조건 통일**: 이후 run 은 `ANSWER_REASONING_EFFORT=none` 으로 두면 temperature 0 이 적용돼 재현성이 좋아진다.
+   기준선 v2 를 이 조건으로 다시 돌릴지 정할 것 (dev none·rule·rule_fm_all, 답변 105회 + 채점 약 210회)
+4. **judge 의 정답 참조 경향**: 위 빈 답변 사례. judge_check_v3 라벨로 FP 를 확인한 뒤 판정 B·정확도를 확정한다
