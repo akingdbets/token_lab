@@ -7,7 +7,7 @@
 환경변수로도 덮어쓸 수 있다.
     $env:LLM_MODEL = "qwen2.5:3b"     (PowerShell, 노트북에서 실행할 때)
 
-프로젝트 최상위의 .env 도 읽는다 (API 키 등, git 제외). 형식은 .env.example 참고.
+프로젝트 최상위의 .env 도 읽는다 (API 키 등, git 제외). 형식은 README "모델 바꿔 끼우기" 예시 참고.
 셸에 이미 설정된 환경변수가 .env 보다 우선한다.
 """
 
