@@ -352,7 +352,7 @@ LLM_MODEL=qwen2.5:3b python src/dataset_builder.py --docs 3 --dry-run
 - [x] 압축 실험 실행기 (A/B 비교, 채점, 로그)
 - [x] 기준선(Baseline) 측정 — dev, gpt-6-luna 답변 · deepseek-flash 채점 (`docs/results/baseline_dev_v2.md`, 정확도는 채점 사람 검증 전 잠정)
 - [x] 압축 기법 1 — 규칙 기반 문맥 정제 (dev 측정: rule 19.9%, rule_fm_all 24.0% 절감)
-- [ ] 압축 기법 3 — LLMLingua (LLMLingua-2 구현 완료, 측정 전)
+- [ ] 압축 기법 3 — LLMLingua (LLMLingua-2 검증셋 측정 완료 (docs/results/llmlingua2_dev_v1.md))
 - [ ] 압축 기법 2 — 재귀 요약
 - [ ] 하이브리드 파이프라인
 - [ ] 멀티 에이전트 오케스트레이션 검증
