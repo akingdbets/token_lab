@@ -40,7 +40,7 @@ DEFAULT_FORCE_TOKENS = (
     "only",
 )
 TRACE_SCHEMA_VERSION = 1
-SAFETY_POLICY_VERSION = "question-identifiers-v1+fenced-code-blocks-v1"
+SAFETY_POLICY_VERSION = "question-identifiers-v1+fenced-code-blocks-v1+document-headers-v1"
 
 _ENGINE_CACHE: dict[tuple[str, str, str], Any] = {}
 _ENGINE_LOCK = threading.Lock()
@@ -48,6 +48,7 @@ _TECHNICAL_IDENTIFIER = re.compile(
     r"\b(?:[A-Za-z][A-Za-z0-9]*_[A-Za-z0-9_]+|[A-Z][A-Za-z0-9]*[A-Z][A-Za-z0-9]*)\b"
 )
 _FENCE_LINE = re.compile(r"^[ \t]*(`{3,}|~{3,})")
+_DOCUMENT_HEADER = re.compile(r"^## Document:[^\n]*\n?", re.MULTILINE)
 
 
 def _load_engine(model_name: str, model_revision: str, device: str):
@@ -109,33 +110,59 @@ def _split_fenced_blocks(text: str) -> list[tuple[bool, str]]:
     return parts
 
 
-def _mask_fenced_code_blocks(text: str) -> tuple[str, list[tuple[str, str]]]:
-    """코드 블록을 강제 보존할 고유 마커로 바꾼다."""
+def _unique_marker(name: str, index: int, text: str) -> str:
+    marker = f"__LLMLINGUA_PROTECTED_{name}_{index:04d}__"
+    while marker in text:
+        marker = f"_{marker}_"
+    return marker
+
+
+def _mask_protected_units(
+    text: str,
+) -> tuple[str, list[tuple[str, str]], list[tuple[str, str]], list[tuple[str, str]]]:
+    """코드 블록과 문서 경계 줄을 강제 보존할 고유 마커로 바꾼다.
+
+    문서 경계 줄("## Document: ...")을 force token 으로만 두면, BERT tokenizer 가 남긴 단어를
+    이어 붙이면서 " ##" 를 지워 두 번째 문서부터 "Document:" 만 남는다. 그래서 줄째로 빼 둔다.
+    반환: (마커로 바꾼 본문, 등장 순서대로 모든 마커, 코드 블록 마커, 문서 경계 줄 마커)
+    """
     masked: list[str] = []
-    blocks: list[tuple[str, str]] = []
+    units: list[tuple[str, str]] = []
+    code_blocks: list[tuple[str, str]] = []
+    document_headers: list[tuple[str, str]] = []
     for is_code, chunk in _split_fenced_blocks(text):
-        if not is_code:
-            masked.append(chunk)
+        if is_code:
+            marker = _unique_marker("CODE_BLOCK", len(code_blocks), text)
+            code_blocks.append((marker, chunk))
+            units.append((marker, chunk))
+            masked.append(marker)
             continue
-        marker = f"__LLMLINGUA_PROTECTED_CODE_BLOCK_{len(blocks):04d}__"
-        while marker in text:
-            marker = f"_{marker}_"
-        blocks.append((marker, chunk))
-        masked.append(marker)
-    return "".join(masked), blocks
+        cursor = 0
+        for match in _DOCUMENT_HEADER.finditer(chunk):
+            marker = _unique_marker("DOCUMENT_HEADER", len(document_headers), text)
+            document_headers.append((marker, match.group(0)))
+            units.append((marker, match.group(0)))
+            masked.extend((chunk[cursor:match.start()], marker))
+            cursor = match.end()
+        masked.append(chunk[cursor:])
+    return "".join(masked), units, code_blocks, document_headers
 
 
-def _restore_fenced_code_blocks(text: str, blocks: list[tuple[str, str]]) -> str:
-    """모델이 마커 주변에 넣은 공백을 제거하고 fence를 원래 줄 단위로 복원한다."""
+def _restore_protected_units(text: str, units: list[tuple[str, str]]) -> str:
+    """모델이 마커 주변에 넣은 공백을 제거하고 코드 블록·문서 경계 줄을 원래 줄 단위로 복원한다."""
     restored: list[str] = []
     cursor = 0
-    for marker, block in blocks:
+    for marker, block in units:
         position = text.index(marker, cursor)
         prose = text[cursor:position].rstrip(" \t")
         if prose and not prose.endswith(("\n", "\r")):
             prose += "\n"
         restored.extend((prose, block))
         cursor = position + len(marker)
+        if _DOCUMENT_HEADER.match(block):
+            # 경계 줄은 줄바꿈까지 복원했으므로 다음 줄 앞에 모델이 넣은 공백은 버린다
+            while cursor < len(text) and text[cursor] in " \t":
+                cursor += 1
     restored.append(text[cursor:])
     return "".join(restored)
 
@@ -329,12 +356,14 @@ class LLMLingua2Compressor(Compressor):
             return context
 
         started = time.perf_counter()
-        masked_context, code_blocks = _mask_fenced_code_blocks(context)
+        masked_context, protected_units, code_blocks, document_headers = _mask_protected_units(context)
+        protected_markers = [marker for marker, _ in protected_units]
         code_markers = [marker for marker, _ in code_blocks]
+        header_markers = [marker for marker, _ in document_headers]
         protected_code_characters = sum(len(block) for _, block in code_blocks)
         force_slots = max(0, 100 - len(self.force_tokens))
         required_question_identifiers = _question_identifiers(question, context)
-        required_force_tokens = list(dict.fromkeys((*code_markers, *required_question_identifiers)))
+        required_force_tokens = list(dict.fromkeys((*protected_markers, *required_question_identifiers)))
         if len(required_force_tokens) > force_slots:
             return self._fallback(
                 "fallback_too_many_protected_units",
@@ -343,14 +372,15 @@ class LLMLingua2Compressor(Compressor):
                 required_question_identifiers=required_question_identifiers,
                 protected_code_blocks=len(code_blocks),
                 protected_code_characters=protected_code_characters,
+                protected_document_headers=len(document_headers),
                 force_token_slots=force_slots,
             )
         context_identifiers = _protected_identifiers(context, limit=100)
         protected_identifiers = list(dict.fromkeys(
             (*required_question_identifiers, *context_identifiers)
-        ))[:max(0, force_slots - len(code_markers))]
+        ))[:max(0, force_slots - len(protected_markers))]
         effective_force_tokens = list(dict.fromkeys(
-            (*self.force_tokens, *code_markers, *protected_identifiers)
+            (*self.force_tokens, *protected_markers, *protected_identifiers)
         ))
         try:
             result = self._get_engine().compress_prompt(
@@ -391,19 +421,36 @@ class LLMLingua2Compressor(Compressor):
                     protected_code_characters=protected_code_characters,
                     protected_identifiers=protected_identifiers,
                 )
-            marker_positions = [compressed_masked.index(marker) for marker in code_markers]
+            invalid_header_markers = [
+                marker for marker in header_markers if compressed_masked.count(marker) != 1
+            ]
+            if invalid_header_markers:
+                return self._fallback(
+                    "fallback_missing_document_header_marker",
+                    context,
+                    elapsed,
+                    origin_tokens=origin_tokens,
+                    compressed_tokens=compressed_tokens,
+                    missing_document_header_markers=invalid_header_markers,
+                    protected_document_headers=len(document_headers),
+                    protected_code_blocks=len(code_blocks),
+                    protected_code_characters=protected_code_characters,
+                    protected_identifiers=protected_identifiers,
+                )
+            marker_positions = [compressed_masked.index(marker) for marker in protected_markers]
             if marker_positions != sorted(marker_positions):
                 return self._fallback(
-                    "fallback_reordered_code_block_marker",
+                    "fallback_reordered_protected_marker",
                     context,
                     elapsed,
                     origin_tokens=origin_tokens,
                     compressed_tokens=compressed_tokens,
                     protected_code_blocks=len(code_blocks),
                     protected_code_characters=protected_code_characters,
+                    protected_document_headers=len(document_headers),
                     protected_identifiers=protected_identifiers,
                 )
-            compressed = _restore_fenced_code_blocks(compressed_masked, code_blocks)
+            compressed = _restore_protected_units(compressed_masked, protected_units)
 
             if not compressed.strip():
                 return self._fallback(
@@ -494,9 +541,10 @@ class LLMLingua2Compressor(Compressor):
                 compressed_tokens=compressed_tokens,
                 library_ratio=result.get("ratio"),
                 library_rate=result.get("rate"),
-                library_input_masked=bool(code_blocks),
+                library_input_masked=bool(protected_units),
                 protected_code_blocks=len(code_blocks),
                 protected_code_characters=protected_code_characters,
+                protected_document_headers=len(document_headers),
                 required_question_identifiers=required_question_identifiers,
                 protected_identifiers=protected_identifiers,
             )
