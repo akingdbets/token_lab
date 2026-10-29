@@ -280,11 +280,52 @@ class LLMLingua2CompressorTest(unittest.TestCase):
         self.assertEqual(output.context, compressed)
         self.assertEqual(output.info["status"], "compressed")
         self.assertEqual(output.info["required_question_identifiers"], ["create_access_token"])
-        self.assertEqual(engine.calls[0]["force_tokens"][:3], ["\n", "?", "create_access_token"])
+        self.assertEqual(output.info["protected_identifiers"][0], "create_access_token")
         self.assertEqual(
             output.info["safety_policy_version"],
-            "question-identifiers-v1+fenced-code-blocks-v1+document-headers-v1",
+            "question-identifiers-v1+fenced-code-blocks-v1+document-headers-v1+unsplit-identifiers-v1",
         )
+
+    def assert_not_split_by_llmlingua(self, source: str, question: str, **kwargs):
+        """llmlingua 0.2.2 처럼 force token 을 리스트 순서대로 단어 경계 없이 [NEWi] 로 치환했을 때
+        [NEWi] 앞뒤에 다른 영숫자가 붙지 않는지 (붙으면 복원 뒤 공백이 끼어 식별자가 쪼개진다)."""
+        engine = FakeEngine(result("short"))
+        self.make(engine, **kwargs).compress(PromptParts("", source, question))
+        sent = engine.calls[0]["context"][0]
+        force_tokens = engine.calls[0]["force_tokens"]
+        self.assertEqual([len(t) for t in force_tokens], sorted(map(len, force_tokens), reverse=True))
+        for i, token in enumerate(force_tokens):
+            if len(token) > 1:
+                sent = sent.replace(token, f"[NEW{i}]")
+        self.assertNotRegex(sent, r"[A-Za-z0-9_]\[NEW|\][A-Za-z0-9_]")
+        return force_tokens
+
+    def test_identifier_inside_longer_word_is_not_split(self):
+        # c0034: 질문 식별자 OAuth2 가 OAuth2PasswordRequestFormStrict 안에서 바뀌어 "OAuth2 PasswordRequestFormStrict"
+        # c0001: 문맥 앞쪽의 JWT 가 PyJWT 안에서 바뀌어 "Py JWT"
+        force_tokens = self.assert_not_split_by_llmlingua(
+            "Use JWT tokens with OAuth2. Install PyJWT. OAuth2PasswordRequestFormStrict requires grant_type.",
+            "Which OAuth2 form class requires grant_type?",
+        )
+        for value in ("OAuth2", "OAuth2PasswordRequestFormStrict", "JWT", "PyJWT"):
+            self.assertIn(value, force_tokens)
+
+    def test_containing_word_is_added_even_past_identifier_limit(self):
+        # c0040: 식별자가 많아 긴 WebSocketDisconnect 가 한도에 밀려도, 짧은 WebSocket 을 보호하면 함께 들어간다
+        filler = " ".join(f"Item{i}Name" for i in range(120))
+        force_tokens = self.assert_not_split_by_llmlingua(
+            f"WebSocket basics. {filler}. Catch WebSocketDisconnect when the client leaves.",
+            "What does WebSocket raise on disconnect?",
+        )
+        self.assertIn("WebSocket", force_tokens)
+        self.assertIn("WebSocketDisconnect", force_tokens)
+        self.assertLessEqual(len(force_tokens), 100)
+
+    def test_identifier_dropped_when_containing_word_does_not_fit(self):
+        filler = " ".join(f"Item{i}Name" for i in range(120))
+        force_tokens = self.assert_not_split_by_llmlingua(f"{filler}. Then CORSMiddleware and CORS.", "q")
+        self.assertLessEqual(len(force_tokens), 100)
+        self.assertNotIn("CORS", force_tokens)
 
     def test_registry_exposes_default_and_rate_variants(self):
         for name in ("llmlingua2", "llmlingua2_r30", "llmlingua2_r50", "llmlingua2_r70"):
