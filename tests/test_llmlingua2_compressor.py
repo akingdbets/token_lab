@@ -181,12 +181,71 @@ class LLMLingua2CompressorTest(unittest.TestCase):
             ["__LLMLINGUA_PROTECTED_CODE_BLOCK_0000__"],
         )
 
-    def test_missing_document_marker_falls_back(self):
+    def test_document_headers_are_excluded_and_restored_exactly(self):
+        # BERT tokenizer 는 force token 을 복원하면서 " ##" 를 지운다. 경계 줄은 마커로 빼 두었다가 그대로 되돌린다
+        first = "## Document: security/oauth2-jwt.md\n"
+        second = "## Document: security/oauth2-password-flow.md\n"
+        source = f"{first}\nJWT tokens are signed.\n\n{second}\nPassword flow returns a token."
+        compressed = (
+            "__LLMLINGUA_PROTECTED_DOCUMENT_HEADER_0000__ \n JWT tokens signed \n \n "
+            "__LLMLINGUA_PROTECTED_DOCUMENT_HEADER_0001__ \n Password flow returns token"
+        )
+        engine = FakeEngine(result(compressed))
+        comp = self.make(engine)
+
+        output = comp.compress(PromptParts("", source, ""))
+
+        sent = engine.calls[0]["context"][0]
+        self.assertNotIn("## Document:", sent)
+        self.assertIn("__LLMLINGUA_PROTECTED_DOCUMENT_HEADER_0001__", sent)
+        self.assertIn("__LLMLINGUA_PROTECTED_DOCUMENT_HEADER_0000__", engine.calls[0]["force_tokens"])
+        self.assertIn("__LLMLINGUA_PROTECTED_DOCUMENT_HEADER_0001__", engine.calls[0]["force_tokens"])
+        self.assertEqual(output.info["status"], "compressed")
+        self.assertEqual(
+            output.context,
+            f"{first}\n JWT tokens signed \n \n{second}\n Password flow returns token",
+        )
+        self.assertEqual(output.info["protected_document_headers"], 2)
+
+    def test_document_headers_and_code_blocks_keep_source_order(self):
+        source = "## Document: a.md\nintro\n```python\nx = 1\n```\n## Document: b.md\noutro"
+        compressed = (
+            "__LLMLINGUA_PROTECTED_DOCUMENT_HEADER_0000__ intro __LLMLINGUA_PROTECTED_CODE_BLOCK_0000__ "
+            "__LLMLINGUA_PROTECTED_DOCUMENT_HEADER_0001__ outro"
+        )
+        output = self.make(FakeEngine(result(compressed))).compress(PromptParts("", source, ""))
+        self.assertEqual(output.info["status"], "compressed")
+        self.assertEqual(output.context, source)
+
+    def test_header_inside_code_block_stays_part_of_code(self):
+        source = "## Document: a.md\n```markdown\n## Document: not-a-boundary\n```\n"
+        compressed = "__LLMLINGUA_PROTECTED_DOCUMENT_HEADER_0000__ __LLMLINGUA_PROTECTED_CODE_BLOCK_0000__"
+        output = self.make(FakeEngine(result(compressed))).compress(PromptParts("", source, ""))
+        self.assertEqual(output.info["status"], "compressed")
+        self.assertEqual(output.context, source)
+        self.assertEqual(output.info["protected_document_headers"], 1)
+        self.assertEqual(output.info["protected_code_blocks"], 1)
+
+    def test_missing_document_header_marker_falls_back(self):
         source = "## Document: guide.md\n\nimportant fact"
         comp = self.make(FakeEngine(result("important fact")))
         output = comp.compress(PromptParts("", source, ""))
         self.assertEqual(output.context, source)
-        self.assertEqual(output.info["status"], "fallback_missing_document_boundary")
+        self.assertEqual(output.info["status"], "fallback_missing_document_header_marker")
+        self.assertEqual(
+            output.info["missing_document_header_markers"],
+            ["__LLMLINGUA_PROTECTED_DOCUMENT_HEADER_0000__"],
+        )
+
+    def test_reordered_protected_markers_fall_back(self):
+        source = "## Document: a.md\nfirst\n## Document: b.md\nsecond"
+        compressed = (
+            "__LLMLINGUA_PROTECTED_DOCUMENT_HEADER_0001__ second "
+            "__LLMLINGUA_PROTECTED_DOCUMENT_HEADER_0000__ first"
+        )
+        output = self.make(FakeEngine(result(compressed))).compress(PromptParts("", source, ""))
+        self.assertEqual(output.context, source)
+        self.assertEqual(output.info["status"], "fallback_reordered_protected_marker")
 
     def test_missing_question_identifier_falls_back(self):
         source = "def create_access_token(expires_delta=None): return 15"
@@ -224,7 +283,7 @@ class LLMLingua2CompressorTest(unittest.TestCase):
         self.assertEqual(engine.calls[0]["force_tokens"][:3], ["\n", "?", "create_access_token"])
         self.assertEqual(
             output.info["safety_policy_version"],
-            "question-identifiers-v1+fenced-code-blocks-v1",
+            "question-identifiers-v1+fenced-code-blocks-v1+document-headers-v1",
         )
 
     def test_registry_exposes_default_and_rate_variants(self):
