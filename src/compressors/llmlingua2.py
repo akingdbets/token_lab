@@ -40,7 +40,9 @@ DEFAULT_FORCE_TOKENS = (
     "only",
 )
 TRACE_SCHEMA_VERSION = 1
-SAFETY_POLICY_VERSION = "question-identifiers-v1+fenced-code-blocks-v1+document-headers-v1"
+SAFETY_POLICY_VERSION = (
+    "question-identifiers-v1+fenced-code-blocks-v1+document-headers-v1+unsplit-identifiers-v1"
+)
 
 _ENGINE_CACHE: dict[tuple[str, str, str], Any] = {}
 _ENGINE_LOCK = threading.Lock()
@@ -191,6 +193,40 @@ def _question_identifiers(question: str, context: str) -> list[str]:
             found.append(value)
             seen.add(value)
     return found
+
+
+def _longest_first(tokens) -> list[str]:
+    """force token 을 긴 것부터 둔다 (길이가 같으면 원래 순서). 짧은 토큰이 긴 토큰 안에서 먼저 치환되지 않게."""
+    return sorted(tokens, key=len, reverse=True)
+
+
+def _unsplittable_identifiers(text: str, identifiers: list[str], already: list[str], slots: int) -> list[str]:
+    """식별자를 품은 더 긴 단어까지 함께 보호해, slots 안에서 쪼개지지 않는 식별자 목록을 고른다.
+
+    llmlingua 0.2.2 는 여러 WordPiece 로 쪼개지는 force token 을 단어 경계 없이 str.replace 로 [NEWi] 로
+    바꾼다. 그래서 "JWT" 를 보호하면 "PyJWT" 가 "Py[NEWi]" 로 잘려 복원 뒤 "Py JWT" 가 된다. 긴 것부터
+    치환하면(_longest_first) 긴 단어도 보호 목록에 있을 때는 막히므로, 식별자를 품은 단어(영숫자·_ 연속)를
+    함께 넣는다. 함께 넣을 자리가 없으면 그 식별자는 뺀다. already(마커 등)는 이미 보호되는 것으로 본다.
+    """
+    runs = set(re.findall(r"[A-Za-z0-9_]+", text))
+    chosen = list(already)
+
+    def needed(value: str, seen: set[str]) -> list[str]:
+        out = [value]
+        for run in runs:
+            if value in run and run != value and run not in seen:
+                seen.add(run)
+                out.extend(needed(run, seen))
+        return out
+
+    picked = []
+    for value in identifiers:
+        add = [v for v in dict.fromkeys(needed(value, {value})) if v not in chosen]
+        if len(picked) + len(add) > slots:
+            continue
+        chosen.extend(add)
+        picked.extend(add)
+    return picked
 
 
 def _missing_identifiers(identifiers: list[str], text: str) -> list[str]:
@@ -376,10 +412,13 @@ class LLMLingua2Compressor(Compressor):
                 force_token_slots=force_slots,
             )
         context_identifiers = _protected_identifiers(context, limit=100)
-        protected_identifiers = list(dict.fromkeys(
-            (*required_question_identifiers, *context_identifiers)
-        ))[:max(0, force_slots - len(protected_markers))]
-        effective_force_tokens = list(dict.fromkeys(
+        protected_identifiers = _unsplittable_identifiers(
+            masked_context,
+            list(dict.fromkeys((*required_question_identifiers, *context_identifiers))),
+            already=[*self.force_tokens, *protected_markers],
+            slots=max(0, force_slots - len(protected_markers)),
+        )
+        effective_force_tokens = _longest_first(dict.fromkeys(
             (*self.force_tokens, *protected_markers, *protected_identifiers)
         ))
         try:
