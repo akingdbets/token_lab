@@ -92,7 +92,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -145,7 +145,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -385,7 +385,7 @@
     "key_facts": [
       "requirements.txt is copied before the application code.",
       "Dependencies are installed with pip before copying ./app.",
-      "The application code is copied last so code changes only rebuild the final layers."
+      "The application code (./app) is copied last."
     ],
     "evidence": [
       {
@@ -452,7 +452,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -641,8 +641,7 @@
       "_DefaultLifespan"
     ],
     "key_facts": [
-      "Providing lifespan replaces the default that runs on_startup/on_shutdown handlers.",
-      "The app's event handlers are then no longer called."
+      "When a lifespan is given, the app's on_startup and on_shutdown handlers are no longer called."
     ],
     "evidence": [
       {
@@ -671,7 +670,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -923,9 +922,8 @@
       "description.split"
     ],
     "key_facts": [
-      "The description is taken from the function's docstring.",
-      "A form feed character \\f is placed before the internal notes.",
-      "Only the text before the first \\f is used in OpenAPI."
+      "A form feed character \\f is placed in the docstring before the internal notes.",
+      "FastAPI keeps only the text before the first \\f for the docs."
     ],
     "evidence": [
       {
@@ -954,7 +952,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -1337,7 +1335,7 @@
       "WSGIMiddleware"
     ],
     "key_facts": [
-      "The Flask app is mounted at /v1 through WSGIMiddleware."
+      "The Flask app is mounted at /v1."
     ],
     "evidence": [
       {
@@ -1366,7 +1364,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -1462,9 +1460,8 @@
       "/subapi/docs"
     ],
     "key_facts": [
-      "Operations from an included APIRouter are part of the main app's OpenAPI schema.",
-      "A mounted sub-application has its own OpenAPI schema and docs UI.",
-      "The mounted app's docs are served under its mount path, e.g. /subapi/docs."
+      "Operations from an included APIRouter appear in the main app's same OpenAPI schema and /docs.",
+      "A mounted sub-application keeps its own OpenAPI schema and docs UI (e.g. /subapi/docs)."
     ],
     "evidence": [
       {
@@ -1506,7 +1503,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -3198,8 +3195,7 @@
     ],
     "key_facts": [
       "The service name is set with OTEL_SERVICE_NAME.",
-      "The collector URL is set with OTEL_EXPORTER_OTLP_ENDPOINT.",
-      "Headers such as an API key go in OTEL_EXPORTER_OTLP_HEADERS when required."
+      "The collector URL is set with OTEL_EXPORTER_OTLP_ENDPOINT."
     ],
     "evidence": [
       {
@@ -3248,7 +3244,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -3269,7 +3265,7 @@
       "Query(le=100)"
     ],
     "key_facts": [
-      "The hero list endpoint caps the page size at 100 with Query(le=100)."
+      "The hero list endpoint allows at most 100 items per page."
     ],
     "evidence": [
       {
@@ -3298,7 +3294,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -3494,7 +3490,7 @@
       "WebSocketException"
     ],
     "key_facts": [
-      "The dependency raises WebSocketException with status.WS_1008_POLICY_VIOLATION."
+      "The close code raised is status.WS_1008_POLICY_VIOLATION."
     ],
     "evidence": [
       {
@@ -3523,7 +3519,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -3545,7 +3541,7 @@
       "RequestValidationError"
     ],
     "key_facts": [
-      "Invalid JSON raises a RequestValidationError of type json_invalid, giving a 422."
+      "Malformed JSON is reported with the error type json_invalid."
     ],
     "evidence": [
       {
@@ -3574,7 +3570,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -3831,7 +3827,7 @@
       "pydantic.v1"
     ],
     "key_facts": [
-      "FastAPI 0.128.0 dropped pydantic.v1 support, leaving v2 only."
+      "Support for pydantic.v1 models was dropped completely in FastAPI 0.128.0."
     ],
     "evidence": [
       {
@@ -3860,7 +3856,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -4304,9 +4300,8 @@
       "hero_db.sqlmodel_update(hero_data)"
     ],
     "key_facts": [
-      "Both start from model_dump(exclude_unset=True).",
-      "The Pydantic version applies the data with model_copy(update=...).",
-      "The SQLModel version applies the data with sqlmodel_update on the row."
+      "The Pydantic version applies the sent fields with model_copy(update=...).",
+      "The SQLModel version applies them to the row with sqlmodel_update."
     ],
     "evidence": [
       {
@@ -4348,7 +4343,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -4825,8 +4820,7 @@
     "key_facts": [
       "The automatic docs are disabled with docs_url=None and redoc_url=None.",
       "The asset files are served from a mounted static directory.",
-      "Custom /docs and /redoc routes use get_swagger_ui_html and get_redoc_html.",
-      "The OAuth2 redirect route is kept for Swagger UI's Authorize dialog."
+      "Custom /docs and /redoc routes use get_swagger_ui_html and get_redoc_html with the local file URLs."
     ],
     "evidence": [
       {
@@ -4875,7 +4869,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -5009,7 +5003,7 @@
       "extra_forbidden"
     ],
     "key_facts": [
-      "An unexpected field in a form model with extra forbidden gives a 422 error of type extra_forbidden."
+      "The client gets a validation error of type extra_forbidden."
     ],
     "evidence": [
       {
@@ -5038,7 +5032,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -5227,8 +5221,7 @@
     ],
     "key_facts": [
       "The parameter is declared with Header().",
-      "convert_underscores=False disables the underscore-to-hyphen conversion.",
-      "Some proxies and servers reject headers with underscores."
+      "convert_underscores=False disables the underscore-to-hyphen conversion."
     ],
     "evidence": [
       {
@@ -5267,7 +5260,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -5727,7 +5720,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -6158,7 +6151,7 @@
     ],
     "key_facts": [
       "The /users/me/items/ operation requires the items scope.",
-      "It also requires the me scope inherited from get_current_active_user."
+      "The /users/me/items/ operation requires the me scope."
     ],
     "evidence": [
       {
@@ -6187,7 +6180,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -6260,9 +6253,8 @@
       "Security"
     ],
     "key_facts": [
-      "The checking dependency declares a SecurityScopes parameter.",
-      "SecurityScopes holds all scopes required by the dependency and its dependants.",
-      "Missing scopes cause a 401 Not enough permissions response.",
+      "The token-checking dependency declares a SecurityScopes parameter.",
+      "If any of security_scopes.scopes is missing from the token, it raises 401 Not enough permissions.",
       "Endpoints declare required scopes with Security(..., scopes=[...])."
     ],
     "evidence": [
@@ -6312,7 +6304,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -6434,9 +6426,8 @@
       "status.HTTP_201_CREATED"
     ],
     "key_facts": [
-      "The header is set through response.headers on the injected Response.",
-      "The status is changed by setting response.status_code to status.HTTP_201_CREATED.",
-      "Values set on the temporary Response are copied to the final response."
+      "The header is set with response.headers[\"X-Cat-Dog\"] on the injected Response.",
+      "The status is changed by setting response.status_code to status.HTTP_201_CREATED."
     ],
     "evidence": [
       {
@@ -6478,7 +6469,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -6628,9 +6619,8 @@
       "still visible"
     ],
     "key_facts": [
-      "GraphQLRouter is an APIRouter added with include_router.",
-      "The GraphQL endpoint is at /graphql.",
-      "Operations added to a router after inclusion are still visible."
+      "GraphQLRouter is an APIRouter, added with app.include_router(graphql_app, prefix=\"/graphql\").",
+      "Operations added to a router after it was included are still visible."
     ],
     "evidence": [
       {
@@ -6672,7 +6662,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
@@ -6693,8 +6683,7 @@
       "create_db_and_tables"
     ],
     "key_facts": [
-      "Without a lifespan, FastAPI uses _DefaultLifespan to run on_startup handlers.",
-      "The tutorial's startup handler calls create_db_and_tables()."
+      "Without a lifespan, FastAPI's internal _DefaultLifespan runs the on_startup handlers."
     ],
     "evidence": [
       {
@@ -6740,7 +6729,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
@@ -7019,8 +7008,7 @@
     ],
     "key_facts": [
       "For a class dependency such as CommonQueryParams, FastAPI inspects __init__.",
-      "For a callable instance such as a FixedContentQueryChecker, FastAPI inspects __call__.",
-      "FastAPI never looks at the instance's __init__."
+      "For a configured instance such as a FixedContentQueryChecker, FastAPI inspects __call__."
     ],
     "evidence": [
       {
@@ -7062,7 +7050,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
@@ -7212,9 +7200,8 @@
       "ExceptionMiddleware"
     ],
     "key_facts": [
-      "Handlers should be registered for Starlette's HTTPException.",
-      "This catches Starlette's internal errors such as 404 and 405.",
-      "Exception handlers run in ExceptionMiddleware inside user middleware."
+      "Handlers for Starlette's HTTPException also catch errors Starlette raises internally, such as 404 and 405.",
+      "Exception handlers run in ExceptionMiddleware, inside user middleware."
     ],
     "evidence": [
       {
@@ -7256,7 +7243,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
@@ -7471,7 +7458,6 @@
     ],
     "key_facts": [
       "serialize_response validates the return value against the response field.",
-      "A failure raises ResponseValidationError and a 500.",
       "response_model=None disables the response model."
     ],
     "evidence": [
@@ -7514,7 +7500,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
@@ -7664,7 +7650,6 @@
     ],
     "key_facts": [
       "The return value is still serialized through the response model.",
-      "The injected Response status overrides the decorator status.",
       "response_model_exclude_unset omits fields not explicitly set."
     ],
     "evidence": [
@@ -7707,7 +7692,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",

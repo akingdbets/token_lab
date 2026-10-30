@@ -1,15 +1,15 @@
 ﻿qid,assignee,type,question,answer,key_facts,key_entities,evidence_page,evidence_quote,none_answer,none_accuracy,ai_flag,ai_reason,ai_suggested_question,ai_suggested_answer,ai_suggested_key_facts,ai_suggested_key_entities,verdict,final_question,final_answer,final_key_facts,final_key_entities,reviewer,note
 c0043,A,fact,"When a FastAPI app is created with a lifespan function, what happens to the on_startup and on_shutdown event handlers registered on that app?",They are no longer called,"Providing lifespan replaces the default that runs on_startup/on_shutdown handlers.
 The app's event handlers are then no longer called.","no longer called
-_DefaultLifespan",app-structure/lifespan-events.md,"[app-structure/lifespan-events.md:131] **It is all `lifespan` or all events, not both.** When no `lifespan` is given, FastAPI uses an internal `_DefaultLifespan` that runs the `on_startup` / `on_shutdown` handlers (Starlette removed this, FastAPI keeps it for backward compatibility). When you provide `lifespan`, that default is replaced, so the event handlers of that app are no longer called.",,,problem,[key_facts 범위] 1번(기본 lifespan 이 교체됨)은 이유 설명이라 질문이 묻지 않음. 값만 답하면 0.5 로 묶임,,,"When a lifespan is given, the app's on_startup and on_shutdown handlers are no longer called.",,,,,,,,
+_DefaultLifespan",app-structure/lifespan-events.md,"[app-structure/lifespan-events.md:131] **It is all `lifespan` or all events, not both.** When no `lifespan` is given, FastAPI uses an internal `_DefaultLifespan` that runs the `on_startup` / `on_shutdown` handlers (Starlette removed this, FastAPI keeps it for backward compatibility). When you provide `lifespan`, that default is replaced, so the event handlers of that app are no longer called.",,,problem,[key_facts 범위] 1번(기본 lifespan 이 교체됨)은 이유 설명이라 질문이 묻지 않음. 값만 답하면 0.5 로 묶임,,,"When a lifespan is given, the app's on_startup and on_shutdown handlers are no longer called.",,edit,,,"When a lifespan is given, the app's on_startup and on_shutdown handlers are no longer called.",,ungdeong,AI 수정안 채택: 질문이 묻지 않은 사실을 key_facts 에서 뺌
 c0008,B,code,"In FastAPI's FilterParams query model example, which two values are allowed for the ordering field?",created_at and updated_at,"order_by accepts ""created_at"".
 order_by accepts ""updated_at"".","created_at
 updated_at
-order_by",request/query-parameters.md,"[request/query-parameters.md:232] order_by: Literal[""created_at"", ""updated_at""] = ""created_at""",,,check,[key_facts 범위] fact·code 는 사실 1개: 두 값을 한 사실로 합침,,,"order_by accepts ""created_at"" and ""updated_at"".",,,,,,,,
+order_by",request/query-parameters.md,"[request/query-parameters.md:232] order_by: Literal[""created_at"", ""updated_at""] = ""created_at""",,,check,[key_facts 범위] fact·code 는 사실 1개: 두 값을 한 사실로 합침,,,"order_by accepts ""created_at"" and ""updated_at"".",,keep,,,,,ungdeong,두 값을 fact 두 개로 유지: 질문이 묻는 것을 맞힌 만큼 점수를 준다 (하나만 맞히면 0.5)
 c0009,B,fact,"Apart from codes under 200 and 204, which status codes does FastAPI treat as not allowing a response body?",205 and 304,"205 does not allow a response body.
 304 does not allow a response body.","205
 304
-is_body_allowed_for_status_code",responses/status-codes.md,"[responses/status-codes.md:76] FastAPI knows which codes forbid a body (`is_body_allowed_for_status_code`: below 200, `204`, `205`, `304`). For those it documents no response body and sends an empty body even if your function returned something.",,,check,[key_facts 범위] fact·code 는 사실 1개: 두 값을 한 사실로 합침,,,205 and 304 do not allow a response body.,,,,,,,,
+is_body_allowed_for_status_code",responses/status-codes.md,"[responses/status-codes.md:76] FastAPI knows which codes forbid a body (`is_body_allowed_for_status_code`: below 200, `204`, `205`, `304`). For those it documents no response body and sends an empty body even if your function returned something.",,,check,[key_facts 범위] fact·code 는 사실 1개: 두 값을 한 사실로 합침,,,205 and 304 do not allow a response body.,,keep,,,,,ungdeong,두 값을 fact 두 개로 유지: 질문이 묻는 것을 맞힌 만큼 점수를 준다 (하나만 맞히면 0.5)
 c0014,A,procedure,"In FastAPI's Docker guide, in what order should the Dockerfile bring in files and install packages so that editing code doesn't reinstall every dependency?",1) Copy only requirements.txt into /code 2) Run pip install --no-cache-dir --upgrade -r /code/requirements.txt 3) Copy the ./app directory afterwards 4) Start the server with fastapi run in exec-form CMD,"requirements.txt is copied before the application code.
 Dependencies are installed with pip before copying ./app.
 The application code is copied last so code changes only rebuild the final layers.","requirements.txt
@@ -19,42 +19,48 @@ The application code is copied last so code changes only rebuild the final layer
 [deployment/docker.md:49] COPY ./app /code/app
 [deployment/docker.md:68] Docker caches each instruction as a layer and reuses it if the inputs didn't change. Dependencies change rarely; code changes often. Copying `requirements.txt` and installing **before** copying `./app` means a code change only rebuilds the last layers, instead of reinstalling every package — saving minutes per build.",,,check,[key_facts 범위] 3번 '그래야 코드 변경 시 마지막 레이어만 다시 빌드'는 질문의 목적(전제) → 순서만 남김,,,"requirements.txt is copied before the application code.
 Dependencies are installed with pip before copying ./app.
-The application code (./app) is copied last.",,,,,,,,
+The application code (./app) is copied last.",,edit,,,"requirements.txt is copied before the application code.
+Dependencies are installed with pip before copying ./app.
+The application code (./app) is copied last.",,ungdeong,AI 수정안 채택: 질문이 묻지 않은 사실을 key_facts 에서 뺌
 c0048,C,procedure,"In FastAPI, how can I keep internal notes such as Sphinx :param: lines in an endpoint's docstring from showing up in the API documentation?",1) Leave the description in the path operation function's docstring 2) Put a form feed \f before the internal notes 3) FastAPI then keeps only the text before the first \f,"The description is taken from the function's docstring.
 A form feed character \f is placed before the internal notes.
 Only the text before the first \f is used in OpenAPI.","form feed
 description.split",app-structure/path-operation-configuration.md,"[app-structure/path-operation-configuration.md:112] To keep internal notes (e.g. Sphinx `:param:` lines) out of OpenAPI, put a form feed `\f` in the docstring. FastAPI keeps only the text before the first `\f` (`route.description.split(""\f"")[0]` in `fastapi/routing.py`):",,,check,[key_facts 범위] 1번 '설명은 docstring 에서 온다'는 질문의 전제 → 뺌,,,"A form feed character \f is placed in the docstring before the internal notes.
-FastAPI keeps only the text before the first \f for the docs.",,,,,,,,
+FastAPI keeps only the text before the first \f for the docs.",,edit,,,"A form feed character \f is placed in the docstring before the internal notes.
+FastAPI keeps only the text before the first \f for the docs.",,ungdeong,AI 수정안 채택: 질문이 묻지 않은 사실을 key_facts 에서 뺌
 c0055,B,code,"In FastAPI's WSGI example, under which path is the Flask application mounted?",/v1,The Flask app is mounted at /v1 through WSGIMiddleware.,"""/v1""
-WSGIMiddleware",app-structure/sub-applications-proxy-and-wsgi.md,"[app-structure/sub-applications-proxy-and-wsgi.md:162] app.mount(""/v1"", WSGIMiddleware(flask_app))",,,check,[key_facts 범위] 'through WSGIMiddleware'(방법)는 질문이 묻지 않음,,,The Flask app is mounted at /v1.,,,,,,,,
+WSGIMiddleware",app-structure/sub-applications-proxy-and-wsgi.md,"[app-structure/sub-applications-proxy-and-wsgi.md:162] app.mount(""/v1"", WSGIMiddleware(flask_app))",,,check,[key_facts 범위] 'through WSGIMiddleware'(방법)는 질문이 묻지 않음,,,The Flask app is mounted at /v1.,,edit,,,The Flask app is mounted at /v1.,,ungdeong,AI 수정안 채택: 질문이 묻지 않은 사실을 key_facts 에서 뺌
 c0057,C,multi,"In FastAPI, how does including an APIRouter differ from mounting a sub-application in terms of the OpenAPI schema and docs where their endpoints appear?","Included router operations join the main app's same OpenAPI schema and /docs, while a mounted app keeps its own schema and docs, e.g. at /subapi/docs","Operations from an included APIRouter are part of the main app's OpenAPI schema.
 A mounted sub-application has its own OpenAPI schema and docs UI.
 The mounted app's docs are served under its mount path, e.g. /subapi/docs.","same OpenAPI schema
 /subapi/docs","app-structure/bigger-applications.md
 app-structure/sub-applications-proxy-and-wsgi.md","[app-structure/bigger-applications.md:181] Routers are not mounted as isolated sub-apps; their operations are part of the same app and the same OpenAPI schema. In this version of FastAPI, `include_router()` appends an internal `_IncludedRouter` entry that references the original router and the include context, and FastAPI combines prefixes, dependencies, tags, responses and other metadata when matching requests and generating OpenAPI. Practical consequences:
 [app-structure/sub-applications-proxy-and-wsgi.md:62] - `/docs` shows only `app`'s operations; `/subapi/docs` shows only `subapi`'s, with correct `/subapi` URLs.",,,check,[key_facts 범위] 3번 '/subapi/docs 경로'는 2번의 예시 → 합침,,,"Operations from an included APIRouter appear in the main app's same OpenAPI schema and /docs.
-A mounted sub-application keeps its own OpenAPI schema and docs UI (e.g. /subapi/docs).",,,,,,,,
+A mounted sub-application keeps its own OpenAPI schema and docs UI (e.g. /subapi/docs).",,edit,,,"Operations from an included APIRouter appear in the main app's same OpenAPI schema and /docs.
+A mounted sub-application keeps its own OpenAPI schema and docs UI (e.g. /subapi/docs).",,ungdeong,AI 수정안 채택: 질문이 묻지 않은 사실을 key_facts 에서 뺌
 c0088,B,procedure,"In FastAPI, how do I send the built-in OpenTelemetry data to a monitoring service over OTLP?","1) Set OTEL_SERVICE_NAME 2) Set OTEL_EXPORTER_OTLP_ENDPOINT to the collector URL 3) Set OTEL_EXPORTER_OTLP_HEADERS if the service needs an API key 4) Run the app, e.g. with fastapi run","The service name is set with OTEL_SERVICE_NAME.
 The collector URL is set with OTEL_EXPORTER_OTLP_ENDPOINT.
 Headers such as an API key go in OTEL_EXPORTER_OTLP_HEADERS when required.","OTEL_EXPORTER_OTLP_ENDPOINT
 OTEL_SERVICE_NAME",integrations/graphql-and-opentelemetry.md,"[integrations/graphql-and-opentelemetry.md:98] export OTEL_SERVICE_NAME=my-api
 [integrations/graphql-and-opentelemetry.md:99] export OTEL_EXPORTER_OTLP_ENDPOINT=https://collector.example.com
 [integrations/graphql-and-opentelemetry.md:101] export OTEL_EXPORTER_OTLP_HEADERS=api-key=YOUR_API_KEY",,,check,[key_facts 범위] 3번 OTEL_EXPORTER_OTLP_HEADERS 는 '서비스가 요구할 때만'이라 필수 단계가 아님 → 뺌,,,"The service name is set with OTEL_SERVICE_NAME.
-The collector URL is set with OTEL_EXPORTER_OTLP_ENDPOINT.",,,,,,,,
-c0089,D,fact,"In FastAPI's SQLModel tutorial, what is the largest page size the hero list endpoint allows?",100,The hero list endpoint caps the page size at 100 with Query(le=100).,Query(le=100),integrations/sql-databases.md,[integrations/sql-databases.md:142] `Query(le=100)` caps the page size.,,,check,[key_facts 범위] 'with Query(le=100)'(구현)은 질문이 묻지 않음,,,The hero list endpoint allows at most 100 items per page.,,,,,,,,
+The collector URL is set with OTEL_EXPORTER_OTLP_ENDPOINT.",,edit,,,"The service name is set with OTEL_SERVICE_NAME.
+The collector URL is set with OTEL_EXPORTER_OTLP_ENDPOINT.",,ungdeong,AI 수정안 채택: 질문이 묻지 않은 사실을 key_facts 에서 뺌
+c0089,D,fact,"In FastAPI's SQLModel tutorial, what is the largest page size the hero list endpoint allows?",100,The hero list endpoint caps the page size at 100 with Query(le=100).,Query(le=100),integrations/sql-databases.md,[integrations/sql-databases.md:142] `Query(le=100)` caps the page size.,,,check,[key_facts 범위] 'with Query(le=100)'(구현)은 질문이 묻지 않음,,,The hero list endpoint allows at most 100 items per page.,,edit,,,The hero list endpoint allows at most 100 items per page.,,ungdeong,AI 수정안 채택: 질문이 묻지 않은 사실을 key_facts 에서 뺌
 c0093,D,code,"In FastAPI's WebSocket dependency example, which close code constant is raised when neither a session cookie nor a token is present?",status.WS_1008_POLICY_VIOLATION,The dependency raises WebSocketException with status.WS_1008_POLICY_VIOLATION.,"status.WS_1008_POLICY_VIOLATION
-WebSocketException",integrations/websockets.md,[integrations/websockets.md:94] raise WebSocketException(code=status.WS_1008_POLICY_VIOLATION),,,check,[key_facts 범위] WebSocketException 언급은 질문이 묻지 않음 (질문은 상수만),,,The close code raised is status.WS_1008_POLICY_VIOLATION.,,,,,,,,
+WebSocketException",integrations/websockets.md,[integrations/websockets.md:94] raise WebSocketException(code=status.WS_1008_POLICY_VIOLATION),,,check,[key_facts 범위] WebSocketException 언급은 질문이 묻지 않음 (질문은 상수만),,,The close code raised is status.WS_1008_POLICY_VIOLATION.,,edit,,,The close code raised is status.WS_1008_POLICY_VIOLATION.,,ungdeong,AI 수정안 채택: 질문이 묻지 않은 사실을 key_facts 에서 뺌
 c0094,B,fact,What validation error type does FastAPI report when a request body contains malformed JSON?,json_invalid,"Invalid JSON raises a RequestValidationError of type json_invalid, giving a 422.","json_invalid
-RequestValidationError",internals/request-handling-internals.md,"[internals/request-handling-internals.md:76] - Invalid JSON → `RequestValidationError` with type `json_invalid` (→ 422). Other parsing failures → `HTTPException(400, ""There was an error parsing the body"")`.",,,check,"[key_facts 범위] RequestValidationError, 422 는 질문이 묻지 않음 (질문은 오류 유형만)",,,Malformed JSON is reported with the error type json_invalid.,,,,,,,,
+RequestValidationError",internals/request-handling-internals.md,"[internals/request-handling-internals.md:76] - Invalid JSON → `RequestValidationError` with type `json_invalid` (→ 422). Other parsing failures → `HTTPException(400, ""There was an error parsing the body"")`.",,,check,"[key_facts 범위] RequestValidationError, 422 는 질문이 묻지 않음 (질문은 오류 유형만)",,,Malformed JSON is reported with the error type json_invalid.,,edit,,,Malformed JSON is reported with the error type json_invalid.,,ungdeong,AI 수정안 채택: 질문이 묻지 않은 사실을 key_facts 에서 뺌
 c0099,D,fact,In which FastAPI version was support for pydantic.v1 models dropped completely?,0.128.0,"FastAPI 0.128.0 dropped pydantic.v1 support, leaving v2 only.","0.128.0
-pydantic.v1",models/dataclasses-and-pydantic-versions.md,[models/dataclasses-and-pydantic-versions.md:178] | 0.128.0 | `pydantic.v1` dropped too — v2 only |,,,check,[key_facts 범위] 'leaving v2 only'는 부가 설명,,,Support for pydantic.v1 models was dropped completely in FastAPI 0.128.0.,,,,,,,,
+pydantic.v1",models/dataclasses-and-pydantic-versions.md,[models/dataclasses-and-pydantic-versions.md:178] | 0.128.0 | `pydantic.v1` dropped too — v2 only |,,,check,[key_facts 범위] 'leaving v2 only'는 부가 설명,,,Support for pydantic.v1 models was dropped completely in FastAPI 0.128.0.,,edit,,,Support for pydantic.v1 models was dropped completely in FastAPI 0.128.0.,,ungdeong,AI 수정안 채택: 질문이 묻지 않은 사실을 key_facts 에서 뺌
 c0107,D,multi,"For a partial update in FastAPI, which call applies only the sent fields to a stored Pydantic model, and which call does the SQLModel version use on the database row instead?",The Pydantic version uses stored_item_model.model_copy(update=update_data); the SQLModel version calls hero_db.sqlmodel_update(hero_data),"Both start from model_dump(exclude_unset=True).
 The Pydantic version applies the data with model_copy(update=...).
 The SQLModel version applies the data with sqlmodel_update on the row.","model_copy(update=update_data)
 hero_db.sqlmodel_update(hero_data)","integrations/sql-databases.md
 models/extra-models-and-updates.md","[models/extra-models-and-updates.md:233] updated_item = stored_item_model.model_copy(update=update_data)
 [integrations/sql-databases.md:164] hero_db.sqlmodel_update(hero_data)",,,check,[key_facts 범위] 1번 '둘 다 model_dump(exclude_unset=True)에서 시작'은 질문이 묻지 않음 → 뺌,,,"The Pydantic version applies the sent fields with model_copy(update=...).
-The SQLModel version applies them to the row with sqlmodel_update.",,,,,,,,
+The SQLModel version applies them to the row with sqlmodel_update.",,edit,,,"The Pydantic version applies the sent fields with model_copy(update=...).
+The SQLModel version applies them to the row with sqlmodel_update.",,ungdeong,AI 수정안 채택: 질문이 묻지 않은 사실을 key_facts 에서 뺌
 c0116,B,procedure,"In FastAPI, how do I serve Swagger UI and ReDoc with JavaScript and CSS files hosted by my own server instead of a CDN?","1) Create the app with docs_url=None and redoc_url=None 2) Put swagger-ui-bundle.js, swagger-ui.css and redoc.standalone.js in static/ and mount StaticFiles 3) Add /docs and /redoc routes returning get_swagger_ui_html and get_redoc_html with the local file URLs 4) Keep the OAuth2 redirect route","The automatic docs are disabled with docs_url=None and redoc_url=None.
 The asset files are served from a mounted static directory.
 Custom /docs and /redoc routes use get_swagger_ui_html and get_redoc_html.
@@ -64,19 +70,23 @@ docs_url=None",openapi/metadata-and-docs-ui.md,"[openapi/metadata-and-docs-ui.md
 [openapi/metadata-and-docs-ui.md:191] - Download `swagger-ui-bundle.js`, `swagger-ui.css` and `redoc.standalone.js` into `static/` (`tutorial001_py310.py` shows the same with an alternative CDN like unpkg).
 [openapi/metadata-and-docs-ui.md:192] - Keep the OAuth2 redirect route if you use OAuth2 in Swagger UI's ""Authorize"" dialog.",,,check,[key_facts 범위] 4번 OAuth2 redirect 경로는 'OAuth2 를 쓸 때만' 필요한 조건부 단계 → 뺌,,,"The automatic docs are disabled with docs_url=None and redoc_url=None.
 The asset files are served from a mounted static directory.
-Custom /docs and /redoc routes use get_swagger_ui_html and get_redoc_html with the local file URLs.",,,,,,,,
-c0119,A,fact,What validation error type does FastAPI return when a form model forbids extra fields and the client sends one anyway?,extra_forbidden,An unexpected field in a form model with extra forbidden gives a 422 error of type extra_forbidden.,extra_forbidden,request/forms-and-files.md,"[request/forms-and-files.md:208] A client sending an extra field (e.g. `extra=Mr. Poopybutthole`) gets a 422 error with type `extra_forbidden`. The same model approach exists for [query, header and cookie parameters](query-parameters.md).",,,check,[key_facts 범위] 422 상태 코드는 질문이 묻지 않음 (질문은 오류 유형만),,,The client gets a validation error of type extra_forbidden.,,,,,,,,
+Custom /docs and /redoc routes use get_swagger_ui_html and get_redoc_html with the local file URLs.",,edit,,,"The automatic docs are disabled with docs_url=None and redoc_url=None.
+The asset files are served from a mounted static directory.
+Custom /docs and /redoc routes use get_swagger_ui_html and get_redoc_html with the local file URLs.",,ungdeong,AI 수정안 채택: 질문이 묻지 않은 사실을 key_facts 에서 뺌
+c0119,A,fact,What validation error type does FastAPI return when a form model forbids extra fields and the client sends one anyway?,extra_forbidden,An unexpected field in a form model with extra forbidden gives a 422 error of type extra_forbidden.,extra_forbidden,request/forms-and-files.md,"[request/forms-and-files.md:208] A client sending an extra field (e.g. `extra=Mr. Poopybutthole`) gets a 422 error with type `extra_forbidden`. The same model approach exists for [query, header and cookie parameters](query-parameters.md).",,,check,[key_facts 범위] 422 상태 코드는 질문이 묻지 않음 (질문은 오류 유형만),,,The client gets a validation error of type extra_forbidden.,,edit,,,The client gets a validation error of type extra_forbidden.,,ungdeong,AI 수정안 채택: 질문이 묻지 않은 사실을 key_facts 에서 뺌
 c0123,D,procedure,"In FastAPI, how do I read a header whose name contains underscores exactly as the client sends it, without turning underscores into hyphens?",1) Declare the parameter with Header() inside Annotated 2) Pass convert_underscores=False to Header() 3) Keep in mind some proxies and servers reject headers containing underscores,"The parameter is declared with Header().
 convert_underscores=False disables the underscore-to-hyphen conversion.
 Some proxies and servers reject headers with underscores.","convert_underscores=False
 Header()",request/headers-and-cookies.md,"[request/headers-and-cookies.md:65] strange_header: Annotated[str | None, Header(convert_underscores=False)] = None,
 [request/headers-and-cookies.md:70] Caution: some HTTP proxies and servers reject headers containing underscores.",,,check,[key_facts 범위] 3번 '일부 프록시가 밑줄 헤더를 거부'는 주의 사항이라 질문이 묻지 않음 → 뺌,,,"The parameter is declared with Header().
-convert_underscores=False disables the underscore-to-hyphen conversion.",,,,,,,,
+convert_underscores=False disables the underscore-to-hyphen conversion.",,edit,,,"The parameter is declared with Header().
+convert_underscores=False disables the underscore-to-hyphen conversion.",,ungdeong,AI 수정안 채택: 질문이 묻지 않은 사실을 key_facts 에서 뺌
 c0131,A,fact,Which two FastAPI JSON response classes are deprecated because a response model already gives the same Rust-level serialization speed?,ORJSONResponse and UJSONResponse,"ORJSONResponse is deprecated.
 UJSONResponse is deprecated.","ORJSONResponse
-UJSONResponse",responses/custom-responses.md,"[responses/custom-responses.md:252] Consequently, `ORJSONResponse` and `UJSONResponse` are **deprecated** (they emit a `FastAPIDeprecationWarning`): a response model gives the same Rust-level speed without extra packages. Existing code using them still works if `orjson`/`ujson` is installed (`tutorial001`, `tutorial001b`).",,,check,[key_facts 범위] fact·code 는 사실 1개: 두 값을 한 사실로 합침,,,ORJSONResponse and UJSONResponse are deprecated.,,,,,,,,
+UJSONResponse",responses/custom-responses.md,"[responses/custom-responses.md:252] Consequently, `ORJSONResponse` and `UJSONResponse` are **deprecated** (they emit a `FastAPIDeprecationWarning`): a response model gives the same Rust-level speed without extra packages. Existing code using them still works if `orjson`/`ujson` is installed (`tutorial001`, `tutorial001b`).",,,check,[key_facts 범위] fact·code 는 사실 1개: 두 값을 한 사실로 합침,,,ORJSONResponse and UJSONResponse are deprecated.,,keep,,,,,ungdeong,두 값을 fact 두 개로 유지: 질문이 묻는 것을 맞힌 만큼 점수를 준다 (하나만 맞히면 0.5)
 c0139,D,fact,"In FastAPI's OAuth2 scopes example, which scopes does get_current_user end up requiring for the /users/me/items/ path operation?",items and me,"The /users/me/items/ operation requires the items scope.
-It also requires the me scope inherited from get_current_active_user.","[""items"", ""me""]",security/oauth2-scopes.md,"[security/oauth2-scopes.md:104] | `/users/me/items/` | `items` (path op) + `me` → `[""items"", ""me""]` |",,,check,[key_facts 범위] fact·code 는 사실 1개: 2번의 '어디서 상속됐나'는 질문이 묻지 않음,,,The /users/me/items/ operation requires the items and me scopes.,,,,,,,,
+It also requires the me scope inherited from get_current_active_user.","[""items"", ""me""]",security/oauth2-scopes.md,"[security/oauth2-scopes.md:104] | `/users/me/items/` | `items` (path op) + `me` → `[""items"", ""me""]` |",,,check,[key_facts 범위] fact·code 는 사실 1개: 2번의 '어디서 상속됐나'는 질문이 묻지 않음,,,The /users/me/items/ operation requires the items and me scopes.,,edit,,,"The /users/me/items/ operation requires the items scope.
+The /users/me/items/ operation requires the me scope.",,ungdeong,"두 값은 fact 두 개로 유지하고, 2번 fact 의 '어디서 상속됐나' 설명만 뺌"
 c0141,A,procedure,"In FastAPI, how do I check a token's OAuth2 scopes for all endpoints in one central dependency?","1) Add a SecurityScopes parameter to the token-checking dependency 2) Decode the token and read its scope claim 3) Raise a 401 Not enough permissions if any of security_scopes.scopes is missing 4) Let endpoints declare their needs with Security(..., scopes=[...])","The checking dependency declares a SecurityScopes parameter.
 SecurityScopes holds all scopes required by the dependency and its dependants.
 Missing scopes cause a 401 Not enough permissions response.
@@ -86,54 +96,62 @@ Security",security/oauth2-scopes.md,"[security/oauth2-scopes.md:109] Declare a p
 [security/oauth2-scopes.md:146] for scope in security_scopes.scopes:
 [security/oauth2-scopes.md:150] detail=""Not enough permissions"",",,,check,[key_facts 범위] 2번 'SecurityScopes 가 무엇을 담나'는 설명 → 1·3번과 합치고 뺌,,,"The token-checking dependency declares a SecurityScopes parameter.
 If any of security_scopes.scopes is missing from the token, it raises 401 Not enough permissions.
-Endpoints declare required scopes with Security(..., scopes=[...]).",,,,,,,,
+Endpoints declare required scopes with Security(..., scopes=[...]).",,edit,,,"The token-checking dependency declares a SecurityScopes parameter.
+If any of security_scopes.scopes is missing from the token, it raises 401 Not enough permissions.
+Endpoints declare required scopes with Security(..., scopes=[...]).",,ungdeong,AI 수정안 채택: 질문이 묻지 않은 사실을 key_facts 에서 뺌
 c0144,A,multi,"Using FastAPI's injected Response parameter, how do the docs set the X-Cat-Dog header in one example and switch the status to 201 in another?","Set response.headers[""X-Cat-Dog""] = ""alone in the world"" for the header and response.status_code = status.HTTP_201_CREATED for the status; both are copied onto the final response","The header is set through response.headers on the injected Response.
 The status is changed by setting response.status_code to status.HTTP_201_CREATED.
 Values set on the temporary Response are copied to the final response.","X-Cat-Dog
 status.HTTP_201_CREATED","responses/response-headers-and-cookies.md
 responses/status-codes.md","[responses/response-headers-and-cookies.md:43] response.headers[""X-Cat-Dog""] = ""alone in the world""
 [responses/status-codes.md:133] response.status_code = status.HTTP_201_CREATED",,,check,[key_facts 범위] 3번 '임시 Response 값이 최종 응답에 복사됨'은 질문이 묻지 않음 → 뺌,,,"The header is set with response.headers[""X-Cat-Dog""] on the injected Response.
-The status is changed by setting response.status_code to status.HTTP_201_CREATED.",,,,,,,,
+The status is changed by setting response.status_code to status.HTTP_201_CREATED.",,edit,,,"The header is set with response.headers[""X-Cat-Dog""] on the injected Response.
+The status is changed by setting response.status_code to status.HTTP_201_CREATED.",,ungdeong,AI 수정안 채택: 질문이 묻지 않은 사실을 key_facts 에서 뺌
 c0151,D,multi,"How is Strawberry's GraphQL router added to a FastAPI app, and what happens to path operations registered on a router once it has already been included?","GraphQLRouter is an APIRouter, so it is added with app.include_router(graphql_app, prefix=""/graphql""); operations added later are still visible through the earlier inclusion","GraphQLRouter is an APIRouter added with include_router.
 The GraphQL endpoint is at /graphql.
 Operations added to a router after inclusion are still visible.","GraphQLRouter
 still visible","app-structure/bigger-applications.md
 integrations/graphql-and-opentelemetry.md","[integrations/graphql-and-opentelemetry.md:67] app.include_router(graphql_app, prefix=""/graphql"")
 [app-structure/bigger-applications.md:183] - Path operations added to a router **after** it was included are still visible through the earlier inclusion.",,,check,[key_facts 범위] 2번 '/graphql 엔드포인트'는 1번에 포함 → 합침,,,"GraphQLRouter is an APIRouter, added with app.include_router(graphql_app, prefix=""/graphql"").
-Operations added to a router after it was included are still visible.",,,,,,,,
+Operations added to a router after it was included are still visible.",,edit,,,"GraphQLRouter is an APIRouter, added with app.include_router(graphql_app, prefix=""/graphql"").
+Operations added to a router after it was included are still visible.",,ungdeong,AI 수정안 채택: 질문이 묻지 않은 사실을 key_facts 에서 뺌
 c0152,A,multi,The SQLModel tutorial creates tables from an on_event startup handler; which internal FastAPI object runs such handlers when no lifespan is passed?,"FastAPI's internal _DefaultLifespan runs the on_startup handlers, so the tutorial's handler calls create_db_and_tables() at startup","Without a lifespan, FastAPI uses _DefaultLifespan to run on_startup handlers.
 The tutorial's startup handler calls create_db_and_tables().","_DefaultLifespan
 create_db_and_tables","app-structure/lifespan-events.md
 integrations/sql-databases.md","[app-structure/lifespan-events.md:131] FastAPI uses an internal `_DefaultLifespan` that runs the `on_startup` / `on_shutdown` handlers
-[integrations/sql-databases.md:44] create_db_and_tables()",,,check,[key_facts 범위] 2번 'create_db_and_tables() 호출'은 질문의 전제 → 뺌 (질문이 묻는 것은 내부 객체 하나),,,"Without a lifespan, FastAPI's internal _DefaultLifespan runs the on_startup handlers.",,,,,,,,
+[integrations/sql-databases.md:44] create_db_and_tables()",,,check,[key_facts 범위] 2번 'create_db_and_tables() 호출'은 질문의 전제 → 뺌 (질문이 묻는 것은 내부 객체 하나),,,"Without a lifespan, FastAPI's internal _DefaultLifespan runs the on_startup handlers.",,edit,,,"Without a lifespan, FastAPI's internal _DefaultLifespan runs the on_startup handlers.",,ungdeong,AI 수정안 채택: 질문이 묻지 않은 사실을 key_facts 에서 뺌
 c0157,B,multi,"When a class is the dependency versus a configured instance of a class, which method's signature does FastAPI inspect in each case?","For Depends(CommonQueryParams) it inspects __init__ and you receive the new instance; for Depends(checker), a FixedContentQueryChecker instance, it ignores __init__ and inspects __call__","For a class dependency such as CommonQueryParams, FastAPI inspects __init__.
 For a callable instance such as a FixedContentQueryChecker, FastAPI inspects __call__.
 FastAPI never looks at the instance's __init__.","CommonQueryParams
 FixedContentQueryChecker","dependencies/advanced-dependencies.md
 dependencies/dependency-injection-basics.md","[dependencies/dependency-injection-basics.md:101] async def read_items(commons: Annotated[CommonQueryParams, Depends(CommonQueryParams)]):
 [dependencies/advanced-dependencies.md:73] - FastAPI never looks at `__init__`; **you** call it to configure the instance (`""bar""`).",,,check,[key_facts 범위] 3번 '인스턴스의 __init__ 은 보지 않음'은 2번과 겹침 → 뺌,,,"For a class dependency such as CommonQueryParams, FastAPI inspects __init__.
-For a configured instance such as a FixedContentQueryChecker, FastAPI inspects __call__.",,,,,,,,
+For a configured instance such as a FixedContentQueryChecker, FastAPI inspects __call__.",,edit,,,"For a class dependency such as CommonQueryParams, FastAPI inspects __init__.
+For a configured instance such as a FixedContentQueryChecker, FastAPI inspects __call__.",,ungdeong,AI 수정안 채택: 질문이 묻지 않은 사실을 key_facts 에서 뺌
 c0160,A,multi,"Why do the docs say to register HTTP error handlers for Starlette's exception class, and where do exception handlers sit relative to your own middleware?","Handlers for StarletteHTTPException also catch errors Starlette raises internally, like 404 for unknown routes and 405; they run in ExceptionMiddleware, inside your middleware, so middleware sees their responses","Handlers should be registered for Starlette's HTTPException.
 This catches Starlette's internal errors such as 404 and 405.
 Exception handlers run in ExceptionMiddleware inside user middleware.","StarletteHTTPException
 ExceptionMiddleware","errors/handling-errors.md
 internals/request-handling-internals.md","[errors/handling-errors.md:75] so they also catch errors Starlette raises internally (e.g. 404 for unknown routes, 405)
 [internals/request-handling-internals.md:44] ExceptionMiddleware          ← your exception handlers (HTTPException, RequestValidationError, custom…)",,,check,[key_facts 범위] 1번 'Starlette HTTPException 에 등록해야 한다'는 질문의 전제 → 이유와 위치만,,,"Handlers for Starlette's HTTPException also catch errors Starlette raises internally, such as 404 and 405.
-Exception handlers run in ExceptionMiddleware, inside user middleware.",,,,,,,,
+Exception handlers run in ExceptionMiddleware, inside user middleware.",,edit,,,"Handlers for Starlette's HTTPException also catch errors Starlette raises internally, such as 404 and 405.
+Exception handlers run in ExceptionMiddleware, inside user middleware.",,ungdeong,AI 수정안 채택: 질문이 묻지 않은 사실을 key_facts 에서 뺌
 c0164,A,multi,"Which internal step validates an endpoint's return value against its response field, and how do you keep a Response | dict annotation without FastAPI building a model from it?","serialize_response validates the value (a failure raises ResponseValidationError, giving a 500); set response_model=None on the decorator","serialize_response validates the return value against the response field.
 A failure raises ResponseValidationError and a 500.
 response_model=None disables the response model.","serialize_response
 response_model=None","internals/request-handling-internals.md
 models/response-model.md","[internals/request-handling-internals.md:102] - Otherwise `serialize_response()`:
 [models/response-model.md:170] @app.get(""/portal"", response_model=None)",,,check,"[key_facts 범위] 2번 '실패하면 ResponseValidationError, 500'은 질문이 묻지 않음 → 뺌",,,"serialize_response validates the return value against the response field.
-response_model=None disables the response model.",,,,,,,,
+response_model=None disables the response model.",,edit,,,"serialize_response validates the return value against the response field.
+response_model=None disables the response model.",,ungdeong,AI 수정안 채택: 질문이 묻지 않은 사실을 key_facts 에서 뺌
 c0167,D,multi,"If an endpoint switches to 201 by setting status_code on an injected Response, is its return value still filtered by the response model, and which decorator option would drop fields never explicitly set?","Yes, it is still serialized through the response model (the injected status overrides the decorator's in _build_response_args); add response_model_exclude_unset=True","The return value is still serialized through the response model.
 The injected Response status overrides the decorator status.
 response_model_exclude_unset omits fields not explicitly set.","_build_response_args
 response_model_exclude_unset","models/response-model.md
 responses/status-codes.md","[responses/status-codes.md:137] (`_build_response_args` in `fastapi/routing.py`). Your return value is still serialized through the response model.
 [models/response-model.md:205] | `response_model_exclude_unset` | Omit fields not explicitly set |",,,check,[key_facts 범위] 2번 '주입된 status 가 decorator 값을 덮어씀'은 질문의 전제 → 뺌,,,"The return value is still serialized through the response model.
-response_model_exclude_unset omits fields not explicitly set.",,,,,,,,
+response_model_exclude_unset omits fields not explicitly set.",,edit,,,"The return value is still serialized through the response model.
+response_model_exclude_unset omits fields not explicitly set.",,ungdeong,AI 수정안 채택: 질문이 묻지 않은 사실을 key_facts 에서 뺌
 c0007,A,fact,Starting with which FastAPI release can query validation be written with Annotated?,0.95.0,Annotated support was added in FastAPI 0.95.0.,"0.95.0
 Annotated",request/query-parameters.md,[request/query-parameters.md:111] `Annotated` support was added in FastAPI 0.95.0 and is the recommended style.,,,ok,key_facts 가 질문 범위에 맞음. (test 는 key_facts 범위만 사전 점검. 근거·상식 여부 등은 검수자가 확인),,,,,,,,,,,
 c0010,C,code,"In FastAPI's get-or-create task example, what text is saved for a task ID that was not present before?",This didn't exist before,"A new task is stored with the text ""This didn't exist before"".",This didn't exist before,responses/status-codes.md,"[responses/status-codes.md:132] tasks[task_id] = ""This didn't exist before""",,,ok,key_facts 가 질문 범위에 맞음. (test 는 key_facts 범위만 사전 점검. 근거·상식 여부 등은 검수자가 확인),,,,,,,,,,,
