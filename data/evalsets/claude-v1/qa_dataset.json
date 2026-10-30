@@ -394,7 +394,12 @@
       "cand_id": "20261006-015454-c0007",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0008",
@@ -438,7 +443,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -491,7 +496,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -550,7 +555,12 @@
       "cand_id": "20261006-015454-c0011",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0011",
@@ -565,8 +575,7 @@
     ],
     "key_facts": [
       "A Response parameter is declared in the path operation function.",
-      "response.status_code is set to status.HTTP_201_CREATED when something is created.",
-      "The return value is still serialized through the response model."
+      "response.status_code is set to status.HTTP_201_CREATED when something is created."
     ],
     "evidence": [
       {
@@ -614,7 +623,12 @@
       "cand_id": "20261006-015454-c0012",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "edit"
+    }
   },
   {
     "id": "c0012",
@@ -665,7 +679,12 @@
       "cand_id": "20261006-015454-c0013",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0013",
@@ -715,7 +734,12 @@
       "cand_id": "20261006-015454-c0014",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0014",
@@ -731,7 +755,7 @@
     "key_facts": [
       "requirements.txt is copied before the application code.",
       "Dependencies are installed with pip before copying ./app.",
-      "The application code is copied last so code changes only rebuild the final layers."
+      "The application code (./app) is copied last."
     ],
     "evidence": [
       {
@@ -798,7 +822,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -937,7 +961,12 @@
       "cand_id": "20261006-015454-c0017",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "intermediate"
+    "persona": "intermediate",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0017",
@@ -2311,7 +2340,12 @@
       "cand_id": "20261006-015454-c0044",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0042",
@@ -2362,7 +2396,12 @@
       "cand_id": "20261006-015454-c0045",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0043",
@@ -2375,8 +2414,7 @@
       "_DefaultLifespan"
     ],
     "key_facts": [
-      "Providing lifespan replaces the default that runs on_startup/on_shutdown handlers.",
-      "The app's event handlers are then no longer called."
+      "When a lifespan is given, the app's on_startup and on_shutdown handlers are no longer called."
     ],
     "evidence": [
       {
@@ -2405,7 +2443,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -2465,7 +2503,12 @@
       "cand_id": "20261006-015454-c0048",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0045",
@@ -2543,7 +2586,12 @@
       "cand_id": "20261006-015454-c0049",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0046",
@@ -2594,7 +2642,12 @@
       "cand_id": "20261006-015454-c0050",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0047",
@@ -2644,7 +2697,12 @@
       "cand_id": "20261006-015454-c0051",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0048",
@@ -2657,9 +2715,8 @@
       "description.split"
     ],
     "key_facts": [
-      "The description is taken from the function's docstring.",
-      "A form feed character \\f is placed before the internal notes.",
-      "Only the text before the first \\f is used in OpenAPI."
+      "A form feed character \\f is placed in the docstring before the internal notes.",
+      "FastAPI keeps only the text before the first \\f for the docs."
     ],
     "evidence": [
       {
@@ -2688,7 +2745,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -2748,7 +2805,12 @@
       "cand_id": "20261006-015454-c0053",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0050",
@@ -2799,7 +2861,12 @@
       "cand_id": "20261006-015454-c0054",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0051",
@@ -2882,7 +2949,12 @@
       "cand_id": "20261006-015454-c0055",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0052",
@@ -2933,7 +3005,12 @@
       "cand_id": "20261006-015454-c0056",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0053",
@@ -2984,7 +3061,12 @@
       "cand_id": "20261006-015454-c0057",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0054",
@@ -3058,7 +3140,12 @@
       "cand_id": "20261006-015454-c0058",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0055",
@@ -3071,7 +3158,7 @@
       "WSGIMiddleware"
     ],
     "key_facts": [
-      "The Flask app is mounted at /v1 through WSGIMiddleware."
+      "The Flask app is mounted at /v1."
     ],
     "evidence": [
       {
@@ -3100,7 +3187,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -3124,8 +3211,7 @@
     ],
     "key_facts": [
       "The proxy is trusted with --forwarded-allow-ips.",
-      "The prefix is passed as root_path, e.g. --root-path /api/v1.",
-      "The server still serves paths without the prefix."
+      "The prefix is passed as root_path, e.g. --root-path /api/v1."
     ],
     "evidence": [
       {
@@ -3183,7 +3269,12 @@
       "cand_id": "20261006-015454-c0061",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "edit"
+    }
   },
   {
     "id": "c0057",
@@ -3196,9 +3287,8 @@
       "/subapi/docs"
     ],
     "key_facts": [
-      "Operations from an included APIRouter are part of the main app's OpenAPI schema.",
-      "A mounted sub-application has its own OpenAPI schema and docs UI.",
-      "The mounted app's docs are served under its mount path, e.g. /subapi/docs."
+      "Operations from an included APIRouter appear in the main app's same OpenAPI schema and /docs.",
+      "A mounted sub-application keeps its own OpenAPI schema and docs UI (e.g. /subapi/docs)."
     ],
     "evidence": [
       {
@@ -3240,7 +3330,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -3300,7 +3390,12 @@
       "cand_id": "20261006-015454-c0063",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0059",
@@ -3350,7 +3445,12 @@
       "cand_id": "20261006-015454-c0064",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0060",
@@ -3424,7 +3524,12 @@
       "cand_id": "20261006-015454-c0065",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0061",
@@ -3475,7 +3580,12 @@
       "cand_id": "20261006-015454-c0066",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0062",
@@ -3526,7 +3636,12 @@
       "cand_id": "20261006-015454-c0067",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0063",
@@ -3610,7 +3725,12 @@
       "cand_id": "20261006-015454-c0068",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0064",
@@ -3661,7 +3781,12 @@
       "cand_id": "20261006-015454-c0069",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0065",
@@ -3712,7 +3837,12 @@
       "cand_id": "20261006-015454-c0070",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0066",
@@ -3774,7 +3904,12 @@
       "cand_id": "20261006-015454-c0071",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0067",
@@ -3825,7 +3960,12 @@
       "cand_id": "20261006-015454-c0072",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0068",
@@ -3876,7 +4016,12 @@
       "cand_id": "20261006-015454-c0073",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0069",
@@ -3960,7 +4105,12 @@
       "cand_id": "20261006-015454-c0074",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0070",
@@ -4010,7 +4160,12 @@
       "cand_id": "20261006-015454-c0077",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0071",
@@ -4060,7 +4215,12 @@
       "cand_id": "20261006-015454-c0078",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0072",
@@ -4113,7 +4273,12 @@
       "cand_id": "20261006-015454-c0079",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0073",
@@ -4164,7 +4329,12 @@
       "cand_id": "20261006-015454-c0080",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0074",
@@ -4218,7 +4388,12 @@
       "cand_id": "20261006-015454-c0081",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0075",
@@ -4303,7 +4478,12 @@
       "cand_id": "20261006-015454-c0082",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0076",
@@ -4353,7 +4533,12 @@
       "cand_id": "20261006-015454-c0083",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0077",
@@ -4403,7 +4588,12 @@
       "cand_id": "20261006-015454-c0084",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0078",
@@ -4454,7 +4644,12 @@
       "cand_id": "20261006-015454-c0085",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0079",
@@ -4504,7 +4699,12 @@
       "cand_id": "20261006-015454-c0086",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0080",
@@ -4554,7 +4754,12 @@
       "cand_id": "20261006-015454-c0088",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0081",
@@ -4604,7 +4809,12 @@
       "cand_id": "20261006-015454-c0089",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0082",
@@ -4618,8 +4828,7 @@
     ],
     "key_facts": [
       "The app location is declared in pyproject.toml under [tool.fastapi].",
-      "entrypoint holds the import string such as main:app.",
-      "fastapi dev and fastapi run then work without a path."
+      "entrypoint holds the import string such as main:app."
     ],
     "evidence": [
       {
@@ -4667,7 +4876,12 @@
       "cand_id": "20261006-015454-c0090",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "edit"
+    }
   },
   {
     "id": "c0083",
@@ -4717,7 +4931,12 @@
       "cand_id": "20261006-015454-c0091",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0084",
@@ -4767,7 +4986,12 @@
       "cand_id": "20261006-015454-c0092",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0085",
@@ -4817,7 +5041,12 @@
       "cand_id": "20261006-015454-c0097",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0086",
@@ -4868,7 +5097,12 @@
       "cand_id": "20261006-015454-c0099",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0087",
@@ -4918,7 +5152,12 @@
       "cand_id": "20261006-015454-c0100",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0088",
@@ -4932,8 +5171,7 @@
     ],
     "key_facts": [
       "The service name is set with OTEL_SERVICE_NAME.",
-      "The collector URL is set with OTEL_EXPORTER_OTLP_ENDPOINT.",
-      "Headers such as an API key go in OTEL_EXPORTER_OTLP_HEADERS when required."
+      "The collector URL is set with OTEL_EXPORTER_OTLP_ENDPOINT."
     ],
     "evidence": [
       {
@@ -4982,7 +5220,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -5003,7 +5241,7 @@
       "Query(le=100)"
     ],
     "key_facts": [
-      "The hero list endpoint caps the page size at 100 with Query(le=100)."
+      "The hero list endpoint allows at most 100 items per page."
     ],
     "evidence": [
       {
@@ -5032,7 +5270,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -5091,7 +5329,12 @@
       "cand_id": "20261006-015454-c0103",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0091",
@@ -5165,7 +5408,12 @@
       "cand_id": "20261006-015454-c0104",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0092",
@@ -5215,7 +5463,12 @@
       "cand_id": "20261006-015454-c0105",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0093",
@@ -5228,7 +5481,7 @@
       "WebSocketException"
     ],
     "key_facts": [
-      "The dependency raises WebSocketException with status.WS_1008_POLICY_VIOLATION."
+      "The close code raised is status.WS_1008_POLICY_VIOLATION."
     ],
     "evidence": [
       {
@@ -5257,7 +5510,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -5279,7 +5532,7 @@
       "RequestValidationError"
     ],
     "key_facts": [
-      "Invalid JSON raises a RequestValidationError of type json_invalid, giving a 422."
+      "Malformed JSON is reported with the error type json_invalid."
     ],
     "evidence": [
       {
@@ -5308,7 +5561,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -5367,7 +5620,12 @@
       "cand_id": "20261006-015454-c0111",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0096",
@@ -5451,7 +5709,12 @@
       "cand_id": "20261006-015454-c0112",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0097",
@@ -5502,7 +5765,12 @@
       "cand_id": "20261006-015454-c0113",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0098",
@@ -5552,7 +5820,12 @@
       "cand_id": "20261006-015454-c0114",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0099",
@@ -5565,7 +5838,7 @@
       "pydantic.v1"
     ],
     "key_facts": [
-      "FastAPI 0.128.0 dropped pydantic.v1 support, leaving v2 only."
+      "Support for pydantic.v1 models was dropped completely in FastAPI 0.128.0."
     ],
     "evidence": [
       {
@@ -5594,7 +5867,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -5653,7 +5926,12 @@
       "cand_id": "20261006-015454-c0117",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0101",
@@ -5736,7 +6014,12 @@
       "cand_id": "20261006-015454-c0118",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0102",
@@ -5786,7 +6069,12 @@
       "cand_id": "20261006-015454-c0119",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0103",
@@ -5837,7 +6125,12 @@
       "cand_id": "20261006-015454-c0120",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0104",
@@ -5912,7 +6205,12 @@
       "cand_id": "20261006-015454-c0121",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0105",
@@ -5962,7 +6260,12 @@
       "cand_id": "20261006-015454-c0123",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0106",
@@ -6025,7 +6328,12 @@
       "cand_id": "20261006-015454-c0124",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0107",
@@ -6038,9 +6346,8 @@
       "hero_db.sqlmodel_update(hero_data)"
     ],
     "key_facts": [
-      "Both start from model_dump(exclude_unset=True).",
-      "The Pydantic version applies the data with model_copy(update=...).",
-      "The SQLModel version applies the data with sqlmodel_update on the row."
+      "The Pydantic version applies the sent fields with model_copy(update=...).",
+      "The SQLModel version applies them to the row with sqlmodel_update."
     ],
     "evidence": [
       {
@@ -6082,7 +6389,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -6142,7 +6449,12 @@
       "cand_id": "20261006-015454-c0126",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0109",
@@ -6193,7 +6505,12 @@
       "cand_id": "20261006-015454-c0127",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0110",
@@ -6266,7 +6583,12 @@
       "cand_id": "20261006-015454-c0128",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0111",
@@ -6317,7 +6639,12 @@
       "cand_id": "20261006-015454-c0129",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0112",
@@ -6367,7 +6694,12 @@
       "cand_id": "20261006-015454-c0130",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0113",
@@ -6442,7 +6774,12 @@
       "cand_id": "20261006-015454-c0131",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0114",
@@ -6492,7 +6829,12 @@
       "cand_id": "20261006-015454-c0132",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0115",
@@ -6543,7 +6885,12 @@
       "cand_id": "20261006-015454-c0133",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0116",
@@ -6559,8 +6906,7 @@
     "key_facts": [
       "The automatic docs are disabled with docs_url=None and redoc_url=None.",
       "The asset files are served from a mounted static directory.",
-      "Custom /docs and /redoc routes use get_swagger_ui_html and get_redoc_html.",
-      "The OAuth2 redirect route is kept for Swagger UI's Authorize dialog."
+      "Custom /docs and /redoc routes use get_swagger_ui_html and get_redoc_html with the local file URLs."
     ],
     "evidence": [
       {
@@ -6609,7 +6955,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -6630,7 +6976,7 @@
       "A plumbus"
     ],
     "key_facts": [
-      "get_data returns DataOutput with the description \"A plumbus\"."
+      "get_data returns the description \"A plumbus\"."
     ],
     "evidence": [
       {
@@ -6668,7 +7014,12 @@
       "cand_id": "20261006-015454-c0137",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "edit"
+    }
   },
   {
     "id": "c0118",
@@ -6731,7 +7082,12 @@
       "cand_id": "20261006-015454-c0138",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0119",
@@ -6743,7 +7099,7 @@
       "extra_forbidden"
     ],
     "key_facts": [
-      "An unexpected field in a form model with extra forbidden gives a 422 error of type extra_forbidden."
+      "The client gets a validation error of type extra_forbidden."
     ],
     "evidence": [
       {
@@ -6772,7 +7128,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -6835,7 +7191,12 @@
       "cand_id": "20261006-015454-c0140",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0121",
@@ -6886,7 +7247,12 @@
       "cand_id": "20261006-015454-c0142",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0122",
@@ -6947,7 +7313,12 @@
       "cand_id": "20261006-015454-c0143",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0123",
@@ -6961,8 +7332,7 @@
     ],
     "key_facts": [
       "The parameter is declared with Header().",
-      "convert_underscores=False disables the underscore-to-hyphen conversion.",
-      "Some proxies and servers reject headers with underscores."
+      "convert_underscores=False disables the underscore-to-hyphen conversion."
     ],
     "evidence": [
       {
@@ -7001,7 +7371,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -7060,7 +7430,12 @@
       "cand_id": "20261006-015454-c0145",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0125",
@@ -7110,7 +7485,12 @@
       "cand_id": "20261006-015454-c0146",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0126",
@@ -7122,8 +7502,7 @@
       "Body(embed=True)"
     ],
     "key_facts": [
-      "The model parameter is declared with Body(embed=True).",
-      "The expected body then wraps the model under the parameter name, e.g. {\"item\": {...}}."
+      "The model parameter is declared with Body(embed=True)."
     ],
     "evidence": [
       {
@@ -7171,7 +7550,12 @@
       "cand_id": "20261006-015454-c0147",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "edit"
+    }
   },
   {
     "id": "c0127",
@@ -7222,7 +7606,12 @@
       "cand_id": "20261006-015454-c0149",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0128",
@@ -7318,7 +7707,12 @@
       "cand_id": "20261006-015454-c0150",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0129",
@@ -7368,7 +7762,12 @@
       "cand_id": "20261006-015454-c0151",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0130",
@@ -7418,7 +7817,12 @@
       "cand_id": "20261006-015454-c0152",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0131",
@@ -7461,7 +7865,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -7520,7 +7924,12 @@
       "cand_id": "20261006-015454-c0156",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0133",
@@ -7592,7 +8001,12 @@
       "cand_id": "20261006-015454-c0157",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0134",
@@ -7643,7 +8057,12 @@
       "cand_id": "20261006-015454-c0158",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0135",
@@ -7694,7 +8113,12 @@
       "cand_id": "20261006-015454-c0159",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0136",
@@ -7745,7 +8169,12 @@
       "cand_id": "20261006-015454-c0161",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0137",
@@ -7795,7 +8224,12 @@
       "cand_id": "20261006-015454-c0165",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0138",
@@ -7879,7 +8313,12 @@
       "cand_id": "20261006-015454-c0166",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0139",
@@ -7892,7 +8331,7 @@
     ],
     "key_facts": [
       "The /users/me/items/ operation requires the items scope.",
-      "It also requires the me scope inherited from get_current_active_user."
+      "The /users/me/items/ operation requires the me scope."
     ],
     "evidence": [
       {
@@ -7921,7 +8360,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -7980,7 +8419,12 @@
       "cand_id": "20261006-015454-c0168",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0141",
@@ -7994,9 +8438,8 @@
       "Security"
     ],
     "key_facts": [
-      "The checking dependency declares a SecurityScopes parameter.",
-      "SecurityScopes holds all scopes required by the dependency and its dependants.",
-      "Missing scopes cause a 401 Not enough permissions response.",
+      "The token-checking dependency declares a SecurityScopes parameter.",
+      "If any of security_scopes.scopes is missing from the token, it raises 401 Not enough permissions.",
       "Endpoints declare required scopes with Security(..., scopes=[...])."
     ],
     "evidence": [
@@ -8046,7 +8489,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -8105,7 +8548,12 @@
       "cand_id": "20261006-015454-c0170",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0143",
@@ -8155,7 +8603,12 @@
       "cand_id": "20261006-015454-c0171",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0144",
@@ -8168,9 +8621,8 @@
       "status.HTTP_201_CREATED"
     ],
     "key_facts": [
-      "The header is set through response.headers on the injected Response.",
-      "The status is changed by setting response.status_code to status.HTTP_201_CREATED.",
-      "Values set on the temporary Response are copied to the final response."
+      "The header is set with response.headers[\"X-Cat-Dog\"] on the injected Response.",
+      "The status is changed by setting response.status_code to status.HTTP_201_CREATED."
     ],
     "evidence": [
       {
@@ -8212,7 +8664,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261006.jsonl",
@@ -8537,6 +8989,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0009",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -8601,6 +9058,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0010",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -8614,9 +9076,8 @@
       "still visible"
     ],
     "key_facts": [
-      "GraphQLRouter is an APIRouter added with include_router.",
-      "The GraphQL endpoint is at /graphql.",
-      "Operations added to a router after inclusion are still visible."
+      "GraphQLRouter is an APIRouter, added with app.include_router(graphql_app, prefix=\"/graphql\").",
+      "Operations added to a router after it was included are still visible."
     ],
     "evidence": [
       {
@@ -8658,7 +9119,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
@@ -8679,8 +9140,7 @@
       "create_db_and_tables"
     ],
     "key_facts": [
-      "Without a lifespan, FastAPI uses _DefaultLifespan to run on_startup handlers.",
-      "The tutorial's startup handler calls create_db_and_tables()."
+      "Without a lifespan, FastAPI's internal _DefaultLifespan runs the on_startup handlers."
     ],
     "evidence": [
       {
@@ -8726,7 +9186,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
@@ -8798,6 +9258,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0019",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -8862,6 +9327,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0022",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -8927,6 +9397,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0023",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -8991,6 +9466,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0025",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -9005,8 +9485,7 @@
     ],
     "key_facts": [
       "For a class dependency such as CommonQueryParams, FastAPI inspects __init__.",
-      "For a callable instance such as a FixedContentQueryChecker, FastAPI inspects __call__.",
-      "FastAPI never looks at the instance's __init__."
+      "For a configured instance such as a FixedContentQueryChecker, FastAPI inspects __call__."
     ],
     "evidence": [
       {
@@ -9048,7 +9527,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
@@ -9069,7 +9548,7 @@
       "APIKeyHeader"
     ],
     "key_facts": [
-      "The hand-rolled check returns 400 with X-Token header invalid.",
+      "The hand-rolled check rejects a bad token with status 400.",
       "APIKeyHeader reads a named API key header.",
       "Missing credentials give 401 Not authenticated."
     ],
@@ -9121,6 +9600,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0029",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "edit"
     }
   },
   {
@@ -9185,6 +9669,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0034",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -9198,9 +9687,8 @@
       "ExceptionMiddleware"
     ],
     "key_facts": [
-      "Handlers should be registered for Starlette's HTTPException.",
-      "This catches Starlette's internal errors such as 404 and 405.",
-      "Exception handlers run in ExceptionMiddleware inside user middleware."
+      "Handlers for Starlette's HTTPException also catch errors Starlette raises internally, such as 404 and 405.",
+      "Exception handlers run in ExceptionMiddleware, inside user middleware."
     ],
     "evidence": [
       {
@@ -9242,7 +9730,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
@@ -9263,8 +9751,7 @@
       "\"body\": exc.body"
     ],
     "key_facts": [
-      "The custom route class is ValidationErrorLoggingRoute.",
-      "It reads the raw body with await request.body().",
+      "The custom APIRoute approach reads the raw body with await request.body().",
       "A RequestValidationError handler can return exc.body instead."
     ],
     "evidence": [
@@ -9315,6 +9802,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0036",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "edit"
     }
   },
   {
@@ -9379,6 +9871,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0040",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -9443,6 +9940,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0043",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -9457,7 +9959,6 @@
     ],
     "key_facts": [
       "serialize_response validates the return value against the response field.",
-      "A failure raises ResponseValidationError and a 500.",
       "response_model=None disables the response model."
     ],
     "evidence": [
@@ -9500,7 +10001,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
@@ -9572,6 +10073,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0048",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -9636,6 +10142,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0049",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -9650,7 +10161,6 @@
     ],
     "key_facts": [
       "The return value is still serialized through the response model.",
-      "The injected Response status overrides the decorator status.",
       "response_model_exclude_unset omits fields not explicitly set."
     ],
     "evidence": [
@@ -9693,7 +10203,7 @@
     "original_question": null,
     "verified": null,
     "closed_book_ok": true,
-    "human_checked": false,
+    "human_checked": true,
     "gen_log": {
       "generator": "claude-opus-5-5",
       "candidates_file": "data/evalsets/claude-v1/candidates/claude_20261011_balance.jsonl",
@@ -9765,6 +10275,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0052",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -9829,6 +10344,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0056",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -9893,6 +10413,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0058",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -9957,6 +10482,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0062",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -10021,6 +10551,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0064",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -10085,6 +10620,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0068",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -10149,6 +10689,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0069",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   }
 ]
