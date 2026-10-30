@@ -7,7 +7,11 @@ OpenWiki 영어 위키(`data/openwiki/en`) 기준 평가셋. 질문 후보는 Cl
 - 문항 번호는 `c0001` 형식 (Ollama로 만든 이전 평가셋의 `q0001` 과 구분)
 - persona 필드: beginner / intermediate / advanced. **기록용**이다. 실험의 답변 형식·집계·검수는 type 기준이며,
   2026-10-11 유형 균형 맞추기로 추가한 문항에는 persona 가 없다
-- 사람 검수 전 (`human_checked` 전부 false)
+- 검수 상태 (2026-10-30, `review/review_log_v1.jsonl` 에 전후 값 기록)
+  - dev 35: 사람 검수 (`human_checked` true)
+  - test 26 (AI 사전 점검 check·problem): 사람이 기준과 유형별 처리를 정해 반영 (`human_checked` true)
+  - test 113 (AI 사전 점검 ok): **AI 점검만** (`human_checked` false, `ai_checked` 에 점검 모델·날짜·keep/edit).
+    7문항은 key_facts 범위를 고쳤다. 검수표 `verdict` 는 비워 뒀으므로 사람이 채우면 `apply_review.py` 로 반영된다
 
 ## 파일
 

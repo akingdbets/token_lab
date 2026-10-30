@@ -394,7 +394,12 @@
       "cand_id": "20261006-015454-c0007",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0008",
@@ -550,7 +555,12 @@
       "cand_id": "20261006-015454-c0011",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0011",
@@ -565,8 +575,7 @@
     ],
     "key_facts": [
       "A Response parameter is declared in the path operation function.",
-      "response.status_code is set to status.HTTP_201_CREATED when something is created.",
-      "The return value is still serialized through the response model."
+      "response.status_code is set to status.HTTP_201_CREATED when something is created."
     ],
     "evidence": [
       {
@@ -614,7 +623,12 @@
       "cand_id": "20261006-015454-c0012",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "edit"
+    }
   },
   {
     "id": "c0012",
@@ -665,7 +679,12 @@
       "cand_id": "20261006-015454-c0013",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0013",
@@ -715,7 +734,12 @@
       "cand_id": "20261006-015454-c0014",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0014",
@@ -937,7 +961,12 @@
       "cand_id": "20261006-015454-c0017",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "intermediate"
+    "persona": "intermediate",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0017",
@@ -2311,7 +2340,12 @@
       "cand_id": "20261006-015454-c0044",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0042",
@@ -2362,7 +2396,12 @@
       "cand_id": "20261006-015454-c0045",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0043",
@@ -2464,7 +2503,12 @@
       "cand_id": "20261006-015454-c0048",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0045",
@@ -2542,7 +2586,12 @@
       "cand_id": "20261006-015454-c0049",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0046",
@@ -2593,7 +2642,12 @@
       "cand_id": "20261006-015454-c0050",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0047",
@@ -2643,7 +2697,12 @@
       "cand_id": "20261006-015454-c0051",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0048",
@@ -2746,7 +2805,12 @@
       "cand_id": "20261006-015454-c0053",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0050",
@@ -2797,7 +2861,12 @@
       "cand_id": "20261006-015454-c0054",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0051",
@@ -2880,7 +2949,12 @@
       "cand_id": "20261006-015454-c0055",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0052",
@@ -2931,7 +3005,12 @@
       "cand_id": "20261006-015454-c0056",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0053",
@@ -2982,7 +3061,12 @@
       "cand_id": "20261006-015454-c0057",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0054",
@@ -3056,7 +3140,12 @@
       "cand_id": "20261006-015454-c0058",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0055",
@@ -3122,8 +3211,7 @@
     ],
     "key_facts": [
       "The proxy is trusted with --forwarded-allow-ips.",
-      "The prefix is passed as root_path, e.g. --root-path /api/v1.",
-      "The server still serves paths without the prefix."
+      "The prefix is passed as root_path, e.g. --root-path /api/v1."
     ],
     "evidence": [
       {
@@ -3181,7 +3269,12 @@
       "cand_id": "20261006-015454-c0061",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "edit"
+    }
   },
   {
     "id": "c0057",
@@ -3297,7 +3390,12 @@
       "cand_id": "20261006-015454-c0063",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0059",
@@ -3347,7 +3445,12 @@
       "cand_id": "20261006-015454-c0064",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0060",
@@ -3421,7 +3524,12 @@
       "cand_id": "20261006-015454-c0065",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0061",
@@ -3472,7 +3580,12 @@
       "cand_id": "20261006-015454-c0066",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0062",
@@ -3523,7 +3636,12 @@
       "cand_id": "20261006-015454-c0067",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0063",
@@ -3607,7 +3725,12 @@
       "cand_id": "20261006-015454-c0068",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0064",
@@ -3658,7 +3781,12 @@
       "cand_id": "20261006-015454-c0069",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0065",
@@ -3709,7 +3837,12 @@
       "cand_id": "20261006-015454-c0070",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0066",
@@ -3771,7 +3904,12 @@
       "cand_id": "20261006-015454-c0071",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0067",
@@ -3822,7 +3960,12 @@
       "cand_id": "20261006-015454-c0072",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0068",
@@ -3873,7 +4016,12 @@
       "cand_id": "20261006-015454-c0073",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0069",
@@ -3957,7 +4105,12 @@
       "cand_id": "20261006-015454-c0074",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0070",
@@ -4007,7 +4160,12 @@
       "cand_id": "20261006-015454-c0077",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0071",
@@ -4057,7 +4215,12 @@
       "cand_id": "20261006-015454-c0078",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0072",
@@ -4110,7 +4273,12 @@
       "cand_id": "20261006-015454-c0079",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0073",
@@ -4161,7 +4329,12 @@
       "cand_id": "20261006-015454-c0080",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0074",
@@ -4215,7 +4388,12 @@
       "cand_id": "20261006-015454-c0081",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0075",
@@ -4300,7 +4478,12 @@
       "cand_id": "20261006-015454-c0082",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0076",
@@ -4350,7 +4533,12 @@
       "cand_id": "20261006-015454-c0083",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0077",
@@ -4400,7 +4588,12 @@
       "cand_id": "20261006-015454-c0084",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0078",
@@ -4451,7 +4644,12 @@
       "cand_id": "20261006-015454-c0085",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0079",
@@ -4501,7 +4699,12 @@
       "cand_id": "20261006-015454-c0086",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0080",
@@ -4551,7 +4754,12 @@
       "cand_id": "20261006-015454-c0088",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0081",
@@ -4601,7 +4809,12 @@
       "cand_id": "20261006-015454-c0089",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0082",
@@ -4615,8 +4828,7 @@
     ],
     "key_facts": [
       "The app location is declared in pyproject.toml under [tool.fastapi].",
-      "entrypoint holds the import string such as main:app.",
-      "fastapi dev and fastapi run then work without a path."
+      "entrypoint holds the import string such as main:app."
     ],
     "evidence": [
       {
@@ -4664,7 +4876,12 @@
       "cand_id": "20261006-015454-c0090",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "edit"
+    }
   },
   {
     "id": "c0083",
@@ -4714,7 +4931,12 @@
       "cand_id": "20261006-015454-c0091",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0084",
@@ -4764,7 +4986,12 @@
       "cand_id": "20261006-015454-c0092",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0085",
@@ -4814,7 +5041,12 @@
       "cand_id": "20261006-015454-c0097",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0086",
@@ -4865,7 +5097,12 @@
       "cand_id": "20261006-015454-c0099",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0087",
@@ -4915,7 +5152,12 @@
       "cand_id": "20261006-015454-c0100",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0088",
@@ -5087,7 +5329,12 @@
       "cand_id": "20261006-015454-c0103",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0091",
@@ -5161,7 +5408,12 @@
       "cand_id": "20261006-015454-c0104",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0092",
@@ -5211,7 +5463,12 @@
       "cand_id": "20261006-015454-c0105",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0093",
@@ -5363,7 +5620,12 @@
       "cand_id": "20261006-015454-c0111",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0096",
@@ -5447,7 +5709,12 @@
       "cand_id": "20261006-015454-c0112",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0097",
@@ -5498,7 +5765,12 @@
       "cand_id": "20261006-015454-c0113",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0098",
@@ -5548,7 +5820,12 @@
       "cand_id": "20261006-015454-c0114",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0099",
@@ -5649,7 +5926,12 @@
       "cand_id": "20261006-015454-c0117",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0101",
@@ -5732,7 +6014,12 @@
       "cand_id": "20261006-015454-c0118",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0102",
@@ -5782,7 +6069,12 @@
       "cand_id": "20261006-015454-c0119",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0103",
@@ -5833,7 +6125,12 @@
       "cand_id": "20261006-015454-c0120",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0104",
@@ -5908,7 +6205,12 @@
       "cand_id": "20261006-015454-c0121",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0105",
@@ -5958,7 +6260,12 @@
       "cand_id": "20261006-015454-c0123",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0106",
@@ -6021,7 +6328,12 @@
       "cand_id": "20261006-015454-c0124",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0107",
@@ -6137,7 +6449,12 @@
       "cand_id": "20261006-015454-c0126",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0109",
@@ -6188,7 +6505,12 @@
       "cand_id": "20261006-015454-c0127",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0110",
@@ -6261,7 +6583,12 @@
       "cand_id": "20261006-015454-c0128",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0111",
@@ -6312,7 +6639,12 @@
       "cand_id": "20261006-015454-c0129",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0112",
@@ -6362,7 +6694,12 @@
       "cand_id": "20261006-015454-c0130",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0113",
@@ -6437,7 +6774,12 @@
       "cand_id": "20261006-015454-c0131",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0114",
@@ -6487,7 +6829,12 @@
       "cand_id": "20261006-015454-c0132",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0115",
@@ -6538,7 +6885,12 @@
       "cand_id": "20261006-015454-c0133",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0116",
@@ -6624,7 +6976,7 @@
       "A plumbus"
     ],
     "key_facts": [
-      "get_data returns DataOutput with the description \"A plumbus\"."
+      "get_data returns the description \"A plumbus\"."
     ],
     "evidence": [
       {
@@ -6662,7 +7014,12 @@
       "cand_id": "20261006-015454-c0137",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "edit"
+    }
   },
   {
     "id": "c0118",
@@ -6725,7 +7082,12 @@
       "cand_id": "20261006-015454-c0138",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0119",
@@ -6829,7 +7191,12 @@
       "cand_id": "20261006-015454-c0140",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0121",
@@ -6880,7 +7247,12 @@
       "cand_id": "20261006-015454-c0142",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0122",
@@ -6941,7 +7313,12 @@
       "cand_id": "20261006-015454-c0143",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0123",
@@ -7053,7 +7430,12 @@
       "cand_id": "20261006-015454-c0145",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0125",
@@ -7103,7 +7485,12 @@
       "cand_id": "20261006-015454-c0146",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0126",
@@ -7115,8 +7502,7 @@
       "Body(embed=True)"
     ],
     "key_facts": [
-      "The model parameter is declared with Body(embed=True).",
-      "The expected body then wraps the model under the parameter name, e.g. {\"item\": {...}}."
+      "The model parameter is declared with Body(embed=True)."
     ],
     "evidence": [
       {
@@ -7164,7 +7550,12 @@
       "cand_id": "20261006-015454-c0147",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "edit"
+    }
   },
   {
     "id": "c0127",
@@ -7215,7 +7606,12 @@
       "cand_id": "20261006-015454-c0149",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0128",
@@ -7311,7 +7707,12 @@
       "cand_id": "20261006-015454-c0150",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0129",
@@ -7361,7 +7762,12 @@
       "cand_id": "20261006-015454-c0151",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0130",
@@ -7411,7 +7817,12 @@
       "cand_id": "20261006-015454-c0152",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0131",
@@ -7513,7 +7924,12 @@
       "cand_id": "20261006-015454-c0156",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0133",
@@ -7585,7 +8001,12 @@
       "cand_id": "20261006-015454-c0157",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0134",
@@ -7636,7 +8057,12 @@
       "cand_id": "20261006-015454-c0158",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0135",
@@ -7687,7 +8113,12 @@
       "cand_id": "20261006-015454-c0159",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0136",
@@ -7738,7 +8169,12 @@
       "cand_id": "20261006-015454-c0161",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0137",
@@ -7788,7 +8224,12 @@
       "cand_id": "20261006-015454-c0165",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0138",
@@ -7872,7 +8313,12 @@
       "cand_id": "20261006-015454-c0166",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "beginner"
+    "persona": "beginner",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0139",
@@ -7973,7 +8419,12 @@
       "cand_id": "20261006-015454-c0168",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0141",
@@ -8097,7 +8548,12 @@
       "cand_id": "20261006-015454-c0170",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0143",
@@ -8147,7 +8603,12 @@
       "cand_id": "20261006-015454-c0171",
       "log": "results/logs/dataset_20261006-015454.jsonl"
     },
-    "persona": "advanced"
+    "persona": "advanced",
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
+    }
   },
   {
     "id": "c0144",
@@ -8528,6 +8989,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0009",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -8592,6 +9058,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0010",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -8787,6 +9258,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0019",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -8851,6 +9327,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0022",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -8916,6 +9397,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0023",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -8980,6 +9466,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0025",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -9057,7 +9548,7 @@
       "APIKeyHeader"
     ],
     "key_facts": [
-      "The hand-rolled check returns 400 with X-Token header invalid.",
+      "The hand-rolled check rejects a bad token with status 400.",
       "APIKeyHeader reads a named API key header.",
       "Missing credentials give 401 Not authenticated."
     ],
@@ -9109,6 +9600,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0029",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "edit"
     }
   },
   {
@@ -9173,6 +9669,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0034",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -9250,8 +9751,7 @@
       "\"body\": exc.body"
     ],
     "key_facts": [
-      "The custom route class is ValidationErrorLoggingRoute.",
-      "It reads the raw body with await request.body().",
+      "The custom APIRoute approach reads the raw body with await request.body().",
       "A RequestValidationError handler can return exc.body instead."
     ],
     "evidence": [
@@ -9302,6 +9802,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0036",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "edit"
     }
   },
   {
@@ -9366,6 +9871,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0040",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -9430,6 +9940,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0043",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -9558,6 +10073,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0048",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -9622,6 +10142,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0049",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -9750,6 +10275,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0052",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -9814,6 +10344,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0056",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -9878,6 +10413,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0058",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -9942,6 +10482,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0062",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -10006,6 +10551,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0064",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -10070,6 +10620,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0068",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   },
   {
@@ -10134,6 +10689,11 @@
       "run_id": "20261011-140427",
       "cand_id": "20261011-140427-c0069",
       "log": "results/logs/dataset_20261011-140427.jsonl"
+    },
+    "ai_checked": {
+      "by": "claude-opus-5-5",
+      "date": "2026-10-30",
+      "verdict": "keep"
     }
   }
 ]
