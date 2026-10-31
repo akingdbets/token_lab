@@ -96,6 +96,8 @@ class Config:
     num_ctx: int = _env("LLM_NUM_CTX", 16384)   # Ollama 기본 4096 -> 늘려둠
     timeout: int = _env("LLM_TIMEOUT", 300)
     max_retries: int = _env("LLM_MAX_RETRIES", 3)
+    # 연결 실패·시간 초과(DNS 오류 등, 과금 안 됨)는 이 간격(초)으로 더 기다리며 다시 보낸다. 합계 약 4분
+    network_retry_waits: tuple = (5, 15, 30, 60, 120)
 
     # ---------- 경로 ----------
     root: Path = ROOT
