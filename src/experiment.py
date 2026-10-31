@@ -320,6 +320,11 @@ def is_not_found(response: str) -> bool:
 
 # ---------------- 로그 형식 (팀 Spec 이 정해지면 여기만 고친다) ----------------
 
+# answer_core_in_context 의 매칭 방식 (trial·summary 에 남긴다)
+CORE_MATCH_VERSION = "normalized-v1"
+_CORE_TOKEN = re.compile(r"[a-z0-9]+")
+
+
 @dataclass
 class TrialRecord:
     run_id: str
@@ -396,8 +401,12 @@ class TrialRecord:
     answer_usage_source: str = "api"          # api | estimate (prompt/completion_tokens 출처)
     answer_finish_reason: str | None = None   # length 면 ANSWER_MAX_TOKENS 에 걸려 답변이 잘림
     # 기억 의존 의심: 압축 문맥에 정답 핵심어가 없는데 answer_accuracy >= 0.5 (memory_suspect())
-    answer_core_in_context: bool | None = None  # 짧은 답은 정답 단어, 긴 답은 핵심 개체 절반 이상이 문맥에 있는지
+    answer_core_in_context: bool | None = None  # 짧은 답은 정답, 긴 답은 핵심 개체 절반 이상이 문맥에 있는지
     memory_suspect: bool = False
+    core_match_version: str = CORE_MATCH_VERSION  # answer_core_in_context 의 매칭 방식
+    # 비교용 이전 방식(단어 연속 일치) 판정과 그 기준의 memory_suspect
+    answer_core_in_context_strict: bool | None = None
+    memory_suspect_strict: bool = False
 
     info: dict = field(default_factory=dict)
 
@@ -411,9 +420,63 @@ def build_context(corpus, item: dict) -> str:
     return "\n\n".join(parts).replace("\r\n", "\n")
 
 
+def _core_tokens(s: str) -> list[re.Match]:
+    return list(_CORE_TOKEN.finditer(s.lower()))
+
+
+def find_normalized(context: str, needle: str, _ctx_tokens: list[re.Match] | None = None) -> str | None:
+    """needle 이 문맥에 있으면 문맥에서 찾은 구절, 없으면 None.
+
+    대소문자와 구분자(공백·하이픈·언더스코어·점 등) 차이는 무시한다. "WebSocket Disconnect" == "WebSocketDisconnect",
+    "asgi_lifespan" == "asgi-lifespan". 대신 토큰 경계는 지킨다: 연속한 문맥 토큰 몇 개를 이어 붙인 결과가
+    needle 토큰을 이어 붙인 결과와 같을 때만 맞다고 본다 ("1000" 안의 "100" 은 아님).
+    숫자끼리 이어 붙이는 자리는 needle 에도 같은 경계가 있어야 한다 ("10.0" 은 "100" 이 아님)."""
+    want = [m.group() for m in _core_tokens(needle)]
+    if not want:
+        return None
+    target = "".join(want)
+    want_cuts = {sum(map(len, want[:k])) for k in range(1, len(want))}
+    toks = _ctx_tokens if _ctx_tokens is not None else _core_tokens(context)
+    for i, first in enumerate(toks):
+        if not target.startswith(first.group()):
+            continue
+        pos, j = 0, i
+        while j < len(toks) and pos < len(target):
+            t = toks[j].group()
+            if not target.startswith(t, pos):
+                break
+            if j > i and target[pos - 1].isdigit() and t[0].isdigit() and pos not in want_cuts:
+                break
+            pos += len(t)
+            j += 1
+        if pos == len(target):
+            return context[first.start():toks[j - 1].end()]
+    return None
+
+
+def core_matches(context: str, item: dict) -> tuple[bool, list[str]]:
+    """answer_core_in_context 의 판정과 문맥에서 찾은 구절들 (정규화 매칭, find_normalized)."""
+    toks = _core_tokens(context)
+    answer = item["answer"]
+    if is_short(answer):
+        hit = find_normalized(context, answer, toks)
+        return hit is not None, [hit] if hit is not None else []
+    ents = [e for e in (item.get("key_entities") or [answer]) if _core_tokens(e)]
+    if not ents:
+        return False, []
+    hits = [h for h in (find_normalized(context, e, toks) for e in ents) if h is not None]
+    return len(hits) >= -(-len(ents) // 2), hits
+
+
 def answer_core_in_context(context: str, item: dict) -> bool:
-    """압축 문맥에 정답 핵심어가 있는지. 평가셋의 문서 없이 풀기 필터와 같은 기준(grader.closed_book_knows)을
-    답변 대신 문맥에 적용한다: 짧은 답은 정답 단어, 긴 답은 핵심 개체(key_entities) 절반 이상."""
+    """압축 문맥에 정답 핵심어가 있는지. 짧은 답은 정답, 긴 답은 핵심 개체(key_entities) 절반 이상
+    (평가셋 문서 없이 풀기 필터와 같은 규칙). 비교는 정규화 매칭(find_normalized, CORE_MATCH_VERSION) 이라
+    LLMLingua-2 가 식별자를 쪼개거나 표기만 바꿔도 있다고 본다."""
+    return core_matches(context, item)[0]
+
+
+def answer_core_in_context_strict(context: str, item: dict) -> bool:
+    """normalized-v1 이전 방식: grader.closed_book_knows 를 문맥에 그대로 적용 (단어 연속 일치). 비교용."""
     return closed_book_knows(context, item["answer"], item.get("key_entities") or [item["answer"]])[0]
 
 
@@ -643,6 +706,7 @@ def _run(args, run_id: str, out_dir: Path) -> Path:
                 judged_accuracy = fact_grade.answer_accuracy if fact_grade is not None else None
                 answer_accuracy = 0.0 if not_found and facts else judged_accuracy
                 core_in_ctx = answer_core_in_context(ctx, item)
+                core_in_ctx_strict = answer_core_in_context_strict(ctx, item)
 
                 sim = chunks = None
 
@@ -718,6 +782,8 @@ def _run(args, run_id: str, out_dir: Path) -> Path:
                     answer_finish_reason=res.finish_reason,
                     answer_core_in_context=core_in_ctx,
                     memory_suspect=memory_suspect(core_in_ctx, answer_accuracy),
+                    answer_core_in_context_strict=core_in_ctx_strict,
+                    memory_suspect_strict=memory_suspect(core_in_ctx_strict, answer_accuracy),
                     ox_judge_error=g.judge_error,
 
                     info=cres.info,
@@ -879,6 +945,10 @@ def summarize(records: list[TrialRecord], names: list[str]) -> dict:
             # 기억 의존 의심 (압축 문맥에 정답 핵심어가 없는데 정확도 >= 0.5) 수와 비율
             "memory_suspect": sum(r.memory_suspect for r in rs),
             "memory_suspect_rate": round(sum(r.memory_suspect for r in rs) / len(rs), 4),
+            "core_match_version": CORE_MATCH_VERSION,
+            # 이전 방식(단어 연속 일치) 기준 값, 비교용
+            "memory_suspect_strict": sum(r.memory_suspect_strict for r in rs),
+            "memory_suspect_strict_rate": round(sum(r.memory_suspect_strict for r in rs) / len(rs), 4),
             # O/X judge 응답을 못 읽어 단어 일치로 채점한 수
             "ox_judge_errors": sum(r.ox_judge_error is not None for r in rs),
 
