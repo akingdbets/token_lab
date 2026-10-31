@@ -173,11 +173,30 @@ class LLM:
         return res
 
     def _call_with_retry(self, messages: list[dict], stream_ttft: bool) -> LLMResult:
+        """max_retries 번까지 다시 보낸다. 연결 실패·시간 초과는 그 뒤에도 CFG.network_retry_waits 간격으로 더 기다린다
+        (서버에 닿지 않은 요청이라 과금되지 않는다. 잠깐의 네트워크 끊김으로 실행이 멈추지 않게)."""
+        try:
+            return self._call_with_basic_retry(messages, stream_ttft)
+        except (requests.ConnectionError, requests.Timeout) as e:
+            last = e
+        for wait in CFG.network_retry_waits:
+            print(f"  [네트워크 재시도] {type(last).__name__}: {str(last)[:120]} ({wait}초 후)", flush=True)
+            time.sleep(wait)
+            try:
+                return self._call_once(messages, stream_ttft)
+            except (requests.ConnectionError, requests.Timeout) as e:
+                last = e
+        raise last
+
+    def _call_once(self, messages: list[dict], stream_ttft: bool) -> LLMResult:
+        if self.backend == "ollama":
+            return self._ollama_chat(messages, stream_ttft)
+        return self._openai_chat(messages, stream_ttft)
+
+    def _call_with_basic_retry(self, messages: list[dict], stream_ttft: bool) -> LLMResult:
         for attempt in range(self.max_retries):
             try:
-                if self.backend == "ollama":
-                    return self._ollama_chat(messages, stream_ttft)
-                return self._openai_chat(messages, stream_ttft)
+                return self._call_once(messages, stream_ttft)
             except Exception as e:
                 # 4xx(429 제외)는 다시 보내도 같은 결과라 바로 올린다
                 status = getattr(getattr(e, "response", None), "status_code", None)

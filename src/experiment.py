@@ -525,10 +525,30 @@ def git_head() -> str | None:
         return None
 
 
+# 이어서 실행할 때 처음 실행의 값을 그대로 쓰는 인자 (같은 run 안에서 조건이 섞이지 않게)
+RUN_ARGS = ("compressors", "split", "limit", "ids", "no_judge", "judge_mode", "semantic", "answer_prompt")
+
+
 def run(args) -> Path:
-    run_id = datetime.now().strftime("%Y%m%d-%H%M%S")
-    out_dir = CFG.results_dir / "runs" / run_id
+    if getattr(args, "resume", None):
+        run_id = args.resume
+        out_dir = CFG.results_dir / "runs" / run_id
+        if not (out_dir / "trials.jsonl").exists():
+            sys.exit(f"이어서 실행할 run 이 없습니다: {out_dir}")
+        meta = json.loads((out_dir / "args.json").read_text(encoding="utf-8"))
+        for k in RUN_ARGS:
+            setattr(args, k, meta["args"][k])
+        meta["attempts"].append({"time": datetime.now().isoformat(timespec="seconds"), "git_head": git_head()})
+        if len({a["git_head"] for a in meta["attempts"]}) > 1:
+            print(f"[경고] 이어서 실행하는 동안 git commit 이 바뀌었습니다: "
+                  f"{[a['git_head'] for a in meta['attempts']]}", file=sys.stderr)
+    else:
+        run_id = datetime.now().strftime("%Y%m%d-%H%M%S")
+        out_dir = CFG.results_dir / "runs" / run_id
+        meta = {"args": {k: getattr(args, k) for k in RUN_ARGS},
+                "attempts": [{"time": datetime.now().isoformat(timespec="seconds"), "git_head": git_head()}]}
     (out_dir / "contexts").mkdir(parents=True, exist_ok=True)
+    (out_dir / "args.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
     try:
         return _run(args, run_id, out_dir)
     except BaseException as e:   # Ctrl-C·프로세스 중단 포함
@@ -543,11 +563,12 @@ def _report_failed_run(out_dir: Path, e: BaseException) -> None:
     trials = out_dir / "trials.jsonl"
     n = sum(1 for line in open(trials, encoding="utf-8") if line.strip()) if trials.exists() else 0
     rel = out_dir.relative_to(CFG.root).as_posix()
+    resume = f"  이어서: python src/experiment.py --resume {out_dir.name}"
     if n == 0:
         shutil.rmtree(out_dir, ignore_errors=True)
         print(f"\n[실패] trial 기록 없이 중단되어 {rel}/ 를 지웠습니다 ({why})", file=sys.stderr)
     else:
-        print(f"\n[중단] {rel}/trials.jsonl 에 {n}개 기록, summary.json 은 만들지 못했습니다 ({why})",
+        print(f"\n[중단] {rel}/trials.jsonl 에 {n}개 기록, summary.json 은 만들지 못했습니다 ({why})\n{resume}",
               file=sys.stderr)
 
 
@@ -594,9 +615,21 @@ def _run(args, run_id: str, out_dir: Path) -> Path:
     print("모델 로딩 (첫 호출은 측정에서 제외)...", flush=True)
     llm.ask("Reply with OK.")
 
+    # 이어서 실행: 이미 기록된 (문항, 압축기) 는 건너뛰고 같은 파일에 이어 쓴다.
+    # 프로세스가 오류 메시지 없이 끝나도(바깥에서 종료) trial 단위로 flush 해 두었으므로 기록은 남는다
     records: list[TrialRecord] = []
-    with open(out_dir / "trials.jsonl", "w", encoding="utf-8") as f:
+    trials_path = out_dir / "trials.jsonl"
+    if trials_path.exists() and getattr(args, "resume", None):
+        fields = set(TrialRecord.__dataclass_fields__)
+        records = [TrialRecord(**{k: v for k, v in json.loads(l).items() if k in fields})
+                   for l in open(trials_path, encoding="utf-8") if l.strip()]
+    done = {(r.qid, r.compressor) for r in records}
+    if done:
+        print(f"이미 기록된 trial {len(done)}개는 건너뜁니다", flush=True)
+    with open(trials_path, "a", encoding="utf-8") as f:
         for i, item in enumerate(items, 1):
+            if all((item["id"], c.name) in done for c in compressors):
+                continue
             raw = build_context(corpus, item)
             ents = item.get("key_entities", [])
             fmt_key = prompt.format_key(item.get("type"))
@@ -609,6 +642,8 @@ def _run(args, run_id: str, out_dir: Path) -> Path:
                   f"input {input_raw} tok (ctx {raw_part_tokens['context']})", flush=True)
 
             for comp in compressors:
+                if (item["id"], comp.name) in done:
+                    continue
                 t0 = time.perf_counter()
                 cres = comp.compress(raw_parts)
                 compress_sec = time.perf_counter() - t0
@@ -1064,6 +1099,8 @@ def main():
                     help="key_facts 판정 방식: batch (한 번에, 불완전하면 재요청/개별 폴백) | per_fact (fact 별 개별 호출). "
                          f"기본 {CFG.judge_mode} (JUDGE_MODE)")
     ap.add_argument("--semantic", action="store_true", help="압축 전후 임베딩 유사도 계산 (bge-m3 필요)")
+    ap.add_argument("--resume", metavar="RUN_ID",
+                    help="중단된 run 을 이어서 실행 (처음 실행의 인자를 args.json 에서 읽고, 기록된 trial 은 건너뜀)")
     ap.add_argument("--answer-prompt", default="v1", choices=answer_prompt_versions(),
                     help="답변 지시문 버전 (src/prompts/answer_<버전>.md)")
     run(ap.parse_args())
