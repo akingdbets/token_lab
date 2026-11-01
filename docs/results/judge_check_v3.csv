@@ -1,32 +1,36 @@
 ﻿qid,assignee,type,compressor,fact_idx,key_fact,answer,human,note
-c0001,A,fact,none,0,"When the user does not exist, authenticate_user verifies the password against DUMMY_HASH.",DUMMY_HASH,,
-c0002,D,code,none,0,"Without expires_delta, create_access_token sets the expiry to 15 minutes from now.",15 minutes,,
+c0001,A,fact,none,0,"When the user does not exist, authenticate_user verifies the password against DUMMY_HASH.",DUMMY_HASH,O,"판정 이유: 답변 DUMMY_HASH가 질문에서 묻는 사전 계산된 해시 이름과 일치한다.
+검수 의견: 질문에 주어진 사용자 부재·암호 검증 조건은 답변에서 반복하지 않아도 인정한다."
+c0002,D,code,none,0,"Without expires_delta, create_access_token sets the expiry to 15 minutes from now.",15 minutes,O,판정 이유: 답변 15 minutes가 expires_delta 미지정 시의 유효 기간과 일치한다.
 c0003,D,procedure,none,0,The token is decoded with jwt.decode using SECRET_KEY and algorithms=[ALGORITHM].,"1. `get_current_user` receives the bearer token through `Depends(oauth2_scheme)`.
 2. It decodes the token with `jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])`.
 3. It reads the `sub` claim. If `sub` is missing, it raises the credentials exception.
 4. It catches `InvalidTokenError` and raises that same exception.
 5. It looks up the user identified by `sub`. If no user is found, it raises the same exception.
-6. Otherwise, it returns the user. The exception is a `401` response with `WWW-Authenticate: Bearer`.",,
+6. Otherwise, it returns the user. The exception is a `401` response with `WWW-Authenticate: Bearer`.",O,"판정 이유: 2단계에 jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])가 명시되어 있다."
 c0003,D,procedure,none,1,The username is read from the sub claim.,"1. `get_current_user` receives the bearer token through `Depends(oauth2_scheme)`.
 2. It decodes the token with `jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])`.
 3. It reads the `sub` claim. If `sub` is missing, it raises the credentials exception.
 4. It catches `InvalidTokenError` and raises that same exception.
 5. It looks up the user identified by `sub`. If no user is found, it raises the same exception.
-6. Otherwise, it returns the user. The exception is a `401` response with `WWW-Authenticate: Bearer`.",,
+6. Otherwise, it returns the user. The exception is a `401` response with `WWW-Authenticate: Bearer`.",O,"판정 이유: 3단계에서 sub claim을 읽고, 5단계에서 그 값으로 사용자를 찾는다고 설명한다.
+검수 의견: username이라는 단어 대신 sub로 식별한 사용자라고 표현했지만 의미가 같다."
 c0003,D,procedure,none,2,The user is looked up by that username (get_user).,"1. `get_current_user` receives the bearer token through `Depends(oauth2_scheme)`.
 2. It decodes the token with `jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])`.
 3. It reads the `sub` claim. If `sub` is missing, it raises the credentials exception.
 4. It catches `InvalidTokenError` and raises that same exception.
 5. It looks up the user identified by `sub`. If no user is found, it raises the same exception.
-6. Otherwise, it returns the user. The exception is a `401` response with `WWW-Authenticate: Bearer`.",,
+6. Otherwise, it returns the user. The exception is a `401` response with `WWW-Authenticate: Bearer`.",O,"판정 이유: 5단계에서 sub로 식별된 사용자를 조회한다고 명시한다.
+검수 의견: get_user 함수명은 생략했지만 사용자 조회 동작을 명확히 설명하므로 인정한다."
 c0003,D,procedure,none,3,"A bad signature, expired token, missing sub or unknown user all give the same 401 with WWW-Authenticate: Bearer.","1. `get_current_user` receives the bearer token through `Depends(oauth2_scheme)`.
 2. It decodes the token with `jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])`.
 3. It reads the `sub` claim. If `sub` is missing, it raises the credentials exception.
 4. It catches `InvalidTokenError` and raises that same exception.
 5. It looks up the user identified by `sub`. If no user is found, it raises the same exception.
-6. Otherwise, it returns the user. The exception is a `401` response with `WWW-Authenticate: Bearer`.",,
-c0004,B,fact,none,0,The middleware added last is the outermost one.,The last middleware added is the outermost.,,
-c0005,A,code,none,0,The example sets compresslevel to 5.,5,,
+6. Otherwise, it returns the user. The exception is a `401` response with `WWW-Authenticate: Bearer`.",O,"판정 이유: InvalidTokenError를 잡고, sub 누락·사용자 부재에도 동일한 예외를 사용하며 401 및 WWW-Authenticate: Bearer를 명시한다.
+검수 의견: 서명 오류·만료는 개별 열거하지 않았지만 토큰 디코딩의 InvalidTokenError 처리로 표현되어 있다. 오류별 명칭 반복을 필수로 보지는 않았다."
+c0004,B,fact,none,0,The middleware added last is the outermost one.,The last middleware added is the outermost.,O,판정 이유: 마지막에 추가한 미들웨어가 가장 바깥쪽이라고 직접 설명한다.
+c0005,A,code,none,0,The example sets compresslevel to 5.,5,O,판정 이유: 답변 5가 질문에서 묻는 compresslevel 값과 일치한다.
 c0006,A,procedure,none,0,"The function is decorated with @app.middleware(""http"") and receives request and call_next.","1. Import `time`, `FastAPI`, and `Request`, then create the app.
 2. Define an `async` function with `@app.middleware(""http"")`. Measure before and after `call_next(request)`, then add the duration to a response header:
 
@@ -45,7 +49,7 @@ async def add_process_time_header(request: Request, call_next):
     process_time = time.perf_counter() - start_time
     response.headers[""X-Process-Time""] = str(process_time)
     return response
-```",,
+```",O,"판정 이유: 코드에 @app.middleware(""http"")와 request, call_next 인자가 모두 있다."
 c0006,A,procedure,none,1,The start time is taken with time.perf_counter() before calling call_next.,"1. Import `time`, `FastAPI`, and `Request`, then create the app.
 2. Define an `async` function with `@app.middleware(""http"")`. Measure before and after `call_next(request)`, then add the duration to a response header:
 
@@ -64,7 +68,7 @@ async def add_process_time_header(request: Request, call_next):
     process_time = time.perf_counter() - start_time
     response.headers[""X-Process-Time""] = str(process_time)
     return response
-```",,
+```",O,판정 이유: await call_next(request) 전에 start_time = time.perf_counter()를 실행한다.
 c0006,A,procedure,none,2,The elapsed time is computed after call_next returns.,"1. Import `time`, `FastAPI`, and `Request`, then create the app.
 2. Define an `async` function with `@app.middleware(""http"")`. Measure before and after `call_next(request)`, then add the duration to a response header:
 
@@ -83,7 +87,7 @@ async def add_process_time_header(request: Request, call_next):
     process_time = time.perf_counter() - start_time
     response.headers[""X-Process-Time""] = str(process_time)
     return response
-```",,
+```",O,판정 이유: call_next가 반환된 뒤 time.perf_counter() - start_time으로 경과 시간을 계산한다.
 c0006,A,procedure,none,3,The elapsed time is stored in the X-Process-Time response header.,"1. Import `time`, `FastAPI`, and `Request`, then create the app.
 2. Define an `async` function with `@app.middleware(""http"")`. Measure before and after `call_next(request)`, then add the duration to a response header:
 
@@ -102,26 +106,31 @@ async def add_process_time_header(request: Request, call_next):
     process_time = time.perf_counter() - start_time
     response.headers[""X-Process-Time""] = str(process_time)
     return response
-```",,
-c0015,D,multi,none,0,The simple password-flow login returns the username itself as the access token.,"The simple password-flow login returns the user’s username as `access_token`—an insecure placeholder. The JWT version instead issues a signed, expiring JWT with the username in its `sub` claim and an `exp` claim; it returns that token with `token_type=""bearer""`.",,
-c0015,D,multi,none,1,The JWT version returns a signed JWT created by create_access_token.,"The simple password-flow login returns the user’s username as `access_token`—an insecure placeholder. The JWT version instead issues a signed, expiring JWT with the username in its `sub` claim and an `exp` claim; it returns that token with `token_type=""bearer""`.",,
-c0015,D,multi,rule_fm_all,0,The simple password-flow login returns the username itself as the access token.,"The simple password-flow login returns the user’s **username** as `access_token`—the tutorial notes this is insecure and only demonstrates the flow. The JWT version instead issues a **signed, expiring JWT** with the username in its `sub` claim, returned with `token_type=""bearer""`.",,
-c0015,D,multi,rule_fm_all,1,The JWT version returns a signed JWT created by create_access_token.,"The simple password-flow login returns the user’s **username** as `access_token`—the tutorial notes this is insecure and only demonstrates the flow. The JWT version instead issues a **signed, expiring JWT** with the username in its `sub` claim, returned with `token_type=""bearer""`.",,
-c0017,B,code,none,0,ACCESS_TOKEN_EXPIRE_MINUTES is 30.,30,,
-c0018,C,fact,none,0,The default minimum_size for GZipMiddleware is 500 bytes.,500,,
-c0019,C,code,none,0,The example allows the wildcard pattern *.example.com.,*.example.com,,
-c0020,D,fact,none,0,"The default scope for yield dependencies is ""request"".","""request""",,
-c0021,A,fact,none,0,Making a request-scoped yield dependency depend on a function-scoped one raises DependencyScopeError.,DependencyScopeError,,
-c0022,D,code,none,0,The OwnerError is converted into an HTTPException with status code 400.,400,,
-c0023,A,code,none,0,"get_username yields the value ""Rick"".","""Rick""",,
+```",O,"판정 이유: 계산한 시간을 response.headers[""X-Process-Time""]에 저장한다."
+c0015,D,multi,none,0,The simple password-flow login returns the username itself as the access token.,"The simple password-flow login returns the user’s username as `access_token`—an insecure placeholder. The JWT version instead issues a signed, expiring JWT with the username in its `sub` claim and an `exp` claim; it returns that token with `token_type=""bearer""`.",O,판정 이유: 단순 password-flow가 username 자체를 access_token으로 반환한다고 명시한다.
+c0015,D,multi,none,1,The JWT version returns a signed JWT created by create_access_token.,"The simple password-flow login returns the user’s username as `access_token`—an insecure placeholder. The JWT version instead issues a signed, expiring JWT with the username in its `sub` claim and an `exp` claim; it returns that token with `token_type=""bearer""`.",X,"판정 이유: 서명된 만료 JWT를 반환한다고 설명하지만, create_access_token으로 생성한다는 내용은 답변에 없다.
+검수 의견: 질문은 토큰의 차이를 묻고 생성 함수명을 요구하지 않는다. 현재 key_fact의 생성 경로를 별도 요구사항으로 읽어 X로 판정했다. 함수명이 부가 설명이라면 O도 가능한 경계 사례이므로, 함수를 필수로 요구할지 합의하거나 key_fact에서 제거할 필요가 있다."
+c0015,D,multi,rule_fm_all,0,The simple password-flow login returns the username itself as the access token.,"The simple password-flow login returns the user’s **username** as `access_token`—the tutorial notes this is insecure and only demonstrates the flow. The JWT version instead issues a **signed, expiring JWT** with the username in its `sub` claim, returned with `token_type=""bearer""`.",O,판정 이유: 단순 password-flow가 username 자체를 access_token으로 반환한다고 명시한다.
+c0015,D,multi,rule_fm_all,1,The JWT version returns a signed JWT created by create_access_token.,"The simple password-flow login returns the user’s **username** as `access_token`—the tutorial notes this is insecure and only demonstrates the flow. The JWT version instead issues a **signed, expiring JWT** with the username in its `sub` claim, returned with `token_type=""bearer""`.",X,"판정 이유: 서명된 만료 JWT를 반환한다고 설명하지만, create_access_token으로 생성한다는 내용은 답변에 없다.
+검수 의견: 질문은 토큰의 차이를 묻고 생성 함수명을 요구하지 않는다. 현재 key_fact의 생성 경로를 별도 요구사항으로 읽어 X로 판정했다. 함수명이 부가 설명이라면 O도 가능한 경계 사례이므로, 함수를 필수로 요구할지 합의하거나 key_fact에서 제거할 필요가 있다."
+c0017,B,code,none,0,ACCESS_TOKEN_EXPIRE_MINUTES is 30.,30,O,판정 이유: 답변 30이 ACCESS_TOKEN_EXPIRE_MINUTES의 값과 일치한다.
+c0018,C,fact,none,0,The default minimum_size for GZipMiddleware is 500 bytes.,500,O,"판정 이유: 답변 500이 질문에서 바이트 단위로 묻는 최소 응답 크기와 일치한다.
+검수 의견: 단위는 질문에 주어져 있으므로 답변의 bytes 생략을 감점하지 않는다."
+c0019,C,code,none,0,The example allows the wildcard pattern *.example.com.,*.example.com,O,판정 이유: 답변이 허용된 wildcard 패턴 *.example.com을 정확히 제시한다.
+c0020,D,fact,none,0,"The default scope for yield dependencies is ""request"".","""request""",O,"판정 이유: 답변 ""request""가 yield 의존성의 기본 scope 값과 일치한다."
+c0021,A,fact,none,0,Making a request-scoped yield dependency depend on a function-scoped one raises DependencyScopeError.,DependencyScopeError,O,"판정 이유: 질문에서 묻는 예외 이름 DependencyScopeError를 정확히 제시한다.
+검수 의견: 의존성 scope의 조합 조건은 질문에 이미 있으므로 답변에서 반복할 필요가 없다."
+c0022,D,code,none,0,The OwnerError is converted into an HTTPException with status code 400.,400,O,"판정 이유: 답변 400이 OwnerError 변환 시 질문에서 묻는 HTTP 상태 코드와 일치한다.
+검수 의견: 질문은 상태 코드만 요구하므로 HTTPException 이름을 반복하지 않아도 인정한다."
+c0023,A,code,none,0,"get_username yields the value ""Rick"".","""Rick""",O,"판정 이유: 답변 ""Rick""이 get_username이 전달하는 값과 일치한다."
 c0024,D,procedure,none,0,The yield is wrapped in try/except.,"1. Catch the exception in a `try/except` around `yield`.
-2. After any handling or logging, re-raise it with a bare `raise` so FastAPI can log the real error.",,
+2. After any handling or logging, re-raise it with a bare `raise` so FastAPI can log the real error.",O,판정 이유: 1단계에서 yield를 둘러싼 try/except로 예외를 잡으라고 명시한다.
 c0024,D,procedure,none,1,The caught exception is re-raised with a bare raise.,"1. Catch the exception in a `try/except` around `yield`.
-2. After any handling or logging, re-raise it with a bare `raise` so FastAPI can log the real error.",,
-c0025,B,fact,none,0,The @pytest.mark.anyio marker runs the test function asynchronously.,@pytest.mark.anyio,,
-c0026,C,fact,none,0,LifespanManager comes from the asgi-lifespan package.,asgi-lifespan,,
-c0027,B,code,none,0,"The AsyncClient uses base_url ""http://test"".","""http://test""",,
-c0028,C,code,none,0,The test engine is created with poolclass=StaticPool.,StaticPool,,
+2. After any handling or logging, re-raise it with a bare `raise` so FastAPI can log the real error.",O,판정 이유: 2단계에서 처리나 로깅 후 bare raise로 다시 발생시키라고 명시한다.
+c0025,B,fact,none,0,The @pytest.mark.anyio marker runs the test function asynchronously.,@pytest.mark.anyio,O,판정 이유: 질문에서 묻는 비동기 테스트 마커 @pytest.mark.anyio를 정확히 제시한다.
+c0026,C,fact,none,0,LifespanManager comes from the asgi-lifespan package.,asgi-lifespan,O,판정 이유: LifespanManager를 제공하는 패키지로 asgi-lifespan을 정확히 제시한다.
+c0027,B,code,none,0,"The AsyncClient uses base_url ""http://test"".","""http://test""",O,"판정 이유: 답변 ""http://test""가 AsyncClient의 base_url과 일치한다."
+c0028,C,code,none,0,The test engine is created with poolclass=StaticPool.,StaticPool,O,판정 이유: 질문에서 묻는 pool class로 StaticPool을 정확히 제시한다.
 c0029,B,procedure,none,0,An in-memory SQLite engine with StaticPool is created and tables are created.,"1. Create a `session` fixture that builds an in-memory SQLite database and creates its tables:
 
    ```python
@@ -151,7 +160,7 @@ c0029,B,procedure,none,0,An in-memory SQLite engine with StaticPool is created a
        app.dependency_overrides.clear()
    ```
 
-3. Use the fixture-provided client in your tests. Clearing `app.dependency_overrides` after the test keeps tests isolated.",,
+3. Use the fixture-provided client in your tests. Clearing `app.dependency_overrides` after the test keeps tests isolated.",O,판정 이유: 코드에서 sqlite://와 poolclass=StaticPool로 엔진을 생성하고 SQLModel.metadata.create_all(engine)을 호출한다.
 c0029,B,procedure,none,1,A session fixture yields a Session.,"1. Create a `session` fixture that builds an in-memory SQLite database and creates its tables:
 
    ```python
@@ -181,7 +190,7 @@ c0029,B,procedure,none,1,A session fixture yields a Session.,"1. Create a `sessi
        app.dependency_overrides.clear()
    ```
 
-3. Use the fixture-provided client in your tests. Clearing `app.dependency_overrides` after the test keeps tests isolated.",,
+3. Use the fixture-provided client in your tests. Clearing `app.dependency_overrides` after the test keeps tests isolated.",O,판정 이유: session fixture에서 with Session(engine) as session 후 yield session을 실행한다.
 c0029,B,procedure,none,2,app.dependency_overrides[get_session] is set to return the test session.,"1. Create a `session` fixture that builds an in-memory SQLite database and creates its tables:
 
    ```python
@@ -211,7 +220,7 @@ c0029,B,procedure,none,2,app.dependency_overrides[get_session] is set to return 
        app.dependency_overrides.clear()
    ```
 
-3. Use the fixture-provided client in your tests. Clearing `app.dependency_overrides` after the test keeps tests isolated.",,
+3. Use the fixture-provided client in your tests. Clearing `app.dependency_overrides` after the test keeps tests isolated.",O,판정 이유: 테스트 session을 반환하는 get_session_override를 app.dependency_overrides[get_session]에 등록한다.
 c0029,B,procedure,none,3,The overrides are cleared afterwards.,"1. Create a `session` fixture that builds an in-memory SQLite database and creates its tables:
 
    ```python
@@ -241,36 +250,39 @@ c0029,B,procedure,none,3,The overrides are cleared afterwards.,"1. Create a `ses
        app.dependency_overrides.clear()
    ```
 
-3. Use the fixture-provided client in your tests. Clearing `app.dependency_overrides` after the test keeps tests isolated.",,
-c0030,D,fact,none,0,The override's own signature defines which request parameters are read and validated.,The override’s own signature.,,
-c0031,A,fact,none,0,The test client raises WebSocketDisconnect when the server closes or rejects the connection.,WebSocketDisconnect,,
-c0032,D,code,none,0,The override returns limit 10.,10,,
-c0033,A,code,none,0,"The test opens the connection with client.websocket_connect(""/ws"").","client.websocket_connect(""/ws"")",,
-c0034,B,fact,none,0,"OAuth2PasswordRequestFormStrict requires grant_type=""password"".",OAuth2PasswordRequestFormStrict,,
-c0035,C,fact,none,0,Wrong credentials at /token produce a 400 response in this tutorial.,400,,
-c0036,B,code,none,0,"fake_hash_password prefixes the password with ""fakehashed"".",fakehashed,,
-c0037,C,code,none,0,"The endpoint returns a dict with the token under the key ""token"".","{""token"": token}",,
+3. Use the fixture-provided client in your tests. Clearing `app.dependency_overrides` after the test keeps tests isolated.",O,"판정 이유: client fixture의 yield 이후 app.dependency_overrides.clear()로 override를 지운다.
+검수 의견: 이 행의 판정은 정상적인 fixture 정리 흐름에서 clear를 호출하는지에 한정한다. 예외 발생 시 정리 보장 여부는 별도 기준이다."
+c0030,D,fact,none,0,The override's own signature defines which request parameters are read and validated.,The override’s own signature.,O,판정 이유: 요청 파라미터를 결정하는 것으로 override 함수 자신의 signature를 제시한다.
+c0031,A,fact,none,0,The test client raises WebSocketDisconnect when the server closes or rejects the connection.,WebSocketDisconnect,O,판정 이유: 질문에서 묻는 테스트 클라이언트 예외 WebSocketDisconnect를 정확히 제시한다.
+c0032,D,code,none,0,The override returns limit 10.,10,O,판정 이유: 답변 10이 override의 limit 값과 일치한다.
+c0033,A,code,none,0,"The test opens the connection with client.websocket_connect(""/ws"").","client.websocket_connect(""/ws"")",O,"판정 이유: client.websocket_connect(""/ws"") 호출을 그대로 제시한다."
+c0034,B,fact,none,0,"OAuth2PasswordRequestFormStrict requires grant_type=""password"".",OAuth2PasswordRequestFormStrict,O,"판정 이유: 질문에서 요구하는 엄격한 form 클래스 OAuth2PasswordRequestFormStrict를 제시한다.
+검수 의견: grant_type=""password""라는 동작은 질문에 주어진 식별 조건이다. 클래스명만 답해도 이 질문에는 충분하다."
+c0035,C,fact,none,0,Wrong credentials at /token produce a 400 response in this tutorial.,400,O,판정 이유: 답변 400이 단순 password-flow의 잘못된 자격 증명 응답 코드와 일치한다.
+c0036,B,code,none,0,"fake_hash_password prefixes the password with ""fakehashed"".",fakehashed,O,판정 이유: 답변 fakehashed가 fake_hash_password가 붙이는 접두사와 일치한다.
+c0037,C,code,none,0,"The endpoint returns a dict with the token under the key ""token"".","{""token"": token}",O,"판정 이유: 답변 {""token"": token}이 token 키에 토큰을 담는 dict를 정확히 표현한다."
 c0038,C,procedure,none,0,The frontend sends the credentials to tokenUrl.,"1. The user enters their credentials in the frontend.
 2. The frontend POSTs `username` and `password` as form fields to the `tokenUrl` configured in `OAuth2PasswordBearer`. `OAuth2PasswordBearer` documents this URL but does not create the endpoint.
 3. The API’s `/token` endpoint checks the credentials and returns JSON containing `access_token` and `token_type` set to `""bearer""`.
 4. The frontend sends `Authorization: Bearer <token>` with later requests to protected endpoints.
-5. `OAuth2PasswordBearer` reads the header and returns the token string to the dependency chain, which can use it to get the current user.",,
+5. `OAuth2PasswordBearer` reads the header and returns the token string to the dependency chain, which can use it to get the current user.",O,판정 이유: 2단계에서 username과 password를 form field로 tokenUrl에 POST한다고 명시한다.
 c0038,C,procedure,none,1,The API returns a token.,"1. The user enters their credentials in the frontend.
 2. The frontend POSTs `username` and `password` as form fields to the `tokenUrl` configured in `OAuth2PasswordBearer`. `OAuth2PasswordBearer` documents this URL but does not create the endpoint.
 3. The API’s `/token` endpoint checks the credentials and returns JSON containing `access_token` and `token_type` set to `""bearer""`.
 4. The frontend sends `Authorization: Bearer <token>` with later requests to protected endpoints.
-5. `OAuth2PasswordBearer` reads the header and returns the token string to the dependency chain, which can use it to get the current user.",,
+5. `OAuth2PasswordBearer` reads the header and returns the token string to the dependency chain, which can use it to get the current user.",O,판정 이유: 3단계에서 API가 access_token과 token_type을 담은 JSON을 반환한다고 명시한다.
 c0038,C,procedure,none,2,Later requests send Authorization: Bearer <token>.,"1. The user enters their credentials in the frontend.
 2. The frontend POSTs `username` and `password` as form fields to the `tokenUrl` configured in `OAuth2PasswordBearer`. `OAuth2PasswordBearer` documents this URL but does not create the endpoint.
 3. The API’s `/token` endpoint checks the credentials and returns JSON containing `access_token` and `token_type` set to `""bearer""`.
 4. The frontend sends `Authorization: Bearer <token>` with later requests to protected endpoints.
-5. `OAuth2PasswordBearer` reads the header and returns the token string to the dependency chain, which can use it to get the current user.",,
-c0039,A,multi,none,0,The simple password-flow login returns 400 for wrong credentials.,"The simple password-flow tutorial returns **400** with `""Incorrect username or password""`. The JWT tutorial returns **401** with the same detail and a `WWW-Authenticate: Bearer` header.",,
-c0039,A,multi,none,1,The JWT login returns 401 for wrong credentials.,"The simple password-flow tutorial returns **400** with `""Incorrect username or password""`. The JWT tutorial returns **401** with the same detail and a `WWW-Authenticate: Bearer` header.",,
-c0039,A,multi,none,2,The JWT login response includes the WWW-Authenticate: Bearer header.,"The simple password-flow tutorial returns **400** with `""Incorrect username or password""`. The JWT tutorial returns **401** with the same detail and a `WWW-Authenticate: Bearer` header.",,
-c0040,B,multi,none,0,An async test needs httpx.AsyncClient instead of TestClient.,"Make the test `async` with `@pytest.mark.anyio` and use `httpx.AsyncClient` with `ASGITransport(app=app)`, since the test itself awaits an async database call. Replace the dependency by setting `app.dependency_overrides[original_dependency] = replacement_callable`; clear the overrides afterward to keep tests isolated.",,
-c0040,B,multi,none,1,AsyncClient is used with ASGITransport.,"Make the test `async` with `@pytest.mark.anyio` and use `httpx.AsyncClient` with `ASGITransport(app=app)`, since the test itself awaits an async database call. Replace the dependency by setting `app.dependency_overrides[original_dependency] = replacement_callable`; clear the overrides afterward to keep tests isolated.",,
-c0040,B,multi,none,2,app.dependency_overrides maps the original dependency to a replacement callable.,"Make the test `async` with `@pytest.mark.anyio` and use `httpx.AsyncClient` with `ASGITransport(app=app)`, since the test itself awaits an async database call. Replace the dependency by setting `app.dependency_overrides[original_dependency] = replacement_callable`; clear the overrides afterward to keep tests isolated.",,
+5. `OAuth2PasswordBearer` reads the header and returns the token string to the dependency chain, which can use it to get the current user.",O,판정 이유: 4단계에서 이후 요청에 Authorization: Bearer <token>을 보낸다고 명시한다.
+c0039,A,multi,none,0,The simple password-flow login returns 400 for wrong credentials.,"The simple password-flow tutorial returns **400** with `""Incorrect username or password""`. The JWT tutorial returns **401** with the same detail and a `WWW-Authenticate: Bearer` header.",O,판정 이유: 단순 password-flow의 실패 응답을 400으로 명시한다.
+c0039,A,multi,none,1,The JWT login returns 401 for wrong credentials.,"The simple password-flow tutorial returns **400** with `""Incorrect username or password""`. The JWT tutorial returns **401** with the same detail and a `WWW-Authenticate: Bearer` header.",O,판정 이유: JWT tutorial의 실패 응답을 401로 명시한다.
+c0039,A,multi,none,2,The JWT login response includes the WWW-Authenticate: Bearer header.,"The simple password-flow tutorial returns **400** with `""Incorrect username or password""`. The JWT tutorial returns **401** with the same detail and a `WWW-Authenticate: Bearer` header.",O,판정 이유: JWT 응답에 WWW-Authenticate: Bearer 헤더가 포함된다고 명시한다.
+c0040,B,multi,none,0,An async test needs httpx.AsyncClient instead of TestClient.,"Make the test `async` with `@pytest.mark.anyio` and use `httpx.AsyncClient` with `ASGITransport(app=app)`, since the test itself awaits an async database call. Replace the dependency by setting `app.dependency_overrides[original_dependency] = replacement_callable`; clear the overrides afterward to keep tests isolated.",O,"판정 이유: 테스트를 async로 만들고 httpx.AsyncClient를 사용하라고 명시한다.
+검수 의견: TestClient라는 이름을 직접 부정하지 않아도 대체할 클라이언트를 정확히 지정했으므로 인정한다."
+c0040,B,multi,none,1,AsyncClient is used with ASGITransport.,"Make the test `async` with `@pytest.mark.anyio` and use `httpx.AsyncClient` with `ASGITransport(app=app)`, since the test itself awaits an async database call. Replace the dependency by setting `app.dependency_overrides[original_dependency] = replacement_callable`; clear the overrides afterward to keep tests isolated.",O,판정 이유: httpx.AsyncClient를 ASGITransport(app=app)와 함께 사용하라고 명시한다.
+c0040,B,multi,none,2,app.dependency_overrides maps the original dependency to a replacement callable.,"Make the test `async` with `@pytest.mark.anyio` and use `httpx.AsyncClient` with `ASGITransport(app=app)`, since the test itself awaits an async database call. Replace the dependency by setting `app.dependency_overrides[original_dependency] = replacement_callable`; clear the overrides afterward to keep tests isolated.",O,판정 이유: app.dependency_overrides[original_dependency] = replacement_callable을 정확히 제시한다.
 c0145,A,procedure,none,0,The TestClient is used as a context manager: with TestClient(app) as client.,"1. Create a `TestClient` for your app.
 2. Use it in a `with` block: `with TestClient(app) as client:`.
 3. Test requests inside the block. Entering it runs startup and the app’s lifespan; leaving it runs shutdown and cleanup.
@@ -284,7 +296,7 @@ def test_read_items():
     # Lifespan cleanup has run here.
 ```
 
-A `TestClient` used without the context manager does not run the app’s lifespan.",,
+A `TestClient` used without the context manager does not run the app’s lifespan.",O,판정 이유: 설명과 코드 모두 with TestClient(app) as client: 형태의 context manager를 사용한다.
 c0145,A,procedure,none,1,Lifespan startup runs when the with block is entered and shutdown when it exits.,"1. Create a `TestClient` for your app.
 2. Use it in a `with` block: `with TestClient(app) as client:`.
 3. Test requests inside the block. Entering it runs startup and the app’s lifespan; leaving it runs shutdown and cleanup.
@@ -298,20 +310,20 @@ def test_read_items():
     # Lifespan cleanup has run here.
 ```
 
-A `TestClient` used without the context manager does not run the app’s lifespan.",,
+A `TestClient` used without the context manager does not run the app’s lifespan.",O,"판정 이유: with 진입 시 startup, 종료 시 shutdown과 cleanup이 실행된다고 명시한다."
 c0146,C,procedure,none,0,The override is set at the start of the test or in a pytest fixture.,"1. At the start of the test—or in a pytest fixture—set `app.dependency_overrides[original_dependency] = replacement_dependency`.
 2. Run the test; FastAPI uses the replacement wherever the original dependency is used.
-3. At the end of the test, clear the override with `app.dependency_overrides.clear()` so other tests are unaffected.",,
+3. At the end of the test, clear the override with `app.dependency_overrides.clear()` so other tests are unaffected.",O,판정 이유: 1단계에서 테스트 시작 시 또는 pytest fixture에서 override를 설정하라고 명시한다.
 c0146,C,procedure,none,1,app.dependency_overrides maps the original dependency to the replacement.,"1. At the start of the test—or in a pytest fixture—set `app.dependency_overrides[original_dependency] = replacement_dependency`.
 2. Run the test; FastAPI uses the replacement wherever the original dependency is used.
-3. At the end of the test, clear the override with `app.dependency_overrides.clear()` so other tests are unaffected.",,
+3. At the end of the test, clear the override with `app.dependency_overrides.clear()` so other tests are unaffected.",O,판정 이유: app.dependency_overrides[original_dependency] = replacement_dependency로 원래 의존성을 대체한다.
 c0146,C,procedure,none,2,"The overrides are cleared at the end, e.g. with app.dependency_overrides.clear().","1. At the start of the test—or in a pytest fixture—set `app.dependency_overrides[original_dependency] = replacement_dependency`.
 2. Run the test; FastAPI uses the replacement wherever the original dependency is used.
-3. At the end of the test, clear the override with `app.dependency_overrides.clear()` so other tests are unaffected.",,
+3. At the end of the test, clear the override with `app.dependency_overrides.clear()` so other tests are unaffected.",O,판정 이유: 3단계에서 테스트 종료 시 app.dependency_overrides.clear()를 호출하라고 명시한다.
 c0147,B,procedure,none,0,"The dependency is declared with Depends(..., scope=""function"").","1. Set the dependency’s `Depends()` scope to `""function""`.
-2. FastAPI will run the code after `yield` when the path operation returns, before sending the response. For example: `Depends(get_username, scope=""function"")`.",,
+2. FastAPI will run the code after `yield` when the path operation returns, before sending the response. For example: `Depends(get_username, scope=""function"")`.",O,"판정 이유: Depends(get_username, scope=""function"") 예시로 scope를 정확히 지정한다."
 c0147,B,procedure,none,1,"With scope=""function"", the cleanup after yield runs right after the path operation returns, before the response is sent.","1. Set the dependency’s `Depends()` scope to `""function""`.
-2. FastAPI will run the code after `yield` when the path operation returns, before sending the response. For example: `Depends(get_username, scope=""function"")`.",,
+2. FastAPI will run the code after `yield` when the path operation returns, before sending the response. For example: `Depends(get_username, scope=""function"")`.",O,"판정 이유: path operation 반환 직후, 응답을 보내기 전에 yield 이후 코드가 실행된다고 명시한다."
 c0148,C,multi,none,0,A TestClient created at module level and used without a with block does not run lifespan.,"A module-level `client = TestClient(app)` used without a `with` block does not run lifespan. With `httpx.AsyncClient`, wrap the app in `LifespanManager` from `asgi-lifespan`, then pass `manager.app` to `ASGITransport`:
 
 ```python
@@ -321,7 +333,7 @@ async with LifespanManager(app) as manager:
         base_url=""http://test"",
     ) as client:
         ...
-```",,
+```",O,판정 이유: 모듈 수준 TestClient(app)를 with 없이 사용하면 lifespan이 실행되지 않는다고 명시한다.
 c0148,C,multi,none,1,"With httpx.AsyncClient, the app is wrapped in LifespanManager from asgi-lifespan.","A module-level `client = TestClient(app)` used without a `with` block does not run lifespan. With `httpx.AsyncClient`, wrap the app in `LifespanManager` from `asgi-lifespan`, then pass `manager.app` to `ASGITransport`:
 
 ```python
@@ -331,7 +343,7 @@ async with LifespanManager(app) as manager:
         base_url=""http://test"",
     ) as client:
         ...
-```",,
+```",O,판정 이유: asgi-lifespan의 LifespanManager로 app을 감싸라고 설명하고 async with LifespanManager(app) as manager 코드를 제시한다.
 c0148,C,multi,none,2,manager.app is passed to ASGITransport.,"A module-level `client = TestClient(app)` used without a `with` block does not run lifespan. With `httpx.AsyncClient`, wrap the app in `LifespanManager` from `asgi-lifespan`, then pass `manager.app` to `ASGITransport`:
 
 ```python
@@ -341,4 +353,4 @@ async with LifespanManager(app) as manager:
         base_url=""http://test"",
     ) as client:
         ...
-```",,
+```",O,판정 이유: ASGITransport(app=manager.app)로 manager.app을 전달하는 코드가 있다.
