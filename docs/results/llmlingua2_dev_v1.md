@@ -167,13 +167,68 @@ fact 정답은 설명 글 속 짧은 값 하나인 경우가 많아, 그 줄이 
 
 ### memory_suspect
 
-LLMLingua-2 압축기에서 3~4문항씩(c0004, c0026, c0030, c0031, c0034) 나왔지만, 문맥을 확인하면 대부분 내용은 남고 문자열만 달라진 경우다.
+> 2026-11-01 다시 분류했다 (`src/memory_suspect.py`, 매칭 `normalized-v2`, 결과 `memory_suspect_v2.json`).
+> 이 run 은 PR #28(문서 경계)·#30(식별자 쪼개짐) **이전** 코드라 c0031·c0034 의 식별자 쪼개짐은 지금 코드에서는 생기지 않는다.
 
-- c0004 정답 "The last one added": 압축 문맥에 `last one added outermost` 가 있다 (`The`, 강조 표시만 빠짐)
-- c0030 정답 "The override's own signature": `override ' s signature` 로 `own` 만 빠졌다
-- c0031·c0034: 위처럼 식별자가 공백으로 쪼개졌다
+**결론: 이번 run 에서 깨끗한 기억 의존 사례는 확인되지 않았다.** 이전 방식으로 잡힌 14건은 대부분 지표의 오탐이고,
+근거가 거의 없는데 맞힌 2건(c0004·c0030 의 r30)도 문맥에 간접 단서가 남아 있어 기억인지 추론인지 구분할 수 없다.
 
-`memory_suspect` 는 압축 문맥에 정답 핵심어 문자열이 있는지로 판단한다. 단어를 지우고 공백을 넣는 LLMLingua-2 에서는 실제 기억 의존보다 많이 잡힌다는 점을 감안해 읽어야 한다.
+**가장 강한 근거 (대조)**: c0031·c0034 는 쪼개진 정답이 남은 r70·r50 에서 맞혔고, 정답이 실제로 지워진 r30 에서는 둘 다 NOT FOUND 였다.
+gpt-6-luna 는 closed-book 에서 이 두 문항을 문서 없이 맞힌다 ([closed_book_luna.md](closed_book_luna.md), 판정 A O).
+답을 알아도 문서에서 지워지면 지시대로 모른다고 했다. 다만 r30 은 다른 내용도 많이 지우므로 완전한 대조군은 아니다.
+
+**판정 방법**: trial 마다 두 축을 본다.
+1. 정답 핵심어가 압축 문맥에 있는가: 대소문자·구분자 표기 차이(`WebSocket Disconnect`, `asgi_lifespan` ↔ `asgi-lifespan`)와
+   앞 관사는 무시한다. 중간 단어가 지워진 경우(`last added` ↔ "The last one added")는 매칭으로 잡지 않는다
+2. 근거 인용문 보존율 (`src/evidence_retention.py`)
+
+| 분류 | 기준 |
+|---|---|
+| 측정 불가 | 압축 없는 원문에서도 정답 핵심어가 안 잡힘 (정답을 문장으로 바꿔 쓴 문항) |
+| 핵심어 있음 | 압축 문맥에 정답 핵심어가 있다 |
+| 근거 남음 / 낮음 / **없음** | 핵심어가 없고 근거 보존율이 0.5 이상 / 0.25~0.5 / **0.25 미만** |
+
+**헤드라인 memory_suspect 는 "근거 없음"만 센다** (강한 주장이라 오판이 적은 쪽). 0.5 미만(근거 낮음 + 없음)은 민감도로 함께 적는다.
+경계값: none 은 174문항 모두 근거 보존율 0.9 이상이고, 근거 줄을 지운 drop_evidence(로컬 생성)는 0~0.9 에 넓게 퍼져 중앙값이 0.25 다
+(비슷한 문장·코드가 문맥 다른 곳에 남아 단어 단위 부분 점수를 받는다). 둘 사이에 빈 구간이 없어 drop_evidence 중앙값을 "근거 없음"으로 뒀다.
+
+**측정 가능 문항: dev 35문항 중 35문항.** test 는 139문항 중 129문항만 측정 가능하다 (c0008, c0009, c0012, c0043, c0049, c0061, c0073,
+c0102, c0139, c0173 은 원문에서도 정답 핵심어가 안 잡힌다. 예: c0012 정답 "About 10 seconds", 원문 `~10 seconds`).
+
+| 압축기 | 이전 방식 | 핵심어 있음 | 근거 남음 | 근거 낮음 | **근거 없음** | 민감도 (<0.5) |
+|---|---|---|---|---|---|---|
+| llmlingua2_r70 | 4 | 34 | 1 | 0 | **0** | 0 |
+| llmlingua2_r50 | 4 | 31 | 0 | 2 | **0** | 2 |
+| llmlingua2_r30 | 3 | 30 | 0 | 0 | **2** | 2 |
+| rule>llmlingua2 | 3 | 30 | 0 | 3 | **0** | 3 |
+
+none·rule 은 0건. 이전 방식으로 잡힌 14건과 대조 2건을 (문항, 압축기) 단위로 나누면:
+
+| 문항 | 압축기 | 압축 문맥에 남은 것 | 근거 보존율 | 분류 |
+|---|---|---|---|---|
+| c0031 | r70·r50 | `WebSocket Disconnect` (식별자 쪼개짐) | 0.53·0.46 | 핵심어 있음 |
+| c0034 | r70·r50 | `OAuth2 PasswordRequestFormStrict` (식별자 쪼개짐) | 0.62·0.36 | 핵심어 있음 |
+| c0026 | r30 | 산문의 `asgi-lifespan` 은 지워지고 보호된 코드의 `from asgi_lifespan import` 만 남음. 답도 `asgi_lifespan` | 0.20 | 핵심어 있음 |
+| c0004 | r70 | `last one added outermost` (`The` 만 빠짐) | 0.63 | 핵심어 있음 |
+| c0030 | r70 | `override ' s signature` (`own` 삭제) | 0.54 | 근거 남음 |
+| c0004 | r50·rule>llmlingua2 | `last added outermost` (`one` 삭제) | 0.44·0.38 | 근거 낮음 |
+| c0030 | r50·rule>llmlingua2 | `override signature defines request parameters read validated` | 0.39·0.29 | 근거 낮음 |
+| c0034 | rule>llmlingua2 | `OAuth2 PasswordRequestForm` 만 있고 `Strict` 없음. 답은 `OAuth2PasswordRequestFormStrict` | 0.38 | 근거 낮음 |
+| c0004 | r30 | 근거 문장은 없고 코드 아래 요청·응답 순서 줄 `MiddlewareB MiddlewareA` / `MiddlewareA MiddlewareB` 만 남음 | 0.06 | **근거 없음** |
+| c0030 | r30 | 설명 문장은 없고 산문 조각 `dependency_overrides ... function parameters` 만 남음. 답 "function parameters" | 0.14 | **근거 없음** |
+| c0031·c0034 | r30 | 정답 없음, NOT FOUND (정확도 0) | 0.14·0.10 | 대조 (의심 대상 아님) |
+
+- c0004·c0030 r30: closed-book 판정 B 가 둘 다 1.0 (문서 없이 앎) 이지만, 남은 줄·조각으로도 답을 끌어낼 수 있어 기억 의존으로 단정하지 않는다
+- c0034 rule>llmlingua2: `Strict` 가 지워졌는데 정확한 클래스 이름으로 답했다. 근거 보존율이 0.38 이라 민감도에만 든다
+
+**확인 실험 (해석을 미리 적어 둔다)**: c0004 r30 문맥에서 요청·응답 순서 두 줄을 지우고 같은 설정으로 묻는다 (같은 조건 반복은
+temperature 0·seed 42 라 구분력이 없다).
+- 지웠는데도 맞힘 → 기억으로 메운 사례 1건. 위 대조의 "지어내지 않는다" 결론을 "정답 문자열이 지워지면 대체로 지어내지 않지만, 사전 지식으로 메운 사례가 있다"로 약하게 고친다
+- NOT FOUND → 남은 줄로 추론한 것. 결론을 유지·강화한다
+
+**남은 확인**: [baseline_dev_v2.md](baseline_dev_v2.md) 의 drop_evidence memory_suspect 7건도 같은 기준으로 다시 세야 그 문서의 함의
+("정확도 유지율이 근거 보존을 과대평가할 수 있다")와 앞뒤가 맞는다. drop_evidence 는 비슷한 줄을 문맥 다른 곳에 남기는 경우가 있어
+(c0027) 근거 보존율 축이 특히 필요하다. 해당 run(`20261019-231040`)이 이 저장소 밖에 있어 아직 못 돌렸다.
 
 ### 의미 손실과 정확도 유지율 (관찰)
 

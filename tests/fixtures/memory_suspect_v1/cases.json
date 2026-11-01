@@ -1,0 +1,85 @@
+{
+ "source_run": "20261028-195811 (PR #28·#30 이전 코드)",
+ "cases": [
+  {
+   "qid": "c0004",
+   "compressor": "llmlingua2_r70",
+   "answer_accuracy": 1.0
+  },
+  {
+   "qid": "c0004",
+   "compressor": "llmlingua2_r50",
+   "answer_accuracy": 1.0
+  },
+  {
+   "qid": "c0004",
+   "compressor": "llmlingua2_r30",
+   "answer_accuracy": 1.0
+  },
+  {
+   "qid": "c0004",
+   "compressor": "rule>llmlingua2",
+   "answer_accuracy": 1.0
+  },
+  {
+   "qid": "c0026",
+   "compressor": "llmlingua2_r30",
+   "answer_accuracy": 1.0
+  },
+  {
+   "qid": "c0030",
+   "compressor": "llmlingua2_r70",
+   "answer_accuracy": 1.0
+  },
+  {
+   "qid": "c0030",
+   "compressor": "llmlingua2_r50",
+   "answer_accuracy": 1.0
+  },
+  {
+   "qid": "c0030",
+   "compressor": "llmlingua2_r30",
+   "answer_accuracy": 1.0
+  },
+  {
+   "qid": "c0030",
+   "compressor": "rule>llmlingua2",
+   "answer_accuracy": 1.0
+  },
+  {
+   "qid": "c0031",
+   "compressor": "llmlingua2_r70",
+   "answer_accuracy": 1.0
+  },
+  {
+   "qid": "c0031",
+   "compressor": "llmlingua2_r50",
+   "answer_accuracy": 1.0
+  },
+  {
+   "qid": "c0034",
+   "compressor": "llmlingua2_r70",
+   "answer_accuracy": 1.0
+  },
+  {
+   "qid": "c0034",
+   "compressor": "llmlingua2_r50",
+   "answer_accuracy": 1.0
+  },
+  {
+   "qid": "c0034",
+   "compressor": "rule>llmlingua2",
+   "answer_accuracy": 1.0
+  },
+  {
+   "qid": "c0031",
+   "compressor": "llmlingua2_r30",
+   "answer_accuracy": 0.0
+  },
+  {
+   "qid": "c0034",
+   "compressor": "llmlingua2_r30",
+   "answer_accuracy": 0.0
+  }
+ ]
+}

@@ -321,8 +321,9 @@ def is_not_found(response: str) -> bool:
 # ---------------- 로그 형식 (팀 Spec 이 정해지면 여기만 고친다) ----------------
 
 # answer_core_in_context 의 매칭 방식 (trial·summary 에 남긴다)
-CORE_MATCH_VERSION = "normalized-v1"
+CORE_MATCH_VERSION = "normalized-v2"
 _CORE_TOKEN = re.compile(r"[a-z0-9]+")
+_LEADING_ARTICLE = re.compile(r"^(?:the|a|an)\s+(?=\S)", re.I)
 
 
 @dataclass
@@ -420,51 +421,96 @@ def build_context(corpus, item: dict) -> str:
     return "\n\n".join(parts).replace("\r\n", "\n")
 
 
-def _core_tokens(s: str) -> list[re.Match]:
-    return list(_CORE_TOKEN.finditer(s.lower()))
+def _sep_kind(sep: str) -> str:
+    """토큰 사이 구분자의 종류: id (식별자 안의 _ 나 -), ws (공백만), other (. / : 등)."""
+    if "_" in sep or "-" in sep:
+        return "id"
+    return "ws" if not sep.strip() else "other"
 
 
-def find_normalized(context: str, needle: str, _ctx_tokens: list[re.Match] | None = None) -> str | None:
-    """needle 이 문맥에 있으면 문맥에서 찾은 구절, 없으면 None.
+def _core_tokens(s: str) -> list[tuple[re.Match, str | None]]:
+    """[(토큰, 앞 토큰과의 구분자 종류)]. 첫 토큰은 None."""
+    low = s.lower()
+    toks, prev = [], None
+    for m in _CORE_TOKEN.finditer(low):
+        toks.append((m, None if prev is None else _sep_kind(low[prev.end():m.start()])))
+        prev = m
+    return toks
 
-    대소문자와 구분자(공백·하이픈·언더스코어·점 등) 차이는 무시한다. "WebSocket Disconnect" == "WebSocketDisconnect",
-    "asgi_lifespan" == "asgi-lifespan". 대신 토큰 경계는 지킨다: 연속한 문맥 토큰 몇 개를 이어 붙인 결과가
-    needle 토큰을 이어 붙인 결과와 같을 때만 맞다고 본다 ("1000" 안의 "100" 은 아님).
-    숫자끼리 이어 붙이는 자리는 needle 에도 같은 경계가 있어야 한다 ("10.0" 은 "100" 이 아님)."""
-    want = [m.group() for m in _core_tokens(needle)]
+
+def _cut_ok(needle_kind: str | None, ctx_kind: str) -> bool:
+    """정답의 같은 자리(needle_kind, 경계가 없으면 None)에 문맥 경계(ctx_kind)가 있어도 되는지.
+    정답에 경계가 없는 자리에는 압축이 끼워 넣은 공백만 허용한다 (WebSocket Disconnect). 정답에 경계가 있으면 같은
+    종류여야 한다: asgi-lifespan 과 asgi_lifespan 은 같지만, response_class 가 산문의 "response class" 나
+    "Read items" 가 read_items 와 같지는 않다."""
+    if needle_kind is None:
+        return ctx_kind == "ws"
+    return ctx_kind == needle_kind
+
+
+def find_normalized(context: str, needle: str, _ctx_tokens: list | None = None) -> str | None:
+    """needle 이 문맥에 있으면 문맥에서 찾은 구절, 없으면 None (normalized-v2).
+
+    대소문자와 구분자 표기 차이는 무시한다: "WebSocket Disconnect" == "WebSocketDisconnect",
+    "asgi_lifespan" == "asgi-lifespan" == "asgi - lifespan". 연속한 문맥 토큰을 이어 붙인 결과가 needle 토큰을
+    이어 붙인 결과와 같아야 하고, 경계마다 _cut_ok 를 지켜야 한다:
+        needle 의 경계는 문맥에도 있어야 한다 ("johndoe" 는 "John Doe" 가 아님)
+        문맥에만 있는 경계는 공백만 된다 ("10.0" 은 "100" 이 아님, "1000" 안의 "100" 도 아님)
+        needle 의 공백 경계에 문맥의 _ 나 - 가 오면 안 된다 ("read_items" 는 "Read items" 가 아님)
+    찾은 구절의 앞뒤가 _ 나 - 로 이어지면(식별자의 일부) 맞지 않은 것으로 본다 ("auto_error" 안의 "auto")."""
+    want = _core_tokens(needle)
     if not want:
         return None
-    target = "".join(want)
-    want_cuts = {sum(map(len, want[:k])) for k in range(1, len(want))}
+    target = "".join(m.group() for m, _ in want)
+    want_cuts, pos = {}, 0
+    for m, kind in want:
+        if kind is not None:
+            want_cuts[pos] = kind
+        pos += len(m.group())
     toks = _ctx_tokens if _ctx_tokens is not None else _core_tokens(context)
-    for i, first in enumerate(toks):
-        if not target.startswith(first.group()):
+    for i, (first, before) in enumerate(toks):
+        if before == "id" or not target.startswith(first.group()):
             continue
-        pos, j = 0, i
+        pos, j, cuts = 0, i, set()
         while j < len(toks) and pos < len(target):
-            t = toks[j].group()
-            if not target.startswith(t, pos):
+            t, kind = toks[j][0].group(), toks[j][1]
+            if not target.startswith(t, pos) or (j > i and not _cut_ok(want_cuts.get(pos), kind)):
                 break
-            if j > i and target[pos - 1].isdigit() and t[0].isdigit() and pos not in want_cuts:
-                break
+            if j > i:
+                cuts.add(pos)
             pos += len(t)
             j += 1
-        if pos == len(target):
-            return context[first.start():toks[j - 1].end()]
+        after = toks[j][1] if j < len(toks) else None
+        if pos == len(target) and set(want_cuts) <= cuts and after != "id":
+            return context[first.start():toks[j - 1][0].end()]
     return None
 
 
+def _strip_article(s: str) -> str:
+    """짧은 답·핵심 개체 앞의 관사(The / A / An) 를 뗀다. LLMLingua-2 가 관사부터 지운다.
+    떼고 한 단어만 남으면 떼지 않는다 ("A plumbus" 의 plumbus 는 예제 코드 여기저기에 나온다)."""
+    rest = _LEADING_ARTICLE.sub("", s.strip())
+    return rest if len(_CORE_TOKEN.findall(rest.lower())) >= 2 else s.strip()
+
+
 def core_matches(context: str, item: dict) -> tuple[bool, list[str]]:
-    """answer_core_in_context 의 판정과 문맥에서 찾은 구절들 (정규화 매칭, find_normalized)."""
-    toks = _core_tokens(context)
+    """answer_core_in_context 의 판정과 문맥에서 찾은 구절들.
+    정규화 매칭(find_normalized) 이나 이전 방식(단어 연속 일치) 중 하나로 찾으면 있다고 본다. 비교 전에 앞 관사를 뗀다.
+    중간 단어가 지워진 경우("last added" 와 "The last one added")는 잡지 않는다 (근거 보존율 축의 몫)."""
+    toks, words = _core_tokens(context), word_tokens(context)
+
+    def find(needle: str) -> str | None:
+        needle = _strip_article(needle)
+        return find_normalized(context, needle, toks) or (needle if contains_words(words, needle) else None)
+
     answer = item["answer"]
     if is_short(answer):
-        hit = find_normalized(context, answer, toks)
+        hit = find(answer)
         return hit is not None, [hit] if hit is not None else []
     ents = [e for e in (item.get("key_entities") or [answer]) if _core_tokens(e)]
     if not ents:
         return False, []
-    hits = [h for h in (find_normalized(context, e, toks) for e in ents) if h is not None]
+    hits = [h for h in (find(e) for e in ents) if h is not None]
     return len(hits) >= -(-len(ents) // 2), hits
 
 
