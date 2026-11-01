@@ -448,8 +448,8 @@ def _cut_ok(needle_kind: str | None, ctx_kind: str) -> bool:
     return ctx_kind == needle_kind
 
 
-def find_normalized(context: str, needle: str, _ctx_tokens: list | None = None) -> str | None:
-    """needle 이 문맥에 있으면 문맥에서 찾은 구절, 없으면 None (normalized-v2).
+def iter_normalized(context: str, needle: str, _ctx_tokens: list | None = None):
+    """needle 이 문맥에 나오는 위치 (start, end) 를 앞에서부터 모두 낸다 (normalized-v2).
 
     대소문자와 구분자 표기 차이는 무시한다: "WebSocket Disconnect" == "WebSocketDisconnect",
     "asgi_lifespan" == "asgi-lifespan" == "asgi - lifespan". 연속한 문맥 토큰을 이어 붙인 결과가 needle 토큰을
@@ -460,7 +460,7 @@ def find_normalized(context: str, needle: str, _ctx_tokens: list | None = None) 
     찾은 구절의 앞뒤가 _ 나 - 로 이어지면(식별자의 일부) 맞지 않은 것으로 본다 ("auto_error" 안의 "auto")."""
     want = _core_tokens(needle)
     if not want:
-        return None
+        return
     target = "".join(m.group() for m, _ in want)
     want_cuts, pos = {}, 0
     for m, kind in want:
@@ -482,8 +482,13 @@ def find_normalized(context: str, needle: str, _ctx_tokens: list | None = None) 
             j += 1
         after = toks[j][1] if j < len(toks) else None
         if pos == len(target) and set(want_cuts) <= cuts and after != "id":
-            return context[first.start():toks[j - 1][0].end()]
-    return None
+            yield first.start(), toks[j - 1][0].end()
+
+
+def find_normalized(context: str, needle: str, _ctx_tokens: list | None = None) -> str | None:
+    """needle 이 문맥에 있으면 문맥에서 찾은 첫 구절, 없으면 None (iter_normalized 의 첫 위치)."""
+    span = next(iter_normalized(context, needle, _ctx_tokens), None)
+    return None if span is None else context[span[0]:span[1]]
 
 
 def _strip_article(s: str) -> str:
