@@ -109,6 +109,13 @@ class LoadTest(unittest.TestCase):
                   trial("c", "none", 1.0, used_original=True)]
         self.assertEqual(fallback_qids(trials), {"a"})
 
+    def test_fallback_inside_chained_compressor(self):
+        chained = trial("d", "rule>llmlingua2", 1.0)
+        chained["info"] = {"1:rule": {"rules": {}}, "2:llmlingua2": {"trace": {"used_original": True}}}
+        kept = trial("e", "rule>llmlingua2", 1.0)
+        kept["info"] = {"1:rule": {}, "2:llmlingua2": {"trace": {"used_original": False}}}
+        self.assertEqual(fallback_qids([chained, kept]), {"d"})
+
 
 if __name__ == "__main__":
     unittest.main()

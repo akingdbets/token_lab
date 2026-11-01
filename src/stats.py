@@ -45,11 +45,18 @@ def load_trials(run_dirs: list[Path]) -> list[dict]:
     return list(seen.values())
 
 
+def used_original(info: dict) -> bool:
+    """압축기(또는 rule>llmlingua2 처럼 이어 붙인 단계 중 하나)가 원문을 그대로 썼는지.
+    이어 붙인 압축기는 단계별 info 가 "1:rule", "2:llmlingua2" 아래에 들어 있다."""
+    if (info.get("trace") or {}).get("used_original"):
+        return True
+    return any(isinstance(v, dict) and used_original(v) for v in info.values())
+
+
 def fallback_qids(trials: list[dict]) -> set[str]:
     """압축 결과를 버리고 원문을 쓴(원문 대체) 문항."""
     return {t["qid"] for t in trials
-            if ((t.get("info") or {}).get("trace") or {}).get("used_original")
-            and t["compressor"] not in ("none", "empty")}
+            if used_original(t.get("info") or {}) and t["compressor"] not in ("none", "empty")}
 
 
 def is_right(t: dict, binary: str) -> bool:
