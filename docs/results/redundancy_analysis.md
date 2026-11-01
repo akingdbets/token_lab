@@ -72,7 +72,7 @@ EVAL_DIR=data/evalsets/claude-v1 python src/redundancy.py results/runs/20261019-
   - 압축 문맥에서도 근거 자리 밖으로 잡힌 경우가 없다 (b-다른위치 0건).
   - 단어 정렬을 넣기 전에는 LLMLingua-2 가 쪼갠 `WebSocket Disconnect` 등이 근거 밖으로 잘못 잡혔다. 지금은 고쳐졌다.
 - **중복도 2+ 인 22문항:** 모두 근거 자리 밖 위치가 1 이상이다.
-- **테스트:** `tests/test_redundancy.py` 9개를 추가했다. 전체 136개가 통과한다.
+- **테스트:** `tests/test_redundancy.py` 13개를 추가했다 (4절 상태 판정 4개 포함). 전체 140개가 통과한다.
 
 ## 1. 문항별 중복도 (none 문맥)
 
@@ -253,6 +253,139 @@ drop_evidence run
 - **code 유형:** 중복도 1 이면 정답 식별자가 근거 코드 한 줄에만 있다. drop_evidence 가 그 줄을 지우면 6문항 모두 틀린다. LLMLingua-2 에서는 r30 까지 모두 1.00 이다. 근거가 사라진 trial 에서도 남은 위치가 대부분 코드다 (r30 b 의 code 21/39).
 - **multi·procedure:** 중복도 1 이 각 1문항뿐이라 비교가 어렵다.
 
+## 4. 근거 자리 안의 정답 핵심어로 다시 본 상태
+
+위 결론은 "LLMLingua-2 에서는 정답 단어가 대부분 제자리에 남아서 중복성이 쓰일 일이 적었다"는 설명이다. 이 설명을 숫자로 확인한다.
+
+2절의 상태 a 는 "근거 보존율 ≥ 0.5" 였는데, 이 기준은 한 줄짜리 코드 인용문에서 보존율을 과대평가한다 (한계 1). 그래서 이번에는 **근거 인용문 범위 안에 정답 핵심어가 남았는가**로 다시 나눈다.
+
+```
+EVAL_DIR=data/evalsets/claude-v1 python src/redundancy.py results/runs/20261031-143214 results/runs/20261031-162640 results/runs/20261031-172011 --compressors "llmlingua2_r50,llmlingua2_r30,rule>llmlingua2" --core-states
+EVAL_DIR=data/evalsets/claude-v1 python src/redundancy.py results/runs/20261019-231040 --compressors drop_evidence --core-states
+```
+
+- **A:** 근거 인용문 자리(none 문맥과 단어 정렬해 찾은 구간) 안에 정답 핵심어가 남음. 긴 답은 근거 자리 안의 위치만으로 절반 규칙을 채워야 한다.
+- **B:** 근거 자리에는 없지만 다른 위치에 남음. 남은 위치에 따라 code / prose / both 로 나누고, 근거 자리와 다른 위치를 합쳐야 절반 규칙을 채우면 mixed 다.
+- **C:** 정답 핵심어가 문맥 전체에서 사라짐 (`core_matches` 가 거짓).
+- 매칭은 normalized-v2 그대로다.
+
+### 상태별 (LLMLingua-2 는 3회 반복 105 trial, drop_evidence 는 1회 35 trial)
+
+| 압축기 | 상태 | trial | 비율 | 정확도 | NOT FOUND |
+|---|---|---|---|---|---|
+| llmlingua2_r50 | A | 96 | 91.4% | 0.948 | 0.031 |
+| | B (both 3) | 3 | 2.9% | 1.000 | 0.000 |
+| | C | 6 | 5.7% | 1.000 | 0.000 |
+| llmlingua2_r30 | A | 78 | 74.3% | 0.970 | 0.013 |
+| | B (code 12, both 3, mixed 3) | 18 | 17.1% | 1.000 | 0.000 |
+| | C | 9 | 8.6% | 0.556 | 0.333 |
+| rule>llmlingua2 | A | 99 | 94.3% | 0.949 | 0.030 |
+| | B | 0 | 0.0% | - | - |
+| | C | 6 | 5.7% | 1.000 | 0.000 |
+| drop_evidence | A | 0 | 0.0% | - | - |
+| | B-code | 5 | 14.3% | 1.000 | 0.000 |
+| | B-prose | 4 | 11.4% | 0.500 | 0.250 |
+| | B-both | 10 | 28.6% | 0.900 | 0.100 |
+| | C | 16 | 45.7% | 0.354 | 0.562 |
+
+- **LLMLingua-2 는 trial 의 74~94% 에서 정답 단어를 근거 자리에 남긴다.** 다른 위치가 쓰인 B 는 r30 에서만 의미 있는 수(18 trial, 6문항)이고, 모두 맞혔다.
+  - B 문항: c0003, c0025, c0026, c0038 (code), c0040 (both), c0148 (mixed). r50 의 B 는 c0040 3 trial 뿐이다.
+- **drop_evidence 는 근거 줄을 지우므로 A 가 0 이다.** 절반 이상(19/35)이 B 로 다른 위치에 기대고, 그중 16 trial 이 맞았다.
+  - 틀린 3 trial 중 c0018·c0020 은 정답이 설명 문장에만 남은 경우이고, c0027 은 both 다.
+- **2절 a 와의 차이:**
+  - drop_evidence 에서 2절 a 로 잡혔던 8 trial 은 여기서 B 나 C 로 간다. 근거 보존율이 0.5 이상이었던 c0002·c0017·c0023 은 C 다 (모두 NOT FOUND).
+  - LLMLingua-2 에서는 2절 b-evidence(근거 자리에만 남음)로 잡혔던 trial 이 A 로 들어간다.
+
+### 상태 C 전체
+
+LLMLingua-2 (21 trial)
+
+| qid | 유형 | 압축기 | run | 정답 | 모델 답변 앞부분 | 정확도 |
+|---|---|---|---|---|---|---|
+| c0004 | fact | llmlingua2_r30 | 20261031-143214 | The last one added | The first middleware added. | 0.00 |
+| c0004 | fact | llmlingua2_r30 | 20261031-162640 | The last one added | The last middleware added wraps all the others. | 1.00 |
+| c0004 | fact | llmlingua2_r30 | 20261031-172011 | The last one added | The last middleware added wraps all the others. | 1.00 |
+| c0020 | fact | llmlingua2_r30 | 20261031-143214 | "request" | NOT FOUND | 0.00 |
+| c0020 | fact | llmlingua2_r30 | 20261031-162640 | "request" | NOT FOUND | 0.00 |
+| c0020 | fact | llmlingua2_r30 | 20261031-172011 | "request" | NOT FOUND | 0.00 |
+| c0030 | fact | llmlingua2_r30 | 20261031-143214 | The override's own signature | The parameters declared by the override dependency. | 1.00 |
+| c0030 | fact | llmlingua2_r30 | 20261031-162640 | The override's own signature | The parameters declared by the override dependency. | 1.00 |
+| c0030 | fact | llmlingua2_r30 | 20261031-172011 | The override's own signature | The parameters declared by the override dependency. | 1.00 |
+| c0004 | fact | llmlingua2_r50 | 20261031-143214 | The last one added | The last middleware added. | 1.00 |
+| c0004 | fact | llmlingua2_r50 | 20261031-162640 | The last one added | The last middleware added. | 1.00 |
+| c0004 | fact | llmlingua2_r50 | 20261031-172011 | The last one added | The last middleware added (outermost). | 1.00 |
+| c0030 | fact | llmlingua2_r50 | 20261031-143214 | The override's own signature | The override callable's signature. | 1.00 |
+| c0030 | fact | llmlingua2_r50 | 20261031-162640 | The override's own signature | The override callable's signature. | 1.00 |
+| c0030 | fact | llmlingua2_r50 | 20261031-172011 | The override's own signature | The override callable's signature. | 1.00 |
+| c0004 | fact | rule>llmlingua2 | 20261031-143214 | The last one added | The last middleware added wraps all the others. | 1.00 |
+| c0004 | fact | rule>llmlingua2 | 20261031-162640 | The last one added | The last middleware added. | 1.00 |
+| c0004 | fact | rule>llmlingua2 | 20261031-172011 | The last one added | The last middleware registered. | 1.00 |
+| c0030 | fact | rule>llmlingua2 | 20261031-143214 | The override's own signature | The override callable's signature. | 1.00 |
+| c0030 | fact | rule>llmlingua2 | 20261031-162640 | The override's own signature | The override callable's signature. | 1.00 |
+| c0030 | fact | rule>llmlingua2 | 20261031-172011 | The override's own signature | The override callable's signature. | 1.00 |
+
+압축은 결정적이라 세 run 의 문맥이 같다. 문맥을 직접 보면 C 의 성격이 압축기마다 다르다.
+
+| 압축기 | 문항 | 근거 자리의 압축 후 문맥 | 판단 |
+|---|---|---|---|
+| r50 | c0004 | `middleware wraps app built last added outermost` | 표기상 C. "one" 만 빠지고 정답 단어가 제자리에 있다 |
+| r50 | c0030 | `override signature defines request parameters` | 표기상 C. "'s own" 만 빠졌다 |
+| rule>llmlingua2 | c0004 | `middleware wraps app outermost` | 일부 삭제. "last added" 는 지워졌고 "outermost" 가 같은 뜻을 남긴다 |
+| rule>llmlingua2 | c0030 | `signature defines request parameters` | 일부 삭제. "override" 가 지워졌다 |
+| r30 | c0004 | (last·added·outermost 모두 없음) | 실제 삭제. 2/3 맞힘 (남은 `add_middleware` 코드 순서로 추론하거나 기억으로 답한 것으로 보임) |
+| r30 | c0030 | (signature 없음, `override_dependency(q)` 코드만 남음) | 실제 삭제. 코드로 추론해 3/3 맞힘 |
+| r30 | c0020 | (`request` 가 문맥 전체에서 없음) | 실제 삭제. 3/3 NOT FOUND |
+
+drop_evidence (16 trial)
+
+| qid | 유형 | 정답 | 모델 답변 앞부분 | 정확도 |
+|---|---|---|---|---|
+| c0002 | code | 15 | NOT FOUND | 0.00 |
+| c0004 | fact | The last one added | The last middleware registered wraps all the others. | 1.00 |
+| c0005 | code | 5 | NOT FOUND | 0.00 |
+| c0017 | code | 30 | NOT FOUND | 0.00 |
+| c0021 | fact | DependencyScopeError | NOT FOUND | 0.00 |
+| c0022 | code | 400 | 404 | 0.00 |
+| c0023 | code | Rick | NOT FOUND | 0.00 |
+| c0030 | fact | The override's own signature | The replacement dependency's parameters. | 1.00 |
+| c0031 | fact | WebSocketDisconnect | NOT FOUND | 0.00 |
+| c0034 | fact | OAuth2PasswordRequestFormStrict | NOT FOUND | 0.00 |
+| c0036 | code | fakehashed | NOT FOUND | 0.00 |
+| c0037 | code | {"token": token} | NOT FOUND | 0.00 |
+| c0039 | multi | The simple version returns 400 Incorrect username or passwor… | In the simple password-flow tutorial, wrong credentials at `/token` re… | 1.00 |
+| c0145 | procedure | 1) Create the client in a with block: with TestClient(app) a… | 1. Define the app's lifespan logic, including startup work before `yie… | 1.00 |
+| c0147 | procedure | 1) Declare the yield dependency with Depends(get_username, s… | 1. Set the dependency's `scope` to `"function"` in `Depends()`. 2. Its… | 1.00 |
+| c0148 | multi | A module-level client = TestClient(app) used without a with … | Using `TestClient(app)` without a `with` context manager does not run … | 0.67 |
+
+(모두 run `20261019-231040`)
+
+### 상태 A 인데 틀림 (accuracy < 0.5, LLMLingua-2 7 trial, drop_evidence 0)
+
+압축 후 문맥은 none 과 단어 정렬해서, 인용문 자리에 대응하는 압축 문맥 구간을 그대로 옮겼다.
+
+| qid | 압축기 | run | 정답 | 답변 | 인용문 원문 | 압축 후 같은 부분 |
+|---|---|---|---|---|---|---|
+| c0020 | r50 | 143214, 162640, 172011 (3/3) | `"request"` | NOT FOUND | - `"request"` (default for `yield` dependencies): setup before the path operation, teardown **after the response is sent**. This means a `StreamingResponse` can keep using the resource while streaming. | request default setup before path operation teardown after response sent StreamingResponse resource while streaming |
+| c0020 | rule>llmlingua2 | 172011 (1/3) | `"request"` | NOT FOUND | (같음) | request default setup before path operation teardown after response StreamingResponse resource streaming |
+| c0021 | rule>llmlingua2 | 143214, 172011 (2/3) | DependencyScopeError | NOT FOUND | Sub-dependency rule: a `"request"`-scoped dependency may only depend on `"request"`-scoped dependencies; a `"function"`-scoped dependency may depend on both. Violating it raises `DependencyScopeError` when the route is created. … | only DependencyScopeError route createdHistory edge cases Advanced Dependencies |
+| c0031 | r30 | 143214 (1/3) | WebSocketDisconnect | NOT FOUND | … If the server closes or rejects the connection (e.g. `WebSocketException` with code 1008), the test client raises `WebSocketDisconnect`, which you can assert with `pytest.raises` … | send_text send_bytes send_json receive_text receive_bytes receive_json URL WebSocketException 1008 WebSocketDisconnect WebSockets |
+
+**7 trial 모두 정답 단어는 남았지만, 그 단어와 질문을 잇는 말이 지워졌다.**
+
+- **c0020:** `for yield dependencies` 의 `yield` 와 괄호 구조가 빠졌다. 그래서 `request` 가 무엇의 기본값인지 이어지지 않는다.
+- **c0021:** `Violating it raises … when` 이 빠졌다. `DependencyScopeError` 가 규칙 위반의 결과라는 관계가 사라졌다.
+- **c0031:** `If the server closes … the test client raises` 가 빠지고 식별자 나열만 남았다.
+
+같은 압축 문맥에서도 run 에 따라 맞히기도 한다 (c0021 1/3, c0031 2/3, rule>llmlingua2 c0020 2/3 맞힘). 연결어가 지워지면 답변이 경계에 놓여 흔들리는 것으로 보인다.
+
+### 요약
+
+- **정답 단어가 실제로 지워진 비율 (C):** 매칭 기준으로 r50 5.7%, r30 8.6%, rule>llmlingua2 5.7%, drop_evidence 45.7% 다. 문맥을 읽어 보면 r50 의 C 6건은 단어가 제자리에 있는 표기상 C 라 실제 삭제는 0% 다. rule>llmlingua2 는 일부 삭제 6건(5.7%), r30 은 실제 삭제 9건(8.6%)이다.
+- **B 에서 중복성이 정답을 지켜 준 건수:** LLMLingua-2 21/21 trial (r30 18, r50 3, rule>llmlingua2 0) 이다. 전체 315 trial 의 6.7% 다. drop_evidence 는 16/19 trial (35 trial 중 46%) 이다.
+- **A 인데 틀린 건수:** LLMLingua-2 7 trial (c0020 4, c0021 2, c0031 1). 7건 모두 정답 단어는 남고 연결어가 지워진 경우로 보인다. drop_evidence 는 A 가 없다.
+
+"정답 단어가 대부분 제자리에 남아서 중복성이 쓰일 일이 적었다"는 설명은 숫자로 맞다. LLMLingua-2 의 틀린 답은 정답 단어 삭제(r30 c0020 3건)보다 **연결어 삭제**(7건)에서 더 많이 나온다.
+
 ## 한계
 
 1. **근거 보존율(v2)은 짧은 코드 인용문에서 과대평가된다.**
@@ -268,6 +401,6 @@ drop_evidence run
 
 ## 파일
 
-- `src/redundancy.py`: 분석 스크립트. `--json` 으로 문항·trial 값을 쓴다.
+- `src/redundancy.py`: 분석 스크립트. `--json` 으로 문항·trial 값을 쓴다. `--core-states` 는 4절 표와 목록을, `--compressors` 는 압축기 필터를 낸다.
 - `src/experiment.py`: `iter_normalized` 를 추가했다 (모든 위치). `find_normalized` 는 그 첫 위치를 쓰며, 판정은 그대로다.
 - `tests/test_redundancy.py`: 위치 세기, 코드/설명 구분, 근거 자리, 상태 분류, Fisher 검정.

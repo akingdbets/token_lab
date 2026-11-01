@@ -14,8 +14,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from experiment import find_normalized, iter_normalized  # noqa: E402
-from redundancy import (code_ranges, core_positions, evidence_words, fisher_p, needle_spans,  # noqa: E402
-                        outside_evidence, quote_window, trial_state)
+from redundancy import (code_ranges, core_positions, core_state, evidence_excerpts, evidence_words,  # noqa: E402
+                        fisher_p, needle_spans, outside_evidence, quote_window, trial_state)
 
 RAW = """## Document: a
 
@@ -90,6 +90,31 @@ class EvidenceTest(unittest.TestCase):
         self.assertEqual(trial_state(it, in_place, RAW, ev)["where"], "evidence")
         none_left = gone.replace("from asgi_lifespan import LifespanManager\n", "")
         self.assertEqual(trial_state(it, none_left, RAW, ev)["state"], "c")
+
+
+class CoreStateTest(unittest.TestCase):
+    QUOTE = "Install asgi-lifespan to test the lifespan."
+
+    def setUp(self):
+        self.it = item("asgi-lifespan", self.QUOTE)
+        self.ev = evidence_words(RAW, self.it)
+
+    def test_in_evidence_is_A_even_if_quote_mostly_deleted(self):
+        comp = RAW.replace(self.QUOTE, "asgi-lifespan lifespan.")
+        self.assertEqual(core_state(self.it, comp, RAW, self.ev)["cstate"], "A")
+
+    def test_only_elsewhere_is_B_with_location(self):
+        comp = RAW.replace(self.QUOTE, "")
+        self.assertEqual(core_state(self.it, comp, RAW, self.ev), {"cstate": "B", "cwhere": "code"})
+
+    def test_gone_everywhere_is_C(self):
+        comp = RAW.replace(self.QUOTE, "").replace("from asgi_lifespan import LifespanManager\n", "")
+        self.assertEqual(core_state(self.it, comp, RAW, self.ev)["cstate"], "C")
+
+    def test_evidence_excerpts_side_by_side(self):
+        comp = RAW.replace(self.QUOTE, "Install asgi-lifespan lifespan.")
+        (e,) = evidence_excerpts(self.it, comp, RAW)
+        self.assertEqual(e, {"quote": self.QUOTE, "compressed": "Install asgi-lifespan lifespan"})
 
 
 class FisherTest(unittest.TestCase):

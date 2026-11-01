@@ -22,6 +22,11 @@
           mixed (둘을 합쳐야 채움) / evidence (근거 자리에 남은 것을 빼면 못 채움: 인용문은 지워졌는데 정답 단어만 남음)
           압축 문맥의 위치는 none 문맥과 단어 정렬(difflib, 압축은 지우기만 하므로)해서 근거 자리인지 본다
        c  근거 보존율 <  EVIDENCE_LOW, 핵심어 없음
+2'. --core-states: 근거 보존율 대신 근거 자리 안의 정답 핵심어로 다시 나눈 상태 (짧은 코드 인용문의 보존율 과대평가를 피함)
+       A  근거 인용문 자리 안에 정답 핵심어가 남음 (긴 답은 근거 자리 안의 위치만으로 절반 규칙을 채움)
+       B  근거 자리에는 없지만 다른 위치에 남음. 남은 위치 code / prose / both / mixed (근거 자리와 다른 위치를 합쳐야 채움 포함)
+       C  정답 핵심어가 문맥 전체에서 사라짐 (core_matches 가 거짓)
+       C 전체 목록과, A 인데 틀린(accuracy < 0.5) trial 의 근거 인용문 원문·압축 후 같은 부분을 함께 낸다
 3. 중복도 1 vs 2 이상으로 나눠 압축기별·유형별 정확도. 정답(accuracy >= 0.5) trial 수의 Fisher 정확 검정(양측)도 낸다.
    여러 run 을 합치면 같은 문항의 trial 이 독립이 아니라 p 는 참고값이다
 """
@@ -117,7 +122,8 @@ class WordMap:
     """문맥 문자 위치 → 단어 번호, 그리고 압축 문맥 단어 번호 → none 문맥 단어 번호."""
 
     def __init__(self, context: str, raw: str | None = None):
-        self.starts = [m.start() for m in _WORD.finditer(context.lower())]
+        words = list(_WORD.finditer(context.lower()))
+        self.starts, self.ends = [m.start() for m in words], [m.end() for m in words]
         self.to_raw = None
         if raw is not None:
             a, b = word_tokens(context), word_tokens(raw)
@@ -192,11 +198,37 @@ def trial_state(item: dict, context: str, raw: str, ev_words: set[int]) -> dict:
     return {"state": "b", "evidence": evidence, "core": True, "where": where_left(pos)}
 
 
+def core_state(item: dict, context: str, raw: str, ev_words: set[int]) -> dict:
+    """근거 자리 안의 정답 핵심어 기준 상태 A / B / C (--core-states)."""
+    if not core_matches(context, item)[0]:
+        return {"cstate": "C", "cwhere": None}
+    out = outside_evidence(context, raw, ev_words)
+    if core_positions(context, item, lambda pos: not out(pos))["total"]:
+        return {"cstate": "A", "cwhere": None}
+    pos = core_positions(context, item, out)
+    return {"cstate": "B", "cwhere": where_left(pos) if pos["total"] else "mixed"}
+
+
+def evidence_excerpts(item: dict, context: str, raw: str) -> list[dict]:
+    """근거 인용문마다 원문 인용문과 압축 문맥의 같은 부분 (none 과 단어 정렬해 인용문 자리에 대응하는 단어 구간)."""
+    raw_words = word_tokens(raw)
+    wm = WordMap(context, raw)
+    out = []
+    for e in item.get("evidence") or []:
+        quote = e.get("quote") or ""
+        w = quote_window(word_tokens(quote), raw_words)
+        hit = [i for i, r in wm.to_raw.items() if w and w[0] <= r < w[1]] if w else []
+        comp = context[wm.starts[min(hit)]:wm.ends[max(hit)]] if hit else ""
+        out.append({"quote": quote, "compressed": comp})
+    return out
+
+
 def group(redundancy: int) -> str:
     return "0" if redundancy == 0 else "1" if redundancy == 1 else "2+"
 
 
-def load_rows(run_dirs: list[Path], items: dict) -> tuple[dict, list[dict]]:
+def load_rows(run_dirs: list[Path], items: dict, compressors: list[str] | None = None,
+              core_states: bool = False) -> tuple[dict, list[dict]]:
     """(문항별 중복도, trial 행). 중복도는 첫 run 의 none 문맥 (없으면 그 문항이 있는 다음 run)."""
     red, raws, rows = {}, {}, []
     for run in run_dirs:
@@ -220,10 +252,19 @@ def load_rows(run_dirs: list[Path], items: dict) -> tuple[dict, list[dict]]:
             ctx = run / "contexts" / f"{t['qid']}.{t['compressor'].replace('>', '+')}.md"
             if not ctx.exists():
                 sys.exit(f"문맥 파일이 없습니다: {ctx}")
-            rows.append({"run_id": run.name, "qid": t["qid"], "qtype": t["qtype"], "compressor": t["compressor"],
-                         "answer_accuracy": t.get("answer_accuracy"),
-                         "not_found": is_not_found(t.get("response") or ""),
-                         **trial_state(item, ctx.read_text(encoding="utf-8"), *raws[t["qid"]])})
+            if compressors and t["compressor"] not in compressors:
+                continue
+            text = ctx.read_text(encoding="utf-8")
+            row = {"run_id": run.name, "qid": t["qid"], "qtype": t["qtype"], "compressor": t["compressor"],
+                   "answer_accuracy": t.get("answer_accuracy"),
+                   "not_found": is_not_found(t.get("response") or ""),
+                   **trial_state(item, text, *raws[t["qid"]])}
+            if core_states:
+                row.update(core_state(item, text, *raws[t["qid"]]), answer=item["answer"],
+                           response=(t.get("response") or "").strip())
+                if row["cstate"] == "A" and (row["answer_accuracy"] or 0) < 0.5:
+                    row["excerpts"] = evidence_excerpts(item, text, raws[t["qid"]][0])
+            rows.append(row)
     for r in rows:
         r["redundancy"] = red[r["qid"]]["total"]
         r["group"] = group(r["redundancy"])
@@ -343,16 +384,62 @@ def report(red: dict, rows: list[dict], runs: list[Path]) -> tuple[str, dict]:
     return "\n".join(L), out
 
 
+def _cell(s: str, n: int) -> str:
+    s = " ".join(s.split()).replace("|", "/")
+    return s if len(s) <= n else s[:n] + "…"
+
+
+def core_report(red: dict, rows: list[dict], runs: list[Path]) -> tuple[str, dict]:
+    """--core-states: 상태 A/B/C 표, C 목록, A 인데 틀린 목록."""
+    comps = list(dict.fromkeys(r["compressor"] for r in rows))
+    out = {"runs": [r.as_posix() for r in runs], "core_match_version": CORE_MATCH_VERSION, "core_states": {}}
+    L = [f"## {', '.join(r.name for r in runs)}  ({CORE_MATCH_VERSION}, 근거 자리 안 핵심어 기준)", "",
+         "| 압축기 | 상태 | trial | 비율 | 정확도 | NOT FOUND |", "|---|---|---|---|---|---|"]
+    labels = [("A", None), ("B", "code"), ("B", "prose"), ("B", "both"), ("B", "mixed"), ("C", None)]
+    for c in comps:
+        rc = [r for r in rows if r["compressor"] == c]
+        out["core_states"][c] = {}
+        for st, w in [("A", None), ("B", None)] + labels[1:]:
+            rs = [r for r in rc if r["cstate"] == st and (w is None or r["cwhere"] == w)]
+            if w is not None and not rs:
+                continue
+            s = stats(rs)
+            out["core_states"][c][st if w is None else f"{st}-{w}"] = s
+            name = st if w is None else f"  B-{w}"
+            L.append(f"| {c} | {name} | {s['trials']} | {s['trials'] / len(rc):.1%} | {_f(s['accuracy'])} "
+                     f"| {_f(s['not_found_rate'])} |")
+    cs = [r for r in rows if r["cstate"] == "C"]
+    L += ["", f"### 상태 C 전체 ({len(cs)} trial)", "",
+          "| qid | 유형 | 압축기 | run | 정답 | 모델 답변 앞부분 | 정확도 |", "|---|---|---|---|---|---|---|"]
+    for r in sorted(cs, key=lambda r: (r["compressor"], r["qid"], r["run_id"])):
+        L.append(f"| {r['qid']} | {r['qtype']} | {r['compressor']} | {r['run_id']} | {_cell(r['answer'], 60)} "
+                 f"| {_cell(r['response'], 70)} | {_f(r['answer_accuracy'], 2)} |")
+    bad = [r for r in rows if r["cstate"] == "A" and (r["answer_accuracy"] or 0) < 0.5]
+    L += ["", f"### 상태 A 인데 틀림 (accuracy < 0.5, {len(bad)} trial)", ""]
+    for r in sorted(bad, key=lambda r: (r["compressor"], r["qid"], r["run_id"])):
+        L += [f"- **{r['qid']}** ({r['qtype']}, {r['compressor']}, {r['run_id']}, 정확도 {_f(r['answer_accuracy'], 2)})",
+              f"  - 정답: {_cell(r['answer'], 160)}", f"  - 답변: {_cell(r['response'], 160)}"]
+        for e in r["excerpts"]:
+            L += [f"  - 인용문 원문: `{_cell(e['quote'], 400)}`",
+                  f"  - 압축 후: `{_cell(e['compressed'], 400) or '(없음)'}`"]
+    out["trials"] = rows
+    return "\n".join(L), out
+
+
 def main():
     ap = argparse.ArgumentParser(description="문서 중복도와 압축 강건성 (저장된 run 만 사용)")
     ap.add_argument("run_dirs", nargs="+", type=Path, help="results/runs/<run_id> (여러 개면 trial 을 합친다)")
     ap.add_argument("--json", type=Path, help="문항·trial 값을 쓸 파일 (기본: 쓰지 않음)")
+    ap.add_argument("--compressors", help="쉼표로 구분한 압축기만 본다 (기본: 전부)")
+    ap.add_argument("--core-states", action="store_true",
+                    help="근거 자리 안의 정답 핵심어 기준 상태 A/B/C 표와 C·A 오답 목록만 낸다")
     args = ap.parse_args()
     sys.stdout.reconfigure(encoding="utf-8")
 
     items = {it["id"]: it for it in load_items("all", None, None)}
-    red, rows = load_rows(args.run_dirs, items)
-    text, out = report(red, rows, args.run_dirs)
+    comps = args.compressors.split(",") if args.compressors else None
+    red, rows = load_rows(args.run_dirs, items, comps, args.core_states)
+    text, out = (core_report if args.core_states else report)(red, rows, args.run_dirs)
     print(text)
     if args.json:
         out["trials"] = rows
