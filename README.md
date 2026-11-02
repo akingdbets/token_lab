@@ -42,6 +42,13 @@ RAG(Vector DB 검색) 단계를 두지 않고, 질문마다 정답 근거 문서
 3. **LLMLingua** — 소형 언어모델 기반 저정보 토큰 제거 (LLMLingua-2, LongLLMLingua)
 4. **하이브리드** — 상기 기법을 순차 결합한 파이프라인
 
+질문 기반 섹션 선택 압축기 `section_bm25`도 같은 실행기에서 비교·조합할 수 있다.
+`--compressors 'none,rule,llmlingua2_r50,section_bm25,rule>section_bm25,section_bm25>llmlingua2'`
+처럼 지정한다. `--section-retain-ratio`(기본 0.5)는 해당 단계 전체 입력의 보존 목표다.
+최상위 섹션을 온전히 남기므로 목표 초과를 기록할 수 있다. [방법·예산·사용법](docs/02_압축기법/섹션선택_압축기.md)과
+[완료한 dev 평가 및 해석](docs/04_실험결과/섹션선택_압축기_평가_20261103.md)을 참고한다.
+조합은 실행·재개 동작을 검증했으며 조합 성능 향상은 아직 측정하지 않았다.
+
 ## 실행 환경
 
 - Python 3.11+

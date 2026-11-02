@@ -214,7 +214,6 @@ RAG 검색 단계는 두지 않는다.
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import re
 import math
@@ -230,7 +229,9 @@ import requests
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from answer_prompts import AnswerPrompt, PROMPTS_DIR, answer_prompt_versions, load_answer_prompt
 from compressors import PromptParts, get_compressor
+from compressors.section_select import DEFAULT_SECTION_RETAIN_RATIO, configure_section_compressor
 from config import CFG
 from corpus import load_corpus
 from grader import (
@@ -255,63 +256,7 @@ OX_JUDGE_MAX_TOKENS = 4096       # 기존 O/X judge
 FACT_JUDGE_MAX_TOKENS = 4096     # key_facts judge (YES/NO 또는 JSON)
 TYPES = ("fact", "code", "procedure", "multi")   # 유형별 집계 순서
 
-# 답변 지시문은 src/prompts/answer_<버전>.md 에 둔다 (바꾸면 이전 결과와 비교할 수 없으므로 새 버전으로)
-PROMPTS_DIR = Path(__file__).resolve().parent / "prompts"
 NOT_FOUND = "NOT FOUND"
-
-
-@dataclass
-class AnswerPrompt:
-    version: str
-    sha256: str                     # 파일 해시 앞 12자리 (같은 버전 이름으로 내용이 바뀌었는지 확인용)
-    system: str                     # {answer_format} 자리에 문항 type 의 형식 줄을 넣는다
-    user: str                       # {context}, {question} 를 채우는 틀 (문서 + 질문만)
-    format: dict[str, str]          # type -> 지시 한 줄. "default" 는 type 이 없거나 모르는 값일 때
-
-    def format_key(self, qtype: str | None) -> str:
-        return qtype if qtype in self.format and qtype != "default" else "default"
-
-    def parts(self, context: str, question: str, qtype: str | None,
-              evidence: tuple[str, ...] = ()) -> PromptParts:
-        """압축 전 입력 세 부분. system 은 형식 줄을 끼운 뒤의 전체 (압축 대상).
-        evidence 는 문항의 근거 인용문 (drop_evidence 압축기가 읽는다, 메시지에는 들어가지 않음)."""
-        fmt = self.format[self.format_key(qtype)]
-        return PromptParts(system=self.system.replace("{answer_format}", fmt), context=context, question=question,
-                           evidence=tuple(evidence))
-
-    def messages(self, parts: PromptParts) -> list[dict]:
-        user = self.user.format(context=parts.context, question=parts.question)
-        return [{"role": "system", "content": parts.system}, {"role": "user", "content": user}]
-
-
-def answer_prompt_versions() -> list[str]:
-    return sorted(p.stem.removeprefix("answer_") for p in PROMPTS_DIR.glob("answer_*.md"))
-
-
-def load_answer_prompt(version: str) -> AnswerPrompt:
-    path = PROMPTS_DIR / f"answer_{version}.md"
-    text = path.read_text(encoding="utf-8").replace("\r\n", "\n")
-    sections, cur = {}, None
-    for line in text.split("\n"):
-        m = re.match(r"## (\w+)\s*$", line)
-        if m:
-            cur = m.group(1)
-            sections[cur] = []
-        elif cur:
-            sections[cur].append(line)
-    sections = {k: "\n".join(v).strip() for k, v in sections.items()}
-    missing = {"system", "format", "user"} - sections.keys()
-    if "{answer_format}" not in sections.get("system", ""):
-        missing.add("system 의 {answer_format}")
-    if missing:
-        sys.exit(f"{path}: 섹션이 없습니다: {sorted(missing)}")
-    fmt = dict(re.findall(r"^- (\w+):[ \t]*(.+?)\s*$", sections["format"], re.M))
-    if "default" not in fmt:
-        sys.exit(f"{path}: format 에 default 줄이 없습니다")
-    if "TODO:" in sections["system"] or any("TODO:" in v for v in fmt.values()):
-        sys.exit(f"{path}: 아직 채우지 않은 TODO 가 있습니다")
-    return AnswerPrompt(version=version, sha256=hashlib.sha256(text.encode("utf-8")).hexdigest()[:12],
-                        system=sections["system"], user=sections["user"], format=fmt)
 
 
 def is_not_found(response: str) -> bool:
@@ -640,16 +585,23 @@ def git_head() -> str | None:
 
 
 # 이어서 실행할 때 처음 실행의 값을 그대로 쓰는 인자 (같은 run 안에서 조건이 섞이지 않게)
-RUN_ARGS = ("compressors", "split", "limit", "ids", "no_judge", "judge_mode", "semantic", "answer_prompt")
+SECTION_ARG_DEFAULTS = {"section_retain_ratio": DEFAULT_SECTION_RETAIN_RATIO, "section_input_budget": None}
+RUN_ARGS = ("compressors", "split", "limit", "ids", "no_judge", "judge_mode", "semantic", "answer_prompt",
+            *SECTION_ARG_DEFAULTS)
 
 
 def run(args) -> Path:
+    for key, value in SECTION_ARG_DEFAULTS.items():
+        if not hasattr(args, key):
+            setattr(args, key, value)
     if getattr(args, "resume", None):
         run_id = args.resume
         out_dir = CFG.results_dir / "runs" / run_id
         if not (out_dir / "trials.jsonl").exists():
             sys.exit(f"이어서 실행할 run 이 없습니다: {out_dir}")
         meta = json.loads((out_dir / "args.json").read_text(encoding="utf-8"))
+        for key, value in SECTION_ARG_DEFAULTS.items():
+            meta["args"].setdefault(key, value)
         for k in RUN_ARGS:
             setattr(args, k, meta["args"][k])
         meta["attempts"].append({"time": datetime.now().isoformat(timespec="seconds"), "git_head": git_head()})
@@ -695,6 +647,10 @@ def _run(args, run_id: str, out_dir: Path) -> Path:
         sys.exit(f"실행할 문항이 없습니다 (split={args.split}). --split all 또는 평가셋 생성을 확인하세요")
 
     prompt = load_answer_prompt(args.answer_prompt)
+    for comp in compressors:
+        configure_section_compressor(comp, prompt.messages,
+                                     getattr(args, "section_retain_ratio", DEFAULT_SECTION_RETAIN_RATIO),
+                                     getattr(args, "section_input_budget", None))
     corpus = load_corpus()
     llm = LLM(max_tokens=ANSWER_MAX_TOKENS)
     # 기존 O/X 판정용 Judge
@@ -1224,6 +1180,10 @@ def main():
                     help="중단된 run 을 이어서 실행 (처음 실행의 인자를 args.json 에서 읽고, 기록된 trial 은 건너뜀)")
     ap.add_argument("--answer-prompt", default="v1", choices=answer_prompt_versions(),
                     help="답변 지시문 버전 (src/prompts/answer_<버전>.md)")
+    ap.add_argument("--section-retain-ratio", type=float, default=DEFAULT_SECTION_RETAIN_RATIO,
+                    help="section_bm25 단계 전체 입력 보존 목표 비율 (기본 0.5). 최상위 섹션 보존 시 초과 가능")
+    ap.add_argument("--section-input-budget", type=int,
+                    help="section_bm25 단계의 전체 입력 토큰 목표 상한. 비율보다 우선")
     run(ap.parse_args())
 
 

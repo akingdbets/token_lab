@@ -51,9 +51,11 @@ from compressors.drop_evidence import DropEvidence
 from compressors.identity import EmptyContext, NoCompression
 from compressors.llmlingua2 import LLMLingua2Compressor
 from compressors.rule import RuleCompressor
+from compressors.section_select import SectionSelectCompressor
 from config import CFG
 
 REGISTRY: dict[str, Compressor] = {
+    "section_bm25": SectionSelectCompressor(),
     "none": NoCompression(),        # 기준선 (Baseline): 원문 그대로
     "empty": EmptyContext(),        # 바닥값: 문서를 비움 (보정 유지율 기준점)
     "drop_evidence": DropEvidence(),  # 진단용: 근거 인용문 줄만 지움 (기억 보충 확인)
@@ -85,5 +87,5 @@ def get_compressor(name: str) -> Compressor:
 
 __all__ = [
     "PARTS", "Chain", "CompressResult", "Compressor", "PromptParts",
-    "LLMLingua2Compressor", "REGISTRY", "get_compressor",
+    "LLMLingua2Compressor", "SectionSelectCompressor", "REGISTRY", "get_compressor",
 ]
