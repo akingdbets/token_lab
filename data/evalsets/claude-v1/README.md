@@ -9,6 +9,8 @@ OpenWiki 영어 위키(`data/openwiki/en`) 기준 평가셋. 질문 후보는 Cl
   2026-10-11 유형 균형 맞추기로 추가한 문항에는 persona 가 없다
 - 사람 검수 완료 (`human_checked` 174문항 모두 true). dev 35 는 `review/review_dev_v1.csv`, test 139 는
   `review/review_test_v1.csv` (keep 113 · edit 26 · delete 0, PR #37) 를 `apply_review.py` 로 반영했다. 변경 기록은 `review/review_log_v1.jsonl`
+  - c0152 는 검수표 `final_*` 열로 담을 수 없는 메모(근거 문서·유형)를 따로 반영했다. 질문의 전제 문서 `integrations/sql-databases.md`
+    를 빼고 근거를 `app-structure/lifespan-events.md` 131행 하나로, 유형을 multi → fact 로 바꿨다 (test: code 42 · fact 38 · procedure 30 · multi 29)
 - key_facts 단위: 질문이 묻는 항목 하나에 key_fact 하나. 한 항목의 답이 값 여러 개면 한 fact 로 묶는다
   (c0153 "Status codes below 200 and 204, 205 and 304 forbid a body.", test 검수에서 c0008·c0009·c0131·c0139 도 이 규칙으로 묶음)
 

@@ -8658,9 +8658,9 @@
   {
     "id": "c0152",
     "split": "test",
-    "type": "multi",
+    "type": "fact",
     "question": "The SQLModel tutorial creates tables from an on_event startup handler; which internal FastAPI object runs such handlers when no lifespan is passed?",
-    "answer": "FastAPI's internal _DefaultLifespan runs the on_startup handlers, so the tutorial's handler calls create_db_and_tables() at startup",
+    "answer": "FastAPI's internal _DefaultLifespan runs the on_startup handlers.",
     "key_entities": [
       "_DefaultLifespan"
     ],
@@ -8669,7 +8669,7 @@
     ],
     "evidence": [
       {
-        "quote": "FastAPI uses an internal `_DefaultLifespan` that runs the `on_startup` / `on_shutdown` handlers",
+        "quote": "When no `lifespan` is given, FastAPI uses an internal `_DefaultLifespan` that runs the `on_startup` / `on_shutdown` handlers",
         "page": "app-structure/lifespan-events.md",
         "locations": [
           {
@@ -8677,36 +8677,19 @@
             "line": 131
           }
         ]
-      },
-      {
-        "quote": "    create_db_and_tables()",
-        "page": "integrations/sql-databases.md",
-        "locations": [
-          {
-            "file": "integrations/sql-databases.md",
-            "line": 44
-          },
-          {
-            "file": "integrations/sql-databases.md",
-            "line": 69
-          }
-        ]
       }
     ],
     "evidence_pages": [
-      "app-structure/lifespan-events.md",
-      "integrations/sql-databases.md"
+      "app-structure/lifespan-events.md"
     ],
     "source_files": [
-      "app-structure/lifespan-events.md",
-      "integrations/sql-databases.md"
+      "app-structure/lifespan-events.md"
     ],
     "sections": [
-      null,
       null
     ],
     "folder": "app-structure",
-    "doc_tokens": 3353,
+    "doc_tokens": 1451,
     "copy_overlap": 0.1,
     "original_question": null,
     "verified": null,
