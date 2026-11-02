@@ -9,8 +9,8 @@ dev 결과는 [LLMLingua-2 dev v3 (3회 반복)](llmlingua2_dev_v3_repeat.md) �
 
 | 항목 | 값 |
 |---|---|
-| 평가셋 | `data/evalsets/claude-v1` test 139문항. 사람 검수 139/139 (#37 검수표, #41 반영, main `85f60fc`) |
-| 문항 구성 | code 42, fact 37, procedure 30, multi 30. key_facts 235개. 모든 문항에 근거 인용문 있음 |
+| 평가셋 | `data/evalsets/claude-v1` test 139문항. 사람 검수 139/139 (#37 검수표, #41 반영, c0152 #43). 고정 태그 `test-v1-freeze` |
+| 문항 구성 | code 42, fact 38, procedure 30, multi 29. key_facts 235개. 모든 문항에 근거 인용문 있음 |
 | 압축기 | none, rule, llmlingua2_r50, llmlingua2_r30, rule>llmlingua2, empty, drop_evidence |
 | LLMLingua-2 안전 정책 | `question-identifiers-v1+fenced-code-blocks-v1+document-headers-v1+unsplit-identifiers-v1`. dev 3회 반복 run 432개 기록과 같다. 그 run 의 코드(`96d862c`) 이후 `src/compressors`·`src/prompts` 변경 없음 |
 | 답변 | `gpt-6-luna`, temperature 0.0, seed 42, reasoning_effort `none`, `max_completion_tokens` 512, answer 프롬프트 v1 `d12495bd1412` |
@@ -26,11 +26,12 @@ EVAL_DIR=data/evalsets/claude-v1 python src/experiment.py --split test --compres
 
 끊기면 `--resume` 으로 같은 run 에 이어 붙인다. 원문 대체(fallback), 답변 잘림, judge 오류가 생기면 결과 문서에 건수와 문항을 적는다. 오류 trial 을 빼고 다시 계산하지 않는다 (재실행은 `--resume` 의 빠진 trial 만).
 
-**실행 전 남은 결정:** c0152 의 근거 페이지 의견 (검수 메모, 아래 "실행 전 확인"). 바꾸기로 하면 이 계획을 커밋한 뒤 평가셋 PR 을 먼저 머지하고 실행한다.
+**실행 기준:** `test-v1-freeze` 태그가 가리키는 커밋에서 실행한다. 평가셋은 이 태그 이후 바꾸지 않는다.
 
 ## 비용·시간 추정 (API 호출 없이)
 
 - **답변 입력 토큰:** test 139문항을 실제로 로컬 압축해 셌다 (원문 대체 0건, drop_evidence 인용문 미일치 0건).
+  c0152 수정(#43) 전에 센 값이다. 수정으로 그 문항의 none 문맥이 1,830 토큰 줄어, 압축기마다 수백~1.8K 토큰 줄어든다 (합계 1% 미만).
 - **나머지 값:** dev 3회 반복 run(같은 코드·설정)의 trial 값으로 환산했다. 답변 출력·시간은 압축기별 trial 당, judge 는 key_fact 당이다.
 - empty·drop_evidence 의 dev 값은 `20261019-231040` 에서 가져왔다.
 
@@ -107,7 +108,7 @@ EVAL_DIR=data/evalsets/claude-v1 python src/redundancy.py results/runs/<test_run
 
 `python src/stats.py results/runs/<test_run> --by-type`
 
-- code 42 / fact 37 / procedure 30 / multi 30 마다 표 1 의 정확도·유지율·CI 를 낸다
+- code 42 / fact 38 / procedure 30 / multi 29 마다 표 1 의 정확도·유지율·CI 를 낸다
 - 유형별 n 이 30~42 라 CI 가 넓다. 유형 간 차이는 서술만 하고 검정 결론을 내지 않는다
 - dev 에서 가장 흔들린 fact(r30 0.85 ± 0.11) 가 test 에서도 가장 낮은지 본다
 
@@ -118,23 +119,19 @@ LLMLingua-2 는 fenced code block 을 지우지 않는다 (`fenced-code-blocks-v
 | split | 문항 | 문맥 토큰 | 코드 블록 토큰 | 코드 비중 | code / fact / multi / procedure |
 |---|---|---|---|---|---|
 | dev | 35 | 73,051 | 23,049 | 31.6% | 30.8 / 29.5 / 35.6 / 31.5% |
-| test | 139 | 321,016 | 86,552 | **27.0%** | 27.0 / 26.8 / 26.8 / 27.4% |
+| test | 139 | 319,186 | 85,870 | **26.9%** | 27.0 / 26.7 / 26.7 / 27.4% |
 
 - 계산: `compressors.llmlingua2._split_fenced_blocks` 로 none 문맥을 나누고 `tiktoken:o200k_base` 로 센다
-- **상한:** 코드 블록 밖 설명만 지울 수 있으므로, 문맥 토큰 절감률의 상한은 1 − 코드 비중 이다. test 는 73.0%, dev 는 68.4% 다
+- **상한:** 코드 블록 밖 설명만 지울 수 있으므로, 문맥 토큰 절감률의 상한은 1 − 코드 비중 이다. test 는 73.1%, dev 는 68.4% 다
   - 문서 제목 줄과 질문 속 식별자도 지우지 않으므로 실제 상한은 이보다 조금 낮다
 - **결과 문서에 낼 값:** 압축기별 문맥 토큰 절감률 / 상한 (상한 대비 달성률)
   - 입력 토큰 절감률은 시스템 프롬프트·질문을 포함하므로 문맥 절감률보다 낮다
-- test 의 코드 비중이 dev 보다 4.6%p 낮다. 같은 비율 설정에서 test 절감률이 dev 보다 조금 높게 나올 수 있다
+- test 의 코드 비중이 dev 보다 4.7%p 낮다. 같은 비율 설정에서 test 절감률이 dev 보다 조금 높게 나올 수 있다
 
 ## 실행 전 확인
 
-- **c0152 (multi):** 검수 메모는 "질문에 create_db_and_tables() 전제가 있으므로 key_facts, key_entities, evidence_pages 도 수정, 문제 분류도 multi 로"이다.
-  - #41 에서 반영된 것: key_facts 와 key_entities 는 `_DefaultLifespan` 하나로 줄었다.
-  - 반영되지 않은 것: evidence_pages 는 `app-structure/lifespan-events.md`, `integrations/sql-databases.md` 둘 그대로다. 근거 인용문 `create_db_and_tables()` 와, 정답 문장 뒷부분("so the tutorial's handler calls create_db_and_tables() at startup")도 남아 있다.
-  - 유형은 이미 multi 다.
-  - 문맥은 evidence_pages 로 만들기 때문에, 페이지를 바꾸면 이 문항의 입력이 바뀐다. 결정 후 실행한다.
-- **c0152 이외:** 실행 전에 `git log -1` 이 이 계획을 커밋한 뒤의 main 인지, `python -m unittest discover -s tests` 가 통과하는지 확인한다.
+- **c0152:** 검수 메모(장우진)대로 수정했다 (#43). 근거를 `app-structure/lifespan-events.md` 131행 하나로 줄였고 (전제 문서 `integrations/sql-databases.md` 제거), 유형은 multi → fact 로 바꿨다. 정답은 key_facts 와 맞췄다. none 문맥에서 `answer_core_in_context` 가 True 다.
+- **실행 직전:** `git describe --tags` 가 `test-v1-freeze` (이 계획과 #43 을 포함한 main) 인지, `python -m unittest discover -s tests` 가 통과하는지 확인한다.
 
 ## 결과 문서
 
