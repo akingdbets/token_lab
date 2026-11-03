@@ -1,0 +1,31 @@
+
+[
+  {
+    "qid": "c0018",
+    "category": "prose",
+    "old_span": "default `500`",
+    "new_span": "default `750`",
+    "synthetic_answer": "750"
+  },
+  {
+    "qid": "c0021",
+    "category": "prose",
+    "old_span": "Violating it raises `DependencyScopeError`",
+    "new_span": "Violating it raises `DependencyConstraintError`",
+    "synthetic_answer": "DependencyConstraintError"
+  },
+  {
+    "qid": "c0002",
+    "category": "code",
+    "old_span": "timedelta(minutes=15)",
+    "new_span": "timedelta(minutes=23)",
+    "synthetic_answer": "23"
+  },
+  {
+    "qid": "c0005",
+    "category": "code",
+    "old_span": "compresslevel=5",
+    "new_span": "compresslevel=7",
+    "synthetic_answer": "7"
+  }
+]
