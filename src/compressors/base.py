@@ -15,6 +15,8 @@ class PromptParts:
     question: str                       # 사용자 질문
     # 문항의 근거 인용문 (평가셋 evidence[].quote). 압축 대상이 아니라 drop_evidence 같은 진단용 압축기만 읽는다
     evidence: tuple[str, ...] = ()
+    # 문항의 정답 핵심어 (core_match.core_needles). 정답 사본을 지우는 진단용 압축기(compressors/copies.py)만 읽는다
+    answer_core: tuple[str, ...] = ()
 
 
 @dataclass
@@ -106,7 +108,8 @@ class Chain(Compressor):
         for i, stage in enumerate(self.stages):
             res = stage.compress(parts)
             nxt = res.parts
-            nxt.evidence = parts.evidence     # 근거 인용문은 다음 단계에도 그대로 넘긴다
+            nxt.evidence = parts.evidence     # 근거 인용문과 정답 핵심어는 다음 단계에도 그대로 넘긴다
+            nxt.answer_core = parts.answer_core
             parts = nxt
             pt += res.llm_prompt_tokens
             ct += res.llm_completion_tokens
