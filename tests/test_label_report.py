@@ -42,7 +42,47 @@ class LabelReportTest(unittest.TestCase):
         self.assertIn("| 3 표기 분해 | 1 | 1 |", text)
         self.assertIn("| 1 정답 구절 삭제 | 0 | 1 |", text)           # 교차표: 자동 A 0, C 1
         self.assertIn("| 3 표기 분해 | 1 | 1/1 (100%) |", text)
-        self.assertIn("|  전체 | 2 | 1/2 (50%) |", text)
+        self.assertIn("| 전체 | 2 | 1/2 (50%) |", text)
+        self.assertIn("| 사람 분류 | fact | 합 |", text)                 # 유형별
+        self.assertIn("- 일치: **2/2 (100%)**", text)                    # 1↔C, 3↔A
+
+    def _rows(self, labels, memo=None):
+        base = {"qtype": "fact", "질문": "", "정답": "", "모델 답변": "", "근거 인용문 원문": "", "압축 후 같은 구절": ""}
+        return [{"qid": f"q{i}", "압축기": "llmlingua2_r30", "사람 분류": c, **base, "메모": (memo or {}).get(i, "")}
+                for i, c in enumerate(labels)]
+
+    def _run(self, name, accs):
+        run = self.d / name
+        run.mkdir()
+        (run / "trials.jsonl").write_text("\n".join(json.dumps(
+            {"qid": f"q{i}", "compressor": "llmlingua2_r30", "answer_accuracy": a, "response": f"ans{i}",
+             "question": "Q", "answer": "A", "fact_results": [{"fact": "F", "satisfied": a >= 0.5}]}) for i, a in enumerate(accs)),
+            encoding="utf-8")
+        return run
+
+    def test_info_vs_interp_fisher_repeat_mean_and_memo(self):
+        write_csv(self.d / "err.csv", self._rows(["1", "1", "2", "4", "5"], memo={4: "채점 오류 의심"}))
+        one = self._run("one", [0, 0, 1, 1, 1])
+        r1, r2 = self._run("r1", [1, 0, 0, 0, 0]), self._run("r2", [0, 0, 1, 0, 0])
+        text = "\n".join(LR.error_section(self.d / "err.csv", [("단일", one), ("반복", [r1, r2])],
+                                          self.d / "none.csv", source=one))
+        self.assertIn("| **정보 손실 (1)** | 2 | 0/2 (0%) | 0.5/2 (25%) |", text)
+        self.assertIn("| **해석 손실 (2+3+4)** | 2 | 2/2 (100%) | 0.5/2 (25%) |", text)
+        self.assertIn("| 단일 | 0/2 (0%) | 2/2 (100%) | +100%p | 0.333 |", text)   # Fisher [[0,2],[2,0]]
+        self.assertIn("| 반복 | 0.5/2 (25%) | 0.5/2 (25%) | +0%p | - (반복 평균) |", text)
+        self.assertIn("q0 llmlingua2_r30 ×1", text)                               # 반복 run 회복 횟수
+        self.assertIn("### q4 llmlingua2_r30 (사람 분류 5)", text)                 # 메모 행
+        self.assertIn("\"F\" → True", text)
+        self.assertIn("| 반복 #2 | `ans4` | 0 |", text)
+
+    def test_manual_block_is_kept(self):
+        out = self.d / "report.md"
+        self.assertEqual(LR.manual_block(out), [LR.MANUAL_BEGIN, "", LR.MANUAL_END, ""])
+        out.write_text(f"# x\n{LR.MANUAL_BEGIN}\n손으로 쓴 해석\n{LR.MANUAL_END}\n## 1.\n", encoding="utf-8")
+        self.assertEqual(LR.manual_block(out), [f"{LR.MANUAL_BEGIN}\n손으로 쓴 해석\n{LR.MANUAL_END}", ""])
+
+    def test_parse_recover_splits_repeats(self):
+        self.assertEqual(LR.parse_recover(["a=x", "b=y+z"]), [("a", [Path("x")]), ("b", [Path("y"), Path("z")])])
 
     def test_error_class_rejects_unknown_value(self):
         with self.assertRaises(SystemExit):
