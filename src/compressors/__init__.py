@@ -52,6 +52,7 @@ from compressors.drop_evidence import DropEvidence
 from compressors.identity import EmptyContext, NoCompression
 from compressors.llmlingua2 import LLMLingua2Compressor
 from compressors.rule import RuleCompressor
+from compressors.telegraph import TelegraphCompressor
 from config import CFG
 
 REGISTRY: dict[str, Compressor] = {
@@ -66,6 +67,7 @@ REGISTRY: dict[str, Compressor] = {
     **{m.name: m for m in (MatchedRandomDrop(seed) for seed in (1, 2, 3))},
     "rule_fm_all": RuleCompressor(frontmatter_keep=(), name="rule_fm_all"),  # rule 비교용: 머리말 통째 제거 (dev baseline v1 의 rule)
     "rule": RuleCompressor(),       # 규칙 기반 문맥 정제 (마크다운 휴리스틱)
+    "te": TelegraphCompressor(),    # 탐색: Telegraph English 사전 변환 페이지 (compressors/telegraph.py)
     "llmlingua2": LLMLingua2Compressor(
         name="llmlingua2",
         retain_ratio=0.5,
