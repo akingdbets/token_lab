@@ -128,6 +128,8 @@ A/B/C 는 문맥만으로 정해지므로 세 열의 trial 이 같다 (normalize
 
 **사람 분류(`test_error_review.csv`)가 아직 비어 있어 자동 분류(A/B/C)를 썼다.** "기억 가능성"은 그 문항을 gpt-6-luna 가 closed-book 에서 맞힌 경우다 ([closed-book 재검사](closed_book_luna.md), 판정 A).
 
+> **2026-11-04 추가:** 사람 분류(50/50)가 채워졌다. luna (기본) 의 사람 분류별 회복률은 [label_report.md](label_report.md) 3절에 있다 (정보 손실 21% 대 해석 손실 75%). 이 절의 표는 자동 분류 기준 그대로 둔다.
+
 | 유형 (자동) | test_v1 오답 | luna (기본) 회복 | 그중 기억 가능성 | terra (기본) 회복 | 그중 기억 가능성 |
 |---|---|---|---|---|---|
 | A | 20 | 12 | 8 | 14 | 10 |
