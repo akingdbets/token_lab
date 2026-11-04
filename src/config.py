@@ -68,16 +68,18 @@ class Config:
     gen_api_key: str = _env("GEN_API_KEY", "")
 
     # ---------- 모델 ----------
-    model: str = _env(("ANSWER_MODEL", "LLM_MODEL"), "qwen2.5:7b")  # 답변 생성
+    # 답변 생성. 기본 설정 = luna, 서버 기본값 (2026-11-04~): gpt-6-luna 에 temperature·reasoning_effort 를 보내지 않는다.
+    # 접속 정보(ANSWER_BACKEND·ANSWER_BASE_URL·ANSWER_API_KEY)는 .env 에서 정한다
+    model: str = _env(("ANSWER_MODEL", "LLM_MODEL"), "gpt-6-luna")
     judge_model: str = _env("JUDGE_MODEL", "qwen2.5:7b")  # 채점
     # key_facts 판정 방식 (batch | per_fact). 7b per_fact 로 확정: docs/results/judge_compare_v2.md
     judge_mode: str = _env("JUDGE_MODE", "per_fact")
     # 생각(reasoning) 토큰 양. OpenAI 호환 서버의 reasoning_effort 로 보낸다 (Ollama 는 무시).
     # 빈 값이면 보내지 않음 (서버 기본값). gpt-6-luna 가장 낮은 값은 "none".
-    # 답변 기본값 none: 생각 토큰이 출력 한도를 다 써서 답변 본문이 비는 일을 막고, gpt-6-luna 는 none 일 때
-    # temperature 0 을 받는다. 받지 않는 서버는 llm.py 가 빼고 다시 보낸다 (summary config.sampling 에 기록).
+    # 답변 기본값은 빈 값(서버 기본값). test_v1 까지는 "none" 이었다 (test_v1_default.md: 생각 기능이 압축 손실을
+    # 줄인다). 예전 설정을 재현하려면 ANSWER_REASONING_EFFORT=none ANSWER_TEMPERATURE=0.
     # 채점 기본값은 서버 기본값 그대로 (사람 라벨 검증 중인 설정을 바꾸지 않음)
-    answer_reasoning_effort: str = _env("ANSWER_REASONING_EFFORT", "none")
+    answer_reasoning_effort: str = _env("ANSWER_REASONING_EFFORT", "")
     judge_reasoning_effort: str = _env("JUDGE_REASONING_EFFORT", "")
     summary_model: str = _env("SUMMARY_MODEL", "qwen2.5:3b")  # 재귀 요약용
     embed_model: str = _env("EMBED_MODEL", "bge-m3")  # Cosine Similarity 계산용 임베딩 모델
@@ -91,7 +93,10 @@ class Config:
     tokenizer_revision: str = _env("TOKENIZER_REVISION", "a09a35458c702b33eeacc393d103063234e8bc28")
 
     # ---------- 생성 조건 (실험 통제) ----------
-    temperature: float = _env("LLM_TEMPERATURE", 0.0)
+    temperature: float = _env("LLM_TEMPERATURE", 0.0)   # 채점·요약 등 답변 외 호출
+    # 답변 temperature. 빈 값(기본)이면 보내지 않음 (서버 기본값, gpt-6 계열은 1). 숫자면 그 값을 보낸다
+    answer_temperature: float | None = (float(_env("ANSWER_TEMPERATURE", "")) if _env("ANSWER_TEMPERATURE", "")
+                                        else None)
     seed: int = _env("LLM_SEED", 42)
     num_ctx: int = _env("LLM_NUM_CTX", 16384)   # Ollama 기본 4096 -> 늘려둠
     timeout: int = _env("LLM_TIMEOUT", 300)
@@ -124,7 +129,9 @@ class Config:
 
     def summary(self) -> str:
         return (f"backend={self.backend} model={self.model} "
-                f"ctx={self.num_ctx} temp={self.temperature} seed={self.seed}")
+                f"ctx={self.num_ctx} answer_temp={'서버 기본값' if self.answer_temperature is None else self.answer_temperature} "
+                f"answer_reasoning={self.answer_reasoning_effort or '서버 기본값'} judge_temp={self.temperature} "
+                f"seed={self.seed}")
 
     def endpoint(self, role: str) -> dict:
         """역할(answer | judge | embed)별 접속 정보 {backend, base_url, api_key}."""

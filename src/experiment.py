@@ -257,7 +257,8 @@ from core_match import (  # noqa: F401  (다른 모듈·테스트가 experiment 
     iter_normalized,
 )
 
-ANSWER_MAX_TOKENS = 512
+# 답변 출력 한도 (생각 토큰 포함). 기본 설정(서버 기본값)은 생각 토큰을 쓰므로 4096. test_v1 까지는 512
+ANSWER_MAX_TOKENS = 4096
 # judge 출력 한도. 생각(reasoning) 토큰을 쓰는 judge(deepseek-flash 등)는 YES/NO 한 단어 앞에
 # 생각 토큰을 수백~천여 개 쓰고 그것도 한도에 들어간다 (실측: O/X 최대 1662, fact 최대 560).
 # 한도에 걸리면 빈 답이 나오므로 넉넉히 둔다. 못 읽은 응답은 grader.parse_yes_no 가 실패로 기록한다

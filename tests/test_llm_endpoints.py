@@ -211,6 +211,18 @@ class OpenAIUnsupportedParamTest(unittest.TestCase):
             self.llm._openai_chat(MESSAGES, stream_ttft=False)
         self.assertNotIn("reasoning_effort", post.call_args.kwargs["json"])
 
+    def test_answer_temperature_not_sent_by_default(self):
+        # 기본 설정 = luna, 서버 기본값: 답변은 temperature 를 보내지 않고, 채점은 CFG.temperature 를 보낸다
+        with mock.patch.object(CFG, "answer_temperature", None):
+            ans = LLM(backend="openai", base_url="http://x", api_key="", model="m", role="answer")
+            judge = LLM(backend="openai", base_url="http://x", api_key="", model="m", role="judge")
+        with mock.patch.object(llm.requests, "post", return_value=self.ok) as post:
+            ans._openai_chat(MESSAGES, stream_ttft=False)
+            self.assertNotIn("temperature", post.call_args.kwargs["json"])
+            judge._openai_chat(MESSAGES, stream_ttft=False)
+            self.assertEqual(post.call_args.kwargs["json"]["temperature"], CFG.temperature)
+        self.assertEqual((ans.sampling_info()["temperature"], ans.sampling_info()["temperature_requested"]), (None, None))
+
     def test_supported_server_keeps_params(self):
         with mock.patch.object(llm.requests, "post", return_value=self.ok) as post:
             res = self.llm._openai_chat(MESSAGES, stream_ttft=False)

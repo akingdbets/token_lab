@@ -119,7 +119,9 @@ class LLM:
         self.model = model or (CFG.judge_model if role == "judge" else CFG.model)
         self.base_url = (base_url or ep["base_url"]).rstrip("/")
         self.num_ctx = num_ctx or CFG.num_ctx
-        self.temperature = CFG.temperature if temperature is None else temperature
+        # None 이면 보내지 않음 (서버 기본값). 답변은 CFG.answer_temperature (기본 None), 나머지는 CFG.temperature
+        self.temperature = (temperature if temperature is not None
+                            else CFG.answer_temperature if role == "answer" else CFG.temperature)
         # None 일 때만 config 값을 쓴다. 빈 문자열을 넘기면 키 없이 호출 (다른 키가 섞이지 않게)
         self.api_key = ep["api_key"] if api_key is None else api_key
         self.timeout = timeout or CFG.timeout
@@ -262,11 +264,12 @@ class LLM:
             "messages": messages,
             "stream": stream_ttft,
             "options": {
-                "temperature": self.temperature,
                 "num_ctx": self.num_ctx,      # 기본 4096이라 반드시 지정
                 "seed": CFG.seed,
             },
         }
+        if self.temperature is not None:      # None = 보내지 않음 (서버 기본값)
+            payload["options"]["temperature"] = self.temperature
         if self.max_tokens is not None:
             payload["options"]["num_predict"] = self.max_tokens
         url = f"{self.base_url}/api/chat"
@@ -315,7 +318,7 @@ class LLM:
 
     def _openai_payload(self, messages: list[dict], stream: bool) -> dict:
         payload = {"model": self.model, "messages": messages, "stream": stream}
-        if "temperature" not in self.unsupported:
+        if self._sent_temperature() is not None:
             payload["temperature"] = self.temperature
         if self._sent_reasoning_effort():
             payload["reasoning_effort"] = self.reasoning_effort
@@ -428,7 +431,7 @@ class LLM:
         return self.reasoning_effort
 
     def _sent_temperature(self) -> float | None:
-        return None if "temperature" in self.unsupported else self.temperature
+        return None if self.temperature is None or "temperature" in self.unsupported else self.temperature
 
 
 def _usage_or_estimate(usage: dict | None, messages: list[dict], text: str,

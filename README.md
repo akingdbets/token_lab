@@ -57,7 +57,7 @@ ollama pull bge-m3          # 임베딩 (의미 손실률 측정)
 
 #### 모델 바꿔 끼우기 (답변 · 채점 · 토크나이저)
 
-답변 모델, 채점 모델, 임베딩, 토크나이저를 환경변수로 각각 고른다. 아무것도 설정하지 않으면 위의 Ollama + qwen2.5:7b + Qwen 토크나이저 그대로다.
+답변 모델, 채점 모델, 임베딩, 토크나이저를 환경변수로 각각 고른다. 답변 모델 기본값은 `gpt-6-luna` 이고(접속 정보는 `.env`), 채점·임베딩·토크나이저는 설정하지 않으면 Ollama + qwen2.5:7b + Qwen 토크나이저다.
 역할 이름(`ANSWER_*`, `JUDGE_*`, `EMBED_*`)이 없으면 옛 공용 이름(`LLM_BACKEND`, `LLM_BASE_URL`, `LLM_API_KEY`, `LLM_MODEL`)을 쓴다.
 
 | 역할 | backend | base_url | api_key | 모델 |
@@ -73,8 +73,13 @@ ollama pull bge-m3          # 임베딩 (의미 손실률 측정)
   `TOKENIZER` 로 추정하고 경고하며 `*_usage_source` 에 `estimate` 로 남긴다.
 - 실행에 쓴 역할별 모델·주소·토크나이저는 `summary.json` 의 `config.models` 에 남는다 (API 키는 남기지 않음).
 - 값은 셸 환경변수나 프로젝트 최상위 `.env` 에 넣는다 (아래 예시 형식 그대로, git 제외). 셸 값이 `.env` 보다 우선한다.
-- 생각(reasoning) 토큰: `ANSWER_REASONING_EFFORT` (기본 `none`), `JUDGE_REASONING_EFFORT` (기본 빈 값 = 서버 기본값). OpenAI 호환 `reasoning_effort` 로 보내고,
-  서버가 거부하면 빼고 다시 보낸다. gpt-6-luna 는 `none` 일 때 생각 토큰 0 에 temperature 0 을 받는다. 실제 적용값은 `summary.json` 의 `config.sampling`
+- **기본 설정 = luna, 서버 기본값** (2026-11-04 부터): 답변 모델 기본값은 `gpt-6-luna` 이고, 답변 요청에 `temperature` 와
+  `reasoning_effort` 를 넣지 않는다 (서버 기본값). `seed` 는 보내고, 답변 출력 한도(`max_completion_tokens`)는 생각 토큰을 포함해 4096 이다.
+  - 근거: [test_v1_default.md](docs/results/test_v1_default.md), [reasoning_probe.md](docs/results/reasoning_probe.md). 생각 기능이 압축 손실을 줄인다
+  - test_v1 까지의 설정(생각 끔·temperature 0·한도 512)은 `ANSWER_REASONING_EFFORT=none ANSWER_TEMPERATURE=0` 으로 재현한다 (한도 512 는 `experiment.ANSWER_MAX_TOKENS`)
+- 생각(reasoning) 토큰: `ANSWER_REASONING_EFFORT` (기본 빈 값 = 서버 기본값), `JUDGE_REASONING_EFFORT` (기본 빈 값 = 서버 기본값). OpenAI 호환 `reasoning_effort` 로 보내고,
+  서버가 거부하면 빼고 다시 보낸다. 실제 적용값은 `summary.json` 의 `config.sampling`
+- temperature: 답변은 `ANSWER_TEMPERATURE` (기본 빈 값 = 보내지 않음), 채점 등 나머지는 `LLM_TEMPERATURE` (기본 0)
 - 역할별 연결 확인: `python src/llm.py answer`, `python src/llm.py judge`
 
 ```bash
@@ -329,7 +334,8 @@ python src/llm.py judge    # 채점 모델
 
 압축 기법 간 비교가 공정하도록 다음을 고정한다.
 
-- 동일 모델, `temperature=0`, `seed` 고정
+- 동일 모델, `seed` 고정. 답변은 기본 설정(luna, 서버 기본값: temperature·reasoning_effort 안 보냄), 채점은 `temperature=0`
+  (test_v1 까지는 답변도 `temperature=0`·생각 끔)
 - `num_ctx=16384` (Ollama 기본값 4096은 긴 문서를 잘라내므로 반드시 지정)
 - 답변·채점 프롬프트 고정 (지시문 변경이 정확도에 영향을 주므로 실험 내내 동일하게 유지). 답변 지시문은 `src/prompts/` 에 버전별로 두고 결과에 버전을 기록
 - 압축하지 않은 원본 입력 결과를 기준선(Baseline)으로 삼음
