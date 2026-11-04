@@ -24,16 +24,19 @@ class LabelReportTest(unittest.TestCase):
     def test_error_section_counts_crosstab_and_recovery(self):
         base = {"qtype": "fact", "질문": "", "정답": "", "모델 답변": "", "근거 인용문 원문": "", "압축 후 같은 구절": "",
                 "메모": ""}
-        rows = [{"qid": "q1", "압축기": "llmlingua2_r30", "자동 분류": "A", "사람 분류": "3", **base},
-                {"qid": "q2", "압축기": "llmlingua2_r30", "자동 분류": "C", "사람 분류": "1 정답 구절 삭제", **base},
-                {"qid": "q3", "압축기": "llmlingua2_r50", "자동 분류": "B (code)", "사람 분류": "", **base}]
+        rows = [{"qid": "q1", "압축기": "llmlingua2_r30", "사람 분류": "3", **base},
+                {"qid": "q2", "압축기": "llmlingua2_r30", "사람 분류": "1 정답 구절 삭제", **base},
+                {"qid": "q3", "압축기": "llmlingua2_r50", "사람 분류": "", **base}]
         write_csv(self.d / "err.csv", rows, encoding="cp949")
+        write_csv(self.d / "err_key.csv", [{"qid": "q1", "압축기": "llmlingua2_r30", "자동 분류": "A"},
+                                           {"qid": "q2", "압축기": "llmlingua2_r30", "자동 분류": "C"},
+                                           {"qid": "q3", "압축기": "llmlingua2_r50", "자동 분류": "B (code)"}])
         run = self.d / "run"
         run.mkdir()
         (run / "trials.jsonl").write_text("\n".join(json.dumps(t) for t in [
             {"qid": "q1", "compressor": "llmlingua2_r30", "answer_accuracy": 1.0},
             {"qid": "q2", "compressor": "llmlingua2_r30", "answer_accuracy": 0.0}]), encoding="utf-8")
-        text = "\n".join(LR.error_section(self.d / "err.csv", [("luna", run)]))
+        text = "\n".join(LR.error_section(self.d / "err.csv", [("luna", run)], self.d / "err_key.csv"))
         self.assertIn("**2 / 3**", text)
         self.assertIn("| 사람 분류 | llmlingua2_r30 | 합 |", text)   # 라벨이 있는 압축기 열만
         self.assertIn("| 3 표기 분해 | 1 | 1 |", text)

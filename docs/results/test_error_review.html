@@ -1,0 +1,2337 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>오답 검수 보기</title>
+<style>
+:root { --bg:#f7f7f5; --card:#fff; --fg:#1d1d1b; --muted:#6b6b66; --line:#e3e2dd; --mark:#ffe680; --code:#eef3ff; --prose:#eef8ee; }
+@media (prefers-color-scheme: dark) { :root { --bg:#18181a; --card:#222225; --fg:#ececea; --muted:#a0a09a; --line:#38383b;
+  --mark:#7a6500; --code:#25304a; --prose:#243a27; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.55 system-ui, sans-serif; }
+main { max-width:1100px; margin:0 auto; padding:24px 16px 64px; }
+h1 { font-size:22px; margin:0 0 6px; } .intro { color:var(--muted); margin:0 0 20px; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px 18px; margin:0 0 18px; }
+.card header { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:10px; }
+.card header a { margin-left:auto; color:var(--muted); text-decoration:none; }
+.num { font-variant-numeric:tabular-nums; color:var(--muted); min-width:2ch; }
+.pill { border:1px solid var(--line); border-radius:99px; padding:0 8px; font-size:13px; color:var(--muted); }
+dl { display:grid; grid-template-columns:7em 1fr; gap:4px 12px; margin:0 0 12px; } dt { color:var(--muted); } dd { margin:0; }
+pre { white-space:pre-wrap; word-break:break-word; margin:0; font:13px/1.5 ui-monospace, Consolas, monospace; }
+mark { background:var(--mark); color:inherit; border-radius:2px; padding:0 1px; }
+.pair { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:10px 0; }
+.pair > div { border:1px solid var(--line); border-radius:8px; padding:8px 10px; min-width:0; }
+h4 { margin:0 0 6px; font-size:13px; color:var(--muted); font-weight:600; }
+.ex { margin:0 0 8px; } .tag { font-size:12px; border-radius:4px; padding:0 6px; }
+.tag.code { background:var(--code); } .tag.prose { background:var(--prose); }
+.count, .file, .none, .label { color:var(--muted); font-size:12px; margin:4px 0; } .file { word-break:break-all; }
+@media (max-width:720px) { .pair { grid-template-columns:1fr; } dl { grid-template-columns:1fr; } }
+</style></head>
+<body><main>
+<h1>test_v1 압축 오답 검수 (50 trial)</h1>
+<p class="intro">run <code>20261102-205826</code>. 정답 핵심어(normalized-v2)를 <mark>형광</mark>으로 표시했다.
+이 화면을 보며 <code>test_error_review.csv</code> 의 <b>사람 분류</b>만 채운다. 기준은 <code>labeling_guide.md</code> 2절.</p>
+
+<section class="card" id="r1">
+  <header><span class="num">1</span><b>c0007</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r1">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>Starting with which FastAPI release can query validation be written with Annotated?</dd>
+    <dt>정답</dt><dd><mark>0.95.0</mark></dd>
+    <dt>핵심어</dt><dd><mark>0.95.0</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>`Annotated` support was added in FastAPI <mark>0.95.0</mark> and is the recommended style.</pre></div><div><h4>압축 후</h4><pre>FastAPI <mark>0 95 0</mark></pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">1곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…results = {&quot;items&quot;: [{&quot;item_id&quot;: &quot;Foo&quot;}, {&quot;item_id&quot;: &quot;Bar&quot;}]}
+    if q:
+        results.update({&quot;q&quot;: q})
+    return results
+```
+
+`Annotated` support was added in FastAPI <mark>0.95.0</mark> and is the recommended style. In the older style, `q: str | None = Query(default=None, max_length=50)`, the default goes inside…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0007.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="count">1곳 (압축 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…| None, Query(max_length=50)] = None):
+    results = {&quot;items&quot;: [{&quot;item_id&quot;: &quot;Foo&quot;}, {&quot;item_id&quot;: &quot;Bar&quot;}]}
+    if q:
+        results.update({&quot;q&quot;: q})
+    return results
+```
+ 
+ FastAPI <mark>0 95 0</mark> default max_length 50 default default default callable can&#x27;t defaults 
+ 
+ 
+ 
+```python
+q: Annotated[
+    str | None, Query(min_length=3, max_length=50, pattern=&quot;^fixedquery$&quot;)
+] =…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0007.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r2">
+  <header><span class="num">2</span><b>c0012</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r50</span><a href="#r2">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>According to FastAPI&#x27;s container guide, roughly how long does docker compose take to stop services when the Dockerfile uses the shell form of CMD?</dd>
+    <dt>정답</dt><dd><mark>About 10 seconds</mark></dd>
+    <dt>핵심어</dt><dd><mark>About 10 seconds</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>The shell form wraps the server in `/bin/sh`, which doesn&#x27;t forward signals. With the exec form, FastAPI receives the stop signal, shuts down gracefully and runs the shutdown part of [lifespan events](../app-structure/lifespan-events.md). (With the shell form you&#x27;ll notice, e.g., `docker compose` taking ~10 seconds to stop services.)</pre></div><div><h4>압축 후</h4><pre>wraps server in bin doesn&#x27;t signals FastAPI receives stop signal shuts down runs shutdown lifespan events 10 seconds services</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0012.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0012.llmlingua2_r50.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r3">
+  <header><span class="num">3</span><b>c0012</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r3">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>According to FastAPI&#x27;s container guide, roughly how long does docker compose take to stop services when the Dockerfile uses the shell form of CMD?</dd>
+    <dt>정답</dt><dd><mark>About 10 seconds</mark></dd>
+    <dt>핵심어</dt><dd><mark>About 10 seconds</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>The shell form wraps the server in `/bin/sh`, which doesn&#x27;t forward signals. With the exec form, FastAPI receives the stop signal, shuts down gracefully and runs the shutdown part of [lifespan events](../app-structure/lifespan-events.md). (With the shell form you&#x27;ll notice, e.g., `docker compose` taking ~10 seconds to stop services.)</pre></div><div><h4>압축 후</h4><pre>wraps server doesn&#x27;t FastAPI signal lifespan 10</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0012.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0012.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r4">
+  <header><span class="num">4</span><b>c0046</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r50</span><a href="#r4">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>What text does FastAPI use for an operation&#x27;s response_description when you do not set one?</dd>
+    <dt>정답</dt><dd>&quot;<mark>Successful Response</mark>&quot;</dd>
+    <dt>핵심어</dt><dd><mark>&quot;Successful Response&quot;</mark></dd>
+    <dt>모델 답변</dt><dd><pre>The main response.</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>`response_description` describes the main response; it defaults to `&quot;<mark>Successful Response</mark>&quot;`.</pre></div><div><h4>압축 후</h4><pre>response_description main response defaults</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">1곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…this item
+    \f
+    :param item: User input.
+    &quot;&quot;&quot;
+```
+
+## Response description
+
+`response_description` describes the main response; it defaults to `&quot;<mark>Successful Response</mark>&quot;`.
+
+```python
+@app.post(
+    &quot;/items/&quot;,
+    summary=&quot;Create an item&quot;,
+    response_description=&quot;The created item&quot;,
+)
+```
+
+## Deprecating an operation
+
+```python
+@app.get(&quot;/elements/&quot;, tags=[&quot;items&quot;], deprecated=True)
+async…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0046.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0046.llmlingua2_r50.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r5">
+  <header><span class="num">5</span><b>c0046</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r5">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>What text does FastAPI use for an operation&#x27;s response_description when you do not set one?</dd>
+    <dt>정답</dt><dd>&quot;<mark>Successful Response</mark>&quot;</dd>
+    <dt>핵심어</dt><dd><mark>&quot;Successful Response&quot;</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>`response_description` describes the main response; it defaults to `&quot;<mark>Successful Response</mark>&quot;`.</pre></div><div><h4>압축 후</h4><pre>response_description defaults</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">1곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…this item
+    \f
+    :param item: User input.
+    &quot;&quot;&quot;
+```
+
+## Response description
+
+`response_description` describes the main response; it defaults to `&quot;<mark>Successful Response</mark>&quot;`.
+
+```python
+@app.post(
+    &quot;/items/&quot;,
+    summary=&quot;Create an item&quot;,
+    response_description=&quot;The created item&quot;,
+)
+```
+
+## Deprecating an operation
+
+```python
+@app.get(&quot;/elements/&quot;, tags=[&quot;items&quot;], deprecated=True)
+async…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0046.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0046.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r6">
+  <header><span class="num">6</span><b>c0049</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r6">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>When FastAPI settings read a .env file, which source wins if the same variable is also set in the real environment?</dd>
+    <dt>정답</dt><dd>The <mark>real environment variable</mark></dd>
+    <dt>핵심어</dt><dd><mark>The real environment variable</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>Real environment variables still take precedence over the `.env` file. The docs recommend adding `python-dotenv` to your project (`uv add python-dotenv`) for dotenv support. Combined with `@lru_cache` on `get_settings`, the file is read only once instead of on every request. Do not commit `.env` files containing secrets.</pre></div><div><h4>압축 후</h4><pre>lru_cache get_settings only not</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0049.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0049.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r7">
+  <header><span class="num">7</span><b>c0049</b><span class="pill">fact</span>
+    <span class="pill comp">rule&gt;llmlingua2</span><a href="#r7">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>When FastAPI settings read a .env file, which source wins if the same variable is also set in the real environment?</dd>
+    <dt>정답</dt><dd>The <mark>real environment variable</mark></dd>
+    <dt>핵심어</dt><dd><mark>The real environment variable</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>Real environment variables still take precedence over the `.env` file. The docs recommend adding `python-dotenv` to your project (`uv add python-dotenv`) for dotenv support. Combined with `@lru_cache` on `get_settings`, the file is read only once instead of on every request. Do not commit `.env` files containing secrets.</pre></div><div><h4>압축 후</h4><pre>environment variables precedence recommend adding python - dotenv dotenv support lru_cache get_settings file read only once not commit</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0049.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0049.rule+llmlingua2.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r8">
+  <header><span class="num">8</span><b>c0052</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r8">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>What is the default value of the fallback parameter of FastAPI&#x27;s app.frontend()?</dd>
+    <dt>정답</dt><dd>&quot;<mark>auto</mark>&quot;</dd>
+    <dt>핵심어</dt><dd><mark>&quot;auto&quot;</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>The `fallback` parameter accepts `&quot;<mark>auto</mark>&quot;` (default), `&quot;index.html&quot;`, `&quot;404.html&quot;` or `None`:</pre></div><div><h4>압축 후</h4><pre>default 404</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">2곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…never shadowed — even when the frontend is mounted at `/`.
+
+### Fallback for missing paths
+
+The `fallback` parameter accepts `&quot;<mark>auto</mark>&quot;` (default), `&quot;index.html&quot;`, `&quot;404.html&quot;` or `None`:
+
+```python
+app.frontend(&quot;/&quot;, directory=&quot;dist&quot;, fallback=&quot;index.html&quot;)  # SPA client-side routing
+app.frontend(&quot;/&quot;, directory=&quot;dist&quot;, fallback=&quot;404.html&quot;)    # static sites, e.g.…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…requests whose `Accept` header includes `text/html` or `application/xhtml+xml` (as browsers send). Missing JS/CSS/images and `POST`/`PUT` requests still get `404`.
+3. `&quot;<mark>auto</mark>&quot;` — use `404.html` if that file exists; otherwise use the `index.html` behavior if `index.html` exists; otherwise a plain 404.
+4. `None` — plain 404.
+
+So in most projects `app.frontend(&quot;/&quot;, directory=&quot;dist&quot;)` is enough.
+
+### Checking the directory: `check_dir`
+
+`check_dir` accepts `&quot;<mark>auto</mark>&quot;` (default), `True` or `False`:
+
+- `&quot;<mark>auto</mark>&quot;`: if the environment variable `FASTAPI_ENV` is `development`, a missing directory only emits a warning (so you can start the backend…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0052.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0052.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r9">
+  <header><span class="num">9</span><b>c0063</b><span class="pill">procedure</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r9">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>For a single FastAPI request, in what order are the dependency lists from the app, routers, decorator and function parameters combined?</dd>
+    <dt>정답</dt><dd>1) App-level <mark>FastAPI(dependencies</mark>=...) 2) Router or <mark>include_router(dependencies</mark>=...) 3) The decorator&#x27;s dependencies=[...] 4) Parameter dependencies in the function signature</dd>
+    <dt>핵심어</dt><dd><mark>FastAPI(dependencies=...)</mark>, <mark>include_router(dependencies=...)</mark></dd>
+    <dt>모델 답변</dt><dd><pre>1. The documentation says the dependency lists are combined, but it does not specify their order.
+2. NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>[1] 1. App-level `<mark>FastAPI(dependencies</mark>=...)`</pre></div><div><h4>압축 후</h4><pre>[1] 1 FastAPI</pre></div></div><div class="pair"><div><h4>근거 원문</h4><pre>[2] 2. Router / `<mark>include_router(dependencies</mark>=...)` (outer includes before inner)</pre></div><div><h4>압축 후</h4><pre>[2] 2 include_router</pre></div></div><div class="pair"><div><h4>근거 원문</h4><pre>[3] 3. Decorator `dependencies=[...]`</pre></div><div><h4>압축 후</h4><pre>[3] 3</pre></div></div><div class="pair"><div><h4>근거 원문</h4><pre>[4] 4. Parameter dependencies declared in the function signature</pre></div><div><h4>압축 후</h4><pre>[4] 4</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">2곳 (none 문맥)</p><div class="ex"><span class="tag code">코드</span><pre>…router:
+
+```python
+app.include_router(admin.router, prefix=&quot;/admin&quot;, dependencies=[Depends(get_token_header)])
+```
+
+See [Bigger Applications with APIRouter](../app-structure/bigger-applications.md).
+
+## Global dependencies (whole app)
+
+`docs_src/dependencies/tutorial012_an_py310.py`:
+
+```python
+app = <mark>FastAPI(dependencies</mark>=[Depends(verify_token), Depends(verify_key)])
+
+
+@app.get(&quot;/items/&quot;)
+async def read_items():
+    return [{&quot;item&quot;: &quot;Portal Gun&quot;}, {&quot;item&quot;: &quot;Plumbus&quot;}]
+
+
+@app.get(&quot;/users/&quot;)
+async def read_users():
+    return [{&quot;username&quot;: &quot;Rick&quot;}, {&quot;username&quot;: &quot;Morty&quot;}]…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…both headers.
+
+## Execution order
+
+For a given request the dependency lists are combined from outermost to innermost:
+
+1. App-level `<mark>FastAPI(dependencies</mark>=...)`
+2. Router / `<mark>include_router(dependencies</mark>=...)` (outer includes before inner)
+3. Decorator `dependencies=[...]`
+4. Parameter dependencies declared in the function signature
+
+Within a request, the same…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0063.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="count">1곳 (압축 문맥)</p><div class="ex"><span class="tag code">코드</span><pre>…```python
+router = APIRouter(
+    prefix=&quot;/items&quot;,
+    dependencies=[Depends(get_token_header)],
+)
+```
+ 
+ without 
+ 
+```python
+app.include_router(admin.router, prefix=&quot;/admin&quot;, dependencies=[Depends(get_token_header)])
+```
+ 
+ APIRouter 
+ 
+ 
+ 
+ docs_src tutorial012_an_py310 
+ 
+```python
+app = <mark>FastAPI(dependencies</mark>=[Depends(verify_token), Depends(verify_key)])
+
+
+@app.get(&quot;/items/&quot;)
+async def read_items():
+    return [{&quot;item&quot;: &quot;Portal Gun&quot;}, {&quot;item&quot;: &quot;Plumbus&quot;}]
+
+
+@app.get(&quot;/users/&quot;)
+async def read_users():
+    return [{&quot;username&quot;: &quot;Rick&quot;}, {&quot;username&quot;: &quot;Morty&quot;}]…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0063.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r10">
+  <header><span class="num">10</span><b>c0064</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r10">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>When a FastAPI dependency is declared as Annotated[SomeClass, Depends()] with no argument, what does FastAPI use as the dependency?</dd>
+    <dt>정답</dt><dd>The <mark>annotated type</mark></dd>
+    <dt>핵심어</dt><dd><mark>The annotated type</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>If `Depends()` has no dependency, FastAPI uses the <mark>annotated type</mark> as the dependency (`dataclasses.replace(depends, dependency=type_annotation)` in `fastapi/dependencies/utils.py`).</pre></div><div><h4>압축 후</h4><pre>no FastAPI type_annotation</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">1곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…omit the argument (`tutorial004_an_py310.py`):
+
+```python
+async def read_items(commons: Annotated[CommonQueryParams, Depends()]):
+    ...
+```
+
+If `Depends()` has no dependency, FastAPI uses the <mark>annotated type</mark> as the dependency (`dataclasses.replace(depends, dependency=type_annotation)` in `fastapi/dependencies/utils.py`).
+
+Pydantic models and dataclasses also work as class dependencies.
+
+## Sub-dependencies
+
+Dependencies can…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0064.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0064.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r11">
+  <header><span class="num">11</span><b>c0067</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r11">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>Starting with which FastAPI version do the built-in security classes answer missing or invalid credentials with 401 instead of 403?</dd>
+    <dt>정답</dt><dd><mark>0.122.0</mark></dd>
+    <dt>핵심어</dt><dd><mark>0.122.0</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>Since FastAPI **<mark>0.122.0</mark>**, the built-in security classes respond to missing/invalid credentials with **`401 Unauthorized`** plus a suitable `WWW-Authenticate` header (previously `403 Forbidden`). To restore 403 for clients that depend on it, override `make_not_authenticated_error` (`docs_src/authentication_error_status_code/tutorial001_an_py310.py`):</pre></div><div><h4>압축 후</h4><pre>FastAPI <mark>0 122 0</mark> classes credentials 401 WWW 403 403 make_not_authenticated_error docs_src authentication_error_status_code tutorial001_an_py310</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">1곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…`HTTPException`s, and always re-raise what you don&#x27;t handle. See [Dependencies with yield](../dependencies/dependencies-with-yield.md).
+
+## Authentication errors: 401 vs 403
+
+Since FastAPI **<mark>0.122.0</mark>**, the built-in security classes respond to missing/invalid credentials with **`401 Unauthorized`** plus a suitable `WWW-Authenticate` header (previously `403 Forbidden`). To…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0067.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="count">1곳 (압축 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…endpoint context endpoint_function endpoint_path endpoint_file endpoint_line endpoint. Response Models 
+ 
+ 500 Starlette ServerErrorMiddleware 
+ 
+ 
+ 
+ HTTPException don&#x27;t.. 
+ 
+ Authentication errors 401 vs 403 
+ 
+ FastAPI <mark>0 122 0</mark> classes credentials 401 WWW 403 403 make_not_authenticated_error docs_src authentication_error_status_code tutorial001_an_py310 
+ 
+```python
+from typing import Annotated
+
+from fastapi import Depends, FastAPI,…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0067.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r12">
+  <header><span class="num">12</span><b>c0070</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r12">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>What is the minimum Pydantic version required by the FastAPI version these docs describe?</dd>
+    <dt>정답</dt><dd><mark>2.9.0</mark></dd>
+    <dt>핵심어</dt><dd><mark>2.9.0</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>- **Pydantic** can be pinned to any version that works for you within FastAPI&#x27;s supported range (this version requires `pydantic&gt;=<mark>2.9.0</mark>`).</pre></div><div><h4>압축 후</h4><pre>FastAPI <mark>2 9 0</mark></pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">1곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…itself.
+- **Pydantic** can be pinned to any version that works for you within FastAPI&#x27;s supported range (this version requires `pydantic&gt;=<mark>2.9.0</mark>`).
+
+## Related
+
+- [Deploying with Docker](docker.md)
+- [HTTPS, TLS Termination and Cloud Providers](https-and-cloud.md)
+- [Sub-applications, Proxies and WSGI](../app-structure/sub-applications-proxy-and-wsgi.md) — `--forwarded-allow-ips`,…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0070.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="count">1곳 (압축 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…or
+fastapi[standard]==0.112.0
+```
+ 
+ tests TestClient bump fix re - pin release notes 
+ 
+ Don &#x27; t pin FastAPI compatible range 
+ FastAPI <mark>2 9 0</mark> 
+ 
+ 
+ 
+ 
+ HTTPS TLS Providers 
+ Sub - applications WSGI 
+ First Steps FastAPI CLI…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0070.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r13">
+  <header><span class="num">13</span><b>c0070</b><span class="pill">fact</span>
+    <span class="pill comp">rule&gt;llmlingua2</span><a href="#r13">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>What is the minimum Pydantic version required by the FastAPI version these docs describe?</dd>
+    <dt>정답</dt><dd><mark>2.9.0</mark></dd>
+    <dt>핵심어</dt><dd><mark>2.9.0</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>- **Pydantic** can be pinned to any version that works for you within FastAPI&#x27;s supported range (this version requires `pydantic&gt;=<mark>2.9.0</mark>`).</pre></div><div><h4>압축 후</h4><pre>Pydantic pinned FastAPI <mark>2. 9. 0</mark></pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">1곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…itself.
+- **Pydantic** can be pinned to any version that works for you within FastAPI&#x27;s supported range (this version requires `pydantic&gt;=<mark>2.9.0</mark>`).
+
+## Related
+
+- [Deploying with Docker](docker.md)
+- [HTTPS, TLS Termination and Cloud Providers](https-and-cloud.md)
+- [Sub-applications, Proxies and WSGI](../app-structure/sub-applications-proxy-and-wsgi.md) — `--forwarded-allow-ips`,…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0070.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="count">1곳 (압축 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…tests TestClient bump fix re - pin release notes 
+ 
+ Don &#x27; t pin Starlette FastAPI compatible range 
+ Pydantic pinned FastAPI <mark>2. 9. 0</mark> 
+ 
+ 
+ 
+ Docker 
+ HTTPS TLS Termination Cloud Providers 
+ Sub - applications Proxies WSGI root path 
+ First Steps FastAPI CLI…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0070.rule+llmlingua2.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r14">
+  <header><span class="num">14</span><b>c0072</b><span class="pill">procedure</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r14">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>In FastAPI, what process do the docs recommend for moving a project to a newer pinned FastAPI version?</dd>
+    <dt>정답</dt><dd>1) Have tests in place 2) Bump the version 3) Run the tests 4) Fix what breaks 5) <mark>Re-pin</mark> the new version, checking the <mark>release notes</mark></dd>
+    <dt>핵심어</dt><dd><mark>re-pin</mark>, <mark>release notes</mark></dd>
+    <dt>모델 답변</dt><dd><pre>1. Update the pinned FastAPI version.
+2. Run your tests with `TestClient`.
+3. If the tests pass, keep the new pin; if they fail, fix the issues or <mark>re-pin</mark> to the previous version.
+4. Check the <mark>release notes</mark> for the new version.</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>Upgrade deliberately: have tests ([Testing with TestClient](../testing/testing-basics.md)), bump the version, run the tests, fix, then <mark>re-pin</mark>. Check the <mark>release notes</mark> for changes.</pre></div><div><h4>압축 후</h4><pre>tests TestClient bump fix <mark>re - pin</mark> <mark>release notes</mark></pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">1곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…fastapi[standard]&gt;=0.112.0,&lt;0.113.0
+# or
+fastapi[standard]==0.112.0
+```
+
+Upgrade deliberately: have tests ([Testing with TestClient](../testing/testing-basics.md)), bump the version, run the tests, fix, then <mark>re-pin</mark>. Check the <mark>release notes</mark> for changes.
+
+- **Don&#x27;t pin Starlette** — each FastAPI version requires a compatible Starlette range itself.
+- **Pydantic** can be…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0072.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="count">1곳 (압축 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…breaking changes 
+ MINOR 0 112 0 113 features breaking changes 
+ 
+ 
+ 
+```txt
+fastapi[standard]&gt;=0.112.0,&lt;0.113.0
+# or
+fastapi[standard]==0.112.0
+```
+ 
+ tests TestClient bump fix <mark>re - pin</mark> <mark>release notes</mark> 
+ 
+ Don &#x27; t pin FastAPI compatible range 
+ FastAPI 2 9 0 
+ 
+ 
+ 
+ 
+ HTTPS TLS Providers 
+ Sub - applications WSGI 
+ First Steps…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0072.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r15">
+  <header><span class="num">15</span><b>c0073</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r15">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>According to FastAPI&#x27;s HTTPS guide, roughly how long are Let&#x27;s Encrypt certificates valid?</dd>
+    <dt>정답</dt><dd><mark>About 3 months</mark></dd>
+    <dt>핵심어</dt><dd><mark>About 3 months</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>**Let&#x27;s Encrypt** (Linux Foundation) issues free, automated, short-lived (~3 months) certificates. A program — often the proxy itself (Traefik, Caddy) — periodically proves domain ownership (e.g. via HTTP or DNS challenges) and renews certificates without downtime.</pre></div><div><h4>압축 후</h4><pre>free 3 certificates proves domain ownership HTTP DNS renews certificates without</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0073.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0073.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r16">
+  <header><span class="num">16</span><b>c0076</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r16">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>Which FastAPI install extra provides the standard dependencies but leaves out the FastAPI Cloud CLI?</dd>
+    <dt>정답</dt><dd><mark>standard-no-fastapi-cloud-cli</mark></dd>
+    <dt>핵심어</dt><dd><mark>standard-no-fastapi-cloud-cli</mark></dd>
+    <dt>모델 답변</dt><dd><pre>`fastapi[standard]`</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>There is also `<mark>standard-no-fastapi-cloud-cli</mark>` (same, without the cloud CLI) and `all`. If you install plain `fastapi`, you must add whichever of these you use yourself — for example, forms fail without `python-multipart`.</pre></div><div><h4>압축 후</h4><pre><mark>standard no fastapi cloud - cli</mark> without CLI fastapi without python</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">1곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…| Extra Pydantic types |
+| `opentelemetry-sdk`, OTLP exporter | Telemetry export (see [GraphQL and OpenTelemetry](../integrations/graphql-and-opentelemetry.md)) |
+
+There is also `<mark>standard-no-fastapi-cloud-cli</mark>` (same, without the cloud CLI) and `all`. If you install plain `fastapi`, you must add whichever of these you use…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0076.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="count">1곳 (압축 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…Cloud CLI 
+ uvicorn Running server uvloop 
+ TestClient 
+ Jinja2Templates 
+ python multipart UploadFile 
+ validator EmailStr 
+ BaseSettings 
+ extra types 
+ opentelemetry OTLP GraphQL OpenTelemetry 
+ 
+ <mark>standard no fastapi cloud - cli</mark> without CLI fastapi without python 
+ 
+ Versioning 
+ 
+ FastAPI 0. x 0. 142. 2 _ _ _ _ semantic versioning minor bump…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0076.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r17">
+  <header><span class="num">17</span><b>c0076</b><span class="pill">fact</span>
+    <span class="pill comp">rule&gt;llmlingua2</span><a href="#r17">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>Which FastAPI install extra provides the standard dependencies but leaves out the FastAPI Cloud CLI?</dd>
+    <dt>정답</dt><dd><mark>standard-no-fastapi-cloud-cli</mark></dd>
+    <dt>핵심어</dt><dd><mark>standard-no-fastapi-cloud-cli</mark></dd>
+    <dt>모델 답변</dt><dd><pre>`fastapi[standard]`</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>There is also `<mark>standard-no-fastapi-cloud-cli</mark>` (same, without the cloud CLI) and `all`. If you install plain `fastapi`, you must add whichever of these you use yourself — for example, forms fail without `python-multipart`.</pre></div><div><h4>압축 후</h4><pre><mark>standard no - fastapi cloud - cli</mark> without cloud CLI install plain fastapi add forms fail without python - multipart</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">1곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…| Extra Pydantic types |
+| `opentelemetry-sdk`, OTLP exporter | Telemetry export (see [GraphQL and OpenTelemetry](../integrations/graphql-and-opentelemetry.md)) |
+
+There is also `<mark>standard-no-fastapi-cloud-cli</mark>` (same, without the cloud CLI) and `all`. If you install plain `fastapi`, you must add whichever of these you use…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0076.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="count">1곳 (압축 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…email - validator Pydantic EmailStr 
+ pydantic settings BaseSettings Settings 
+ pydantic extra types 
+ opentelemetry sdk OTLP exporter Telemetry export GraphQL OpenTelemetry 
+ 
+ <mark>standard no - fastapi cloud - cli</mark> without cloud CLI install plain fastapi add forms fail without python - multipart 
+ 
+ Versioning 
+ 
+ FastAPI 0. x repository version 0.…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0076.rule+llmlingua2.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r18">
+  <header><span class="num">18</span><b>c0078</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r18">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>What value does the fastapi dev command give FASTAPI_ENV when that variable is not already set?</dd>
+    <dt>정답</dt><dd><mark>development</mark></dd>
+    <dt>핵심어</dt><dd><mark>development</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>- `FASTAPI_ENV` — `fastapi dev` sets it to `<mark>development</mark>` if unset; `app.frontend(check_dir=&quot;auto&quot;)` uses it (see [Static Files, Templates and Frontends](../app-structure/static-files-templates-and-frontend.md)). `fastapi run` leaves it unchanged.</pre></div><div><h4>압축 후</h4><pre>FASTAPI_ENV check_dir unchanged</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">4곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…## Document: getting-started/<mark>development</mark>-workflow.md
+
+---
+type: guide
+title: &quot;<mark>Development</mark> Workflow: Virtual Environments, Environment Variables and Debugging&quot;
+description: Set up an isolated FastAPI project with uv, use environment variables for configuration, and debug your app in VS Code or PyCharm by running Uvicorn from your code.
+tags: [<mark>development</mark>, uv, virtual-environment, environment-variables, debugging, uvicorn, vscode, pycharm]
+verified:
+  - by: openwiki/0.7.0
+    at: 2026-10-05T02:25:02.861Z
+sources:
+  - id: openwiki-source-a63798837acc79e7e4562614
+    resource: repo://docs_src/debugging/tutorial001_py310.py
+  -…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…repo://docs/en/docs/fastapi-cli.md
+  - id: openwiki-source-d8b088114289e51e24813c52
+    resource: repo://docs/en/docs/tutorial/debugging.md
+  - id: openwiki-source-7ee7d971f429ba15850f3e46
+    resource: repo://docs/en/docs/virtual-environments.md
+generated: { by: &quot;claude-code&quot;, at: &quot;2026-10-05T02:25:02.861Z&quot; }
+---
+
+# <mark>Development</mark> Workflow: Virtual Environments, Environment Variables and Debugging
+
+## Virtual environments with `uv`
+
+Each Python project should have its own **virtual…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…[Settings and Environment Variables](../app-structure/settings.md). Two environment variables matter to FastAPI tooling itself:
+
+- `FASTAPI_ENV` — `fastapi dev` sets it to `<mark>development</mark>` if unset; `app.frontend(check_dir=&quot;auto&quot;)` uses it (see [Static Files, Templates and Frontends](../app-structure/static-files-templates-and-frontend.md)). `fastapi run` leaves it unchanged.
+- `PATH` — determines…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…&quot;Debug…&quot; → choose the file (e.g. `main.py`).
+
+The server starts with your code and stops at your breakpoints.
+
+For day-to-day <mark>development</mark> without a debugger, `fastapi dev` (auto-reload) is the usual choice; see [First Steps and the FastAPI CLI](first-steps.md).
+
+## Related
+
+-…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0078.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="count">1곳 (압축 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…## Document: getting-started/<mark>development</mark>-workflow.md
+
+ 
+ 
+ <mark>Development</mark> Virtual Environments Debugging 
+ isolated FastAPI project VS PyCharm 
+ 
+ 
+ 0 7 0 
+ 2026 10 05T02 25 02 
+ 
+ a63798837acc79e7e4562614 
+ docs_src tutorial001_py310 
+ 
+ 
+ 9bc15a21c009b14775a3dd72…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0078.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r19">
+  <header><span class="num">19</span><b>c0078</b><span class="pill">fact</span>
+    <span class="pill comp">rule&gt;llmlingua2</span><a href="#r19">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>What value does the fastapi dev command give FASTAPI_ENV when that variable is not already set?</dd>
+    <dt>정답</dt><dd><mark>development</mark></dd>
+    <dt>핵심어</dt><dd><mark>development</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>- `FASTAPI_ENV` — `fastapi dev` sets it to `<mark>development</mark>` if unset; `app.frontend(check_dir=&quot;auto&quot;)` uses it (see [Static Files, Templates and Frontends](../app-structure/static-files-templates-and-frontend.md)). `fastapi run` leaves it unchanged.</pre></div><div><h4>압축 후</h4><pre>FASTAPI_ENV <mark>development</mark> unset app check_dir unchanged</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">4곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…## Document: getting-started/<mark>development</mark>-workflow.md
+
+---
+type: guide
+title: &quot;<mark>Development</mark> Workflow: Virtual Environments, Environment Variables and Debugging&quot;
+description: Set up an isolated FastAPI project with uv, use environment variables for configuration, and debug your app in VS Code or PyCharm by running Uvicorn from your code.
+tags: [<mark>development</mark>, uv, virtual-environment, environment-variables, debugging, uvicorn, vscode, pycharm]
+verified:
+  - by: openwiki/0.7.0
+    at: 2026-10-05T02:25:02.861Z
+sources:
+  - id: openwiki-source-a63798837acc79e7e4562614
+    resource: repo://docs_src/debugging/tutorial001_py310.py
+  -…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…repo://docs/en/docs/fastapi-cli.md
+  - id: openwiki-source-d8b088114289e51e24813c52
+    resource: repo://docs/en/docs/tutorial/debugging.md
+  - id: openwiki-source-7ee7d971f429ba15850f3e46
+    resource: repo://docs/en/docs/virtual-environments.md
+generated: { by: &quot;claude-code&quot;, at: &quot;2026-10-05T02:25:02.861Z&quot; }
+---
+
+# <mark>Development</mark> Workflow: Virtual Environments, Environment Variables and Debugging
+
+## Virtual environments with `uv`
+
+Each Python project should have its own **virtual…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…[Settings and Environment Variables](../app-structure/settings.md). Two environment variables matter to FastAPI tooling itself:
+
+- `FASTAPI_ENV` — `fastapi dev` sets it to `<mark>development</mark>` if unset; `app.frontend(check_dir=&quot;auto&quot;)` uses it (see [Static Files, Templates and Frontends](../app-structure/static-files-templates-and-frontend.md)). `fastapi run` leaves it unchanged.
+- `PATH` — determines…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…&quot;Debug…&quot; → choose the file (e.g. `main.py`).
+
+The server starts with your code and stops at your breakpoints.
+
+For day-to-day <mark>development</mark> without a debugger, `fastapi dev` (auto-reload) is the usual choice; see [First Steps and the FastAPI CLI](first-steps.md).
+
+## Related
+
+-…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0078.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="count">3곳 (압축 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…## Document: getting-started/<mark>development</mark>-workflow.md
+
+ 
+ <mark>Development</mark> Workflow Virtual Environments Environment Variables Debugging 
+ isolated FastAPI project uv use environment variables configuration debug app VS Code PyCharm Uvicorn 
+ <mark>development</mark> virtual environment environment variables debugging uvicorn vscode pycharm 
+ 
+ 
+ Virtual Environments Variables Debugging 
+ 
+ Virtual environments 
+ 
+ Python project virtual environment don&#x27;t conflict…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…```python
+import os
+
+name = os.getenv(&quot;MY_NAME&quot;, &quot;World&quot;)
+```
+ 
+ typed validated configuration Pydantic BaseSettings Settings Environment Variables environment variables FastAPI 
+ 
+ FASTAPI_ENV <mark>development</mark> unset app check_dir unchanged 
+PATH determines python fastapi executable runs 
+ 
+ Debugging 
+ 
+ editor debugger breakpoints start Uvicorn code docs_src tutorial001_py310 
+ 
+```python…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…Add configuration Python Current File Integrated Terminal 
+ PyCharm Run menu Debug choose file main py 
+ 
+ server starts code stops breakpoints 
+ 
+ <mark>development</mark> without debugger fastapi dev auto - reload First Steps FastAPI CLI 
+ 
+ 
+ 
+ Testing TestClient 
+ Deployment Concepts…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0078.rule+llmlingua2.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r20">
+  <header><span class="num">20</span><b>c0085</b><span class="pill">code</span>
+    <span class="pill comp">rule&gt;llmlingua2</span><a href="#r20">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>In FastAPI&#x27;s background-task example that also uses a dependency, what text does get_query log when a q value is sent?</dd>
+    <dt>정답</dt><dd><mark>found query: {q</mark>}</dd>
+    <dt>핵심어</dt><dd><mark>found query: {q}</mark></dd>
+    <dt>모델 답변</dt><dd><pre><mark>found query: {q</mark>} NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>        message = f&quot;<mark>found query: {q</mark>}\n&quot;</pre></div><div><h4>압축 후</h4><pre>message = f&quot;<mark>found query: {q</mark>}\n</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">1곳 (none 문맥)</p><div class="ex"><span class="tag code">코드</span><pre>…str):
+    with open(&quot;log.txt&quot;, mode=&quot;a&quot;) as log:
+        log.write(message)
+
+
+def get_query(background_tasks: BackgroundTasks, q: str | None = None):
+    if q:
+        message = f&quot;<mark>found query: {q</mark>}\n&quot;
+        background_tasks.add_task(write_log, message)
+    return q
+
+
+@app.post(&quot;/send-notification/{email}&quot;)
+async def send_notification(
+    email: str, background_tasks: BackgroundTasks, q: Annotated[str, Depends(get_query)]
+):
+    message = f&quot;message to…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0085.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="count">1곳 (압축 문맥)</p><div class="ex"><span class="tag code">코드</span><pre>…str):
+    with open(&quot;log.txt&quot;, mode=&quot;a&quot;) as log:
+        log.write(message)
+
+def get_query(background_tasks: BackgroundTasks, q: str | None = None):
+    if q:
+        message = f&quot;<mark>found query: {q</mark>}\n&quot;
+        background_tasks.add_task(write_log, message)
+    return q
+
+@app.post(&quot;/send-notification/{email}&quot;)
+async def send_notification(
+    email: str, background_tasks: BackgroundTasks, q: Annotated[str, Depends(get_query)]
+):
+    message = f&quot;message to…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0085.rule+llmlingua2.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r21">
+  <header><span class="num">21</span><b>c0086</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r50</span><a href="#r21">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>Which package do FastAPI&#x27;s docs suggest as the replacement for Starlette&#x27;s deprecated GraphQLApp when using Graphene?</dd>
+    <dt>정답</dt><dd><mark>starlette-graphene3</mark></dd>
+    <dt>핵심어</dt><dd><mark>starlette-graphene3</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>Starlette&#x27;s old `GraphQLApp` (for Graphene) is deprecated; migrate to `<mark>starlette-graphene3</mark>`, which has an almost identical interface — or consider Strawberry.</pre></div><div><h4>압축 후</h4><pre>GraphQLApp deprecated <mark>starlette graphene3</mark> identical interface Strawberry</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">2곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…FastAPI integration docs
+- **Ariadne** — has FastAPI integration docs
+- **Tartiflette** — via Tartiflette ASGI
+- **Graphene** — via `<mark>starlette-graphene3</mark>`
+
+### Strawberry example
+
+`docs_src/graphql_/tutorial001_py310.py`:
+
+```python
+import strawberry
+from fastapi import FastAPI
+from strawberry.fastapi import GraphQLRouter
+
+
+@strawberry.type
+class User:
+    name: str…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…use FastAPI dependencies for context). The GraphQL endpoint is at `/graphql`.
+
+Starlette&#x27;s old `GraphQLApp` (for Graphene) is deprecated; migrate to `<mark>starlette-graphene3</mark>`, which has an almost identical interface — or consider Strawberry.
+
+GraphQL typically uses only `POST` for all operations. Evaluate whether…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0086.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="count">2곳 (압축 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…library normal path operations app Libraries ASGI support 
+ 
+ Strawberry annotation based FastAPI FastAPI integration 
+ Ariadne FastAPI integration 
+ Tartiflette ASGI 
+ Graphene <mark>starlette graphene3</mark> 
+ 
+ Strawberry 
+ 
+ docs_src graphql _ tutorial001_py310 
+ 
+```python
+import strawberry
+from fastapi import FastAPI
+from strawberry.fastapi import GraphQLRouter
+
+
+@strawberry.type
+class User:
+    name:…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…strawberry.Schema(query=Query)
+
+
+graphql_app = GraphQLRouter(schema)
+
+app = FastAPI()
+app.include_router(graphql_app, prefix=&quot;/graphql&quot;)
+```
+ 
+ GraphQLRouter APIRouter added include_router FastAPI GraphQL endpoint graphql 
+ 
+ GraphQLApp deprecated <mark>starlette graphene3</mark> identical interface Strawberry 
+ 
+ GraphQL only POST operations trade - offs plain REST - API 
+ 
+ OpenTelemetry 
+ 
+ Telemetry data running app metrics…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0086.llmlingua2_r50.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r22">
+  <header><span class="num">22</span><b>c0086</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r22">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>Which package do FastAPI&#x27;s docs suggest as the replacement for Starlette&#x27;s deprecated GraphQLApp when using Graphene?</dd>
+    <dt>정답</dt><dd><mark>starlette-graphene3</mark></dd>
+    <dt>핵심어</dt><dd><mark>starlette-graphene3</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>Starlette&#x27;s old `GraphQLApp` (for Graphene) is deprecated; migrate to `<mark>starlette-graphene3</mark>`, which has an almost identical interface — or consider Strawberry.</pre></div><div><h4>압축 후</h4><pre>GraphQLApp</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">2곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…FastAPI integration docs
+- **Ariadne** — has FastAPI integration docs
+- **Tartiflette** — via Tartiflette ASGI
+- **Graphene** — via `<mark>starlette-graphene3</mark>`
+
+### Strawberry example
+
+`docs_src/graphql_/tutorial001_py310.py`:
+
+```python
+import strawberry
+from fastapi import FastAPI
+from strawberry.fastapi import GraphQLRouter
+
+
+@strawberry.type
+class User:
+    name: str…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…use FastAPI dependencies for context). The GraphQL endpoint is at `/graphql`.
+
+Starlette&#x27;s old `GraphQLApp` (for Graphene) is deprecated; migrate to `<mark>starlette-graphene3</mark>`, which has an almost identical interface — or consider Strawberry.
+
+GraphQL typically uses only `POST` for all operations. Evaluate whether…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0086.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0086.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r23">
+  <header><span class="num">23</span><b>c0086</b><span class="pill">fact</span>
+    <span class="pill comp">rule&gt;llmlingua2</span><a href="#r23">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>Which package do FastAPI&#x27;s docs suggest as the replacement for Starlette&#x27;s deprecated GraphQLApp when using Graphene?</dd>
+    <dt>정답</dt><dd><mark>starlette-graphene3</mark></dd>
+    <dt>핵심어</dt><dd><mark>starlette-graphene3</mark></dd>
+    <dt>모델 답변</dt><dd><pre>graphene3</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>Starlette&#x27;s old `GraphQLApp` (for Graphene) is deprecated; migrate to `<mark>starlette-graphene3</mark>`, which has an almost identical interface — or consider Strawberry.</pre></div><div><h4>압축 후</h4><pre>Starlette GraphQLApp deprecated migrate graphene3 identical</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">2곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…FastAPI integration docs
+- **Ariadne** — has FastAPI integration docs
+- **Tartiflette** — via Tartiflette ASGI
+- **Graphene** — via `<mark>starlette-graphene3</mark>`
+
+### Strawberry example
+
+`docs_src/graphql_/tutorial001_py310.py`:
+
+```python
+import strawberry
+from fastapi import FastAPI
+from strawberry.fastapi import GraphQLRouter
+
+
+@strawberry.type
+class User:
+    name: str…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…use FastAPI dependencies for context). The GraphQL endpoint is at `/graphql`.
+
+Starlette&#x27;s old `GraphQLApp` (for Graphene) is deprecated; migrate to `<mark>starlette-graphene3</mark>`, which has an almost identical interface — or consider Strawberry.
+
+GraphQL typically uses only `POST` for all operations. Evaluate whether…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0086.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0086.rule+llmlingua2.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r24">
+  <header><span class="num">24</span><b>c0092</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r24">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>Why are authentication tokens for FastAPI WebSocket endpoints usually sent as a query parameter or a cookie?</dd>
+    <dt>정답</dt><dd>Browsers can&#x27;t set <mark>custom headers</mark> on WebSocket connections</dd>
+    <dt>핵심어</dt><dd><mark>custom headers</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>- Browsers can&#x27;t set <mark>custom headers</mark> on WebSocket connections, so auth tokens are commonly passed as a query parameter or cookie, as here.</pre></div><div><h4>압축 후</h4><pre>can&#x27;t WebSocket</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">1곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…handler closes the connection with code `1008` and the errors as the reason (see [Handling Errors](../errors/handling-errors.md)).
+- Browsers can&#x27;t set <mark>custom headers</mark> on WebSocket connections, so auth tokens are commonly passed as a query parameter or cookie, as here.
+
+Router- and app-level…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0092.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0092.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r25">
+  <header><span class="num">25</span><b>c0092</b><span class="pill">fact</span>
+    <span class="pill comp">rule&gt;llmlingua2</span><a href="#r25">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>Why are authentication tokens for FastAPI WebSocket endpoints usually sent as a query parameter or a cookie?</dd>
+    <dt>정답</dt><dd>Browsers can&#x27;t set <mark>custom headers</mark> on WebSocket connections</dd>
+    <dt>핵심어</dt><dd><mark>custom headers</mark></dd>
+    <dt>모델 답변</dt><dd><pre>Browsers can&#x27;t send headers in WebSocket connections.</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>- Browsers can&#x27;t set <mark>custom headers</mark> on WebSocket connections, so auth tokens are commonly passed as a query parameter or cookie, as here.</pre></div><div><h4>압축 후</h4><pre>Browsers can&#x27;t headers WebSocket connections tokens passed query parameter cookie</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">1곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…handler closes the connection with code `1008` and the errors as the reason (see [Handling Errors](../errors/handling-errors.md)).
+- Browsers can&#x27;t set <mark>custom headers</mark> on WebSocket connections, so auth tokens are commonly passed as a query parameter or cookie, as here.
+
+Router- and app-level…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0092.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0092.rule+llmlingua2.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r26">
+  <header><span class="num">26</span><b>c0099</b><span class="pill">fact</span>
+    <span class="pill comp">rule&gt;llmlingua2</span><a href="#r26">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>In which FastAPI version was support for pydantic.v1 models dropped completely?</dd>
+    <dt>정답</dt><dd><mark>0.128.0</mark></dd>
+    <dt>핵심어</dt><dd><mark>0.128.0</mark></dd>
+    <dt>모델 답변</dt><dd><pre>0.126.0</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>| <mark>0.128.0</mark> | `pydantic.v1` dropped too — v2 only |</pre></div><div><h4>압축 후</h4><pre><mark>0 128 0</mark> v2 only</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">1곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…models inside Pydantic v2, to ease migration |
+| 0.126.0 | Pydantic v1 dropped; `pydantic.v1` still temporarily supported |
+| <mark>0.128.0</mark> | `pydantic.v1` dropped too — v2 only |
+
+In current versions, using a `pydantic.v1` model raises `PydanticV1NotSupportedError` (e.g. *&quot;pydantic.v1 models…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0099.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="count">1곳 (압축 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…| v1 or v2 
+ 0 119. 0 support for pydantic. v1 models Pydantic v2 
+ 0 126. 0 v1 dropped supported 
+ <mark>0 128 0</mark> v2 only 
+ 
+ pydantic v1 model raises PydanticV1NotSupportedError v1 no supported by FastAPI update response model Pydantic team doesn&#x27;t support v1…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0099.rule+llmlingua2.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r27">
+  <header><span class="num">27</span><b>c0102</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r27">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>When a FastAPI response model is a union of several models, which model should be listed first?</dd>
+    <dt>정답</dt><dd>The <mark>most specific one</mark></dd>
+    <dt>핵심어</dt><dd><mark>The most specific one</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>Put the **most specific** type first (`PlaneItem` before `CarItem`), so Pydantic doesn&#x27;t match the less specific model first. `typing.Union[PlaneItem, CarItem]` is equivalent; the `X | Y` form works as a value here because FastAPI requires Python 3.10+.</pre></div><div><h4>압축 후</h4><pre>PlaneItem CarItem doesn&#x27;t PlaneItem CarItem FastAPI 3 10</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0102.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0102.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r28">
+  <header><span class="num">28</span><b>c0106</b><span class="pill">procedure</span>
+    <span class="pill comp">llmlingua2_r50</span><a href="#r28">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>In FastAPI, how can I keep an accurate return type annotation and still have the password filtered out of a user response?</dd>
+    <dt>정답</dt><dd>1) Define an output model <mark>BaseUser</mark> without the password 2) Make the input model <mark>UserIn</mark> a subclass of <mark>BaseUser</mark> that adds password 3) Annotate the path operation to return <mark>BaseUser</mark> and return the <mark>UserIn</mark> object</dd>
+    <dt>핵심어</dt><dd><mark>BaseUser</mark>, <mark>UserIn</mark></dd>
+    <dt>모델 답변</dt><dd><pre>1. Define separate input and output models: `<mark>UserIn</mark>` includes `password`, while `UserOut` contains only the fields you want returned.
+2. Keep the function’s return annotation accurate for your implementation, and set `response_model=UserOut` on the route. FastAPI uses `response_model` in preference to the return annotation for the response model.
+3. Return the `<mark>UserIn</mark>` value. FastAPI filters the response to the fields declared in `UserOut`, so `password` is omitted.</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>[1] To keep a precise return annotation **and** filtering, make the input model a subclass of the output model (`tutorial003_01_py310.py`):</pre></div><div><h4>압축 후</h4><pre>[1] return annotation filtering input model subclass of output model tutorial003_01_py310</pre></div></div><div class="pair"><div><h4>근거 원문</h4><pre>[2] async def create_user(user: <mark>UserIn</mark>) -&gt; <mark>BaseUser</mark>:</pre></div><div><h4>압축 후</h4><pre>[2] async def create_user(user: <mark>UserIn</mark>) -&gt; <mark>BaseUser</mark></pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">5곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…from the return annotation when `response_model` isn&#x27;t passed at all.
+
+## Filtering output
+
+Never echo sensitive input back (`tutorial002_py310.py` returns `<mark>UserIn</mark>` with the password — &quot;Don&#x27;t do this in production!&quot;). Declare an output model (`tutorial003_py310.py`):
+
+```python
+class UserIn(BaseModel):
+    username: str
+    password:…</pre></div><div class="ex"><span class="tag code">코드</span><pre>…back (`tutorial002_py310.py` returns `UserIn` with the password — &quot;Don&#x27;t do this in production!&quot;). Declare an output model (`tutorial003_py310.py`):
+
+```python
+class <mark>UserIn</mark>(BaseModel):
+    username: str
+    password: str
+    email: EmailStr
+    full_name: str | None = None
+
+
+class UserOut(BaseModel):
+    username: str
+    email: EmailStr
+    full_name: str | None = None
+
+
+@app.post(&quot;/user/&quot;, response_model=UserOut)
+async def create_user(user: <mark>UserIn</mark>) -&gt; Any:
+    return user
+```
+
+The returned `UserIn` is converted to `UserOut`; `password` is dropped.
+
+### Filtering with inheritance and…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…EmailStr
+    full_name: str | None = None
+
+
+@app.post(&quot;/user/&quot;, response_model=UserOut)
+async def create_user(user: UserIn) -&gt; Any:
+    return user
+```
+
+The returned `<mark>UserIn</mark>` is converted to `UserOut`; `password` is dropped.
+
+### Filtering with inheritance and a return type
+
+To keep a precise return…</pre></div><div class="ex"><span class="tag code">코드</span><pre>…keep a precise return annotation **and** filtering, make the input model a subclass of the output model (`tutorial003_01_py310.py`):
+
+```python
+class <mark>BaseUser</mark>(BaseModel):
+    username: str
+    email: EmailStr
+    full_name: str | None = None
+
+
+class <mark>UserIn</mark>(<mark>BaseUser</mark>):
+    password: str
+
+
+@app.post(&quot;/user/&quot;)
+async def create_user(user: <mark>UserIn</mark>) -&gt; <mark>BaseUser</mark>:
+    return user
+```
+
+Type checkers accept it (a `UserIn` *is a* `BaseUser`), and FastAPI still serializes only `BaseUser`&#x27;s fields. More…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…None
+
+
+class UserIn(BaseUser):
+    password: str
+
+
+@app.post(&quot;/user/&quot;)
+async def create_user(user: UserIn) -&gt; BaseUser:
+    return user
+```
+
+Type checkers accept it (a `<mark>UserIn</mark>` *is a* `<mark>BaseUser</mark>`), and FastAPI still serializes only `<mark>BaseUser</mark>`&#x27;s fields. More patterns in [Extra Models](extra-models-and-updates.md).
+
+## Returning `Response` objects
+
+If the return annotation is `Response` or a subclass, FastAPI…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0106.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="count">5곳 (압축 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…]
+```
+ 
+ response_model not 
+ 
+ Priority present response_model FastAPI only derives response model from return annotation response_model isn&#x27;t 
+ 
+ Filtering output 
+ 
+ tutorial002_py310 <mark>UserIn</mark> password production Declare output model tutorial003_py310 
+ 
+```python
+class UserIn(BaseModel):
+    username: str
+    password: str
+    email: EmailStr
+    full_name: str | None =…</pre></div><div class="ex"><span class="tag code">코드</span><pre>…derives response model from return annotation response_model isn&#x27;t 
+ 
+ Filtering output 
+ 
+ tutorial002_py310 UserIn password production Declare output model tutorial003_py310 
+ 
+```python
+class <mark>UserIn</mark>(BaseModel):
+    username: str
+    password: str
+    email: EmailStr
+    full_name: str | None = None
+
+
+class UserOut(BaseModel):
+    username: str
+    email: EmailStr
+    full_name: str | None = None
+
+
+@app.post(&quot;/user/&quot;, response_model=UserOut)
+async def create_user(user: <mark>UserIn</mark>) -&gt; Any:
+    return user
+```
+ 
+ UserIn to UserOut password 
+ 
+ Filtering with inheritance return 
+ 
+ return annotation filtering input model subclass of…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…str
+    email: EmailStr
+    full_name: str | None = None
+
+
+@app.post(&quot;/user/&quot;, response_model=UserOut)
+async def create_user(user: UserIn) -&gt; Any:
+    return user
+```
+ 
+ <mark>UserIn</mark> to UserOut password 
+ 
+ Filtering with inheritance return 
+ 
+ return annotation filtering input model subclass of output model tutorial003_01_py310 
+ 
+```python
+class BaseUser(BaseModel):…</pre></div><div class="ex"><span class="tag code">코드</span><pre>…UserIn to UserOut password 
+ 
+ Filtering with inheritance return 
+ 
+ return annotation filtering input model subclass of output model tutorial003_01_py310 
+ 
+```python
+class <mark>BaseUser</mark>(BaseModel):
+    username: str
+    email: EmailStr
+    full_name: str | None = None
+
+
+class <mark>UserIn</mark>(<mark>BaseUser</mark>):
+    password: str
+
+
+@app.post(&quot;/user/&quot;)
+async def create_user(user: <mark>UserIn</mark>) -&gt; <mark>BaseUser</mark>:
+    return user
+```
+ 
+Type checkers accept UserIn * BaseUser ) FastAPI serializes only BaseUser fields patterns Extra Models updates 
+ 
+ Returning…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…None = None
+
+
+class UserIn(BaseUser):
+    password: str
+
+
+@app.post(&quot;/user/&quot;)
+async def create_user(user: UserIn) -&gt; BaseUser:
+    return user
+```
+ 
+Type checkers accept <mark>UserIn</mark> * <mark>BaseUser</mark> ) FastAPI serializes only <mark>BaseUser</mark> fields patterns Extra Models updates 
+ 
+ Returning Response objects 
+ 
+ return annotation subclass FastAPI not create response model lenient_issubclass return_annotation response_model 
+ 
+```python…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0106.llmlingua2_r50.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r29">
+  <header><span class="num">29</span><b>c0111</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r29">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>Which SDK generator do FastAPI&#x27;s docs describe as purpose-built for TypeScript?</dd>
+    <dt>정답</dt><dd><mark>Hey API (@hey-api/openapi-ts</mark>)</dd>
+    <dt>핵심어</dt><dd><mark>Hey API (@hey-api/openapi-ts)</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>- **<mark>Hey API** (`@hey-api/openapi-ts</mark>`) — purpose-built for TypeScript.</pre></div><div><h4>압축 후</h4><pre>API </pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">1곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…request payloads and responses, and build-time errors when the API changes.
+
+## Generators
+
+- **OpenAPI Generator** — many languages.
+- **<mark>Hey API** (`@hey-api/openapi-ts</mark>`) — purpose-built for TypeScript.
+- More on OpenAPI.Tools (SDK generators category).
+
+FastAPI emits **OpenAPI 3.1**, so the tool must support…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0111.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0111.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r30">
+  <header><span class="num">30</span><b>c0111</b><span class="pill">fact</span>
+    <span class="pill comp">rule&gt;llmlingua2</span><a href="#r30">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>Which SDK generator do FastAPI&#x27;s docs describe as purpose-built for TypeScript?</dd>
+    <dt>정답</dt><dd><mark>Hey API (@hey-api/openapi-ts</mark>)</dd>
+    <dt>핵심어</dt><dd><mark>Hey API (@hey-api/openapi-ts)</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>- **<mark>Hey API** (`@hey-api/openapi-ts</mark>`) — purpose-built for TypeScript.</pre></div><div><h4>압축 후</h4><pre>API </pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">1곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…request payloads and responses, and build-time errors when the API changes.
+
+## Generators
+
+- **OpenAPI Generator** — many languages.
+- **<mark>Hey API** (`@hey-api/openapi-ts</mark>`) — purpose-built for TypeScript.
+- More on OpenAPI.Tools (SDK generators category).
+
+FastAPI emits **OpenAPI 3.1**, so the tool must support…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0111.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0111.rule+llmlingua2.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r31">
+  <header><span class="num">31</span><b>c0114</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r31">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>What is the default value of the version parameter for an API&#x27;s metadata in FastAPI?</dd>
+    <dt>정답</dt><dd>&quot;<mark>0.1.0</mark>&quot;</dd>
+    <dt>핵심어</dt><dd><mark>&quot;0.1.0&quot;</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>| `version` | `str` | **Your API&#x27;s** version, default `&quot;<mark>0.1.0</mark>&quot;` (not FastAPI&#x27;s or OpenAPI&#x27;s) |</pre></div><div><h4>압축 후</h4><pre>API default <mark>0 1 0</mark> not FastAPI OpenAPI</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">1곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…(OpenAPI 3.1) |
+| `description` | `str` | Markdown supported |
+| `version` | `str` | **Your API&#x27;s** version, default `&quot;<mark>0.1.0</mark>&quot;` (not FastAPI&#x27;s or OpenAPI&#x27;s) |
+| `terms_of_service` | `str` | URL |
+| `contact` | `dict` | `name`, `url`, `email`…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0114.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="count">1곳 (압축 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…&quot;url&quot;: &quot;http://x-force.example.com/contact/&quot;,
+        &quot;email&quot;: &quot;dp@x-force.example.com&quot;,
+    },
+    license_info={
+        &quot;name&quot;: &quot;Apache 2.0&quot;,
+        &quot;url&quot;: &quot;https://www.apache.org/licenses/LICENSE-2.0.html&quot;,
+    },
+)
+```
+ 
+ 
+ 
+ FastAPI 
+ OpenAPI 3 1 
+ 
+ API default <mark>0 1 0</mark> not FastAPI OpenAPI 
+ terms_of_service URL 
+ 
+ license_info SPDX 2 0 tutorial001_1_py310 
+ 
+ openapi_version default 3 1 0 root_path openapi_external_docs separate_input_output_schemas 
+ 
+ openapi_tags 
+ 
+ tutorial004_py310…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0114.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r32">
+  <header><span class="num">32</span><b>c0121</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r32">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>Why can&#x27;t the Try it out button in FastAPI&#x27;s docs UI send values for cookie parameters?</dd>
+    <dt>정답</dt><dd>Browsers don&#x27;t let JavaScript set arbitrary cookies</dd>
+    <dt>핵심어</dt><dd><mark>Try it out</mark>, <mark>Cookie()</mark></dd>
+    <dt>모델 답변</dt><dd><pre>Because JavaScript can’t send <mark>cookie</mark> parameters.</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>Browsers manage cookies themselves and don&#x27;t let JavaScript set arbitrary ones, so **&quot;<mark>Try it out</mark>&quot; in the docs UI can&#x27;t send cookies** — test with a real browser, `curl`, or `TestClient`. To *set* cookies, see [Setting Response Headers and Cookies](../responses/response-headers-and-cookies.md).</pre></div><div><h4>압축 후</h4><pre>don&#x27;t JavaScript UI can&#x27;t TestClient</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">8곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…## Document: request/headers-and-cookies.md
+
+---
+type: guide
+title: Header and <mark>Cookie</mark> Parameters
+description: Read request headers with Header() (automatic underscore-to-hyphen conversion, convert_underscores, duplicate headers as lists) and cookies with <mark>Cookie</mark>(), and group them in Pydantic header/<mark>cookie</mark> parameter models with extra=&#x27;forbid&#x27;.
+tags: [headers, header, cookies, <mark>cookie</mark>, parameters, convert_underscores, parameter-models]
+verified:
+  - by: openwiki/0.7.0
+    at: 2026-10-05T02:25:02.861Z
+sources:
+  - id: openwiki-source-271b7b386e680a403ae9c8fa
+    resource: repo://docs_src/cookie_param_models/tutorial002_an_py310.py
+  - id: openwiki-source-77f5b306ccc4bddccb0a42cd
+    resource: repo://docs_src/cookie_params/tutorial001_an_py310.py…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…repo://docs_src/header_param_models/tutorial002_an_py310.py
+  - id: openwiki-source-ecd3aca0ab3476cf99a5f88b
+    resource: repo://docs_src/header_params/tutorial001_an_py310.py
+  - id: openwiki-source-14c4faaaab7b5cb2487b7da0
+    resource: repo://docs_src/header_params/tutorial002_an_py310.py
+  - id: openwiki-source-3755bb50687e08f4a8baa3db
+    resource: repo://docs_src/header_params/tutorial003_an_py310.py
+  - id: openwiki-source-156fb14d5ad8ae2e714b915d
+    resource: repo://docs/en/docs/tutorial/<mark>cookie</mark>-param-models.md
+  - id: openwiki-source-92b8161cd107b8fe2397b104
+    resource: repo://docs/en/docs/tutorial/<mark>cookie</mark>-params.md
+  - id: openwiki-source-018921fd9b7328bb4c81647c
+    resource: repo://docs/en/docs/tutorial/header-params.md
+  - id: openwiki-source-0e9a2a0518ebbbeae0aa9f66
+    resource: repo://fastapi/params.py
+generated: { by: &quot;claude-code&quot;, at: &quot;2026-10-05T02:25:02.861Z&quot; }
+---
+
+# Header and <mark>Cookie</mark> Parameters
+
+`Header` and `<mark>Cookie</mark>` work like `Query` and `Path`: same validation and metadata parameters, declared with `Annotated`. Without them, a scalar parameter would be…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…```
+
+Sending `X-Token: foo` and `X-Token: bar` returns all values in a list, e.g. `{&quot;X-Token values&quot;: [&quot;bar&quot;, &quot;foo&quot;]}`.
+
+## Cookies: `<mark>Cookie</mark>()`
+
+`docs_src/cookie_params/tutorial001_an_py310.py`:
+
+```python
+from typing import Annotated
+
+from fastapi import Cookie, FastAPI
+
+app = FastAPI()
+
+
+@app.get(&quot;/items/&quot;)
+async def read_items(ads_id: Annotated[str |…</pre></div><div class="ex"><span class="tag code">코드</span><pre>…in a list, e.g. `{&quot;X-Token values&quot;: [&quot;bar&quot;, &quot;foo&quot;]}`.
+
+## Cookies: `Cookie()`
+
+`docs_src/cookie_params/tutorial001_an_py310.py`:
+
+```python
+from typing import Annotated
+
+from fastapi import <mark>Cookie</mark>, FastAPI
+
+app = FastAPI()
+
+
+@app.get(&quot;/items/&quot;)
+async def read_items(ads_id: Annotated[str | None, <mark>Cookie</mark>()] = None):
+    return {&quot;ads_id&quot;: ads_id}
+```
+
+Browsers manage cookies themselves and don&#x27;t let JavaScript set arbitrary ones, so **&quot;Try it…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…None, Cookie()] = None):
+    return {&quot;ads_id&quot;: ads_id}
+```
+
+Browsers manage cookies themselves and don&#x27;t let JavaScript set arbitrary ones, so **&quot;<mark>Try it out</mark>&quot; in the docs UI can&#x27;t send cookies** — test with a real browser, `curl`, or `TestClient`. To *set* cookies, see [Setting Response Headers and Cookies](../responses/response-headers-and-cookies.md).
+
+`Header` and `<mark>Cookie</mark>` (like `Path` and `Query`) are subclasses of an internal `Param` class; import them from `fastapi`.
+
+## Parameter models
+
+Group related headers or cookies into a Pydantic model and declare it with `Header()` / `<mark>Cookie</mark>()`. FastAPI extracts each field from the request and validates the model.
+
+### Header model
+
+`docs_src/header_param_models/tutorial001_an_py310.py`:
+
+```python
+from typing import Annotated…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…to the model&#x27;s fields too (`save_data` ↔ `Save-Data`); disable it with `Header(convert_underscores=False)` (`tutorial003_an_py310.py`). List fields (`x_tag`) collect duplicate headers.
+
+### <mark>Cookie</mark> model
+
+`docs_src/cookie_param_models/tutorial001_an_py310.py`:
+
+```python
+class Cookies(BaseModel):
+    session_id: str
+    fatebook_tracker: str | None = None
+    googall_tracker: str | None = None
+
+
+@app.get(&quot;/items/&quot;)…</pre></div><div class="ex"><span class="tag code">코드</span><pre>…Cookies(BaseModel):
+    session_id: str
+    fatebook_tracker: str | None = None
+    googall_tracker: str | None = None
+
+
+@app.get(&quot;/items/&quot;)
+async def read_items(cookies: Annotated[Cookies, <mark>Cookie</mark>()]):
+    return cookies
+```
+
+### Forbidding extra values
+
+Add `model_config = {&quot;extra&quot;: &quot;forbid&quot;}` to reject anything not declared (`header_param_models/tutorial002_an_py310.py`, `cookie_param_models/tutorial002_an_py310.py`):
+
+```python…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…session_id: str
+    fatebook_tracker: str | None = None
+    googall_tracker: str | None = None
+```
+
+A request with an unexpected <mark>cookie</mark> (e.g. a `santa_tracker` <mark>cookie</mark>) or header receives a 422 error of type `extra_forbidden`. This is handy for <mark>cookie</mark> consent: if a client sends cookies you didn&#x27;t declare, you can reject them.
+
+Parameter models work the same way for…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0121.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="count">3곳 (압축 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…## Document: request/headers-and-cookies.md
+
+ 
+ 
+ Header <mark>Cookie</mark> 
+ convert_underscores cookies Pydantic header <mark>cookie</mark> parameter models 
+ convert_underscores 
+ 
+ 0 7 0 
+ 2026 10 25 02 
+ 
+ 
+ docs_src cookie_param_models tutorial002_an_py310 
+ 
+ docs_src cookie_params tutorial001_an_py310 
+ 5a73b75e06fb149013513757 
+ docs_src header_param_models tutorial001_an_py310…</pre></div><div class="ex"><span class="tag code">코드</span><pre>…None, Header()] = None):
+    return {&quot;X-Token values&quot;: x_token}
+```
+ 
+ 
+ 
+ 
+ 
+ docs_src cookie_params tutorial001_an_py310
+ 
+```python
+from typing import Annotated
+
+from fastapi import <mark>Cookie</mark>, FastAPI
+
+app = FastAPI()
+
+
+@app.get(&quot;/items/&quot;)
+async def read_items(ads_id: Annotated[str | None, <mark>Cookie</mark>()] = None):
+    return {&quot;ads_id&quot;: ads_id}
+```
+ 
+ don&#x27;t JavaScript UI can&#x27;t TestClient 
+ 
+ 
+ 
+ 
+ 
+ FastAPI 
+ 
+ 
+ 
+ docs_src header_param_models tutorial001_an_py310 
+ 
+```python
+from typing import Annotated…</pre></div><div class="ex"><span class="tag code">코드</span><pre>…Cookies(BaseModel):
+    session_id: str
+    fatebook_tracker: str | None = None
+    googall_tracker: str | None = None
+
+
+@app.get(&quot;/items/&quot;)
+async def read_items(cookies: Annotated[Cookies, <mark>Cookie</mark>()]):
+    return cookies
+```
+ 
+ 
+ 
+ model_config not header_param_models tutorial002_an_py310 cookie_param_models tutorial002_an_py310 
+ 
+```python
+class Cookies(BaseModel):
+    model_config = {&quot;extra&quot;: &quot;forbid&quot;}
+
+    session_id: str
+    fatebook_tracker: str…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0121.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r33">
+  <header><span class="num">33</span><b>c0129</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r33">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>For a FastAPI {file_path:path} parameter, how is a value that itself starts with a slash written in the URL?</dd>
+    <dt>정답</dt><dd>With a double slash, e.g. /<mark>files//home/johndoe/myfile.txt</mark></dd>
+    <dt>핵심어</dt><dd><mark>/files//home/johndoe/myfile.txt</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>`/<mark>files/home/johndoe/myfile.txt</mark>` → `file_path=&quot;home/johndoe/myfile.txt&quot;`. For a value starting with `/`, the URL has a double slash: `/<mark>files//home/johndoe/myfile.txt</mark>`. OpenAPI has no notion of path-containing parameters, so the docs won&#x27;t hint at it, but it works.</pre></div><div><h4>압축 후</h4><pre>file_path URL OpenAPI no won&#x27;t</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">1곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…slashes (e.g. a file path), use Starlette&#x27;s `:path` converter (`tutorial004_py310.py`):
+
+```python
+@app.get(&quot;/files/{file_path:path}&quot;)
+async def read_file(file_path: str):
+    return {&quot;file_path&quot;: file_path}
+```
+
+`/<mark>files/home/johndoe/myfile.txt</mark>` → `file_path=&quot;home/johndoe/myfile.txt&quot;`. For a value starting with `/`, the URL has a double slash: `/<mark>files//home/johndoe/myfile.txt</mark>`. OpenAPI has no notion of path-containing parameters, so the docs won&#x27;t hint at it, but it works.
+
+## `Path()`: metadata…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0129.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0129.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r34">
+  <header><span class="num">34</span><b>c0131</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r34">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>Which two FastAPI JSON response classes are deprecated because a response model already gives the same Rust-level serialization speed?</dd>
+    <dt>정답</dt><dd><mark>ORJSONResponse and UJSONResponse</mark></dd>
+    <dt>핵심어</dt><dd><mark>ORJSONResponse and UJSONResponse</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>Consequently, `<mark>ORJSONResponse` and `UJSONResponse</mark>` are **deprecated** (they emit a `FastAPIDeprecationWarning`): a response model gives the same Rust-level speed without extra packages. Existing code using them still works if `orjson`/`ujson` is installed (`tutorial001`, `tutorial001b`).</pre></div><div><h4>압축 후</h4><pre>ORJSONResponse UJSONResponse FastAPIDeprecationWarning speed without</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">1곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…is still filtered by the response model, but then converted with `jsonable_encoder` and serialized by that class — slower.
+
+Consequently, `<mark>ORJSONResponse` and `UJSONResponse</mark>` are **deprecated** (they emit a `FastAPIDeprecationWarning`): a response model gives the same Rust-level speed without extra packages. Existing code using…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0131.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0131.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r35">
+  <header><span class="num">35</span><b>c0134</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r50</span><a href="#r35">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>What is the default samesite setting used by Response.set_cookie in FastAPI?</dd>
+    <dt>정답</dt><dd>&quot;<mark>lax</mark>&quot;</dd>
+    <dt>핵심어</dt><dd><mark>&quot;lax&quot;</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>| `samesite` | `&quot;<mark>lax</mark>&quot;` (default), `&quot;strict&quot;` or `&quot;none&quot;` |</pre></div><div><h4>압축 후</h4><pre>default</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">1곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…|
+| `secure` | Only send over HTTPS |
+| `httponly` | Not accessible to JavaScript |
+| `samesite` | `&quot;<mark>lax</mark>&quot;` (default), `&quot;strict&quot;` or `&quot;none&quot;` |
+
+Use `response.delete_cookie(key, ...)` to remove one. For session/auth cookies, set `httponly=True`, `secure=True` and a suitable…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0134.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0134.llmlingua2_r50.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r36">
+  <header><span class="num">36</span><b>c0134</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r36">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>What is the default samesite setting used by Response.set_cookie in FastAPI?</dd>
+    <dt>정답</dt><dd>&quot;<mark>lax</mark>&quot;</dd>
+    <dt>핵심어</dt><dd><mark>&quot;lax&quot;</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>| `samesite` | `&quot;<mark>lax</mark>&quot;` (default), `&quot;strict&quot;` or `&quot;none&quot;` |</pre></div><div><h4>압축 후</h4><pre>default</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">1곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…|
+| `secure` | Only send over HTTPS |
+| `httponly` | Not accessible to JavaScript |
+| `samesite` | `&quot;<mark>lax</mark>&quot;` (default), `&quot;strict&quot;` or `&quot;none&quot;` |
+
+Use `response.delete_cookie(key, ...)` to remove one. For session/auth cookies, set `httponly=True`, `secure=True` and a suitable…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0134.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0134.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r37">
+  <header><span class="num">37</span><b>c0136</b><span class="pill">fact</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r37">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>How often does FastAPI send a keep-alive ping comment on an idle Server-Sent Events stream?</dd>
+    <dt>정답</dt><dd><mark>Every 15 seconds</mark></dd>
+    <dt>핵심어</dt><dd><mark>Every 15 seconds</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>- Sends a keep-alive `: ping` comment <mark>every **15 seconds</mark>** when the generator is idle, so proxies don&#x27;t close the connection.</pre></div><div><h4>압축 후</h4><pre>alive 15 seconds generator idle don&#x27;t</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">1곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…or an SSE client library for `POST`.)
+
+### What FastAPI handles for you
+
+- Sends a keep-alive `: ping` comment <mark>every **15 seconds</mark>** when the generator is idle, so proxies don&#x27;t close the connection.
+- Sets `Cache-Control: no-cache` to prevent caching of the…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0136.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0136.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r38">
+  <header><span class="num">38</span><b>c0149</b><span class="pill">multi</span>
+    <span class="pill comp">llmlingua2_r50</span><a href="#r38">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>Which earlier framework does FastAPI credit for its dependency injection idea, and how do you force such a dependency to be called again instead of reused within one request?</dd>
+    <dt>정답</dt><dd><mark>NestJS</mark> / Angular inspired it; declare the dependency with <mark>use_cache=False</mark>, e.g. Depends(get_value, <mark>use_cache=False</mark>)</dd>
+    <dt>핵심어</dt><dd><mark>NestJS</mark>, <mark>use_cache=False</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>[1] - **<mark>NestJS</mark> / Angular** — dependency injection; FastAPI&#x27;s is type-hint based and less verbose.</pre></div><div><h4>압축 후</h4><pre>[1] <mark>NestJS</mark> dependency injection FastAPI type - hint verbose</pre></div></div><div class="pair"><div><h4>근거 원문</h4><pre>[2] async def needy_dependency(fresh_value: Annotated[str, Depends(get_value, <mark>use_cache=False</mark>)]):</pre></div><div><h4>압축 후</h4><pre>[2] async def needy_dependency(fresh_value: Annotated[str, Depends(get_value, <mark>use_cache=False</mark></pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">3곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…**Marshmallow, Webargs, APISpec, Flask-apispec** — validation, request parsing and schema generation, which FastAPI replaces with Pydantic and type hints.
+- **<mark>NestJS</mark> / Angular** — dependency injection; FastAPI&#x27;s is type-hint based and less verbose.
+- **Sanic, Falcon, Molten, Hug, APIStar** — performance,…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…uWSGI).
+- Starlette vs micro-frameworks (Sanic, Flask, Django).
+- FastAPI vs frameworks that also do validation, serialization and docs (Flask-apispec, <mark>NestJS</mark>, Molten).
+
+The validation and serialization FastAPI does is work you would otherwise write yourself, so the real-world overhead is usually…</pre></div><div class="ex"><span class="tag code">코드</span><pre>…with different OAuth2 scopes is evaluated separately.
+
+To force a fresh call every time:
+
+```python
+async def needy_dependency(fresh_value: Annotated[str, Depends(get_value, <mark>use_cache=False</mark>)]):
+    return {&quot;fresh_value&quot;: fresh_value}
+```
+
+The cache lives only for one request; for cross-request caching use something like `functools.lru_cache` (see [Settings](../app-structure/settings.md)).…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0149.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="count">3곳 (압축 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…Swagger OpenAPI standard schema custom 
+ Marshmallow Webargs APISpec Flask apispec validation request parsing schema generation FastAPI replaces Pydantic type hints 
+ <mark>NestJS</mark> dependency injection FastAPI type - hint verbose 
+ Sanic Falcon Molten Hug APIStar performance async type - hint parameter declaration schema…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…cannot 
+ 
+ Uvicorn ASGI WSGI servers Hypercorn uWSGI 
+ Starlette micro - frameworks Sanic Flask Django 
+ FastAPI validation serialization docs Flask apispec <mark>NestJS</mark> Molten 
+ 
+ validation serialization FastAPI real - world overhead OpenAPI schema generated app openapi first use cached app openapi_schema regenerated only…</pre></div><div class="ex"><span class="tag code">코드</span><pre>…cache key dependency callable effective security scopes dependency scope, OAuth2 evaluated separately 
+ 
+ fresh call 
+ 
+```python
+async def needy_dependency(fresh_value: Annotated[str, Depends(get_value, <mark>use_cache=False</mark>)]):
+    return {&quot;fresh_value&quot;: fresh_value}
+```
+ 
+ cache lives only for one request cross - request caching functools. lru _ cache app 
+ 
+ dependencies…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0149.llmlingua2_r50.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r39">
+  <header><span class="num">39</span><b>c0150</b><span class="pill">multi</span>
+    <span class="pill comp">llmlingua2_r50</span><a href="#r39">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>Which proxy is bundled in the Full Stack FastAPI Template, and what can that proxy do about TLS certificates by itself?</dd>
+    <dt>정답</dt><dd>The <mark>Full Stack FastAPI Template</mark> includes Traefik, which can obtain and <mark>renew certificates automatically</mark>, e.g. from Let&#x27;s Encrypt</dd>
+    <dt>핵심어</dt><dd><mark>Full Stack FastAPI Template</mark>, <mark>renew certificates automatically</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>[1] Docker Compose, JWT auth, password hashing, Pytest tests, Traefik and GitHub Actions CI/CD.</pre></div><div><h4>압축 후</h4><pre>[1] Docker Compose JWT auth password hashing Pytest tests Traefik GitHub CI CD</pre></div></div><div class="pair"><div><h4>근거 원문</h4><pre>[2] Options include **Traefik** and **Caddy** (both can <mark>renew certificates automatically</mark>)</pre></div><div><h4>압축 후</h4><pre>[2] Options include Traefik Caddy <mark>renew certificates automatically</mark></pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">3곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…Pydantic, how it compares to other Python frameworks, how to read benchmarks, the install extras, the editor extension and the <mark>Full Stack FastAPI Template</mark>.
+tags: [overview, features, ecosystem, starlette, pydantic, benchmarks, installation]
+verified:
+  - by: openwiki/0.7.0
+    at: 2026-10-05T02:25:02.861Z
+sources:
+  - id: openwiki-source-65385d28aa615ccf9c247795
+    resource: repo://docs/en/docs/benchmarks.md…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…set an entrypoint via `[tool.fastapi]` in `pyproject.toml` or the `fastapi.entryPoint` setting (module notation such as `myapp.main:app`) if detection fails.
+- **<mark>Full Stack FastAPI Template</mark>** — a starter project with FastAPI + SQLModel + PostgreSQL, a React/TypeScript frontend with a generated client, Docker Compose, JWT…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…sends it back.
+
+It can route to multiple applications/domains on the same server. Options include **Traefik** and **Caddy** (both can <mark>renew certificates automatically</mark>), **Nginx** and **HAProxy**; in the cloud, a load balancer or Kubernetes ingress usually plays this role.
+
+Typical request flow:
+
+```…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0150.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="count">2곳 (압축 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…## Document: about/features-and-ecosystem.md
+
+ 
+ overview 
+ title Features Alternatives Ecosystem 
+ FastAPI Starlette Pydantic Python frameworks benchmarks install extras editor extension <mark>Full Stack FastAPI Template</mark> 
+ overview features ecosystem starlette pydantic benchmarks installation 
+ verified 
+ openwiki 0. 7. 0 
+ 2026 - 10 - 05T02 25 : 02.…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…8000 
+ 4 Encrypts app plain HTTP response sends back 
+ 
+ route to multiple applications domains same server Options include Traefik Caddy <mark>renew certificates automatically</mark> Nginx HAProxy cloud load balancer Kubernetes ingress 
+ 
+ 
+ 
+```
+Browser ──DNS lookup──▶ IP of someapp.example.com
+Browser ──TLS (443, SNI)──▶ TLS termination…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0150.llmlingua2_r50.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r40">
+  <header><span class="num">40</span><b>c0150</b><span class="pill">multi</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r40">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>Which proxy is bundled in the Full Stack FastAPI Template, and what can that proxy do about TLS certificates by itself?</dd>
+    <dt>정답</dt><dd>The <mark>Full Stack FastAPI Template</mark> includes Traefik, which can obtain and <mark>renew certificates automatically</mark>, e.g. from Let&#x27;s Encrypt</dd>
+    <dt>핵심어</dt><dd><mark>Full Stack FastAPI Template</mark>, <mark>renew certificates automatically</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>[1] Docker Compose, JWT auth, password hashing, Pytest tests, Traefik and GitHub Actions CI/CD.</pre></div><div><h4>압축 후</h4><pre>[1] Docker JWT auth password hashing Pytest tests Traefik GitHub CI CD</pre></div></div><div class="pair"><div><h4>근거 원문</h4><pre>[2] Options include **Traefik** and **Caddy** (both can <mark>renew certificates automatically</mark>)</pre></div><div><h4>압축 후</h4><pre>[2] Options Traefik Caddy renew certificates</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">3곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…Pydantic, how it compares to other Python frameworks, how to read benchmarks, the install extras, the editor extension and the <mark>Full Stack FastAPI Template</mark>.
+tags: [overview, features, ecosystem, starlette, pydantic, benchmarks, installation]
+verified:
+  - by: openwiki/0.7.0
+    at: 2026-10-05T02:25:02.861Z
+sources:
+  - id: openwiki-source-65385d28aa615ccf9c247795
+    resource: repo://docs/en/docs/benchmarks.md…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…set an entrypoint via `[tool.fastapi]` in `pyproject.toml` or the `fastapi.entryPoint` setting (module notation such as `myapp.main:app`) if detection fails.
+- **<mark>Full Stack FastAPI Template</mark>** — a starter project with FastAPI + SQLModel + PostgreSQL, a React/TypeScript frontend with a generated client, Docker Compose, JWT…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…sends it back.
+
+It can route to multiple applications/domains on the same server. Options include **Traefik** and **Caddy** (both can <mark>renew certificates automatically</mark>), **Nginx** and **HAProxy**; in the cloud, a load balancer or Kubernetes ingress usually plays this role.
+
+Typical request flow:
+
+```…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0150.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0150.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r41">
+  <header><span class="num">41</span><b>c0151</b><span class="pill">multi</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r41">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>How is Strawberry&#x27;s GraphQL router added to a FastAPI app, and what happens to path operations registered on a router once it has already been included?</dd>
+    <dt>정답</dt><dd><mark>GraphQLRouter</mark> is an APIRouter, so it is added with app.include_router(graphql_app, prefix=&quot;/graphql&quot;); operations added later are <mark>still visible</mark> through the earlier inclusion</dd>
+    <dt>핵심어</dt><dd><mark>GraphQLRouter</mark>, <mark>still visible</mark></dd>
+    <dt>모델 답변</dt><dd><pre>Create a `<mark>GraphQLRouter</mark>` with the Strawberry schema, then add it with `app.include_router(graphql_app, prefix=&quot;/graphql&quot;)`; this exposes the GraphQL endpoint under that prefix.
+
+When a router is included, FastAPI adds its path operations to the app and combines the router’s prefixes, dependencies, tags, and responses. The documentation does not state what happens if you register additional path operations on a router *after* it has already been included.</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>[1] app.include_router(graphql_app, prefix=&quot;/graphql&quot;)</pre></div><div><h4>압축 후</h4><pre>[1] app.include_router(graphql_app, prefix=&quot;/graphql</pre></div></div><div class="pair"><div><h4>근거 원문</h4><pre>[2] - Path operations added to a router **after** it was included are <mark>still visible</mark> through the earlier inclusion.</pre></div><div><h4>압축 후</h4><pre>[2] Path operations</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">4곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…when matching requests and generating OpenAPI. Practical consequences:
+
+- Path operations added to a router **after** it was included are <mark>still visible</mark> through the earlier inclusion.
+- You can `router.include_router(other_router)` before or after including `router` in the app.
+- Do not mutate…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…app (`app.mount()`)
+
+## Document: integrations/graphql-and-opentelemetry.md
+
+---
+type: guide
+title: GraphQL and OpenTelemetry Integrations
+description: Add a GraphQL endpoint with Strawberry&#x27;s <mark>GraphQLRouter</mark> (or other ASGI GraphQL libraries), and use FastAPI&#x27;s built-in OpenTelemetry support for traces, metrics and logs via OTLP environment variables…</pre></div><div class="ex"><span class="tag code">코드</span><pre>…ASGI
+- **Graphene** — via `starlette-graphene3`
+
+### Strawberry example
+
+`docs_src/graphql_/tutorial001_py310.py`:
+
+```python
+import strawberry
+from fastapi import FastAPI
+from strawberry.fastapi import <mark>GraphQLRouter</mark>
+
+
+@strawberry.type
+class User:
+    name: str
+    age: int
+
+
+@strawberry.type
+class Query:
+    @strawberry.field
+    def user(self) -&gt; User:
+        return User(name=&quot;Patrick&quot;, age=100)
+
+
+schema = strawberry.Schema(query=Query)
+
+
+graphql_app = <mark>GraphQLRouter</mark>(schema)
+
+app = FastAPI()
+app.include_router(graphql_app, prefix=&quot;/graphql&quot;)
+```
+
+`GraphQLRouter` is an `APIRouter`, so it&#x27;s added with `include_router()` like any router (and can…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…@strawberry.field
+    def user(self) -&gt; User:
+        return User(name=&quot;Patrick&quot;, age=100)
+
+
+schema = strawberry.Schema(query=Query)
+
+
+graphql_app = GraphQLRouter(schema)
+
+app = FastAPI()
+app.include_router(graphql_app, prefix=&quot;/graphql&quot;)
+```
+
+`<mark>GraphQLRouter</mark>` is an `APIRouter`, so it&#x27;s added with `include_router()` like any router (and can use FastAPI dependencies for context). The GraphQL…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0151.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="count">3곳 (압축 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…Steps FastAPI CLI 
+ 
+ 
+ 
+ Dependencies 
+ Path Operation Configuration 
+ applications isolated app 
+ 
+## Document: integrations/graphql-and-opentelemetry.md
+
+ 
+ 
+ GraphQL OpenTelemetry 
+ GraphQL endpoint Strawberry &#x27; s <mark>GraphQLRouter</mark> ASGI GraphQL FastAPI &#x27; OpenTelemetry support traces metrics logs OTLP 
+ 
+ 
+ 0 7 0 
+ 2026 10 25 02 
+ 
+ 
+ docs_src _ tutorial001_py310…</pre></div><div class="ex"><span class="tag code">코드</span><pre>…ASGI GraphQL ASGI 
+ 
+ FastAPI FastAPI 
+ FastAPI 
+ ASGI 
+ 
+ 
+ 
+ 
+ docs_src _ tutorial001_py310 
+ 
+```python
+import strawberry
+from fastapi import FastAPI
+from strawberry.fastapi import <mark>GraphQLRouter</mark>
+
+
+@strawberry.type
+class User:
+    name: str
+    age: int
+
+
+@strawberry.type
+class Query:
+    @strawberry.field
+    def user(self) -&gt; User:
+        return User(name=&quot;Patrick&quot;, age=100)
+
+
+schema = strawberry.Schema(query=Query)
+
+
+graphql_app = <mark>GraphQLRouter</mark>(schema)
+
+app = FastAPI()
+app.include_router(graphql_app, prefix=&quot;/graphql&quot;)
+```
+ 
+ GraphQLRouter APIRouter include_router FastAPI GraphQL endpoint 
+ 
+Starlette GraphQLApp deprecated starlette graphene3 interface Strawberry 
+ 
+ GraphQL…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…@strawberry.field
+    def user(self) -&gt; User:
+        return User(name=&quot;Patrick&quot;, age=100)
+
+
+schema = strawberry.Schema(query=Query)
+
+
+graphql_app = GraphQLRouter(schema)
+
+app = FastAPI()
+app.include_router(graphql_app, prefix=&quot;/graphql&quot;)
+```
+ 
+ <mark>GraphQLRouter</mark> APIRouter include_router FastAPI GraphQL endpoint 
+ 
+Starlette GraphQLApp deprecated starlette graphene3 interface Strawberry 
+ 
+ GraphQL uses only POST trade - offs REST…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0151.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r42">
+  <header><span class="num">42</span><b>c0153</b><span class="pill">multi</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r42">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>What text documents an operation&#x27;s main response when no response_description is given, and which status codes make FastAPI send an empty body?</dd>
+    <dt>정답</dt><dd>It defaults to &quot;<mark>Successful Response</mark>&quot;; codes below 200, plus 204, <mark>205</mark> and 304, are treated as forbidding a body</dd>
+    <dt>핵심어</dt><dd><mark>Successful Response</mark>, <mark>205</mark></dd>
+    <dt>모델 답변</dt><dd><pre>The documentation does not specify the default text for an operation’s main response when `response_description` is omitted. FastAPI sends an empty body for status codes **200, 204, <mark>205</mark>, and 304**.</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>[1] `response_description` describes the main response; it defaults to `&quot;<mark>Successful Response</mark>&quot;`.</pre></div><div><h4>압축 후</h4><pre>[1] response_description defaults</pre></div></div><div class="pair"><div><h4>근거 원문</h4><pre>[2] (`is_body_allowed_for_status_code`: below 200, `204`, `<mark>205</mark>`, `304`)</pre></div><div><h4>압축 후</h4><pre>[2] is_body_allowed_for_status_code 200 204 <mark>205</mark> 304</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">2곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…this item
+    \f
+    :param item: User input.
+    &quot;&quot;&quot;
+```
+
+## Response description
+
+`response_description` describes the main response; it defaults to `&quot;<mark>Successful Response</mark>&quot;`.
+
+```python
+@app.post(
+    &quot;/items/&quot;,
+    summary=&quot;Create an item&quot;,
+    response_description=&quot;The created item&quot;,
+)
+```
+
+## Deprecating an operation
+
+```python
+@app.get(&quot;/elements/&quot;, tags=[&quot;items&quot;], deprecated=True)
+async…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…Server error | Produced automatically for unhandled errors |
+
+FastAPI knows which codes forbid a body (`is_body_allowed_for_status_code`: below 200, `204`, `<mark>205</mark>`, `304`). For those it documents no response body and sends an empty body even if your function returned something.
+
+To…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0153.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="count">1곳 (압축 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…399 304 not 
+ 400 499 404 400 422 
+500 599 Server error unhandled errors 
+ 
+ FastAPI codes body is_body_allowed_for_status_code 200 204 <mark>205</mark> 304 documents no response sends empty body 
+ 
+ errors HTTPException 
+ 
+ 
+ 
+ status_code main status JSONResponse docs_src additional_status_codes _ _ 
+ 
+```python
+from typing…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0153.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r43">
+  <header><span class="num">43</span><b>c0162</b><span class="pill">multi</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r43">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>Which FastAPI telemetry setting creates a child span for each background task, and in what order do those tasks execute?</dd>
+    <dt>정답</dt><dd><mark>operation_spans</mark> (on by default) adds a child span per BackgroundTasks task; the tasks run in the <mark>order they were added</mark>, after the response is sent</dd>
+    <dt>핵심어</dt><dd><mark>operation_spans</mark>, <mark>order they were added</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>[1] | `<mark>operation_spans</mark>` | Child spans for dependency resolution, the endpoint function, response serialization and each `BackgroundTasks` task | `True` |</pre></div><div><h4>압축 후</h4><pre>[1] <mark>operation_spans</mark> dependency response serialization BackgroundTasks</pre></div></div><div class="pair"><div><h4>근거 원문</h4><pre>[2] - Tasks run in the <mark>order they were added</mark>, in the same process, after the response is sent.</pre></div><div><h4>압축 후</h4><pre>[2] Tasks after response</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">3곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…- The task can be `async def` (awaited) or plain `def` (run in a threadpool).
+- Tasks run in the <mark>order they were added</mark>, in the same process, after the response is sent.
+
+`fastapi.BackgroundTasks` subclasses Starlette&#x27;s `BackgroundTasks`.
+
+## Background tasks from dependencies
+
+`BackgroundTasks` can…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…HTTP request metrics | `True` |
+| `logs` | Logs for validation failures and unhandled exceptions | `True` |
+| `<mark>operation_spans</mark>` | Child spans for dependency resolution, the endpoint function, response serialization and each `BackgroundTasks` task | `True` |
+| `exclude`…</pre></div><div class="ex"><span class="tag code">코드</span><pre>…= TracerProvider()
+tracer_provider.add_span_processor(BatchSpanProcessor(ConsoleSpanExporter()))
+
+app = FastAPI(telemetry={&quot;tracer_provider&quot;: tracer_provider})
+```
+
+Only the HTTP request span, no operation spans (`tutorial003_py310.py`):
+
+```python
+app = FastAPI(telemetry={&quot;<mark>operation_spans</mark>&quot;: False})
+```
+
+Metrics only, skipping health checks:
+
+```python
+app = FastAPI(
+    telemetry={
+        &quot;tracing&quot;: False,
+        &quot;exclude&quot;: lambda scope: scope[&quot;path&quot;] == &quot;/health&quot;,…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0162.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="count">2곳 (압축 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…if required by the service:
+export OTEL_EXPORTER_OTLP_HEADERS=api-key=YOUR_API_KEY
+
+fastapi run
+```
+ 
+ 1 GET item_id 
+ 
+ FastAPI fastapi 
+ 
+ 
+ 
+ FastAPI TelemetryConfig 
+ 
+ 
+ 
+ HTTP WebSocket 
+ HTTP 
+ 
+ <mark>operation_spans</mark> dependency response serialization BackgroundTasks 
+ ASGI 
+ auto_configure OTLP 
+ tracer_provider meter_provider logger_provider OpenTelemetry 
+ 
+ docs_src tutorial002_py310 
+ 
+```python
+from fastapi import FastAPI
+from opentelemetry.sdk.trace…</pre></div><div class="ex"><span class="tag code">코드</span><pre>…BatchSpanProcessor, ConsoleSpanExporter
+
+tracer_provider = TracerProvider()
+tracer_provider.add_span_processor(BatchSpanProcessor(ConsoleSpanExporter()))
+
+app = FastAPI(telemetry={&quot;tracer_provider&quot;: tracer_provider})
+```
+ 
+HTTP request span no operation tutorial003_py310 
+ 
+```python
+app = FastAPI(telemetry={&quot;<mark>operation_spans</mark>&quot;: False})
+```
+ 
+ only 
+ 
+```python
+app = FastAPI(
+    telemetry={
+        &quot;tracing&quot;: False,
+        &quot;exclude&quot;: lambda scope: scope[&quot;path&quot;] == &quot;/health&quot;,
+    }
+)
+```
+ 
+ 
+ 
+ telemetry…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0162.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r44">
+  <header><span class="num">44</span><b>c0166</b><span class="pill">multi</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r44">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>When jsonable_encoder converts a set field, what does it become, and how does the OpenAPI schema mark a set-typed field?</dd>
+    <dt>정답</dt><dd>jsonable_encoder turns sets (like tuples and generators) into lists; the schema marks the field with <mark>uniqueItems</mark></dd>
+    <dt>핵심어</dt><dd><mark>sets/tuples/generators</mark>, <mark>uniqueItems</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>[1] <mark>sets/tuples/generators</mark> → lists</pre></div><div><h4>압축 후</h4><pre>[1] (없음)</pre></div></div><div class="pair"><div><h4>근거 원문</h4><pre>[2] | `frozenset` / `set` | request: a list, de-duplicated; response: a list; schema has `<mark>uniqueItems</mark>` |</pre></div><div><h4>압축 후</h4><pre>[2] (없음)</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">2곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…(`float`), `Decimal` → `int` if integral else `float`, `Enum` → its value, `UUID` and `Path` → `str`, `bytes` → `str`, <mark>sets/tuples/generators</mark> → lists. Parameters: `include`, `exclude`, `by_alias`, `exclude_unset`, `exclude_defaults`, `exclude_none`, `custom_encoder` (a `{type: function}` dict) and `sqlalchemy_safe`.
+
+FastAPI uses `jsonable_encoder` internally…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…also use ISO 8601 durations) |
+| `frozenset` / `set` | request: a list, de-duplicated; response: a list; schema has `<mark>uniqueItems</mark>` |
+| `bytes` | `str` (schema format `binary`) |
+| `decimal.Decimal` | handled like `float` |
+
+See Pydantic&#x27;s types documentation…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0166.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0166.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r45">
+  <header><span class="num">45</span><b>c0168</b><span class="pill">multi</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r45">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>What warning does FastAPI emit while generating OpenAPI if two operations share an ID, and how does the docs&#x27; preprocessing script shorten IDs before generating a client?</dd>
+    <dt>정답</dt><dd>It warns <mark>Duplicate Operation ID</mark> ... for function ...; the script slices off <mark>to_remove</mark> = f&quot;{tag}-&quot; from each operationId</dd>
+    <dt>핵심어</dt><dd><mark>Duplicate Operation ID</mark>, <mark>to_remove</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>[1] FastAPI warns about duplicate operation IDs (`<mark>Duplicate Operation ID</mark> ... for function ...`)</pre></div><div><h4>압축 후</h4><pre>[1] FastAPI duplicate operation IDs ID</pre></div></div><div class="pair"><div><h4>근거 원문</h4><pre>[2]         <mark>to_remove</mark> = f&quot;{tag}-&quot;</pre></div><div><h4>압축 후</h4><pre>[2] <mark>to_remove</mark> = f&quot;{tag</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">2곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…avoids regenerating on every request. Here the ReDoc-specific `x-logo` extension is added.
+
+While generating, FastAPI warns about duplicate operation IDs (`<mark>Duplicate Operation ID</mark> ... for function ...`) — fix those for clean client generation.
+
+For per-operation tweaks prefer `openapi_extra` ([Path Operation Configuration](../app-structure/path-operation-configuration.md)); for…</pre></div><div class="ex"><span class="tag code">코드</span><pre>…file_path = Path(&quot;./openapi.json&quot;)
+openapi_content = json.loads(file_path.read_text())
+
+for path_data in openapi_content[&quot;paths&quot;].values():
+    for operation in path_data.values():
+        tag = operation[&quot;tags&quot;][0]
+        operation_id = operation[&quot;operationId&quot;]
+        <mark>to_remove</mark> = f&quot;{tag}-&quot;
+        new_operation_id = operation_id[len(<mark>to_remove</mark>) :]
+        operation[&quot;operationId&quot;] = new_operation_id
+
+file_path.write_text(json.dumps(openapi_content))
+```
+
+(A JavaScript version is in `docs_src/generate_clients/tutorial004.js`.) Then:
+
+```bash
+npx @hey-api/openapi-ts -i ./openapi.json -o src/client…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0168.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="count">1곳 (압축 문맥)</p><div class="ex"><span class="tag code">코드</span><pre>…file_path = Path(&quot;./openapi.json&quot;)
+openapi_content = json.loads(file_path.read_text())
+
+for path_data in openapi_content[&quot;paths&quot;].values():
+    for operation in path_data.values():
+        tag = operation[&quot;tags&quot;][0]
+        operation_id = operation[&quot;operationId&quot;]
+        <mark>to_remove</mark> = f&quot;{tag}-&quot;
+        new_operation_id = operation_id[len(<mark>to_remove</mark>) :]
+        operation[&quot;operationId&quot;] = new_operation_id
+
+file_path.write_text(json.dumps(openapi_content))
+```
+ 
+ docs_src generate_clients 
+ 
+```bash
+npx @hey-api/openapi-ts -i ./openapi.json -o src/client
+```
+ 
+ 5 
+ 
+ 
+ 
+mismatches 
+ clients separate_input_output_schemas…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0168.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r46">
+  <header><span class="num">46</span><b>c0168</b><span class="pill">multi</span>
+    <span class="pill comp">rule&gt;llmlingua2</span><a href="#r46">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>What warning does FastAPI emit while generating OpenAPI if two operations share an ID, and how does the docs&#x27; preprocessing script shorten IDs before generating a client?</dd>
+    <dt>정답</dt><dd>It warns <mark>Duplicate Operation ID</mark> ... for function ...; the script slices off <mark>to_remove</mark> = f&quot;{tag}-&quot; from each operationId</dd>
+    <dt>핵심어</dt><dd><mark>Duplicate Operation ID</mark>, <mark>to_remove</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>[1] FastAPI warns about duplicate operation IDs (`<mark>Duplicate Operation ID</mark> ... for function ...`)</pre></div><div><h4>압축 후</h4><pre>[1] FastAPI duplicate operation IDs ID</pre></div></div><div class="pair"><div><h4>근거 원문</h4><pre>[2]         <mark>to_remove</mark> = f&quot;{tag}-&quot;</pre></div><div><h4>압축 후</h4><pre>[2] <mark>to_remove</mark> = f&quot;{tag</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">2곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…avoids regenerating on every request. Here the ReDoc-specific `x-logo` extension is added.
+
+While generating, FastAPI warns about duplicate operation IDs (`<mark>Duplicate Operation ID</mark> ... for function ...`) — fix those for clean client generation.
+
+For per-operation tweaks prefer `openapi_extra` ([Path Operation Configuration](../app-structure/path-operation-configuration.md)); for…</pre></div><div class="ex"><span class="tag code">코드</span><pre>…file_path = Path(&quot;./openapi.json&quot;)
+openapi_content = json.loads(file_path.read_text())
+
+for path_data in openapi_content[&quot;paths&quot;].values():
+    for operation in path_data.values():
+        tag = operation[&quot;tags&quot;][0]
+        operation_id = operation[&quot;operationId&quot;]
+        <mark>to_remove</mark> = f&quot;{tag}-&quot;
+        new_operation_id = operation_id[len(<mark>to_remove</mark>) :]
+        operation[&quot;operationId&quot;] = new_operation_id
+
+file_path.write_text(json.dumps(openapi_content))
+```
+
+(A JavaScript version is in `docs_src/generate_clients/tutorial004.js`.) Then:
+
+```bash
+npx @hey-api/openapi-ts -i ./openapi.json -o src/client…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0168.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="count">1곳 (압축 문맥)</p><div class="ex"><span class="tag code">코드</span><pre>…file_path = Path(&quot;./openapi.json&quot;)
+openapi_content = json.loads(file_path.read_text())
+
+for path_data in openapi_content[&quot;paths&quot;].values():
+    for operation in path_data.values():
+        tag = operation[&quot;tags&quot;][0]
+        operation_id = operation[&quot;operationId&quot;]
+        <mark>to_remove</mark> = f&quot;{tag}-&quot;
+        new_operation_id = operation_id[len(<mark>to_remove</mark>) :]
+        operation[&quot;operationId&quot;] = new_operation_id
+
+file_path.write_text(json.dumps(openapi_content))
+```
+ 
+ docs_src generate_clients 
+ 
+```bash
+npx @hey-api/openapi-ts -i ./openapi.json -o src/client
+```
+ 
+ ItemsService. createItem 5 
+ 
+ 
+ 
+ Regenerate…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0168.rule+llmlingua2.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r47">
+  <header><span class="num">47</span><b>c0171</b><span class="pill">multi</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r47">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>If you build a Response object yourself, which length header is added for you, and which set_cookie flag keeps the cookie away from browser scripts?</dd>
+    <dt>정답</dt><dd><mark>Content-Length</mark> is added (plus the charset in Content-Type for text types); <mark>httponly</mark>=True hides the cookie from JavaScript</dd>
+    <dt>핵심어</dt><dd><mark>Content-Length</mark>, <mark>httponly</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>[1] FastAPI/Starlette add `<mark>Content-Length</mark>` and, for text types, the charset in `Content-Type`.</pre></div><div><h4>압축 후</h4><pre>[1] FastAPI</pre></div></div><div class="pair"><div><h4>근거 원문</h4><pre>[2] | `<mark>httponly</mark>` | Not accessible to JavaScript |</pre></div><div><h4>압축 후</h4><pre>[2] JavaScript</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">3곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…You&#x27;ll have to use soap here.
+    &lt;/Body&gt;
+    &lt;/shampoo&gt;
+    &quot;&quot;&quot;
+    return Response(content=data, media_type=&quot;application/xml&quot;)
+```
+
+`Response(content, status_code=200, headers=None, media_type=None)` — FastAPI/Starlette add `<mark>Content-Length</mark>` and, for text types, the charset in `Content-Type`.
+
+Use direct responses for custom status codes ([Response Status Codes](status-codes.md)), headers/cookies ([Response…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…```
+
+Arguments: `path`, `headers`, `media_type` (guessed from the filename if omitted), `filename` (sets `Content-Disposition` so browsers download it). It sets `<mark>Content-Length</mark>`, `Last-Modified` and `ETag`.
+
+## Custom response classes
+
+Subclass `Response` and implement `render(content) -&gt; bytes` (`tutorial009c_py310.py`):
+
+```python
+from typing import Any…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…Path scope (default `/`) |
+| `domain` | Domain scope |
+| `secure` | Only send over HTTPS |
+| `<mark>httponly</mark>` | Not accessible to JavaScript |
+| `samesite` | `&quot;lax&quot;` (default), `&quot;strict&quot;` or `&quot;none&quot;` |
+
+Use `response.delete_cookie(key, ...)` to remove one. For session/auth cookies, set `<mark>httponly</mark>=True`, `secure=True` and a suitable `samesite`.
+
+## Headers and browsers
+
+- Custom proprietary headers conventionally use the `X-` prefix.
+- For…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0171.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0171.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r48">
+  <header><span class="num">48</span><b>c0174</b><span class="pill">multi</span>
+    <span class="pill comp">llmlingua2_r50</span><a href="#r48">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>When posting a Pydantic model through TestClient&#x27;s json= argument, which model method can stand in for jsonable_encoder, and what does jsonable_encoder turn a timedelta into?</dd>
+    <dt>정답</dt><dd>model.<mark>model_dump(mode=&quot;json</mark>&quot;); a timedelta becomes its <mark>total seconds</mark> as a float</dd>
+    <dt>핵심어</dt><dd><mark>model_dump(mode=&quot;json&quot;)</mark>, <mark>total seconds</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>[1] or `model.<mark>model_dump(mode=&quot;json</mark>&quot;)`.</pre></div><div><h4>압축 후</h4><pre>[1] model. <mark>model_dump mode json</mark></pre></div></div><div class="pair"><div><h4>근거 원문</h4><pre>[2] `timedelta` → <mark>total seconds</mark> (`float`)</pre></div><div><h4>압축 후</h4><pre>[2] (없음)</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">2곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…**not** a JSON string (use `json.dumps()` for that).
+
+Built-in conversions (`ENCODERS_BY_TYPE` in `fastapi/encoders.py`) include: `datetime`/`date`/`time` → ISO string, `timedelta` → <mark>total seconds</mark> (`float`), `Decimal` → `int` if integral else `float`, `Enum` → its value, `UUID` and `Path` → `str`, `bytes` → `str`,…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…send X&quot; questions.
+
+To send a Pydantic model as JSON, convert it first with `jsonable_encoder` ([Extra Models and jsonable_encoder](../models/extra-models-and-updates.md)) or `model.<mark>model_dump(mode=&quot;json</mark>&quot;)`.
+
+## Related
+
+- [Testing Dependencies, Lifespan Events and WebSockets](testing-dependencies-events-websockets.md) — `dependency_overrides`, `with TestClient(app)`, `websocket_connect`
+- [Async Tests and Testing Databases](async-tests-and-database-testing.md)…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0174.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="count">1곳 (압축 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…HTTPX requests docs answer send X &quot; questions. 
+ 
+ send Pydantic model JSON convert first jsonable_encoder Extra Models jsonable_encoder updates model. <mark>model_dump mode json</mark> &quot; 
+ 
+ Related 
+ 
+ Testing Dependencies Lifespan Events WebSockets testing dependencies events websockets dependency _ overrides TestClient ( app websocket _ connect…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0174.llmlingua2_r50.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r49">
+  <header><span class="num">49</span><b>c0174</b><span class="pill">multi</span>
+    <span class="pill comp">llmlingua2_r30</span><a href="#r49">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>When posting a Pydantic model through TestClient&#x27;s json= argument, which model method can stand in for jsonable_encoder, and what does jsonable_encoder turn a timedelta into?</dd>
+    <dt>정답</dt><dd>model.<mark>model_dump(mode=&quot;json</mark>&quot;); a timedelta becomes its <mark>total seconds</mark> as a float</dd>
+    <dt>핵심어</dt><dd><mark>model_dump(mode=&quot;json&quot;)</mark>, <mark>total seconds</mark></dd>
+    <dt>모델 답변</dt><dd><pre>NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>[1] or `model.<mark>model_dump(mode=&quot;json</mark>&quot;)`.</pre></div><div><h4>압축 후</h4><pre>[1] model_dump</pre></div></div><div class="pair"><div><h4>근거 원문</h4><pre>[2] `timedelta` → <mark>total seconds</mark> (`float`)</pre></div><div><h4>압축 후</h4><pre>[2] (없음)</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">2곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…**not** a JSON string (use `json.dumps()` for that).
+
+Built-in conversions (`ENCODERS_BY_TYPE` in `fastapi/encoders.py`) include: `datetime`/`date`/`time` → ISO string, `timedelta` → <mark>total seconds</mark> (`float`), `Decimal` → `int` if integral else `float`, `Enum` → its value, `UUID` and `Path` → `str`, `bytes` → `str`,…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…send X&quot; questions.
+
+To send a Pydantic model as JSON, convert it first with `jsonable_encoder` ([Extra Models and jsonable_encoder](../models/extra-models-and-updates.md)) or `model.<mark>model_dump(mode=&quot;json</mark>&quot;)`.
+
+## Related
+
+- [Testing Dependencies, Lifespan Events and WebSockets](testing-dependencies-events-websockets.md) — `dependency_overrides`, `with TestClient(app)`, `websocket_connect`
+- [Async Tests and Testing Databases](async-tests-and-database-testing.md)…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0174.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0174.llmlingua2_r30.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+<section class="card" id="r50">
+  <header><span class="num">50</span><b>c0174</b><span class="pill">multi</span>
+    <span class="pill comp">rule&gt;llmlingua2</span><a href="#r50">#</a></header>
+  <dl>
+    <dt>질문</dt><dd>When posting a Pydantic model through TestClient&#x27;s json= argument, which model method can stand in for jsonable_encoder, and what does jsonable_encoder turn a timedelta into?</dd>
+    <dt>정답</dt><dd>model.<mark>model_dump(mode=&quot;json</mark>&quot;); a timedelta becomes its <mark>total seconds</mark> as a float</dd>
+    <dt>핵심어</dt><dd><mark>model_dump(mode=&quot;json&quot;)</mark>, <mark>total seconds</mark></dd>
+    <dt>모델 답변</dt><dd><pre>Use the model’s `model_dump()` method to get data for `json=`. The documentation does not state what `jsonable_encoder` turns a `timedelta` into.
+
+NOT FOUND</pre></dd>
+  </dl>
+  <div class="pair"><div><h4>근거 원문</h4><pre>[1] or `model.<mark>model_dump(mode=&quot;json</mark>&quot;)`.</pre></div><div><h4>압축 후</h4><pre>[1] (없음)</pre></div></div><div class="pair"><div><h4>근거 원문</h4><pre>[2] `timedelta` → <mark>total seconds</mark> (`float`)</pre></div><div><h4>압축 후</h4><pre>[2] (없음)</pre></div></div>
+  <div class="pair">
+    <div><h4>원문 내 정답 위치</h4><p class="count">2곳 (none 문맥)</p><div class="ex"><span class="tag prose">설명</span><pre>…**not** a JSON string (use `json.dumps()` for that).
+
+Built-in conversions (`ENCODERS_BY_TYPE` in `fastapi/encoders.py`) include: `datetime`/`date`/`time` → ISO string, `timedelta` → <mark>total seconds</mark> (`float`), `Decimal` → `int` if integral else `float`, `Enum` → its value, `UUID` and `Path` → `str`, `bytes` → `str`,…</pre></div><div class="ex"><span class="tag prose">설명</span><pre>…send X&quot; questions.
+
+To send a Pydantic model as JSON, convert it first with `jsonable_encoder` ([Extra Models and jsonable_encoder](../models/extra-models-and-updates.md)) or `model.<mark>model_dump(mode=&quot;json</mark>&quot;)`.
+
+## Related
+
+- [Testing Dependencies, Lifespan Events and WebSockets](testing-dependencies-events-websockets.md) — `dependency_overrides`, `with TestClient(app)`, `websocket_connect`
+- [Async Tests and Testing Databases](async-tests-and-database-testing.md)…</pre></div><p class="file">results/runs/20261102-205826/contexts/c0174.none.md</p></div>
+    <div><h4>문맥 내 정답 위치</h4><p class="none">없음</p><p class="file">results/runs/20261102-205826/contexts/c0174.rule+llmlingua2.md</p></div>
+  </div>
+  <p class="label">CSV <code>사람 분류</code>: 1 정답 구절 삭제 · 2 연결어·조건 삭제 · 3 표기 분해 · 4 정답 남음·추론 가능한데 틀림 · 5 기타</p>
+</section>
+</main></body></html>

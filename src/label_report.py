@@ -56,13 +56,16 @@ def load_trials(run: Path) -> dict:
         return {(t["qid"], t["compressor"]): t for t in map(json.loads, f) if t}
 
 
-def error_section(path: Path, recover: list[tuple[str, Path]]) -> list[str]:
+def error_section(path: Path, recover: list[tuple[str, Path]], key: Path | None = None) -> list[str]:
+    """자동 분류는 key(qid, 압축기, 자동 분류)에서 읽는다. 없으면 시트의 자동 분류 열 (예전 시트)."""
     rows = read_sheet(path)
+    auto = ({(r["qid"], r["압축기"]): r["자동 분류"] for r in read_sheet(key)} if key and key.exists() else {})
     labeled = []
     for i, r in enumerate(rows, 2):
         c = error_class(r.get("사람 분류", ""), f"{path.name} {i}행 ({r['qid']} {r['압축기']})")
         if c:
-            labeled.append({**r, "cls": c, "auto": (r.get("자동 분류") or "?").strip()[:1]})
+            a = auto.get((r["qid"], r["압축기"])) or r.get("자동 분류") or "?"
+            labeled.append({**r, "cls": c, "auto": a.strip()[:1]})
     out = [f"## 1. 오답 분류 (`{path.name}`)", "",
            f"사람 분류가 채워진 행: **{len(labeled)} / {len(rows)}** (빈 행 {len(rows) - len(labeled)} 은 뺐다)", ""]
     if not labeled:
@@ -161,6 +164,7 @@ def judge_section(sheet: Path, key: Path) -> list[str]:
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--errors", default="docs/results/test_error_review.csv")
+    ap.add_argument("--errors-key", default="docs/results/test_error_review_key.csv", help="자동 분류 (error_review_sheet.py)")
     ap.add_argument("--judge-sheet", default="docs/results/judge_check_test.csv")
     ap.add_argument("--judge-key", default="docs/results/judge_check_test_key.csv")
     ap.add_argument("--recover", action="append", metavar="이름=RUN_DIR",
@@ -171,7 +175,7 @@ def main():
     lines = ["# 사람 라벨 집계", "",
              f"`python src/label_report.py` 로 만든다 ({datetime.now():%Y-%m-%d %H:%M}). "
              "라벨 기준은 [labeling_guide.md](labeling_guide.md).", "",
-             *error_section(Path(args.errors), recover), *judge_section(Path(args.judge_sheet), Path(args.judge_key))]
+             *error_section(Path(args.errors), recover, Path(args.errors_key)), *judge_section(Path(args.judge_sheet), Path(args.judge_key))]
     Path(args.out).write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("\n".join(lines))
     print(f"\n저장: {args.out}")
