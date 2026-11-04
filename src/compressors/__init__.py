@@ -52,6 +52,7 @@ from compressors.drop_evidence import DropEvidence
 from compressors.identity import EmptyContext, NoCompression
 from compressors.llmlingua2 import LLMLingua2Compressor
 from compressors.rule import RuleCompressor
+from compressors.sentence_select import SentenceSelectCompressor
 from config import CFG
 
 REGISTRY: dict[str, Compressor] = {
@@ -84,6 +85,13 @@ REGISTRY: dict[str, Compressor] = {
         )
         for rate in CFG.compression_rates
     },
+    # 문장 단위 선택 (질문 안 봄, 멀티턴용). 보호되지 않은 문장·목록 항목만 후보, 후보 글자의 keep_ratio 를 남긴다.
+    # 이름은 sent_{보호 수준}_r{남길 비율}. rule 뒤에 붙인다: "rule>sent_literal_r70"
+    **{
+        f"sent_{level}_r{round(rate * 100):02d}": SentenceSelectCompressor(keep_ratio=rate, protect=level)
+        for level in ("strict", "literal", "loose", "structure")
+        for rate in (0.5, 0.7)
+    },
 }
 
 
@@ -100,5 +108,5 @@ def get_compressor(name: str) -> Compressor:
 
 __all__ = [
     "PARTS", "Chain", "CompressResult", "Compressor", "PromptParts",
-    "LLMLingua2Compressor", "REGISTRY", "get_compressor",
+    "LLMLingua2Compressor", "SentenceSelectCompressor", "REGISTRY", "get_compressor",
 ]
