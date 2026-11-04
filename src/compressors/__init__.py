@@ -53,8 +53,11 @@ from compressors.identity import EmptyContext, NoCompression
 from compressors.llmlingua2 import LLMLingua2Compressor
 from compressors.rule import RuleCompressor
 from config import CFG
+from compressors.repair import SentenceRepairCompressor
 
 REGISTRY: dict[str, Compressor] = {
+    **{f"llmlingua2_repair_v1_r{round(rate * 100):02d}": SentenceRepairCompressor(rate)
+       for rate in CFG.compression_rates},
     "none": NoCompression(),        # 기준선 (Baseline): 원문 그대로
     "empty": EmptyContext(),        # 바닥값: 문서를 비움 (보정 유지율 기준점)
     "drop_evidence": DropEvidence(),  # 진단용: 근거 인용문 줄만 지움 (기억 보충 확인)
