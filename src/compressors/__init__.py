@@ -76,6 +76,14 @@ REGISTRY: dict[str, Compressor] = {
         )
         for rate in CFG.compression_rates
     },
+    # 질문을 보지 않는 변형 (멀티턴: 문서를 한 번 압축해 여러 턴에 재사용). "rule>llmlingua2_r50_noq" 처럼 rule 뒤에 붙인다
+    **{
+        f"llmlingua2_r{round(rate * 100):02d}_noq": LLMLingua2Compressor(
+            retain_ratio=rate,
+            use_question=False,
+        )
+        for rate in CFG.compression_rates
+    },
 }
 
 
