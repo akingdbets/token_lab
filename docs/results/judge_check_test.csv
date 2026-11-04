@@ -1,0 +1,269 @@
+﻿row_id,담당자,qid,유형,설정,압축 조건,fact_idx,질문,핵심 사실,참고 정답,모델 답변,human,메모
+T001,A,c0042,code,기본,LL2-r30,0,"In FastAPI's bigger-application example, which X-Token header value does the shared get_token_header dependency accept?",get_token_header accepts only the value fake-super-secret-token.,fake-super-secret-token,fake-super-secret-token,,
+T010,A,c0124,fact,기본,rule>LL2,0,"When a FastAPI endpoint has more than one body parameter, what are the keys of the expected JSON object?","With several body parameters, the JSON object is keyed by the parameter names.",The parameter names,`item` and `user`,,
+T011,A,c0045,procedure,기본,none,0,"In FastAPI, how do I load a shared resource once when the application starts and release it when the application stops?",The lifespan function is decorated with @asynccontextmanager.,1) Write an async function that takes app and decorate it with @asynccontextmanager 2) Load the resource before yield 3) Release it after yield 4) Pass the function as FastAPI(lifespan=lifespan),"1. Define an async context manager and pass it to `FastAPI(lifespan=lifespan)`.
+2. Load the shared resource before `yield`; the app waits for this setup before serving requests.
+3. Release the resource after `yield`; this runs at shutdown, after requests are done.",,
+T017,A,c0144,multi,기본,LL2-r50,1,"Using FastAPI's injected Response parameter, how do the docs set the X-Cat-Dog header in one example and switch the status to 201 in another?",The status is changed by setting response.status_code to status.HTTP_201_CREATED.,"Set response.headers[""X-Cat-Dog""] = ""alone in the world"" for the header and response.status_code = status.HTTP_201_CREATED for the status; both are copied onto the final response","For the header, accept an injected `Response` and set its header:
+
+```python
+def get_headers(response: Response):
+    response.headers[""X-Cat-Dog""] = ""alone in the world""
+    return {""message"": ""Hello World""}
+```
+
+To switch the status to 201 for a request, set `response.status_code`:
+
+```python
+def get_or_create_task(task_id: str, response: Response):
+    if task_id not in tasks:
+        tasks[task_id] = ""This didn't exist before""
+        response.status_code = status.HTTP_201_CREATED
+    return tasks[task_id]
+```
+
+FastAPI applies the injected response’s headers and status code to the final response while serializing the returned value.",,
+T020,A,c0055,code,생각 끔,rule,0,"In FastAPI's WSGI example, under which path is the Flask application mounted?",The Flask app is mounted at /v1.,/v1,/v1,,
+T024,A,c0087,code,생각 끔,rule>LL2,0,"In FastAPI's Strawberry GraphQL example, what age does the user resolver return?",The resolver returns a User with age 100.,100,100,,
+T025,A,c0155,multi,기본,LL2-r50,2,"If app.frontend(""/"", directory=""dist"") points at a missing folder, what happens under fastapi dev versus fastapi run, given how each handles FASTAPI_ENV?","fastapi run leaves FASTAPI_ENV unchanged, so a missing directory raises an error when the app is created.","fastapi dev sets FASTAPI_ENV=development, so check_dir=""auto"" only emits a warning; fastapi run leaves it unchanged, so otherwise the missing directory raises an error at app creation","With the default `check_dir=""auto""`, `fastapi dev` sets `FASTAPI_ENV` to development, so a missing `dist` directory emits a warning. `fastapi run` leaves `FASTAPI_ENV` unset, so the missing directory raises an error when the app is created.",,
+T033,A,c0100,code,기본,LL2-r50,0,"In FastAPI's dataclass response model example, what price does read_next_item return?",read_next_item returns a price of 12.99.,12.99,12.99,,
+T036,A,c0151,multi,기본,rule>LL2,1,"How is Strawberry's GraphQL router added to a FastAPI app, and what happens to path operations registered on a router once it has already been included?",Operations added to a router after it was included are still visible.,"GraphQLRouter is an APIRouter, so it is added with app.include_router(graphql_app, prefix=""/graphql""); operations added later are still visible through the earlier inclusion","Create a `GraphQLRouter` from the Strawberry schema and add it with `app.include_router`, optionally setting a prefix such as `""/graphql""`:
+
+```python
+graphql_app = GraphQLRouter(schema)
+app.include_router(graphql_app, prefix=""/graphql"")
+```
+
+Path operations registered on a router after it has been included are still visible in the app. Routers are included live, not copied.",,
+T037,A,c0136,fact,기본,none,0,How often does FastAPI send a keep-alive ping comment on an idle Server-Sent Events stream?,FastAPI sends a keep-alive ping comment every 15 seconds when the generator is idle.,Every 15 seconds,Every 15 seconds.,,
+T039,A,c0086,fact,생각 끔,rule>LL2,0,Which package do FastAPI's docs suggest as the replacement for Starlette's deprecated GraphQLApp when using Graphene?,Starlette's GraphQLApp is deprecated in favor of starlette-graphene3.,starlette-graphene3,graphene3,,
+T041,A,c0118,procedure,생각 끔,LL2-r30,2,"In FastAPI, how do I offer several named request examples for one endpoint that users can pick from a dropdown in Swagger UI?","Each example can have summary, description and value.","1) Use Body() (or Query, Path, etc.) on the parameter 2) Pass openapi_examples as a dict keyed by example name 3) Give each entry a summary, an optional description and a value","1. Use `Body(openapi_examples=...)` for the endpoint’s request body.
+2. Give each example a name and include its `summary` and `value`. For example:
+
+```python
+@app.put(""/items/{item_id}"")
+async def update_item(
+    *,
+    item_id: int,
+    item: Annotated[
+        Item,
+        Body(
+            openapi_examples={
+                ""normal"": {
+                    ""summary"": ""A normal example"",
+                    ""value"": {
+                        ""name"": ""Foo"",
+                        ""price"": 35.4,
+                    },
+                },
+                ""converted"": {
+                    ""summary"": ""An example with converted data"",
+                    ""value"": {
+                        ""name"": ""Bar"",
+                        ""price"": ""35.4"",
+                    },
+                },
+            },
+        ),
+    ],
+):
+    ...
+```
+
+3. FastAPI exposes these named examples in OpenAPI; Swagger UI displays them for users to select.",,
+T044,A,c0083,fact,생각 끔,rule,0,Which function does FastAPI use to run plain def path operations in an external threadpool?,Plain def path operations are run with run_in_threadpool.,run_in_threadpool,run_in_threadpool,,
+T047,A,c0149,multi,기본,LL2-r30,0,"Which earlier framework does FastAPI credit for its dependency injection idea, and how do you force such a dependency to be called again instead of reused within one request?",FastAPI's dependency injection idea is credited to NestJS / Angular.,"NestJS / Angular inspired it; declare the dependency with use_cache=False, e.g. Depends(get_value, use_cache=False)",FastAPI credits NestJS for the dependency-injection idea. Set `use_cache=False` on `Depends(...)` to call the dependency again instead of reusing its cached value within the request.,,
+T048,A,c0160,multi,기본,LL2-r30,1,"Why do the docs say to register HTTP error handlers for Starlette's exception class, and where do exception handlers sit relative to your own middleware?","Exception handlers run in ExceptionMiddleware, inside user middleware.","Handlers for StarletteHTTPException also catch errors Starlette raises internally, like 404 for unknown routes and 405; they run in ExceptionMiddleware, inside your middleware, so middleware sees their responses","Register the handler for `StarletteHTTPException` because the docs identify it with HTTP errors such as 404 and 405, and show using it for a custom HTTP exception handler.
+
+In the middleware stack, `ExceptionMiddleware`—which runs your exception handlers—is inside your own middleware. Your middleware is outside it, and the last middleware added is the outermost.",,
+T061,A,c0052,fact,기본,LL2-r30,0,What is the default value of the fallback parameter of FastAPI's app.frontend()?,"The fallback parameter defaults to ""auto"".","""auto""",None,,
+T062,A,c0170,multi,생각 끔,LL2-r50,1,"How does FastAPI collect every value of a header that is sent several times, and which query values count as True for a bool parameter?","1, True, true, on and yes are converted to True.","Declare it as a list, e.g. x_token: Annotated[list[str] | None, Header()]; 1, True, true, on and yes (e.g. short=yes) all become True","Declare the header as a list, for example `x_token: Annotated[list[str] | None, Header()] = None`; FastAPI collects the repeated header values into that list.
+
+NOT FOUND",,
+T076,A,c0138,procedure,기본,none,2,"In FastAPI, how do I make authentication optional by accepting either an API key header or a bearer token?",It verifies whichever credential is present and otherwise raises 401.,"1) Create APIKeyHeader and HTTPBearer with auto_error=False so they return None when absent 2) Depend on both in one function 3) Verify whichever is present, otherwise raise a 401 Not authenticated","1. Set `auto_error=False` on both security dependencies:
+
+```python
+from typing import Annotated
+
+from fastapi import Depends
+from fastapi.security import APIKeyHeader, HTTPAuthorizationCredentials, HTTPBearer
+
+api_key_scheme = APIKeyHeader(name=""X-API-Key"", auto_error=False)
+bearer_scheme = HTTPBearer(auto_error=False)
+```
+
+2. Accept both as optional dependencies. Check the API key first, then the bearer token; if neither is present, allow the request without an identity:
+
+```python
+async def get_identity(
+    api_key: Annotated[str | None, Depends(api_key_scheme)],
+    bearer: Annotated[HTTPAuthorizationCredentials | None, Depends(bearer_scheme)],
+):
+    if api_key:
+        return verify_api_key(api_key)
+    if bearer:
+        return verify_token(bearer.credentials)
+    return None
+```
+
+With `auto_error=False`, missing credentials return `None` instead of raising an authentication error. FastAPI extracts the credentials; your code verifies them.",,
+T078,A,c0104,procedure,생각 끔,rule,3,"In FastAPI, how do I partially update a stored Pydantic item so that fields the client did not send keep their stored values?",The result is encoded with jsonable_encoder and saved.,"1) Load the stored data and build a model from it 2) Get only the sent fields with item.model_dump(exclude_unset=True) 3) Create the updated model with model_copy(update=update_data) 4) Encode it with jsonable_encoder, save and return it","1. Load the stored item data.
+2. Build a Pydantic model from it: `stored_item_model = Item(**stored_item_data)`.
+3. Get only fields the client sent: `update_data = item.model_dump(exclude_unset=True)`.
+4. Apply those fields to the stored model: `updated_item = stored_item_model.model_copy(update=update_data)`.
+5. Encode and save the updated model, then return it. This preserves stored values for fields the client omitted.",,
+T080,A,c0008,code,기본,none,0,"In FastAPI's FilterParams query model example, which two values are allowed for the ordering field?","order_by accepts ""created_at"" and ""updated_at"".",created_at and updated_at,"`""created_at""` and `""updated_at""`",,
+T008,B,c0072,procedure,기본,LL2-r50,0,"In FastAPI, what process do the docs recommend for moving a project to a newer pinned FastAPI version?",Tests should exist before upgrading.,"1) Have tests in place 2) Bump the version 3) Run the tests 4) Fix what breaks 5) Re-pin the new version, checking the release notes","1. Use `TestClient` to upgrade the FastAPI version.
+2. Run your tests and fix any issues.
+3. Pin the version again.
+4. Check the release notes for changes.",,
+T015,B,c0071,code,기본,LL2-r50,0,"In FastAPI's version-pinning example that limits upgrades to one minor series, what upper bound is placed on fastapi[standard]?",The pinned range uses the upper bound <0.113.0.,<0.113.0,<113.0.0,,
+T018,B,c0155,multi,생각 끔,rule>LL2,1,"If app.frontend(""/"", directory=""dist"") points at a missing folder, what happens under fastapi dev versus fastapi run, given how each handles FASTAPI_ENV?","In development, a missing frontend directory only emits a warning.","fastapi dev sets FASTAPI_ENV=development, so check_dir=""auto"" only emits a warning; fastapi run leaves it unchanged, so otherwise the missing directory raises an error at app creation","With `check_dir=""auto""` (the default), `fastapi dev` sets `FASTAPI_ENV` to `development`, so a missing `dist` directory emits a warning. `fastapi run` leaves `FASTAPI_ENV` unset, so a missing directory raises an error when the app is created.",,
+T019,B,c0115,code,기본,LL2-r30,0,"In FastAPI's API metadata example, which license name is declared in license_info?",license_info declares the license name Apache 2.0.,Apache 2.0,Apache 2.0,,
+T029,B,c0153,multi,생각 끔,LL2-r30,0,"What text documents an operation's main response when no response_description is given, and which status codes make FastAPI send an empty body?",response_description defaults to Successful Response.,"It defaults to ""Successful Response""; codes below 200, plus 204, 205 and 304, are treated as forbidding a body","The documentation does not specify the default text for an operation’s main response when `response_description` is omitted. FastAPI sends an empty body for status codes **200, 204, 205, and 304**.",,
+T030,B,c0143,code,기본,none,0,"In FastAPI's extended testing example, what is the fake secret X-Token value?",The fake secret token is coneofsilence.,coneofsilence,coneofsilence,,
+T038,B,c0135,code,기본,LL2-r50,0,"In FastAPI's example that sets a header through the Response parameter, what value is given to X-Cat-Dog?","The X-Cat-Dog header is set to ""alone in the world"".",alone in the world,alone in the world,,
+T040,B,c0063,procedure,생각 끔,LL2-r50,3,"For a single FastAPI request, in what order are the dependency lists from the app, routers, decorator and function parameters combined?",Parameter dependencies in the function signature come last.,1) App-level FastAPI(dependencies=...) 2) Router or include_router(dependencies=...) 3) The decorator's dependencies=[...] 4) Parameter dependencies in the function signature,"1. App-level `FastAPI` dependencies.
+2. `include_router` dependencies.
+3. Path operation decorator dependencies.
+4. Parameter dependencies in the function signature.",,
+T043,B,c0158,multi,생각 끔,rule,0,"FastAPI's hand-rolled header check in the decorator dependencies example rejects a bad token with one status; which security class reads an API key header instead, and what status does it give when the key is missing?",The hand-rolled check returns 400 with X-Token header invalid.,"The hand-rolled check raises 400 ""X-Token header invalid""; APIKeyHeader(name=...) raises 401 Not authenticated with a WWW-Authenticate: APIKey header when the key is missing","`APIKeyHeader(name=""..."")` reads an API key from a named header. With the default `auto_error=True`, a missing key raises **401 Unauthorized**.",,
+T045,B,c0153,multi,기본,rule>LL2,1,"What text documents an operation's main response when no response_description is given, and which status codes make FastAPI send an empty body?","Status codes below 200 and 204, 205 and 304 forbid a body.","It defaults to ""Successful Response""; codes below 200, plus 204, 205 and 304, are treated as forbidding a body","The default `response_description` is **“Successful Response.”** FastAPI sends an empty body for status codes **200, 204, 205, and 304**.",,
+T049,B,c0150,multi,기본,rule,0,"Which proxy is bundled in the Full Stack FastAPI Template, and what can that proxy do about TLS certificates by itself?",The Full Stack FastAPI Template includes Traefik.,"The Full Stack FastAPI Template includes Traefik, which can obtain and renew certificates automatically, e.g. from Let's Encrypt",The Full Stack FastAPI Template includes Traefik. Traefik can automatically renew TLS certificates.,,
+T050,B,c0060,procedure,생각 끔,none,1,"In FastAPI, how do I build one dependency implementation that can be configured with different parameters for different endpoints?",FastAPI inspects __call__ for request parameters and calls it per request.,"1) Write a class whose __init__ takes the configuration 2) Implement __call__ with the request parameters to use 3) Create a configured instance such as FixedContentQueryChecker(""bar"") 4) Pass the instance to Depends, not the class","1. Define a class whose `__call__` method implements the dependency. FastAPI inspects `__call__` for request parameters and sub-dependencies.
+2. Create a configured instance for each endpoint by passing the desired parameters to the class constructor.
+3. Use each instance with `Depends(instance)` in the endpoint’s parameter, rather than passing the class itself to `Depends`.
+
+For example, create `FixedContentQueryChecker(""bar"")` and use `Depends(checker)`.",,
+T051,B,c0098,code,기본,rule,0,"In FastAPI's CORS example, which localhost origin with an explicit port is in the allowed list?",The origins list includes http://localhost:8080.,http://localhost:8080,http://localhost:8080,,
+T057,B,c0086,fact,기본,rule>LL2,0,Which package do FastAPI's docs suggest as the replacement for Starlette's deprecated GraphQLApp when using Graphene?,Starlette's GraphQLApp is deprecated in favor of starlette-graphene3.,starlette-graphene3,graphene3,,
+T058,B,c0076,fact,생각 끔,LL2-r30,0,Which FastAPI install extra provides the standard dependencies but leaves out the FastAPI Cloud CLI?,The standard-no-fastapi-cloud-cli extra is the standard set without the cloud CLI.,standard-no-fastapi-cloud-cli,`fastapi[standard]`,,
+T064,B,c0138,procedure,생각 끔,rule,2,"In FastAPI, how do I make authentication optional by accepting either an API key header or a bearer token?",It verifies whichever credential is present and otherwise raises 401.,"1) Create APIKeyHeader and HTTPBearer with auto_error=False so they return None when absent 2) Depend on both in one function 3) Verify whichever is present, otherwise raise a 401 Not authenticated","1. Create both security dependencies with `auto_error=False`, so missing credentials return `None`:
+
+   ```python
+   from fastapi.security import APIKeyHeader, HTTPBearer
+
+   api_key_scheme = APIKeyHeader(name=""X-API-Key"", auto_error=False)
+   bearer_scheme = HTTPBearer(auto_error=False)
+   ```
+
+2. Inject both into your dependency and use whichever credential is present:
+
+   ```python
+   async def get_identity(
+       api_key: Annotated[str | None, Depends(api_key_scheme)],
+       bearer: Annotated[HTTPAuthorizationCredentials | None, Depends(bearer_scheme)],
+   ):
+       if api_key:
+           return verify_api_key(api_key)
+       if bearer:
+           return verify_token(bearer.credentials)
+       return None
+   ```
+
+   The API key is checked first; if neither credential is provided, returning `None` makes authentication optional.",,
+T065,B,c0159,multi,기본,LL2-r50,0,"In a FastAPI WebSocket endpoint, which exception should a dependency raise to reject a missing token, and which default handler closes the socket when parameter validation fails?",A WebSocket dependency raises WebSocketException with status.WS_1008_POLICY_VIOLATION.,Raise WebSocketException(code=status.WS_1008_POLICY_VIOLATION); websocket_request_validation_exception_handler closes the connection with code 1008,"Raise `WebSocketException` to reject a missing token. When parameter validation fails, FastAPI’s default `websocket_request_validation_exception_handler` handles `WebSocketRequestValidationError` and closes the socket with code 1008.",,
+T067,B,c0132,code,기본,rule>LL2,0,"In FastAPI's redirect examples, which status code is set for the /pydantic redirect?",The /pydantic redirect uses status code 302.,302,302,,
+T071,B,c0106,procedure,생각 끔,LL2-r30,0,"In FastAPI, how can I keep an accurate return type annotation and still have the password filtered out of a user response?",An output model without the password is defined.,1) Define an output model BaseUser without the password 2) Make the input model UserIn a subclass of BaseUser that adds password 3) Annotate the path operation to return BaseUser and return the UserIn object,"1. Define a `UserIn` model that includes `password`, and a `BaseUser` model that contains only the fields safe to return.
+2. Annotate the endpoint’s return type as `BaseUser` and return the `UserIn` value. FastAPI serializes the response using `BaseUser`, filtering out `password`.",,
+T075,B,c0136,fact,생각 끔,none,0,How often does FastAPI send a keep-alive ping comment on an idle Server-Sent Events stream?,FastAPI sends a keep-alive ping comment every 15 seconds when the generator is idle.,Every 15 seconds,Every 15 seconds.,,
+T002,C,c0171,multi,생각 끔,rule>LL2,0,"If you build a Response object yourself, which length header is added for you, and which set_cookie flag keeps the cookie away from browser scripts?",FastAPI/Starlette add Content-Length to a Response.,Content-Length is added (plus the charset in Content-Type for text types); httponly=True hides the cookie from JavaScript,`FileResponse` adds the `Content-Length` header. Set `httponly=True` to keep the cookie inaccessible to browser scripts.,,
+T003,C,c0158,multi,생각 끔,none,0,"FastAPI's hand-rolled header check in the decorator dependencies example rejects a bad token with one status; which security class reads an API key header instead, and what status does it give when the key is missing?",The hand-rolled check returns 400 with X-Token header invalid.,"The hand-rolled check raises 400 ""X-Token header invalid""; APIKeyHeader(name=...) raises 401 Not authenticated with a WWW-Authenticate: APIKey header when the key is missing","`APIKeyHeader(name=""X-API-Key"")` reads an API key from a header. With the default `auto_error=True`, a missing key raises **401 Unauthorized**.",,
+T005,C,c0106,procedure,기본,LL2-r30,1,"In FastAPI, how can I keep an accurate return type annotation and still have the password filtered out of a user response?",The input model subclasses the output model and adds the password.,1) Define an output model BaseUser without the password 2) Make the input model UserIn a subclass of BaseUser that adds password 3) Annotate the path operation to return BaseUser and return the UserIn object,"1. Define `BaseUser` with the public fields, and define `UserIn` as a subclass that adds `password`.
+2. Annotate the endpoint’s return type as `BaseUser` and return the `UserIn` value. FastAPI serializes only the `BaseUser` fields, filtering out `password`.",,
+T007,C,c0072,procedure,기본,none,0,"In FastAPI, what process do the docs recommend for moving a project to a newer pinned FastAPI version?",Tests should exist before upgrading.,"1) Have tests in place 2) Bump the version 3) Run the tests 4) Fix what breaks 5) Re-pin the new version, checking the release notes","1. Check the release notes for changes.
+2. Bump the FastAPI version.
+3. Run your tests and fix any issues.
+4. Re-pin the version.",,
+T013,C,c0119,fact,생각 끔,LL2-r30,0,What validation error type does FastAPI return when a form model forbids extra fields and the client sends one anyway?,The client gets a validation error of type extra_forbidden.,extra_forbidden,extra_forbidden,,
+T014,C,c0161,multi,기본,LL2-r50,0,"To include the raw request body in a 422 error, what does the custom APIRoute approach read, and what simpler handler-based alternative returns it?",The custom route class is ValidationErrorLoggingRoute.,"ValidationErrorLoggingRoute catches RequestValidationError and calls await request.body(); the simpler way is a RequestValidationError handler returning {""detail"": exc.errors(), ""body"": exc.body}","The custom `APIRoute` approach reads the raw body with `await request.body()` and decodes it for the 422 error detail. A simpler `RequestValidationError` handler can return a `JSONResponse` with status 422 and `jsonable_encoder({""detail"": exc.errors(), ""body"": exc.body})`.",,
+T022,C,c0121,fact,기본,LL2-r30,0,Why can't the Try it out button in FastAPI's docs UI send values for cookie parameters?,Browsers manage cookies themselves and do not let JavaScript set arbitrary ones.,Browsers don't let JavaScript set arbitrary cookies,Because JavaScript cannot access cookies.,,
+T023,C,c0161,multi,생각 끔,rule,0,"To include the raw request body in a 422 error, what does the custom APIRoute approach read, and what simpler handler-based alternative returns it?",The custom route class is ValidationErrorLoggingRoute.,"ValidationErrorLoggingRoute catches RequestValidationError and calls await request.body(); the simpler way is a RequestValidationError handler returning {""detail"": exc.errors(), ""body"": exc.body}",The custom `APIRoute` approach reads the raw body with `await request.body()` when `RequestValidationError` is caught. The simpler alternative is a `RequestValidationError` handler that returns `exc.body` in the response.,,
+T026,C,c0075,procedure,기본,LL2-r50,0,"In a typical FastAPI HTTPS deployment, what does the TLS termination proxy do with each request, step by step?",The proxy holds the certificates and listens on port 443.,"1) Hold all certificates and listen on port 443 2) Perform the TLS handshake, picking the certificate via SNI 3) Decrypt and forward plain HTTP to the app 4) Encrypt the app's plain HTTP response and send it back","1. The TLS termination proxy listens on HTTPS port 443 and holds the certificates.
+2. It performs the TLS handshake and selects the right certificate using SNI.
+3. It decrypts the request and forwards it as plain HTTP to the FastAPI app, typically on port 8000.",,
+T028,C,c0063,procedure,생각 끔,LL2-r30,1,"For a single FastAPI request, in what order are the dependency lists from the app, routers, decorator and function parameters combined?",Router and include_router dependencies come next.,1) App-level FastAPI(dependencies=...) 2) Router or include_router(dependencies=...) 3) The decorator's dependencies=[...] 4) Parameter dependencies in the function signature,"1. The documentation says the dependency lists are combined, but it does not specify their order.
+2. NOT FOUND",,
+T034,C,c0046,fact,생각 끔,LL2-r50,0,What text does FastAPI use for an operation's response_description when you do not set one?,"response_description defaults to ""Successful Response"".","""Successful Response""",The main response.,,
+T035,C,c0096,procedure,생각 끔,none,3,"After a FastAPI endpoint finishes, in what order do the yield-dependency teardowns, sending the response and closing uploaded files happen?",Uploaded files are closed last by AsyncExitStackMiddleware.,"1) The function stack closes, tearing down scope=""function"" yield dependencies 2) The response is sent and its background tasks run 3) The request stack closes, tearing down request-scoped yield dependencies 4) AsyncExitStackMiddleware closes uploaded files","1. The function stack closes, tearing down `yield` dependencies with `scope=""function""`.
+2. FastAPI sends the response; background tasks run after the body is sent.
+3. The request stack closes, tearing down request-scoped (default) `yield` dependencies.
+4. `AsyncExitStackMiddleware` closes uploaded files.",,
+T056,C,c0169,multi,생각 끔,rule,1,"In FastAPI's parameter-model docs, which unexpected form field value and which unexpected cookie illustrate the extra_forbidden error?",The cookie example sends an unexpected santa_tracker cookie.,"An extra form field such as extra=Mr. Poopybutthole, and a santa_tracker cookie",The unexpected form field is `extra=Mr. Poopybutthole`; the unexpected cookie is `santa_tracker`. Both examples result in a 422 error with type `extra_forbidden`.,,
+T059,C,c0111,fact,기본,none,0,Which SDK generator do FastAPI's docs describe as purpose-built for TypeScript?,Hey API (@hey-api/openapi-ts) is the TypeScript-specific generator.,Hey API (@hey-api/openapi-ts),Hey API (`@hey-api/openapi-ts`),,
+T060,C,c0102,fact,생각 끔,rule>LL2,0,"When a FastAPI response model is a union of several models, which model should be listed first?",The most specific model should come first in the union.,The most specific one,The most specific model.,,
+T066,C,c0007,fact,생각 끔,rule,0,Starting with which FastAPI release can query validation be written with Annotated?,Annotated support was added in FastAPI 0.95.0.,0.95.0,FastAPI 0.95.0,,
+T068,C,c0085,code,생각 끔,rule>LL2,0,"In FastAPI's background-task example that also uses a dependency, what text does get_query log when a q value is sent?","get_query logs the message ""found query: {q}"".",found query: {q},found query: {q} NOT FOUND,,
+T069,C,c0067,fact,생각 끔,LL2-r50,0,Starting with which FastAPI version do the built-in security classes answer missing or invalid credentials with 401 instead of 403?,Since FastAPI 0.122.0 the security classes return 401 Unauthorized for missing or invalid credentials.,0.122.0,0.122.0,,
+T073,C,c0092,fact,생각 끔,rule>LL2,0,Why are authentication tokens for FastAPI WebSocket endpoints usually sent as a query parameter or a cookie?,Browsers cannot set custom headers on WebSocket connections.,Browsers can't set custom headers on WebSocket connections,Browsers can't send headers in WebSocket connections.,,
+T079,C,c0172,multi,기본,rule>LL2,1,"With HTTPBasic, what WWW-Authenticate value accompanies a 401 so browsers re-prompt, and what value does the scopes example send when me and items are both required?","The scopes example sends Bearer scope=""me items"".","Basic, or Basic realm=""..."" when a realm is set; the scopes example sends Bearer scope=""me items""","For `HTTPBasic`, send `WWW-Authenticate: Basic` with the 401. When both `me` and `items` are required, the scopes example sends `WWW-Authenticate: Bearer scope=""me items""`.",,
+T004,D,c0064,fact,생각 끔,rule,0,"When a FastAPI dependency is declared as Annotated[SomeClass, Depends()] with no argument, what does FastAPI use as the dependency?","With an empty Depends(), FastAPI uses the annotated type as the dependency.",The annotated type,The annotated type (`SomeClass`).,,
+T006,D,c0149,multi,생각 끔,rule>LL2,1,"Which earlier framework does FastAPI credit for its dependency injection idea, and how do you force such a dependency to be called again instead of reused within one request?",Passing use_cache=False to Depends forces a fresh call each time.,"NestJS / Angular inspired it; declare the dependency with use_cache=False, e.g. Depends(get_value, use_cache=False)","FastAPI credits **NestJS** for the dependency-injection idea. To call a dependency again rather than reuse its cached value within the same request, set `use_cache=False` in `Depends`, for example: `Depends(get_value, use_cache=False)`.",,
+T009,D,c0172,multi,기본,none,0,"With HTTPBasic, what WWW-Authenticate value accompanies a 401 so browsers re-prompt, and what value does the scopes example send when me and items are both required?",HTTPBasic sends WWW-Authenticate: Basic (with a realm if set).,"Basic, or Basic realm=""..."" when a realm is set; the scopes example sends Bearer scope=""me items""","HTTPBasic sends `WWW-Authenticate: Basic` with the 401 so browsers re-prompt. When `me` and `items` are both required, the scopes example sends `WWW-Authenticate: Bearer scope=""me items""`.",,
+T012,D,c0060,procedure,기본,rule,1,"In FastAPI, how do I build one dependency implementation that can be configured with different parameters for different endpoints?",FastAPI inspects __call__ for request parameters and calls it per request.,"1) Write a class whose __init__ takes the configuration 2) Implement __call__ with the request parameters to use 3) Create a configured instance such as FixedContentQueryChecker(""bar"") 4) Pass the instance to Depends, not the class","1. Define a class whose `__init__` accepts the configuration parameter and stores it.
+2. Implement `__call__` with the request parameters and dependency logic. FastAPI inspects `__call__`’s signature.
+3. Create a configured instance for each configuration you need.
+4. Use each instance in the relevant endpoint with `Depends(instance)`, not `Depends(ClassName)`.",,
+T016,D,c0113,procedure,생각 끔,rule>LL2,0,"In FastAPI, how do I end up with clean generated TypeScript method names like ItemsService.createItem?",Path operations are grouped with tags.,"1) Tag the path operations 2) Set generate_unique_id_function to return f""{route.tags[0]}-{route.name}"" 3) Download openapi.json and strip the tag prefix from each operationId 4) Generate the client with npx @hey-api/openapi-ts","1. Add tags to your path operations, such as `tags=[""items""]`. The generated client groups operations by tag, creating `ItemsService`.
+2. Set `generate_unique_id_function` on `FastAPI` to produce clean operation IDs. For example, return `f""{route.tags[0]}-{route.name}""` from a function that accepts an `APIRoute`.
+3. Generate the TypeScript client from the OpenAPI schema. If the operation ID includes the tag prefix, preprocess the schema to remove it before generating the client. This can produce a method name like `ItemsService.createItem`.",,
+T021,D,c0101,procedure,생각 끔,LL2-r30,2,"According to FastAPI's docs, what are the steps for migrating an app from Pydantic v1 to v2?",bump-pydantic rewrites most of the code automatically.,1) Have tests and run them in CI 2) Read Pydantic's official migration guide 3) Run bump-pydantic to rewrite most code automatically 4) Fix remaining issues and run the tests,"1. Add tests using `TestClient` to your CI.
+2. Follow the Pydantic migration guide for the APIs.
+3. Rewrite your code to use the Pydantic v2 APIs.
+4. Fix any issues that arise.",,
+T027,D,c0110,procedure,기본,LL2-r30,2,"In FastAPI, how do I document the endpoint that my API's users must implement to receive an invoice-paid notification?",The router's routes are passed to the path operation through callbacks=.,1) Create a separate APIRouter for the callback 2) Declare the external endpoint on it with a runtime-expression path such as {$callback_url}/invoices/{$request.body.id} 3) Pass callbacks=invoices_callback_router.routes to the path operation; the router is never included in the app,"1. Define the notification payload and response models, such as `InvoiceEvent` with a `paid: bool` field and `InvoiceEventReceived`.
+2. Create an `APIRouter` for the callback endpoint.
+3. Add a route such as `@invoices_callback_router.post(""{$callback_url}/invoices/{$request.body.id}"", response_model=InvoiceEventReceived)` that accepts `InvoiceEvent`.
+4. Add a `callback_url` parameter to your invoice-creation endpoint.
+5. Pass `callbacks=invoices_callback_router.routes` to that endpoint. This documents the callback endpoint in OpenAPI.",,
+T031,D,c0056,procedure,기본,rule>LL2,0,"In FastAPI, how do I run an app behind a proxy that publishes it under /api/v1 but strips that prefix before forwarding requests?",The proxy is trusted with --forwarded-allow-ips.,"1) Trust the proxy's forwarded headers with --forwarded-allow-ips 2) Pass the stripped prefix with --root-path /api/v1 (or FastAPI(root_path=""/api/v1"")) 3) Keep serving routes without the prefix; adding it is the proxy's job","1. Configure `root_path` as `/api/v1`, because the proxy strips that prefix before forwarding requests.
+2. Set it either when creating the app:
+   ```python
+   app = FastAPI(root_path=""/api/v1"")
+   ```
+   or when running it:
+   ```bash
+   fastapi run main.py --root-path /api/v1
+   ```
+3. Serve the app’s routes without the `/api/v1` prefix. FastAPI uses `root_path` for URLs such as the OpenAPI and OAuth2 redirect URLs.",,
+T032,D,c0116,procedure,생각 끔,none,2,"In FastAPI, how do I serve Swagger UI and ReDoc with JavaScript and CSS files hosted by my own server instead of a CDN?",Custom /docs and /redoc routes use get_swagger_ui_html and get_redoc_html with the local file URLs.,"1) Create the app with docs_url=None and redoc_url=None 2) Put swagger-ui-bundle.js, swagger-ui.css and redoc.standalone.js in static/ and mount StaticFiles 3) Add /docs and /redoc routes returning get_swagger_ui_html and get_redoc_html with the local file URLs","1. Disable FastAPI’s automatic docs pages by setting `docs_url=None` and `redoc_url=None`.
+2. Mount your local assets directory with `StaticFiles`, for example: `app.mount(""/static"", StaticFiles(directory=""static""), name=""static"")`.
+3. Add a `/docs` route that returns `get_swagger_ui_html(...)`, passing local paths such as `/static/swagger-ui-bundle.js` and `/static/swagger-ui.css`.
+4. Add a `/redoc` route that returns `get_redoc_html(...)`, passing a local path such as `/static/redoc.standalone.js`.
+5. Download the Swagger UI and ReDoc assets into your `static/` directory. If you use OAuth2 in Swagger UI’s “Authorize” dialog, also add the OAuth2 redirect route using `get_swagger_ui_oauth2_redirect_html()`.",,
+T042,D,c0166,multi,생각 끔,LL2-r50,1,"When jsonable_encoder converts a set field, what does it become, and how does the OpenAPI schema mark a set-typed field?",A set field's schema has uniqueItems.,jsonable_encoder turns sets (like tuples and generators) into lists; the schema marks the field with uniqueItems,`jsonable_encoder` converts sets to lists. The documentation says request lists are de-duplicated and their schema uses `uniqueItems`; it does not explicitly state how a set-typed field is marked in the OpenAPI schema.,,
+T046,D,c0088,procedure,기본,none,1,"In FastAPI, how do I send the built-in OpenTelemetry data to a monitoring service over OTLP?",The collector URL is set with OTEL_EXPORTER_OTLP_ENDPOINT.,1) Set OTEL_SERVICE_NAME 2) Set OTEL_EXPORTER_OTLP_ENDPOINT to the collector URL,"1. Set `OTEL_SERVICE_NAME` to your service name.
+2. Set `OTEL_EXPORTER_OTLP_ENDPOINT` to the monitoring service’s OTLP-over-HTTP/protobuf endpoint.
+3. If required, set `OTEL_EXPORTER_OTLP_HEADERS` with the service’s headers, for example `api-key=YOUR_API_KEY`.
+4. Start FastAPI with `fastapi run`. FastAPI sends traces to `/v1/traces`, metrics to `/v1/metrics`, and logs to `/v1/logs` under the endpoint.",,
+T052,D,c0076,fact,생각 끔,rule>LL2,0,Which FastAPI install extra provides the standard dependencies but leaves out the FastAPI Cloud CLI?,The standard-no-fastapi-cloud-cli extra is the standard set without the cloud CLI.,standard-no-fastapi-cloud-cli,`fastapi[standard]`,,
+T053,D,c0099,fact,기본,rule>LL2,0,In which FastAPI version was support for pydantic.v1 models dropped completely?,Support for pydantic.v1 models was dropped completely in FastAPI 0.128.0.,0.128.0,0.126.0,,
+T054,D,c0092,fact,기본,LL2-r50,0,Why are authentication tokens for FastAPI WebSocket endpoints usually sent as a query parameter or a cookie?,Browsers cannot set custom headers on WebSocket connections.,Browsers can't set custom headers on WebSocket connections,"Because browsers can’t send headers on WebSocket connections, tokens are passed as a query parameter or cookie.",,
+T055,D,c0113,procedure,생각 끔,LL2-r50,1,"In FastAPI, how do I end up with clean generated TypeScript method names like ItemsService.createItem?",A custom generate_unique_id_function builds IDs from the tag and function name.,"1) Tag the path operations 2) Set generate_unique_id_function to return f""{route.tags[0]}-{route.name}"" 3) Download openapi.json and strip the tag prefix from each operationId 4) Generate the client with npx @hey-api/openapi-ts","1. Tag related path operations with `tags=[""items""]` so the generator groups them into `ItemsService`.
+2. Set `generate_unique_id_function` on `FastAPI` to create clean operation IDs. For example:
+
+   ```python
+   from fastapi import FastAPI
+   from fastapi.routing import APIRoute
+
+   def custom_generate_unique_id(route: APIRoute):
+       return f""{route.tags[0]}-{route.name}""
+
+   app = FastAPI(generate_unique_id_function=custom_generate_unique_id)
+   ```
+
+3. Generate the TypeScript client from the OpenAPI schema. If the generated method still includes the tag prefix, preprocess the schema to remove that prefix from each operation’s `operationId`, then generate the client from the updated schema.",,
+T063,D,c0128,procedure,생각 끔,rule,0,"In FastAPI, how do I transparently decompress gzip-encoded request bodies for every route?",A Request subclass overrides body() to decompress gzip content.,1) Subclass Request as GzipRequest and override body() to gzip.decompress when Content-Encoding includes gzip 2) Subclass APIRoute and override get_route_handler to wrap the request in GzipRequest 3) Set app.router.route_class = GzipRoute before declaring routes,"1. Define a `GzipRequest` subclass that overrides `body()`. Read the body with `await super().body()`, decompress it with `gzip.decompress()` when `Content-Encoding` contains `""gzip""`, and cache the result in `_body`.
+2. Define a `GzipRoute` subclass of `APIRoute`. In `get_route_handler()`, wrap the original handler so it creates a `GzipRequest` from the incoming request’s `scope` and `receive`, then calls the original handler with it.
+3. Set `app.router.route_class = GzipRoute` to apply the custom route class to routes declared afterwards.",,
+T070,D,c0151,multi,기본,LL2-r30,0,"How is Strawberry's GraphQL router added to a FastAPI app, and what happens to path operations registered on a router once it has already been included?","GraphQLRouter is an APIRouter, added with app.include_router(graphql_app, prefix=""/graphql"").","GraphQLRouter is an APIRouter, so it is added with app.include_router(graphql_app, prefix=""/graphql""); operations added later are still visible through the earlier inclusion","Create Strawberry’s `GraphQLRouter` with the schema, then include it in the FastAPI app with a prefix:
+
+```python
+graphql_app = GraphQLRouter(schema)
+app.include_router(graphql_app, prefix=""/graphql"")
+```
+
+`include_router` adds the router’s path operations to the app. Path operations registered on the router afterward are not included automatically.",,
+T072,D,c0121,fact,생각 끔,LL2-r30,0,Why can't the Try it out button in FastAPI's docs UI send values for cookie parameters?,Browsers manage cookies themselves and do not let JavaScript set arbitrary ones.,Browsers don't let JavaScript set arbitrary cookies,Because JavaScript can’t send cookie parameters.,,
+T074,D,c0129,fact,기본,none,0,"For a FastAPI {file_path:path} parameter, how is a value that itself starts with a slash written in the URL?",A value starting with / is written with a double slash in the URL.,"With a double slash, e.g. /files//home/johndoe/myfile.txt",Use a double slash: `/files//home/johndoe/myfile.txt`.,,
+T077,D,c0016,multi,생각 끔,LL2-r50,1,"In FastAPI, which validation error type appears when a required query parameter is left out, and which one when an int-typed path parameter receives text like foo?",A non-integer value for an int path parameter gives an int_parsing error.,"missing for the omitted required query parameter, and int_parsing for the non-integer path value",A missing required query parameter produces a **422 validation error**. An `int`-typed path parameter given text such as `foo` produces a **422 `int_parsing` error**.,,
