@@ -15,6 +15,7 @@
 ## 1. judge 검증: `judge_check_test.csv`
 
 test_v1(생각 끔)과 luna 기본 설정 run 에서 judge 가 채점한 key_fact 80개다. 담당자 A~D 가 20행씩 맡는다.
+- **[`judge_check_test.html`](judge_check_test.html) 을 브라우저로 열어 라벨링해도 된다.** 담당자를 고르고 O/X·메모를 채운다 (단축키 O/X/J/K/M). 입력은 그 브라우저에 자동 저장된다. 끝나면 "CSV 내려받기" 로 받은 파일(시트 전체)로 `judge_check_test.csv` 를 바꾼다. 시트가 바뀌면 `python src/judge_check_viewer.py` 로 다시 만든다.
 - **judge 판정은 시트에 없다** (블라인드). 판정은 `judge_check_test_key.csv` 에 `row_id` 로 따로 있다. 라벨을 다 채울 때까지 열지 않는다.
 - NOT FOUND 답변은 judge 가 채점하지 않았으므로 들어 있지 않다.
 
