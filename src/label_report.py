@@ -271,7 +271,8 @@ def judge_section(sheet: Path, key: Path) -> list[str]:
             "- 시트는 judge YES 40 / NO 40 으로 층화 추출했다. 실제 판정 분포(YES 95%)와 다르므로 전체 정확도는 "
             "이 표본에서의 값이다.", ""]
     for title, col, order in (("압축 조건별", "압축 조건", CONDS), ("유형별", "유형", TYPES),
-                              ("설정별", "설정", sorted({p["설정"] for p in pairs}))):
+                              ("설정별", "설정", sorted({p["설정"] for p in pairs})),
+                              ("담당자별", "담당자", sorted({p.get("담당자", "") for p in pairs}))):
         out += [f"### {title}", "", *head]
         out += [stat_row(v, [p for p in pairs if p[col] == v]) for v in order]
         out.append("")
@@ -285,6 +286,26 @@ def judge_section(sheet: Path, key: Path) -> list[str]:
                            f"{cell(p['핵심 사실'], 120)} | {cell(p['모델 답변'], 120)} | {cell(p.get('메모'), 80)} |")
             out.append("")
     return out
+
+
+def judge_fn_rate(sheet: Path, key: Path) -> tuple[int, int] | None:
+    """judge X 행 중 사람 O 수, judge X 행 수 (사람 라벨이 다 찼을 때만)."""
+    rows = read_sheet(sheet)
+    if not rows or any(not (r.get("human") or "").strip() for r in rows):
+        return None
+    keys = {r["row_id"]: label(r["judge"]) for r in read_sheet(key)}
+    neg = [r for r in rows if keys.get(r["row_id"]) is False]
+    return sum(label(r["human"]) is True for r in neg), len(neg)
+
+
+def sensitivity_lines(run: Path, fn: tuple[int, int] | None, extra: list[str]) -> list[str]:
+    if fn is None:
+        return ["## 6. 민감도 분석", "", "judge 검증 사람 라벨이 다 차면 계산한다.", ""]
+    if not (run / "trials.jsonl").exists():
+        return ["## 6. 민감도 분석", "", f"run 이 없어 뺐다: {run}", ""]
+    import judge_sensitivity as JS
+    rates = [JS.parse_rate(f"{fn[0]}/{fn[1]}"), *(JS.parse_rate(s) for s in extra if s != f"{fn[0]}/{fn[1]}")]
+    return JS.section(JS.analyze(run, rates), fn)
 
 
 def manual_block(path: Path) -> list[str]:
@@ -306,16 +327,21 @@ def main():
     ap.add_argument("--judge-key", default="docs/results/judge_check_test_key.csv")
     ap.add_argument("--recover", action="append", metavar="이름=RUN_DIR[+RUN_DIR...]",
                     help="회복률을 볼 run (여러 번). + 로 이으면 반복 실행 평균. 기본: " + " / ".join(DEFAULT_RECOVER))
+    ap.add_argument("--sens-run", default="results/runs/luna-default-20261103", help="민감도 분석 run (6절)")
+    ap.add_argument("--sens-rate", action="append", metavar="a/b",
+                    help="사람 라벨 비율 외에 더 볼 judge FN 비율. 기본: 13/40 (처음 요청 값), 1/1 (상한)")
     ap.add_argument("--out", default="docs/results/label_report.md")
     args = ap.parse_args()
     out = Path(args.out)
     lines = ["# 사람 라벨 집계", "",
              f"`python src/label_report.py` 로 만든다 ({datetime.now():%Y-%m-%d %H:%M}). "
-             "라벨 기준은 [labeling_guide.md](labeling_guide.md). 1~5절은 스크립트가 만들고, 아래 수기 구간은 사람이 쓴다.", "",
+             "라벨 기준은 [labeling_guide.md](labeling_guide.md). 1~6절은 스크립트가 만들고, 아래 수기 구간은 사람이 쓴다.", "",
              *manual_block(out),
              *error_section(Path(args.errors), parse_recover(args.recover or DEFAULT_RECOVER), Path(args.errors_key),
                             Path(args.source)),
-             *judge_section(Path(args.judge_sheet), Path(args.judge_key))]
+             *judge_section(Path(args.judge_sheet), Path(args.judge_key)),
+             *sensitivity_lines(Path(args.sens_run), judge_fn_rate(Path(args.judge_sheet), Path(args.judge_key)),
+                                args.sens_rate or ["13/40", "1/1"])]
     out.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("\n".join(lines))
     print(f"\n저장: {args.out}")

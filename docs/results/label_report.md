@@ -1,6 +1,6 @@
 # 사람 라벨 집계
 
-`python src/label_report.py` 로 만든다 (2026-11-04 16:40). 라벨 기준은 [labeling_guide.md](labeling_guide.md). 1~5절은 스크립트가 만들고, 아래 수기 구간은 사람이 쓴다.
+`python src/label_report.py` 로 만든다 (2026-11-04 17:49). 라벨 기준은 [labeling_guide.md](labeling_guide.md). 1~6절은 스크립트가 만들고, 아래 수기 구간은 사람이 쓴다.
 
 <!-- 수기 시작: label_report.py 를 다시 돌려도 이 사이는 그대로 둔다 -->
 
@@ -36,6 +36,33 @@
   - 기억 불가능 층은 16 trial 뿐이라 차이가 없다고도, 있다고도 말할 수 없다.
   - 기억 가능 문항이어도 정답 구절이 지워지면 회복이 드물다 (3/20). 모델이 기억으로 빈칸을 메우기보다 NOT FOUND 를 낸다.
   - 정보 손실인데 회복된 7 중 2 (c0150 r30, c0174 rule>llmlingua2) 는 multi 문항의 부분 점수(0.5)다.
+
+## 요약: judge 검증과 민감도 분석 (2026-11-04, 사람 라벨 80/80)
+
+judge(deepseek-flash, fact_judge_v2 per_fact)의 key_fact 판정을 사람 라벨과 비교했다. 표는 5절, 보정은 6절이다.
+
+- **일치율 0.863 (69/80), Cohen's κ 0.725.** 어긋난 11 행은 모두 FN(judge X·사람 O)이다. FP(judge O·사람 X)는 0 이다.
+  - judge O 행 40: 사람도 40 모두 O 다. judge 가 맞다고 하면 믿어도 된다.
+  - judge X 행 40: 사람 O 가 **11 (27.5%)** 이다. judge 는 엄격한 쪽으로 틀린다.
+- **FN 은 multi·procedure 에 몰린다.** fact 22 행은 모두 일치하고, multi 6·procedure 4·code 1 이 FN 이다. 부분 점수 문항(사실이 여럿)의 κ 는 0.483 으로 낮다. 긴 답에서 사실 하나를 찾는 판정이 약하다.
+- 담당자별 일치율은 0.80~0.95 다 (A 0.90, B 0.95, C 0.80, D 0.80).
+- **판정 비율은 11/40 이다.** 요청에 적힌 13/40 과 다르다. 이번에 받은 80 행 기준으로는 judge X 40 행 중 사람 O 가 11 이다. 6절은 11/40, 13/40, 상한 1/1(judge X 가 전부 틀렸다고 가정) 세 가지를 모두 계산했다.
+- **보정해도 "rule 만 유지" 결론은 바뀌지 않는다.**
+
+  | 조건 (luna 기본) | 유지율 보정 전 | p = 11/40 | p = 13/40 | p = 1 (상한) | 판단 |
+  |---|---|---|---|---|---|
+  | rule | 101.2% [99.9, 102.7] | 100.8% [100.0, 101.9] | 100.8% [100.0, 101.8] | 100.0% | 유지 |
+  | llmlingua2_r50 | 93.0% [88.1, 97.5] | 93.3% [88.7, 97.4] | 93.4% [88.8, 97.4] | 94.2% [89.9, 97.8] | 손실 |
+  | llmlingua2_r30 | 81.8% [75.2, 87.8] | 82.8% [76.5, 88.6] | 83.0% [76.7, 88.8] | 85.5% [79.0, 91.3] | 손실 |
+  | rule>llmlingua2 | 93.9% [89.3, 97.9] | 94.6% [90.5, 98.0] | 94.7% [90.7, 98.1] | 96.4% [92.7, 99.3] | 손실 |
+
+  - 보정은 none 정확도도 같이 올린다 (0.981 → 0.986). 그래서 유지율은 1%p 남짓만 오른다.
+  - LLMLingua-2 의 손실은 대부분 judge 를 거치지 않은 NOT FOUND·빈 답이다. judge X 를 모두 O 로 바꾼 상한에서도 r50 5.8%p, r30 14.5%p, rule>llmlingua2 3.6%p 가 남고, 유지율 CI 하한이 95% 에 못 미친다.
+  - 시뮬레이션 500 표본에서도 판단이 한 번도 바뀌지 않았다 (rule 유지 100%, 나머지 유지 0%).
+- **정확도 수치는 잠정치를 벗어난다.** p = 11/40 기준으로 judge 는 정확도를 조건에 따라 0.2~1.4%p 낮게 잰다 (none +0.5, rule +0.2, r50 +0.9, r30 +1.4, rule>llmlingua2 +1.1). 조건 간 비교와 사전 기준 판단에는 영향이 없다.
+- **메모 2건과의 관계**
+  - c0092 (T073): 사람 라벨도 X 다. "send headers" 는 "set custom headers" 와 다르다고 봤다. 오답 검수 메모의 "채점 오류 의심" 과 엇갈리므로, 이 문항은 judge 오류가 아닌 경계 사례로 둔다.
+  - c0085 (T068): 사람은 O(FN)로 봤다 ("NOT FOUND 확인 필요" 메모). 아래 c0085 절의 "지금 규칙으로는 오답" 해석과 다르다. 답 뒤에 붙은 NOT FOUND 를 모순으로 볼지는 팀이 정할 일이다.
 
 ## 메모 확인 2건
 
@@ -235,7 +262,99 @@ trial 은 (문항, 압축기) 쌍이다. 문항은 35 개다. 한 문항이 압�
 
 ## 5. judge 검증 (`judge_check_test.csv`)
 
-human 이 채워진 행: **0 / 80** (빈 행 80 은 뺐다)
+human 이 채워진 행: **80 / 80** (빈 행 0 은 뺐다)
 
-아직 사람 라벨이 없다.
+### 전체
+
+| 구분 | n | 정확도 (일치율) | FP (사람 X·judge O) | FN (사람 O·judge X) | Cohen's κ |
+|---|---|---|---|---|---|
+| 전체 | 80 | 0.863 (69/80) | 0 | 11 | 0.725 |
+| judge YES 행 | 40 | 1.000 (40/40) | 0 | 0 | - |
+| judge NO 행 | 40 | 0.725 (29/40) | 0 | 11 | - |
+| 부분 점수 문항 | 36 | 0.722 (26/36) | 0 | 10 | 0.483 |
+
+- judge YES 행의 정확도 = judge 가 O 라고 한 것 중 사람도 O 인 비율 (정밀도). NO 행도 같다.
+- 시트는 judge YES 40 / NO 40 으로 층화 추출했다. 실제 판정 분포(YES 95%)와 다르므로 전체 정확도는 이 표본에서의 값이다.
+
+### 압축 조건별
+
+| 구분 | n | 정확도 (일치율) | FP (사람 X·judge O) | FN (사람 O·judge X) | Cohen's κ |
+|---|---|---|---|---|---|
+| none | 15 | 0.800 (12/15) | 0 | 3 | 0.587 |
+| rule | 13 | 0.769 (10/13) | 0 | 3 | 0.451 |
+| LL2-r50 | 17 | 0.824 (14/17) | 0 | 3 | 0.653 |
+| LL2-r30 | 17 | 1.000 (17/17) | 0 | 0 | 1.000 |
+| rule>LL2 | 18 | 0.889 (16/18) | 0 | 2 | 0.780 |
+
+### 유형별
+
+| 구분 | n | 정확도 (일치율) | FP (사람 X·judge O) | FN (사람 O·judge X) | Cohen's κ |
+|---|---|---|---|---|---|
+| fact | 22 | 1.000 (22/22) | 0 | 0 | 1.000 |
+| code | 12 | 0.917 (11/12) | 0 | 1 | 0.625 |
+| procedure | 23 | 0.826 (19/23) | 0 | 4 | 0.662 |
+| multi | 23 | 0.739 (17/23) | 0 | 6 | 0.504 |
+
+### 설정별
+
+| 구분 | n | 정확도 (일치율) | FP (사람 X·judge O) | FN (사람 O·judge X) | Cohen's κ |
+|---|---|---|---|---|---|
+| 기본 | 40 | 0.875 (35/40) | 0 | 5 | 0.750 |
+| 생각 끔 | 40 | 0.850 (34/40) | 0 | 6 | 0.700 |
+
+### 담당자별
+
+| 구분 | n | 정확도 (일치율) | FP (사람 X·judge O) | FN (사람 O·judge X) | Cohen's κ |
+|---|---|---|---|---|---|
+| A | 20 | 0.900 (18/20) | 0 | 2 | 0.800 |
+| B | 20 | 0.950 (19/20) | 0 | 1 | 0.900 |
+| C | 20 | 0.800 (16/20) | 0 | 4 | 0.600 |
+| D | 20 | 0.800 (16/20) | 0 | 4 | 0.600 |
+
+### FP (사람 X, judge O): 0
+
+### FN (사람 O, judge X): 11
+
+| row_id | qid | 유형 | 설정 | 압축 조건 | 핵심 사실 | 모델 답변 | 메모 |
+|---|---|---|---|---|---|---|---|
+| T002 | c0171 | multi | 생각 끔 | rule>LL2 | FastAPI/Starlette add Content-Length to a Response. | `FileResponse` adds the `Content-Length` header. Set `httponly=True` to keep the cookie inaccessible to browser scripts. | 모델 답변에 핵심 사실이 명확하게 드러남 ⏎ 답변: `FileResponse` adds the `Content-Length` header. |
+| T009 | c0172 | multi | 기본 | none | HTTPBasic sends WWW-Authenticate: Basic (with a realm if set). | HTTPBasic sends `WWW-Authenticate: Basic` with the 401 so browsers re-prompt. When `me` and `items` are both required, t |  |
+| T012 | c0060 | procedure | 기본 | rule | FastAPI inspects __call__ for request parameters and calls it per request. | 1. Define a class whose `__init__` accepts the configuration parameter and stores it. ⏎ 2. Implement `__call__` with the |  |
+| T014 | c0161 | multi | 기본 | LL2-r50 | The custom route class is ValidationErrorLoggingRoute. | The custom `APIRoute` approach reads the raw body with `await request.body()` and decodes it for the 422 error detail. A |  |
+| T023 | c0161 | multi | 생각 끔 | rule | The custom route class is ValidationErrorLoggingRoute. | The custom `APIRoute` approach reads the raw body with `await request.body()` when `RequestValidationError` is caught. T |  |
+| T025 | c0155 | multi | 기본 | LL2-r50 | fastapi run leaves FASTAPI_ENV unchanged, so a missing directory raises an error when the app is created. | With the default `check_dir="auto"`, `fastapi dev` sets `FASTAPI_ENV` to development, so a missing `dist` directory emit |  |
+| T042 | c0166 | multi | 생각 끔 | LL2-r50 | A set field's schema has uniqueItems. | `jsonable_encoder` converts sets to lists. The documentation says request lists are de-duplicated and their schema uses  |  |
+| T046 | c0088 | procedure | 기본 | none | The collector URL is set with OTEL_EXPORTER_OTLP_ENDPOINT. | 1. Set `OTEL_SERVICE_NAME` to your service name. ⏎ 2. Set `OTEL_EXPORTER_OTLP_ENDPOINT` to the monitoring service’s OTLP |  |
+| T050 | c0060 | procedure | 생각 끔 | none | FastAPI inspects __call__ for request parameters and calls it per request. | 1. Define a class whose `__call__` method implements the dependency. FastAPI inspects `__call__` for request parameters  |  |
+| T068 | c0085 | code | 생각 끔 | rule>LL2 | get_query logs the message "found query: {q}". | found query: {q} NOT FOUND | 모델 답변 뒤에 NOT FOUND 확인 필요 |
+| T078 | c0104 | procedure | 생각 끔 | rule | The result is encoded with jsonable_encoder and saved. | 1. Load the stored item data. ⏎ 2. Build a Pydantic model from it: `stored_item_model = Item(**stored_item_data)`. ⏎ 3.  |  |
+
+## 6. 민감도 분석: judge FN 비율로 key_fact 판정 보정
+
+run `luna-default-20261103` (luna 기본, test_v1_default.md). none 과 짝지은 문항 rule 138, llmlingua2_r50 138, llmlingua2_r30 138, rule>llmlingua2 137. judge 가 X 로 본 key_fact 는 조건별로 none 7, rule 3, llmlingua2_r50 9, llmlingua2_r30 18, rule>llmlingua2 11 개다 (사실 전체 232, 235, 235, 235, 233).
+
+- 각 judge X 사실이 확률 p 로 사실은 O 라고 보고 다시 계산했다. NOT FOUND·빈 답 trial 은 judge 를 거치지 않았으므로 보정하지 않는다. FP 가 0 이라 O 판정은 내리지 않는다.
+- 정확도·유지율은 기대값이고, CI 는 문항 짝 bootstrap 10,000 회 (시드 42) 다.
+- "유지" 판단은 사전 기준(유지율 CI 하한 ≥ 95% 이고 Holm McNemar p ≥ 0.05)이다. McNemar 는 완전 정답 이진값이라 기대값으로 계산할 수 없다. 그래서 judge X 사실을 확률 p 로 뒤집은 표본 500 개마다 판단하고, "유지" 로 나온 표본 비율을 적는다.
+
+- 사람 라벨 기준 p = 11/40 (judge X 행 중 사람 O). 시트는 judge X 를 따로 40 행 뽑았으므로 judge X 판정 전체에 대한 추정치로 쓴다.
+
+| p | 조건 | 정확도 (none) | 유지율 [95% CI] | Holm p (중앙값) | 유지 판단 (표본 비율) |
+|---|---|---|---|---|---|
+| 보정 전 | rule | 0.993 (0.981) | 101.2% [99.9, 102.7] | 0.219 | 유지 |
+| 보정 전 | llmlingua2_r50 | 0.912 (0.981) | 93.0% [88.1, 97.5] | 0.147 | 손실 |
+| 보정 전 | llmlingua2_r30 | 0.803 (0.981) | 81.8% [75.2, 87.8] | 1.85e-06 | 손실 |
+| 보정 전 | rule>llmlingua2 | 0.922 (0.981) | 93.9% [89.3, 97.9] | 0.154 | 손실 |
+| 11/40 (p = 0.275) | rule | 0.995 (0.986) | 100.8% [100.0, 101.9] | 0.453 | 유지 (100%) |
+| 11/40 (p = 0.275) | llmlingua2_r50 | 0.921 (0.986) | 93.3% [88.7, 97.4] | 0.125 | 손실 (0%) |
+| 11/40 (p = 0.275) | llmlingua2_r30 | 0.817 (0.986) | 82.8% [76.5, 88.6] | 6.5e-06 | 손실 (0%) |
+| 11/40 (p = 0.275) | rule>llmlingua2 | 0.933 (0.986) | 94.6% [90.5, 98.0] | 0.186 | 손실 (0%) |
+| 13/40 (p = 0.325) | rule | 0.995 (0.987) | 100.8% [100.0, 101.8] | 0.488 | 유지 (100%) |
+| 13/40 (p = 0.325) | llmlingua2_r50 | 0.922 (0.987) | 93.4% [88.8, 97.4] | 0.115 | 손실 (0%) |
+| 13/40 (p = 0.325) | llmlingua2_r30 | 0.820 (0.987) | 83.0% [76.7, 88.8] | 6.5e-06 | 손실 (0%) |
+| 13/40 (p = 0.325) | rule>llmlingua2 | 0.935 (0.987) | 94.7% [90.7, 98.1] | 0.23 | 손실 (0%) |
+| 1/1 (p = 1.000) | rule | 1.000 (1.000) | 100.0% [100.0, 100.0] | 1 | 유지 (100%) |
+| 1/1 (p = 1.000) | llmlingua2_r50 | 0.942 (1.000) | 94.2% [89.9, 97.8] | 0.0234 | 손실 (0%) |
+| 1/1 (p = 1.000) | llmlingua2_r30 | 0.855 (1.000) | 85.5% [79.0, 91.3] | 7.63e-06 | 손실 (0%) |
+| 1/1 (p = 1.000) | rule>llmlingua2 | 0.964 (1.000) | 96.4% [92.7, 99.3] | 0.125 | 손실 (0%) |
 

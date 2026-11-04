@@ -81,6 +81,15 @@ class LabelReportTest(unittest.TestCase):
         out.write_text(f"# x\n{LR.MANUAL_BEGIN}\n손으로 쓴 해석\n{LR.MANUAL_END}\n## 1.\n", encoding="utf-8")
         self.assertEqual(LR.manual_block(out), [f"{LR.MANUAL_BEGIN}\n손으로 쓴 해석\n{LR.MANUAL_END}", ""])
 
+    def test_judge_fn_rate_needs_full_labels(self):
+        sheet = [{"row_id": f"T{i}", "human": h} for i, h in enumerate(["O", "X", "O", "O"])]
+        key = [{"row_id": f"T{i}", "judge": j} for i, j in enumerate(["X", "X", "X", "O"])]
+        write_csv(self.d / "s.csv", sheet)
+        write_csv(self.d / "k.csv", key)
+        self.assertEqual(LR.judge_fn_rate(self.d / "s.csv", self.d / "k.csv"), (2, 3))
+        write_csv(self.d / "s.csv", [*sheet[:3], {"row_id": "T3", "human": ""}])
+        self.assertIsNone(LR.judge_fn_rate(self.d / "s.csv", self.d / "k.csv"))
+
     def test_parse_recover_splits_repeats(self):
         self.assertEqual(LR.parse_recover(["a=x", "b=y+z"]), [("a", [Path("x")]), ("b", [Path("y"), Path("z")])])
 
