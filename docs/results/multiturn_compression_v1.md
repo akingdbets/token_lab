@@ -4,6 +4,17 @@
 보호 기준을 "질문과 관련 있는가"에서 "답이 될 만한 형태인가"로 바꾼다. rule 은 항상 먼저 적용하고
 그 위에 다음 압축을 붙인다 (`rule>X`). 비교 기준선은 rule 단독이다.
 
+## 정리 (실험하지 않을 압축기 삭제)
+
+아래 측정 기록은 그대로 두고, 실험 계획에서 빠진 압축기 코드는 지웠다. 남은 것은 `sent_{loose,structure}_r{50,70}` 과
+`qx_bm25_{loose,structure}_r{30,50}` 이다.
+
+| 지운 것 | 이유 |
+|---|---|
+| `llmlingua2_r*_noq` (`use_question` 옵션) | 토큰 단위라 구두점 분해·연결어 삭제가 그대로 남는다. 질문을 보지 않는 압축은 `sent_*` 가 맡는다 |
+| `sent_strict_*`, `sent_literal_*` (인라인 코드·식별자·값 단어 표지) | 아래 측정에서 rule 대비 추가 절감 상한이 1~5% 라 실험할 가치가 없다 |
+| `qx_emb_*` (임베딩 점수) | 매 턴 임베딩 호출이 들고 측정도 안 했다. 보충 실험은 BM25 로 한다 |
+
 ## 커밋
 
 | 커밋 | 내용 |
@@ -93,12 +104,12 @@ EVAL_DIR=data/evalsets/claude-v1 python src/experiment.py --split test --compres
 단위와 보호 규칙은 `sent_*` 와 같고, 후보 점수만 질문 관련도다. 추출형이 토큰 가지치기보다
 낫다는 비교 연구(Jha et al. 2024, arXiv 2407.08892)가 근거다.
 
-- **점수:** `bm25` (질문 단어로 문서 안 후보를 BM25, 식별자는 통째로 + 조각으로) 또는
-  `emb` (질문과 후보의 임베딩 코사인, 후보 임베딩은 캐시해 다음 턴엔 질문 임베딩만 든다)
+- **점수:** `bm25` (질문 단어로 문서 안 후보를 BM25, 식별자는 통째로 + 조각으로).
+  처음엔 임베딩 코사인(`emb`)도 있었지만 지웠다 (위 "정리")
 - **선택:** 후보 글자의 `keep_ratio` 까지 점수 높은 순으로 남긴다. 상한이라 점수 0(질문과 겹치는 데 없음)인
   후보로는 채우지 않는다. 후보 점수가 모두 0 이면 그 문서는 그대로 둔다.
   `min_score` 를 주면 기준점 방식(문서 안 최고점 대비 비율)으로 고른다.
-- **이름:** `qx_{bm25|emb}_{loose|structure}_r{30,50}`, 예: `"rule>qx_bm25_loose_r50"`
+- **이름:** `qx_bm25_{loose|structure}_r{30,50}`, 예: `"rule>qx_bm25_loose_r50"`
 - **비용:** 턴마다 문맥이 바뀌어 답변 모델의 프롬프트 캐시를 못 쓴다. 멀티턴 절감은 원문+캐시와 비교한다.
 - **`llmlingua2_repair_v1` (feature/question-guided-repair-v1) 과의 차이:** 그쪽은 LLMLingua-2 토큰 압축 뒤
   질문 관련 상위 문장을 원문으로 되돌려 넣는다. 이쪽은 토큰 압축 없이 문장을 골라 남긴다.
@@ -117,3 +128,54 @@ EVAL_DIR=data/evalsets/claude-v1 python src/experiment.py --split test --compres
 
 추가 절감은 rule 뒤 문맥 대비, rule 절감은 원문 대비 15~16% 다. 설정은 dev 로 고르고 test 는 확인용으로만 쓴다
 (test 측정값은 위 표에 같이 적었지만 고르는 데 쓰지 않는다).
+
+## 고정 앞부분 + 질문별 보충 (`sup_*`, `src/compressors/supplement.py`)
+
+1. 질문을 보지 않고 `sent_{보호 수준}_r{남길 비율}` 로 압축한다 (같은 결과).
+2. 그때 지운 문장·목록 항목 중에서만, 그 턴 질문과 단어 일치 점수가 높은 상위 k개를 고른다 (점수 0 은 제외).
+3. 고른 단위를 원문 그대로, 문서 순서로, 출처 문서 이름과 함께 문맥 맨 끝에 붙인다.
+
+```
+## Restored sentences (omitted above, relevant to the question)
+- [cors.md] The preflight cache lifetime is configurable.
+```
+
+- **캐시:** 1번 결과는 질문과 무관해 질문이 바뀌어도 같다 (테스트로 확인). 답변 프롬프트는
+  `<documentation>{context}</documentation>` 다음에 질문이 오므로, 바뀌는 건 질문 바로 앞의 보충뿐이다.
+  system + 압축본까지가 고정 앞부분으로 캐시에 남는다.
+- **점수:** `bm25` 와 `wcos` (단어 빈도 코사인, PR #57 `relevance()` 와 같은 계산) 를 `compressors/lexical.py` 에 모았다.
+  dev 에서 비교해 하나만 남긴다.
+- **이름:** `sup_{bm25|wcos}_{loose|structure}_r{50,70}_k{3,5}`, 예: `"rule>sup_bm25_structure_r50_k3"`
+- **PR #57 (`llmlingua2_repair_v1`) 과의 관계:** 같은 생각(압축 + 질문 관련 문장 복원)이다. 이쪽은 문장 단위로 지워
+  어떤 문장이 빠졌는지 정확히 알므로 압축 구간 찾기(SequenceMatcher)와 임베딩 손상 판정이 필요 없고,
+  제자리 대신 끝에 붙여 앞부분을 지킨다.
+
+같이 고친 것: `join_units` 가 빈 줄 연속을 줄이는 정규식을 코드 블록 안에도 걸어, Python 함수 사이 빈 줄 두 개가
+하나로 줄었다. 이제 코드 블록·머리말 안은 원문 그대로 둔다.
+
+### 근거 조각 보존 (dev, 답변 모델 없음, 잠정)
+
+작업 환경에 LLMLingua-2 모델이 없어 1번의 점수를 **긴 문장 우선 가짜 점수**로 바꿔 쟀다. 실제 실행(LLMLingua-2 점수)에서는
+지워지는 문장이 달라지므로 방향만 본다. 근거 조각은 rule 뒤 문맥에서 찾을 수 있는 인용문을 문장·목록 단위로 나눈 것
+(20자 초과, 47개)이고, 조각이 압축 문맥에 글자 그대로 있으면 보존으로 센다. 절감은 rule 뒤 문맥 대비 글자 기준이다.
+
+| 조건 | 근거 조각 보존 | 근거 전부 보존 문항 | 추가 절감 |
+|---|---|---|---|
+| sent_loose_r70 | 91.5% | 31/35 | 8.4% |
+| sup_bm25_loose_r70_k3 | 93.6% | 32/35 | 3.7% |
+| sup_wcos_loose_r70_k5 | 97.9% | 34/35 | 2.8% |
+| sent_structure_r50 | 72.3% | 24/35 | 24.3% |
+| sup_bm25_structure_r50_k3 | 87.2% | 29/35 | 18.5% |
+| sup_bm25_structure_r50_k5 | 89.4% | 30/35 | 15.3% |
+| sup_wcos_structure_r50_k3 | 83.0% | 28/35 | 18.6% |
+| sup_wcos_structure_r50_k5 | 85.1% | 29/35 | 15.6% |
+
+- loose_r70 은 원래 지우는 양이 8% 남짓이라 보충을 붙이면 절감이 2~4% 만 남는다. 보충은 강하게 지우는 설정에 붙일 때 의미가 있다.
+- structure_r50 에서 보충 k=3 은 절감 24.3% → 18.5% 를 내주고 근거 보존을 72.3% → 87.2% 로 올렸다. 이 설정에서는 bm25 가 wcos 보다 4%p 높다.
+- 답변 실험 후보: `rule`, `rule>sent_structure_r50`, `rule>sup_bm25_structure_r50_k3`, `rule>sup_wcos_structure_r50_k3`,
+  `rule>qx_bm25_structure_r50`. 첫 실행은 `--limit 2` 로 LLMLingua-2 점수 계산부터 확인한다.
+
+```
+EVAL_DIR=data/evalsets/claude-v1 python src/experiment.py --split dev --limit 2 --compressors "none,rule>sup_bm25_structure_r50_k3"
+EVAL_DIR=data/evalsets/claude-v1 python src/experiment.py --split dev --compressors "none,rule,rule>sent_structure_r50,rule>sup_bm25_structure_r50_k3,rule>sup_wcos_structure_r50_k3,rule>qx_bm25_structure_r50"
+```

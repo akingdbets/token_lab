@@ -71,29 +71,10 @@ class QueryExtractTest(unittest.TestCase):
         # 기준점 0 이면 모두 남는다
         self.assertEqual(self.run_q(make(min_score=0.0), "anything").context, DOC)
 
-    def test_embedding_scorer_caches_unit_vectors(self):
-        calls = []
-
-        def embed(text):
-            calls.append(text)
-            return [1.0, 0.0] if "preflight" in text.lower() else [0.0, 1.0]
-
-        comp = make(scorer="emb", keep_ratio=0.2, embed=embed)
-        res = self.run_q(comp, "preflight cache")
-        self.assertIn("The preflight cache lifetime is configurable.", res.context)
-        first = len(calls)
-        self.assertEqual(res.info["embed_calls"], first)
-        res = self.run_q(comp, "preflight timing")       # 다음 턴: 질문만 새로 임베딩
-        self.assertEqual(len(calls), first + 1)
-        self.assertEqual(res.info["embed_calls"], 1)
-
-    def test_invalid_scorer(self):
-        with self.assertRaises(ValueError):
-            QueryExtractCompressor(scorer="nope")
-
     def test_registry_and_chain(self):
-        for name in ("qx_bm25_loose_r50", "qx_bm25_structure_r30", "qx_emb_loose_r50", "qx_emb_structure_r30"):
+        for name in ("qx_bm25_loose_r50", "qx_bm25_structure_r30"):
             self.assertIn(name, REGISTRY)
+        self.assertFalse(any(name.startswith("qx_emb_") for name in REGISTRY))
         chain = get_compressor("rule>qx_bm25_loose_r50")
         self.assertEqual(chain.stages[-1].config()["uses_question"], True)
         self.assertEqual(chain.stages[-1].config()["scorer"], "bm25")

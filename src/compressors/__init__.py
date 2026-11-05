@@ -54,6 +54,7 @@ from compressors.llmlingua2 import LLMLingua2Compressor
 from compressors.rule import RuleCompressor
 from compressors.query_extract import QueryExtractCompressor
 from compressors.sentence_select import SentenceSelectCompressor
+from compressors.supplement import SupplementCompressor
 from config import CFG
 
 REGISTRY: dict[str, Compressor] = {
@@ -78,30 +79,31 @@ REGISTRY: dict[str, Compressor] = {
         )
         for rate in CFG.compression_rates
     },
-    # 질문을 보지 않는 변형 (멀티턴: 문서를 한 번 압축해 여러 턴에 재사용). "rule>llmlingua2_r50_noq" 처럼 rule 뒤에 붙인다
-    **{
-        f"llmlingua2_r{round(rate * 100):02d}_noq": LLMLingua2Compressor(
-            retain_ratio=rate,
-            use_question=False,
-        )
-        for rate in CFG.compression_rates
-    },
     # 문장 단위 선택 (질문 안 봄, 멀티턴용). 보호되지 않은 문장·목록 항목만 후보, 후보 글자의 keep_ratio 를 남긴다.
-    # 이름은 sent_{보호 수준}_r{남길 비율}. rule 뒤에 붙인다: "rule>sent_literal_r70"
+    # 이름은 sent_{보호 수준}_r{남길 비율}. rule 뒤에 붙인다: "rule>sent_loose_r70"
     **{
         f"sent_{level}_r{round(rate * 100):02d}": SentenceSelectCompressor(keep_ratio=rate, protect=level)
-        for level in ("strict", "literal", "loose", "structure")
+        for level in ("loose", "structure")
         for rate in (0.5, 0.7)
     },
-    # 턴마다 그 턴의 질문으로 문장을 고르는 추출형 (질문 봄). 이름은 qx_{점수}_{보호 수준}_r{남길 비율}.
-    # 점수: bm25 (모델 없음) | emb (임베딩 코사인). rule 뒤에 붙인다: "rule>qx_bm25_loose_r50"
+    # 턴마다 그 턴의 질문으로 BM25 점수가 높은 문장을 고르는 추출형 (질문 봄). 이름은 qx_bm25_{보호 수준}_r{남길 비율}.
+    # rule 뒤에 붙인다: "rule>qx_bm25_loose_r50"
     **{
-        f"qx_{scorer}_{level}_r{round(rate * 100):02d}": QueryExtractCompressor(
-            scorer=scorer, protect=level, keep_ratio=rate,
-        )
-        for scorer in ("bm25", "emb")
+        f"qx_bm25_{level}_r{round(rate * 100):02d}": QueryExtractCompressor(protect=level, keep_ratio=rate)
         for level in ("loose", "structure")
         for rate in (0.3, 0.5)
+    },
+    # 고정 앞부분 + 질문별 보충 (compressors/supplement.py). sent_{보호 수준}_r{남길 비율} 압축본 끝에, 지운 문장 중
+    # 질문 관련 상위 k개를 원문 그대로 덧붙인다. 점수: bm25 | wcos (단어 빈도 코사인, PR #57 과 같은 계산).
+    # 이름은 sup_{점수}_{보호 수준}_r{남길 비율}_k{개수}. rule 뒤에 붙인다: "rule>sup_bm25_loose_r70_k3"
+    **{
+        f"sup_{scorer}_{level}_r{round(rate * 100):02d}_k{k}": SupplementCompressor(
+            query_scorer=scorer, protect=level, keep_ratio=rate, top_k=k,
+        )
+        for scorer in ("bm25", "wcos")
+        for level in ("loose", "structure")
+        for rate in (0.5, 0.7)
+        for k in (3, 5)
     },
 }
 
@@ -119,5 +121,5 @@ def get_compressor(name: str) -> Compressor:
 
 __all__ = [
     "PARTS", "Chain", "CompressResult", "Compressor", "PromptParts",
-    "LLMLingua2Compressor", "QueryExtractCompressor", "SentenceSelectCompressor", "REGISTRY", "get_compressor",
+    "LLMLingua2Compressor", "QueryExtractCompressor", "SentenceSelectCompressor", "SupplementCompressor", "REGISTRY", "get_compressor",
 ]

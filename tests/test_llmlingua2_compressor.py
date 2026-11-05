@@ -327,46 +327,10 @@ class LLMLingua2CompressorTest(unittest.TestCase):
         self.assertLessEqual(len(force_tokens), 100)
         self.assertNotIn("CORS", force_tokens)
 
-    def test_use_question_false_ignores_question_identifiers(self):
-        source = "def create_access_token(expires_delta=None): return 15"
-        compressed = "expires_delta None return 15"
-        engine = FakeEngine(result(compressed))
-        comp = self.make(engine, use_question=False)
-
-        output = comp.compress(PromptParts(
-            "",
-            source,
-            "What does create_access_token use by default?",
-        ))
-
-        # 질문 식별자가 빠져도 원문으로 되돌리지 않는다
-        self.assertEqual(output.context, compressed)
-        self.assertEqual(output.info["status"], "compressed")
-        self.assertEqual(output.info["required_question_identifiers"], [])
-        self.assertFalse(output.info["use_question"])
-        self.assertEqual(
-            output.info["safety_policy_version"],
-            "fenced-code-blocks-v1+document-headers-v1+unsplit-identifiers-v1",
-        )
-        self.assertEqual(comp.name, "llmlingua2_r50_noq")
-
-    def test_use_question_false_output_does_not_depend_on_question(self):
-        source = "Use CORSMiddleware with allow_origins. The default max_age is 600."
-        sent = []
-        for question in ("What is max_age?", "How do I set allow_origins in CORSMiddleware?"):
-            engine = FakeEngine(result("short"))
-            self.make(engine, use_question=False).compress(PromptParts("", source, question))
-            sent.append((engine.calls[0]["context"], engine.calls[0]["force_tokens"]))
-        self.assertEqual(sent[0], sent[1])
-
     def test_registry_exposes_default_and_rate_variants(self):
-        for name in (
-            "llmlingua2", "llmlingua2_r30", "llmlingua2_r50", "llmlingua2_r70",
-            "llmlingua2_r30_noq", "llmlingua2_r50_noq", "llmlingua2_r70_noq",
-        ):
+        for name in ("llmlingua2", "llmlingua2_r30", "llmlingua2_r50", "llmlingua2_r70"):
             self.assertIn(name, REGISTRY)
             self.assertEqual(get_compressor(name).name, name)
-        self.assertFalse(get_compressor("rule>llmlingua2_r50_noq").stages[-1].use_question)
 
 
 if __name__ == "__main__":

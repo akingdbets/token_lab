@@ -43,10 +43,6 @@ TRACE_SCHEMA_VERSION = 1
 SAFETY_POLICY_VERSION = (
     "question-identifiers-v1+fenced-code-blocks-v1+document-headers-v1+unsplit-identifiers-v1"
 )
-# use_question=False 일 때: 질문 식별자 보호와 그 fallback 을 끈다 (멀티턴처럼 압축 시점에 질문을 모를 때)
-SAFETY_POLICY_VERSION_NO_QUESTION = (
-    "fenced-code-blocks-v1+document-headers-v1+unsplit-identifiers-v1"
-)
 
 _ENGINE_CACHE: dict[tuple[str, str, str], Any] = {}
 _ENGINE_LOCK = threading.Lock()
@@ -257,7 +253,6 @@ class LLMLingua2Compressor(Compressor):
         force_tokens: tuple[str, ...] = DEFAULT_FORCE_TOKENS,
         force_reserve_digit: bool = True,
         fallback_on_error: bool = True,
-        use_question: bool = True,
         name: str | None = None,
         engine_factory: Callable[[], Any] | None = None,
     ):
@@ -279,11 +274,7 @@ class LLMLingua2Compressor(Compressor):
         self.force_tokens = tuple(force_tokens)
         self.force_reserve_digit = force_reserve_digit
         self.fallback_on_error = fallback_on_error
-        # False 면 질문을 보지 않는다: 질문 식별자를 force token 으로 넣지 않고,
-        # 압축 뒤 질문 식별자가 빠져도 원문으로 되돌리지 않는다 (멀티턴 재사용 조건)
-        self.use_question = use_question
-        suffix = "" if use_question else "_noq"
-        self.name = name or f"llmlingua2_r{round(self.retain_ratio * 100):02d}{suffix}"
+        self.name = name or f"llmlingua2_r{round(self.retain_ratio * 100):02d}"
         self._engine_factory = engine_factory
         self._engine = None
 
@@ -297,8 +288,7 @@ class LLMLingua2Compressor(Compressor):
             "force_tokens": list(self.force_tokens),
             "force_reserve_digit": self.force_reserve_digit,
             "fallback_on_error": self.fallback_on_error,
-            "use_question": self.use_question,
-            "safety_policy_version": self._policy_version,
+            "safety_policy_version": SAFETY_POLICY_VERSION,
         }
 
     def _get_engine(self):
@@ -319,13 +309,8 @@ class LLMLingua2Compressor(Compressor):
             "retain_ratio": self.retain_ratio,
             "force_tokens": list(self.force_tokens),
             "force_reserve_digit": self.force_reserve_digit,
-            "use_question": self.use_question,
-            "safety_policy_version": self._policy_version,
+            "safety_policy_version": SAFETY_POLICY_VERSION,
         }
-
-    @property
-    def _policy_version(self) -> str:
-        return SAFETY_POLICY_VERSION if self.use_question else SAFETY_POLICY_VERSION_NO_QUESTION
 
     def _record(
         self,
@@ -413,9 +398,7 @@ class LLMLingua2Compressor(Compressor):
         header_markers = [marker for marker, _ in document_headers]
         protected_code_characters = sum(len(block) for _, block in code_blocks)
         force_slots = max(0, 100 - len(self.force_tokens))
-        required_question_identifiers = (
-            _question_identifiers(question, context) if self.use_question else []
-        )
+        required_question_identifiers = _question_identifiers(question, context)
         required_force_tokens = list(dict.fromkeys((*protected_markers, *required_question_identifiers)))
         if len(required_force_tokens) > force_slots:
             return self._fallback(

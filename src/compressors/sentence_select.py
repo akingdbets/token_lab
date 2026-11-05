@@ -11,11 +11,8 @@ rule 다음 단계로 쓴다 ("rule>sent_r70"). 문서를 한 번 압축해 여�
     글자 없는 줄(구분선 등)은 보호.
     빈 줄은 구조로 남긴다.
     목록 항목은 줄 하나가 단위, 나머지 본문 줄은 문장으로 나눈 것이 단위.
-    본문 단위라도 답이 될 만한 형태면 보호한다. 표지는 inline_code, number, quoted(따옴표 리터럴),
-    identifier(snake_case/CamelCase), value_word(default·not·must·only 등). 어느 표지를 보호할지는
-    protect 수준으로 고른다 (PROTECT_LEVELS):
-        strict     다섯 표지 모두. 이 위키는 본문의 93% 가 걸려 지울 몫이 거의 없다
-        literal    inline_code, number, quoted
+    본문 단위라도 답이 될 만한 형태면 보호한다. 표지는 number, quoted(따옴표 리터럴).
+    어느 표지를 보호할지는 protect 수준으로 고른다 (PROTECT_LEVELS):
         loose      number, quoted
         structure  표지 보호 없음 (구조 단위만 보호)
 
@@ -35,7 +32,7 @@ from __future__ import annotations
 import re
 import time
 from dataclasses import dataclass
-from typing import Callable, Sequence
+from typing import Callable
 
 from compressors.base import Compressor
 
@@ -50,39 +47,21 @@ _LIST_ITEM = re.compile(r"^[ \t]*(?:[-*+]|\d+[.)])[ \t]+")
 # 문장 끝: . ! ? 뒤 공백, 다음이 대문자·여는 기호. "e.g. X" 같은 약어는 끊지 않는다
 _SENTENCE_END = re.compile(r"(?<=[.!?])(?<!\be\.g\.)(?<!\bi\.e\.)(?<!\bvs\.)(?<!\betc\.)[ \t]+(?=[A-Z`\"'(\[*_])")
 
-_TECHNICAL_IDENTIFIER = re.compile(
-    r"\b(?:[A-Za-z][A-Za-z0-9]*_[A-Za-z0-9_]+|[A-Z][A-Za-z0-9]*[A-Z][A-Za-z0-9]*)\b"
-)
-VALUE_WORDS = (
-    "default", "defaults", "not", "no", "never", "none", "without", "unless", "except", "instead",
-    "only", "must", "required", "requires", "deprecated", "always", "cannot", "can't", "don't",
-    "doesn't", "isn't", "won't", "shouldn't", "before", "after", "first", "last", "order",
-    "warning", "note", "important",
-)
-
-
+# strict(인라인 코드·식별자·값 단어까지 보호)와 literal(인라인 코드까지)은 지울 몫이 1~5% 라 뺐다
+# (docs/results/multiturn_compression_v1.md 의 측정)
 PROTECT_LEVELS = {
-    "strict": frozenset({"inline_code", "number", "quoted", "identifier", "value_word"}),
-    "literal": frozenset({"inline_code", "number", "quoted"}),
     "loose": frozenset({"number", "quoted"}),
     "structure": frozenset(),
 }
 
 
-def _answer_shaped(text: str, value_words: Sequence[str]) -> list[str]:
+def _answer_shaped(text: str) -> list[str]:
     """답이 될 만한 형태 표지들 (비어 있으면 후보)."""
     reasons = []
-    if "`" in text:
-        reasons.append("inline_code")
     if re.search(r"\d", text):
         reasons.append("number")
     if re.search(r"\"[^\"\n]+\"|(?<![A-Za-z])'[^'\n]+'(?![A-Za-z])", text):
         reasons.append("quoted")
-    if _TECHNICAL_IDENTIFIER.search(text):
-        reasons.append("identifier")
-    words = set(re.findall(r"[a-z]+(?:'[a-z]+)?", text.lower()))
-    if words & set(value_words):
-        reasons.append("value_word")
     return reasons
 
 
@@ -97,7 +76,7 @@ class Unit:
     reasons: tuple = ()
 
 
-def split_units(text: str, value_words: Sequence[str] = VALUE_WORDS) -> list[Unit]:
+def split_units(text: str) -> list[Unit]:
     """문서를 단위로 나눈다. "".join(재조립) 하면 원문과 같다 (모든 단위를 남길 때)."""
     units: list[Unit] = []
     lines = text.splitlines(keepends=True)
@@ -163,7 +142,7 @@ def split_units(text: str, value_words: Sequence[str] = VALUE_WORDS) -> list[Uni
             else:
                 pieces, kind = _SENTENCE_END.split(rest), "sentence"
             for i, piece in enumerate(pieces):
-                reasons = tuple(_answer_shaped(piece, value_words))
+                reasons = tuple(_answer_shaped(piece))
                 units.append(Unit(
                     piece, kind, False, line_no,          # 본문 보호 여부는 protect 수준에 따라 plan() 이 정한다
                     newline=nl if i == len(pieces) - 1 else "",
@@ -179,7 +158,7 @@ def split_units(text: str, value_words: Sequence[str] = VALUE_WORDS) -> list[Uni
 
 def join_units(units: list[Unit], keep: list[bool]) -> str:
     """남길 단위만 이어 붙인다. 같은 줄 문장은 공백 하나로, 단위가 모두 지워진 줄은 줄째 없앤다."""
-    out: list[str] = []
+    out: list[tuple[bool, str]] = []      # (여러 줄짜리 블록 여부, 글자)
     by_line: dict[int, list[int]] = {}
     order: list[int] = []
     for i, u in enumerate(units):
@@ -194,17 +173,27 @@ def join_units(units: list[Unit], keep: list[bool]) -> str:
         if key < 0:
             i = -key - 1
             if keep[i]:
-                out.append(units[i].text)
+                out.append((True, units[i].text))
             continue
         idx = by_line[key]
         kept = [i for i in idx if keep[i]]
         if not kept:
             continue
         first, last = units[idx[0]], units[idx[-1]]
-        out.append(first.indent + " ".join(units[i].text for i in kept) + last.newline)
-    text = "".join(out)
-    # 지운 문단 때문에 생긴 빈 줄 연속은 하나로
-    return re.sub(r"\n(?:[ \t]*\n){2,}", "\n\n", text)
+        out.append((False, first.indent + " ".join(units[i].text for i in kept) + last.newline))
+    # 지운 문단 때문에 생긴 빈 줄 연속은 하나로. 코드 블록·머리말 안은 원문 그대로 둔다
+    # (예전에는 전체에 걸어 Python 함수 사이 빈 줄 두 개가 하나로 줄었다)
+    pieces: list[str] = []
+    run: list[str] = []
+    for is_block, text in out:
+        if is_block:
+            pieces.append(re.sub(r"\n(?:[ \t]*\n){2,}", "\n\n", "".join(run)))
+            pieces.append(text)
+            run = []
+        else:
+            run.append(text)
+    pieces.append(re.sub(r"\n(?:[ \t]*\n){2,}", "\n\n", "".join(run)))
+    return "".join(pieces)
 
 
 def _llmlingua2_scorer(model_name: str, model_revision: str, device: str) -> Callable[[list[str]], list[float]]:
@@ -219,6 +208,20 @@ def _llmlingua2_scorer(model_name: str, model_revision: str, device: str) -> Cal
         return [float(p) for p in probs]
 
     return score
+
+
+@dataclass(frozen=True)
+class DroppedUnit:
+    """압축 때 지운 후보 단위 하나 (원문 글자 그대로)."""
+    doc_index: int          # split_documents 순서
+    unit_index: int         # 그 문서 split_units 순서
+    source: str             # "## Document:" 뒤 이름 (없으면 "")
+    text: str
+
+
+def _document_name(document: str) -> str:
+    match = re.match(r"## Document:[ \t]*(.*)", document)
+    return match.group(1).strip() if match else ""
 
 
 def split_documents(context: str) -> list[str]:
@@ -238,10 +241,9 @@ class SentenceSelectCompressor(Compressor):
         self,
         *,
         keep_ratio: float = 0.7,
-        protect: str = "literal",
+        protect: str = "loose",
         min_chars: int = 1500,
         max_protected_share: float = 1.0,
-        value_words: Sequence[str] = VALUE_WORDS,
         scorer: Callable[[list[str]], list[float]] | None = None,
         model_name: str = "microsoft/llmlingua-2-bert-base-multilingual-cased-meetingbank",
         model_revision: str = "5f0c827",
@@ -258,7 +260,6 @@ class SentenceSelectCompressor(Compressor):
         self.protect = protect
         self.min_chars = int(min_chars)
         self.max_protected_share = float(max_protected_share)
-        self.value_words = tuple(value_words)
         self.model_name = model_name
         self.model_revision = model_revision
         self.device = device
@@ -275,7 +276,6 @@ class SentenceSelectCompressor(Compressor):
             "protect_reasons": sorted(PROTECT_LEVELS[self.protect]),
             "min_chars": self.min_chars,
             "max_protected_share": self.max_protected_share,
-            "value_words": list(self.value_words),
             "scorer": self.scorer_name,
             "model_name": self.model_name,
             "model_revision": self.model_revision,
@@ -311,7 +311,7 @@ class SentenceSelectCompressor(Compressor):
 
     def plan(self, document: str) -> tuple[list[Unit], list[int], str]:
         """(단위, 후보 인덱스, 상태). 상태가 select 가 아니면 원문 그대로 둔다."""
-        units = split_units(document, self.value_words)
+        units = split_units(document)
         guarded = PROTECT_LEVELS[self.protect]
         for u in units:
             if u.kind in ("sentence", "list"):
@@ -331,7 +331,9 @@ class SentenceSelectCompressor(Compressor):
         started = time.perf_counter()
         docs = []
         out: list[str] = []
-        for document in split_documents(context):
+        # 지운 후보 단위 (문서 순서, 문서 안 순서). supplement 가 이 중에서 질문 관련 문장을 되살린다
+        self._dropped: list[DroppedUnit] = []
+        for doc_index, document in enumerate(split_documents(context)):
             units, candidates, status = self.plan(document)
             cand_chars = sum(len(units[i].text) for i in candidates)
             record = {
@@ -348,6 +350,11 @@ class SentenceSelectCompressor(Compressor):
             scores = self._score_candidates(question, [units[i].text for i in candidates])
             keep = self._select(units, candidates, scores)
             kept_chars = sum(len(units[i].text) for i in candidates if keep[i])
+            source = _document_name(document)
+            self._dropped.extend(
+                DroppedUnit(doc_index=doc_index, unit_index=i, source=source, text=units[i].text)
+                for i in candidates if not keep[i]
+            )
             compressed = join_units(units, keep)
             out.append(compressed)
             record.update(

@@ -71,10 +71,11 @@ class SplitTest(unittest.TestCase):
         self.assertIn("\n\ny = 2\n", code[0].text)
 
     def test_sentences_split_and_marked(self):
-        units = {u.text: u for u in split_units(DOC) if u.kind == "sentence"}
+        units = {u.text: u for u in split_units(DOC) if u.kind in ("sentence", "list")}
         self.assertIn("This is filler prose about things.", units)
-        self.assertIn("inline_code", units["Set `max_age` to change it."].reasons)
+        self.assertIn("number", units["- the default is 600 seconds"].reasons)
         self.assertEqual(units["It keeps going for a while."].reasons, ())
+        self.assertEqual(units["Set `max_age` to change it."].reasons, ())   # 인라인 코드는 표지가 아니다
 
     def test_abbreviation_does_not_split(self):
         texts = [u.text for u in split_units("Use types (e.g. Decimal) here. Next one.\n") if u.kind == "sentence"]
@@ -91,17 +92,18 @@ class SelectTest(unittest.TestCase):
         return comp.compress(PromptParts("", context, question))
 
     def test_protected_units_always_survive(self):
-        out = self.compress(make(keep_ratio=0.01, protect="literal")).context
-        for kept in ("## Document: a.md", "title: Demo", "# Title", "Set `max_age` to change it.",
+        out = self.compress(make(keep_ratio=0.01, protect="loose")).context
+        for kept in ("## Document: a.md", "title: Demo", "# Title",
                      "- the default is 600 seconds", '| samesite | "lax" (default) |', "x = 1\n\ny = 2",
                      "> Note: keep this."):
             self.assertIn(kept, out)
 
     def test_dropped_sentences_are_whole_and_lines_collapse(self):
-        out = self.compress(make(keep_ratio=0.01, protect="literal")).context
+        out = self.compress(make(keep_ratio=0.01, protect="loose")).context
         # 예산을 넘기 전까지 점수 높은 순으로 남기므로 가장 앞(점수 최고) 후보 하나만 남는다
-        self.assertIn("This is filler prose about things. Set `max_age` to change it.\n", out)
+        self.assertIn("This is filler prose about things.\n", out)
         self.assertNotIn("It keeps going", out)
+        self.assertNotIn("Set `max_age`", out)
         self.assertNotIn("Another plain sentence", out)
         self.assertNotIn("- a plain list item here", out)
         self.assertNotIn("\n\n\n", out)
@@ -124,13 +126,10 @@ class SelectTest(unittest.TestCase):
 
     def test_protect_levels_change_candidates(self):
         counts = {}
-        for level in ("strict", "literal", "loose", "structure"):
+        for level in ("loose", "structure"):
             res = self.compress(make(protect=level))
             counts[level] = res.info["documents"][0]["candidate_units"]
-        self.assertLessEqual(counts["strict"], counts["literal"])
-        self.assertLessEqual(counts["literal"], counts["loose"])
-        self.assertLessEqual(counts["loose"], counts["structure"])
-        self.assertLess(counts["strict"], counts["structure"])
+        self.assertLess(counts["loose"], counts["structure"])
 
     def test_short_and_dense_documents_are_skipped(self):
         res = self.compress(make(min_chars=10_000))
@@ -156,11 +155,13 @@ class SelectTest(unittest.TestCase):
             SentenceSelectCompressor(protect="nope")
 
     def test_registry(self):
-        for name in ("sent_literal_r70", "sent_structure_r50", "sent_strict_r70", "sent_loose_r50"):
+        for name in ("sent_loose_r70", "sent_structure_r50", "sent_loose_r50"):
             self.assertIn(name, REGISTRY)
-        chain = get_compressor("rule>sent_literal_r70")
-        self.assertEqual(chain.name, "rule>sent_literal_r70")
-        self.assertEqual(chain.stages[-1].protect, "literal")
+        for gone in ("sent_strict_r70", "sent_literal_r70"):
+            self.assertNotIn(gone, REGISTRY)
+        chain = get_compressor("rule>sent_loose_r70")
+        self.assertEqual(chain.name, "rule>sent_loose_r70")
+        self.assertEqual(chain.stages[-1].protect, "loose")
 
 
 if __name__ == "__main__":
