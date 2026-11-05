@@ -4,3 +4,11 @@ __pycache__/
 *.pyc
 .venv/
 .env
+
+# Research outputs stay local; only small publication tables/configs are tracked.
+/tokenlab_*.zip
+/docs/analysis/terra-review-*/
+/docs/analysis/oracle-pilot/*
+!/docs/analysis/oracle-pilot/selection_config.json
+/docs/analysis/final-experiment/*
+!/docs/analysis/final-experiment/config.json

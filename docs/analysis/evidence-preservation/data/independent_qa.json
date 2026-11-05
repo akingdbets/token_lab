@@ -1,0 +1,634 @@
+[
+  {
+    "id": "ind_graphlib_1",
+    "type": "fact",
+    "question": "What happens when graphlib.TopologicalSorter.add() is called multiple times with the same node?",
+    "answer": "The node's dependencies become the union of all dependencies passed in.",
+    "key_facts": [
+      "The dependencies are the union of all dependencies passed in for that node."
+    ],
+    "evidence": [
+      {
+        "quote": "If called multiple times with the same node argument, the set of\ndependencies will be the union of all dependencies passed in."
+      }
+    ],
+    "source_files": [
+      "python314/graphlib.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/graphlib.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_graphlib_2",
+    "type": "code",
+    "question": "Given a graphlib.TopologicalSorter instance named ts, what exact expression from the documented example produces a tuple of its static topological order?",
+    "answer": "tuple(ts.static_order())",
+    "key_facts": [
+      "The expression is tuple(ts.static_order())."
+    ],
+    "evidence": [
+      {
+        "quote": ">>> ts = TopologicalSorter(graph)\n>>> tuple(ts.static_order())"
+      }
+    ],
+    "source_files": [
+      "python314/graphlib.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/graphlib.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_graphlib_3",
+    "type": "procedure",
+    "question": "What ordered process does graphlib document for sorting a graph with TopologicalSorter in the general case?",
+    "answer": "Create a TopologicalSorter with an optional initial graph, add additional nodes, and call prepare(). While is_active() is true, iterate over and process the nodes returned by get_ready(), calling done() on each node as it finishes.",
+    "key_facts": [
+      "Create a TopologicalSorter with an optional initial graph, then add additional nodes.",
+      "Call prepare() before processing nodes.",
+      "While is_active() is true, process nodes returned by get_ready() and call done() on each as it finishes."
+    ],
+    "evidence": [
+      {
+        "quote": "Create an instance of the TopologicalSorter with an optional\ninitial graph.\n\nAdd additional nodes to the graph.\n\nCall prepare() on the graph.\n\nWhile is_active() is True, iterate over\nthe nodes returned by get_ready() and\nprocess them. Call done() on each node as it\nfinishes processing."
+      }
+    ],
+    "source_files": [
+      "python314/graphlib.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/graphlib.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_tomllib_1",
+    "type": "fact",
+    "question": "What does the tomllib.TOMLDecodeError pos attribute represent?",
+    "answer": "The index of doc where parsing failed.",
+    "key_facts": [
+      "pos is the index of doc where parsing failed."
+    ],
+    "evidence": [
+      {
+        "quote": "posÂ\n\nThe index of doc where parsing failed."
+      }
+    ],
+    "source_files": [
+      "python314/tomllib.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/tomllib.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_tomllib_2",
+    "type": "code",
+    "question": "What exact expression does the tomllib example use to parse the TOML string stored in toml_str?",
+    "answer": "tomllib.loads(toml_str)",
+    "key_facts": [
+      "The expression is tomllib.loads(toml_str)."
+    ],
+    "evidence": [
+      {
+        "quote": "data = tomllib.loads(toml_str)"
+      }
+    ],
+    "source_files": [
+      "python314/tomllib.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/tomllib.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_tomllib_3",
+    "type": "procedure",
+    "question": "In the documented tomllib example, what ordered steps parse pyproject.toml into data?",
+    "answer": "Import tomllib, open pyproject.toml in binary read mode as f, then assign tomllib.load(f) to data.",
+    "key_facts": [
+      "Import tomllib.",
+      "Open pyproject.toml in binary read mode as f.",
+      "Assign tomllib.load(f) to data."
+    ],
+    "evidence": [
+      {
+        "quote": "import tomllib\n\nwith open(\"pyproject.toml\", \"rb\") as f:\n    data = tomllib.load(f)"
+      }
+    ],
+    "source_files": [
+      "python314/tomllib.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/tomllib.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_tomllib_4",
+    "type": "multi",
+    "question": "According to the tomllib conversion table, how are TOML offset date-times and local date-times represented in Python?",
+    "answer": "Both become datetime.datetime objects. An offset date-time has tzinfo set to a datetime.timezone instance; a local date-time has tzinfo set to None.",
+    "key_facts": [
+      "An offset date-time becomes a datetime.datetime with tzinfo set to a datetime.timezone instance.",
+      "A local date-time becomes a datetime.datetime with tzinfo set to None."
+    ],
+    "evidence": [
+      {
+        "quote": "offset date-time\n\ndatetime.datetime (tzinfo attribute set to an instance of datetime.timezone)\n\nlocal date-time\n\ndatetime.datetime (tzinfo attribute set to None)"
+      }
+    ],
+    "source_files": [
+      "python314/tomllib.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/tomllib.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_bisect_1",
+    "type": "fact",
+    "question": "Which comparison method do the bisect module's functions call to locate an insertion point?",
+    "answer": "They call __lt__().",
+    "key_facts": [
+      "The bisect functions call __lt__() to locate an insertion point."
+    ],
+    "evidence": [
+      {
+        "quote": "Instead, the\nfunctions only call the __lt__() method and will return an insertion\npoint between values in an array."
+      }
+    ],
+    "source_files": [
+      "python314/bisect.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/bisect.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_bisect_2",
+    "type": "code",
+    "question": "In the bisect module's movie example, what exact expression retrieves the first movie released after 1960 using the defined by_year key?",
+    "answer": "movies[bisect(movies, 1960, key=by_year)]",
+    "key_facts": [
+      "The expression is movies[bisect(movies, 1960, key=by_year)]."
+    ],
+    "evidence": [
+      {
+        "quote": ">>> # Find the first movie released after 1960\n>>> by_year = attrgetter('released')\n>>> movies.sort(key=by_year)\n>>> movies[bisect(movies, 1960, key=by_year)]"
+      }
+    ],
+    "source_files": [
+      "python314/bisect.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/bisect.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_bisect_3",
+    "type": "procedure",
+    "question": "What ordered steps does bisect.insort_left() perform to insert x into a sorted list?",
+    "answer": "First it runs bisect_left() to locate the insertion point, then it calls the list's insert() method to insert x at that position.",
+    "key_facts": [
+      "First, insort_left() runs bisect_left() to locate an insertion point.",
+      "Next, it runs insert() on the list to insert x at the appropriate position."
+    ],
+    "evidence": [
+      {
+        "quote": "This function first runs bisect_left() to locate an insertion point.\nNext, it runs the insert() method on a to insert x at the\nappropriate position to maintain sort order."
+      }
+    ],
+    "source_files": [
+      "python314/bisect.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/bisect.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_bisect_4",
+    "type": "multi",
+    "question": "According to the bisect module's performance notes, what is the time complexity of insort() functions, and what happens to key-function results after search functions use them?",
+    "answer": "The insort() functions are O(n), and the search functions discard key-function results after use.",
+    "key_facts": [
+      "The insort() functions are O(n).",
+      "The search functions discard key-function results after they are used."
+    ],
+    "evidence": [
+      {
+        "quote": "The insort() functions are O(n) because the logarithmic search step\nis dominated by the linear time insertion step."
+      },
+      {
+        "quote": "The search functions are stateless and discard key function results after\nthey are used."
+      }
+    ],
+    "source_files": [
+      "python314/bisect.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/bisect.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_heapq_1",
+    "type": "fact",
+    "question": "What does heapq.heapify_max(x) do, and what is its time complexity?",
+    "answer": "It transforms list x into a max-heap in place, in linear time.",
+    "key_facts": [
+      "It transforms list x into a max-heap in place.",
+      "It runs in linear time."
+    ],
+    "evidence": [
+      {
+        "quote": "heapq.heapify_max(x)Â\n\nTransform list x into a max-heap, in-place, in linear time."
+      }
+    ],
+    "source_files": [
+      "python314/heapq.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/heapq.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_heapq_2",
+    "type": "code",
+    "question": "What exact sorted() expression does the heapq documentation give as equivalent to heapq.nlargest(n, iterable, key=key)?",
+    "answer": "sorted(iterable, key=key, reverse=True)[:n]",
+    "key_facts": [
+      "sorted(iterable, key=key, reverse=True)[:n]"
+    ],
+    "evidence": [
+      {
+        "quote": "heapq.nlargest(n, iterable, key=None)Â\n\nReturn a list with the n largest elements from the dataset defined by\niterable.  key, if provided, specifies a function of one argument that is\nused to extract a comparison key from each element in iterable (for example,\nkey=str.lower).  Equivalent to:  sorted(iterable, key=key,\nreverse=True)[:n]."
+      }
+    ],
+    "source_files": [
+      "python314/heapq.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/heapq.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_heapq_3",
+    "type": "procedure",
+    "question": "In the documented heapq priority queue example, what ordered process does add_task use to update an existing task's priority?",
+    "answer": "First remove the existing task, marking its old entry as removed. Then obtain a new count, create an entry with the revised priority, count, and task, update entry_finder, and push the entry onto pq.",
+    "key_facts": [
+      "Remove the existing task, marking its old entry as removed.",
+      "Obtain a new count and create an entry containing the priority, count, and task.",
+      "Update entry_finder and push the new entry onto pq."
+    ],
+    "evidence": [
+      {
+        "quote": "def add_task(task, priority=0):\n    'Add a new task or update the priority of an existing task'\n    if task in entry_finder:\n        remove_task(task)\n    count = next(counter)\n    entry = [priority, count, task]\n    entry_finder[task] = entry\n    heappush(pq, entry)\n\ndef remove_task(task):\n    'Mark an existing task as REMOVED.  Raise KeyError if not found.'\n    entry = entry_finder.pop(task)\n    entry[-1] = REMOVED"
+      }
+    ],
+    "source_files": [
+      "python314/heapq.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/heapq.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_heapq_4",
+    "type": "multi",
+    "question": "In the heapq running-median application, which values go in each heap, and how is the median determined when the heaps have equal versus unequal sizes?",
+    "answer": "The max-heap holds values at or below the midpoint, and the min-heap holds values above it. When the heaps have equal sizes, the median is the average of their tops; otherwise, it is the top of the larger heap.",
+    "key_facts": [
+      "The max-heap holds values at or below the midpoint, and the min-heap holds values above the midpoint.",
+      "For equal-sized heaps, the median is the average of their tops; otherwise, it is the top of the larger heap."
+    ],
+    "evidence": [
+      {
+        "quote": "A running median can be efficiently implemented by balancing two heaps,\na max-heap for values at or below the midpoint and a min-heap for values\nabove the midpoint.  When the two heaps have the same size, the new\nmedian is the average of the tops of the two heaps; otherwise, the\nmedian is at the top of the larger heap:"
+      }
+    ],
+    "source_files": [
+      "python314/heapq.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/heapq.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_copy_1",
+    "type": "fact",
+    "question": "How does the copy module handle shallow and deep copies of functions and classes?",
+    "answer": "It returns the original object unchanged.",
+    "key_facts": [
+      "For both shallow and deep copies of functions and classes, the original object is returned unchanged."
+    ],
+    "evidence": [
+      {
+        "quote": "It does âcopyâ functions and\nclasses (shallow and deeply), by returning the original object unchanged"
+      }
+    ],
+    "source_files": [
+      "python314/copy.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/copy.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_copy_2",
+    "type": "code",
+    "question": "What exact slice expression does the copy module documentation give for copying an entire sequence?",
+    "answer": "sequence[:]",
+    "key_facts": [
+      "The documented expression is sequence[:]."
+    ],
+    "evidence": [
+      {
+        "quote": "by making\na slice of the entire sequence (sequence[:])."
+      }
+    ],
+    "source_files": [
+      "python314/copy.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/copy.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_copy_3",
+    "type": "procedure",
+    "question": "In an object.__deepcopy__ implementation, what documented process should be followed to deep-copy a component?",
+    "answer": "Call deepcopy() with the component as the first argument and the memo dictionary as the second, treating the memo dictionary as opaque.",
+    "key_facts": [
+      "Call deepcopy() with the component as the first argument and the memo dictionary as the second.",
+      "Treat the memo dictionary as an opaque object."
+    ],
+    "evidence": [
+      {
+        "quote": "If the __deepcopy__ implementation needs\nto make a deep copy of a component, it should call the deepcopy() function\nwith the component as first argument and the memo dictionary as second argument.\nThe memo dictionary should be treated as an opaque object."
+      }
+    ],
+    "source_files": [
+      "python314/copy.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/copy.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_copy_4",
+    "type": "multi",
+    "question": "What does copy.replace() create, and which kinds of objects does it support?",
+    "answer": "It creates a new object of the same type with fields replaced by values from changes. It supports named tuples created by namedtuple(), dataclasses, and other classes defining __replace__().",
+    "key_facts": [
+      "copy.replace() creates a new object of the same type, replacing fields with values from changes.",
+      "It supports named tuples created by namedtuple(), dataclasses, and other classes defining __replace__()."
+    ],
+    "evidence": [
+      {
+        "quote": "Creates a new object of the same type as obj, replacing fields with values\nfrom changes."
+      },
+      {
+        "quote": "Function copy.replace() is more limited\nthan copy() and deepcopy(),\nand only supports named tuples created by namedtuple(),\ndataclasses, and other classes which define method __replace__()."
+      }
+    ],
+    "source_files": [
+      "python314/copy.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/copy.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_weakref_1",
+    "type": "fact",
+    "question": "What happens when an attribute of a weakref.proxy object is accessed after its referent has been garbage collected?",
+    "answer": "It raises ReferenceError.",
+    "key_facts": [
+      "Accessing an attribute of the proxy after its referent is garbage collected raises ReferenceError."
+    ],
+    "evidence": [
+      {
+        "quote": "Accessing an attribute of the proxy object after the referent is\ngarbage collected raises ReferenceError."
+      }
+    ],
+    "source_files": [
+      "python314/weakref.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/weakref.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_weakref_2",
+    "type": "code",
+    "question": "Given a weakref.ref object named r, what exact expression does the weak reference objects section document for testing whether its referent is still live?",
+    "answer": "r() is not None",
+    "key_facts": [
+      "The documented liveness-test expression, using r as the reference name, is r() is not None."
+    ],
+    "evidence": [
+      {
+        "quote": "Testing that a weak reference object is still live should be done using the\nexpression ref() is not None."
+      }
+    ],
+    "source_files": [
+      "python314/weakref.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/weakref.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_weakref_3",
+    "type": "procedure",
+    "question": "In the documented weakref.WeakKeyDictionary workaround, what ordered steps replace an existing key with an equal-valued but non-identical key?",
+    "answer": "Remove the existing key from the dictionary first, then assign the value using the new key.",
+    "key_facts": [
+      "Remove the existing key before reassignment.",
+      "Assign the value using the new key."
+    ],
+    "evidence": [
+      {
+        "quote": "A workaround would be to remove the key prior to reassignment:"
+      },
+      {
+        "quote": ">>> d[k1] = 1   # d = {k1: 1}\n>>> del d[k1]\n>>> d[k2] = 2   # d = {k2: 2}"
+      }
+    ],
+    "source_files": [
+      "python314/weakref.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/weakref.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_weakref_4",
+    "type": "multi",
+    "question": "For weakref.finalize, what does detach() return when the finalizer is alive, and in what order are eligible live finalizers called at interpreter shutdown?",
+    "answer": "detach() marks the live finalizer dead and returns (obj, func, args, kwargs). At shutdown, remaining live finalizers whose atexit property is true are called in reverse order of creation.",
+    "key_facts": [
+      "detach() marks a live finalizer dead and returns (obj, func, args, kwargs).",
+      "At interpreter shutdown, remaining live finalizers with atexit true are called in reverse order of creation."
+    ],
+    "evidence": [
+      {
+        "quote": "If self is alive then mark it as dead and return the tuple\n(obj, func, args, kwargs).  If self is dead then return\nNone."
+      },
+      {
+        "quote": "At\ninterpreter shutdown, all remaining live finalizers for which\natexit is true are called in reverse order of\ncreation."
+      }
+    ],
+    "source_files": [
+      "python314/weakref.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/weakref.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_contextlib_1",
+    "type": "fact",
+    "question": "What does contextlib.aclosing ensure about an async generator's exit code when the generator exits early?",
+    "answer": "It ensures that the generator's async exit code runs in the same context as its iterations.",
+    "key_facts": [
+      "The async exit code runs in the same context as the generator's iterations."
+    ],
+    "evidence": [
+      {
+        "quote": "Significantly, aclosing() supports deterministic cleanup of async\ngenerators when they happen to exit early by break or an\nexception."
+      },
+      {
+        "quote": "This pattern ensures that the generatorâs async exit code is executed in\nthe same context as its iterations (so that exceptions and context\nvariables work as expected, and the exit code isnât run after the\nlifetime of some task it depends on)."
+      }
+    ],
+    "source_files": [
+      "python314/contextlib.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/contextlib.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_contextlib_2",
+    "type": "code",
+    "question": "In the contextlib.nullcontext process_file example, what exact expression is assigned to cm when file_or_path is not a string?",
+    "answer": "nullcontext(file_or_path)",
+    "key_facts": [
+      "The expression is nullcontext(file_or_path)."
+    ],
+    "evidence": [
+      {
+        "quote": "    else:\n        # Caller is responsible for closing file\n        cm = nullcontext(file_or_path)"
+      }
+    ],
+    "source_files": [
+      "python314/contextlib.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/contextlib.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_contextlib_3",
+    "type": "procedure",
+    "question": "In the contextlib.ExitStack recipe for catching exceptions from __enter__, what ordered steps separate handling an entry exception from the normal with-block case?",
+    "answer": "Create an ExitStack, call stack.enter_context(cm) inside a try block, handle an exception in except, and otherwise use the stack in a with statement for the normal case.",
+    "key_facts": [
+      "Create an ExitStack and call stack.enter_context(cm) inside a try block.",
+      "Handle an entry exception in the except block.",
+      "In the else block, use with stack for the normal case."
+    ],
+    "evidence": [
+      {
+        "quote": "stack = ExitStack()\ntry:\n    x = stack.enter_context(cm)\nexcept Exception:\n    # handle __enter__ exception\nelse:\n    with stack:\n        # Handle normal case"
+      }
+    ],
+    "source_files": [
+      "python314/contextlib.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/contextlib.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_contextlib_4",
+    "type": "multi",
+    "question": "How does contextlib.suppress handle suppressed and unsuppressed exceptions when a with block raises a BaseExceptionGroup?",
+    "answer": "It removes suppressed exceptions from the group and re-raises the unsuppressed exceptions in a new group created using the original group's derive() method.",
+    "key_facts": [
+      "Suppressed exceptions are removed from the group.",
+      "Unsuppressed exceptions are re-raised in a new group created using the original group's derive() method."
+    ],
+    "evidence": [
+      {
+        "quote": "If the code within the with block raises a\nBaseExceptionGroup, suppressed exceptions are removed from the\ngroup.  Any exceptions of the group which are not suppressed are re-raised in\na new group which is created using the original groupâs derive()\nmethod."
+      }
+    ],
+    "source_files": [
+      "python314/contextlib.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/contextlib.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_functools_1",
+    "type": "fact",
+    "question": "What happens when the cached attribute of a functools.cached_property is deleted?",
+    "answer": "The cached value is cleared, allowing the cached_property method to run again.",
+    "key_facts": [
+      "Deleting the attribute clears the cached value.",
+      "The cached_property method can then run again."
+    ],
+    "evidence": [
+      {
+        "quote": "The cached value can be cleared by deleting the attribute.  This\nallows the cached_property method to run again."
+      }
+    ],
+    "source_files": [
+      "python314/functools.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/functools.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_functools_2",
+    "type": "code",
+    "question": "What expression does the functools.cmp_to_key example use to sort iterable in locale-aware order using locale.strcoll?",
+    "answer": "sorted(iterable, key=cmp_to_key(locale.strcoll))",
+    "key_facts": [
+      "sorted(iterable, key=cmp_to_key(locale.strcoll))"
+    ],
+    "evidence": [
+      {
+        "quote": "sorted(iterable, key=cmp_to_key(locale.strcoll))  # locale-aware sort order"
+      }
+    ],
+    "source_files": [
+      "python314/functools.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/functools.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_functools_3",
+    "type": "procedure",
+    "question": "According to the functools.singledispatch documentation, what ordered steps define a generic function and add an overloaded implementation whose first argument has a type annotation?",
+    "answer": "First decorate the generic function with @singledispatch. Then use its register() attribute as a decorator on the annotated implementation; the decorator infers the type of its first argument.",
+    "key_facts": [
+      "First decorate the generic function with @singledispatch.",
+      "Then use the generic function's register() attribute as a decorator on the annotated implementation.",
+      "The register decorator infers the type of the implementation's first argument."
+    ],
+    "evidence": [
+      {
+        "quote": "To define a generic function, decorate it with the @singledispatch\ndecorator."
+      },
+      {
+        "quote": "To add overloaded implementations to the function, use the register()\nattribute of the generic function, which can be used as a decorator.  For\nfunctions annotated with types, the decorator will infer the type of the\nfirst argument automatically:"
+      }
+    ],
+    "source_files": [
+      "python314/functools.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/functools.html",
+    "automatic_audit_only": true
+  },
+  {
+    "id": "ind_functools_4",
+    "type": "multi",
+    "question": "For a function wrapped by functools.lru_cache, what does cache_info() report, and how can the cache be cleared?",
+    "answer": "cache_info() returns a named tuple containing hits, misses, maxsize and currsize. The cache_clear() function clears or invalidates the cache.",
+    "key_facts": [
+      "cache_info() returns a named tuple showing hits, misses, maxsize and currsize.",
+      "cache_clear() clears or invalidates the cache."
+    ],
+    "evidence": [
+      {
+        "quote": "To help measure the effectiveness of the cache and tune the maxsize\nparameter, the wrapped function is instrumented with a cache_info()\nfunction that returns a named tuple showing hits, misses,\nmaxsize and currsize."
+      },
+      {
+        "quote": "The decorator also provides a cache_clear() function for clearing or\ninvalidating the cache."
+      }
+    ],
+    "source_files": [
+      "python314/functools.html"
+    ],
+    "source_url": "https://docs.python.org/3.14/library/functools.html",
+    "automatic_audit_only": true
+  }
+]

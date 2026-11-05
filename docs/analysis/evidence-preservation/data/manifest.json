@@ -1,0 +1,74 @@
+{
+  "corpus/LICENSE.txt": {
+    "sha256": "50d5088f2a8c4e442212824c5dbf9cbf8233e50407bba60648347a595ee75ec3",
+    "bytes": 55208
+  },
+  "corpus/bisect.md": {
+    "sha256": "7505e705e686bd8ac845617b614620bd43e22bf14f304cce25aadd8e27fe1e63",
+    "bytes": 8487
+  },
+  "corpus/contextlib.md": {
+    "sha256": "dc3046d9fdd0e3350b97c217994b1fc2b3155abe94d9d279b0f094b8b25a141a",
+    "bytes": 23830
+  },
+  "corpus/copy.md": {
+    "sha256": "39c08835c5546dd665622b6016937560062dd0163a60cb5be8ffa95c6dce9fe4",
+    "bytes": 3867
+  },
+  "corpus/functools.md": {
+    "sha256": "aa0b11f09c71ec4df899b40d19852ad90d75083be3b0546f71f428bf0920cab7",
+    "bytes": 21966
+  },
+  "corpus/graphlib.md": {
+    "sha256": "a0193a5617b8e8d78dbbaf26f1670266537df05489e6121bbc5f1b73ecac9c88",
+    "bytes": 7349
+  },
+  "corpus/heapq.md": {
+    "sha256": "0fc63b38d67511d20c26b4e2de4aafb06770f2243471c13ec7ae2999f67dc232",
+    "bytes": 16061
+  },
+  "corpus/tomllib.md": {
+    "sha256": "7b8c27fc35088b8e62c9e7475cee2b6c1029ed5ae52ff45e735f65668f71e0ac",
+    "bytes": 3066
+  },
+  "corpus/weakref.md": {
+    "sha256": "ef5b2cce60ab207c80430362bb301b9903daa6c0f134b2db602de9acc4e06c03",
+    "bytes": 19620
+  },
+  "data/audit_decisions.json": {
+    "sha256": "230aaa3c0407767ca2228453a814460bfcfefa14612f32ae438f0c98948444f1",
+    "bytes": 2660
+  },
+  "data/costs.json": {
+    "sha256": "56dcdc037a7a3962590ad43caf75e93f2afafe66af056642c41210856ec3a5a1",
+    "bytes": 980
+  },
+  "data/damage_counts.json": {
+    "sha256": "a078b03c2bbbc661e840a7ae06df7442261f331d9d472775b7f38baeb7eb11d6",
+    "bytes": 2054
+  },
+  "data/independent_qa.json": {
+    "sha256": "88154c7193e9e5e478f7be9215a6dd244ada679fe1c8db97306b3e6b39a93fed",
+    "bytes": 27287
+  },
+  "data/metrics.csv": {
+    "sha256": "d6a8c7ae16b53a628373ef3f84a6875d7cba51cf271376cd96fa58eb66d23b14",
+    "bytes": 57760
+  },
+  "data/oracle_metrics.csv": {
+    "sha256": "2c4d37ab9b9391ba1c374bb733274bd33a78450442e870f2cafc341db8c8cc2b",
+    "bytes": 3589
+  },
+  "data/preprocessing_diagnostic.json": {
+    "sha256": "7cf66c6f63ec818de80d38658bf3ede5ffde2effb2d1d9d4228d6ce9d394ecc5",
+    "bytes": 1706
+  },
+  "data/provenance.json": {
+    "sha256": "6d69327223089b979a28a46e4a540867872a19875d9be2edd5f23a3b824a5c5a",
+    "bytes": 12120
+  },
+  "data/sources.json": {
+    "sha256": "a6c230e66aac9de580d2783493bc011c4d5345b42e41e204c8695b29efbfbd84",
+    "bytes": 4513
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "diagnostic_only": true,
+  "corpus_modified": false,
+  "finding": "Some extracted prefixes contain mojibake consistent with UTF-8 decoded as Latin-1. Frozen extractor used requests.response.text without forcing UTF-8. All methods used the same frozen extraction. Original HTML bytes are preserved. Exact quote tests refer to this extracted corpus, not necessarily typography-correct HTML rendering. Do not silently repair or retune this evaluated dataset.",
+  "documents": [
+    {
+      "module": "graphlib",
+      "html_valid_utf8": true,
+      "extracted_latin1_artifact_markers": 16,
+      "c1_controls_in_extract": 12
+    },
+    {
+      "module": "tomllib",
+      "html_valid_utf8": true,
+      "extracted_latin1_artifact_markers": 13,
+      "c1_controls_in_extract": 4
+    },
+    {
+      "module": "bisect",
+      "html_valid_utf8": true,
+      "extracted_latin1_artifact_markers": 16,
+      "c1_controls_in_extract": 12
+    },
+    {
+      "module": "heapq",
+      "html_valid_utf8": true,
+      "extracted_latin1_artifact_markers": 42,
+      "c1_controls_in_extract": 48
+    },
+    {
+      "module": "copy",
+      "html_valid_utf8": true,
+      "extracted_latin1_artifact_markers": 12,
+      "c1_controls_in_extract": 8
+    },
+    {
+      "module": "weakref",
+      "html_valid_utf8": true,
+      "extracted_latin1_artifact_markers": 41,
+      "c1_controls_in_extract": 30
+    },
+    {
+      "module": "contextlib",
+      "html_valid_utf8": true,
+      "extracted_latin1_artifact_markers": 55,
+      "c1_controls_in_extract": 48
+    },
+    {
+      "module": "functools",
+      "html_valid_utf8": true,
+      "extracted_latin1_artifact_markers": 23,
+      "c1_controls_in_extract": 24
+    }
+  ]
+}

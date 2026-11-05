@@ -1,0 +1,98 @@
+[
+  {
+    "module": "graphlib",
+    "url": "https://docs.python.org/3.14/library/graphlib.html",
+    "fetched_utc": "2026-11-04T13:19:25.394973+00:00",
+    "html_sha256": "bfe9dbe6a3f36b3c2da064fb9e1e4ec454a0c5661875bb9a08801ce7f9833615",
+    "text_sha256": "a0193a5617b8e8d78dbbaf26f1670266537df05489e6121bbc5f1b73ecac9c88",
+    "context_tokens": 1715,
+    "prefix_cap": 5000,
+    "old_document_overlap_ids": [],
+    "old_corpus_12word_shingle_overlap_fraction": 0.0,
+    "license": "Python documentation, PSF license; https://docs.python.org/3.14/license.html"
+  },
+  {
+    "module": "tomllib",
+    "url": "https://docs.python.org/3.14/library/tomllib.html",
+    "fetched_utc": "2026-11-04T13:20:04.988448+00:00",
+    "html_sha256": "b0f6fa3c7a0fb3eaec57692c597e48b3b0ba8c8ac4b0465a43434221f15a6e7a",
+    "text_sha256": "7b8c27fc35088b8e62c9e7475cee2b6c1029ed5ae52ff45e735f65668f71e0ac",
+    "context_tokens": 736,
+    "prefix_cap": 5000,
+    "old_document_overlap_ids": [],
+    "old_corpus_12word_shingle_overlap_fraction": 0.0,
+    "license": "Python documentation, PSF license; https://docs.python.org/3.14/license.html"
+  },
+  {
+    "module": "bisect",
+    "url": "https://docs.python.org/3.14/library/bisect.html",
+    "fetched_utc": "2026-11-04T13:20:33.254536+00:00",
+    "html_sha256": "c02db00c08ddeb054ad9737234aba2e0510e77b388b7aa7ad2317e9ab6604741",
+    "text_sha256": "7505e705e686bd8ac845617b614620bd43e22bf14f304cce25aadd8e27fe1e63",
+    "context_tokens": 2191,
+    "prefix_cap": 5000,
+    "old_document_overlap_ids": [],
+    "old_corpus_12word_shingle_overlap_fraction": 0.0,
+    "license": "Python documentation, PSF license; https://docs.python.org/3.14/license.html"
+  },
+  {
+    "module": "heapq",
+    "url": "https://docs.python.org/3.14/library/heapq.html",
+    "fetched_utc": "2026-11-04T13:21:08.274795+00:00",
+    "html_sha256": "b2fc4ce612232a3d8cbe60417e55a1410813bff75bfe969de879dc8e2b9c7a29",
+    "text_sha256": "0fc63b38d67511d20c26b4e2de4aafb06770f2243471c13ec7ae2999f67dc232",
+    "context_tokens": 3957,
+    "prefix_cap": 5000,
+    "old_document_overlap_ids": [],
+    "old_corpus_12word_shingle_overlap_fraction": 0.0,
+    "license": "Python documentation, PSF license; https://docs.python.org/3.14/license.html"
+  },
+  {
+    "module": "copy",
+    "url": "https://docs.python.org/3.14/library/copy.html",
+    "fetched_utc": "2026-11-04T13:21:43.553794+00:00",
+    "html_sha256": "5cc6d1bc03e767f8648a3a71a980c6d3a3b9197c932fe9662e5167079d57b6fb",
+    "text_sha256": "39c08835c5546dd665622b6016937560062dd0163a60cb5be8ffa95c6dce9fe4",
+    "context_tokens": 815,
+    "prefix_cap": 5000,
+    "old_document_overlap_ids": [],
+    "old_corpus_12word_shingle_overlap_fraction": 0.0,
+    "license": "Python documentation, PSF license; https://docs.python.org/3.14/license.html"
+  },
+  {
+    "module": "weakref",
+    "url": "https://docs.python.org/3.14/library/weakref.html",
+    "fetched_utc": "2026-11-04T13:22:06.949500+00:00",
+    "html_sha256": "8cbda8bbd0769e0405db3d00f0c7dc2c9ae6c6e1a13d470ae1bb398082cf9025",
+    "text_sha256": "ef5b2cce60ab207c80430362bb301b9903daa6c0f134b2db602de9acc4e06c03",
+    "context_tokens": 4486,
+    "prefix_cap": 5000,
+    "old_document_overlap_ids": [],
+    "old_corpus_12word_shingle_overlap_fraction": 0.0,
+    "license": "Python documentation, PSF license; https://docs.python.org/3.14/license.html"
+  },
+  {
+    "module": "contextlib",
+    "url": "https://docs.python.org/3.14/library/contextlib.html",
+    "fetched_utc": "2026-11-04T13:22:43.968333+00:00",
+    "html_sha256": "9f918e548f5b43acef6c2efb14209f2d2f7f45ccc8e600501bda479e03fb6308",
+    "text_sha256": "dc3046d9fdd0e3350b97c217994b1fc2b3155abe94d9d279b0f094b8b25a141a",
+    "context_tokens": 5110,
+    "prefix_cap": 5000,
+    "old_document_overlap_ids": [],
+    "old_corpus_12word_shingle_overlap_fraction": 0.0,
+    "license": "Python documentation, PSF license; https://docs.python.org/3.14/license.html"
+  },
+  {
+    "module": "functools",
+    "url": "https://docs.python.org/3.14/library/functools.html",
+    "fetched_utc": "2026-11-04T13:23:23.870191+00:00",
+    "html_sha256": "9fcc63a03fadcc38ff152049396ba39715c92ad157a2472a0da1aa48e40a84e1",
+    "text_sha256": "aa0b11f09c71ec4df899b40d19852ad90d75083be3b0546f71f428bf0920cab7",
+    "context_tokens": 5085,
+    "prefix_cap": 5000,
+    "old_document_overlap_ids": [],
+    "old_corpus_12word_shingle_overlap_fraction": 0.0,
+    "license": "Python documentation, PSF license; https://docs.python.org/3.14/license.html"
+  }
+]

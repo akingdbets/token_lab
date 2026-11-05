@@ -1,0 +1,23 @@
+{
+  "protocol_version":"ucwit-question-preserve-v1",
+  "conditions":["none","llmlingua2_r50","llmlingua2_r30","qp_identifiers_r30","qp_sentences_r30","qp_combined_r30"],
+  "protected_fraction":0.35,
+  "max_spans":18,
+  "repeats":1,
+  "answer_model":"gpt-6.1-terra",
+  "judge_model":"deepseek-flash",
+  "seed":42,
+  "schedule_seed":20261104,
+  "bootstrap_seed":20261104,
+  "bootstrap_replicates":10000,
+  "independent_documents":["graphlib","tomllib","bisect","heapq","copy","weakref","contextlib","functools"],
+  "source_url_template":"https://docs.python.org/3.14/library/{module}.html",
+  "independent_doc_token_cap":5000,
+  "independent_questions_per_document":4,
+  "types":["fact","code","procedure","multi"],
+  "independent_generation_policy":"Only after dev completion and algorithm freeze. One generation request per document, one automatic source-grounding audit per candidate. No answer-performance-based filtering or regeneration. Require exact evidence quotes and all schema/source checks plus audit YES before admitting. Retain rejected candidates and all errors.",
+  "selection_policy":"One predeclared policy, no parameter search. Dev verifies constraints and observes performance. Freeze after dev regardless of improvement; do not tune on independent data or outcomes.",
+  "primary_comparison":"qp_combined_r30 vs fresh llmlingua2_r30; whole-message estimated and API-reported prompt tokens; macro key-fact accuracy; paired question bootstrap and document-cluster bootstrap",
+  "budget_policy":"Use each question's fresh r30 full input as numeric target. Protected spans capped at 35 percent of available context budget; trim residual words then greedily add source units and exact prefixes. No artificial filler; report every deficit/overflow. All ablations share target and repair algorithm.",
+  "claim_policy":"Report negative results. No confirmatory population claim from small synthetic dataset, correlated questions, unblinded automatic gold generation/audit or post-hoc subgroup selection. Existing test 139 is not an independent endpoint."
+}

@@ -4,3 +4,5 @@ jinja2>=3.1             # tokenizer chat template (count_message_tokens)
 tiktoken>=0.7           # OpenAI tokenizer when TOKENIZER=tiktoken:<encoding>
 python-dotenv>=1.0      # load API keys etc. from .env (src/config.py)
 llmlingua==0.2.2        # LLMLingua/LongLLMLingua/LLMLingua-2 prompt compression
+
+numpy>=1.26           # offline paired and document-cluster bootstrap analysis
