@@ -79,6 +79,11 @@ REGISTRY: dict[str, Compressor] = {
 }
 
 
+# Question-only variants; existing compressor implementations and entries are unchanged.
+from compressors.question_preserve import QuestionPreserveCompressor
+REGISTRY.update({c.name: c for c in (QuestionPreserveCompressor(mode=m) for m in ("identifiers", "sentences", "combined"))})
+
+
 def get_compressor(name: str) -> Compressor:
     """이름으로 압축기를 고른다. "a>b" 는 a 다음 b 를 적용하는 조합."""
     stages = [n.strip() for n in name.split(">")]
