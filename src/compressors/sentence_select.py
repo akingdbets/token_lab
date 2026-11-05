@@ -290,6 +290,25 @@ class SentenceSelectCompressor(Compressor):
             raise ValueError(f"점수 개수 {len(scores)} 가 단위 개수 {len(texts)} 와 다릅니다")
         return scores
 
+    def _select(self, units: list[Unit], candidates: list[int], scores: list[float]) -> list[bool]:
+        """점수 높은 순으로 후보 글자의 keep_ratio 를 채운다 (같은 점수면 앞 단위 먼저)."""
+        budget = self.keep_ratio * sum(len(units[i].text) for i in candidates)
+        keep = [True] * len(units)
+        kept_chars = 0
+        for _, i in sorted(zip(scores, candidates), key=lambda p: (-p[0], p[1])):
+            if kept_chars >= budget:
+                keep[i] = False
+            else:
+                kept_chars += len(units[i].text)
+        return keep
+
+    def _extra_info(self) -> dict:
+        return {"method": "sentence_select", "policy_version": POLICY_VERSION, "uses_question": False}
+
+    def _score_candidates(self, question: str, texts: list[str]) -> list[float]:
+        """후보 단위 점수. 이 클래스는 질문을 쓰지 않는다 (query_extract 가 재정의)."""
+        return self._score(texts)
+
     def plan(self, document: str) -> tuple[list[Unit], list[int], str]:
         """(단위, 후보 인덱스, 상태). 상태가 select 가 아니면 원문 그대로 둔다."""
         units = split_units(document, self.value_words)
@@ -308,7 +327,7 @@ class SentenceSelectCompressor(Compressor):
             return units, candidates, "skip_dense"
         return units, candidates, "select"
 
-    def compress_context(self, question: str, context: str) -> str:   # question 은 쓰지 않는다
+    def compress_context(self, question: str, context: str) -> str:   # 이 클래스는 question 을 쓰지 않는다
         started = time.perf_counter()
         docs = []
         out: list[str] = []
@@ -326,16 +345,9 @@ class SentenceSelectCompressor(Compressor):
                 out.append(document)
                 docs.append(record)
                 continue
-            scores = self._score([units[i].text for i in candidates])
-            budget = self.keep_ratio * cand_chars
-            keep = [True] * len(units)
-            kept_chars = 0
-            # 점수 높은 순으로 예산을 채운다 (같은 점수면 앞 단위 먼저)
-            for _, i in sorted(zip(scores, candidates), key=lambda p: (-p[0], p[1])):
-                if kept_chars >= budget:
-                    keep[i] = False
-                else:
-                    kept_chars += len(units[i].text)
+            scores = self._score_candidates(question, [units[i].text for i in candidates])
+            keep = self._select(units, candidates, scores)
+            kept_chars = sum(len(units[i].text) for i in candidates if keep[i])
             compressed = join_units(units, keep)
             out.append(compressed)
             record.update(
@@ -346,11 +358,9 @@ class SentenceSelectCompressor(Compressor):
             docs.append(record)
         result = "".join(out)
         self.add_info(
-            method="sentence_select",
-            policy_version=POLICY_VERSION,
+            **self._extra_info(),
             keep_ratio=self.keep_ratio,
             protect=self.protect,
-            uses_question=False,
             documents=docs,
             dropped_units=sum(d.get("dropped_units", 0) for d in docs),
             dropped_chars=sum(d.get("dropped_chars", 0) for d in docs),

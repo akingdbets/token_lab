@@ -52,6 +52,7 @@ from compressors.drop_evidence import DropEvidence
 from compressors.identity import EmptyContext, NoCompression
 from compressors.llmlingua2 import LLMLingua2Compressor
 from compressors.rule import RuleCompressor
+from compressors.query_extract import QueryExtractCompressor
 from compressors.sentence_select import SentenceSelectCompressor
 from config import CFG
 
@@ -92,6 +93,16 @@ REGISTRY: dict[str, Compressor] = {
         for level in ("strict", "literal", "loose", "structure")
         for rate in (0.5, 0.7)
     },
+    # 턴마다 그 턴의 질문으로 문장을 고르는 추출형 (질문 봄). 이름은 qx_{점수}_{보호 수준}_r{남길 비율}.
+    # 점수: bm25 (모델 없음) | emb (임베딩 코사인). rule 뒤에 붙인다: "rule>qx_bm25_loose_r50"
+    **{
+        f"qx_{scorer}_{level}_r{round(rate * 100):02d}": QueryExtractCompressor(
+            scorer=scorer, protect=level, keep_ratio=rate,
+        )
+        for scorer in ("bm25", "emb")
+        for level in ("loose", "structure")
+        for rate in (0.3, 0.5)
+    },
 }
 
 
@@ -108,5 +119,5 @@ def get_compressor(name: str) -> Compressor:
 
 __all__ = [
     "PARTS", "Chain", "CompressResult", "Compressor", "PromptParts",
-    "LLMLingua2Compressor", "SentenceSelectCompressor", "REGISTRY", "get_compressor",
+    "LLMLingua2Compressor", "QueryExtractCompressor", "SentenceSelectCompressor", "REGISTRY", "get_compressor",
 ]
