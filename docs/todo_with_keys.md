@@ -35,7 +35,7 @@ python src/llm.py --cache-probe
 | 단계 | 내용 | 예상 실제 지출 |
 |---|---|---|
 | (1) | `--cache-probe` (필드 이름 확정) | < $0.01 |
-| (2) | 기준 궤적 + none / window(2) / window_budget / query_select, 예산 2000·4000·8000 | 답변 $0.47~0.65 + 채점 $0.22 ≈ **$0.7~0.9** |
+| (2) | 기준 궤적 + none / window(2) / window_budget / query_select / per_message(rule) / per_message(llmlingua2), 예산 2000·4000·8000 | 답변 $0.58~0.83 + 채점 $0.28 ≈ **$0.9~1.1** (llmlingua2 몫 약 $0.06~0.09 + 채점 $0.03 포함, 추정치) |
 | (3) | 요약형 2종 × 요약 추론 2조건 (server_default, none), 예산 2000·4000·8000 | 답변 $0.67~0.95 + 요약 $0.20 + 채점 $0.33 ≈ **$1.2~1.5** |
 | (4) | `--sequential-chains` 로 none, frozen_summary(4000) 각 시나리오 1개 (mt01_security) 캐시 검증 | 답변 $0.016~0.02 + 요약 $0.002 ≈ **$0.03** (채점 없음) |
 
@@ -50,8 +50,10 @@ python src/llm.py --cache-probe
 ### (2) 기준 궤적 + 상태 없는 압축기
 
 ```powershell
-python src/multiturn/replay.py --scenarios data/evalsets/multiturn-v1 --model gpt-6-luna --compressors "none,window(2),window_budget,query_select" --history-budget 2000,4000,8000 --samples 3 --reasoning-effort server_default --max-completion-tokens 4096 --concurrency 5
+python src/multiturn/replay.py --scenarios data/evalsets/multiturn-v1 --model gpt-6-luna --compressors "none,window(2),window_budget,query_select,per_message(rule),per_message(llmlingua2)" --history-budget 2000,4000,8000 --samples 3 --reasoning-effort server_default --max-completion-tokens 4096 --concurrency 5
 ```
+
+- `per_message(llmlingua2)` 는 llmlingua 가 있어야 한다 (점검 목록 1). 없으면 시작 시점에 멈춘다. 이 노트북에는 llmlingua 가 없어 아래 추정 표에 per_message(llmlingua2) 가 없다. 실행 전에 같은 명령에 `--estimate-only` 를 붙여 llmlingua2 의 입력 절감·sim 비용을 먼저 확인한다.
 
 - 끝나면 `summary.json` 의 `reference_health`, `answer_health` (finish_length·empty_response·reasoning_ran) 를 보고 `--max-completion-tokens` 를 정한다. 바꾸면 기준 궤적이 새로 만들어진다.
 
@@ -77,6 +79,7 @@ python src/multiturn/replay.py --scenarios data/evalsets/multiturn-v1 --model gp
 ### 비용 지표 (중요)
 
 - replay 는 턴을 병렬·순서 무관하게 보내므로, 실행 중 서버가 보고한 `cached_tokens` 는 실제 대화의 캐시 동작이 아니다.
+- 두 비용 열의 해석: **sim** 은 대화 간격이 캐시 보존 시간(30분) 안이라는 가정(직전 턴 접두부가 캐시에 남아 있음), **nocache (캐시 0%)** 는 캐시가 만료된 경우의 경계값이다. 실제 비용은 대화 간격 분포에 따라 두 값 사이에 놓인다 (`summary.notes` 에도 적힘).
 - 그래서 `summary.json` / `budget_table` 의 비용 절감률 주 지표는 **`cost_reduction_pct_sim`** (같은 압축기로 실제 대화했을 때 직전 턴 요청과 겹치는 접두부 = `prefix_shared_tokens` 를 캐시 읽기로 본 시뮬레이션 비용) 이고, `_sim_write` 는 미스 부분을 캐시 쓰기 단가로 계산한 변형이다. `_nocache` 는 상한, `_measured` (실측 cached_tokens) 는 참고용이다.
 - overflow 턴(직전 턴 원문만으로 예산 초과)을 뺀 집계는 `excluding_overflow` 와 budget_table 의 `*_excluding_overflow` 에 있다.
 
@@ -85,28 +88,32 @@ python src/multiturn/replay.py --scenarios data/evalsets/multiturn-v1 --model gp
 **압축기 비교: 실험상 비용 (호출당) = 답변 + 요약, none 대비 절감률.** sim = 직전 턴 접두부 캐시 (주 지표), 캐시 0% = 상한.
 none: 캐시 0% $0.0980, sim $0.0640, 직전 턴 접두부 공유율 76.0%.
 
-| 압축기 | 입력 절감 | overflow | 접두부 공유 | 요약 비용 | 절감 (캐시 0%) | **절감 (sim)** | 요약 호출 | 재압축 |
-|---|---|---|---|---|---|---|---|---|
-| window(2) | 54.8% | 0.0% | 20.5% | – | 25.4% | −8.5% | – | – |
-| window_budget(2000) | 65.0% | 18.5% | 24.6% | – | 30.1% | −3.6% | – | – |
-| window_budget(4000) | 38.0% | 0.0% | 44.7% | – | 17.6% | −8.3% | – | – |
-| window_budget(8000) | 6.2% | 0.0% | 68.9% | – | 2.9% | −4.4% | – | – |
-| query_select(2000) | 55.9% | 18.5% | 12.8% | – | 25.9% | −10.9% | – | – |
-| query_select(4000) | 39.8% | 0.0% | 11.8% | – | 18.4% | −22.3% | – | – |
-| query_select(8000) | 31.8% | 0.0% | 11.7% | – | 14.7% | −28.0% | – | – |
-| rolling_summary(2000)[sre=server_default] | 64.1% | 18.5% | 26.2% | $0.0379 | −9.1% | −63.9% | 45 | – |
-| rolling_summary(2000)[sre=none] | 64.1% | 18.5% | 26.2% | $0.0154 | 13.9% | −28.7% | 45 | – |
-| rolling_summary(4000)[sre=server_default] | 47.1% | 0.0% | 53.5% | $0.0184 | 3.0% | −29.6% | 18 | – |
-| rolling_summary(4000)[sre=none] | 47.1% | 0.0% | 53.5% | $0.0094 | 12.2% | −15.5% | 18 | – |
-| rolling_summary(8000)[sre=server_default] | 16.1% | 0.0% | 69.0% | $0.0082 | −0.9% | −12.8% | 6 | – |
-| rolling_summary(8000)[sre=none] | 16.1% | 0.0% | 69.0% | $0.0052 | 2.2% | −8.1% | 6 | – |
-| frozen_summary(2000)[sre=server_default] | 61.6% | 18.5% | 31.8% | $0.0504 | −22.9% | −82.9% | 63 | 18 |
-| frozen_summary(2000)[sre=none] | 61.6% | 18.5% | 31.8% | $0.0189 | 9.3% | −33.7% | 63 | 18 |
-| frozen_summary(4000)[sre=server_default] | 45.5% | 0.0% | 56.3% | $0.0181 | 2.6% | −28.9% | 18 | 0 |
-| frozen_summary(4000)[sre=none] | 45.5% | 0.0% | 56.3% | $0.0091 | 11.8% | −14.9% | 18 | 0 |
-| frozen_summary(8000)[sre=server_default] | 16.1% | 0.0% | 69.0% | $0.0082 | −0.9% | −12.8% | 6 | 0 |
-| frozen_summary(8000)[sre=none] | 16.1% | 0.0% | 69.0% | $0.0052 | 2.2% | −8.1% | 6 | 0 |
+| 압축기 | 입력 절감 | overflow | 접두부 공유 | 요약 비용 | 절감 (캐시 0%) | **절감 (sim)** | 절감 (sim_write) | 요약 호출 | 재압축 |
+|---|---|---|---|---|---|---|---|---|---|
+| window(2) | 54.8% | 0.0% | 20.5% | – | 25.4% | −8.5% | −11.6% | – | – |
+| window_budget(2000) | 65.0% | 18.5% | 24.6% | – | 30.1% | −3.6% | −5.8% | – | – |
+| window_budget(4000) | 38.0% | 0.0% | 44.7% | – | 17.6% | −8.3% | −11.0% | – | – |
+| window_budget(8000) | 6.2% | 0.0% | 68.9% | – | 2.9% | −4.4% | −5.6% | – | – |
+| query_select(2000) | 55.9% | 18.5% | 12.8% | – | 25.9% | −10.9% | −14.6% | – | – |
+| query_select(4000) | 39.8% | 0.0% | 11.8% | – | 18.4% | −22.3% | −28.4% | – | – |
+| query_select(8000) | 31.8% | 0.0% | 11.7% | – | 14.7% | −28.0% | −35.4% | – | – |
+| per_message(rule) | 14.8% | – | 59.3% | – | 6.9% | −4.4% | −5.8% | – | – |
+| per_message(llmlingua2) | (키 있는 노트북에서 `--estimate-only`) | | | | | | | | |
+| rolling_summary(2000)[sre=server_default] | 64.1% | 18.5% | 26.2% | $0.0379 | −9.1% | −63.9% | −64.5% | 45 | – |
+| rolling_summary(2000)[sre=none] | 64.1% | 18.5% | 26.2% | $0.0154 | 13.9% | −28.7% | −30.4% | 45 | – |
+| rolling_summary(4000)[sre=server_default] | 47.1% | 0.0% | 53.5% | $0.0184 | 3.0% | −29.6% | −29.8% | 18 | – |
+| rolling_summary(4000)[sre=none] | 47.1% | 0.0% | 53.5% | $0.0094 | 12.2% | −15.5% | −16.2% | 18 | – |
+| rolling_summary(8000)[sre=server_default] | 16.1% | 0.0% | 69.0% | $0.0082 | −0.9% | −12.8% | −12.8% | 6 | – |
+| rolling_summary(8000)[sre=none] | 16.1% | 0.0% | 69.0% | $0.0052 | 2.2% | −8.1% | −8.2% | 6 | – |
+| frozen_summary(2000)[sre=server_default] | 61.6% | 18.5% | 31.8% | $0.0504 | −22.9% | −82.9% | −82.9% | 63 | 18 |
+| frozen_summary(2000)[sre=none] | 61.6% | 18.5% | 31.8% | $0.0189 | 9.3% | −33.7% | −35.0% | 63 | 18 |
+| frozen_summary(4000)[sre=server_default] | 45.5% | 0.0% | 56.3% | $0.0181 | 2.6% | −28.9% | −29.1% | 18 | 0 |
+| frozen_summary(4000)[sre=none] | 45.5% | 0.0% | 56.3% | $0.0091 | 11.8% | −14.9% | −15.5% | 18 | 0 |
+| frozen_summary(8000)[sre=server_default] | 16.1% | 0.0% | 69.0% | $0.0082 | −0.9% | −12.8% | −12.8% | 6 | 0 |
+| frozen_summary(8000)[sre=none] | 16.1% | 0.0% | 69.0% | $0.0052 | 2.2% | −8.1% | −8.2% | 6 | 0 |
 
+- none: 캐시 0% $0.0980, sim $0.0640, sim_write $0.0658, 직전 턴 접두부 공유율 76.0%.
+- per_message(rule) 의 접두부 공유율(59.3%)이 높은 이유: 과거 문서를 매번 같은 규칙으로 압축해 앞쪽 턴이 글자 그대로 유지된다. 다만 직전 턴 메시지는 그 턴에는 원문(현재 턴), 다음 턴에는 압축본(과거)이라 그 지점에서 접두부가 끊긴다.
 - **요약 추론 조건별 요약 비용**: server_default $0.141 (156회, 추론 1,000 가정), none $0.063 (156회, 추론 0).
 - **frozen_summary 재압축**: 2000 에서 체인당 2.0회 (턴 3~6), 4000·8000 에서 0회. 2000 은 rolling 과 비슷해진다.
 - **시뮬레이션 캐시 기준으로는 어떤 압축기도 none 보다 싸지 않다.** none 은 기록이 앞에서부터 그대로 자라 직전 턴 접두부 공유율이 76% 이고, 캐시 읽기 단가가 입력의 1/10 이다. 압축기는 입력을 줄여도 접두부가 깨져 캐시 할인을 잃는다. 출력(답변 + 추론 1,300 토큰)이 비용의 대부분이라 입력 절감 효과가 작다. 실제 추론 토큰과 (4) 의 캐시 검증 결과가 이 결론의 핵심 가정이다.

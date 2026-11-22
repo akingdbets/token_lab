@@ -299,6 +299,7 @@ class ReplayStage3Test(unittest.TestCase):
         self.assertIn("retention_pct_excluding_overflow", tb)
         self.assertIn("cost_reduction_pct_sim", tb)
         self.assertTrue(any("병렬" in n for n in summary["notes"]))
+        self.assertTrue(any("30분" in n and "만료" in n for n in summary["notes"]))   # sim / nocache 해석
         self.assertIn("cost_sim", r)
 
     def test_state_rebuilt_from_cache_on_resume(self):

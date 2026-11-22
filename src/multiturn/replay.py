@@ -758,6 +758,9 @@ COST_BASIS_NOTE = ("비용 절감률 주 지표는 cost_reduction_pct_sim (시�
                    "실제 대화의 캐시 동작이 아니다. 그래서 실측 기반 cost_reduction_pct_measured 는 참고용이다 "
                    "(검증은 --sequential-chains). 모든 비용은 실험상 비용(호출당): 응답 캐시 적중과 무관하게 원래 호출의 usage 로 센다. "
                    "요약 호출은 캐시 없이 센다. 실제 지출은 budget 에 따로 있다.")
+SIM_INTERPRETATION_NOTE = ("두 비용 열의 해석: sim (cost_reduction_pct_sim, _sim_write) 은 대화 간격이 캐시 보존 시간(30분) 안이라는 가정이다 "
+                           "(직전 턴 요청의 접두부가 아직 캐시에 남아 있음). nocache (cost_reduction_pct_nocache) 는 캐시가 만료된 경우의 경계값이다 "
+                           "(매 턴 입력 전부를 input 단가로). 실제 서비스 비용은 대화 간격 분포에 따라 두 값 사이에 놓인다.")
 REFERENCE_SPEND_NOTE = ("none 의 reference sample 은 기준 궤적과 같은 요청이라 응답 캐시에 적중해 실제 지출이 0원이다 "
                         "(기준 궤적 호출로 이미 한 번 냈다).")
 
@@ -867,6 +870,7 @@ def summarize_replay(rows: list[dict], cfg: ReplayConfig, ref_warnings: list[str
             "prefix_shared_tokens 는 직전 턴 요청과 메시지 단위로 겹치는 접두부 토큰 (1,024 미만은 0, 원래 값은 _raw). "
             "actual_cache_hit_rate 는 서버가 보고한 cached_tokens / prompt_tokens.",
             COST_BASIS_NOTE,
+            SIM_INTERPRETATION_NOTE,
             REFERENCE_SPEND_NOTE,
         ],
         "reference_health": {"warnings": ref_warnings or [], "n_warnings": len(ref_warnings or [])},

@@ -315,15 +315,18 @@ def print_estimate(est: dict) -> None:
         print("  [경고] 요약 모델 단가가 data/pricing.json 에 없습니다")
 
     print("\n[압축기 비교] 실험상 비용 (호출당, 응답 캐시와 무관) = 답변 + 요약. 절감률은 none 대비")
-    print("  sim = 직전 턴 요청과 겹치는 접두부를 캐시 읽기로 본 시뮬레이션 캐시 비용 (주 지표). 캐시0% = 상한")
+    print("  sim = 직전 턴 요청과 겹치는 접두부를 캐시 읽기로 본 시뮬레이션 캐시 비용 (주 지표, 대화 간격이 캐시 보존 시간 30분 안이라는 가정)")
+    print("  sim_write = sim 에서 미스 부분을 캐시 쓰기 단가로. 캐시0% = 캐시가 만료된 경우의 경계값")
     print(f"{'압축기':<44}{'입력 절감':>9}{'기록 절감':>9}{'overflow':>9}{'접두공유':>9}"
-          f"{'답변(캐시0%)':>12}{'요약':>9}{'절감':>8}{'답변(sim)':>11}{'절감':>8}{'요약호출':>8}{'재압축':>7}")
+          f"{'답변(캐시0%)':>12}{'요약':>9}{'절감':>8}{'답변(sim)':>11}{'절감':>8}{'sim_write':>11}{'절감':>8}"
+          f"{'요약호출':>8}{'재압축':>7}")
     for name, x in est["compressors"].items():
         u, red = x["answer_usd_experimental"], x["cost_reduction_pct_vs_none"]
         print(f"{name:<44}{x['input_reduction_pct_vs_none'] or 0:>8.1f}%{x['history_reduction_pct'] or 0:>8.1f}%"
               f"{(x['overflow_rate'] or 0) * 100:>8.1f}%{(x['prefix_share_mean'] or 0) * 100:>8.1f}%"
               f"{(u.get('no_cache') or 0):>12.4f}{(x['summary_usd'] or 0):>9.4f}{(red.get('no_cache') or 0):>7.1f}%"
               f"{(u.get('prefix_cache') or 0):>11.4f}{(red.get('prefix_cache') or 0):>7.1f}%"
+              f"{(u.get('prefix_cache_write') or 0):>11.4f}{(red.get('prefix_cache_write') or 0):>7.1f}%"
               f"{x['summary_calls']:>8}{x['recompress_count']:>7}")
     if est.get("summary_usd_by_effort"):
         print("\n[요약 추론 조건별 요약 비용]")

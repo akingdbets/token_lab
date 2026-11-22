@@ -388,5 +388,5 @@ LLM_MODEL=qwen2.5:3b python src/dataset_builder.py --docs 3 --dry-run
   - 접두부 공유 지표 `prefix_shared_tokens(_raw)` 와 실제 `cached_tokens` 비교
   - 비용 주 지표는 시뮬레이션 캐시 비용 (`cost_reduction_pct_sim`, 직전 턴 접두부 기준). 실측 cached_tokens 는 병렬 실행이라 참고용, `--sequential-chains` 로 순차 검증
   - 요약 추론 조건 `--summary-reasoning-effort server_default,none` → `[sre=...]` 로 펼침, overflow 제외 집계
-  - 파일럿 추정 (예산 2000·4000·8000): 시뮬레이션 캐시 기준으로 어떤 압축기도 none 보다 싸지 않음 (none 의 직전 턴 접두부 공유율 76%)
+  - 파일럿 추정 (예산 2000·4000·8000, per_message(rule) 포함): 시뮬레이션 캐시 기준으로 어떤 압축기도 none 보다 싸지 않음 (none 의 직전 턴 접두부 공유율 76%). sim 은 대화 간격 30분 안 가정, 캐시 0% 는 만료 경계값
 - [ ] free-run 모드
