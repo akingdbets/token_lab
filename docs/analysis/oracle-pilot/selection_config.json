@@ -1,0 +1,26 @@
+{
+  "source_run": "results/runs/20261104-165320",
+  "review_source": "docs/analysis/terra-review-20261104",
+  "repeats": 3,
+  "schedule_seed": 20261104,
+  "selection_protocol": "Before new API outcomes: source-check all candidates; exclude suspected judge/gold issues, use distinct qids and clearly inspectable lost literal/entity (A) or missing semantic link with surviving operands (B). Purposeful fixed manifest, not random or representative sampling. Use r30 for all ten to hold compression condition fixed. Classification is source-checked by Codex, not human ground truth; human verification remains pending. Do not revise selection after outcomes.",
+  "placebo_source": "data/openwiki/en/deployment/deployment-concepts-and-servers.md",
+  "placebo_start": "A single Python process uses one CPU core for your code.",
+  "placebo_end": "## The deployment concepts",
+  "placebo_rationale": "Worker replication, per-process memory and Kubernetes worker configuration do not answer any selected question. Use contiguous verbatim prefix ending at a whitespace boundary, chosen only for nearest total input token budget. No answer-derived filler.",
+  "insertion": "append at end of baseline context, identical two-newline delimiter for placebo and oracle",
+  "cases": [
+    {"qid":"c0046","category":"A","evidence_indices":[0],"missing_literal":"Successful Response","reason":"The default response description literal is absent everywhere in the compressed context; existing answer is NOT FOUND."},
+    {"qid":"c0052","category":"A","evidence_indices":[0],"missing_literal":"\"auto\"","reason":"The fallback default auto is missing while index.html, 404.html and None examples survive; answer selects None incorrectly."},
+    {"qid":"c0086","category":"A","evidence_indices":[0],"missing_literal":"starlette-graphene3","reason":"Replacement package identifier is absent; GraphQLApp remains but answer is NOT FOUND."},
+    {"qid":"c0101","category":"A","evidence_indices":[2,3],"missing_literal":"bump-pydantic","reason":"Migration outline survives but the named automatic migration tool is entirely missing. Existing answer substitutes manual rewrite and omits rerunning tests; restore steps 3-4 verbatim."},
+    {"qid":"c0134","category":"A","evidence_indices":[0],"missing_literal":"\"lax\"","reason":"The cookie default literal lax and its table association are absent; answer is NOT FOUND."},
+    {"qid":"c0049","category":"B","evidence_indices":[0],"quote_prefix":"Real environment variables still take precedence over the `.env` file.","surviving_anchors":["env_file",".env"],"lost_link":"take precedence","reason":"Environment-setting examples and dotenv configuration survive; the precedence direction between real environment and dotenv values is absent. NOT FOUND is consistent with this loss."},
+    {"qid":"c0073","category":"B","evidence_indices":[0],"quote_prefix":"**Let's Encrypt** (Linux Foundation) issues free, automated, short-lived (~3 months) certificates.","surviving_anchors":["3","certificates"],"lost_link":"months","reason":"Compressed sentence retains free 3 certificates, but loses the months unit linking 3 to certificate validity. This is unit/attribute relation damage; entity deletion also co-occurs."},
+    {"qid":"c0096","category":"B","evidence_indices":[0,1,2,3],"surviving_anchors":["function stack","tasks","request stack","AsyncExitStackMiddleware"],"lost_link":"after the body is sent","reason":"Numbered stack skeleton and tasks survive, but response-send/background-task timing is lost. Existing answer omits background tasks, matching one genuinely missing fact."},
+    {"qid":"c0155","category":"B","evidence_indices":[1],"extra_source_line_contains":"- `\"auto\"`: if the environment variable `FASTAPI_ENV` is `development`","extra_source_page":"app-structure/static-files-templates-and-frontend.md","surviving_anchors":["FASTAPI_ENV","warning","raises error"],"lost_link":"FASTAPI_ENV=development","reason":"Warning and error outcomes and FASTAPI_ENV survive, but the development condition and dev/run assignment are lost. Restore the complete original conditional bullet plus the dev/run original bullet, without synthesizing a gold answer."},
+    {"qid":"c0162","category":"B","evidence_indices":[1],"surviving_anchors":["BackgroundTasks","tasks","after response"],"lost_link":"order they were added","reason":"Background task entities and after-response fragment survive; the addition-order relation is absent. Existing answer explicitly says order is not documented. Restore the ordering sentence only."}
+  ],
+  "suspected_D_qids": ["c0011","c0063","c0072","c0149","c0150","c0163"],
+  "suspected_D_reason": "Existing responses plausibly express the required semantics or an equivalent formulation; avoid adjudication-sensitive candidates in this pilot. This is preliminary screening, not a final D label."
+}

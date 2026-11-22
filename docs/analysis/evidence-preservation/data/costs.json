@@ -1,0 +1,34 @@
+{
+  "dataset": {
+    "generation_input": 25543,
+    "generation_output": 5401,
+    "audit_input": 107443,
+    "audit_output": 26614
+  },
+  "dataset_generation_calls": 8,
+  "dataset_audit_calls": 32,
+  "evaluation": {
+    "dev": {
+      "answer_input": 292043,
+      "answer_output": 8558,
+      "judge_input": 91794,
+      "judge_output": 43586,
+      "answer_calls_completed": 210,
+      "fact_judge_calls": 338,
+      "compression_llm_api_calls": 0,
+      "compression_llm_api_tokens": 0
+    },
+    "independent": {
+      "answer_input": 347752,
+      "answer_output": 5254,
+      "judge_input": 62420,
+      "judge_output": 31274,
+      "answer_calls_completed": 186,
+      "fact_judge_calls": 271,
+      "compression_llm_api_calls": 0,
+      "compression_llm_api_tokens": 0
+    }
+  },
+  "compression_api_calls": 0,
+  "note": "Known returned usage only; interrupted network or per-fact batches can have unreturned usage, so complete provider billing totals are not claimed."
+}

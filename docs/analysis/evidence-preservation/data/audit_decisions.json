@@ -1,0 +1,162 @@
+[
+  {
+    "qid": "ind_graphlib_1",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_graphlib_2",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_graphlib_3",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_graphlib_4",
+    "accepted": false,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_tomllib_1",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_tomllib_2",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_tomllib_3",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_tomllib_4",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_bisect_1",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_bisect_2",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_bisect_3",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_bisect_4",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_heapq_1",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_heapq_2",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_heapq_3",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_heapq_4",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_copy_1",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_copy_2",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_copy_3",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_copy_4",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_weakref_1",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_weakref_2",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_weakref_3",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_weakref_4",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_contextlib_1",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_contextlib_2",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_contextlib_3",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_contextlib_4",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_functools_1",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_functools_2",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_functools_3",
+    "accepted": true,
+    "judge_error": null
+  },
+  {
+    "qid": "ind_functools_4",
+    "accepted": true,
+    "judge_error": null
+  }
+]

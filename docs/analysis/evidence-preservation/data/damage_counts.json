@@ -1,0 +1,81 @@
+{
+  "test_run": "20261104-165320",
+  "dev_run": "20261104-151606",
+  "denominators": [
+    {
+      "type": "code",
+      "compressor": "llmlingua2_r30",
+      "paired": 42,
+      "success": 42,
+      "sampled_success": 2,
+      "success_sampling_fraction": 0.047619047619047616
+    },
+    {
+      "type": "code",
+      "compressor": "llmlingua2_r50",
+      "paired": 42,
+      "success": 42,
+      "sampled_success": 2,
+      "success_sampling_fraction": 0.047619047619047616
+    },
+    {
+      "type": "fact",
+      "compressor": "llmlingua2_r30",
+      "paired": 38,
+      "success": 26,
+      "decline": 12,
+      "sampled_success": 2,
+      "success_sampling_fraction": 0.07692307692307693
+    },
+    {
+      "type": "fact",
+      "compressor": "llmlingua2_r50",
+      "paired": 38,
+      "success": 34,
+      "decline": 4,
+      "sampled_success": 2,
+      "success_sampling_fraction": 0.058823529411764705
+    },
+    {
+      "type": "multi",
+      "compressor": "llmlingua2_r30",
+      "paired": 29,
+      "decline": 12,
+      "success": 14,
+      "other_non_decline": 3,
+      "sampled_success": 2,
+      "success_sampling_fraction": 0.14285714285714285
+    },
+    {
+      "type": "multi",
+      "compressor": "llmlingua2_r50",
+      "paired": 29,
+      "decline": 6,
+      "success": 21,
+      "other_non_decline": 2,
+      "sampled_success": 2,
+      "success_sampling_fraction": 0.09523809523809523
+    },
+    {
+      "type": "procedure",
+      "compressor": "llmlingua2_r30",
+      "paired": 30,
+      "decline": 5,
+      "success": 25,
+      "sampled_success": 2,
+      "success_sampling_fraction": 0.08
+    },
+    {
+      "type": "procedure",
+      "compressor": "llmlingua2_r50",
+      "paired": 30,
+      "success": 28,
+      "decline": 2,
+      "sampled_success": 2,
+      "success_sampling_fraction": 0.07142857142857142
+    }
+  ],
+  "join_issues": [],
+  "source_summary_git_commit": "2697f7d",
+  "note": "Declines are compressed accuracy < paired none; A/B are preliminary source-checked candidate labels, not population prevalence."
+}

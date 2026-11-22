@@ -1,0 +1,267 @@
+{
+  "schema_version": 1,
+  "experiment_base_commit": "2697f7d4a56321d2ab1ff477e4e241f1f7750c5a",
+  "measured_worktree_had_uncommitted_research_code": true,
+  "algorithm_freeze_utc": "2026-11-04T13:19:07.020621+00:00",
+  "algorithm_freeze_sha256": "bd8302580f33d3dce7cc2c35fc1b6a194314c00c3cf59b5ad21ac25ef31d1e8d",
+  "dataset_frozen_utc": "2026-11-04T13:23:57.939900+00:00",
+  "original_dataset_sha256": "8a03362ee982c69f35eb4487056df1d28b62709fded9ae5473f667bbee90bfa3",
+  "original_code_hashes": {
+    "scripts/final_experiment.py": "6e743536fec8931ad7053890b57ef4d16916a7309878bc2307b4f678248d81c7",
+    "src/compressors/llmlingua2.py": "4bf16594c9d4b4e9ffd7d5f708ccc1057e4e49ec4d31a36788d02aee53e043d9",
+    "src/compressors/question_preserve.py": "94b474f281391b700e946f8a1034e2c7eb967a1605bfb6824d95c15e8ae23552",
+    "src/config.py": "7e602497bb5ff898f830e7b1b8ee24a376bcf2dbabcbcaeeb052fe2a94c82468",
+    "src/experiment.py": "55f930f3f846f48081512b92ed1fd48d943fc7ec72229b049aafebadea12f336",
+    "src/grader.py": "69e1730bc0f35638bb1c9d679d7a0451c8942ea49bb9c31dbcde42abeac3744a",
+    "src/llm.py": "96b1dc1339d4e76fded35e62f739f8950d4415d193e8de0e6a32270b5a9edca3",
+    "src/prompts/answer_v1.md": "d12495bd14123ff9c0f5108ddc8a74b451dc3fa32a6a6fd8d2891a452e876eef"
+  },
+  "original_runtime": {
+    "models": {
+      "answer": {
+        "model": "gpt-6.1-terra",
+        "backend": "openai",
+        "base_url": "https://api.openai.com"
+      },
+      "judge": {
+        "model": "deepseek-flash",
+        "backend": "openai",
+        "base_url": "https://api.deepseek.com"
+      },
+      "embed": {
+        "model": "bge-m3",
+        "backend": "ollama",
+        "base_url": "http://localhost:11434"
+      },
+      "tokenizer": "tiktoken:o200k_base",
+      "tokenizer_revision": null
+    },
+    "seed": 42,
+    "temperature": 0.0,
+    "answer_reasoning_effort": "none",
+    "judge_reasoning_effort": "",
+    "answer_max_tokens": 512,
+    "fact_judge_max_tokens": 4096,
+    "judge_mode": "per_fact",
+    "answer_prompt_hash": "d12495bd1412",
+    "fact_judge_hash": "7e441ad04bab",
+    "packages": {
+      "requests": "2.34.2",
+      "tiktoken": "0.14.0",
+      "torch": "2.14.1",
+      "transformers": "5.19.0",
+      "llmlingua": "0.2.2",
+      "numpy": "2.5.4"
+    }
+  },
+  "configuration": {
+    "protocol_version": "ucwit-question-preserve-v1",
+    "conditions": [
+      "none",
+      "llmlingua2_r50",
+      "llmlingua2_r30",
+      "qp_identifiers_r30",
+      "qp_sentences_r30",
+      "qp_combined_r30"
+    ],
+    "protected_fraction": 0.35,
+    "max_spans": 18,
+    "repeats": 1,
+    "answer_model": "gpt-6.1-terra",
+    "judge_model": "deepseek-flash",
+    "seed": 42,
+    "schedule_seed": 20261104,
+    "bootstrap_seed": 20261104,
+    "bootstrap_replicates": 10000,
+    "independent_documents": [
+      "graphlib",
+      "tomllib",
+      "bisect",
+      "heapq",
+      "copy",
+      "weakref",
+      "contextlib",
+      "functools"
+    ],
+    "source_url_template": "https://docs.python.org/3.14/library/{module}.html",
+    "independent_doc_token_cap": 5000,
+    "independent_questions_per_document": 4,
+    "types": [
+      "fact",
+      "code",
+      "procedure",
+      "multi"
+    ],
+    "independent_generation_policy": "Only after dev completion and algorithm freeze. One generation request per document, one automatic source-grounding audit per candidate. No answer-performance-based filtering or regeneration. Require exact evidence quotes and all schema/source checks plus audit YES before admitting. Retain rejected candidates and all errors.",
+    "selection_policy": "One predeclared policy, no parameter search. Dev verifies constraints and observes performance. Freeze after dev regardless of improvement; do not tune on independent data or outcomes.",
+    "primary_comparison": "qp_combined_r30 vs fresh llmlingua2_r30; whole-message estimated and API-reported prompt tokens; macro key-fact accuracy; paired question bootstrap and document-cluster bootstrap",
+    "budget_policy": "Use each question's fresh r30 full input as numeric target. Protected spans capped at 35 percent of available context budget; trim residual words then greedily add source units and exact prefixes. No artificial filler; report every deficit/overflow. All ablations share target and repair algorithm.",
+    "claim_policy": "Report negative results. No confirmatory population claim from small synthetic dataset, correlated questions, unblinded automatic gold generation/audit or post-hoc subgroup selection. Existing test 139 is not an independent endpoint."
+  },
+  "original_summary_hashes": {
+    "dev": "3bf8e5bc9783ce158b7ceed75fa0ceef5403a320f7b484c9ce18e508efebe785",
+    "independent": "71278c861b48898c865429a1968f199b95492e9d08741f180680309a84937996"
+  },
+  "oracle": {
+    "plan_sha256": "551b13b8e7bdae7989d87da4c33e31d4c5d042fe9d22c7bae284151c80122891",
+    "code_hashes": {
+      "src/prompts/answer_v1.md": "d12495bd14123ff9c0f5108ddc8a74b451dc3fa32a6a6fd8d2891a452e876eef",
+      "scripts/oracle_pilot.py": "6bb5176cd45aeb6a445334c8430494f5ce8d3bda5cf1933ad9b21d2cdb7f75c3",
+      "src/llm.py": "96b1dc1339d4e76fded35e62f739f8950d4415d193e8de0e6a32270b5a9edca3",
+      "src/grader.py": "69e1730bc0f35638bb1c9d679d7a0451c8942ea49bb9c31dbcde42abeac3744a"
+    },
+    "config": {
+      "source_run": "results/runs/20261104-165320",
+      "review_source": "docs/analysis/terra-review-20261104",
+      "repeats": 3,
+      "schedule_seed": 20261104,
+      "selection_protocol": "Before new API outcomes: source-check all candidates; exclude suspected judge/gold issues, use distinct qids and clearly inspectable lost literal/entity (A) or missing semantic link with surviving operands (B). Purposeful fixed manifest, not random or representative sampling. Use r30 for all ten to hold compression condition fixed. Classification is source-checked by Codex, not human ground truth; human verification remains pending. Do not revise selection after outcomes.",
+      "placebo_source": "data/openwiki/en/deployment/deployment-concepts-and-servers.md",
+      "placebo_start": "A single Python process uses one CPU core for your code.",
+      "placebo_end": "## The deployment concepts",
+      "placebo_rationale": "Worker replication, per-process memory and Kubernetes worker configuration do not answer any selected question. Use contiguous verbatim prefix ending at a whitespace boundary, chosen only for nearest total input token budget. No answer-derived filler.",
+      "insertion": "append at end of baseline context, identical two-newline delimiter for placebo and oracle",
+      "cases": [
+        {
+          "qid": "c0046",
+          "category": "A",
+          "evidence_indices": [
+            0
+          ],
+          "missing_literal": "Successful Response",
+          "reason": "The default response description literal is absent everywhere in the compressed context; existing answer is NOT FOUND."
+        },
+        {
+          "qid": "c0052",
+          "category": "A",
+          "evidence_indices": [
+            0
+          ],
+          "missing_literal": "\"auto\"",
+          "reason": "The fallback default auto is missing while index.html, 404.html and None examples survive; answer selects None incorrectly."
+        },
+        {
+          "qid": "c0086",
+          "category": "A",
+          "evidence_indices": [
+            0
+          ],
+          "missing_literal": "starlette-graphene3",
+          "reason": "Replacement package identifier is absent; GraphQLApp remains but answer is NOT FOUND."
+        },
+        {
+          "qid": "c0101",
+          "category": "A",
+          "evidence_indices": [
+            2,
+            3
+          ],
+          "missing_literal": "bump-pydantic",
+          "reason": "Migration outline survives but the named automatic migration tool is entirely missing. Existing answer substitutes manual rewrite and omits rerunning tests; restore steps 3-4 verbatim."
+        },
+        {
+          "qid": "c0134",
+          "category": "A",
+          "evidence_indices": [
+            0
+          ],
+          "missing_literal": "\"lax\"",
+          "reason": "The cookie default literal lax and its table association are absent; answer is NOT FOUND."
+        },
+        {
+          "qid": "c0049",
+          "category": "B",
+          "evidence_indices": [
+            0
+          ],
+          "quote_prefix": "Real environment variables still take precedence over the `.env` file.",
+          "surviving_anchors": [
+            "env_file",
+            ".env"
+          ],
+          "lost_link": "take precedence",
+          "reason": "Environment-setting examples and dotenv configuration survive; the precedence direction between real environment and dotenv values is absent. NOT FOUND is consistent with this loss."
+        },
+        {
+          "qid": "c0073",
+          "category": "B",
+          "evidence_indices": [
+            0
+          ],
+          "quote_prefix": "**Let's Encrypt** (Linux Foundation) issues free, automated, short-lived (~3 months) certificates.",
+          "surviving_anchors": [
+            "3",
+            "certificates"
+          ],
+          "lost_link": "months",
+          "reason": "Compressed sentence retains free 3 certificates, but loses the months unit linking 3 to certificate validity. This is unit/attribute relation damage; entity deletion also co-occurs."
+        },
+        {
+          "qid": "c0096",
+          "category": "B",
+          "evidence_indices": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "surviving_anchors": [
+            "function stack",
+            "tasks",
+            "request stack",
+            "AsyncExitStackMiddleware"
+          ],
+          "lost_link": "after the body is sent",
+          "reason": "Numbered stack skeleton and tasks survive, but response-send/background-task timing is lost. Existing answer omits background tasks, matching one genuinely missing fact."
+        },
+        {
+          "qid": "c0155",
+          "category": "B",
+          "evidence_indices": [
+            1
+          ],
+          "extra_source_line_contains": "- `\"auto\"`: if the environment variable `FASTAPI_ENV` is `development`",
+          "extra_source_page": "app-structure/static-files-templates-and-frontend.md",
+          "surviving_anchors": [
+            "FASTAPI_ENV",
+            "warning",
+            "raises error"
+          ],
+          "lost_link": "FASTAPI_ENV=development",
+          "reason": "Warning and error outcomes and FASTAPI_ENV survive, but the development condition and dev/run assignment are lost. Restore the complete original conditional bullet plus the dev/run original bullet, without synthesizing a gold answer."
+        },
+        {
+          "qid": "c0162",
+          "category": "B",
+          "evidence_indices": [
+            1
+          ],
+          "surviving_anchors": [
+            "BackgroundTasks",
+            "tasks",
+            "after response"
+          ],
+          "lost_link": "order they were added",
+          "reason": "Background task entities and after-response fragment survive; the addition-order relation is absent. Existing answer explicitly says order is not documented. Restore the ordering sentence only."
+        }
+      ],
+      "suspected_D_qids": [
+        "c0011",
+        "c0063",
+        "c0072",
+        "c0149",
+        "c0150",
+        "c0163"
+      ],
+      "suspected_D_reason": "Existing responses plausibly express the required semantics or an equivalent formulation; avoid adjudication-sensitive candidates in this pilot. This is preliminary screening, not a final D label."
+    },
+    "answer_prompt_hash": "d12495bd1412",
+    "fact_judge_hash": "7e441ad04bab"
+  },
+  "export_notes": [
+    "Metrics and QA content are copied, not re-evaluated.",
+    "Published QA omits original output paths; original dataset hash identifies the private full artifact.",
+    "Source markdown bytes are frozen extracts, including documented encoding artifacts.",
+    "No raw experiment logs, model responses, API request IDs or local absolute paths are exported."
+  ]
+}
