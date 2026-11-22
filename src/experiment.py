@@ -48,6 +48,8 @@ RAG 검색 단계는 두지 않는다.
 부분별 토큰(system/context/question_tokens)은 각 부분 글자만 센다.
 답변·채점 모델이 실제로 쓴 토큰은 서버 보고값(prompt_tokens, completion_tokens, judge_*_tokens)이고,
 서버가 보고하지 않아 추정한 경우 *_usage_source 가 "estimate" 다.
+답변의 캐시 읽기·쓰기·추론 토큰과 usage 원본은 answer_cached_tokens / answer_cache_write_tokens /
+answer_reasoning_tokens / answer_raw_usage (서버가 안 주면 None) 이고, summary 의 usage·answer_health 에 집계한다.
 
 1. 입력 토큰 절감률 (input_reduction_pct)  <- 주 지표 (목표 50%)
 
@@ -408,6 +410,11 @@ class TrialRecord:
     answer_model: str = ""                    # 서버가 응답에 적은 모델 (없으면 요청한 모델)
     answer_usage_source: str = "api"          # api | estimate (prompt/completion_tokens 출처)
     answer_finish_reason: str | None = None   # length 면 ANSWER_MAX_TOKENS 에 걸려 답변이 잘림
+    # 답변 usage 세부 (llm.parse_usage_details). 서버가 안 주면 None (0 이 아님). 이전 run 의 trials 에는 없다
+    answer_cached_tokens: int | None = None       # 입력 중 캐시 읽기 (prompt_tokens 에 포함)
+    answer_cache_write_tokens: int | None = None  # 입력 중 캐시 쓰기 (필드 이름 미확인)
+    answer_reasoning_tokens: int | None = None    # 출력 중 추론 토큰 (completion_tokens 에 포함)
+    answer_raw_usage: dict | None = None          # 서버 usage 원본
     # 기억 의존 의심: 압축 문맥에 정답 핵심어가 없는데 answer_accuracy >= 0.5 (memory_suspect())
     answer_core_in_context: bool | None = None  # 짧은 답은 정답, 긴 답은 핵심 개체 절반 이상이 문맥에 있는지
     memory_suspect: bool = False
@@ -776,6 +783,10 @@ def _run(args, run_id: str, out_dir: Path) -> Path:
                     answer_model=res.model,
                     answer_usage_source=res.usage_source,
                     answer_finish_reason=res.finish_reason,
+                    answer_cached_tokens=res.cached_tokens,
+                    answer_cache_write_tokens=res.cache_write_tokens,
+                    answer_reasoning_tokens=res.reasoning_tokens,
+                    answer_raw_usage=res.raw_usage,
                     answer_core_in_context=core_in_ctx,
                     memory_suspect=memory_suspect(core_in_ctx, answer_accuracy),
                     answer_core_in_context_strict=core_in_ctx_strict,
@@ -824,6 +835,12 @@ def _run(args, run_id: str, out_dir: Path) -> Path:
 
 
 # ---------------- 집계 ----------------
+
+def _sum_known(xs):
+    """None 이 아닌 값의 합. 전부 None 이면 None."""
+    vals = [x for x in xs if x is not None]
+    return sum(vals) if vals else None
+
 
 def _mean(xs):
     xs = [x for x in xs if x is not None]
@@ -883,6 +900,20 @@ def summarize(records: list[TrialRecord], names: list[str]) -> dict:
                                                for r in rs),
                 "answer_usage_estimated": sum(r.answer_usage_source != "api" for r in rs),
                 "judge_usage_estimated": sum(r.judge_usage_source not in (None, "api") for r in rs),
+                # 답변 usage 세부. 값을 준 trial 이 하나도 없으면 None (서버가 보고하지 않음)
+                "answer_cached_tokens": _sum_known(r.answer_cached_tokens for r in rs),
+                "answer_cache_write_tokens": _sum_known(r.answer_cache_write_tokens for r in rs),
+                "answer_reasoning_tokens": _sum_known(r.answer_reasoning_tokens for r in rs),
+            },
+            # 추론이 실제로 돌았는지 (서버 기본값은 제공사가 바꿀 수 있음) 와 추론이 출력 한도를 다 쓴 흔적
+            "answer_health": {
+                "reasoning_ran": sum((r.answer_reasoning_tokens or 0) > 0 for r in rs),
+                "reasoning_zero": sum(r.answer_reasoning_tokens == 0 for r in rs),
+                "reasoning_unknown": sum(r.answer_reasoning_tokens is None for r in rs),
+                "finish_length": sum(r.answer_finish_reason == "length" for r in rs),
+                "finish_length_rate": round(sum(r.answer_finish_reason == "length" for r in rs) / len(rs), 4),
+                "empty_response": sum(not (r.response or "").strip() for r in rs),
+                "empty_response_rate": round(sum(not (r.response or "").strip() for r in rs) / len(rs), 4),
             },
             "question_changed_rate": round(sum(r.question_changed for r in rs) / len(rs), 4),
 

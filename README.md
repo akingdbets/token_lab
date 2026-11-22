@@ -100,11 +100,13 @@ token_lab/
 ├── data/
 │   ├── openwiki/             # OpenWiki 생성 위키: en/ (문서 원천, 고정), ko/ (보관용). 출처는 각 SOURCE.md
 │   ├── corpus_manifest.jsonl # 코퍼스 페이지 목록·종류·해시·토큰 수
+│   ├── pricing.json          # 모델별 단가 (USD / 1M 토큰, src/cost.py)
 │   ├── evalsets/claude-v1/   # 평가셋 (git 관리, EVAL_DIR 로 선택). 후보 원본·생성 규칙은 candidates/, 사람 검수는 review/
 │   └── eval/                 # 평가셋 작업 공간 (기본 EVAL_DIR, 버전 관리 제외)
 ├── src/
 │   ├── config.py             # 모델·경로·실험 조건 통합 설정
-│   ├── llm.py                # LLM 호출 (백엔드 교체 가능), 토큰 계산
+│   ├── llm.py                # LLM 호출 (백엔드 교체 가능), 토큰 계산, usage 세부(캐시·추론 토큰), --cache-probe
+│   ├── cost.py               # 호출 비용 계산 (data/pricing.json), recompute_costs
 │   ├── corpus.py             # 코퍼스 로더 (OpenWiki 위키, 문서의 단일 출처)
 │   ├── dataset_builder.py    # 평가 데이터셋 생성 및 검수
 │   ├── apply_review.py       # 사람 검수표(CSV) 반영 (keep/edit/delete)
@@ -112,7 +114,8 @@ token_lab/
 │   ├── experiment.py         # 압축 실험 실행 (A/B 비교)
 │   ├── rejudge.py            # 기존 trials.jsonl 답변을 key_facts judge 로 재채점 (답변 재생성 없음)
 │   ├── prompts/              # 답변 지시문 (answer_v1.md ...), --answer-prompt 로 선택
-│   └── compressors/          # 입력 압축 기법 (none, rule) 과 조합(">")
+│   ├── compressors/          # 입력 압축 기법 (none, rule) 과 조합(">")
+│   └── multiturn/            # 멀티턴 기반: trajectory.py (궤적 JSONL), response_cache.py (SQLite 응답 캐시)
 ├── tests/                    # 단위 테스트 (python -m unittest discover -s tests)
 ├── results/                  # 실험 로그 (runs/<run_id>/)
 └── dashboard/                # Grafana 실험 대시보드 (MVP)
@@ -323,7 +326,8 @@ python src/llm.py          # 답변 모델
 python src/llm.py judge    # 채점 모델
 ```
 
-응답, 입출력 토큰 수(서버 보고값인지 추정치인지), TTFT(첫 토큰까지 시간), 임베딩 차원을 출력한다.
+응답, 입출력 토큰 수(서버 보고값인지 추정치인지), 캐시 읽기·쓰기·추론 토큰과 usage 원본, TTFT(첫 토큰까지 시간), 임베딩 차원을 출력한다.
+`python src/llm.py --cache-probe [answer|judge]` 는 같은 긴 프롬프트(약 2,000 토큰)를 두 번 보내 캐시 필드 이름을 확인한다.
 
 ## 실험 통제 조건
 
@@ -358,3 +362,11 @@ LLM_MODEL=qwen2.5:3b python src/dataset_builder.py --docs 3 --dry-run
 - [ ] 멀티 에이전트 오케스트레이션 검증
 - [x] 평가 지표 모듈 (6개 지표, key_facts 기반 답변 정확도) — 의미 유사도는 bge-m3 필요, deepseek-flash judge 사람 라벨 검증 중 (`docs/results/judge_check_v3.csv`)
 - [x] 대시보드 — Grafana MVP (`dashboard/`)
+- [x] 싱글턴 논문 버전 태그 `paper-singleturn-v1`
+- [ ] 멀티턴 실험 기반 1단계 — 구현·오프라인 테스트 완료, 키 필요한 확인은 [`docs/todo_with_keys.md`](docs/todo_with_keys.md)
+  - LLMResult 에 `cached_tokens / cache_write_tokens / reasoning_tokens / raw_usage / reasoning_text / created_at` (없으면 None)
+  - 캐시 쓰기 필드 이름은 **미확인 (`--cache-probe` 로 확정 필요)**, 캐시 읽기·추론 필드도 실제 응답으로는 아직 확인 전
+  - `src/cost.py` + `data/pricing.json` (gpt-6.1-sol Standard, deepseek-flash 피크 단가 고정), `recompute_costs(path)`
+  - `src/multiturn/trajectory.py` (호출 1번 = 1줄, 기록에는 최종 답변만), `src/multiturn/response_cache.py` (키에 sample_idx·backend·base_url, `RESPONSE_CACHE=off`)
+  - trials.jsonl 에 `answer_cached_tokens` 등 새 필드, summary.json 에 `answer_health` (추론 실행 여부, finish=length, 빈 답변)
+- [ ] 멀티턴 실행기
