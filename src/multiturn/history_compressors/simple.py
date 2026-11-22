@@ -2,10 +2,42 @@
 
 from __future__ import annotations
 
+import importlib
 import re
 
 from multiturn.history_compressors.base import HistoryCompressor, HistoryResult, split_turns
 from multiturn.prompt import DOC_BLOCK_RE
+
+# llmlingua 패키지가 필요한 싱글턴 압축기 모듈. 이 압축기들은 llmlingua 가 없거나 추론이 실패하면
+# 예외를 삼키고 원문을 그대로 돌려준다 (compressors/llmlingua2.py fallback_on_error=True, status="fallback_error").
+# 멀티턴 실험에서는 그런 조용한 대체를 허용하지 않는다: 시작 시점에 import 를 확인하고, 실행 중 fallback_error 가 나오면 멈춘다.
+LLMLINGUA_MODULES = ("compressors.llmlingua2", "compressors.repair", "compressors.question_preserve")
+
+
+class MissingDependencyError(RuntimeError):
+    """압축기에 필요한 패키지가 없다. 원문으로 대체하지 않고 멈춘다."""
+
+
+class CompressorFallbackError(RuntimeError):
+    """싱글턴 압축기가 오류를 삼키고 원문을 돌려줬다 (status=fallback_error). 압축하지 않은 결과를 압축 결과로 쓰지 않는다."""
+
+
+def _stages(single) -> list:
+    return list(getattr(single, "stages", None) or [single])
+
+
+def needs_llmlingua(single) -> bool:
+    return any(type(st).__module__ in LLMLINGUA_MODULES for st in _stages(single))
+
+
+def require_llmlingua(name: str) -> None:
+    try:
+        importlib.import_module("llmlingua")
+    except Exception as e:      # 패키지가 없거나, torch 등 의존성이 없어 import 가 실패
+        raise MissingDependencyError(
+            f"{name} 는 llmlingua 가 필요합니다 ({type(e).__name__}: {e}). "
+            "pip install -r requirements.txt (llmlingua==0.2.2) 후 다시 실행하세요. "
+            "원문으로 대체해서 돌리지 않습니다.") from e
 
 _QUESTION_RE = re.compile(r"Question: (.*?)(?:\n\nAnswer format:|\Z)", re.S)
 
@@ -48,6 +80,9 @@ class PerMessage(HistoryCompressor):
             raise ValueError(f"per_message 는 context 만 압축하는 압축기만 받습니다: {single_name} targets={self.single.targets}")
         self.single_name = single_name
         self.name = f"per_message({single_name})"
+        self.requires_llmlingua = needs_llmlingua(self.single)
+        if self.requires_llmlingua:
+            require_llmlingua(self.name)     # 시작 시점(압축기 생성)에 멈춘다
 
     def compress_past(self, past, current_user, budget_tokens, state):
         from compressors import PromptParts
@@ -66,9 +101,12 @@ class PerMessage(HistoryCompressor):
                     pt += r.llm_prompt_tokens
                     ct += r.llm_completion_tokens
                     n_docs += 1
-                    st = (r.info or {}).get("status")
-                    if st:                    # llmlingua2 는 실패하면 원문을 그대로 돌려주고 status 에 fallback_* 를 남긴다
+                    for st in _statuses(r.info):
                         statuses[st] = statuses.get(st, 0) + 1
+                        if st == "fallback_error":
+                            raise CompressorFallbackError(
+                                f"{self.name}: 싱글턴 압축기가 오류로 원문을 돌려줬습니다 "
+                                f"({_error_detail(r.info)}). 원문을 압축 결과로 쓰지 않고 멈춥니다.")
                     return match.group(1) + r.context + match.group(3)
 
                 m["content"] = DOC_BLOCK_RE.sub(repl, m["content"])
@@ -79,3 +117,26 @@ class PerMessage(HistoryCompressor):
     def config(self):
         cfg = self.single.config() if hasattr(self.single, "config") else {}
         return {"name": self.name, "single": self.single_name, "single_config": cfg}
+
+
+def _statuses(info) -> list[str]:
+    """싱글턴 CompressResult.info 의 status (Chain 이면 단계별 info 안)."""
+    if not isinstance(info, dict):
+        return []
+    out = [info["status"]] if isinstance(info.get("status"), str) else []
+    for v in info.values():
+        if isinstance(v, dict):
+            out.extend(_statuses(v))
+    return out
+
+
+def _error_detail(info) -> str:
+    if isinstance(info, dict):
+        if info.get("error_type") or info.get("error"):
+            return f"{info.get('error_type')}: {info.get('error')}"
+        for v in info.values():
+            d = _error_detail(v)
+            if d:
+                return d
+    return ""
+

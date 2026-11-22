@@ -376,6 +376,8 @@ LLM_MODEL=qwen2.5:3b python src/dataset_builder.py --docs 3 --dry-run
   - `src/multiturn/history_compressors/`: `none`, `window(n)`, `per_message(<싱글턴 압축기>)`, `>` 체인. system·현재 턴은 압축하지 않음
   - `src/multiturn/replay.py`: 기준 궤적(none) 고정 → 턴 k 이전 기록만 압축 → 채점. `--reasoning-effort`·`--max-completion-tokens` 필수,
     이어 돌리기, 429 백오프, depends_on_reference_ok, (시나리오, 턴) 쌍체 부트스트랩 비열등 판정 + 시나리오 군집 부트스트랩(보조)
-  - `--estimate-only` 파일럿 예상: 답변 $0.18~0.26 + 채점 $0.08 (llmlingua2 제외, Qwen 토크나이저 근사)
+  - `--estimate-only` 파일럿 예상 (실제 지출): 답변 $0.18~0.26 + 채점 $0.08 (llmlingua2 제외, Qwen 토크나이저 근사).
+    압축기 비교는 실험상 비용(호출당) 기준: 캐시 0% 이면 window(2) 25.4%·per_message(rule) 6.9% 절감, 접두부 캐시를 반영하면 ~0%
+  - 조용한 대체 금지 (llmlingua 없으면 시작 시점 에러), 시작 시 토크나이저 확인 (`--allow-approx-tokenizer` 로만 근사)
   - 싱글턴 다리 측정: `luna-default-20261103` (test 139, 추론·temperature 서버 기본값, 출력 4096) 을 그대로 쓴다
 - [ ] 멀티턴 3단계 — 상태 있는 압축기 (재귀 요약, 고정 요약), free-run

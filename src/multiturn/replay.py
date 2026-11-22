@@ -67,6 +67,35 @@ from multiturn.trajectory import (
 
 REFERENCE_ROOT = CFG.results_dir / "multiturn" / "references"
 RETRY_STATUS = {429, 500, 502, 503, 504}
+# 답변 모델 -> history_tokens_* / input_tokens_est 를 셀 토크나이저 (TOKENIZER). 정확히 일치하는 키, 없으면 가장 긴 접두사
+EXPECTED_TOKENIZERS = {"gpt-6-luna": "tiktoken:o200k_base"}
+
+
+class TokenizerMismatchError(RuntimeError):
+    pass
+
+
+def check_tokenizer(model: str, allow_approx: bool, tokenizer: str | None = None) -> dict:
+    """TOKENIZER 가 답변 모델과 맞는지 확인한다. 다르거나 tiktoken 이 없으면 allow_approx 가 아닌 한 멈춘다.
+    과금 토큰은 서버 usage 기준이라 영향이 없고, 압축 전후 기록 토큰·호출 전 입력 추정치의 단위가 달라진다."""
+    tokenizer = tokenizer or CFG.tokenizer
+    keys = [k for k in EXPECTED_TOKENIZERS if model == k or model.startswith(k)]
+    expected = EXPECTED_TOKENIZERS[max(keys, key=len)] if keys else None
+    problems = []
+    if expected is None:
+        problems.append(f"{model} 의 기대 토크나이저가 EXPECTED_TOKENIZERS 에 없습니다")
+    elif tokenizer != expected:
+        problems.append(f"TOKENIZER={tokenizer} 가 {model} 의 {expected} 와 다릅니다")
+    if (expected or tokenizer).startswith("tiktoken:"):
+        try:
+            import tiktoken  # noqa: F401
+        except ImportError:
+            problems.append("tiktoken 이 설치돼 있지 않습니다 (pip install tiktoken)")
+    ok = not problems
+    if not ok and not allow_approx:
+        raise TokenizerMismatchError("; ".join(problems) + ". .env 에 TOKENIZER=" + (expected or "<모델 토크나이저>")
+                                     + " 를 넣거나, 근사로 돌리려면 --allow-approx-tokenizer 를 붙이세요.")
+    return {"tokenizer": tokenizer, "expected": expected, "ok": ok, "approx": not ok, "problems": problems}
 
 
 @dataclass
@@ -162,7 +191,8 @@ def entity_retention_in_history(entities: list[str], raw_past: list[dict], comp_
 
 class Replay:
     def __init__(self, cfg: ReplayConfig, scenarios: list[dict], corpus, answer_cached, judge_cached,
-                 out_dir: Path, reference_root: Path = REFERENCE_ROOT, grade_fn=None, sleep=time.sleep):
+                 out_dir: Path, reference_root: Path = REFERENCE_ROOT, grade_fn=None, sleep=time.sleep,
+                 tokenizer_check: dict | None = None):
         self.cfg, self.scenarios, self.corpus = cfg, scenarios, corpus
         self.answer = answer_cached                    # multiturn.response_cache.CachedLLM (answer LLM 감쌈)
         self.judge = judge_cached.bind(0)              # 같은 답변은 같은 채점 (sample_idx 0 고정)
@@ -174,6 +204,9 @@ class Replay:
             grade_fn = grade_answer_accuracy
         self.grade_fn = grade_fn
         self.sleep = sleep
+        self.tokenizer_check = tokenizer_check or {"tokenizer": CFG.tokenizer, "ok": None, "approx": None,
+                                                   "note": "확인하지 않음 (Replay 를 직접 만든 경우)"}
+        # 압축기를 여기서 만든다: llmlingua 가 필요한데 없으면 시작 시점에 MissingDependencyError 로 멈춘다
         self.compressors = {name: get_history_compressor(name) for name in cfg.compressors}
         self._lock = threading.Lock()
         self.run_id = self.out_dir.name.removeprefix("mt_")
@@ -347,9 +380,14 @@ class Replay:
         summary = summarize_replay(self._read("turn_trials.jsonl"), self.cfg, ref_warnings=ref_warnings,
                                    n_scenarios=len(self.scenarios))
         summary["failed_trials_this_run"] = failed
+        summary["tokenizer_check"] = self.tokenizer_check
+        if self.tokenizer_check.get("approx"):
+            summary["notes"].append(f"토크나이저 근사: {self.tokenizer_check.get('problems')}. "
+                                    "history_tokens_* 와 input_tokens_est 는 답변 모델 단위가 아니다 (과금 토큰은 서버 usage).")
         summary["config"] = self.config_record()
         steps = [TrajectoryStep.from_dict(d) for d in self._read("trajectory.jsonl")]
         summary["trajectory"] = summarize_steps(steps)
+        summary["budget"] = budget_block(steps, [st for v in refs.values() for st in v])
         (self.out_dir / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=1), encoding="utf-8")
         return summary
 
@@ -364,6 +402,7 @@ class Replay:
                           for s in self.scenarios},
             "compressor_configs": {n: c.config() for n, c in self.compressors.items()},
             "tokenizer": CFG.tokenizer,
+            "tokenizer_check": self.tokenizer_check,
         }
 
 
@@ -403,6 +442,29 @@ def _pct_reduction(base: float, comp: float):
     return round(100 * (1 - comp / base), 2) if base else None
 
 
+COST_BASIS_NOTE = ("cost_reduction_pct 와 cost_usd 는 실험상 비용(호출당) 기준이다: 응답 캐시 적중과 무관하게 "
+                   "모든 trial 을 원래 호출의 usage 로 센다. 실제 지출은 budget 에 따로 있다.")
+REFERENCE_SPEND_NOTE = ("none 의 reference sample 은 기준 궤적과 같은 요청이라 응답 캐시에 적중해 실제 지출이 0원이다 "
+                        "(기준 궤적 호출로 이미 한 번 냈다).")
+
+
+def budget_block(replay_steps: list, reference_steps: list) -> dict:
+    """예산 확인용 실제 지출 (응답 캐시 적중은 0원). 압축기 비교에는 쓰지 않는다."""
+    def actual(steps):
+        return round(sum((st.cost or {}).get("usd") or 0 for st in steps if not st.cache_hit), 6)
+    by_comp = defaultdict(list)
+    for st in replay_steps:
+        by_comp[st.compressor].append(st)
+    return {
+        "answer_usd_actual_total": round(actual(replay_steps) + actual(reference_steps), 6),
+        "reference_usd_actual": actual(reference_steps),
+        "replay_usd_actual_by_compressor": {c: actual(v) for c, v in sorted(by_comp.items())},
+        "replay_cache_hits_by_compressor": {c: sum(st.cache_hit for st in v) for c, v in sorted(by_comp.items())},
+        "notes": [REFERENCE_SPEND_NOTE, "실행을 이어 돌린 경우 앞선 실행에서 이미 받은 응답도 이번에는 캐시 적중(0원)으로 센다.",
+                  "채점 비용(judge_cost)은 trial 행에만 있고 평가 비용이라 여기 넣지 않는다."],
+    }
+
+
 def compare_block(pairs: list[tuple[dict, dict]], cfg: ReplayConfig, n_scenarios: int) -> dict:
     """짝지은 (none, 압축) trial 들의 절감률·정확도·비열등 판정."""
     if not pairs:
@@ -419,7 +481,9 @@ def compare_block(pairs: list[tuple[dict, dict]], cfg: ReplayConfig, n_scenarios
         "history_reduction_pct": _pct_reduction(_sum(bs, "history_tokens_raw"), _sum(cs, "history_tokens_compressed")),
         "input_reduction_pct": _pct_reduction(_sum(bs, "prompt_tokens"), _sum(cs, "prompt_tokens")),
         "total_token_reduction_pct": _pct_reduction(base_total, comp_total),
-        "cost_reduction_pct": _pct_reduction(_usd(bs), _usd(cs)),   # 캐시 읽기·쓰기 반영 (cost.py)
+        # 실험상 비용(호출당): 응답 캐시 적중이어도 원래 호출의 usage 로 계산한 cost. 프롬프트 캐시 읽기·쓰기는 반영 (cost.py)
+        "cost_basis": "experimental_per_call",
+        "cost_reduction_pct": _pct_reduction(_usd(bs), _usd(cs)),
         "cost_usd": {"none": round(_usd(bs), 6), "compressed": round(_usd(cs), 6)},
         "reasoning_tokens": {"none_mean": _mean(r.get("reasoning_tokens") for r in bs),
                              "compressed_mean": _mean(r.get("reasoning_tokens") for r in cs)},
@@ -447,8 +511,9 @@ def summarize_replay(rows: list[dict], cfg: ReplayConfig, ref_warnings: list[str
             "주 판정은 (시나리오, 턴) 단위 쌍체 부트스트랩이다. sample 은 같은 턴 안에서 평균한다.",
             f"시나리오 군집 부트스트랩은 보조 결과다. 시나리오 {n_scen}개로 재추출하므로 구간이 넓고 불안정하다"
             + (" (파일럿 규모)." if n_scen < 10 else "."),
-            "none 의 reference sample 은 기준 궤적과 같은 요청이라 응답 캐시에 적중한다. 실제 지출은 trajectory.cost_usd_actual.",
             "depends_on_reference_ok=False 인 턴은 기준 궤적의 앞 턴 답변이 틀려 압축과 무관하게 틀릴 수 있다.",
+            COST_BASIS_NOTE,
+            REFERENCE_SPEND_NOTE,
         ],
         "reference_health": {"warnings": ref_warnings or [], "n_warnings": len(ref_warnings or [])},
         "n_trials": len(rows),
@@ -502,6 +567,8 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--prompt", default="v1", help="src/prompts/mt_answer_<version>.md")
     ap.add_argument("--judge-mode", default=CFG.judge_mode)
     ap.add_argument("--resume", metavar="RUN_ID", help="results/runs/mt_<RUN_ID> 를 이어서")
+    ap.add_argument("--allow-approx-tokenizer", action="store_true",
+                    help="TOKENIZER 가 답변 모델과 달라도 근사로 돈다 (summary 에 표시). 기본은 에러로 멈춤")
     ap.add_argument("--estimate-only", action="store_true", help="API 를 부르지 않고 예상 비용만 계산")
     ap.add_argument("--assume-answer-tokens", type=int, default=300, help="(--estimate-only) 기준 궤적이 없을 때 답변 길이")
     ap.add_argument("--assume-reasoning-tokens", type=int, default=1000, help="(--estimate-only) 호출당 추론 토큰")
@@ -528,10 +595,17 @@ def main(argv=None):
     corpus = load_corpus()
     if a.estimate_only:
         from multiturn.estimate import estimate, print_estimate
+        tk = check_tokenizer(cfg.model, allow_approx=True)      # 추정은 근사여도 된다 (출력 맨 위에 표시)
         print_estimate(estimate(cfg, scenarios, corpus, answer_tokens=a.assume_answer_tokens,
                                 reasoning_tokens=a.assume_reasoning_tokens, judge_model=a.judge_model,
-                                judge_in=a.judge_in_per_call, judge_out=a.judge_out_per_call))
+                                judge_in=a.judge_in_per_call, judge_out=a.judge_out_per_call, tokenizer_check=tk))
         return
+    try:
+        tk = check_tokenizer(cfg.model, allow_approx=a.allow_approx_tokenizer)
+    except TokenizerMismatchError as e:
+        sys.exit(f"[중단] {e}")
+    if tk["approx"]:
+        print(f"[근사 토크나이저] {tk['problems']}", flush=True)
     from llm import LLM
     from multiturn.response_cache import CachedLLM
     answer = CachedLLM(configure_answer_llm(LLM(role="answer"), cfg))
@@ -539,13 +613,17 @@ def main(argv=None):
     run_id = a.resume or datetime.now().strftime("%Y%m%d-%H%M%S")
     out_dir = CFG.results_dir / "runs" / f"mt_{run_id}"
     try:
-        summary = Replay(cfg, scenarios, corpus, answer, judge, out_dir).run()
+        summary = Replay(cfg, scenarios, corpus, answer, judge, out_dir, tokenizer_check=tk).run()
     finally:
         answer.close()
         judge.close()
+    print("[압축기 비교] 실험상 비용(호출당) 기준")
     print(json.dumps({c: {k: b["all"].get(k) for k in ("input_reduction_pct", "total_token_reduction_pct",
                                                        "cost_reduction_pct", "retention_pct", "non_inferiority")}
                       for c, b in summary["compressors"].items()}, ensure_ascii=False, indent=1))
+    bud = summary["budget"]
+    print(f"[예산 확인] 실제 지출 답변 ${bud['answer_usd_actual_total']} (기준 궤적 ${bud['reference_usd_actual']})")
+    print(f"  * {REFERENCE_SPEND_NOTE}")
     print(f"저장: {out_dir}")
 
 

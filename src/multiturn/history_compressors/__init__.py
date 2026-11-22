@@ -17,7 +17,9 @@ from __future__ import annotations
 import re
 
 from multiturn.history_compressors.base import HistoryChain, HistoryCompressor, HistoryResult, split_turns
-from multiturn.history_compressors.simple import NoHistoryCompression, PerMessage, Window
+from multiturn.history_compressors.simple import (
+    CompressorFallbackError, MissingDependencyError, NoHistoryCompression, PerMessage, Window,
+)
 
 _STAGE_RE = re.compile(r"^([a-z_]+)(?:\((.*)\))?$")
 
@@ -69,5 +71,5 @@ def split_compressor_list(arg: str) -> list[str]:
     return split_top_level(arg, sep=",")
 
 
-__all__ = ["HistoryChain", "HistoryCompressor", "HistoryResult", "NoHistoryCompression", "PerMessage",
+__all__ = ["CompressorFallbackError", "MissingDependencyError", "HistoryChain", "HistoryCompressor", "HistoryResult", "NoHistoryCompression", "PerMessage",
            "Window", "get_history_compressor", "split_compressor_list", "split_top_level", "split_turns"]

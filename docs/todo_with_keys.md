@@ -1,5 +1,29 @@
 # 키 필요한 확인 작업 (멀티턴 1·2단계)
 
+## 실행 전 점검 목록 (이 순서대로)
+
+1. 패키지 설치. llmlingua 가 없으면 `per_message(llmlingua2)` 등 llmlingua 계열 압축기는 시작 시점에 에러로 멈춘다 (원문으로 대체하지 않음).
+
+```powershell
+pip install llmlingua==0.2.2 tiktoken
+```
+
+2. `.env` 의 토크나이저 확인. replay.py 는 시작할 때 TOKENIZER 가 답변 모델과 맞는지 확인하고, gpt-6-luna 인데 `tiktoken:o200k_base` 가 아니거나 tiktoken 이 없으면 멈춘다 (근사로 돌릴 때만 `--allow-approx-tokenizer`, summary 에 표시됨).
+
+```powershell
+Select-String -Path .env -Pattern "^TOKENIZER="
+```
+
+   `TOKENIZER=tiktoken:o200k_base` 가 나와야 한다.
+
+3. 캐시·추론 토큰 필드 이름 확정 (아래 1절). 결과로 `src/llm.py` 의 `USAGE_FIELD_CANDIDATES` 주석을 고친다.
+
+```powershell
+python src/llm.py --cache-probe
+```
+
+4. 그다음 파일럿 (아래 4절): `--estimate-only` 로 비용 확인 → 실행 → `answer_health` 보고 `--max-completion-tokens` 조정.
+
 API 키가 없는 노트북에서 구현과 오프라인 테스트까지만 했다. 아래는 키가 있는 노트북에서 돌릴 확인 작업이다.
 끝나면 결과를 이 문서에 적고, `src/llm.py` 의 `USAGE_FIELD_CANDIDATES` 주석을 확인된 이름으로 고친다.
 
@@ -110,7 +134,7 @@ python src/multiturn/replay.py --scenarios data/evalsets/multiturn-v1 --model gp
 python src/multiturn/replay.py --scenarios data/evalsets/multiturn-v1 --model gpt-6-luna --compressors "none,window(2),per_message(rule),per_message(llmlingua2)" --samples 3 --reasoning-effort server_default --max-completion-tokens 4096 --resume <run_id>
 ```
 
-- `per_message(llmlingua2)` 는 `llmlingua` 와 모델 가중치가 있어야 한다 (`pip install -r requirements.txt`). 없으면 원문을 그대로 돌려주므로(`fallback_error`) 결과의 `compression_info.info.single_status` 를 꼭 본다. 이 노트북의 추정에서는 그래서 뺐다.
+- `per_message(llmlingua2)` 등 llmlingua 계열은 `llmlingua` 와 모델 가중치가 있어야 한다. 없으면 replay.py·estimate.py 모두 **시작 시점에 MissingDependencyError 로 멈춘다**. 실행 중 모델 로드·추론이 실패해 싱글턴 압축기가 원문을 돌려주면(`status=fallback_error`) CompressorFallbackError 로 멈춘다 (조용한 대체 금지). 이 노트북에는 llmlingua 가 없어 추정에서 뺐다.
 - 추정·`history_tokens_*`·`input_tokens_est` 는 `TOKENIZER` 기준이다. luna 와 맞추려면 `tiktoken` 을 설치하고 `TOKENIZER=tiktoken:o200k_base` 로 둔다 (이 노트북은 tiktoken 이 없어 Qwen 토크나이저로 근사했다). 과금 토큰은 서버 usage 기준이라 영향이 없다.
 
 ### `--max-completion-tokens` 권장값: 4096 (answer_health 보고 조정)
@@ -121,18 +145,31 @@ python src/multiturn/replay.py --scenarios data/evalsets/multiturn-v1 --model gp
 
 ### 예상 비용 (이 노트북의 `--estimate-only`, 2026-11-22)
 
-가정: 시나리오 3개 / 27턴, sample 3, 답변 300 + 추론 1,000 토큰, judge 호출당 입력 261 / 출력 101 토큰 (test_v1_default 실측 평균), per_fact 채점, 토크나이저 Qwen (근사).
+가정: 시나리오 3개 / 27턴, sample 3, 답변 300 + 추론 1,000 토큰, judge 호출당 입력 261 / 출력 101 토큰 (test_v1_default 실측 평균), per_fact 채점.
+**토크나이저: Qwen/Qwen2.5-7B-Instruct (근사, 기대값 tiktoken:o200k_base).** llmlingua 미설치라 `per_message(llmlingua2)` 제외.
 
-| 압축기 | 요청 (실제) | 입력 토큰 | 입력 절감 | 기록 절감 | 캐시 0% | 접두부 캐시 | 채점 |
-|---|---|---|---|---|---|---|---|
-| none | 81 (54) | 450,921 | 0.0% | 0.0% | $0.065 | $0.038 | $0.028 |
-| window(2) | 81 (81) | 202,200 | 55.2% | 63.4% | $0.073 | $0.059 | $0.028 |
-| per_message(rule) | 81 (81) | 383,688 | 14.9% | 17.3% | $0.091 | $0.059 | $0.028 |
+**압축기 비교: 실험상 비용 (호출당).** 응답 캐시 적중과 무관하게 81 trial 전부를 한 번 호출한 값으로 센다 (none 의 reference sample 은 같은 요청인 기준 궤적 호출 값). 절감률은 none 대비.
 
-- 기준 궤적 27 요청: $0.033 (캐시 0%) / $0.021 (접두부 캐시)
-- 합계 (실제 지출, 기준 궤적 포함, llmlingua2 제외): 답변 **$0.26 (캐시 0% 상한) / $0.18 (접두부 캐시)**, 채점 **$0.08**
+| 압축기 | trial | 입력 토큰 | 입력 절감 | 기록 절감 | 캐시 0% | 절감 | 접두부 캐시 | 절감 | +쓰기 과금 | 절감 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| none | 81 | 450,921 | – | – | $0.0977 | – | $0.0594 | – | $0.0601 | – |
+| window(2) | 81 | 202,200 | 55.2% | 63.4% | $0.0729 | 25.4% | $0.0591 | 0.6% | $0.0603 | −0.4% |
+| per_message(rule) | 81 | 383,688 | 14.9% | 17.3% | $0.0910 | 6.9% | $0.0593 | 0.1% | $0.0601 | −0.1% |
+
+- 프롬프트 캐시를 반영하면 압축기 간 비용 차이가 거의 사라진다. 출력(답변 300 + 추론 1,000 토큰, 호출당 $0.00065)이 비용의 대부분이고, none 은 기록이 앞에서부터 그대로 자라 캐시 적중이 많기 때문이다. **실제 실행에서 추론 토큰·캐시 적중을 확인해야 할 가장 중요한 가정이다.**
+
+**예산 확인: 실제 지출** (실제로 보내는 요청만)
+
+| 항목 | 실제 요청 | 캐시 0% | 접두부 캐시 | 채점 |
+|---|---|---|---|---|
+| 기준 궤적 | 27 | $0.0326 | $0.0213 | – |
+| none | 54 / 81 | $0.0652 | $0.0381 | $0.0275 |
+| window(2) | 81 / 81 | $0.0729 | $0.0591 | $0.0275 |
+| per_message(rule) | 81 / 81 | $0.0910 | $0.0593 | $0.0275 |
+| **합계** | | **$0.26** | **$0.18** | **$0.08** |
+
+- none 의 reference sample 은 기준 궤적과 같은 요청이라 응답 캐시에 적중해 실제 지출이 0원이다 (기준 궤적 호출로 이미 한 번 낸다). 그래서 none 의 실제 요청이 54 다.
 - per_message(llmlingua2) 를 넣으면 답변이 대략 압축기 하나 몫 ($0.06~0.09) 더 든다.
-- none 의 "실제" 요청이 54 인 것은 reference sample 이 기준 궤적과 같은 요청이라 응답 캐시에 적중하기 때문이다.
 
 ## 5. 싱글턴 다리 측정 확인
 

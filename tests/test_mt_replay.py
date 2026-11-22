@@ -183,6 +183,13 @@ class ReplayTest(unittest.TestCase):
         self.assertTrue(any("군집" in n for n in summary["notes"]))
         self.assertEqual(summary["noise_none_vs_none"]["all"]["n_pairs"], 12)
         self.assertEqual(summary["answer_health"]["none"]["reasoning_ran"], 24)
+        # 비용 비교 기준과 예산 블록
+        self.assertEqual(block["all"]["cost_basis"], "experimental_per_call")
+        bud = summary["budget"]
+        self.assertGreater(bud["answer_usd_actual_total"], 0)
+        self.assertEqual(bud["replay_usd_actual_by_compressor"]["none"] < block["all"]["cost_usd"]["none"], True)
+        self.assertTrue(any("0원" in n for n in bud["notes"]))
+        self.assertIn("tokenizer_check", summary)
 
     def test_depends_on_reference_ok(self):
         # 기준 궤적의 턴 1 (b.md 만 첨부) 답변은 ALPHA42 를 포함 (기록에 a.md 가 있음) -> 정답. 턴 0 도 정답.
@@ -312,6 +319,82 @@ def _row(sid, turn, comp, sample, acc):
     return {"scenario_id": sid, "turn": turn, "compressor": comp, "sample_idx": sample, "answer_accuracy": acc}
 
 
+class GuardTest(unittest.TestCase):
+    """조용한 대체 금지와 토크나이저 확인."""
+
+    def test_llmlingua_family_requires_package(self):
+        from multiturn.history_compressors import MissingDependencyError, get_history_compressor
+        with mock.patch("multiturn.history_compressors.simple.importlib.import_module",
+                        side_effect=ModuleNotFoundError("No module named 'llmlingua'")):
+            for name in ("per_message(llmlingua2)", "per_message(rule>llmlingua2)",
+                         "window(2)>per_message(llmlingua2_r30)", "per_message(llmlingua2_repair_v1_r50)"):
+                with self.assertRaises(MissingDependencyError, msg=name):
+                    get_history_compressor(name)
+            get_history_compressor("per_message(rule)")          # llmlingua 가 필요 없는 압축기는 그대로
+
+    def test_replay_stops_at_start_without_llmlingua(self):
+        from multiturn.history_compressors import MissingDependencyError
+        cfg = make_cfg(compressors=["none", "per_message(llmlingua2)"])
+        llm = FakeLLM()
+        with tempfile.TemporaryDirectory() as d:
+            with mock.patch("multiturn.history_compressors.simple.importlib.import_module",
+                            side_effect=ModuleNotFoundError("No module named 'llmlingua'")):
+                answer = CachedLLM(llm, path=Path(d) / "c.sqlite", enabled=True)
+                judge = CachedLLM(FakeJudge(), path=Path(d) / "c.sqlite", enabled=True)
+                with self.assertRaises(MissingDependencyError):
+                    rp.Replay(cfg, [SCENARIO], FakeCorpus(), answer, judge, Path(d) / "mt_x",
+                              reference_root=Path(d) / "refs", grade_fn=fake_grade)
+                answer.close(); judge.close()
+        self.assertEqual(llm.calls, [])                              # API 를 한 번도 부르지 않았다
+
+    def test_fallback_error_is_not_silent(self):
+        from compressors import REGISTRY, Compressor, CompressResult
+        from multiturn.history_compressors import CompressorFallbackError, get_history_compressor
+
+        class Falls(Compressor):
+            name, targets = "falls", ("context",)
+
+            def compress(self, parts):
+                return CompressResult(system=parts.system, context=parts.context, question=parts.question,
+                                      info={"status": "fallback_error", "error_type": "OSError", "error": "no model"})
+        with mock.patch.dict(REGISTRY, {"falls": Falls()}):
+            hc = get_history_compressor("per_message(falls)")
+        hist = [{"role": "system", "content": "S"},
+                {"role": "user", "content": "<documentation>\nX\n</documentation>\n\nQuestion: q"},
+                {"role": "assistant", "content": "a"}]
+        with self.assertRaises(CompressorFallbackError):
+            hc.compress_history(hist, "CUR")
+
+    def test_tokenizer_check(self):
+        ok = rp.check_tokenizer("gpt-6-luna", allow_approx=False, tokenizer="tiktoken:o200k_base") \
+            if _has_tiktoken() else None
+        if ok is not None:
+            self.assertTrue(ok["ok"])
+        with self.assertRaises(rp.TokenizerMismatchError):
+            rp.check_tokenizer("gpt-6-luna", allow_approx=False, tokenizer="Qwen/Qwen2.5-7B-Instruct")
+        with self.assertRaises(rp.TokenizerMismatchError):
+            rp.check_tokenizer("unknown-model", allow_approx=False, tokenizer="tiktoken:o200k_base")
+        r = rp.check_tokenizer("gpt-6-luna", allow_approx=True, tokenizer="Qwen/Qwen2.5-7B-Instruct")
+        self.assertTrue(r["approx"])
+        self.assertEqual(r["expected"], "tiktoken:o200k_base")
+        with mock.patch.dict(sys.modules, {"tiktoken": None}):       # tiktoken 이 없으면 맞는 이름이어도 멈춘다
+            with self.assertRaises(rp.TokenizerMismatchError):
+                rp.check_tokenizer("gpt-6-luna", allow_approx=False, tokenizer="tiktoken:o200k_base")
+
+    def test_cli_requires_allow_flag(self):
+        a = rp.build_parser().parse_args(["--scenarios", "x", "--model", "m", "--reasoning-effort", "low",
+                                          "--max-completion-tokens", "10"])
+        self.assertFalse(a.allow_approx_tokenizer)
+
+
+def _has_tiktoken():
+    try:
+        import tiktoken  # noqa: F401
+        return True
+    except ImportError:
+        return False
+
+
 class StatsTest(unittest.TestCase):
     def test_pairing_and_noninferiority(self):
         rows = []
@@ -366,7 +449,20 @@ class EstimateTest(unittest.TestCase):
         u = none["answer_usd_actual"]
         self.assertLessEqual(u["prefix_cache"], u["no_cache"])
         self.assertEqual(none["judge_calls"], 6 * 3 * 2)                  # per_fact: key_fact 2개
-        self.assertIsNotNone(e["total_judge_usd"])
+        self.assertIsNotNone(e["budget_judge_usd"])
+        # 압축기 비교는 실험상 비용: none 도 81 trial 전부 (reference sample 은 기준 궤적 호출 값) 로 센다
+        self.assertGreater(none["answer_usd_experimental"]["no_cache"], none["answer_usd_actual"]["no_cache"])
+        self.assertEqual(none["cost_reduction_pct_vs_none"]["no_cache"], 0.0)
+        self.assertGreater(win["cost_reduction_pct_vs_none"]["no_cache"], 0)
+        self.assertTrue(any("0원" in n for n in e["notes"]))
+
+    def test_estimate_stops_on_missing_llmlingua(self):
+        from multiturn.history_compressors import MissingDependencyError
+        cfg = make_cfg(compressors=["none", "per_message(llmlingua2)"])
+        with mock.patch("multiturn.history_compressors.simple.importlib.import_module",
+                        side_effect=ModuleNotFoundError("No module named 'llmlingua'")):
+            with self.assertRaises(MissingDependencyError):
+                est_mod.estimate(cfg, [SCENARIO], FakeCorpus(), judge_model="deepseek-flash")
 
 
 if __name__ == "__main__":
