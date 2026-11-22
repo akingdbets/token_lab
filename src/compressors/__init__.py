@@ -76,6 +76,19 @@ REGISTRY: dict[str, Compressor] = {
         )
         for rate in CFG.compression_rates
     },
+    # 같은 압축 + 쪼개진 버전 번호·하이픈/점 이름을 원문 표기로 되돌림 (rejoin-punctuated-v2, 단어 라벨 기준)
+    "llmlingua2_punct": LLMLingua2Compressor(
+        name="llmlingua2_punct",
+        retain_ratio=0.5,
+        rejoin_punctuated=True,
+    ),
+    **{
+        f"llmlingua2_r{round(rate * 100):02d}_punct": LLMLingua2Compressor(
+            retain_ratio=rate,
+            rejoin_punctuated=True,
+        )
+        for rate in CFG.compression_rates
+    },
 }
 
 

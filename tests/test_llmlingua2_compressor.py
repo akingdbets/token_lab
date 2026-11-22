@@ -35,6 +35,11 @@ def result(text: str, before: int = 10, after: int = 5) -> dict:
     }
 
 
+def labeled_result(text: str, pairs: list[tuple[str, str]]) -> dict:
+    """return_word_label=True 결과 (llmlingua 0.2.2 기본 구분자)."""
+    return {**result(text), "fn_labeled_original_prompt": "\t\t|\t\t".join(f"{w} {label}" for w, label in pairs)}
+
+
 class LLMLingua2CompressorTest(unittest.TestCase):
     def make(self, engine: FakeEngine, **kwargs) -> LLMLingua2Compressor:
         return LLMLingua2Compressor(
@@ -327,10 +332,89 @@ class LLMLingua2CompressorTest(unittest.TestCase):
         self.assertLessEqual(len(force_tokens), 100)
         self.assertNotIn("CORS", force_tokens)
 
+    def rejoin(self, source: str, labels: str):
+        """labels: 공백으로 나눈 "단어/라벨" (예: "0/1 ./0"). 압축 결과는 BERT 처럼 남긴 단어를 공백으로 잇는다."""
+        pairs = [(w.rsplit("/", 1)[0].replace("\\n", "\n"), w.rsplit("/", 1)[1]) for w in labels.split()]
+        compressed = " ".join(w for w, label in pairs if label == "1")
+        engine = FakeEngine(labeled_result(compressed, pairs))
+        return self.make(engine, rejoin_punctuated=True).compress(PromptParts("", source, "q")), engine
+
+    def test_punctuated_tokens_split_by_compression_are_rejoined_by_word_labels(self):
+        # c0007 "0.95.0" → "0 95 0", c0076 하이픈 이름 → "standard no fastapi cloud - cli"
+        output, engine = self.rejoin(
+            "FastAPI 0.95.0 works.\nInstall fastapi[standard-no-cli] or pydantic.v1 too.",
+            "FastAPI/1 0/1 ./0 95/1 ./0 0/1 works/0 ./0 \\n/1 Install/0 fastapi/1 [/0 standard/1 -/0 no/1 -/1 "
+            "cli/1 ]/0 or/0 pydantic/1 ./0 v1/1 too/0 ./0",
+        )
+
+        self.assertEqual(output.context, "FastAPI 0.95.0 \n fastapi standard-no-cli pydantic.v1")
+        self.assertEqual(output.info["rejoined_punctuated"], ["0.95.0", "standard-no-cli", "pydantic.v1"])
+        self.assertIsNone(output.info["rejoin_skipped"])
+        self.assertTrue(output.info["safety_policy_version"].endswith("+rejoin-punctuated-v2"))
+        self.assertTrue(engine.calls[0]["return_word_label"])
+
+    def test_rejoin_skips_tokens_with_dropped_segments(self):
+        output, _ = self.rejoin("Requires 0.128.0 now.", "Requires/1 0/1 ./0 128/1 ./0 0/0 now/0 ./0")
+
+        self.assertEqual(output.context, "Requires 0 128")
+        self.assertEqual(output.info["rejoined_punctuated"], [])
+
+    def test_rejoin_uses_positions_not_matching_text(self):
+        # v1(문자열 매칭)이 틀렸던 경우: 멀쩡한 2-9 를 2.9 로, 쉼표 빠진 "1, 0" 을 1.0 으로,
+        # 수식 "3 - 1" 을 3.1 로, 줄바꿈 너머 "1\n5" 를 1.5 로 바꿨다
+        cases = [
+            ("See pages 2-9. Version 2.9 is new.",
+             "See/0 pages/1 2/1 -/1 9/1 ./0 Version/1 2/1 ./0 9/1 is/0 new/1 ./0",
+             "pages 2-9 Version 2.9 new"),
+            ("Returns 1, 0 on error. Use version 1.0 now.",
+             "Returns/1 1/1 ,/0 0/1 on/0 error/1 ./0 Use/1 version/1 1/1 ./0 0/1 now/0 ./0",
+             "Returns 1 0 error Use version 1.0"),
+            ("Compute 3 - 1 here. Python 3.1 is old.",
+             "Compute/1 3/1 -/1 1/1 here/0 ./0 Python/1 3/1 ./0 1/1 is/0 old/1 ./0",
+             "Compute 3 - 1 Python 3.1 old"),
+            ("Total 1\n5 items. Version 1.5 out.",
+             "Total/1 1/1 \\n/1 5/1 items/1 ./0 Version/1 1/1 ./0 5/1 out/0 ./0",
+             "Total 1 \n 5 items Version 1.5"),
+        ]
+        for source, labels, expected in cases:
+            with self.subTest(source=source):
+                output, _ = self.rejoin(source, labels)
+                self.assertEqual(output.context, expected)
+
+    def test_rejoin_is_skipped_when_labels_do_not_align_or_are_missing(self):
+        misaligned, _ = self.rejoin("Use 2.9 here.", "Use/1 3/1 ./0 9/1 here/0 ./0")
+        self.assertEqual(misaligned.context, "Use 3 9")
+        self.assertEqual(misaligned.info["rejoin_skipped"], "source_alignment_failed")
+
+        # BERT 어휘에 없는 "—" "`" 는 [UNK] 로 단어 목록에서 빠지지만 정렬은 이어진다
+        unknown, _ = self.rejoin("Login — use `2.9` now.", "Login/1 use/1 2/1 ./0 9/1 now/0 ./0")
+        self.assertEqual(unknown.context, "Login use 2.9")
+        self.assertIsNone(unknown.info["rejoin_skipped"])
+
+        missing = self.make(FakeEngine(result("Use 2 9")), rejoin_punctuated=True).compress(
+            PromptParts("", "Use 2.9 here.", "q")
+        )
+        self.assertEqual(missing.context, "Use 2 9")
+        self.assertEqual(missing.info["rejoin_skipped"], "missing_word_labels")
+
+    def test_rejoin_is_off_by_default(self):
+        engine = FakeEngine(result("Use 2 9"))
+        off = self.make(engine).compress(PromptParts("", "Use 2.9 here.", "q"))
+
+        self.assertEqual(off.context, "Use 2 9")
+        self.assertNotIn("rejoined_punctuated", off.info)
+        self.assertNotIn("return_word_label", engine.calls[0])
+        self.assertNotIn("rejoin_punctuated", LLMLingua2Compressor().config())
+
     def test_registry_exposes_default_and_rate_variants(self):
-        for name in ("llmlingua2", "llmlingua2_r30", "llmlingua2_r50", "llmlingua2_r70"):
+        for name in (
+            "llmlingua2", "llmlingua2_r30", "llmlingua2_r50", "llmlingua2_r70",
+            "llmlingua2_punct", "llmlingua2_r30_punct", "llmlingua2_r50_punct", "llmlingua2_r70_punct",
+        ):
             self.assertIn(name, REGISTRY)
             self.assertEqual(get_compressor(name).name, name)
+        self.assertTrue(REGISTRY["llmlingua2_r30_punct"].rejoin_punctuated)
+        self.assertFalse(REGISTRY["llmlingua2_r30"].rejoin_punctuated)
 
 
 if __name__ == "__main__":

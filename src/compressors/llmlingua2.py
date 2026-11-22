@@ -43,6 +43,8 @@ TRACE_SCHEMA_VERSION = 1
 SAFETY_POLICY_VERSION = (
     "question-identifiers-v1+fenced-code-blocks-v1+document-headers-v1+unsplit-identifiers-v1"
 )
+REJOIN_POLICY = "rejoin-punctuated-v2"
+_LABEL_WORD_SEP = "\t\t|\t\t"   # llmlingua 0.2.2 return_word_label 의 기본 word_sep
 
 _ENGINE_CACHE: dict[tuple[str, str, str], Any] = {}
 _ENGINE_LOCK = threading.Lock()
@@ -51,6 +53,10 @@ _TECHNICAL_IDENTIFIER = re.compile(
 )
 _FENCE_LINE = re.compile(r"^[ \t]*(`{3,}|~{3,})")
 _DOCUMENT_HEADER = re.compile(r"^## Document:[^\n]*\n?", re.MULTILINE)
+# 점·하이픈으로 이어진 영숫자 묶음: 버전 번호(0.95.0), 하이픈 이름(starlette-graphene3), 점 이름(pydantic.v1)
+_PUNCTUATED_TOKEN = re.compile(
+    r"(?<![A-Za-z0-9_.-])[A-Za-z0-9]+(?:[.-][A-Za-z0-9]+)+(?![A-Za-z0-9_]|[.-][A-Za-z0-9])"
+)
 
 
 def _load_engine(model_name: str, model_revision: str, device: str):
@@ -229,6 +235,94 @@ def _unsplittable_identifiers(text: str, identifiers: list[str], already: list[s
     return picked
 
 
+def _parse_word_labels(labeled: str) -> list[tuple[str, bool]]:
+    """llmlingua 의 fn_labeled_original_prompt ("단어 라벨" 을 _LABEL_WORD_SEP 로 이음) 를 (단어, 남김) 목록으로."""
+    pairs = []
+    for item in labeled.split(_LABEL_WORD_SEP):
+        word, _, label = item.rpartition(" ")
+        if label not in ("0", "1"):
+            raise ValueError(f"단어 라벨을 읽을 수 없습니다: {item[:40]!r}")
+        pairs.append((word, label == "1"))
+    return pairs
+
+
+def _align_words(text: str, words: list[str]) -> list[tuple[int, int]] | None:
+    """단어들을 text 에서 왼쪽부터 차례로 찾아 (시작, 끝) 위치를 돌려준다.
+
+    LLMLingua-2 는 단어를 지우기만 하고 순서를 바꾸지 않으므로 원문과 압축 결과 모두에 이렇게 맞출 수 있다.
+    단어 사이에서는 ASCII 영숫자가 아닌 글자만 건너뛴다: BERT 어휘에 없는 글자("—", "`" 등)는 [UNK] 가 되고,
+    llmlingua 는 [UNK] 를 special token 으로 보고 단어 목록에서 뺀다 (ASCII 영숫자 한 글자는 늘 어휘에 있다).
+    공백 단어("\\n" force token)는 압축 결과 끝에서 strip 될 수 있어 바로 앞 공백 안에 없으면 길이 0 으로 둔다.
+    맞지 않는 단어가 있으면 None.
+    """
+    spans = []
+    cursor = 0
+    for word in words:
+        pos = cursor
+        while (
+            pos < len(text)
+            and (text[pos].isspace() or (word.strip() and not (text[pos].isascii() and text[pos].isalnum())))
+            and not text.startswith(word, pos)
+        ):
+            pos += 1
+        if text.startswith(word, pos):
+            spans.append((pos, pos + len(word)))
+            cursor = pos + len(word)
+        elif not word.strip():
+            spans.append((cursor, cursor))
+        else:
+            return None
+    return spans
+
+
+def _rejoin_punctuated(compressed: str, source: str, labeled: str) -> tuple[str, list[str], str | None]:
+    """압축이 쪼갠 점·하이픈 묶음을 LLMLingua-2 의 단어별 남김 라벨로 원문 표기로 되돌린다.
+
+    LLMLingua-2(BERT)는 "." "-" 를 따로 된 단어로 보고 지우며, force_reserve_digit 으로 숫자만 남겨
+    "0.95.0" 이 "0 95 0" 이 된다. 라벨로 원문 단어마다 남았는지와 압축 결과 속 위치를 알 수 있으므로,
+    원문 묶음의 영숫자 조각이 모두 남았을 때만 그 조각들이 차지한 압축 결과 구간을 원문 표기로 바꾼다.
+    조각이 하나라도 지워졌으면 되돌리지 않는다. 위치로 바꾸므로 다른 곳의 같은 숫자열은 건드리지 않는다.
+    반환: (되돌린 문맥, 되돌린 원문 표기 목록, 되돌리지 못한 이유 또는 None)
+    """
+    try:
+        pairs = _parse_word_labels(labeled)
+    except ValueError:
+        return compressed, [], "unreadable_word_labels"
+    words = [word for word, _ in pairs]
+    source_spans = _align_words(source, words)
+    if source_spans is None:
+        return compressed, [], "source_alignment_failed"
+    kept = [i for i, (_, keep) in enumerate(pairs) if keep]
+    output_spans = _align_words(compressed, [words[i] for i in kept])
+    if output_spans is None:
+        return compressed, [], "output_alignment_failed"
+    output_of = dict(zip(kept, output_spans))
+
+    replacements: list[tuple[int, int, str]] = []
+    cursor = 0
+    for match in _PUNCTUATED_TOKEN.finditer(source):
+        start, end = match.span()
+        while cursor < len(words) and source_spans[cursor][1] <= start:
+            cursor += 1
+        inside = []
+        index = cursor
+        while index < len(words) and source_spans[index][0] < end:
+            inside.append(index)
+            index += 1
+        # 묶음 경계를 걸친 단어가 있으면 (비 ASCII 글자와 붙은 경우 등) 건드리지 않는다
+        if not inside or source_spans[inside[0]][0] < start or source_spans[inside[-1]][1] > end:
+            continue
+        if not all(pairs[i][1] for i in inside if any(ch.isalnum() for ch in words[i])):
+            continue
+        pieces = [output_of[i] for i in inside if pairs[i][1]]
+        first, last = pieces[0][0], pieces[-1][1]
+        if compressed[first:last] != match.group(0):
+            replacements.append((first, last, match.group(0)))
+    for first, last, value in reversed(replacements):
+        compressed = compressed[:first] + value + compressed[last:]
+    return compressed, [value for _, _, value in replacements], None
+
+
 def _missing_identifiers(identifiers: list[str], text: str) -> list[str]:
     missing = []
     for value in identifiers:
@@ -253,6 +347,7 @@ class LLMLingua2Compressor(Compressor):
         force_tokens: tuple[str, ...] = DEFAULT_FORCE_TOKENS,
         force_reserve_digit: bool = True,
         fallback_on_error: bool = True,
+        rejoin_punctuated: bool = False,
         name: str | None = None,
         engine_factory: Callable[[], Any] | None = None,
     ):
@@ -274,12 +369,20 @@ class LLMLingua2Compressor(Compressor):
         self.force_tokens = tuple(force_tokens)
         self.force_reserve_digit = force_reserve_digit
         self.fallback_on_error = fallback_on_error
-        self.name = name or f"llmlingua2_r{round(self.retain_ratio * 100):02d}"
+        self.rejoin_punctuated = rejoin_punctuated
+        self.name = name or (
+            f"llmlingua2_r{round(self.retain_ratio * 100):02d}" + ("_punct" if rejoin_punctuated else "")
+        )
         self._engine_factory = engine_factory
         self._engine = None
 
+    @property
+    def safety_policy_version(self) -> str:
+        # 되돌리기를 끈 압축기는 기존 run 과 같은 값을 남긴다
+        return f"{SAFETY_POLICY_VERSION}+{REJOIN_POLICY}" if self.rejoin_punctuated else SAFETY_POLICY_VERSION
+
     def config(self) -> dict:
-        return {
+        config = {
             "method": "llmlingua2",
             "retain_ratio": self.retain_ratio,
             "model_name": self.model_name,
@@ -288,8 +391,11 @@ class LLMLingua2Compressor(Compressor):
             "force_tokens": list(self.force_tokens),
             "force_reserve_digit": self.force_reserve_digit,
             "fallback_on_error": self.fallback_on_error,
-            "safety_policy_version": SAFETY_POLICY_VERSION,
+            "safety_policy_version": self.safety_policy_version,
         }
+        if self.rejoin_punctuated:
+            config["rejoin_punctuated"] = True
+        return config
 
     def _get_engine(self):
         if self._engine is None:
@@ -309,7 +415,7 @@ class LLMLingua2Compressor(Compressor):
             "retain_ratio": self.retain_ratio,
             "force_tokens": list(self.force_tokens),
             "force_reserve_digit": self.force_reserve_digit,
-            "safety_policy_version": SAFETY_POLICY_VERSION,
+            "safety_policy_version": self.safety_policy_version,
         }
 
     def _record(
@@ -429,6 +535,7 @@ class LLMLingua2Compressor(Compressor):
                 use_token_level_filter=True,
                 force_tokens=effective_force_tokens,
                 force_reserve_digit=self.force_reserve_digit,
+                **({"return_word_label": True, "word_sep": _LABEL_WORD_SEP} if self.rejoin_punctuated else {}),
             )
             elapsed = time.perf_counter() - started
             if not isinstance(result, dict) or "compressed_prompt" not in result:
@@ -489,6 +596,17 @@ class LLMLingua2Compressor(Compressor):
                     protected_document_headers=len(document_headers),
                     protected_identifiers=protected_identifiers,
                 )
+            rejoined: list[str] = []
+            rejoin_skipped: str | None = None
+            if self.rejoin_punctuated:
+                # 코드 블록·문서 경계 줄은 마커 상태라 prose 만 되돌린다
+                labeled = result.get("fn_labeled_original_prompt")
+                if isinstance(labeled, str):
+                    compressed_masked, rejoined, rejoin_skipped = _rejoin_punctuated(
+                        compressed_masked, masked_context, labeled
+                    )
+                else:
+                    rejoin_skipped = "missing_word_labels"
             compressed = _restore_protected_units(compressed_masked, protected_units)
 
             if not compressed.strip():
@@ -586,6 +704,11 @@ class LLMLingua2Compressor(Compressor):
                 protected_document_headers=len(document_headers),
                 required_question_identifiers=required_question_identifiers,
                 protected_identifiers=protected_identifiers,
+                **(
+                    {"rejoined_punctuated": rejoined, "rejoin_skipped": rejoin_skipped}
+                    if self.rejoin_punctuated
+                    else {}
+                ),
             )
             return compressed
         except Exception as exc:
