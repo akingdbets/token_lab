@@ -1,0 +1,4 @@
+# 해시로 검증하는 공개 산출물은 줄바꿈을 바꾸지 않는다 (Windows core.autocrlf=true 에서 CRLF 로 체크아웃되면
+# tests/test_published_evidence_results.py 의 sha256 검사가 깨진다)
+docs/analysis/evidence-preservation/** -text
+src/compressors/question_preserve.py -text

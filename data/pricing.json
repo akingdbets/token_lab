@@ -8,6 +8,13 @@
       "cache_write": 2.50,
       "output": 10.0
     },
+    "gpt-6-luna": {
+      "_note": "OpenAI Standard 등급 기준. 출처: OpenAI API pricing 페이지, 2026-11-22 확인. cache_write 는 30분 보존 캐시 쓰기 단가. 출력 단가에 추론 토큰 포함.",
+      "input": 0.10,
+      "cache_read": 0.01,
+      "cache_write": 0.125,
+      "output": 0.50
+    },
     "deepseek-flash": {
       "_note": "할인 시간대 무시, 피크 단가 고정. 출처: DeepSeek Models & Pricing, 2026-11-22 확인. 채점기 전용이라 평가 비용으로만 쓴다. 캐시 쓰기 과금 없음 (미스는 input 단가).",
       "input": 0.30,

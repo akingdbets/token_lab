@@ -20,6 +20,10 @@ LLM 객체를 감싸 같은 요청이면 저장된 LLMResult 를 돌려준다. l
 집계할 때 hit=True 는 "실험상 비용"에는 넣고 "실제 지출"에서는 뺀다 (trajectory.summarize_steps).
 
 RESPONSE_CACHE=off 면 캐시를 읽지도 쓰지도 않는다 (hit 는 항상 False).
+
+스레드: 연결은 스레드마다 따로 연다 (sqlite3 연결은 스레드 간 공유 불가). 쓰기는 lock 으로 직렬화한다.
+bind(sample_idx) 는 sample_idx 를 고정한 객체를 돌려준다. grader 처럼 llm.ask / llm.chat 을 그대로 부르는 코드에
+넘길 때 쓴다 (그 객체의 chat 은 LLMResult 만 돌려주고, 적중 여부는 last_hit 에 남는다).
 """
 
 from __future__ import annotations
@@ -28,6 +32,7 @@ import hashlib
 import json
 import os
 import sqlite3
+import threading
 from dataclasses import asdict, fields
 from datetime import datetime, timezone
 from pathlib import Path
@@ -84,33 +89,42 @@ class CachedLLM:
         self.llm = llm
         self.path = Path(path) if path else DEFAULT_PATH
         self.enabled = cache_enabled() if enabled is None else enabled
-        self._conn: sqlite3.Connection | None = None
+        self._local = threading.local()
+        self._lock = threading.Lock()
+        self._conns: list[sqlite3.Connection] = []
 
     def __getattr__(self, name):
         return getattr(self.llm, name)
 
     def _db(self) -> sqlite3.Connection:
-        if self._conn is None:
+        conn = getattr(self._local, "conn", None)
+        if conn is None:
             self.path.parent.mkdir(parents=True, exist_ok=True)
-            self._conn = sqlite3.connect(self.path)
-            self._conn.execute(
-                "CREATE TABLE IF NOT EXISTS responses ("
-                " key TEXT PRIMARY KEY, backend TEXT, base_url TEXT, model TEXT, sample_idx INTEGER,"
-                " sampling_sent TEXT, result TEXT NOT NULL, stored_at TEXT NOT NULL)")
-            self._conn.commit()
-        return self._conn
+            # 스레드마다 자기 연결만 쓴다. close() 가 다른 스레드에서 열린 연결도 닫을 수 있게 check_same_thread=False
+            conn = sqlite3.connect(self.path, timeout=30, check_same_thread=False)
+            with self._lock:
+                conn.execute(
+                    "CREATE TABLE IF NOT EXISTS responses ("
+                    " key TEXT PRIMARY KEY, backend TEXT, base_url TEXT, model TEXT, sample_idx INTEGER,"
+                    " sampling_sent TEXT, result TEXT NOT NULL, stored_at TEXT NOT NULL)")
+                conn.commit()
+                self._conns.append(conn)
+            self._local.conn = conn
+        return conn
 
     def get(self, key: str) -> LLMResult | None:
         row = self._db().execute("SELECT result FROM responses WHERE key = ?", (key,)).fetchone()
         return _result_from_json(row[0]) if row else None
 
     def put(self, key: str, res: LLMResult, sample_idx: int) -> None:
-        self._db().execute(
-            "INSERT OR REPLACE INTO responses VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-            (key, self.llm.backend, self.llm.base_url, self.llm.model, sample_idx,
-             json.dumps(self.llm.sampling_info(), ensure_ascii=False), _result_to_json(res),
-             datetime.now(timezone.utc).isoformat(timespec="seconds")))
-        self._db().commit()
+        db = self._db()
+        with self._lock:
+            db.execute(
+                "INSERT OR REPLACE INTO responses VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                (key, self.llm.backend, self.llm.base_url, self.llm.model, sample_idx,
+                 json.dumps(self.llm.sampling_info(), ensure_ascii=False), _result_to_json(res),
+                 datetime.now(timezone.utc).isoformat(timespec="seconds")))
+            db.commit()
 
     def chat(self, messages: list[dict], *, sample_idx: int, stream_ttft: bool = False) -> tuple[LLMResult, bool]:
         if not isinstance(sample_idx, int) or isinstance(sample_idx, bool):
@@ -125,7 +139,37 @@ class CachedLLM:
         self.put(key, res, sample_idx)
         return res, False
 
+    def bind(self, sample_idx: int) -> "BoundCachedLLM":
+        return BoundCachedLLM(self, sample_idx)
+
     def close(self) -> None:
-        if self._conn is not None:
-            self._conn.close()
-            self._conn = None
+        with self._lock:
+            for c in self._conns:
+                c.close()
+            self._conns.clear()
+        self._local = threading.local()
+
+
+class BoundCachedLLM:
+    """sample_idx 를 고정한 CachedLLM. LLM 과 같은 ask / chat 을 제공한다 (grader 에 그대로 넘길 수 있음)."""
+
+    def __init__(self, cached: CachedLLM, sample_idx: int):
+        self.cached = cached
+        self.sample_idx = sample_idx
+        self._local = threading.local()
+
+    def __getattr__(self, name):
+        return getattr(self.cached.llm, name)
+
+    @property
+    def last_hit(self) -> bool:
+        return getattr(self._local, "hit", False)
+
+    def chat(self, messages: list[dict], stream_ttft: bool = False) -> LLMResult:
+        res, hit = self.cached.chat(messages, sample_idx=self.sample_idx, stream_ttft=stream_ttft)
+        self._local.hit = hit
+        return res
+
+    def ask(self, prompt: str, system: str | None = None, stream_ttft: bool = False) -> LLMResult:
+        messages = ([{"role": "system", "content": system}] if system else []) + [{"role": "user", "content": prompt}]
+        return self.chat(messages, stream_ttft=stream_ttft)
