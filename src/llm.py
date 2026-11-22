@@ -16,7 +16,11 @@ LLM 호출 모듈
 count_tokens / count_message_tokens 는 config.tokenizer 기준 (hf:<저장소> 또는 tiktoken:<인코딩>).
 LLMResult 의 prompt_tokens / completion_tokens 는 서버가 보고한 값(usage_source="api")이고,
 서버가 보고하지 않았을 때만 config.tokenizer 추정치로 채운다(usage_source="estimate").
-응답 캐시는 두지 않는다. 호출 기록은 호출하는 쪽의 실험 로그에 남긴다.
+cached_tokens / cache_write_tokens / reasoning_tokens / raw_usage 는 usage 세부 (parse_usage_details).
+서버가 주지 않은 값은 None 이다 (0 이 아님). 비용은 cost.compute_cost 로 계산한다.
+응답 캐시는 여기 두지 않는다 (멀티턴 실험은 multiturn/response_cache.CachedLLM 으로 감싼다).
+호출 기록은 호출하는 쪽의 실험 로그에 남긴다.
+python src/llm.py --cache-probe 로 캐시·추론 토큰의 실제 필드 이름을 확인한다.
 """
 
 from __future__ import annotations
@@ -25,7 +29,7 @@ import json
 import time
 import warnings
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from functools import lru_cache
 
 import requests
@@ -93,6 +97,14 @@ class LLMResult:
     usage_source: str = "api"       # api: 서버 보고값 | estimate: 서버가 안 줘서 config.tokenizer 로 추정
     est_prompt_tokens: int = 0      # config.tokenizer 로 센 입력 토큰 (템플릿 포함)
     ctx_overflow: bool = False      # 입력이 num_ctx를 넘었는지 (Ollama는 조용히 잘라냄)
+    # usage 세부 (parse_usage_details). 서버가 해당 필드를 보내지 않으면 None (0 으로 채우지 않는다)
+    cached_tokens: int | None = None        # 입력 중 캐시에서 읽은 토큰 (prompt_tokens 에 포함)
+    cache_write_tokens: int | None = None   # 입력 중 캐시에 새로 쓴 토큰 (prompt_tokens 에 포함). 필드 이름 미확인
+    reasoning_tokens: int | None = None     # 출력 중 추론 토큰 (completion_tokens 에 포함)
+    raw_usage: dict | None = None           # 서버가 보낸 usage 원본 (없으면 None)
+    reasoning_text: str | None = None       # 추론 원문 (DeepSeek reasoning_content). 주지 않는 서버는 None
+    created_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat(timespec="seconds"))
+    #                                         호출 시작 시각 (UTC). 비용 재계산·감사용
 
     @property
     def total_tokens(self) -> int:
@@ -370,11 +382,13 @@ class LLM:
         """LM Studio, vLLM, OpenAI 등 /v1/chat/completions 호환 서버."""
         url = f"{self.base_url}/v1/chat/completions"
         t0 = time.perf_counter()
+        created_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
 
         if not stream_ttft:
             r = self._openai_post(url, messages, stream=False)
             d = r.json()
-            text = d["choices"][0]["message"]["content"] or ""
+            msg = d["choices"][0]["message"]
+            text = msg["content"] or ""
             pt, ct, source = _usage_or_estimate(d.get("usage"), messages, text, self.model)
             return LLMResult(
                 text=text,
@@ -386,9 +400,12 @@ class LLM:
                 finish_reason=d["choices"][0].get("finish_reason"),
                 temperature=self._sent_temperature(),
                 usage_source=source,
+                reasoning_text=msg.get("reasoning_content") or None,
+                created_at=created_at,
+                **parse_usage_details(d.get("usage")),
             )
 
-        chunks, ttft, usage, served_model, finish = [], None, {}, None, None
+        chunks, reasoning, ttft, usage, served_model, finish = [], [], None, {}, None, None
         with self._openai_post(url, messages, stream=True) as r:
             for line in r.iter_lines():
                 if not line or not line.startswith(b"data: "):
@@ -404,7 +421,10 @@ class LLM:
                 if not d.get("choices"):   # include_usage 의 마지막 청크는 choices 가 비어 있다
                     continue
                 finish = d["choices"][0].get("finish_reason") or finish
-                piece = d["choices"][0].get("delta", {}).get("content") or ""
+                delta = d["choices"][0].get("delta") or {}
+                if delta.get("reasoning_content"):   # DeepSeek: 추론 원문은 따로 모은다 (TTFT 는 본문 기준)
+                    reasoning.append(delta["reasoning_content"])
+                piece = delta.get("content") or ""
                 if piece and ttft is None:
                     ttft = time.perf_counter() - t0
                 chunks.append(piece)
@@ -420,6 +440,9 @@ class LLM:
             finish_reason=finish,
             temperature=self._sent_temperature(),
             usage_source=source,
+            reasoning_text="".join(reasoning) or None,
+            created_at=created_at,
+            **parse_usage_details(usage),
         )
 
     def _sent_reasoning_effort(self) -> str | None:
@@ -443,13 +466,110 @@ def _usage_or_estimate(usage: dict | None, messages: list[dict], text: str,
     return count_message_tokens(messages), count_tokens(text), "estimate"
 
 
+# ---------------- usage 세부 (캐시·추론 토큰) ----------------
+# 제공사마다 이름이 달라 후보를 앞에서부터 찾는다. 처음 찾은 정수 값을 쓰고, 없으면 None (0 으로 채우지 않음).
+# 확인 상태 (python src/llm.py --cache-probe 로 확정해 이 주석을 고친다. 2026-11-22 기준 실제 응답으로 확인 전):
+#   캐시 읽기
+#     OpenAI chat completions  prompt_tokens_details.cached_tokens          문서 기준, 실제 응답 미확인
+#     DeepSeek                 prompt_cache_hit_tokens                      문서 기준, 실제 응답 미확인
+#     (Responses API 형식)      input_tokens_details.cached_tokens
+#   캐시 쓰기  ** 전부 미확인 (추측). --cache-probe 로 확정 필요 **
+#     OpenAI chat completions 에서 어떤 이름으로 오는지 모른다. Responses API 문서는
+#     input_tokens_details.cache_write_tokens. 아래 chat completions 후보는 그 이름을 옮겨 본 추측이다.
+#     DeepSeek 은 캐시 쓰기 과금이 따로 없다. prompt_cache_miss_tokens 는 일반 입력 단가로 청구되는
+#     "캐시 미스" 이지 캐시 쓰기가 아니므로 여기 넣지 않는다 (raw_usage 에만 남는다).
+#   추론
+#     OpenAI · DeepSeek         completion_tokens_details.reasoning_tokens   문서 기준, 실제 응답 미확인
+#     (Responses API 형식)      output_tokens_details.reasoning_tokens
+USAGE_FIELD_CANDIDATES: dict[str, tuple[tuple[str, ...], ...]] = {
+    "cached_tokens": (
+        ("prompt_tokens_details", "cached_tokens"),
+        ("prompt_cache_hit_tokens",),
+        ("input_tokens_details", "cached_tokens"),
+    ),
+    "cache_write_tokens": (                       # 미확인 (--cache-probe 로 확정 필요)
+        ("prompt_tokens_details", "cache_write_tokens"),
+        ("prompt_tokens_details", "cache_creation_tokens"),
+        ("input_tokens_details", "cache_write_tokens"),
+    ),
+    "reasoning_tokens": (
+        ("completion_tokens_details", "reasoning_tokens"),
+        ("output_tokens_details", "reasoning_tokens"),
+    ),
+}
+
+
+def _dig(d, path: tuple[str, ...]):
+    for k in path:
+        if not isinstance(d, dict) or k not in d:
+            return None
+        d = d[k]
+    return d
+
+
+def parse_usage_details(usage: dict | None) -> dict:
+    """서버 usage -> {cached_tokens, cache_write_tokens, reasoning_tokens, raw_usage}.
+    값이 없거나(null 포함) 정수가 아니면 None. 추측으로 채우지 않는다."""
+    out: dict = {"raw_usage": dict(usage) if usage else None}
+    for name, paths in USAGE_FIELD_CANDIDATES.items():
+        out[name] = None
+        for p in paths:
+            v = _dig(usage or {}, p)
+            if isinstance(v, (int, float)) and not isinstance(v, bool):
+                out[name] = int(v)
+                break
+    return out
+
+
 # ---------------- 연결 확인용 ----------------
 
-if __name__ == "__main__":
-    import sys
+def cache_probe_prompt(n_lines: int = 120) -> str:
+    """--cache-probe 용 고정 프롬프트 (약 2,000 토큰). 매번 같은 문자열이라 두 번째 호출이 캐시 접두부와 같다."""
+    lines = [f"Record {i:03d}: service-{i % 17:02d} handled {i * 37 % 1000} requests "
+             f"with median latency {i * 13 % 250} ms in region r{i % 5}." for i in range(n_lines)]
+    return ("Below is a fixed log used only to test prompt caching.\n" + "\n".join(lines)
+            + "\n\nReply with exactly: OK")
 
-    # python src/llm.py [answer|judge]  역할별 연결 확인
-    role = sys.argv[1] if len(sys.argv) > 1 else "answer"
+
+def _print_usage(res: LLMResult) -> None:
+    print(f"  입력 {res.prompt_tokens} [{res.usage_source}] (토크나이저 추정 {res.est_prompt_tokens}) "
+          f"/ 출력 {res.completion_tokens} 토큰  finish={res.finish_reason}")
+    print(f"  cached_tokens={res.cached_tokens}  cache_write_tokens={res.cache_write_tokens}  "
+          f"reasoning_tokens={res.reasoning_tokens}  reasoning_text={'있음' if res.reasoning_text else None}")
+    print(f"  raw_usage={json.dumps(res.raw_usage, ensure_ascii=False)}")
+
+
+def _cache_probe(role: str) -> None:
+    """같은 긴 프롬프트를 연속 두 번 보내 두 번째에 캐시 읽기가 잡히는지 본다 (스트리밍 없이)."""
+    llm = LLM(role=role)
+    prompt = cache_probe_prompt()
+    print(f"\n[cache-probe] role={role}  model={llm.model}  base_url={llm.base_url}  "
+          f"reasoning_effort={llm.sampling_info()['reasoning_effort']}  프롬프트 추정 {count_tokens(prompt)} 토큰")
+    for i in (1, 2):
+        res = llm.ask(prompt)
+        print(f" 호출 {i}: 응답 {res.text.strip()[:40]!r}  (서버 모델: {res.model})")
+        _print_usage(res)
+        if i == 1:
+            time.sleep(2)   # 캐시 기록이 반영될 시간을 조금 둔다
+    print("  -> 호출 2 의 raw_usage 에서 캐시 읽기·쓰기 필드 이름을 확인해 USAGE_FIELD_CANDIDATES 주석을 고친다")
+
+
+if __name__ == "__main__":
+    import argparse
+
+    ap = argparse.ArgumentParser(description="역할별 LLM 연결 확인")
+    ap.add_argument("role", nargs="?", choices=("answer", "judge"),
+                    help="기본 answer. --cache-probe 에서 생략하면 answer, judge 둘 다")
+    ap.add_argument("--cache-probe", action="store_true",
+                    help="같은 긴 프롬프트(약 2,000 토큰)를 두 번 보내 캐시·추론 토큰 필드를 확인")
+    args = ap.parse_args()
+
+    if args.cache_probe:
+        for r in ([args.role] if args.role else ["answer", "judge"]):
+            _cache_probe(r)
+        raise SystemExit(0)
+
+    role = args.role or "answer"
     llm = LLM(role=role)
     print(f"role={role}  backend={llm.backend}  model={llm.model}  base_url={llm.base_url}  "
           f"tokenizer={CFG.tokenizer}")
@@ -457,8 +577,7 @@ if __name__ == "__main__":
     res = llm.ask("Reply with exactly one short sentence about FastAPI.",
                   stream_ttft=True)
     print(f"\n응답: {res.text.strip()}  (서버 모델: {res.model})")
-    print(f"입력 {res.prompt_tokens} [{res.usage_source}] (토크나이저 추정 {res.est_prompt_tokens}) "
-          f"/ 출력 {res.completion_tokens} 토큰")
+    _print_usage(res)
     print(f"소요 {res.latency:.2f}초", end="")
     print(f" (첫 토큰 {res.ttft:.2f}초)" if res.ttft else "")
 
