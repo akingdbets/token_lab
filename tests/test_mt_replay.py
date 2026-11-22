@@ -184,10 +184,10 @@ class ReplayTest(unittest.TestCase):
         self.assertEqual(summary["noise_none_vs_none"]["all"]["n_pairs"], 12)
         self.assertEqual(summary["answer_health"]["none"]["reasoning_ran"], 24)
         # 비용 비교 기준과 예산 블록
-        self.assertEqual(block["all"]["cost_basis"], "experimental_per_call")
+        self.assertEqual(block["all"]["cost_basis"], "simulated_prefix_cache")
         bud = summary["budget"]
         self.assertGreater(bud["answer_usd_actual_total"], 0)
-        self.assertEqual(bud["replay_usd_actual_by_compressor"]["none"] < block["all"]["cost_usd"]["none"], True)
+        self.assertLess(bud["replay_usd_actual_by_compressor"]["none"], block["all"]["cost_usd_measured"]["none"])
         self.assertTrue(any("0원" in n for n in bud["notes"]))
         self.assertIn("tokenizer_check", summary)
 

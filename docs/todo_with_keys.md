@@ -1,4 +1,6 @@
-# 키 필요한 확인 작업 (멀티턴 1·2단계)
+# 키 필요한 확인 작업 (멀티턴 1·2·3단계)
+
+먼저 "실행 전 점검 목록" 과 "파일럿 순서" 를 본다. 그 아래 절들은 단계별 세부 내용이다.
 
 ## 실행 전 점검 목록 (이 순서대로)
 
@@ -22,10 +24,93 @@ Select-String -Path .env -Pattern "^TOKENIZER="
 python src/llm.py --cache-probe
 ```
 
-4. 그다음 파일럿 (아래 4절): `--estimate-only` 로 비용 확인 → 실행 → `answer_health` 보고 `--max-completion-tokens` 조정.
+4. 그다음 아래 "파일럿 순서" 의 (1)~(4) 를 차례로 돈다. 답변 지시문은 v2 (기본값) 다.
 
-API 키가 없는 노트북에서 구현과 오프라인 테스트까지만 했다. 아래는 키가 있는 노트북에서 돌릴 확인 작업이다.
-끝나면 결과를 이 문서에 적고, `src/llm.py` 의 `USAGE_FIELD_CANDIDATES` 주석을 확인된 이름으로 고친다.
+## 파일럿 순서 (2026-11-22 갱신)
+
+모든 단계에서 공통 인자는 같다 (`--model gpt-6-luna --reasoning-effort server_default --max-completion-tokens 4096 --samples 3`).
+응답 캐시를 같은 곳(`results/cache/responses.sqlite`)에 쓰므로 뒤 단계의 none·기준 궤적은 앞 단계 응답을 재사용한다 (같은 요청이면 0원).
+예상 비용은 이 노트북의 `--estimate-only` 값이다 (Qwen 토크나이저 근사, 답변 300 + 추론 1,000, 요약 300 + 추론 1,000 토큰 가정, 요약 조건 none 은 추론 0).
+
+| 단계 | 내용 | 예상 실제 지출 |
+|---|---|---|
+| (1) | `--cache-probe` (필드 이름 확정) | < $0.01 |
+| (2) | 기준 궤적 + none / window(2) / window_budget / query_select, 예산 2000·4000·8000 | 답변 $0.47~0.65 + 채점 $0.22 ≈ **$0.7~0.9** |
+| (3) | 요약형 2종 × 요약 추론 2조건 (server_default, none), 예산 2000·4000·8000 | 답변 $0.67~0.95 + 요약 $0.20 + 채점 $0.33 ≈ **$1.2~1.5** |
+| (4) | `--sequential-chains` 로 none, frozen_summary(4000) 각 시나리오 1개 (mt01_security) 캐시 검증 | 답변 $0.016~0.02 + 요약 $0.002 ≈ **$0.03** (채점 없음) |
+
+답변 금액 범위는 프롬프트 캐시 적중 0% (상한) ~ 접두부 캐시 반영 값이다.
+
+### (1) 캐시 필드 확정
+
+```powershell
+python src/llm.py --cache-probe
+```
+
+### (2) 기준 궤적 + 상태 없는 압축기
+
+```powershell
+python src/multiturn/replay.py --scenarios data/evalsets/multiturn-v1 --model gpt-6-luna --compressors "none,window(2),window_budget,query_select" --history-budget 2000,4000,8000 --samples 3 --reasoning-effort server_default --max-completion-tokens 4096 --concurrency 5
+```
+
+- 끝나면 `summary.json` 의 `reference_health`, `answer_health` (finish_length·empty_response·reasoning_ran) 를 보고 `--max-completion-tokens` 를 정한다. 바꾸면 기준 궤적이 새로 만들어진다.
+
+### (3) 요약형 2종 × 요약 추론 2조건
+
+```powershell
+python src/multiturn/replay.py --scenarios data/evalsets/multiturn-v1 --model gpt-6-luna --compressors "none,rolling_summary,frozen_summary" --history-budget 2000,4000,8000 --samples 3 --reasoning-effort server_default --max-completion-tokens 4096 --summary-model gpt-6-luna --summary-reasoning-effort server_default,none --summary-max-tokens 4096 --concurrency 5
+```
+
+- 압축기 이름은 `rolling_summary(4000)[sre=none]` 처럼 펼쳐진다. none 은 (2) 와 같은 요청이라 응답 캐시에서 읽는다.
+- `summary_failure` (요약 실패율) 가 0 이 아니면 `--summary-max-tokens` 를 올린다. 실패 체인은 `--resume <run_id>` 로 다시 시도된다.
+
+### (4) 캐시 검증 (순차 체인, 응답 캐시 끔)
+
+```powershell
+python src/multiturn/replay.py --scenarios data/evalsets/multiturn-v1 --model gpt-6-luna --compressors none --history-budget 4000 --samples 1 --reasoning-effort server_default --max-completion-tokens 4096 --summary-model gpt-6-luna --summary-reasoning-effort server_default --summary-max-tokens 4096 --sequential-chains "none,frozen_summary(4000)" --chain-scenarios mt01_security --chain-samples 0
+```
+
+- 턴 순서대로 한 번에 하나씩, 응답 캐시 없이 보낸다 (답변 채점 없음). `sequential_summary.json` 에 턴별 `sim_cached_tokens` (prefix_shared_tokens 기반) 와 서버 `cached_tokens` 가 나란히 있다.
+- 두 값이 크게 다르면 비용 주 지표(시뮬레이션 캐시 비용)의 가정을 다시 본다. 서버 캐시는 보존 시간·라우팅 영향을 받으므로 한 체인 결과로 일반화하지 않는다.
+- 기준 궤적은 (2) 에서 만든 것을 그대로 쓴다 (같은 설정 해시).
+
+### 비용 지표 (중요)
+
+- replay 는 턴을 병렬·순서 무관하게 보내므로, 실행 중 서버가 보고한 `cached_tokens` 는 실제 대화의 캐시 동작이 아니다.
+- 그래서 `summary.json` / `budget_table` 의 비용 절감률 주 지표는 **`cost_reduction_pct_sim`** (같은 압축기로 실제 대화했을 때 직전 턴 요청과 겹치는 접두부 = `prefix_shared_tokens` 를 캐시 읽기로 본 시뮬레이션 비용) 이고, `_sim_write` 는 미스 부분을 캐시 쓰기 단가로 계산한 변형이다. `_nocache` 는 상한, `_measured` (실측 cached_tokens) 는 참고용이다.
+- overflow 턴(직전 턴 원문만으로 예산 초과)을 뺀 집계는 `excluding_overflow` 와 budget_table 의 `*_excluding_overflow` 에 있다.
+
+### 예상 비용 상세 (시뮬레이션 캐시 기준, 2026-11-22)
+
+**압축기 비교: 실험상 비용 (호출당) = 답변 + 요약, none 대비 절감률.** sim = 직전 턴 접두부 캐시 (주 지표), 캐시 0% = 상한.
+none: 캐시 0% $0.0980, sim $0.0640, 직전 턴 접두부 공유율 76.0%.
+
+| 압축기 | 입력 절감 | overflow | 접두부 공유 | 요약 비용 | 절감 (캐시 0%) | **절감 (sim)** | 요약 호출 | 재압축 |
+|---|---|---|---|---|---|---|---|---|
+| window(2) | 54.8% | 0.0% | 20.5% | – | 25.4% | −8.5% | – | – |
+| window_budget(2000) | 65.0% | 18.5% | 24.6% | – | 30.1% | −3.6% | – | – |
+| window_budget(4000) | 38.0% | 0.0% | 44.7% | – | 17.6% | −8.3% | – | – |
+| window_budget(8000) | 6.2% | 0.0% | 68.9% | – | 2.9% | −4.4% | – | – |
+| query_select(2000) | 55.9% | 18.5% | 12.8% | – | 25.9% | −10.9% | – | – |
+| query_select(4000) | 39.8% | 0.0% | 11.8% | – | 18.4% | −22.3% | – | – |
+| query_select(8000) | 31.8% | 0.0% | 11.7% | – | 14.7% | −28.0% | – | – |
+| rolling_summary(2000)[sre=server_default] | 64.1% | 18.5% | 26.2% | $0.0379 | −9.1% | −63.9% | 45 | – |
+| rolling_summary(2000)[sre=none] | 64.1% | 18.5% | 26.2% | $0.0154 | 13.9% | −28.7% | 45 | – |
+| rolling_summary(4000)[sre=server_default] | 47.1% | 0.0% | 53.5% | $0.0184 | 3.0% | −29.6% | 18 | – |
+| rolling_summary(4000)[sre=none] | 47.1% | 0.0% | 53.5% | $0.0094 | 12.2% | −15.5% | 18 | – |
+| rolling_summary(8000)[sre=server_default] | 16.1% | 0.0% | 69.0% | $0.0082 | −0.9% | −12.8% | 6 | – |
+| rolling_summary(8000)[sre=none] | 16.1% | 0.0% | 69.0% | $0.0052 | 2.2% | −8.1% | 6 | – |
+| frozen_summary(2000)[sre=server_default] | 61.6% | 18.5% | 31.8% | $0.0504 | −22.9% | −82.9% | 63 | 18 |
+| frozen_summary(2000)[sre=none] | 61.6% | 18.5% | 31.8% | $0.0189 | 9.3% | −33.7% | 63 | 18 |
+| frozen_summary(4000)[sre=server_default] | 45.5% | 0.0% | 56.3% | $0.0181 | 2.6% | −28.9% | 18 | 0 |
+| frozen_summary(4000)[sre=none] | 45.5% | 0.0% | 56.3% | $0.0091 | 11.8% | −14.9% | 18 | 0 |
+| frozen_summary(8000)[sre=server_default] | 16.1% | 0.0% | 69.0% | $0.0082 | −0.9% | −12.8% | 6 | 0 |
+| frozen_summary(8000)[sre=none] | 16.1% | 0.0% | 69.0% | $0.0052 | 2.2% | −8.1% | 6 | 0 |
+
+- **요약 추론 조건별 요약 비용**: server_default $0.141 (156회, 추론 1,000 가정), none $0.063 (156회, 추론 0).
+- **frozen_summary 재압축**: 2000 에서 체인당 2.0회 (턴 3~6), 4000·8000 에서 0회. 2000 은 rolling 과 비슷해진다.
+- **시뮬레이션 캐시 기준으로는 어떤 압축기도 none 보다 싸지 않다.** none 은 기록이 앞에서부터 그대로 자라 직전 턴 접두부 공유율이 76% 이고, 캐시 읽기 단가가 입력의 1/10 이다. 압축기는 입력을 줄여도 접두부가 깨져 캐시 할인을 잃는다. 출력(답변 + 추론 1,300 토큰)이 비용의 대부분이라 입력 절감 효과가 작다. 실제 추론 토큰과 (4) 의 캐시 검증 결과가 이 결론의 핵심 가정이다.
+- overflow 18.5% (2000): 직전 턴 원문만으로 예산을 넘는 턴이다. `excluding_overflow` 집계로 따로 본다.
 
 ## 0. 준비
 
@@ -191,3 +276,11 @@ $env:EVAL_DIR = "data/evalsets/claude-v1"; python src/rerun_contexts.py results/
 
   - `llmlingua2_r50` 은 `llmlingua2`(retain 0.5) 와 같은 설정이다. 논문 조건 전체를 맞추려면 `"none,rule,llmlingua2_r50,llmlingua2_r30,rule>llmlingua2"` 로 돌린다.
   - experiment.py 구조는 바꾸지 않았다. experiment.py 로 추론 서버 기본값을 재려면 `ANSWER_REASONING_EFFORT=` (빈 값) 으로 넘길 수는 있지만 출력 한도 512 때문에 다리 측정으로 쓰지 않는다.
+
+# 멀티턴 3단계 (요약 압축기 2종 + 질문 기반 선택 + 같은 예산 비교)
+
+실행 명령·예상 비용·비용 지표 설명은 맨 앞 "파일럿 순서" 의 (2)~(4) 로 옮겼다 (예산 2000·4000·8000, 요약 추론 2조건, 시뮬레이션 캐시 비용 기준).
+
+- 상태형 압축기는 끝난 턴도 압축을 다시 해 상태를 재구성한다 (요약 호출은 응답 캐시 적중이라 과금 없음).
+- 요약 실패 (3번 시도 뒤에도 빈 요약·`finish_reason=length`): 그 체인을 그 턴부터 `summary_failed` 로 표시하고 남은 턴을 건너뛴다. 실패 응답은 캐시에 저장하지 않으므로 `--resume` 하면 다시 시도한다.
+- 키가 있으면 `turn_trials.jsonl` 의 `cost_sim` 과 `cost` (실측), `prefix_shared_tokens(_raw)` 와 `cached_tokens` 를 나란히 본다. 실측은 병렬 실행이라 참고용이다.

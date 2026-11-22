@@ -19,6 +19,30 @@
        none 도 sample 마다 다시 돌려 잡음 기준선을 만든다. none 의 reference sample 은 기준 궤적과 요청이 완전히 같아
        응답 캐시에 적중한다 (실험상 비용에만 들어가고 실제 지출은 0).
 
+상태가 없는 압축기 (none, window, window_budget, query_select, per_message)
+    (시나리오, 턴, 압축기, sample) 마다 독립으로 처리한다.
+상태형 압축기 (rolling_summary, frozen_summary)
+    (시나리오, 압축기, 예산, sample) 마다 체인 하나로 처리한다. 턴 0 부터 차례로 history_before_turn(k) (기준 궤적의 원문
+    기록) 를 넣어 상태를 갱신하고, 턴 k 에는 "그 압축기로 실제 대화했을 때 턴 k 시점의 기록" 을 보낸다.
+    기록 내용(과거 답변)은 기준 궤적의 것이다. 체인끼리는 병렬, 체인 안은 순서대로.
+    이어 돌리기: 끝난 턴도 압축 단계는 다시 실행해 상태를 재구성한다 (요약 호출은 응답 캐시에 적중, sample_idx 포함 키).
+    요약 실패(3번 시도 뒤에도 빈 요약·length): 그 체인을 그 턴부터 summary_failed 로 표시하고 남은 턴은 건너뛴다.
+    실패한 응답은 캐시에 저장하지 않으므로, 이어 돌리면 summary_failed 체인은 다시 시도된다.
+
+비용 지표
+    replay 는 턴을 병렬·순서 무관하게 처리하므로 실험 중 서버가 보고한 cached_tokens 는 실제 대화의 프롬프트 캐시 동작이 아니다.
+    그래서 비용 절감률 주 지표는 prefix_shared_tokens (같은 압축기로 실제 대화했을 때 직전 턴 요청과 겹치는 접두부) 로 계산한
+    시뮬레이션 캐시 비용 (*_sim: 캐시 읽기 단가, *_sim_write: 미스 부분을 캐시 쓰기 단가로) 이다. 실측 cached_tokens 기반은 *_measured (참고).
+    --sequential-chains 는 지정한 압축기 체인을 턴 순서대로, 동시 실행 없이, 응답 캐시를 끄고 실제 대화처럼 보내
+    시뮬레이션 캐시 토큰과 실측 cached_tokens 를 턴별로 비교한다 (sequential_summary.json).
+
+요약 추론 조건 (--summary-reasoning-effort server_default,none)
+    요약형 압축기를 조건마다 펼쳐 이름에 [sre=<조건>] 을 붙인다 (예: rolling_summary(4000)[sre=none]).
+
+예산 (--history-budget, 파일럿 기본 2000,4000,8000)
+    예산 없이 쓴 예산형 이름(window_budget 등)을 예산마다 펼친다. 최근 --keep-recent 턴은 넘쳐도 남기고 overflow 로 표시.
+    summary.json 의 budget_table 은 예산 × 압축기 비교표다 (none 대비, 실험상 비용 기준).
+
 규칙
     - 대화 기록에는 최종 답변만 넣는다 (trajectory 규칙). 기준 궤적의 답변이 그대로 기록이 된다.
       그래서 턴 j 의 기준 답변이 틀리면 j 에 의존하는 턴은 압축과 무관하게 틀릴 수 있다 -> depends_on_reference_ok.
@@ -53,10 +77,13 @@ from datetime import datetime
 import requests
 
 from config import CFG
-from cost import compute_cost
+from cost import compute_cost, cost_from_fields, find_price, load_pricing
 from grader import contains_words, is_not_found_answer, word_tokens
 from llm import count_message_tokens, count_tokens
-from multiturn.history_compressors import get_history_compressor, split_compressor_list
+from multiturn.history_compressors import (
+    BUDGET_FAMILIES, budget_of, expand_budgets, expand_summary_efforts, family_of, get_history_compressor,
+    is_stateful, label_of, split_compressor_list, summary_effort_of,
+)
 from multiturn.mt_stats import bootstrap_diff, non_inferiority, pair_rows
 from multiturn.prompt import load_mt_prompt
 from multiturn.scenario import scenario_hash, validate_scenario
@@ -107,7 +134,12 @@ class ReplayConfig:
     samples: int = 3
     reference_sample: int = 0
     temperature: str = SERVER_DEFAULT   # server_default 또는 숫자 문자열
-    prompt_version: str = "v1"
+    prompt_version: str = "v2"          # src/prompts/mt_answer_v2.md (요약·발췌 블록도 제공 정보로 봄)
+    history_budgets: list[int] = field(default_factory=list)   # 예산형 압축기 기록 토큰 예산
+    keep_recent: int = 1                # 예산형 압축기가 항상 원문으로 남기는 최근 턴 수
+    summary_model: str | None = None            # 요약형 압축기가 있으면 필수
+    summary_reasoning_effort: str | list | None = None  # 요약형 압축기가 있으면 필수. 쉼표로 여러 조건 (server_default,none)
+    summary_max_tokens: int | None = None        # 요약형 압축기가 있으면 필수
     judge_mode: str = CFG.judge_mode
     concurrency: int = 5
     margin: float = 0.10
@@ -124,20 +156,56 @@ class ReplayConfig:
             raise ValueError("compressors 에 none(기준선)이 있어야 합니다")
         if not 0 <= self.reference_sample < self.samples:
             raise ValueError("reference_sample 은 0 이상 samples 미만")
+        if any(b <= 0 for b in self.history_budgets):
+            raise ValueError("history_budgets 는 양의 정수")
+        if isinstance(self.summary_reasoning_effort, str):
+            self.summary_reasoning_effort = [e.strip() for e in self.summary_reasoning_effort.split(",") if e.strip()]
+        self.compressors = expand_budgets(list(self.compressors), list(self.history_budgets))
+        self.compressors = expand_summary_efforts(self.compressors, list(self.summary_efforts))
+        if self.has_summary:
+            missing = [k for k in ("summary_model", "summary_reasoning_effort", "summary_max_tokens")
+                       if getattr(self, k) in (None, "")]
+            if missing:
+                raise ValueError(f"요약형 압축기에는 {missing} 가 필요합니다 (--summary-model, "
+                                 "--summary-reasoning-effort, --summary-max-tokens). config 기본값을 쓰지 않습니다")
+            for e in self.summary_efforts:
+                reasoning_effort_for_llm(e)
+            for c in self.compressors:
+                if is_stateful(c) and summary_effort_of(c) not in self.summary_efforts:
+                    raise ValueError(f"{c} 의 요약 조건이 --summary-reasoning-effort 에 없습니다")
+            if not isinstance(self.summary_max_tokens, int) or self.summary_max_tokens <= 0:
+                raise ValueError("summary_max_tokens 는 양의 정수")
+
+    @property
+    def summary_efforts(self) -> list[str]:
+        return list(self.summary_reasoning_effort or [])
+
+    @property
+    def has_summary(self) -> bool:
+        return any(is_stateful(c) for c in self.compressors)
 
 
-def configure_answer_llm(llm, cfg: ReplayConfig):
+def configure_llm(llm, model: str, reasoning_effort: str, max_tokens: int, temperature: str):
     """LLM 객체에 실험 설정을 명시적으로 넣는다 (llm.py 는 고치지 않음).
     temperature=server_default 면 처음부터 보내지 않는다 (0 을 보냈는데 서버가 받으면 서버 기본값 조건이 깨진다)."""
-    llm.model = cfg.model
-    llm.max_tokens = cfg.max_completion_tokens
-    llm.reasoning_effort = reasoning_effort_for_llm(cfg.reasoning_effort)
-    if cfg.temperature == SERVER_DEFAULT:
+    llm.model = model
+    llm.max_tokens = max_tokens
+    llm.reasoning_effort = reasoning_effort_for_llm(reasoning_effort)
+    if temperature == SERVER_DEFAULT:
         llm.temperature = None
         llm.unsupported.add("temperature")
     else:
-        llm.temperature = float(cfg.temperature)
+        llm.temperature = float(temperature)
     return llm
+
+
+def configure_answer_llm(llm, cfg: ReplayConfig):
+    return configure_llm(llm, cfg.model, cfg.reasoning_effort, cfg.max_completion_tokens, cfg.temperature)
+
+
+def configure_summary_llm(llm, cfg: ReplayConfig, effort: str | None = None):
+    effort = effort or cfg.summary_efforts[0]
+    return configure_llm(llm, cfg.summary_model, effort, cfg.summary_max_tokens, cfg.temperature)
 
 
 def with_backoff(fn, cfg: ReplayConfig, sleep=time.sleep):
@@ -192,8 +260,9 @@ def entity_retention_in_history(entities: list[str], raw_past: list[dict], comp_
 class Replay:
     def __init__(self, cfg: ReplayConfig, scenarios: list[dict], corpus, answer_cached, judge_cached,
                  out_dir: Path, reference_root: Path = REFERENCE_ROOT, grade_fn=None, sleep=time.sleep,
-                 tokenizer_check: dict | None = None):
+                 tokenizer_check: dict | None = None, summarizer=None):
         self.cfg, self.scenarios, self.corpus = cfg, scenarios, corpus
+        self.summarizer = summarizer
         self.answer = answer_cached                    # multiturn.response_cache.CachedLLM (answer LLM 감쌈)
         self.judge = judge_cached.bind(0)              # 같은 답변은 같은 채점 (sample_idx 0 고정)
         self.out_dir = Path(out_dir)
@@ -207,8 +276,11 @@ class Replay:
         self.tokenizer_check = tokenizer_check or {"tokenizer": CFG.tokenizer, "ok": None, "approx": None,
                                                    "note": "확인하지 않음 (Replay 를 직접 만든 경우)"}
         # 압축기를 여기서 만든다: llmlingua 가 필요한데 없으면 시작 시점에 MissingDependencyError 로 멈춘다
-        self.compressors = {name: get_history_compressor(name) for name in cfg.compressors}
+        self.compressors = {name: get_history_compressor(name, token_counter=lambda t: count_tokens(t),
+                                                         summarizer=summarizer, keep_recent=cfg.keep_recent)
+                            for name in cfg.compressors}
         self._lock = threading.Lock()
+        self._memo: dict = {}
         self.run_id = self.out_dir.name.removeprefix("mt_")
         for s in scenarios:
             errs = validate_scenario(s)
@@ -228,6 +300,13 @@ class Replay:
         if not p.exists():
             return []
         return [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]
+
+    def _trials(self) -> list[dict]:
+        """turn_trials.jsonl. 같은 키가 여러 번 있으면 마지막 줄 (summary_failed 체인을 다시 돌린 경우)."""
+        last = {}
+        for r in self._read("turn_trials.jsonl"):
+            last[self.trial_key(r)] = r
+        return list(last.values())
 
     # ---------------- 1단계: 기준 궤적 ----------------
 
@@ -301,18 +380,59 @@ class Replay:
     def trial_key(row: dict) -> tuple:
         return (row["scenario_id"], row["turn"], row["compressor"], row["sample_idx"])
 
-    def run_trial(self, scenario: dict, ref_steps: list[TrajectoryStep], ref_grades: dict, k: int,
-                  comp_name: str, sample_idx: int) -> dict:
+    def _row_base(self, scenario: dict, ref_grades: dict, k: int, comp_name: str, sample_idx: int) -> dict:
         t = scenario["turns"][k]
-        history = history_before_turn(ref_steps, k, system=self.prompt.system)
-        current_user = self.prompt.user_message(t, self.corpus)
-        comp = self.compressors[comp_name]
+        deps = depends_closure(scenario, k)
+        return {
+            "run_id": self.run_id, "scenario_id": scenario["scenario_id"], "turn": k, "compressor": comp_name,
+            "compressor_family": family_of(comp_name), "history_budget": budget_of(comp_name),
+            "keep_recent": self.cfg.keep_recent if budget_of(comp_name) else None,
+            "sample_idx": sample_idx, "turn_type": t["turn_type"], "type": t["type"],
+            "depends_on": t["depends_on"], "depends_on_all": deps,
+            "depends_distance_min": min((k - d for d in t["depends_on"]), default=None),
+            "depends_distance_max": max((k - d for d in t["depends_on"]), default=None),
+            "depends_on_reference_ok": all((ref_grades.get(str(d)) or {}).get("answer_accuracy") == 1.0 for d in deps),
+            "summary_failed": False,
+        }
+
+    def _prefix(self, prev: list[dict] | None, messages: list[dict]) -> tuple[int, int]:
+        from multiturn.estimate import CACHE_MIN_TOKENS, common_prefix_tokens
+        raw = common_prefix_tokens(prev, messages, count_message_tokens) if prev else 0
+        return (raw if raw >= CACHE_MIN_TOKENS else 0), raw
+
+    def _inputs(self, scenario: dict, ref_steps: list[TrajectoryStep], k: int):
+        t = scenario["turns"][k]
+        return history_before_turn(ref_steps, k, system=self.prompt.system), self.prompt.user_message(t, self.corpus)
+
+    def _stateless(self, scenario, ref_steps, k, comp_name):
+        """상태 없는 압축기의 턴 k 결과 (sample 과 무관해 메모해 둔다. 직전 턴 접두부 비교에도 쓴다)."""
+        key = (scenario["scenario_id"], k, comp_name)
+        with self._lock:
+            if key in self._memo:
+                return self._memo[key]
+        history, current_user = self._inputs(scenario, ref_steps, k)
         t0 = time.perf_counter()
-        hres = comp.compress_history(history, current_user, None, None)
-        compress_sec = time.perf_counter() - t0
+        hres = self.compressors[comp_name].compress_history(history, current_user, None, None)
+        out = (history, current_user, hres, time.perf_counter() - t0)
+        with self._lock:
+            self._memo[key] = out
+        return out
+
+    def run_trial(self, scenario: dict, ref_steps: list[TrajectoryStep], ref_grades: dict, k: int,
+                  comp_name: str, sample_idx: int, pre=None, prev_messages=None) -> dict:
+        t = scenario["turns"][k]
+        if pre is None:
+            pre = self._stateless(scenario, ref_steps, k, comp_name)
+            if k > 0 and prev_messages is None:
+                prev_messages = self._stateless(scenario, ref_steps, k - 1, comp_name)[2].messages
+        history, current_user, hres, compress_sec = pre
+        comp = self.compressors[comp_name]
         messages = hres.messages
         if messages[0] != history[0] or messages[-1]["content"] != current_user:
             raise AssertionError("압축기가 system 또는 현재 턴 메시지를 바꿨습니다")
+        info = dict(hres.info)
+        results = info.pop("_llm_results", []) or []
+        compress_cost = compress_cost_of(results)
         res, hit = with_backoff(lambda: self.answer.chat(messages, sample_idx=sample_idx), self.cfg, self.sleep)
         response = res.text.strip()
         g = self.grade(t, response)
@@ -323,7 +443,7 @@ class Replay:
             judge_cost = cost_from_fields(self.judge.model, g.judge_prompt_tokens, g.judge_completion_tokens,
                                           usage_source=g.judge_usage_source or "api").to_dict()
         raw_past, comp_past = history[1:], messages[1:-1]
-        deps = depends_closure(scenario, k)
+        shared, shared_raw = self._prefix(prev_messages, messages)
         step = TrajectoryStep.from_result(
             res, cache_hit=hit, cost=cost, run_id=self.run_id, scenario_id=scenario["scenario_id"],
             sample_idx=sample_idx, mode="replay", compressor=comp_name, turn=k, user_input=current_user,
@@ -331,23 +451,22 @@ class Replay:
             sampling=sampling_record(self.answer.llm, res, self.cfg.reasoning_effort),
             history_tokens_raw=_history_tokens(raw_past), history_tokens_compressed=_history_tokens(comp_past),
             compression_info={"config": comp.config(), "llm_prompt_tokens": hres.llm_prompt_tokens,
-                              "llm_completion_tokens": hres.llm_completion_tokens, "info": hres.info,
-                              "compress_sec": round(compress_sec, 3)})
+                              "llm_completion_tokens": hres.llm_completion_tokens, "info": info,
+                              "compress_cost": compress_cost, "compress_sec": round(compress_sec, 3)})
         row = {
-            "run_id": self.run_id, "scenario_id": scenario["scenario_id"], "turn": k, "compressor": comp_name,
-            "sample_idx": sample_idx, "turn_type": t["turn_type"], "type": t["type"],
-            "depends_on": t["depends_on"], "depends_on_all": deps,
-            "depends_distance_min": min((k - d for d in t["depends_on"]), default=None),
-            "depends_distance_max": max((k - d for d in t["depends_on"]), default=None),
-            "depends_on_reference_ok": all((ref_grades.get(str(d)) or {}).get("answer_accuracy") == 1.0 for d in deps),
+            **self._row_base(scenario, ref_grades, k, comp_name, sample_idx),
             "history_tokens_raw": step.history_tokens_raw, "history_tokens_compressed": step.history_tokens_compressed,
-            "input_tokens_est": count_message_tokens(messages),
+            "overflow": info.get("overflow"), "input_tokens_est": count_message_tokens(messages),
+            "prefix_shared_tokens": shared, "prefix_shared_tokens_raw": shared_raw,
             "prompt_tokens": res.prompt_tokens, "cached_tokens": res.cached_tokens,
             "cache_write_tokens": res.cache_write_tokens, "reasoning_tokens": res.reasoning_tokens,
             "completion_tokens": res.completion_tokens, "usage_source": res.usage_source,
             "compress_llm_prompt_tokens": hres.llm_prompt_tokens,
-            "compress_llm_completion_tokens": hres.llm_completion_tokens,
+            "compress_llm_completion_tokens": hres.llm_completion_tokens, "compress_cost": compress_cost,
+            "summary_calls": info.get("summary_calls"), "summary_cache_hits": info.get("summary_cache_hits"),
+            "recompressed": info.get("recompressed"), "recompress_turns": info.get("recompress_turns"),
             "cost": cost, "judge_cost": judge_cost, "cache_hit": hit, "finish_reason": res.finish_reason,
+            "summary_effort": summary_effort_of(comp_name),
             "response": response, "empty_response": not response, "not_found": is_not_found_answer(response),
             "answer_accuracy": g.answer_accuracy, "satisfied_facts": g.satisfied_count, "total_facts": g.total_count,
             "judge_mode": g.judge_mode, "judge_skipped": g.judge_skipped, "judge_failed": list(g.judge_failed),
@@ -355,30 +474,86 @@ class Replay:
             "entity_retention": entity_retention_in_history(t["key_entities"], raw_past, comp_past),
             "prompt_hash": step.prompt_hash, "model": res.model,
         }
+        row["cost_sim"] = sim_cost(row)
         self._append("trajectory.jsonl", step.to_dict())
         self._append("turn_trials.jsonl", row)
         return row
 
+    def _failed_rows(self, scenario, ref_grades, k_fail, comp_name, sample_idx, hres, done: set):
+        """요약 실패: 실패 턴과 남은 턴을 summary_failed 로 기록 (주 기준 정확도 0점, 답변 호출 없음)."""
+        info = dict(hres.info)
+        results = info.pop("_llm_results", []) or []
+        cost = compress_cost_of(results)
+        for k in range(k_fail, len(scenario["turns"])):
+            if (scenario["scenario_id"], k, comp_name, sample_idx) in done:
+                continue
+            first = k == k_fail
+            self._append("turn_trials.jsonl", {
+                **self._row_base(scenario, ref_grades, k, comp_name, sample_idx),
+                "summary_failed": True, "summary_failed_turn": k_fail, "skipped_after_summary_failure": not first,
+                "summary_fail_reason": info.get("summary_fail_reason"),
+                "summary_attempts": info.get("summary_attempts") if first else 0,
+                "compress_llm_prompt_tokens": hres.llm_prompt_tokens if first else 0,
+                "compress_llm_completion_tokens": hres.llm_completion_tokens if first else 0,
+                "compress_cost": cost if first else {"usd": 0.0, "usd_nocache": 0.0, "calls": 0},
+                "summary_effort": summary_effort_of(comp_name),
+                "answer_accuracy": 0.0, "response": None, "not_found": False, "empty_response": False,
+                "cost": None, "cache_hit": False,
+            })
+
+    def run_chain(self, scenario: dict, ref_steps, ref_grades, comp_name: str, sample_idx: int, done: set) -> int:
+        """상태형 압축기 체인. 끝난 턴도 압축은 다시 해서 상태를 재구성한다 (요약은 응답 캐시 적중)."""
+        comp = self.compressors[comp_name]
+        state = comp.initial_state(sample_idx)
+        prev = None
+        n = 0
+        for k in range(len(scenario["turns"])):
+            history, current_user = self._inputs(scenario, ref_steps, k)
+            t0 = time.perf_counter()
+            hres = with_backoff(lambda: comp.compress_history(history, current_user, None, state), self.cfg, self.sleep)
+            sec = time.perf_counter() - t0
+            if hres.info.get("summary_failed"):
+                self._failed_rows(scenario, ref_grades, k, comp_name, sample_idx, hres, done)
+                return n
+            state = hres.state
+            if (scenario["scenario_id"], k, comp_name, sample_idx) in done:
+                prev = hres.messages
+                continue
+            self.run_trial(scenario, ref_steps, ref_grades, k, comp_name, sample_idx,
+                           pre=(history, current_user, hres, sec), prev_messages=prev)
+            prev = hres.messages
+            n += 1
+        return n
+
     def run(self) -> dict:
         refs, ref_grades, ref_warnings = self.build_references()
-        done = {self.trial_key(r) for r in self._read("turn_trials.jsonl")}
+        done = {self.trial_key(r) for r in self._trials() if not r.get("summary_failed")}
+        stateless = [c for c in self.cfg.compressors if not is_stateful(c)]
+        stateful = [c for c in self.cfg.compressors if is_stateful(c)]
         tasks = [(s, k, c, i) for s in self.scenarios for k in range(len(s["turns"]))
-                 for c in self.cfg.compressors for i in range(self.cfg.samples)
+                 for c in stateless for i in range(self.cfg.samples)
                  if (s["scenario_id"], k, c, i) not in done]
-        print(f"replay: {len(tasks)} trial (이미 끝남 {len(done)})", flush=True)
+        chains = [(s, c, i) for s in self.scenarios for c in stateful for i in range(self.cfg.samples)
+                  if any((s["scenario_id"], k, c, i) not in done for k in range(len(s["turns"])))]
+        print(f"replay: trial {len(tasks)} + 상태형 체인 {len(chains)} (이미 끝남 {len(done)})", flush=True)
         failed = 0
         with ThreadPoolExecutor(max_workers=self.cfg.concurrency) as pool:
-            futs = {pool.submit(self.run_trial, s, refs[s["scenario_id"]], ref_grades[s["scenario_id"]], k, c, i):
-                    (s["scenario_id"], k, c, i) for s, k, c, i in tasks}
+            futs = {}
+            for s, k, c, i in tasks:
+                futs[pool.submit(self.run_trial, s, refs[s["scenario_id"]], ref_grades[s["scenario_id"]], k, c, i)] = \
+                    (s["scenario_id"], k, c, i)
+            for s, c, i in chains:
+                futs[pool.submit(self.run_chain, s, refs[s["scenario_id"]], ref_grades[s["scenario_id"]], c, i, done)] = \
+                    (s["scenario_id"], "chain", c, i)
             for f in as_completed(futs):
                 try:
                     f.result()
-                except Exception as e:      # 한 trial 이 실패해도 나머지는 돈다. 이어 돌리기로 다시 시도된다
+                except Exception as e:      # 한 trial·체인이 실패해도 나머지는 돈다. 이어 돌리기로 다시 시도된다
                     failed += 1
                     self._append("errors.jsonl", {"key": list(futs[f]), "error": f"{type(e).__name__}: {e}"[:500],
                                                   "time": datetime.now().isoformat(timespec="seconds")})
-        summary = summarize_replay(self._read("turn_trials.jsonl"), self.cfg, ref_warnings=ref_warnings,
-                                   n_scenarios=len(self.scenarios))
+        rows = self._trials()
+        summary = summarize_replay(rows, self.cfg, ref_warnings=ref_warnings, n_scenarios=len(self.scenarios))
         summary["failed_trials_this_run"] = failed
         summary["tokenizer_check"] = self.tokenizer_check
         if self.tokenizer_check.get("approx"):
@@ -387,9 +562,70 @@ class Replay:
         summary["config"] = self.config_record()
         steps = [TrajectoryStep.from_dict(d) for d in self._read("trajectory.jsonl")]
         summary["trajectory"] = summarize_steps(steps)
-        summary["budget"] = budget_block(steps, [st for v in refs.values() for st in v])
+        summary["budget"] = budget_block(steps, [st for v in refs.values() for st in v], rows)
         (self.out_dir / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=1), encoding="utf-8")
         return summary
+
+    def run_sequential(self, comp_names: list[str], scenario_ids: list[str] | None = None,
+                       samples: list[int] | None = None) -> dict:
+        """캐시 검증: 지정 압축기의 (시나리오, sample) 체인을 턴 순서대로, 동시 실행 없이, 응답 캐시를 끄고 보낸다.
+        답변은 채점하지 않는다 (프롬프트 캐시 동작만 본다). 결과: sequential_chains.jsonl, sequential_summary.json."""
+        from multiturn.history_compressors import Summarizer
+        from multiturn.response_cache import CachedLLM
+
+        refs, _, ref_warnings = self.build_references()
+        answer = CachedLLM(self.answer.llm, enabled=False)
+        summ = self.summarizer
+        if isinstance(summ, dict):
+            summ = {k: Summarizer(CachedLLM(v.cached.llm, enabled=False), v.prompt, v.max_attempts) for k, v in summ.items()}
+        elif summ is not None:
+            summ = Summarizer(CachedLLM(summ.cached.llm, enabled=False), summ.prompt, summ.max_attempts)
+        scen = [s for s in self.scenarios if not scenario_ids or s["scenario_id"] in scenario_ids]
+        rows = []
+        for name in comp_names:
+            comp = get_history_compressor(name, token_counter=lambda t: count_tokens(t), summarizer=summ,
+                                          keep_recent=self.cfg.keep_recent)
+            for s in scen:
+                for i in (samples or [0]):
+                    state = comp.initial_state(i) if hasattr(comp, "initial_state") else None
+                    prev = None
+                    for k in range(len(s["turns"])):
+                        history, user = self._inputs(s, refs[s["scenario_id"]], k)
+                        hres = comp.compress_history(history, user, None, state)
+                        if hres.info.get("summary_failed"):
+                            rows.append({"scenario_id": s["scenario_id"], "compressor": name, "sample_idx": i, "turn": k,
+                                         "summary_failed": True})
+                            break
+                        state = hres.state
+                        info = dict(hres.info)
+                        sres = info.pop("_llm_results", []) or []
+                        res = with_backoff(lambda: answer.chat(hres.messages, sample_idx=i)[0], self.cfg, self.sleep)
+                        shared, shared_raw = self._prefix(prev, hres.messages)
+                        row = {"scenario_id": s["scenario_id"], "compressor": name, "sample_idx": i, "turn": k,
+                               "input_tokens_est": count_message_tokens(hres.messages),
+                               "prefix_shared_tokens": shared, "prefix_shared_tokens_raw": shared_raw,
+                               "prompt_tokens": res.prompt_tokens, "cached_tokens": res.cached_tokens,
+                               "cache_write_tokens": res.cache_write_tokens, "completion_tokens": res.completion_tokens,
+                               "reasoning_tokens": res.reasoning_tokens, "finish_reason": res.finish_reason,
+                               "model": res.model, "created_at": res.created_at, "summary_calls": len(sres),
+                               "summary_cached_tokens": [r.cached_tokens for r in sres],
+                               "cost_measured": compute_cost(res).to_dict()}
+                        row["cost_sim"] = sim_cost(row)
+                        row["sim_cached_tokens"] = row["cost_sim"]["sim_cached_tokens"]
+                        rows.append(row)
+                        self._append("sequential_chains.jsonl", row)
+                        prev = hres.messages
+        out = sequential_summary(rows)
+        out["notes"] = [
+            "응답 캐시를 끄고 턴 순서대로 한 번에 하나씩 보낸 결과다. sim_cached_tokens 는 prefix_shared_tokens 를 API 토큰 단위로 맞춘 값 "
+            "(prompt_tokens × prefix_shared_tokens / input_tokens_est), cached_tokens 는 서버 보고값이다.",
+            "서버 캐시는 보존 시간·라우팅·다른 요청의 영향을 받으므로 한 체인의 결과로 일반화하지 않는다.",
+            "답변은 채점하지 않았다 (캐시 동작 검증용).",
+        ]
+        out["reference_health"] = {"warnings": ref_warnings}
+        (self.out_dir / "sequential_summary.json").write_text(json.dumps(out, ensure_ascii=False, indent=1),
+                                                             encoding="utf-8")
+        return out
 
     def config_record(self) -> dict:
         return {
@@ -401,6 +637,8 @@ class Replay:
             "scenarios": {s["scenario_id"]: {"hash": scenario_hash(s), "status": s["status"], "turns": len(s["turns"])}
                           for s in self.scenarios},
             "compressor_configs": {n: c.config() for n, c in self.compressors.items()},
+            "summarizer": ({e: sm.config() for e, sm in self.summarizer.items()} if isinstance(self.summarizer, dict)
+                           else self.summarizer.config() if self.summarizer else None),
             "tokenizer": CFG.tokenizer,
             "tokenizer_check": self.tokenizer_check,
         }
@@ -430,7 +668,26 @@ def _sum(rows, k):
 
 
 def _usd(rows):
-    return sum(((r.get("cost") or {}).get("usd") or 0) for r in rows)
+    """답변 비용 + 압축(요약) 호출 비용. 실험상 비용(호출당) 기준."""
+    return sum(((r.get("cost") or {}).get("usd") or 0) + ((r.get("compress_cost") or {}).get("usd") or 0)
+               for r in rows)
+
+
+def _ratio(num, den):
+    return round(num / den, 4) if den else None
+
+
+def cache_metrics(rows: list[dict]) -> dict:
+    """접두부 공유율(직전 턴 요청과 메시지 단위로 겹치는 접두부 / 입력 추정) 과 실제 캐시 적중률(서버 cached_tokens)."""
+    ok = [r for r in rows if not r.get("summary_failed")]
+    known = [r for r in ok if r.get("cached_tokens") is not None]
+    return {
+        "prefix_share_mean": _mean(_ratio(r.get("prefix_shared_tokens") or 0, r.get("input_tokens_est")) for r in ok),
+        "prefix_share_raw_mean": _mean(_ratio(r.get("prefix_shared_tokens_raw") or 0, r.get("input_tokens_est"))
+                                       for r in ok),
+        "actual_cache_hit_rate": _ratio(_sum(known, "cached_tokens"), _sum(known, "prompt_tokens")) if known else None,
+        "actual_cache_known_trials": len(known),
+    }
 
 
 def _mean(xs):
@@ -438,17 +695,74 @@ def _mean(xs):
     return round(sum(xs) / len(xs), 4) if xs else None
 
 
+def compress_cost_of(results: list) -> dict:
+    """요약 호출 비용. usd: 서버 보고 cached_tokens 반영 (참고), usd_nocache: 캐시 없이 (시뮬레이션 비용에 쓴다)."""
+    return {"usd": round(sum((compute_cost(r).usd or 0) for r in results), 8),
+            "usd_nocache": round(sum((cost_from_fields(r.model, r.prompt_tokens, r.completion_tokens, 0, 0,
+                                                       r.usage_source).usd or 0) for r in results), 8),
+            "calls": len(results)}
+
+
+def sim_cost(row: dict) -> dict:
+    """prefix_shared_tokens 로 계산한 시뮬레이션 캐시 비용 (답변 호출 하나).
+    단위 맞춤: 접두부는 TOKENIZER 단위라 API prompt_tokens × (prefix_shared_tokens / input_tokens_est) 를 캐시 읽기 토큰으로 본다."""
+    from multiturn.estimate import call_usd
+    est, pt = row.get("input_tokens_est") or 0, row.get("prompt_tokens") or 0
+    cached = min(pt, round(pt * (row.get("prefix_shared_tokens") or 0) / est)) if est else 0
+    price = find_price(row.get("model") or "", load_pricing())[1]
+    if price is None:
+        return {"usd_nocache": None, "usd_read": None, "usd_write": None, "sim_cached_tokens": cached}
+    u = call_usd(pt, cached, row.get("completion_tokens") or 0, price)
+    return {"usd_nocache": u["no_cache"], "usd_read": u["prefix_cache"], "usd_write": u["prefix_cache_write"],
+            "sim_cached_tokens": cached}
+
+
+def _usd_sim(rows, variant: str) -> float:
+    """시뮬레이션 캐시 비용 합 (답변 + 요약). 요약 호출은 캐시 없이 센다 (입력이 매번 달라 접두부 공유가 거의 없음)."""
+    tot = 0.0
+    for r in rows:
+        c = r.get("cost_sim") or sim_cost(r)
+        tot += (c.get(variant) or 0) + ((r.get("compress_cost") or {}).get("usd_nocache")
+                                        or (r.get("compress_cost") or {}).get("usd") or 0)
+    return tot
+
+
+def sequential_summary(rows: list[dict]) -> dict:
+    """--sequential-chains 결과: 턴별 시뮬레이션 캐시 토큰과 실측 cached_tokens."""
+    out = {}
+    for name in sorted({r["compressor"] for r in rows}):
+        rs = [r for r in rows if r["compressor"] == name and not r.get("summary_failed")]
+        known = [r for r in rs if r.get("cached_tokens") is not None]
+        out[name] = {
+            "turns": [{k: r.get(k) for k in ("scenario_id", "sample_idx", "turn", "prompt_tokens", "sim_cached_tokens",
+                                             "cached_tokens", "prefix_shared_tokens_raw", "summary_calls")} for r in rs],
+            "sim_cached_total": _sum(rs, "sim_cached_tokens"),
+            "measured_cached_total": _sum(known, "cached_tokens") if known else None,
+            "prompt_total": _sum(rs, "prompt_tokens"),
+            "sim_hit_rate": _ratio(_sum(rs, "sim_cached_tokens"), _sum(rs, "prompt_tokens")),
+            "measured_hit_rate": _ratio(_sum(known, "cached_tokens"), _sum(known, "prompt_tokens")) if known else None,
+            "mean_abs_diff_tokens": _mean(abs((r.get("sim_cached_tokens") or 0) - r["cached_tokens"]) for r in known),
+            "cost_sim_read_usd": round(sum((r["cost_sim"].get("usd_read") or 0) for r in rs), 6),
+            "cost_measured_usd": round(sum(((r.get("cost_measured") or {}).get("usd") or 0) for r in rs), 6),
+            "summary_failed": any(r.get("summary_failed") for r in rows if r["compressor"] == name),
+        }
+    return out
+
+
 def _pct_reduction(base: float, comp: float):
     return round(100 * (1 - comp / base), 2) if base else None
 
 
-COST_BASIS_NOTE = ("cost_reduction_pct 와 cost_usd 는 실험상 비용(호출당) 기준이다: 응답 캐시 적중과 무관하게 "
-                   "모든 trial 을 원래 호출의 usage 로 센다. 실제 지출은 budget 에 따로 있다.")
+COST_BASIS_NOTE = ("비용 절감률 주 지표는 cost_reduction_pct_sim (시뮬레이션 캐시 비용: prefix_shared_tokens 를 캐시 읽기로, "
+                   "_sim_write 는 미스 부분을 캐시 쓰기 단가로) 이다. replay 는 턴을 병렬·순서 무관하게 보내므로 실측 cached_tokens 는 "
+                   "실제 대화의 캐시 동작이 아니다. 그래서 실측 기반 cost_reduction_pct_measured 는 참고용이다 "
+                   "(검증은 --sequential-chains). 모든 비용은 실험상 비용(호출당): 응답 캐시 적중과 무관하게 원래 호출의 usage 로 센다. "
+                   "요약 호출은 캐시 없이 센다. 실제 지출은 budget 에 따로 있다.")
 REFERENCE_SPEND_NOTE = ("none 의 reference sample 은 기준 궤적과 같은 요청이라 응답 캐시에 적중해 실제 지출이 0원이다 "
                         "(기준 궤적 호출로 이미 한 번 냈다).")
 
 
-def budget_block(replay_steps: list, reference_steps: list) -> dict:
+def budget_block(replay_steps: list, reference_steps: list, rows: list[dict] | None = None) -> dict:
     """예산 확인용 실제 지출 (응답 캐시 적중은 0원). 압축기 비교에는 쓰지 않는다."""
     def actual(steps):
         return round(sum((st.cost or {}).get("usd") or 0 for st in steps if not st.cache_hit), 6)
@@ -460,7 +774,9 @@ def budget_block(replay_steps: list, reference_steps: list) -> dict:
         "reference_usd_actual": actual(reference_steps),
         "replay_usd_actual_by_compressor": {c: actual(v) for c, v in sorted(by_comp.items())},
         "replay_cache_hits_by_compressor": {c: sum(st.cache_hit for st in v) for c, v in sorted(by_comp.items())},
-        "notes": [REFERENCE_SPEND_NOTE, "실행을 이어 돌린 경우 앞선 실행에서 이미 받은 응답도 이번에는 캐시 적중(0원)으로 센다.",
+        "summary_calls_usd_experimental": round(sum(((r.get("compress_cost") or {}).get("usd") or 0)
+                                                    for r in rows or []), 6),
+        "notes": [REFERENCE_SPEND_NOTE, "요약 호출 비용은 실험상 비용으로만 낸다 (이어 돌리기에서 상태 재구성용 요약은 캐시 적중이라 0원).", "실행을 이어 돌린 경우 앞선 실행에서 이미 받은 응답도 이번에는 캐시 적중(0원)으로 센다.",
                   "채점 비용(judge_cost)은 trial 행에만 있고 평가 비용이라 여기 넣지 않는다."],
     }
 
@@ -469,28 +785,45 @@ def compare_block(pairs: list[tuple[dict, dict]], cfg: ReplayConfig, n_scenarios
     """짝지은 (none, 압축) trial 들의 절감률·정확도·비열등 판정."""
     if not pairs:
         return {"n_pairs": 0}
+    all_pairs = pairs
+    failed = [c for _, c in pairs if c.get("summary_failed")]
+    pairs = [(b, c) for b, c in pairs if not c.get("summary_failed")]     # 토큰·비용은 실제로 답한 trial 만
     bs = [b for b, _ in pairs]
     cs = [c for _, c in pairs]
     base_total = _sum(bs, "prompt_tokens") + _sum(bs, "completion_tokens")
     comp_total = (_sum(cs, "prompt_tokens") + _sum(cs, "completion_tokens")
                   + _sum(cs, "compress_llm_prompt_tokens") + _sum(cs, "compress_llm_completion_tokens"))
-    turn = bootstrap_diff(pairs, unit="turn", boot=cfg.boot, seed=cfg.seed)
-    cluster = bootstrap_diff(pairs, unit="scenario", boot=cfg.boot, seed=cfg.seed)
+    # 정확도 주 기준: 요약 실패 턴을 0점으로 포함. 보조: 실패 턴을 뺀 집계
+    turn = bootstrap_diff(all_pairs, unit="turn", boot=cfg.boot, seed=cfg.seed)
+    cluster = bootstrap_diff(all_pairs, unit="scenario", boot=cfg.boot, seed=cfg.seed)
+    excl = bootstrap_diff(pairs, unit="turn", boot=cfg.boot, seed=cfg.seed) if failed else None
+    comp_rows = [c for _, c in all_pairs]
     return {
-        "n_pairs": len(pairs),
+        "n_pairs": len(all_pairs),
+        "summary_failed": len(failed),
+        "summary_failed_rate": _ratio(len(failed), len(all_pairs)),
+        "overflow_rate": _rate(cs, lambda r: bool(r.get("overflow"))),
+        "summary_calls": _sum(comp_rows, "summary_calls"),
+        "recompress_count": sum(1 for r in cs if r.get("recompressed")),
+        "compress_cost_usd": round(sum(((r.get("compress_cost") or {}).get("usd") or 0) for r in comp_rows), 6),
+        "cache": {"none": cache_metrics(bs), "compressed": cache_metrics(cs)},
         "history_reduction_pct": _pct_reduction(_sum(bs, "history_tokens_raw"), _sum(cs, "history_tokens_compressed")),
         "input_reduction_pct": _pct_reduction(_sum(bs, "prompt_tokens"), _sum(cs, "prompt_tokens")),
         "total_token_reduction_pct": _pct_reduction(base_total, comp_total),
-        # 실험상 비용(호출당): 응답 캐시 적중이어도 원래 호출의 usage 로 계산한 cost. 프롬프트 캐시 읽기·쓰기는 반영 (cost.py)
-        "cost_basis": "experimental_per_call",
-        "cost_reduction_pct": _pct_reduction(_usd(bs), _usd(cs)),
-        "cost_usd": {"none": round(_usd(bs), 6), "compressed": round(_usd(cs), 6)},
+        # 비용 주 지표: 시뮬레이션 캐시 비용 (prefix_shared_tokens). 실측(cached_tokens) 은 참고
+        "cost_basis": "simulated_prefix_cache",
+        "cost_reduction_pct_sim": _pct_reduction(_usd_sim(bs, "usd_read"), _usd_sim(cs, "usd_read")),
+        "cost_reduction_pct_sim_write": _pct_reduction(_usd_sim(bs, "usd_write"), _usd_sim(cs, "usd_write")),
+        "cost_reduction_pct_nocache": _pct_reduction(_usd_sim(bs, "usd_nocache"), _usd_sim(cs, "usd_nocache")),
+        "cost_usd_sim": {"none": round(_usd_sim(bs, "usd_read"), 6), "compressed": round(_usd_sim(cs, "usd_read"), 6)},
+        "cost_reduction_pct_measured": _pct_reduction(_usd(bs), _usd(cs)),            # 참고
+        "cost_usd_measured": {"none": round(_usd(bs), 6), "compressed": round(_usd(cs), 6)},
         "reasoning_tokens": {"none_mean": _mean(r.get("reasoning_tokens") for r in bs),
                              "compressed_mean": _mean(r.get("reasoning_tokens") for r in cs)},
         "completion_tokens": {"none_mean": _mean(r.get("completion_tokens") for r in bs),
                               "compressed_mean": _mean(r.get("completion_tokens") for r in cs)},
-        "accuracy": {"none": _mean(r["answer_accuracy"] for r in bs),
-                     "compressed": _mean(r["answer_accuracy"] for r in cs)},
+        "accuracy": {"none": _mean(b["answer_accuracy"] for b, _ in all_pairs),
+                     "compressed": _mean(c["answer_accuracy"] for _, c in all_pairs)},
         "retention_pct": turn.get("retention_pct"),
         "not_found_rate": {"none": _rate(bs, lambda r: r.get("not_found")),
                            "compressed": _rate(cs, lambda r: r.get("not_found"))},
@@ -499,7 +832,24 @@ def compare_block(pairs: list[tuple[dict, dict]], cfg: ReplayConfig, n_scenarios
         "non_inferiority": non_inferiority(turn, cfg.margin),
         "cluster_bootstrap_scenario": cluster,                              # 보조
         "non_inferiority_cluster": non_inferiority(cluster, cfg.margin),
+        "excluding_summary_failed": ({"paired_bootstrap_turn": excl, "non_inferiority": non_inferiority(excl, cfg.margin)}
+                                     if excl is not None else None),                 # 보조
+        "excluding_overflow": overflow_block(all_pairs, cfg),                          # 보조
     }
+
+
+def overflow_block(all_pairs, cfg: ReplayConfig) -> dict | None:
+    """overflow 턴(최근 원문 턴만으로 예산 초과)을 뺀 집계. 예산형이 아니면 None."""
+    if not any(c.get("history_budget") for _, c in all_pairs):
+        return None
+    ps = [(b, c) for b, c in all_pairs if not c.get("overflow")]
+    ok = [(b, c) for b, c in ps if not c.get("summary_failed")]
+    t = bootstrap_diff(ps, unit="turn", boot=cfg.boot, seed=cfg.seed) if ps else {"n_pairs": 0}
+    bs, cs = [b for b, _ in ok], [c for _, c in ok]
+    return {"n_pairs": len(ps), "retention_pct": t.get("retention_pct"), "paired_bootstrap_turn": t,
+            "non_inferiority": non_inferiority(t, cfg.margin) if ps else None,
+            "input_reduction_pct": _pct_reduction(_sum(bs, "prompt_tokens"), _sum(cs, "prompt_tokens")),
+            "cost_reduction_pct_sim": _pct_reduction(_usd_sim(bs, "usd_read"), _usd_sim(cs, "usd_read"))}
 
 
 def summarize_replay(rows: list[dict], cfg: ReplayConfig, ref_warnings: list[str] | None = None,
@@ -512,12 +862,23 @@ def summarize_replay(rows: list[dict], cfg: ReplayConfig, ref_warnings: list[str
             f"시나리오 군집 부트스트랩은 보조 결과다. 시나리오 {n_scen}개로 재추출하므로 구간이 넓고 불안정하다"
             + (" (파일럿 규모)." if n_scen < 10 else "."),
             "depends_on_reference_ok=False 인 턴은 기준 궤적의 앞 턴 답변이 틀려 압축과 무관하게 틀릴 수 있다.",
+            "요약 실패 턴은 정확도 주 기준에서 0점으로 넣는다 (실서비스에서 나쁜 결과). 실패 턴을 뺀 집계는 excluding_summary_failed (보조). "
+            "토큰·비용 절감률은 실제로 답한 trial 만으로 계산한다.",
+            "prefix_shared_tokens 는 직전 턴 요청과 메시지 단위로 겹치는 접두부 토큰 (1,024 미만은 0, 원래 값은 _raw). "
+            "actual_cache_hit_rate 는 서버가 보고한 cached_tokens / prompt_tokens.",
             COST_BASIS_NOTE,
             REFERENCE_SPEND_NOTE,
         ],
         "reference_health": {"warnings": ref_warnings or [], "n_warnings": len(ref_warnings or [])},
         "n_trials": len(rows),
-        "answer_health": {c: answer_health([r for r in rows if r["compressor"] == c]) for c in cfg.compressors},
+        "answer_health": {c: answer_health([r for r in rows if r["compressor"] == c and not r.get("summary_failed")])
+                          for c in cfg.compressors},
+        "summary_failure": {c: {"trials": len(rs), "summary_failed": sum(bool(r.get("summary_failed")) for r in rs),
+                                "rate": _rate(rs, lambda r: bool(r.get("summary_failed"))),
+                                "chains_failed": len({(r["scenario_id"], r["sample_idx"]) for r in rs if r.get("summary_failed")})}
+                            for c in cfg.compressors if is_stateful(c)
+                            for rs in [[r for r in rows if r["compressor"] == c]]},
+        "cache_by_compressor": {c: cache_metrics([r for r in rows if r["compressor"] == c]) for c in cfg.compressors},
         "not_found_rate_by_turn_type": {
             c: {tt: _rate([r for r in rows if r["compressor"] == c and r["turn_type"] == tt], lambda r: r["not_found"])
                 for tt in sorted({r["turn_type"] for r in rows})}
@@ -544,7 +905,37 @@ def summarize_replay(rows: list[dict], cfg: ReplayConfig, ref_warnings: list[str
         block["by_turn"] = {str(k): compare_block([p for p in pair_rows(rows, comp) if p[1]["turn"] == k], cfg, n_scen)
                             for k in sorted({r["turn"] for r in rows})}
         out["compressors"][comp] = block
+    out["budget_table"] = budget_table(out["compressors"], cfg)
     return out
+
+
+TABLE_KEYS = ("n_pairs", "history_reduction_pct", "input_reduction_pct", "total_token_reduction_pct",
+              "cost_reduction_pct_sim", "cost_reduction_pct_sim_write", "cost_reduction_pct_nocache",
+              "cost_reduction_pct_measured", "retention_pct", "overflow_rate", "summary_failed_rate", "summary_calls",
+              "recompress_count", "compress_cost_usd")
+
+
+def budget_table(blocks: dict, cfg: ReplayConfig) -> dict:
+    """예산 × 압축기 비교표 (none 대비, 실험상 비용 기준). 예산이 없는 압축기는 "no_budget" 아래에 둔다."""
+    table: dict = {}
+    for comp, block in blocks.items():
+        b = block.get("all") or {}
+        key = str(budget_of(comp)) if budget_of(comp) else "no_budget"
+        row = {k: b.get(k) for k in TABLE_KEYS}
+        row["non_inferior"] = (b.get("non_inferiority") or {}).get("non_inferior")
+        row["non_inferior_cluster"] = (b.get("non_inferiority_cluster") or {}).get("non_inferior")
+        ex = b.get("excluding_summary_failed")
+        row["retention_pct_excluding_summary_failed"] = (ex or {}).get("paired_bootstrap_turn", {}).get("retention_pct") if ex else None
+        eo = b.get("excluding_overflow") or {}
+        row["n_pairs_excluding_overflow"] = eo.get("n_pairs")
+        row["retention_pct_excluding_overflow"] = eo.get("retention_pct")
+        row["non_inferior_excluding_overflow"] = (eo.get("non_inferiority") or {}).get("non_inferior")
+        row["cost_reduction_pct_sim_excluding_overflow"] = eo.get("cost_reduction_pct_sim")
+        cm = (b.get("cache") or {}).get("compressed") or {}
+        row["prefix_share_mean"] = cm.get("prefix_share_mean")
+        row["actual_cache_hit_rate"] = cm.get("actual_cache_hit_rate")
+        table.setdefault(key, {})[label_of(comp) if key != "no_budget" else comp] = row
+    return dict(sorted(table.items(), key=lambda kv: (kv[0] == "no_budget", int(kv[0]) if kv[0].isdigit() else 0)))
 
 
 # ---------------- CLI ----------------
@@ -564,7 +955,18 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--concurrency", type=int, default=5)
     ap.add_argument("--margin", type=float, default=0.10, help="비열등 마진 (none 정확도의 비율)")
     ap.add_argument("--boot", type=int, default=10000)
-    ap.add_argument("--prompt", default="v1", help="src/prompts/mt_answer_<version>.md")
+    ap.add_argument("--prompt", default="v2", help="src/prompts/mt_answer_<version>.md (기본 v2)")
+    ap.add_argument("--history-budget", default="2000,4000,8000",
+                    help="예산형 압축기 기록 토큰 예산, 쉼표로 여러 개 (파일럿 기본 2000,4000,8000)")
+    ap.add_argument("--keep-recent", type=int, default=1, help="예산형 압축기가 항상 원문으로 남기는 최근 턴 수")
+    ap.add_argument("--summary-model", help="요약형 압축기가 있으면 필수")
+    ap.add_argument("--summary-reasoning-effort",
+                    help=f"요약형 압축기가 있으면 필수. 쉼표로 여러 조건 (예: server_default,none). 값: {', '.join(REASONING_EFFORT_CHOICES)}")
+    ap.add_argument("--sequential-chains", metavar="COMPRESSORS",
+                    help='캐시 검증 모드: 이 압축기들의 체인을 턴 순서대로·동시 실행 없이·응답 캐시를 끄고 보낸다 (예: "none,frozen_summary(4000)")')
+    ap.add_argument("--chain-scenarios", default="", help="(--sequential-chains) 시나리오 id, 쉼표 구분. 기본: 시나리오마다 전부")
+    ap.add_argument("--chain-samples", default="0", help="(--sequential-chains) sample_idx, 쉼표 구분")
+    ap.add_argument("--summary-max-tokens", type=int, help="요약형 압축기가 있으면 필수 (추론 포함 출력 한도)")
     ap.add_argument("--judge-mode", default=CFG.judge_mode)
     ap.add_argument("--resume", metavar="RUN_ID", help="results/runs/mt_<RUN_ID> 를 이어서")
     ap.add_argument("--allow-approx-tokenizer", action="store_true",
@@ -575,6 +977,9 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--judge-model", default=CFG.judge_model, help="(--estimate-only) 채점 단가를 찾을 모델 이름")
     ap.add_argument("--judge-in-per-call", type=int, default=261, help="(--estimate-only) judge 호출당 입력 토큰")
     ap.add_argument("--judge-out-per-call", type=int, default=101, help="(--estimate-only) judge 호출당 출력 토큰")
+    ap.add_argument("--assume-summary-tokens", type=int, default=300, help="(--estimate-only) 요약 출력 길이")
+    ap.add_argument("--assume-summary-reasoning-tokens", type=int, default=1000,
+                    help="(--estimate-only) 요약 호출당 추론 토큰 (요약 조건 none 은 0 으로 둔다)")
     return ap
 
 
@@ -583,7 +988,10 @@ def config_from_args(a) -> ReplayConfig:
                         max_completion_tokens=a.max_completion_tokens,
                         compressors=split_compressor_list(a.compressors), samples=a.samples,
                         reference_sample=a.reference_sample, temperature=a.temperature, prompt_version=a.prompt,
-                        judge_mode=a.judge_mode, concurrency=a.concurrency, margin=a.margin, boot=a.boot)
+                        judge_mode=a.judge_mode, concurrency=a.concurrency, margin=a.margin, boot=a.boot,
+                        history_budgets=[int(x) for x in a.history_budget.split(",") if x.strip()],
+                        keep_recent=a.keep_recent, summary_model=a.summary_model,
+                        summary_reasoning_effort=a.summary_reasoning_effort, summary_max_tokens=a.summary_max_tokens)
 
 
 def main(argv=None):
@@ -598,7 +1006,9 @@ def main(argv=None):
         tk = check_tokenizer(cfg.model, allow_approx=True)      # 추정은 근사여도 된다 (출력 맨 위에 표시)
         print_estimate(estimate(cfg, scenarios, corpus, answer_tokens=a.assume_answer_tokens,
                                 reasoning_tokens=a.assume_reasoning_tokens, judge_model=a.judge_model,
-                                judge_in=a.judge_in_per_call, judge_out=a.judge_out_per_call, tokenizer_check=tk))
+                                judge_in=a.judge_in_per_call, judge_out=a.judge_out_per_call, tokenizer_check=tk,
+                                summary_tokens=a.assume_summary_tokens,
+                                summary_reasoning_tokens=a.assume_summary_reasoning_tokens))
         return
     try:
         tk = check_tokenizer(cfg.model, allow_approx=a.allow_approx_tokenizer)
@@ -610,20 +1020,42 @@ def main(argv=None):
     from multiturn.response_cache import CachedLLM
     answer = CachedLLM(configure_answer_llm(LLM(role="answer"), cfg))
     judge = CachedLLM(LLM(role="judge"))
+    summarizer = None
+    seq = split_compressor_list(a.sequential_chains) if a.sequential_chains else []
+    if seq:
+        seq = expand_summary_efforts(expand_budgets(seq, cfg.history_budgets), cfg.summary_efforts)
+    if cfg.has_summary or any(is_stateful(c) for c in seq):
+        from multiturn.history_compressors import Summarizer
+        summarizer = {e: Summarizer(CachedLLM(configure_summary_llm(LLM(role="answer"), cfg, e)))
+                      for e in cfg.summary_efforts}
     run_id = a.resume or datetime.now().strftime("%Y%m%d-%H%M%S")
     out_dir = CFG.results_dir / "runs" / f"mt_{run_id}"
+    rep = Replay(cfg, scenarios, corpus, answer, judge, out_dir, tokenizer_check=tk, summarizer=summarizer)
     try:
-        summary = Replay(cfg, scenarios, corpus, answer, judge, out_dir, tokenizer_check=tk).run()
+        if seq:
+            out = rep.run_sequential(seq, [x for x in a.chain_scenarios.split(",") if x.strip()] or None,
+                                     [int(x) for x in a.chain_samples.split(",") if x.strip()])
+            print("[캐시 검증] " + json.dumps({k: {kk: v[kk] for kk in ("sim_hit_rate", "measured_hit_rate",
+                                                                     "mean_abs_diff_tokens")} for k, v in out.items()
+                                              if isinstance(v, dict) and "sim_hit_rate" in v}, ensure_ascii=False))
+            print(f"저장: {out_dir / 'sequential_summary.json'}")
+            return
+        summary = rep.run()
     finally:
         answer.close()
         judge.close()
-    print("[압축기 비교] 실험상 비용(호출당) 기준")
+        for sm in (summarizer or {}).values():
+            sm.cached.close()
+    print("[압축기 비교] 시뮬레이션 캐시 비용(_sim) 기준, 실측(_measured)은 참고")
     print(json.dumps({c: {k: b["all"].get(k) for k in ("input_reduction_pct", "total_token_reduction_pct",
-                                                       "cost_reduction_pct", "retention_pct", "non_inferiority")}
+                                                       "cost_reduction_pct_sim", "cost_reduction_pct_measured",
+                                                       "retention_pct", "non_inferiority")}
                       for c, b in summary["compressors"].items()}, ensure_ascii=False, indent=1))
     bud = summary["budget"]
     print(f"[예산 확인] 실제 지출 답변 ${bud['answer_usd_actual_total']} (기준 궤적 ${bud['reference_usd_actual']})")
     print(f"  * {REFERENCE_SPEND_NOTE}")
+    if summary.get("budget_table"):
+        print("[예산별 비교표] " + json.dumps(summary["budget_table"], ensure_ascii=False))
     print(f"저장: {out_dir}")
 
 

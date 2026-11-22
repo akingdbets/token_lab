@@ -36,15 +36,16 @@ turns[]:
 
 ## 싱글턴 대비 차이
 
-멀티턴 답변 지시문은 `src/prompts/mt_answer_v1.md` 다 (싱글턴 `answer_v1.md` 는 바꾸지 않음).
+멀티턴 답변 지시문은 `src/prompts/mt_answer_v2.md` 다 (실제 실행 전에 v1 에서 바꿨다. 기준 궤적을 포함한 모든 압축기가 v2 를 쓴다. v1 파일은 남겨 둔다. 싱글턴 `answer_v1.md` 는 바꾸지 않음).
 
 | 항목 | 싱글턴 (answer_v1) | 멀티턴 (mt_answer_v1) | 이유 |
 |---|---|---|---|
 | 형식 줄 위치 | system 마지막 규칙 `{answer_format}` | 각 턴 user 메시지 끝 `Answer format: ...` | system 은 대화 내내 고정이라 문항 유형별 형식 줄을 둘 수 없다 |
+| 근거 범위 (v2) | 제공된 문서 | 첨부 문서 + 이전 대화의 요약 `<conversation_summary>` 와 발췌 `<selected_history>` 도 "이 대화에서 제공된 문서" 로 본다 | 요약·선택 압축기가 넣은 블록을 모델이 문서가 아니라고 보고 NOT FOUND 를 내면 압축 효과가 아니라 지시문 효과가 섞인다 |
 | system 첫 줄 | "...using only the documentation provided." | "...using only the documentation provided in this conversation." | 문서가 여러 턴에 걸쳐 첨부된다 |
-| NOT FOUND 규칙 | `If the documentation does not contain the answer, reply exactly: NOT FOUND` | **같은 문구** | 압축으로 기록이 사라졌을 때 지어내는지 모른다고 하는지가 recall 턴의 핵심 관찰값. turn_type 별 not_found 비율을 집계한다 |
+| NOT FOUND 규칙 | `If the documentation does not contain the answer, reply exactly: NOT FOUND` | **같은 문구** (v1·v2 모두) | 압축으로 기록이 사라졌을 때 지어내는지 모른다고 하는지가 recall 턴의 핵심 관찰값. turn_type 별 not_found 비율을 집계한다 |
 | 문서 블록 표기 | `<documentation>` 안에 `## Document: <doc_id>` 블록 | 같음 (문서를 붙이지 않는 턴은 `<documentation>` 없이 `Question:` 만) | per_message 압축기는 과거 user 메시지의 `<documentation>` 블록만 압축 대상으로 본다 |
-| 압축 대상 | 현재 문항의 문서 | **과거 기록만**. 현재 턴 user 메시지(첨부 문서 포함)와 system 은 압축하지 않는다 | 이번 실험은 대화 기록 압축의 효과만 본다. 현재 턴 문서 압축은 싱글턴 결과로 이미 측정했다 |
+| 압축 대상 | 현재 문항의 문서 | **과거 기록만** (예산형 압축기의 기록 토큰 예산도 과거 기록에만 적용). 현재 턴 user 메시지(첨부 문서 포함)와 system 은 압축하지 않는다 | 이번 실험은 대화 기록 압축의 효과만 본다. 현재 턴 문서 압축은 싱글턴 결과로 이미 측정했다 |
 | 기록에 들어가는 답변 | (해당 없음) | 기준 궤적(none)의 최종 답변만. 추론은 넣지 않는다 | trajectory 규칙. replay 는 기준 궤적을 고정하고 턴 k 이전 기록만 압축한다 |
 
 ## 남은 일
