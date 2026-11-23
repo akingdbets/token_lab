@@ -164,7 +164,7 @@ python src/llm.py --cache-probe judge
 | 항목 | gpt-6-luna / gpt-6.1-sol (chat completions) | deepseek-flash |
 |---|---|---|
 | 캐시 읽기 | 호출 2 의 `prompt_tokens_details.cached_tokens` > 0 인지 | 호출 2 의 `prompt_cache_hit_tokens` > 0 인지 |
-| 캐시 쓰기 | **미확인**. 호출 1 의 raw_usage 에 쓰기 토큰 필드가 있는지, 이름은 무엇인지 | 과금 항목 없음 (`prompt_cache_miss_tokens` 는 미스) |
+| 캐시 쓰기 | **확정 (2026-11-23)**: luna 는 `prompt_tokens_details.cache_write_tokens` (호출 1 에서 2660) | 제공 안 됨 (`prompt_cache_miss_tokens` 는 미스) |
 | 추론 | `completion_tokens_details.reasoning_tokens` | `completion_tokens_details.reasoning_tokens`, 추론 원문 `reasoning_content` |
 
 - 캐시 쓰기 후보(`prompt_tokens_details.cache_write_tokens`, `prompt_tokens_details.cache_creation_tokens`)는 Responses API 문서의 `input_tokens_details.cache_write_tokens` 를 보고 만든 **추측**이다. 실제 이름이 다르면 `USAGE_FIELD_CANDIDATES` 를 고친다.

@@ -412,7 +412,7 @@ class TrialRecord:
     answer_finish_reason: str | None = None   # length 면 ANSWER_MAX_TOKENS 에 걸려 답변이 잘림
     # 답변 usage 세부 (llm.parse_usage_details). 서버가 안 주면 None (0 이 아님). 이전 run 의 trials 에는 없다
     answer_cached_tokens: int | None = None       # 입력 중 캐시 읽기 (prompt_tokens 에 포함)
-    answer_cache_write_tokens: int | None = None  # 입력 중 캐시 쓰기 (필드 이름 미확인)
+    answer_cache_write_tokens: int | None = None  # 입력 중 캐시 쓰기 (luna: prompt_tokens_details.cache_write_tokens, 제공 안 하는 서버는 None)
     answer_reasoning_tokens: int | None = None    # 출력 중 추론 토큰 (completion_tokens 에 포함)
     answer_raw_usage: dict | None = None          # 서버 usage 원본
     # 기억 의존 의심: 압축 문맥에 정답 핵심어가 없는데 answer_accuracy >= 0.5 (memory_suspect())

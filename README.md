@@ -368,7 +368,9 @@ LLM_MODEL=qwen2.5:3b python src/dataset_builder.py --docs 3 --dry-run
 - [x] 싱글턴 논문 버전 태그 `paper-singleturn-v1`
 - [ ] 멀티턴 실험 기반 1단계 — 구현·오프라인 테스트 완료, 키 필요한 확인은 [`docs/todo_with_keys.md`](docs/todo_with_keys.md)
   - LLMResult 에 `cached_tokens / cache_write_tokens / reasoning_tokens / raw_usage / reasoning_text / created_at` (없으면 None)
-  - 캐시 쓰기 필드 이름은 **미확인 (`--cache-probe` 로 확정 필요)**, 캐시 읽기·추론 필드도 실제 응답으로는 아직 확인 전
+  - usage 필드 (2026-11-23 `--cache-probe` 로 확정): 캐시 읽기 `prompt_tokens_details.cached_tokens` (luna) · `prompt_cache_hit_tokens` (deepseek-flash),
+    캐시 쓰기 `prompt_tokens_details.cache_write_tokens` (luna, deepseek-flash 는 제공 안 됨), 추론 `completion_tokens_details.reasoning_tokens` (둘 다).
+    `--cache-probe --reasoning-effort server_default|none|...` 로 추론 설정을 지정할 수 있다 (생략하면 config 값)
   - `src/cost.py` + `data/pricing.json` (gpt-6.1-sol Standard, deepseek-flash 피크 단가 고정), `recompute_costs(path)`
   - `src/multiturn/trajectory.py` (호출 1번 = 1줄, 기록에는 최종 답변만), `src/multiturn/response_cache.py` (키에 sample_idx·backend·base_url, `RESPONSE_CACHE=off`)
   - trials.jsonl 에 `answer_cached_tokens` 등 새 필드, summary.json 에 `answer_health` (추론 실행 여부, finish=length, 빈 답변)
