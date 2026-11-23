@@ -210,6 +210,16 @@ class ReplayTest(unittest.TestCase):
         self.assertFalse(rp._same_current_turn(get_history_compressor("per_message(rule)"),
                                                "<documentation>\nB\n</documentation>\n\nQuestion: q", cur))
 
+    def test_pilot_report_builds_from_run(self):
+        """docs/results 보고서 생성기가 실제 run 산출물에서 표를 만든다 (수치를 손으로 옮기지 않는다)."""
+        from multiturn.pilot_report import build
+        self._replay(FakeLLM(), cfg=make_cfg(compressors=["none", "window(1)"], samples=2)).run()
+        text = build(self.root / "mt_test", None, None)
+        self.assertIn("## 전체 표", text)
+        self.assertIn("| window(1) |", text)
+        self.assertIn("## 정확도가 1.0 아래로 떨어진 턴", text)
+        self.assertIn("## 파일럿 한계", text)
+
     def test_resume_records_execution_segments(self):
         """--resume 로 concurrency 를 바꿔 이어 돌려도 앞 구간 기록을 덮어쓰지 않는다."""
         self._replay(FakeLLM(), cfg=make_cfg(concurrency=3)).run()
