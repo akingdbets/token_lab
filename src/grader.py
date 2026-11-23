@@ -109,6 +109,14 @@ Extra correct details are fine.
 Reply with exactly one word: YES or NO."""
 
 
+def _sum_usage_field(responses, name: str) -> int | None:
+    """judge 응답들의 캐시 토큰 합. 하나라도 서버가 그 필드를 주지 않았으면(None) None (추측으로 0 을 채우지 않는다)."""
+    vals = [getattr(r, name, None) for r in responses]
+    if not vals or any(v is None for v in vals):
+        return None
+    return sum(vals)
+
+
 @dataclass
 class Grade:
     correct: bool
@@ -120,6 +128,8 @@ class Grade:
     judge_prompt_tokens: int = 0
     judge_completion_tokens: int = 0
     judge_usage_source: str | None = None   # api | estimate (judge 를 안 불렀으면 None)
+    judge_cached_tokens: int | None = None       # judge 입력 중 캐시 읽기 (비용 계산용, 서버가 안 주면 None)
+    judge_cache_write_tokens: int | None = None  # judge 입력 중 캐시 쓰기 (deepseek 은 제공 안 함 -> None)
     judge_error: str | None = None          # judge 응답에서 YES/NO 를 못 읽은 사유 (parse_yes_no)
 
 
@@ -181,6 +191,7 @@ def grade(
     ct = 0
     usage_source = None
     error = None
+    cached = written = None
 
     if need_judge:
         res = judge_llm.ask(
@@ -198,6 +209,8 @@ def grade(
         pt = res.prompt_tokens
         ct = res.completion_tokens
         usage_source = usage_source_of([res])
+        cached = _sum_usage_field([res], "cached_tokens")
+        written = _sum_usage_field([res], "cache_write_tokens")
 
     use_judge = (
         j is not None
@@ -214,6 +227,8 @@ def grade(
         judge_prompt_tokens=pt,
         judge_completion_tokens=ct,
         judge_usage_source=usage_source,
+        judge_cached_tokens=cached,
+        judge_cache_write_tokens=written,
         judge_error=error,
     )
 
@@ -358,6 +373,8 @@ class AnswerAccuracyResult:
     judge_prompt_tokens: int = 0
     judge_completion_tokens: int = 0
     judge_usage_source: str | None = None   # api | estimate | mixed (judge 를 안 불렀으면 None)
+    judge_cached_tokens: int | None = None       # judge 입력 중 캐시 읽기 합 (비용 계산용, 서버가 안 주면 None)
+    judge_cache_write_tokens: int | None = None  # judge 입력 중 캐시 쓰기 합 (deepseek 은 제공 안 함 -> None)
 
     judge_prompt_version: str = FACT_JUDGE_PROMPT_VERSION
     judge_prompt_hash: str = FACT_JUDGE_PROMPT_HASH
@@ -679,6 +696,8 @@ def grade_answer_accuracy(
         judge_prompt_tokens=pt,
         judge_completion_tokens=ct,
         judge_usage_source=usage_source_of(responses),
+        judge_cached_tokens=_sum_usage_field(responses, "cached_tokens"),
+        judge_cache_write_tokens=_sum_usage_field(responses, "cache_write_tokens"),
         judge_mode=judge_mode,
         judge_retries=retries,
         judge_missing_before_fix=missing_before,

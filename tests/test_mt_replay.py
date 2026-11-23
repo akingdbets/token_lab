@@ -191,6 +191,29 @@ class ReplayTest(unittest.TestCase):
         self.assertTrue(any("0원" in n for n in bud["notes"]))
         self.assertIn("tokenizer_check", summary)
 
+    def test_judge_cost_uses_cached_tokens(self):
+        """채점 비용: grader 가 준 캐시 읽기 토큰을 반영해 cost_source=api (no_cache_info 가 아님)."""
+        def grade(q, ref, facts, cand, judge, mode="per_fact"):
+            g = fake_grade(q, ref, facts, cand, judge, mode)
+            g.judge_cached_tokens, g.judge_cache_write_tokens = 80, None
+            return g
+        rep = self._replay(FakeLLM(), cfg=make_cfg(compressors=["none"], samples=1))
+        rep.grade_fn = grade
+        rep.run()
+        rows = [json.loads(l) for l in (self.root / "mt_test" / "turn_trials.jsonl").read_text(encoding="utf-8").splitlines()]
+        from cost import cost_from_fields
+        no_cache = cost_from_fields("deepseek-flash", 100, 10).to_dict()
+        for r in rows:
+            self.assertEqual(r["judge_cost"]["cost_source"], "api")
+            self.assertLess(r["judge_cost"]["usd"], no_cache["usd"])
+            self.assertGreater(r["judge_cost"]["cache_read_usd"], 0)
+
+    def test_judge_cost_without_cache_info(self):
+        rep = self._replay(FakeLLM(), cfg=make_cfg(compressors=["none"], samples=1))
+        rep.run()   # fake_grade 에는 judge_cached_tokens 가 없다
+        rows = [json.loads(l) for l in (self.root / "mt_test" / "turn_trials.jsonl").read_text(encoding="utf-8").splitlines()]
+        self.assertTrue(all(r["judge_cost"]["cost_source"] == "no_cache_info" for r in rows))
+
     def test_depends_on_reference_ok(self):
         # 기준 궤적의 턴 1 (b.md 만 첨부) 답변은 ALPHA42 를 포함 (기록에 a.md 가 있음) -> 정답. 턴 0 도 정답.
         # 턴 1 기준 답이 틀리도록 grader 를 바꾼다

@@ -441,6 +441,8 @@ class Replay:
         if g.judge_prompt_tokens or g.judge_completion_tokens:
             from cost import cost_from_fields
             judge_cost = cost_from_fields(self.judge.model, g.judge_prompt_tokens, g.judge_completion_tokens,
+                                          cached_tokens=getattr(g, "judge_cached_tokens", None),
+                                          cache_write_tokens=getattr(g, "judge_cache_write_tokens", None),
                                           usage_source=g.judge_usage_source or "api").to_dict()
         raw_past, comp_past = history[1:], messages[1:-1]
         shared, shared_raw = self._prefix(prev_messages, messages)
