@@ -8,6 +8,7 @@
     on_arrival(<싱글턴 이름>)      문서가 온 턴에 문서 블록을 압축해 보내고 이후에도 그 압축본 유지.
                                   **현재 턴 문서도 압축한다** (다른 압축기는 현재 턴을 건드리지 않는다). 질문·답변은 그대로
     a>b                           a 다음 b. 괄호 안의 ">" 는 나누지 않는다: per_message(rule>llmlingua2)
+                                  요약형은 마지막 단계에만: on_arrival(rule)>frozen_summary(8000)[sre=none]
 
 예산형 (기록 토큰 예산 B, budget.py / summary.py). 최근 keep_recent 턴은 넘쳐도 원문으로 남기고 overflow 로 표시
     window_budget(<B>)            최근 턴부터 예산이 찰 때까지 원문
@@ -109,9 +110,9 @@ def get_history_compressor(spec: str, token_counter=None, summarizer=None, keep_
                 raise KeyError(f"{spec}: 요약 조건 {effort} 의 요약기가 없습니다 (있음: {sorted(map(str, summarizer))})")
             summarizer = summarizer[effort]
     stages = [_stage(s, token_counter, summarizer, keep_recent) for s in split_top_level(base)]
-    if len(stages) > 1 and any(getattr(s, "stateful", False) for s in stages):
-        raise ValueError(f"상태형 압축기는 체인으로 쓸 수 없습니다: {spec}")
-    if effort is not None and not getattr(stages[0], "stateful", False):
+    if len(stages) > 1 and any(getattr(s, "stateful", False) for s in stages[:-1]):
+        raise ValueError(f"상태형 압축기는 체인의 마지막 단계에만 둘 수 있습니다: {spec}")
+    if effort is not None and not any(getattr(s, "stateful", False) for s in stages):
         raise ValueError(f"[sre=...] 는 요약형 압축기에만 붙입니다: {spec}")
     comp = stages[0] if len(stages) == 1 else HistoryChain(stages)
     comp.name = spec.strip()
@@ -145,7 +146,9 @@ def budget_of(spec: str) -> int | None:
 
 
 def is_stateful(spec: str) -> bool:
-    return family_of(spec) in STATEFUL_FAMILIES
+    """요약형이거나, 마지막 단계가 요약형인 체인 (on_arrival(rule)>frozen_summary(8000))."""
+    base = split_sre(spec)[0]
+    return any(family_of(st) in STATEFUL_FAMILIES for st in split_top_level(base))
 
 
 def expand_budgets(names: list[str], budgets: list[int]) -> list[str]:

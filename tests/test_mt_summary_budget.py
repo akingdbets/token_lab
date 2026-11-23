@@ -25,7 +25,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from llm import LLMResult  # noqa: E402
 from multiturn import replay as rp  # noqa: E402
 from multiturn.history_compressors import (  # noqa: E402
-    Summarizer, expand_budgets, get_history_compressor, select_history,
+    Summarizer, expand_budgets, get_history_compressor, is_stateful, select_history,
 )
 from multiturn.history_compressors.budget import history_tokens  # noqa: E402
 from multiturn.prompt import load_mt_prompt  # noqa: E402
@@ -217,6 +217,56 @@ class SummaryCompressorTest(_Tmp):
         hc.compress_history(history(len(outs) - 1), "Question: q", None, state)
         self.assertEqual(len(llm.calls), n + 3)
 
+    def test_on_arrival_then_frozen_chain(self):
+        """on_arrival(rule)>frozen_summary(B): 문서는 도착 시 압축, 넘치면 고정 요약. 요약 info 는 최상위로."""
+        summ, llm = self.summ()
+        per_turn = history_tokens(history(1)[1:], fake_count_tokens)
+        from unittest import mock
+        from compressors import REGISTRY
+        from test_mt_scenario_and_history import _Upper
+        patch = mock.patch.dict(REGISTRY, {"upper": _Upper()})
+        patch.start()
+        self.addCleanup(patch.stop)
+        name = f"on_arrival(upper)>frozen_summary({int(per_turn * 2.5)})"
+        self.assertTrue(is_stateful(name))
+        hc = get_history_compressor(name, token_counter=fake_count_tokens, summarizer=summ)
+        self.assertTrue(hc.stateful and hc.compresses_current_docs)
+        state = hc.initial_state(0)
+        self.assertIsNone(state[0])
+        alone = get_history_compressor("on_arrival(upper)")
+        outs = []
+        for k in range(6):
+            cur = doc_turn(k, "---"+chr(10)+"title: t"+chr(10)+"---"+chr(10)*2+"Fact: keep this.", "x")[0]["content"]
+            r = hc.compress_history(history(k), cur, None, state)
+            state = r.state
+            outs.append(r)
+            self.assertEqual(r.messages[-1]["content"], alone.compress_history([SYS], cur).messages[-1]["content"])  # 현재 턴도 on_arrival 과 같게 압축
+            self.assertIn("FACT: KEEP THIS.", r.messages[-1]["content"])
+            self.assertTrue(r.messages[-1]["content"].endswith("Question: question %d\n\nAnswer format: f" % k))
+            self.assertIn("summary_calls", r.info)                          # 요약 단계 info 가 최상위에
+            self.assertNotIn("_llm_results", r.info["2:" + hc.stages[1].name])
+        self.assertTrue(any(o.info["summary_calls"] for o in outs))
+        self.assertTrue(llm.calls)
+
+    def test_stateful_stage_only_last_in_chain(self):
+        summ, _ = self.summ()
+        with self.assertRaises(ValueError):
+            get_history_compressor("frozen_summary(1000)>on_arrival(rule)", summarizer=summ)
+
+    def test_chain_summary_failure_propagates(self):
+        summ, _ = self.summ(FakeSummaryLLM(fail=True))
+        per_turn = history_tokens(history(1)[1:], fake_count_tokens)
+        hc = get_history_compressor(f"on_arrival(rule)>frozen_summary({per_turn * 2})",
+                                    token_counter=fake_count_tokens, summarizer=summ)
+        state = hc.initial_state(0)
+        for k in range(6):
+            r = hc.compress_history(history(k), "Question: q", None, state)
+            if r.info.get("summary_failed"):
+                break
+            state = r.state
+        self.assertTrue(r.info["summary_failed"])
+        self.assertEqual(r.messages[1:-1], [])
+
     def test_length_counts_as_failure(self):
         summ, llm = self.summ(FakeSummaryLLM(length=True))
         o = summ.summarize([(0, history(1)[1:])], None, 300, 0)
@@ -377,6 +427,26 @@ class ReplayStage3Test(unittest.TestCase):
 
 class Stage3bTest(ReplayStage3Test):
     """요약 추론 조건 펼치기, 시뮬레이션 캐시 비용, --sequential-chains, 추정의 조건별 요약 비용."""
+
+    def test_chain_runs_in_replay_with_efforts(self):
+        cfg = self._cfg(compressors=["none", "on_arrival(rule)>frozen_summary(1500)"], history_budgets=[1500],
+                        summary_reasoning_effort="server_default,none")
+        self.assertEqual(cfg.compressors[1:], ["on_arrival(rule)>frozen_summary(1500)[sre=server_default]",
+                                               "on_arrival(rule)>frozen_summary(1500)[sre=none]"])
+        answer = CachedLLM(rp.configure_answer_llm(FakeLLM(), cfg), path=self.root / "c.sqlite", enabled=True)
+        judge = CachedLLM(FakeJudge(), path=self.root / "c.sqlite", enabled=True)
+        summ = {e: Summarizer(CachedLLM(rp.configure_summary_llm(FakeSummaryLLM(), cfg, e), path=self.root / "c.sqlite",
+                                        enabled=True)) for e in ("server_default", "none")}
+        self.caches += [answer, judge] + [x.cached for x in summ.values()]
+        summary = rp.Replay(cfg, [SCENARIO], FakeCorpus(), answer, judge, self.root / "mt_ch",
+                            reference_root=self.root / "refs", grade_fn=fake_grade, sleep=lambda s: None,
+                            summarizer=summ).run()
+        for c in cfg.compressors[1:]:
+            self.assertIn(c, summary["compressors"])
+        rows = [json.loads(l) for l in (self.root / "mt_ch" / "turn_trials.jsonl").read_text(encoding="utf-8").splitlines()]
+        ch = [r for r in rows if r["compressor"].startswith("on_arrival")]
+        self.assertEqual(len(ch), 2 * 6 * 2)
+        self.assertTrue(all(r["summary_calls"] is not None for r in ch))
 
     def test_summary_efforts_expand_and_use_separate_summarizers(self):
         cfg = self._cfg(compressors=["none", "rolling_summary"], history_budgets=[1500],
