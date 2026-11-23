@@ -539,6 +539,7 @@ class Replay:
                   if any((s["scenario_id"], k, c, i) not in done for k in range(len(s["turns"])))]
         print(f"replay: trial {len(tasks)} + 상태형 체인 {len(chains)} (이미 끝남 {len(done)})", flush=True)
         failed = 0
+        seg_start = datetime.now().isoformat(timespec="seconds")
         with ThreadPoolExecutor(max_workers=self.cfg.concurrency) as pool:
             futs = {}
             for s, k, c, i in tasks:
@@ -554,6 +555,11 @@ class Replay:
                     failed += 1
                     self._append("errors.jsonl", {"key": list(futs[f]), "error": f"{type(e).__name__}: {e}"[:500],
                                                   "time": datetime.now().isoformat(timespec="seconds")})
+        # 실행 구간 기록: --resume 으로 이어 돌리면 구간이 하나씩 늘어난다 (concurrency 등을 덮어쓰지 않는다)
+        self._append("run_segments.jsonl", {
+            "started_at": seg_start, "finished_at": datetime.now().isoformat(timespec="seconds"),
+            "concurrency": self.cfg.concurrency, "trials_submitted": len(tasks), "chains_submitted": len(chains),
+            "already_done": len(done), "failed": failed})
         rows = self._trials()
         summary = summarize_replay(rows, self.cfg, ref_warnings=ref_warnings, n_scenarios=len(self.scenarios))
         summary["failed_trials_this_run"] = failed
@@ -630,8 +636,14 @@ class Replay:
         return out
 
     def config_record(self) -> dict:
+        replay_cfg = asdict(self.cfg)
+        # concurrency 는 실행 구간마다 다를 수 있어 execution_segments 에만 남긴다 (마지막 값으로 덮어쓰지 않는다)
+        replay_cfg.pop("concurrency", None)
+        segments = self._read("run_segments.jsonl")
         return {
-            "replay": asdict(self.cfg),
+            "replay": replay_cfg,
+            "execution_segments": segments,
+            "concurrency_values": sorted({sg["concurrency"] for sg in segments}),
             "answer_sampling": self.answer.llm.sampling_info(),
             "answer_backend": {"backend": self.answer.llm.backend, "base_url": self.answer.llm.base_url},
             "judge": {"model": self.judge.model, "mode": self.cfg.judge_mode},

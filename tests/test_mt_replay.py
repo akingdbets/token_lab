@@ -191,6 +191,17 @@ class ReplayTest(unittest.TestCase):
         self.assertTrue(any("0원" in n for n in bud["notes"]))
         self.assertIn("tokenizer_check", summary)
 
+    def test_resume_records_execution_segments(self):
+        """--resume 로 concurrency 를 바꿔 이어 돌려도 앞 구간 기록을 덮어쓰지 않는다."""
+        self._replay(FakeLLM(), cfg=make_cfg(concurrency=3)).run()
+        summary = self._replay(FakeLLM(), cfg=make_cfg(concurrency=1)).run()
+        segs = summary["config"]["execution_segments"]
+        self.assertEqual([sg["concurrency"] for sg in segs], [3, 1])
+        self.assertEqual(segs[1]["trials_submitted"], 0)              # 두 번째 구간은 할 일이 없었다
+        self.assertEqual(segs[1]["already_done"], segs[0]["trials_submitted"])
+        self.assertEqual(summary["config"]["concurrency_values"], [1, 3])
+        self.assertNotIn("concurrency", summary["config"]["replay"])
+
     def test_judge_cost_uses_cached_tokens(self):
         """채점 비용: grader 가 준 캐시 읽기 토큰을 반영해 cost_source=api (no_cache_info 가 아님)."""
         def grade(q, ref, facts, cand, judge, mode="per_fact"):

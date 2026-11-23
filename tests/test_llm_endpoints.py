@@ -182,6 +182,51 @@ class OpenAIUnsupportedParamTest(unittest.TestCase):
         self.assertEqual((info["temperature"], info["temperature_requested"], info["max_tokens_param"]),
                          (None, 0.0, "max_completion_tokens"))
 
+    def test_concurrent_rejection_retries_in_every_thread(self):
+        """경합 재현: 두 스레드가 학습 전 페이로드(max_tokens)를 동시에 보내 둘 다 400 을 받는다.
+        먼저 학습한 스레드뿐 아니라 늦은 스레드도 max_completion_tokens 로 다시 보내 성공해야 한다."""
+        import threading
+        barrier = threading.Barrier(2, timeout=5)
+        sent = []
+
+        def post(url, headers=None, json=None, stream=False, timeout=None):
+            sent.append(dict(json))
+            if "max_tokens" in json:
+                barrier.wait()          # 두 요청이 모두 학습 전 페이로드로 나간 뒤에 응답
+                return _unsupported("max_tokens")
+            return self.ok
+
+        self.llm.unsupported.add("temperature")
+        results, errors = [], []
+
+        def worker():
+            try:
+                results.append(self.llm._openai_chat(MESSAGES, stream_ttft=False))
+            except Exception as e:      # noqa: BLE001
+                errors.append(e)
+
+        with mock.patch.object(llm.requests, "post", side_effect=post):
+            with warnings.catch_warnings(record=True) as w:
+                warnings.simplefilter("always")
+                threads = [threading.Thread(target=worker) for _ in range(2)]
+                for t in threads:
+                    t.start()
+                for t in threads:
+                    t.join(10)
+        self.assertEqual(errors, [])
+        self.assertEqual(len(results), 2)
+        self.assertEqual(sum("max_tokens" in p for p in sent), 2)
+        self.assertEqual(sum("max_completion_tokens" in p for p in sent), 2)
+        self.assertEqual(len([x for x in w if "max_tokens" in str(x.message)]), 1)   # 경고는 한 번만
+
+    def test_already_learned_param_not_sent_is_not_retried(self):
+        """이미 뺀 인자로 또 거부되면 다시 보내지 않고 오류 (무한 재시도 방지)."""
+        self.llm.unsupported.update({"temperature", "max_tokens"})
+        with mock.patch.object(llm.requests, "post", return_value=_unsupported("max_tokens")) as post:
+            with self.assertRaises(llm.requests.HTTPError):
+                self.llm._openai_chat(MESSAGES, stream_ttft=False)
+        self.assertEqual(post.call_count, 1)
+
     def test_other_4xx_raises_with_body_and_no_retry(self):
         bad = _resp(401, {"error": {"message": "invalid key", "param": None}})
         with mock.patch.object(llm.requests, "post", return_value=bad) as post:

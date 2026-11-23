@@ -26,6 +26,7 @@ python src/llm.py --cache-probe 로 캐시·추론 토큰의 실제 필드 이�
 from __future__ import annotations
 
 import json
+import threading
 import time
 import warnings
 from dataclasses import dataclass, field
@@ -149,6 +150,8 @@ class LLM:
         #   "seed"        -> 보내지 않음
         #   "reasoning_effort" -> 보내지 않음 (서버 기본값)
         self.unsupported: set[str] = set()
+        # unsupported 는 병렬 호출(replay --concurrency)이 함께 읽고 쓴다. 페이로드 만들기와 학습을 이 lock 으로 묶는다
+        self._unsupported_lock = threading.Lock()
 
     def sampling_info(self) -> dict:
         """결과 파일에 남길 실제 생성 조건. 서버가 거부해 바꾼 인자가 있으면 그대로 드러난다."""
@@ -326,6 +329,10 @@ class LLM:
         )
 
     def _openai_payload(self, messages: list[dict], stream: bool) -> dict:
+        with self._unsupported_lock:
+            return self._openai_payload_locked(messages, stream)
+
+    def _openai_payload_locked(self, messages: list[dict], stream: bool) -> dict:
         payload = {"model": self.model, "messages": messages, "stream": stream}
         if "temperature" not in self.unsupported:
             payload["temperature"] = self.temperature
@@ -342,9 +349,15 @@ class LLM:
             payload[key] = self.max_tokens
         return payload
 
-    def _learn_unsupported(self, r) -> bool:
-        """400 응답이 temperature / max_tokens / seed 를 거부한 것이면 기억하고 True (다시 보낼 것).
-        예: gpt-6 계열은 temperature 기본값(1)만 받고, max_tokens 대신 max_completion_tokens 를 쓴다."""
+    # 거부된 인자가 보낸 페이로드에 들어 있었는지 (들어 있었어야 바꿔서 다시 보낼 의미가 있다)
+    _SENT_KEY = {"temperature": "temperature", "max_tokens": "max_tokens", "seed": "seed",
+                 "reasoning_effort": "reasoning_effort"}
+
+    def _learn_unsupported(self, r, sent: dict | None = None) -> bool:
+        """400 응답이 temperature / max_tokens / seed / reasoning_effort 를 거부한 것이면 기억하고 True (다시 보낼 것).
+        예: gpt-6 계열은 temperature 기본값(1)만 받고, max_tokens 대신 max_completion_tokens 를 쓴다.
+        병렬 호출에서 다른 스레드가 이미 그 인자를 배웠어도, 이 요청(sent)이 학습 전 페이로드로 그 인자를 담고 있었으면
+        True (다시 만든 페이로드에는 빠진다). 같은 인자를 이미 뺀 요청이 또 거부되면 False (무한 재시도 방지)."""
         if r.status_code != 400:
             return False
         try:
@@ -352,11 +365,15 @@ class LLM:
         except ValueError:
             return False
         param = err.get("param")
-        if param not in ("temperature", "max_tokens", "seed", "reasoning_effort") or param in self.unsupported:
+        if param not in self._SENT_KEY:
             return False
         if param == "max_tokens" and self.max_tokens is None:
             return False
-        self.unsupported.add(param)
+        with self._unsupported_lock:
+            if param in self.unsupported:
+                # 다른 스레드가 먼저 배웠다. 이 요청이 그 인자를 보냈을 때만 다시 보낸다
+                return sent is not None and self._SENT_KEY[param] in sent
+            self.unsupported.add(param)
         how = ("max_completion_tokens 로 보냅니다" if param == "max_tokens"
                else "보내지 않고 서버 기본값을 씁니다")
         warnings.warn(f"{self.model} 가 {param} 를 거부해 {how}: {err.get('message', '')}",
@@ -367,11 +384,12 @@ class LLM:
         """요청을 보내고 응답을 돌려준다. 서버가 거부한 인자는 바꿔서 다시 보낸다 (400 은 과금되지 않음).
         실패하면 서버의 오류 메시지를 담은 HTTPError 를 낸다."""
         while True:
-            r = requests.post(url, headers=self._headers(), json=self._openai_payload(messages, stream),
+            payload = self._openai_payload(messages, stream)
+            r = requests.post(url, headers=self._headers(), json=payload,
                               stream=stream, timeout=self.timeout)
             if r.ok:
                 return r
-            if self._learn_unsupported(r):
+            if self._learn_unsupported(r, payload):
                 r.close()
                 continue
             body = r.text[:500]
