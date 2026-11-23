@@ -19,7 +19,9 @@
        none 도 sample 마다 다시 돌려 잡음 기준선을 만든다. none 의 reference sample 은 기준 궤적과 요청이 완전히 같아
        응답 캐시에 적중한다 (실험상 비용에만 들어가고 실제 지출은 0).
 
-상태가 없는 압축기 (none, window, window_budget, query_select, per_message)
+상태가 없는 압축기 (none, window, window_budget, query_select, per_message, on_arrival)
+    on_arrival 은 현재 턴 문서도 압축한다 (문서가 온 턴에 압축, 이후 그 압축본 유지). 턴 k 의 기록은 기준 궤적 원문에서
+    "모든 과거 문서가 도착 시 압축된 상태" 로 다시 만든다 (같은 문서·같은 질문이면 같은 결과를 재사용).
     (시나리오, 턴, 압축기, sample) 마다 독립으로 처리한다.
 상태형 압축기 (rolling_summary, frozen_summary)
     (시나리오, 압축기, 예산, sample) 마다 체인 하나로 처리한다. 턴 0 부터 차례로 history_before_turn(k) (기준 궤적의 원문
@@ -234,6 +236,17 @@ def depends_closure(scenario: dict, k: int) -> list[int]:
     return sorted(seen)
 
 
+def _same_current_turn(comp, sent: str, current_user: str) -> bool:
+    """현재 턴 메시지는 그대로여야 한다. on_arrival 처럼 현재 턴 문서를 압축하는 압축기는 문서 블록 밖(질문·형식 줄)만 같으면 된다."""
+    if sent == current_user:
+        return True
+    if not getattr(comp, "compresses_current_docs", False):
+        return False
+    from multiturn.prompt import DOC_BLOCK_RE
+    strip = lambda t: DOC_BLOCK_RE.sub(r"\1\3", t)   # noqa: E731
+    return strip(sent) == strip(current_user)
+
+
 def reference_key(cfg: ReplayConfig, answer_llm, prompt, scenario: dict) -> str:
     payload = {"backend": answer_llm.backend, "base_url": answer_llm.base_url, "model": cfg.model,
                "reasoning_effort": cfg.reasoning_effort, "temperature": cfg.temperature,
@@ -428,7 +441,7 @@ class Replay:
         history, current_user, hres, compress_sec = pre
         comp = self.compressors[comp_name]
         messages = hres.messages
-        if messages[0] != history[0] or messages[-1]["content"] != current_user:
+        if messages[0] != history[0] or not _same_current_turn(comp, messages[-1]["content"], current_user):
             raise AssertionError("압축기가 system 또는 현재 턴 메시지를 바꿨습니다")
         info = dict(hres.info)
         results = info.pop("_llm_results", []) or []

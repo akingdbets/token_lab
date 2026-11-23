@@ -191,6 +191,25 @@ class ReplayTest(unittest.TestCase):
         self.assertTrue(any("0원" in n for n in bud["notes"]))
         self.assertIn("tokenizer_check", summary)
 
+    def test_on_arrival_runs_in_replay(self):
+        """현재 턴 문서를 압축해도 replay 의 현재 턴 검사(질문·형식 줄 보존)를 통과하고, 직전 턴 접두부가 이어진다."""
+        cfg = make_cfg(compressors=["none", "on_arrival(rule)"], samples=1)
+        summary = self._replay(FakeLLM(), cfg=cfg).run()
+        rows = [json.loads(l) for l in (self.root / "mt_test" / "turn_trials.jsonl").read_text(encoding="utf-8").splitlines()]
+        oa = [r for r in rows if r["compressor"] == "on_arrival(rule)"]
+        self.assertEqual(len(oa), 6)
+        self.assertIn("on_arrival(rule)", summary["compressors"])
+        self.assertEqual(summary["config"]["compressor_configs"]["on_arrival(rule)"]["name"], "on_arrival(rule)")
+
+    def test_current_turn_guard_still_rejects_question_change(self):
+        from multiturn.history_compressors import get_history_compressor
+        comp = get_history_compressor("on_arrival(rule)")
+        cur = "<documentation>\nA\n</documentation>\n\nQuestion: q"
+        self.assertTrue(rp._same_current_turn(comp, "<documentation>\nB\n</documentation>\n\nQuestion: q", cur))
+        self.assertFalse(rp._same_current_turn(comp, "<documentation>\nB\n</documentation>\n\nQuestion: CHANGED", cur))
+        self.assertFalse(rp._same_current_turn(get_history_compressor("per_message(rule)"),
+                                               "<documentation>\nB\n</documentation>\n\nQuestion: q", cur))
+
     def test_resume_records_execution_segments(self):
         """--resume 로 concurrency 를 바꿔 이어 돌려도 앞 구간 기록을 덮어쓰지 않는다."""
         self._replay(FakeLLM(), cfg=make_cfg(concurrency=3)).run()

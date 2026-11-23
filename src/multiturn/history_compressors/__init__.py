@@ -5,6 +5,8 @@
     none
     window(<n>)                   최근 n 턴만 원문 유지
     per_message(<싱글턴 이름>)     과거 user 메시지의 문서 블록에만 싱글턴 압축기 적용 (rule, llmlingua2, rule>llmlingua2 ...)
+    on_arrival(<싱글턴 이름>)      문서가 온 턴에 문서 블록을 압축해 보내고 이후에도 그 압축본 유지.
+                                  **현재 턴 문서도 압축한다** (다른 압축기는 현재 턴을 건드리지 않는다). 질문·답변은 그대로
     a>b                           a 다음 b. 괄호 안의 ">" 는 나누지 않는다: per_message(rule>llmlingua2)
 
 예산형 (기록 토큰 예산 B, budget.py / summary.py). 최근 keep_recent 턴은 넘쳐도 원문으로 남기고 overflow 로 표시
@@ -30,7 +32,7 @@ import re
 from multiturn.history_compressors.base import HistoryChain, HistoryCompressor, HistoryResult, split_turns
 from multiturn.history_compressors.budget import QuerySelect, WindowBudget, select_history
 from multiturn.history_compressors.simple import (
-    CompressorFallbackError, MissingDependencyError, NoHistoryCompression, PerMessage, Window,
+    CompressorFallbackError, MissingDependencyError, NoHistoryCompression, OnArrival, PerMessage, Window,
 )
 from multiturn.history_compressors.summary import FrozenSummary, RollingSummary, Summarizer
 
@@ -89,7 +91,10 @@ def _stage(spec: str, token_counter=None, summarizer=None, keep_recent: int = 1)
         return Window(int(arg))
     if name == "per_message" and arg:
         return PerMessage(arg.strip())
-    raise KeyError(f"알 수 없는 history 압축기: {spec} (none | window(n) | per_message(<싱글턴 이름>))")
+    if name == "on_arrival" and arg:
+        return OnArrival(arg.strip())
+    raise KeyError(f"알 수 없는 history 압축기: {spec} "
+                   "(none | window(n) | per_message(<싱글턴 이름>) | on_arrival(<싱글턴 이름>))")
 
 
 def get_history_compressor(spec: str, token_counter=None, summarizer=None, keep_recent: int = 1) -> HistoryCompressor:

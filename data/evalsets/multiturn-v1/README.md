@@ -44,9 +44,20 @@ turns[]:
 | 근거 범위 (v2) | 제공된 문서 | 첨부 문서 + 이전 대화의 요약 `<conversation_summary>` 와 발췌 `<selected_history>` 도 "이 대화에서 제공된 문서" 로 본다 | 요약·선택 압축기가 넣은 블록을 모델이 문서가 아니라고 보고 NOT FOUND 를 내면 압축 효과가 아니라 지시문 효과가 섞인다 |
 | system 첫 줄 | "...using only the documentation provided." | "...using only the documentation provided in this conversation." | 문서가 여러 턴에 걸쳐 첨부된다 |
 | NOT FOUND 규칙 | `If the documentation does not contain the answer, reply exactly: NOT FOUND` | **같은 문구** (v1·v2 모두) | 압축으로 기록이 사라졌을 때 지어내는지 모른다고 하는지가 recall 턴의 핵심 관찰값. turn_type 별 not_found 비율을 집계한다 |
-| 문서 블록 표기 | `<documentation>` 안에 `## Document: <doc_id>` 블록 | 같음 (문서를 붙이지 않는 턴은 `<documentation>` 없이 `Question:` 만) | per_message 압축기는 과거 user 메시지의 `<documentation>` 블록만 압축 대상으로 본다 |
+| 문서 블록 표기 | `<documentation>` 안에 `## Document: <doc_id>` 블록 | 같음 (문서를 붙이지 않는 턴은 `<documentation>` 없이 `Question:` 만) | per_message 압축기는 과거 user 메시지의 `<documentation>` 블록만, on_arrival 은 현재 턴을 포함한 모든 user 메시지의 `<documentation>` 블록만 압축 대상으로 본다 |
 | 압축 대상 | 현재 문항의 문서 | **과거 기록만** (예산형 압축기의 기록 토큰 예산도 과거 기록에만 적용). 현재 턴 user 메시지(첨부 문서 포함)와 system 은 압축하지 않는다 | 이번 실험은 대화 기록 압축의 효과만 본다. 현재 턴 문서 압축은 싱글턴 결과로 이미 측정했다 |
-| 기록에 들어가는 답변 | (해당 없음) | 기준 궤적(none)의 최종 답변만. 추론은 넣지 않는다 | trajectory 규칙. replay 는 기준 궤적을 고정하고 턴 k 이전 기록만 압축한다 |
+| 압축 대상 (예외: `on_arrival`) | 현재 문항의 문서 | **`on_arrival(<싱글턴>)` 만 현재 턴 문서도 압축한다.** 문서가 첨부된 그 턴에 `<documentation>` 블록을 싱글턴 압축기로 압축해 보내고, 이후 턴에서는 그 압축본을 그대로 둔다 (다시 압축하지 않음). 질문·형식 줄과 assistant 답변은 압축하지 않는다 | 실제 서비스처럼 문서를 받을 때 한 번 압축하면 이후 요청이 앞 요청의 접두부를 그대로 이어 받아 프롬프트 캐시에 유리하다. 다른 압축기(per_message 포함)는 현재 턴을 건드리지 않으므로, on_arrival 의 정확도 변화에는 현재 턴 문서 압축 효과가 섞인다 (싱글턴 압축 효과 + 기록 압축 효과) |
+| 기록에 들어가는 답변 | (해당 없음) | 기준 궤적(none)의 최종 답변만. 추론은 넣지 않는다 | trajectory 규칙. replay 는 기준 궤적을 고정하고 턴 k 이전 기록만 압축한다 (on_arrival 은 턴 k 기록을 "모든 과거 문서가 도착 시 압축된 상태" 로 다시 만든다) |
+
+## 압축기 설명 (요약)
+
+| 압축기 | 압축 대상 | 현재 턴 문서 |
+|---|---|---|
+| none | 없음 | 원문 |
+| window(n), window_budget(B), query_select(B) | 과거 턴을 지우거나 골라냄 | 원문 |
+| per_message(<싱글턴>) | 과거 user 메시지의 `<documentation>` 블록 (매 턴 다시 압축, 직전 턴 문서는 그 턴엔 원문·다음 턴엔 압축본) | 원문 |
+| **on_arrival(<싱글턴>)** | 모든 user 메시지의 `<documentation>` 블록. 도착한 턴에 한 번 압축하고 그 압축본을 계속 쓴다 | **압축** |
+| rolling_summary(B), frozen_summary(B) | 과거 턴을 요약으로 바꿈 | 원문 |
 
 ## 남은 일
 
