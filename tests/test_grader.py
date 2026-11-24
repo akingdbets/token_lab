@@ -37,6 +37,8 @@ class FakeResult:
     prompt_tokens: int = 10
     completion_tokens: int = 5
     finish_reason: str | None = "stop"
+    cached_tokens: int | None = None
+    cache_write_tokens: int | None = None
 
 
 class FakeJudge:
@@ -365,3 +367,47 @@ class UnreadableJudgeTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class JudgeCacheTokensTest(unittest.TestCase):
+    """채점 비용 계산용 캐시 토큰 합 (판정 로직과 무관)."""
+
+    class CachingJudge(FakeJudge):
+        def __init__(self, cached, replies=()):
+            super().__init__(replies)
+            self.cached = list(cached)
+
+        def ask(self, prompt):
+            r = super().ask(prompt)
+            r.cached_tokens = self.cached.pop(0)
+            return r
+
+        def chat(self, messages):
+            r = super().chat(messages)
+            r.cached_tokens = self.cached.pop(0)
+            return r
+
+    def test_batch_sums_cached_tokens_over_retry(self):
+        judge = self.CachingJudge([6, 4], ["not json", reply((i, True) for i in range(5))])
+        g = grade_facts(judge)
+        self.assertEqual(g.judge_calls, 2)
+        self.assertEqual(g.judge_cached_tokens, 10)
+        self.assertIsNone(g.judge_cache_write_tokens)   # deepseek 처럼 쓰기 필드가 없으면 None
+
+    def test_missing_field_stays_none(self):
+        g = grade_facts(FakeJudge([reply((i, True) for i in range(5))]))
+        self.assertIsNone(g.judge_cached_tokens)
+
+    def test_partial_missing_is_none(self):
+        judge = self.CachingJudge([6, None], ["not json", reply((i, True) for i in range(5))])
+        self.assertIsNone(grade_facts(judge).judge_cached_tokens)
+
+    def test_single_grade_carries_cached_tokens(self):
+        class J:
+            def ask(self, prompt):
+                return FakeResult("YES", cached_tokens=7)
+        g = grade("Q?", "use the Depends function for injection", [],
+                  "use the Depends function for injection", J())
+        self.assertTrue(g.judge)                       # judge 를 실제로 불렀다
+        self.assertEqual(g.judge_cached_tokens, 7)
+        self.assertIsNone(g.judge_cache_write_tokens)

@@ -26,6 +26,7 @@ python src/llm.py --cache-probe 로 캐시·추론 토큰의 실제 필드 이�
 from __future__ import annotations
 
 import json
+import threading
 import time
 import warnings
 from dataclasses import dataclass, field
@@ -99,7 +100,7 @@ class LLMResult:
     ctx_overflow: bool = False      # 입력이 num_ctx를 넘었는지 (Ollama는 조용히 잘라냄)
     # usage 세부 (parse_usage_details). 서버가 해당 필드를 보내지 않으면 None (0 으로 채우지 않는다)
     cached_tokens: int | None = None        # 입력 중 캐시에서 읽은 토큰 (prompt_tokens 에 포함)
-    cache_write_tokens: int | None = None   # 입력 중 캐시에 새로 쓴 토큰 (prompt_tokens 에 포함). 필드 이름 미확인
+    cache_write_tokens: int | None = None   # 입력 중 캐시에 새로 쓴 토큰 (prompt_tokens 에 포함). 제공 안 하는 서버(deepseek)는 None
     reasoning_tokens: int | None = None     # 출력 중 추론 토큰 (completion_tokens 에 포함)
     raw_usage: dict | None = None           # 서버가 보낸 usage 원본 (없으면 None)
     reasoning_text: str | None = None       # 추론 원문 (DeepSeek reasoning_content). 주지 않는 서버는 None
@@ -149,6 +150,8 @@ class LLM:
         #   "seed"        -> 보내지 않음
         #   "reasoning_effort" -> 보내지 않음 (서버 기본값)
         self.unsupported: set[str] = set()
+        # unsupported 는 병렬 호출(replay --concurrency)이 함께 읽고 쓴다. 페이로드 만들기와 학습을 이 lock 으로 묶는다
+        self._unsupported_lock = threading.Lock()
 
     def sampling_info(self) -> dict:
         """결과 파일에 남길 실제 생성 조건. 서버가 거부해 바꾼 인자가 있으면 그대로 드러난다."""
@@ -326,6 +329,10 @@ class LLM:
         )
 
     def _openai_payload(self, messages: list[dict], stream: bool) -> dict:
+        with self._unsupported_lock:
+            return self._openai_payload_locked(messages, stream)
+
+    def _openai_payload_locked(self, messages: list[dict], stream: bool) -> dict:
         payload = {"model": self.model, "messages": messages, "stream": stream}
         if "temperature" not in self.unsupported:
             payload["temperature"] = self.temperature
@@ -342,9 +349,15 @@ class LLM:
             payload[key] = self.max_tokens
         return payload
 
-    def _learn_unsupported(self, r) -> bool:
-        """400 응답이 temperature / max_tokens / seed 를 거부한 것이면 기억하고 True (다시 보낼 것).
-        예: gpt-6 계열은 temperature 기본값(1)만 받고, max_tokens 대신 max_completion_tokens 를 쓴다."""
+    # 거부된 인자가 보낸 페이로드에 들어 있었는지 (들어 있었어야 바꿔서 다시 보낼 의미가 있다)
+    _SENT_KEY = {"temperature": "temperature", "max_tokens": "max_tokens", "seed": "seed",
+                 "reasoning_effort": "reasoning_effort"}
+
+    def _learn_unsupported(self, r, sent: dict | None = None) -> bool:
+        """400 응답이 temperature / max_tokens / seed / reasoning_effort 를 거부한 것이면 기억하고 True (다시 보낼 것).
+        예: gpt-6 계열은 temperature 기본값(1)만 받고, max_tokens 대신 max_completion_tokens 를 쓴다.
+        병렬 호출에서 다른 스레드가 이미 그 인자를 배웠어도, 이 요청(sent)이 학습 전 페이로드로 그 인자를 담고 있었으면
+        True (다시 만든 페이로드에는 빠진다). 같은 인자를 이미 뺀 요청이 또 거부되면 False (무한 재시도 방지)."""
         if r.status_code != 400:
             return False
         try:
@@ -352,11 +365,15 @@ class LLM:
         except ValueError:
             return False
         param = err.get("param")
-        if param not in ("temperature", "max_tokens", "seed", "reasoning_effort") or param in self.unsupported:
+        if param not in self._SENT_KEY:
             return False
         if param == "max_tokens" and self.max_tokens is None:
             return False
-        self.unsupported.add(param)
+        with self._unsupported_lock:
+            if param in self.unsupported:
+                # 다른 스레드가 먼저 배웠다. 이 요청이 그 인자를 보냈을 때만 다시 보낸다
+                return sent is not None and self._SENT_KEY[param] in sent
+            self.unsupported.add(param)
         how = ("max_completion_tokens 로 보냅니다" if param == "max_tokens"
                else "보내지 않고 서버 기본값을 씁니다")
         warnings.warn(f"{self.model} 가 {param} 를 거부해 {how}: {err.get('message', '')}",
@@ -367,11 +384,12 @@ class LLM:
         """요청을 보내고 응답을 돌려준다. 서버가 거부한 인자는 바꿔서 다시 보낸다 (400 은 과금되지 않음).
         실패하면 서버의 오류 메시지를 담은 HTTPError 를 낸다."""
         while True:
-            r = requests.post(url, headers=self._headers(), json=self._openai_payload(messages, stream),
+            payload = self._openai_payload(messages, stream)
+            r = requests.post(url, headers=self._headers(), json=payload,
                               stream=stream, timeout=self.timeout)
             if r.ok:
                 return r
-            if self._learn_unsupported(r):
+            if self._learn_unsupported(r, payload):
                 r.close()
                 continue
             body = r.text[:500]
@@ -468,26 +486,29 @@ def _usage_or_estimate(usage: dict | None, messages: list[dict], text: str,
 
 # ---------------- usage 세부 (캐시·추론 토큰) ----------------
 # 제공사마다 이름이 달라 후보를 앞에서부터 찾는다. 처음 찾은 정수 값을 쓰고, 없으면 None (0 으로 채우지 않음).
-# 확인 상태 (python src/llm.py --cache-probe 로 확정해 이 주석을 고친다. 2026-11-22 기준 실제 응답으로 확인 전):
+# 확인 상태 (2026-11-23 python src/llm.py --cache-probe 실제 응답으로 확정):
 #   캐시 읽기
-#     OpenAI chat completions  prompt_tokens_details.cached_tokens          문서 기준, 실제 응답 미확인
-#     DeepSeek                 prompt_cache_hit_tokens                      문서 기준, 실제 응답 미확인
-#     (Responses API 형식)      input_tokens_details.cached_tokens
-#   캐시 쓰기  ** 전부 미확인 (추측). --cache-probe 로 확정 필요 **
-#     OpenAI chat completions 에서 어떤 이름으로 오는지 모른다. Responses API 문서는
-#     input_tokens_details.cache_write_tokens. 아래 chat completions 후보는 그 이름을 옮겨 본 추측이다.
-#     DeepSeek 은 캐시 쓰기 과금이 따로 없다. prompt_cache_miss_tokens 는 일반 입력 단가로 청구되는
-#     "캐시 미스" 이지 캐시 쓰기가 아니므로 여기 넣지 않는다 (raw_usage 에만 남는다).
+#     gpt-6-luna (OpenAI chat completions)  prompt_tokens_details.cached_tokens   확정 (호출 2 에서 2660)
+#     deepseek-flash                        prompt_cache_hit_tokens              확정 (호출 2 에서 2432).
+#                                           prompt_tokens_details.cached_tokens 도 같은 값으로 온다
+#     (Responses API 형식)                   input_tokens_details.cached_tokens   미사용 (확인 대상 아님)
+#   캐시 쓰기
+#     gpt-6-luna                            prompt_tokens_details.cache_write_tokens  확정 (호출 1 에서 2660, 호출 2 에서 0)
+#     deepseek-flash                        제공 안 됨 (캐시 쓰기 과금 없음). prompt_cache_miss_tokens 는 일반 입력
+#                                           단가로 청구되는 "캐시 미스" 이지 캐시 쓰기가 아니므로 여기 넣지 않는다 (raw_usage 에만 남는다)
+#     cache_creation_tokens · input_tokens_details 후보는 실제 응답에 없었다 (다른 제공사 대비용으로 남김)
 #   추론
-#     OpenAI · DeepSeek         completion_tokens_details.reasoning_tokens   문서 기준, 실제 응답 미확인
-#     (Responses API 형식)      output_tokens_details.reasoning_tokens
+#     gpt-6-luna · deepseek-flash           completion_tokens_details.reasoning_tokens  확정
+#       luna: reasoning_effort=none 이면 0, 보내지 않으면(서버 기본값) 추론이 돈다 (추론 필요한 질문에서 190).
+#             단, "OK 만 답하라" 같은 쉬운 프롬프트에서는 서버 기본값이어도 0 이 나올 수 있다
+#       deepseek-flash: 추론 원문은 reasoning_content (reasoning_text 에 저장)
 USAGE_FIELD_CANDIDATES: dict[str, tuple[tuple[str, ...], ...]] = {
     "cached_tokens": (
         ("prompt_tokens_details", "cached_tokens"),
         ("prompt_cache_hit_tokens",),
         ("input_tokens_details", "cached_tokens"),
     ),
-    "cache_write_tokens": (                       # 미확인 (--cache-probe 로 확정 필요)
+    "cache_write_tokens": (                       # gpt-6-luna 는 첫 후보로 확정, deepseek-flash 는 제공 안 됨
         ("prompt_tokens_details", "cache_write_tokens"),
         ("prompt_tokens_details", "cache_creation_tokens"),
         ("input_tokens_details", "cache_write_tokens"),
@@ -539,18 +560,30 @@ def _print_usage(res: LLMResult) -> None:
     print(f"  raw_usage={json.dumps(res.raw_usage, ensure_ascii=False)}")
 
 
-def _cache_probe(role: str) -> None:
-    """같은 긴 프롬프트를 연속 두 번 보내 두 번째에 캐시 읽기가 잡히는지 본다 (스트리밍 없이)."""
+def _cache_probe(role: str, reasoning_effort: str | None = None) -> None:
+    """같은 긴 프롬프트를 연속 두 번 보내 두 번째에 캐시 읽기가 잡히는지 본다 (스트리밍 없이).
+    reasoning_effort: replay.py 와 같은 값 체계 (server_default | none | low ...). None 이면 config 값."""
     llm = LLM(role=role)
+    if reasoning_effort is None:
+        requested = f"(config) {llm.reasoning_effort or 'server_default'}"
+    else:
+        from multiturn.trajectory import reasoning_effort_for_llm
+        llm.reasoning_effort = reasoning_effort_for_llm(reasoning_effort)
+        requested = reasoning_effort
+    sent = llm.sampling_info()["reasoning_effort"]
+    print(f"\n[cache-probe] role={role}  reasoning_effort 요청값={requested}  "
+          f"전송값={sent if sent is not None else '보내지 않음 (서버 기본값)'}")
     prompt = cache_probe_prompt()
-    print(f"\n[cache-probe] role={role}  model={llm.model}  base_url={llm.base_url}  "
-          f"reasoning_effort={llm.sampling_info()['reasoning_effort']}  프롬프트 추정 {count_tokens(prompt)} 토큰")
+    print(f"  model={llm.model}  base_url={llm.base_url}  프롬프트 추정 {count_tokens(prompt)} 토큰")
     for i in (1, 2):
         res = llm.ask(prompt)
         print(f" 호출 {i}: 응답 {res.text.strip()[:40]!r}  (서버 모델: {res.model})")
         _print_usage(res)
         if i == 1:
             time.sleep(2)   # 캐시 기록이 반영될 시간을 조금 둔다
+    sent_after = llm.sampling_info()["reasoning_effort"]
+    if sent_after != sent:   # 서버가 400 으로 거부해 인자를 뺀 경우
+        print(f"  !! 서버가 reasoning_effort 를 거부해 실제 전송값이 바뀜: {sent!r} -> {sent_after!r} (보내지 않음)")
     print("  -> 호출 2 의 raw_usage 에서 캐시 읽기·쓰기 필드 이름을 확인해 USAGE_FIELD_CANDIDATES 주석을 고친다")
 
 
@@ -562,11 +595,16 @@ if __name__ == "__main__":
                     help="기본 answer. --cache-probe 에서 생략하면 answer, judge 둘 다")
     ap.add_argument("--cache-probe", action="store_true",
                     help="같은 긴 프롬프트(약 2,000 토큰)를 두 번 보내 캐시·추론 토큰 필드를 확인")
+    ap.add_argument("--reasoning-effort", default=None,
+                    help="--cache-probe 전용. replay.py 와 같은 값 (server_default = 보내지 않음, none, low ...). "
+                         "생략하면 config 값 (ANSWER_/JUDGE_REASONING_EFFORT)")
     args = ap.parse_args()
+    if args.reasoning_effort is not None and not args.cache_probe:
+        ap.error("--reasoning-effort 는 --cache-probe 와 함께만 쓴다")
 
     if args.cache_probe:
         for r in ([args.role] if args.role else ["answer", "judge"]):
-            _cache_probe(r)
+            _cache_probe(r, args.reasoning_effort)
         raise SystemExit(0)
 
     role = args.role or "answer"

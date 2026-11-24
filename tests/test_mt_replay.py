@@ -184,12 +184,75 @@ class ReplayTest(unittest.TestCase):
         self.assertEqual(summary["noise_none_vs_none"]["all"]["n_pairs"], 12)
         self.assertEqual(summary["answer_health"]["none"]["reasoning_ran"], 24)
         # 비용 비교 기준과 예산 블록
-        self.assertEqual(block["all"]["cost_basis"], "experimental_per_call")
+        self.assertEqual(block["all"]["cost_basis"], "simulated_prefix_cache")
         bud = summary["budget"]
         self.assertGreater(bud["answer_usd_actual_total"], 0)
-        self.assertEqual(bud["replay_usd_actual_by_compressor"]["none"] < block["all"]["cost_usd"]["none"], True)
+        self.assertLess(bud["replay_usd_actual_by_compressor"]["none"], block["all"]["cost_usd_measured"]["none"])
         self.assertTrue(any("0원" in n for n in bud["notes"]))
         self.assertIn("tokenizer_check", summary)
+
+    def test_on_arrival_runs_in_replay(self):
+        """현재 턴 문서를 압축해도 replay 의 현재 턴 검사(질문·형식 줄 보존)를 통과하고, 직전 턴 접두부가 이어진다."""
+        cfg = make_cfg(compressors=["none", "on_arrival(rule)"], samples=1)
+        summary = self._replay(FakeLLM(), cfg=cfg).run()
+        rows = [json.loads(l) for l in (self.root / "mt_test" / "turn_trials.jsonl").read_text(encoding="utf-8").splitlines()]
+        oa = [r for r in rows if r["compressor"] == "on_arrival(rule)"]
+        self.assertEqual(len(oa), 6)
+        self.assertIn("on_arrival(rule)", summary["compressors"])
+        self.assertEqual(summary["config"]["compressor_configs"]["on_arrival(rule)"]["name"], "on_arrival(rule)")
+
+    def test_current_turn_guard_still_rejects_question_change(self):
+        from multiturn.history_compressors import get_history_compressor
+        comp = get_history_compressor("on_arrival(rule)")
+        cur = "<documentation>\nA\n</documentation>\n\nQuestion: q"
+        self.assertTrue(rp._same_current_turn(comp, "<documentation>\nB\n</documentation>\n\nQuestion: q", cur))
+        self.assertFalse(rp._same_current_turn(comp, "<documentation>\nB\n</documentation>\n\nQuestion: CHANGED", cur))
+        self.assertFalse(rp._same_current_turn(get_history_compressor("per_message(rule)"),
+                                               "<documentation>\nB\n</documentation>\n\nQuestion: q", cur))
+
+    def test_pilot_report_builds_from_run(self):
+        """docs/results 보고서 생성기가 실제 run 산출물에서 표를 만든다 (수치를 손으로 옮기지 않는다)."""
+        from multiturn.pilot_report import build
+        self._replay(FakeLLM(), cfg=make_cfg(compressors=["none", "window(1)"], samples=2)).run()
+        text = build(self.root / "mt_test", None, None)
+        self.assertIn("## 전체 표", text)
+        self.assertIn("| window(1) |", text)
+        self.assertIn("## 정확도가 1.0 아래로 떨어진 턴", text)
+        self.assertIn("## 파일럿 한계", text)
+
+    def test_resume_records_execution_segments(self):
+        """--resume 로 concurrency 를 바꿔 이어 돌려도 앞 구간 기록을 덮어쓰지 않는다."""
+        self._replay(FakeLLM(), cfg=make_cfg(concurrency=3)).run()
+        summary = self._replay(FakeLLM(), cfg=make_cfg(concurrency=1)).run()
+        segs = summary["config"]["execution_segments"]
+        self.assertEqual([sg["concurrency"] for sg in segs], [3, 1])
+        self.assertEqual(segs[1]["trials_submitted"], 0)              # 두 번째 구간은 할 일이 없었다
+        self.assertEqual(segs[1]["already_done"], segs[0]["trials_submitted"])
+        self.assertEqual(summary["config"]["concurrency_values"], [1, 3])
+        self.assertNotIn("concurrency", summary["config"]["replay"])
+
+    def test_judge_cost_uses_cached_tokens(self):
+        """채점 비용: grader 가 준 캐시 읽기 토큰을 반영해 cost_source=api (no_cache_info 가 아님)."""
+        def grade(q, ref, facts, cand, judge, mode="per_fact"):
+            g = fake_grade(q, ref, facts, cand, judge, mode)
+            g.judge_cached_tokens, g.judge_cache_write_tokens = 80, None
+            return g
+        rep = self._replay(FakeLLM(), cfg=make_cfg(compressors=["none"], samples=1))
+        rep.grade_fn = grade
+        rep.run()
+        rows = [json.loads(l) for l in (self.root / "mt_test" / "turn_trials.jsonl").read_text(encoding="utf-8").splitlines()]
+        from cost import cost_from_fields
+        no_cache = cost_from_fields("deepseek-flash", 100, 10).to_dict()
+        for r in rows:
+            self.assertEqual(r["judge_cost"]["cost_source"], "api")
+            self.assertLess(r["judge_cost"]["usd"], no_cache["usd"])
+            self.assertGreater(r["judge_cost"]["cache_read_usd"], 0)
+
+    def test_judge_cost_without_cache_info(self):
+        rep = self._replay(FakeLLM(), cfg=make_cfg(compressors=["none"], samples=1))
+        rep.run()   # fake_grade 에는 judge_cached_tokens 가 없다
+        rows = [json.loads(l) for l in (self.root / "mt_test" / "turn_trials.jsonl").read_text(encoding="utf-8").splitlines()]
+        self.assertTrue(all(r["judge_cost"]["cost_source"] == "no_cache_info" for r in rows))
 
     def test_depends_on_reference_ok(self):
         # 기준 궤적의 턴 1 (b.md 만 첨부) 답변은 ALPHA42 를 포함 (기록에 a.md 가 있음) -> 정답. 턴 0 도 정답.

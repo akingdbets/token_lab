@@ -174,6 +174,68 @@ class HistoryCompressorTest(unittest.TestCase):
         want = get_compressor("rule").compress(PromptParts(system="", context=doc, question="q0")).context
         self.assertEqual(DOC_BLOCK_RE.search(r.messages[1]["content"]).group(2), want)
 
+    # ---------------- on_arrival ----------------
+
+    @staticmethod
+    def _doc(i):
+        return f"<documentation>\n## Document: d{i}.md\n\n# D{i}\n\nText {i}.\n\n<!-- drop {i} -->\n</documentation>"
+
+    def _conversation(self, hc, n=4):
+        """on_arrival 로 실제 대화처럼 진행: 턴마다 기준 원문 기록 + 현재 턴을 넣고 보낸 요청을 모은다."""
+        hist, reqs = [SYSTEM], []
+        for k in range(n):
+            cur = f"{self._doc(k)}\n\nQuestion: q{k}\n\nAnswer format: f"
+            reqs.append(hc.compress_history(hist, cur).messages)
+            hist = hist + [{"role": "user", "content": cur}, {"role": "assistant", "content": f"answer {k}"}]
+        return reqs
+
+    def test_on_arrival_compresses_current_turn_docs_only(self):
+        with mock.patch.dict(REGISTRY, {"upper": _Upper()}):
+            hc = get_history_compressor("on_arrival(upper)")
+            cur = f"{DOC}\n\nQuestion: now\n\nAnswer format: f"
+            r = hc.compress_history(_history(2), cur)
+        self.assertEqual(hc.name, "on_arrival(upper)")
+        self.assertEqual(r.messages[0], SYSTEM)
+        last = r.messages[-1]["content"]
+        self.assertIn("SOME TEXT.", last)                                # 현재 턴 문서도 압축
+        self.assertTrue(last.endswith("\n\nQuestion: now\n\nAnswer format: f"))   # 질문·형식 줄은 그대로
+        self.assertIn("SOME TEXT.", r.messages[1]["content"])           # 과거 문서도 압축된 상태
+        self.assertEqual(r.messages[2]["content"], "answer 0")          # assistant 그대로
+        self.assertEqual(r.info["current_doc_blocks_compressed"], 1)
+
+    def test_on_arrival_requests_are_prefix_of_next(self):
+        """캐시 친화성: 턴 k 요청 + 턴 k 답변이 턴 k+1 요청의 접두부와 정확히 같다 (per_message 는 다르다)."""
+        for name in ("on_arrival(rule)", "per_message(rule)"):
+            reqs = self._conversation(get_history_compressor(name))
+            ok = all(reqs[k + 1][:len(reqs[k]) + 1] == reqs[k] + [{"role": "assistant", "content": f"answer {k}"}]
+                     for k in range(len(reqs) - 1))
+            self.assertEqual(ok, name.startswith("on_arrival"), name)
+
+    def test_on_arrival_deterministic_across_instances(self):
+        """같은 문서 원문 + 같은 압축기면 새 인스턴스에서도 같은 결과 (replay 가 턴 k 기록을 다시 만들어도 같다)."""
+        a = self._conversation(get_history_compressor("on_arrival(rule)"))
+        b = self._conversation(get_history_compressor("on_arrival(rule)"))
+        self.assertEqual(a, b)
+
+    def test_on_arrival_never_changes_a_compressed_doc(self):
+        """압축기가 호출마다 다른 결과를 내도, 한 번 압축한 문서는 이후 턴에서 같은 압축본을 쓴다."""
+        class _Counter(Compressor):
+            name = "counter"
+            targets = ("context",)
+            n = 0
+
+            def compress_context(self, question, context):
+                _Counter.n += 1
+                return f"v{_Counter.n}:" + context[:5]
+
+        with mock.patch.dict(REGISTRY, {"counter": _Counter()}):
+            hc = get_history_compressor("on_arrival(counter)")
+            reqs = self._conversation(hc, n=3)
+        first = reqs[0][-1]["content"]
+        self.assertEqual(reqs[1][1]["content"], first)
+        self.assertEqual(reqs[2][1]["content"], first)
+        self.assertEqual(_Counter.n, 3)                 # 문서 3개, 각 한 번씩만 압축
+
     def test_system_only_at_front(self):
         with self.assertRaises(ValueError):
             get_history_compressor("none").compress_history([SYSTEM, SYSTEM], "CUR")

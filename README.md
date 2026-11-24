@@ -117,7 +117,8 @@ token_lab/
 │   ├── prompts/              # 답변 지시문 (answer_v1.md ...), --answer-prompt 로 선택
 │   ├── compressors/          # 입력 압축 기법 (none, rule) 과 조합(">")
 │   └── multiturn/            # 멀티턴: trajectory.py (궤적 JSONL), response_cache.py (SQLite 응답 캐시), scenario.py,
-│                             #   history_compressors/ (none, window(n), per_message(...)), replay.py (replay 실행기), estimate.py
+│                             #   history_compressors/ (none, window(n), per_message(...), window_budget, query_select,
+│                             #   rolling_summary, frozen_summary), replay.py (replay 실행기), estimate.py
 ├── tests/                    # 단위 테스트 (python -m unittest discover -s tests)
 ├── results/                  # 실험 로그 (runs/<run_id>/)
 └── dashboard/                # Grafana 실험 대시보드 (MVP)
@@ -367,7 +368,9 @@ LLM_MODEL=qwen2.5:3b python src/dataset_builder.py --docs 3 --dry-run
 - [x] 싱글턴 논문 버전 태그 `paper-singleturn-v1`
 - [ ] 멀티턴 실험 기반 1단계 — 구현·오프라인 테스트 완료, 키 필요한 확인은 [`docs/todo_with_keys.md`](docs/todo_with_keys.md)
   - LLMResult 에 `cached_tokens / cache_write_tokens / reasoning_tokens / raw_usage / reasoning_text / created_at` (없으면 None)
-  - 캐시 쓰기 필드 이름은 **미확인 (`--cache-probe` 로 확정 필요)**, 캐시 읽기·추론 필드도 실제 응답으로는 아직 확인 전
+  - usage 필드 (2026-11-23 `--cache-probe` 로 확정): 캐시 읽기 `prompt_tokens_details.cached_tokens` (luna) · `prompt_cache_hit_tokens` (deepseek-flash),
+    캐시 쓰기 `prompt_tokens_details.cache_write_tokens` (luna, deepseek-flash 는 제공 안 됨), 추론 `completion_tokens_details.reasoning_tokens` (둘 다).
+    `--cache-probe --reasoning-effort server_default|none|...` 로 추론 설정을 지정할 수 있다 (생략하면 config 값)
   - `src/cost.py` + `data/pricing.json` (gpt-6.1-sol Standard, deepseek-flash 피크 단가 고정), `recompute_costs(path)`
   - `src/multiturn/trajectory.py` (호출 1번 = 1줄, 기록에는 최종 답변만), `src/multiturn/response_cache.py` (키에 sample_idx·backend·base_url, `RESPONSE_CACHE=off`)
   - trials.jsonl 에 `answer_cached_tokens` 등 새 필드, summary.json 에 `answer_health` (추론 실행 여부, finish=length, 빈 답변)
@@ -380,4 +383,12 @@ LLM_MODEL=qwen2.5:3b python src/dataset_builder.py --docs 3 --dry-run
     압축기 비교는 실험상 비용(호출당) 기준: 캐시 0% 이면 window(2) 25.4%·per_message(rule) 6.9% 절감, 접두부 캐시를 반영하면 ~0%
   - 조용한 대체 금지 (llmlingua 없으면 시작 시점 에러), 시작 시 토크나이저 확인 (`--allow-approx-tokenizer` 로만 근사)
   - 싱글턴 다리 측정: `luna-default-20261103` (test 139, 추론·temperature 서버 기본값, 출력 4096) 을 그대로 쓴다
-- [ ] 멀티턴 3단계 — 상태 있는 압축기 (재귀 요약, 고정 요약), free-run
+- [ ] 멀티턴 3단계 — 요약·선택 압축기와 같은 예산 비교. 구현·오프라인 테스트 완료, 실행은 [`docs/todo_with_keys.md`](docs/todo_with_keys.md) 6절
+  - `window_budget(B)`, `query_select(B)` (question_preserve 의 BM25 재사용), `rolling_summary(B)`, `frozen_summary(B)` (상태형, 재압축 기록)
+  - `--history-budget 1000,2000,4000` 으로 예산별 비교표 (`summary.json` budget_table), overflow 표시, 요약 실패는 체인 단위로 표시·0점 집계
+  - 답변 지시문 `mt_answer_v2` (요약·발췌 블록도 제공 정보로 봄), 요약 지시문 `mt_summary_v1`
+  - 접두부 공유 지표 `prefix_shared_tokens(_raw)` 와 실제 `cached_tokens` 비교
+  - 비용 주 지표는 시뮬레이션 캐시 비용 (`cost_reduction_pct_sim`, 직전 턴 접두부 기준). 실측 cached_tokens 는 병렬 실행이라 참고용, `--sequential-chains` 로 순차 검증
+  - 요약 추론 조건 `--summary-reasoning-effort server_default,none` → `[sre=...]` 로 펼침, overflow 제외 집계
+  - 파일럿 추정 (예산 2000·4000·8000, per_message(rule) 포함): 시뮬레이션 캐시 기준으로 어떤 압축기도 none 보다 싸지 않음 (none 의 직전 턴 접두부 공유율 76%). sim 은 대화 간격 30분 안 가정, 캐시 0% 는 만료 경계값
+- [ ] free-run 모드

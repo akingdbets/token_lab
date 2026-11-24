@@ -63,11 +63,24 @@ class HistoryCompressor:
 
 class HistoryChain(HistoryCompressor):
     """"window(2)>per_message(rule)" 처럼 순서대로 적용. 앞 단계 출력이 다음 단계 입력, LLM 토큰은 합산.
-    state 는 단계별 리스트."""
+    state 는 단계별 리스트.
+
+    상태형(요약형) 단계는 마지막 단계일 때만 받는다: "on_arrival(rule)>frozen_summary(8000)".
+    이때 체인 전체가 상태형이 되고(initial_state), 요약 단계의 info(summary_calls, recompressed, overflow,
+    summary_failed, _llm_results ...)를 replay 가 읽을 수 있게 최상위 info 로 올린다.
+    on_arrival 처럼 현재 턴 문서를 압축하는 단계가 있으면 현재 턴 메시지에도 그 단계를 적용한다."""
 
     def __init__(self, stages: list[HistoryCompressor]):
         self.stages = stages
         self.name = ">".join(s.name for s in stages)
+        flags = [getattr(s, "stateful", False) for s in stages]
+        if any(flags[:-1]):
+            raise ValueError(f"상태형 압축기는 체인의 마지막 단계에만 둘 수 있습니다: {self.name}")
+        self.stateful = flags[-1]
+        self.compresses_current_docs = any(getattr(s, "compresses_current_docs", False) for s in stages)
+
+    def initial_state(self, sample_idx: int) -> list:
+        return [s.initial_state(sample_idx) if getattr(s, "stateful", False) else None for s in self.stages]
 
     def compress_past(self, past, current_user, budget_tokens, state):
         states = list(state) if state else [None] * len(self.stages)
@@ -75,13 +88,33 @@ class HistoryChain(HistoryCompressor):
         info, new_states = {}, []
         for i, (stage, st) in enumerate(zip(self.stages, states)):
             r = stage.compress_past(past, current_user, budget_tokens, st)
-            past = r.messages
             pt += r.llm_prompt_tokens
             ct += r.llm_completion_tokens
-            info[f"{i + 1}:{stage.name}"] = r.info
+            stage_info = dict(r.info)
+            if self.stateful and getattr(stage, "stateful", False):
+                info.update({k: v for k, v in stage_info.items() if k not in info})   # 요약 단계 info 를 최상위로
+                stage_info.pop("_llm_results", None)                                   # 객체는 최상위에만 (JSON 저장 안 함)
+            info[f"{i + 1}:{stage.name}"] = stage_info
+            if r.info.get("summary_failed"):
+                return HistoryResult(messages=[], llm_prompt_tokens=pt, llm_completion_tokens=ct, state=None, info=info)
+            past = r.messages
             new_states.append(r.state)
         return HistoryResult(messages=past, llm_prompt_tokens=pt, llm_completion_tokens=ct,
                              state=new_states, info=info)
+
+    def compress_history(self, history, current_user, budget_tokens=None, state=None):
+        res = super().compress_history(history, current_user, budget_tokens, state)
+        if self.compresses_current_docs and not res.info.get("summary_failed"):
+            content = current_user
+            for st in self.stages:
+                if getattr(st, "compresses_current_docs", False):
+                    c = st._new_counters()
+                    content = st._compress_user(content, c)
+                    res.llm_prompt_tokens += c["pt"]
+                    res.llm_completion_tokens += c["ct"]
+                    res.info[f"current_doc_blocks_compressed:{st.name}"] = c["docs"]
+            res.messages[-1] = {"role": "user", "content": content}
+        return res
 
     def config(self) -> dict:
         return {"name": self.name, "stages": [s.config() for s in self.stages]}

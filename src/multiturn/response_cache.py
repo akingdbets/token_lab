@@ -126,17 +126,22 @@ class CachedLLM:
                  datetime.now(timezone.utc).isoformat(timespec="seconds")))
             db.commit()
 
-    def chat(self, messages: list[dict], *, sample_idx: int, stream_ttft: bool = False) -> tuple[LLMResult, bool]:
+    def chat(self, messages: list[dict], *, sample_idx: int, stream_ttft: bool = False,
+             store_if=None) -> tuple[LLMResult, bool]:
+        """store_if(res) -> bool 을 주면 False 인 응답은 저장하지 않는다 (예: 빈 요약·length 잘림).
+        같은 키로 다시 부르면 새로 호출되므로 재시도 때 같은 실패가 캐시에서 돌아오지 않는다.
+        이전에 저장된 응답이 store_if 를 통과하지 못하면 적중으로 보지 않고 새로 호출한다."""
         if not isinstance(sample_idx, int) or isinstance(sample_idx, bool):
             raise TypeError(f"sample_idx 는 정수여야 합니다: {sample_idx!r}")
         if not self.enabled:
             return self.llm.chat(messages, stream_ttft=stream_ttft), False
         key = cache_key(self.llm, messages, sample_idx)
         hit = self.get(key)
-        if hit is not None:
+        if hit is not None and (store_if is None or store_if(hit)):
             return hit, True
         res = self.llm.chat(messages, stream_ttft=stream_ttft)
-        self.put(key, res, sample_idx)
+        if store_if is None or store_if(res):
+            self.put(key, res, sample_idx)
         return res, False
 
     def bind(self, sample_idx: int) -> "BoundCachedLLM":
