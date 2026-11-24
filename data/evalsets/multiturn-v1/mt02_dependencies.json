@@ -1,0 +1,257 @@
+{
+  "scenario_id": "mt02_dependencies",
+  "title": "yield dependencies -> background tasks -> CORS",
+  "topic": "dependencies",
+  "status": "draft",
+  "turns": [
+    {
+      "turn": 0,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "If yield dependencies are chained a → b → c, in what order does their teardown run?",
+      "answer": "c → b → a",
+      "key_facts": [
+        "Teardown runs in reverse order: c, then b, then a."
+      ],
+      "key_entities": [],
+      "evidence_pages": [
+        "dependencies/dependencies-with-yield.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "quote": "Setup: a → b → c. Teardown: c → b → a.",
+          "page": "dependencies/dependencies-with-yield.md",
+          "fact_idx": 0
+        }
+      ]
+    },
+    {
+      "turn": 1,
+      "turn_type": "followup",
+      "type": "multi",
+      "question": "What happens if a yield dependency catches an exception and does not raise anything?",
+      "answer": "The client still gets a 500 Internal Server Error, but the server logs nothing about the real error.",
+      "key_facts": [
+        "The client still receives a 500 Internal Server Error.",
+        "The server logs nothing about the real error."
+      ],
+      "key_entities": [
+        "500"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "quote": "The client still gets a `500 Internal Server Error`",
+          "page": "dependencies/dependencies-with-yield.md",
+          "fact_idx": 0
+        },
+        {
+          "quote": "the server logs **nothing** about the real error",
+          "page": "dependencies/dependencies-with-yield.md",
+          "fact_idx": 1
+        }
+      ]
+    },
+    {
+      "turn": 2,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "What is the default scope for yield dependencies, and when does its teardown run?",
+      "answer": "\"request\"; teardown runs after the response is sent.",
+      "key_facts": [
+        "The default scope for yield dependencies is \"request\".",
+        "With request scope, teardown runs after the response is sent."
+      ],
+      "key_entities": [
+        "request"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "quote": "`\"request\"` (default for `yield` dependencies)",
+          "page": "dependencies/dependencies-with-yield.md",
+          "fact_idx": 0
+        },
+        {
+          "quote": "teardown **after the response is sent**",
+          "page": "dependencies/dependencies-with-yield.md",
+          "fact_idx": 1
+        }
+      ]
+    },
+    {
+      "turn": 3,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "When do FastAPI background tasks run, and in what order?",
+      "answer": "After the response is sent, in the order they were added, in the same process.",
+      "key_facts": [
+        "Background tasks run after the response is sent.",
+        "Tasks run in the order they were added."
+      ],
+      "key_entities": [
+        "BackgroundTasks"
+      ],
+      "evidence_pages": [
+        "integrations/background-tasks.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "quote": "Tasks run in the order they were added, in the same process, after the response is sent.",
+          "page": "integrations/background-tasks.md",
+          "fact_idx": 0
+        },
+        {
+          "quote": "Tasks run in the order they were added, in the same process, after the response is sent.",
+          "page": "integrations/background-tasks.md",
+          "fact_idx": 1
+        }
+      ]
+    },
+    {
+      "turn": 4,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Given what we discussed about yield dependencies and background tasks, can a background task safely use a DB session yielded by a dependency? What should it do instead?",
+      "answer": "No. Don't rely on the yielded session in a background task; open a new session inside the task and pass simple values such as an object's ID.",
+      "key_facts": [
+        "A background task should not rely on a DB session from a yield dependency.",
+        "It should open a new session inside the task and pass simple values such as IDs."
+      ],
+      "key_entities": [],
+      "evidence_pages": [],
+      "depends_on": [
+        0,
+        3
+      ],
+      "evidence": [
+        {
+          "quote": "Don't rely on a yielded resource (e.g. a DB session) inside a background task",
+          "page": "dependencies/dependencies-with-yield.md",
+          "fact_idx": 0
+        },
+        {
+          "quote": "Open a new session inside the task and pass simple values (like an object's ID) as arguments.",
+          "page": "integrations/background-tasks.md",
+          "fact_idx": 1
+        }
+      ]
+    },
+    {
+      "turn": 5,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What are the default values of allow_methods and max_age in CORSMiddleware?",
+      "answer": "allow_methods defaults to [\"GET\"] and max_age to 600.",
+      "key_facts": [
+        "allow_methods defaults to [\"GET\"].",
+        "max_age defaults to 600 seconds."
+      ],
+      "key_entities": [
+        "allow_methods",
+        "max_age"
+      ],
+      "evidence_pages": [
+        "middleware/cors.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "quote": "| `allow_methods` | Allowed methods for cross-origin requests; `[\"*\"]` for all standard methods | `[\"GET\"]` |",
+          "page": "middleware/cors.md",
+          "fact_idx": 0
+        },
+        {
+          "quote": "| `max_age` | Seconds browsers may cache preflight responses | `600` |",
+          "page": "middleware/cors.md",
+          "fact_idx": 1
+        }
+      ]
+    },
+    {
+      "turn": 6,
+      "turn_type": "recall",
+      "type": "fact",
+      "question": "Back to yield dependencies: which scope makes teardown run right after the path operation function returns, before the response is sent?",
+      "answer": "\"function\"",
+      "key_facts": [
+        "The \"function\" scope runs teardown before the response is sent."
+      ],
+      "key_entities": [
+        "function"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        2
+      ],
+      "evidence": [
+        {
+          "quote": "`\"function\"`: teardown right after the path operation function returns, **before** the response is sent.",
+          "page": "dependencies/dependencies-with-yield.md",
+          "fact_idx": 0
+        }
+      ]
+    },
+    {
+      "turn": 7,
+      "turn_type": "recall",
+      "type": "code",
+      "question": "Earlier we talked about catching exceptions in a yield dependency. How should the caught exception be re-raised so the error is logged?",
+      "answer": "With a bare raise",
+      "key_facts": [
+        "Re-raise the caught exception with a bare raise."
+      ],
+      "key_entities": [
+        "raise"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "quote": "Re-raise with a bare `raise`",
+          "page": "dependencies/dependencies-with-yield.md",
+          "fact_idx": 0
+        }
+      ]
+    },
+    {
+      "turn": 8,
+      "turn_type": "synthesis",
+      "type": "procedure",
+      "question": "Put these in order for one request: the path operation runs, a function-scoped yield dependency's teardown, the response is sent, and background tasks run.",
+      "answer": "1. Path operation runs. 2. Function-scoped teardown. 3. Response is sent. 4. Background tasks run.",
+      "key_facts": [
+        "Function-scoped teardown runs after the path operation returns and before the response is sent.",
+        "Background tasks run after the response has been sent."
+      ],
+      "key_entities": [],
+      "evidence_pages": [],
+      "depends_on": [
+        3,
+        6
+      ],
+      "evidence": [
+        {
+          "quote": "`\"function\"`: teardown right after the path operation function returns, **before** the response is sent.",
+          "page": "dependencies/dependencies-with-yield.md",
+          "fact_idx": 0
+        },
+        {
+          "quote": "Background tasks run **after the response has been sent**.",
+          "page": "integrations/background-tasks.md",
+          "fact_idx": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,274 @@
+{
+  "scenario_id": "mt01_security",
+  "title": "OAuth2 password flow -> JWT -> scopes",
+  "topic": "security",
+  "status": "draft",
+  "turns": [
+    {
+      "turn": 0,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "In the OAuth2 password flow tutorial, what status code and header does OAuth2PasswordBearer send when the Authorization header is missing?",
+      "answer": "401 with the header WWW-Authenticate: Bearer",
+      "key_facts": [
+        "A missing Authorization header results in status 401.",
+        "The response includes the WWW-Authenticate: Bearer header."
+      ],
+      "key_entities": [
+        "401",
+        "WWW-Authenticate"
+      ],
+      "evidence_pages": [
+        "security/oauth2-password-flow.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "quote": "Missing header or non-bearer scheme → **401** `{\"detail\": \"Not authenticated\"}` with `WWW-Authenticate: Bearer`",
+          "page": "security/oauth2-password-flow.md",
+          "fact_idx": 0
+        },
+        {
+          "quote": "Missing header or non-bearer scheme → **401** `{\"detail\": \"Not authenticated\"}` with `WWW-Authenticate: Bearer`",
+          "page": "security/oauth2-password-flow.md",
+          "fact_idx": 1
+        }
+      ]
+    },
+    {
+      "turn": 1,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "In that same tutorial, what status code does the simple /token login return for wrong credentials?",
+      "answer": "400",
+      "key_facts": [
+        "The simple /token login returns 400 for wrong credentials."
+      ],
+      "key_entities": [
+        "400"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "quote": "Wrong credentials at `/token` → `400`",
+          "page": "security/oauth2-password-flow.md",
+          "fact_idx": 0
+        }
+      ]
+    },
+    {
+      "turn": 2,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "In the JWT tutorial, what values are used for ALGORITHM and ACCESS_TOKEN_EXPIRE_MINUTES?",
+      "answer": "ALGORITHM = \"HS256\" and ACCESS_TOKEN_EXPIRE_MINUTES = 30",
+      "key_facts": [
+        "ALGORITHM is HS256.",
+        "ACCESS_TOKEN_EXPIRE_MINUTES is 30."
+      ],
+      "key_entities": [
+        "HS256",
+        "ACCESS_TOKEN_EXPIRE_MINUTES"
+      ],
+      "evidence_pages": [
+        "security/oauth2-jwt.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "quote": "ALGORITHM = \"HS256\"",
+          "page": "security/oauth2-jwt.md",
+          "fact_idx": 0
+        },
+        {
+          "quote": "ACCESS_TOKEN_EXPIRE_MINUTES = 30",
+          "page": "security/oauth2-jwt.md",
+          "fact_idx": 1
+        }
+      ]
+    },
+    {
+      "turn": 3,
+      "turn_type": "followup",
+      "type": "multi",
+      "question": "Why does authenticate_user still call verify_password with DUMMY_HASH when the user does not exist?",
+      "answer": "So unknown usernames are not rejected faster than wrong passwords, which would let attackers enumerate valid usernames by timing.",
+      "key_facts": [
+        "Without the dummy check, unknown usernames would be rejected faster than wrong passwords.",
+        "The timing difference would let attackers enumerate valid usernames."
+      ],
+      "key_entities": [
+        "DUMMY_HASH",
+        "authenticate_user"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        2
+      ],
+      "evidence": [
+        {
+          "quote": "Without that, unknown usernames would be rejected noticeably faster than wrong passwords",
+          "page": "security/oauth2-jwt.md",
+          "fact_idx": 0
+        },
+        {
+          "quote": "letting attackers enumerate valid usernames by timing",
+          "page": "security/oauth2-jwt.md",
+          "fact_idx": 1
+        }
+      ]
+    },
+    {
+      "turn": 4,
+      "turn_type": "recall",
+      "type": "fact",
+      "question": "Going back to the first tutorial: what does OAuth2PasswordBearer return instead of raising an error when auto_error=False and the header is missing?",
+      "answer": "None",
+      "key_facts": [
+        "With auto_error=False it returns None instead of raising 401."
+      ],
+      "key_entities": [
+        "auto_error"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "quote": "(unless `auto_error=False`, which returns `None`)",
+          "page": "security/oauth2-password-flow.md",
+          "fact_idx": 0
+        }
+      ]
+    },
+    {
+      "turn": 5,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "In the scopes tutorial, which scopes does get_current_user require for the /users/me/items/ path operation?",
+      "answer": "[\"items\", \"me\"]",
+      "key_facts": [
+        "/users/me/items/ requires the items scope.",
+        "/users/me/items/ also requires the me scope inherited from get_current_active_user."
+      ],
+      "key_entities": [
+        "items",
+        "me"
+      ],
+      "evidence_pages": [
+        "security/oauth2-scopes.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "quote": "`items` (path op) + `me` → `[\"items\", \"me\"]`",
+          "page": "security/oauth2-scopes.md",
+          "fact_idx": 0
+        },
+        {
+          "quote": "`items` (path op) + `me` → `[\"items\", \"me\"]`",
+          "page": "security/oauth2-scopes.md",
+          "fact_idx": 1
+        }
+      ]
+    },
+    {
+      "turn": 6,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Compare what we covered: which status code does the /token login return for wrong credentials in the password flow tutorial versus the JWT tutorial, and what detail does the scopes tutorial return when a token lacks a required scope?",
+      "answer": "Password flow: 400. JWT: 401 (with WWW-Authenticate: Bearer). Missing scope: 401 with detail \"Not enough permissions\".",
+      "key_facts": [
+        "The password flow tutorial returns 400 for wrong credentials.",
+        "The JWT tutorial returns 401 for an incorrect username or password.",
+        "A missing required scope returns detail \"Not enough permissions\"."
+      ],
+      "key_entities": [
+        "Not enough permissions"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1,
+        2,
+        5
+      ],
+      "evidence": [
+        {
+          "quote": "Wrong credentials at `/token` → `400`",
+          "page": "security/oauth2-password-flow.md",
+          "fact_idx": 0
+        },
+        {
+          "quote": "status_code=status.HTTP_401_UNAUTHORIZED, detail=\"Incorrect username or password\", headers={\"WWW-Authenticate\": \"Bearer\"},",
+          "page": "security/oauth2-jwt.md",
+          "fact_idx": 1
+        },
+        {
+          "quote": "detail=\"Not enough permissions\"",
+          "page": "security/oauth2-scopes.md",
+          "fact_idx": 2
+        }
+      ]
+    },
+    {
+      "turn": 7,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "How does the JWT tutorial's get_current_user differ from the first tutorial's fake_decode_token approach: what function decodes the token and which claim identifies the user?",
+      "answer": "It verifies the token with jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM]) instead of a fake decoder, and reads the sub claim to get the username.",
+      "key_facts": [
+        "The JWT tutorial decodes the token with jwt.decode using SECRET_KEY and the pinned algorithm.",
+        "It reads the sub claim to identify the user."
+      ],
+      "key_entities": [
+        "jwt.decode",
+        "sub"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0,
+        2
+      ],
+      "evidence": [
+        {
+          "quote": "`get_current_user` decodes with `jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])`",
+          "page": "security/oauth2-jwt.md",
+          "fact_idx": 0
+        },
+        {
+          "quote": "reads `sub`, and loads the user",
+          "page": "security/oauth2-jwt.md",
+          "fact_idx": 1
+        }
+      ]
+    },
+    {
+      "turn": 8,
+      "turn_type": "recall",
+      "type": "code",
+      "question": "Earlier, which command did the JWT tutorial suggest for generating SECRET_KEY?",
+      "answer": "openssl rand -hex 32",
+      "key_facts": [
+        "SECRET_KEY should be generated with openssl rand -hex 32."
+      ],
+      "key_entities": [
+        "openssl rand -hex 32"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        2
+      ],
+      "evidence": [
+        {
+          "quote": "Generate `SECRET_KEY` with `openssl rand -hex 32`",
+          "page": "security/oauth2-jwt.md",
+          "fact_idx": 0
+        }
+      ]
+    }
+  ]
+}

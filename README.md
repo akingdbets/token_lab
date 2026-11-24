@@ -101,6 +101,7 @@ token_lab/
 │   ├── openwiki/             # OpenWiki 생성 위키: en/ (문서 원천, 고정), ko/ (보관용). 출처는 각 SOURCE.md
 │   ├── corpus_manifest.jsonl # 코퍼스 페이지 목록·종류·해시·토큰 수
 │   ├── pricing.json          # 모델별 단가 (USD / 1M 토큰, src/cost.py)
+│   ├── evalsets/multiturn-v1/ # 멀티턴 파일럿 시나리오 3개 (draft, 시나리오 하나 = JSON 하나)
 │   ├── evalsets/claude-v1/   # 평가셋 (git 관리, EVAL_DIR 로 선택). 후보 원본·생성 규칙은 candidates/, 사람 검수는 review/
 │   └── eval/                 # 평가셋 작업 공간 (기본 EVAL_DIR, 버전 관리 제외)
 ├── src/
@@ -115,7 +116,8 @@ token_lab/
 │   ├── rejudge.py            # 기존 trials.jsonl 답변을 key_facts judge 로 재채점 (답변 재생성 없음)
 │   ├── prompts/              # 답변 지시문 (answer_v1.md ...), --answer-prompt 로 선택
 │   ├── compressors/          # 입력 압축 기법 (none, rule) 과 조합(">")
-│   └── multiturn/            # 멀티턴 기반: trajectory.py (궤적 JSONL), response_cache.py (SQLite 응답 캐시)
+│   └── multiturn/            # 멀티턴: trajectory.py (궤적 JSONL), response_cache.py (SQLite 응답 캐시), scenario.py,
+│                             #   history_compressors/ (none, window(n), per_message(...)), replay.py (replay 실행기), estimate.py
 ├── tests/                    # 단위 테스트 (python -m unittest discover -s tests)
 ├── results/                  # 실험 로그 (runs/<run_id>/)
 └── dashboard/                # Grafana 실험 대시보드 (MVP)
@@ -369,4 +371,13 @@ LLM_MODEL=qwen2.5:3b python src/dataset_builder.py --docs 3 --dry-run
   - `src/cost.py` + `data/pricing.json` (gpt-6.1-sol Standard, deepseek-flash 피크 단가 고정), `recompute_costs(path)`
   - `src/multiturn/trajectory.py` (호출 1번 = 1줄, 기록에는 최종 답변만), `src/multiturn/response_cache.py` (키에 sample_idx·backend·base_url, `RESPONSE_CACHE=off`)
   - trials.jsonl 에 `answer_cached_tokens` 등 새 필드, summary.json 에 `answer_health` (추론 실행 여부, finish=length, 빈 답변)
-- [ ] 멀티턴 실행기
+- [ ] 멀티턴 2단계 — replay 실행기, 구현·오프라인 테스트 완료. 파일럿 실행은 [`docs/todo_with_keys.md`](docs/todo_with_keys.md) 4절
+  - 시나리오 `data/evalsets/multiturn-v1/` (3개 × 9턴, draft, 스키마 검증·근거 확인 통과). 싱글턴 대비 차이는 그 폴더 README
+  - `src/multiturn/history_compressors/`: `none`, `window(n)`, `per_message(<싱글턴 압축기>)`, `>` 체인. system·현재 턴은 압축하지 않음
+  - `src/multiturn/replay.py`: 기준 궤적(none) 고정 → 턴 k 이전 기록만 압축 → 채점. `--reasoning-effort`·`--max-completion-tokens` 필수,
+    이어 돌리기, 429 백오프, depends_on_reference_ok, (시나리오, 턴) 쌍체 부트스트랩 비열등 판정 + 시나리오 군집 부트스트랩(보조)
+  - `--estimate-only` 파일럿 예상 (실제 지출): 답변 $0.18~0.26 + 채점 $0.08 (llmlingua2 제외, Qwen 토크나이저 근사).
+    압축기 비교는 실험상 비용(호출당) 기준: 캐시 0% 이면 window(2) 25.4%·per_message(rule) 6.9% 절감, 접두부 캐시를 반영하면 ~0%
+  - 조용한 대체 금지 (llmlingua 없으면 시작 시점 에러), 시작 시 토크나이저 확인 (`--allow-approx-tokenizer` 로만 근사)
+  - 싱글턴 다리 측정: `luna-default-20261103` (test 139, 추론·temperature 서버 기본값, 출력 4096) 을 그대로 쓴다
+- [ ] 멀티턴 3단계 — 상태 있는 압축기 (재귀 요약, 고정 요약), free-run

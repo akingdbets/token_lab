@@ -1,0 +1,266 @@
+{
+  "scenario_id": "mt03_responses",
+  "title": "status codes -> headers and cookies -> error handling",
+  "topic": "responses",
+  "status": "draft",
+  "turns": [
+    {
+      "turn": 0,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Which status codes does FastAPI treat as forbidding a response body?",
+      "answer": "Codes below 200, 204, 205 and 304",
+      "key_facts": [
+        "Status codes below 200 forbid a body.",
+        "204, 205 and 304 forbid a body."
+      ],
+      "key_entities": [
+        "204",
+        "304"
+      ],
+      "evidence_pages": [
+        "responses/status-codes.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "quote": "(`is_body_allowed_for_status_code`: below 200, `204`, `205`, `304`)",
+          "page": "responses/status-codes.md",
+          "fact_idx": 0
+        },
+        {
+          "quote": "(`is_body_allowed_for_status_code`: below 200, `204`, `205`, `304`)",
+          "page": "responses/status-codes.md",
+          "fact_idx": 1
+        }
+      ]
+    },
+    {
+      "turn": 1,
+      "turn_type": "followup",
+      "type": "multi",
+      "question": "If an endpoint should return 201 for new items but 200 otherwise, how do I do that, and what is the caveat about response models?",
+      "answer": "Return a Response such as JSONResponse directly with the needed status; a directly returned response is not validated or filtered by the response model.",
+      "key_facts": [
+        "Return a Response such as JSONResponse directly with the other status.",
+        "A directly returned response is not validated or filtered by the response model."
+      ],
+      "key_entities": [
+        "JSONResponse"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "quote": "return a `Response` (e.g. `JSONResponse`) directly with that status",
+          "page": "responses/status-codes.md",
+          "fact_idx": 0
+        },
+        {
+          "quote": "A directly returned response isn't validated or filtered by any response model",
+          "page": "responses/status-codes.md",
+          "fact_idx": 1
+        }
+      ]
+    },
+    {
+      "turn": 2,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What is the default samesite value for set_cookie, and which settings are recommended for session or auth cookies?",
+      "answer": "samesite defaults to \"lax\"; set httponly=True, secure=True and a suitable samesite.",
+      "key_facts": [
+        "samesite defaults to \"lax\".",
+        "Session or auth cookies should use httponly=True and secure=True."
+      ],
+      "key_entities": [
+        "samesite",
+        "httponly"
+      ],
+      "evidence_pages": [
+        "responses/response-headers-and-cookies.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "quote": "`\"lax\"` (default)",
+          "page": "responses/response-headers-and-cookies.md",
+          "fact_idx": 0
+        },
+        {
+          "quote": "For session/auth cookies, set `httponly=True`, `secure=True` and a suitable `samesite`.",
+          "page": "responses/response-headers-and-cookies.md",
+          "fact_idx": 1
+        }
+      ]
+    },
+    {
+      "turn": 3,
+      "turn_type": "followup",
+      "type": "code",
+      "question": "How can JavaScript running on another origin read a custom response header?",
+      "answer": "List the header in CORSMiddleware(expose_headers=[...])",
+      "key_facts": [
+        "The header must be listed in CORSMiddleware expose_headers."
+      ],
+      "key_entities": [
+        "expose_headers"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        2
+      ],
+      "evidence": [
+        {
+          "quote": "list it in `CORSMiddleware(expose_headers=[...])`",
+          "page": "responses/response-headers-and-cookies.md",
+          "fact_idx": 0
+        }
+      ]
+    },
+    {
+      "turn": 4,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "What happens when an endpoint returns data that does not match its response_model?",
+      "answer": "FastAPI raises ResponseValidationError; there is no default handler, so the client gets a 500 Internal Server Error and the error is logged.",
+      "key_facts": [
+        "FastAPI raises ResponseValidationError.",
+        "The client gets a 500 Internal Server Error."
+      ],
+      "key_entities": [
+        "ResponseValidationError",
+        "500"
+      ],
+      "evidence_pages": [
+        "errors/handling-errors.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "quote": "FastAPI raises `ResponseValidationError`",
+          "page": "errors/handling-errors.md",
+          "fact_idx": 0
+        },
+        {
+          "quote": "so the client gets a **500 Internal Server Error**",
+          "page": "errors/handling-errors.md",
+          "fact_idx": 1
+        }
+      ]
+    },
+    {
+      "turn": 5,
+      "turn_type": "recall",
+      "type": "fact",
+      "question": "From the status code page we saw earlier: what is the 100–199 range called?",
+      "answer": "Informational",
+      "key_facts": [
+        "The 100–199 range is Informational."
+      ],
+      "key_entities": [
+        "Informational"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "quote": "| `100–199` | Informational |",
+          "page": "responses/status-codes.md",
+          "fact_idx": 0
+        }
+      ]
+    },
+    {
+      "turn": 6,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "We discussed a directly returned JSONResponse and a response_model mismatch. Which of the two bypasses response model validation, and which one causes a 500?",
+      "answer": "Returning a JSONResponse directly bypasses response model validation; returning data that doesn't match the response_model raises ResponseValidationError and a 500.",
+      "key_facts": [
+        "A directly returned JSONResponse bypasses response model validation.",
+        "A response_model mismatch causes a 500 via ResponseValidationError."
+      ],
+      "key_entities": [
+        "ResponseValidationError"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1,
+        4
+      ],
+      "evidence": [
+        {
+          "quote": "A directly returned response isn't validated or filtered by any response model",
+          "page": "responses/status-codes.md",
+          "fact_idx": 0
+        },
+        {
+          "quote": "FastAPI raises `ResponseValidationError`",
+          "page": "errors/handling-errors.md",
+          "fact_idx": 1
+        }
+      ]
+    },
+    {
+      "turn": 7,
+      "turn_type": "recall",
+      "type": "code",
+      "question": "According to the headers and cookies page, which method removes a cookie?",
+      "answer": "response.delete_cookie(key, ...)",
+      "key_facts": [
+        "response.delete_cookie removes a cookie."
+      ],
+      "key_entities": [
+        "delete_cookie"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        2
+      ],
+      "evidence": [
+        {
+          "quote": "Use `response.delete_cookie(key, ...)` to remove one.",
+          "page": "responses/response-headers-and-cookies.md",
+          "fact_idx": 0
+        }
+      ]
+    },
+    {
+      "turn": 8,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Since FastAPI 0.122.0, which status do the built-in security classes return for missing credentials, and is that one of the status codes that forbid a response body?",
+      "answer": "401 Unauthorized with a WWW-Authenticate header; 401 is not among the codes that forbid a body (below 200, 204, 205, 304).",
+      "key_facts": [
+        "Since 0.122.0, built-in security classes return 401 Unauthorized.",
+        "401 is not one of the codes that forbid a body."
+      ],
+      "key_entities": [
+        "0.122.0",
+        "401"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0,
+        4
+      ],
+      "evidence": [
+        {
+          "quote": "the built-in security classes respond to missing/invalid credentials with **`401 Unauthorized`**",
+          "page": "errors/handling-errors.md",
+          "fact_idx": 0
+        },
+        {
+          "quote": "(`is_body_allowed_for_status_code`: below 200, `204`, `205`, `304`)",
+          "page": "responses/status-codes.md",
+          "fact_idx": 1
+        }
+      ]
+    }
+  ]
+}
