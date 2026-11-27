@@ -1,7 +1,7 @@
 {
  "schema_version": 2,
  "scenario_id": "v2_02_response_design",
- "title": "Designing an Upsert Response Contract",
+ "title": "Artifact API Response Contracts",
  "topic": "응답 상태·형식 설계",
  "status": "draft",
  "bundle": [
@@ -19,8 +19,8 @@
   "model": "gpt-6.1-sol",
   "served_model": "gpt-6.1-sol",
   "prompt": [
-   "mt_scenario_gen_v1",
-   "c567341df6e0"
+   "mt_scenario_gen_v2",
+   "14ed07361f1b"
   ],
   "settings": {
    "model": "gpt-6.1-sol",
@@ -32,38 +32,45 @@
    "max_tokens": 40000,
    "max_tokens_param": "max_completion_tokens"
   },
-  "run_id": "20261127-222404_v2_02_response_design",
-  "attempts": 1,
-  "created_at": "2026-11-27T22:26:52"
+  "run_id": "20261128-004434_v2_02_response_design",
+  "attempts": 2,
+  "created_at": "2026-11-28T00:50:47"
  },
  "turns": [
   {
    "turn": 0,
    "turn_type": "new",
-   "type": "multi",
-   "question": "I'm building PUT /items/{item_id} as an upsert. For now, both creation and replacement should return 200. Where do I declare that default, and does the declaration also describe the response status in OpenAPI?",
-   "standalone_question": "For a FastAPI PUT /items/{item_id} upsert whose creation and replacement branches both return 200, where is the default response status declared, and does that declaration document the status in OpenAPI?",
-   "answer": "Set status_code=200 on the path operation decorator, for example @app.put('/items/{item_id}', status_code=200). It sets the response status and documents it in OpenAPI; it is not an endpoint function parameter.",
+   "type": "code",
+   "question": "I'm building an artifact service. Our upsert route is /artifacts/{artifact_id}. Show the minimal decorator and function pattern for returning 200 on update and 201 on creation without losing response-model filtering; assume ArtifactOut and save_artifact already exist, and save_artifact returns (record, created).",
+   "asks": [
+    "Show a model-preserving dynamic-status upsert pattern"
+   ],
+   "standalone_question": "I'm building an artifact service. Our upsert route is /artifacts/{artifact_id}. Show the minimal decorator and function pattern for returning 200 on update and 201 on creation without losing response-model filtering; assume ArtifactOut and save_artifact already exist, and save_artifact returns (record, created).",
+   "answer": "@app.put(\"/artifacts/{artifact_id}\", status_code=200, response_model=ArtifactOut)\ndef upsert_artifact(artifact_id: str, response: Response):\n    record, created = save_artifact(artifact_id)\n    if created:\n        response.status_code = status.HTTP_201_CREATED\n    return record\n\nImport Response and status from fastapi. Setting the injected response's status keeps normal response-model serialization.",
    "key_facts": [
-    "status_code belongs to the path operation decorator, not the endpoint function.",
-    "The declaration sets the response status and documents it in OpenAPI."
+    "Set the injected Response.status_code to 201 on creation and return data normally to preserve response-model serialization.",
+    "The project's upsert route is /artifacts/{artifact_id}."
    ],
    "fact_meta": [
     {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
-      "negation"
+      "condition"
      ]
     },
     {
+     "source": "user",
      "accept_alternatives": [],
      "tags": []
     }
    ],
    "key_entities": [
-    "status_code",
-    "200",
-    "OpenAPI"
+    "/artifacts/{artifact_id}",
+    "Response",
+    "response.status_code",
+    "status.HTTP_201_CREATED",
+    "response_model"
    ],
    "evidence_pages": [
     "responses/status-codes.md"
@@ -71,336 +78,37 @@
    "depends_on": [],
    "evidence": [
     {
-     "quote": "- `status_code` is a parameter of the **decorator** (`@app.get()`, `@app.post()`, …), not of your function.",
+     "quote": "Your return value is still serialized through the response model.",
      "page": "responses/status-codes.md",
      "fact_idx": 0
     },
-    {
-     "quote": "- It sets the response status **and** documents it in OpenAPI.",
-     "page": "responses/status-codes.md",
-     "fact_idx": 1
-    }
-   ],
-   "alt_evidence": [],
-   "changes": null,
-   "affects": null,
-   "source_turn": null,
-   "recall_distance": 0,
-   "closed_book": {
-    "correct": true,
-    "accuracy": 1.0,
-    "unknown": false,
-    "empty": false,
-    "response": "Declare it on the route decorator, e.g. `@app.put(\"/items/{item_id}\", status_code=200)`. FastAPI includes that status in the OpenAPI documentation. Without the argument, the response defaults to 200.",
-    "model": "gpt-6-luna",
-    "settings": {
-     "model": "gpt-6-luna",
-     "temperature": null,
-     "temperature_requested": null,
-     "seed": 42,
-     "reasoning_effort": null,
-     "reasoning_effort_requested": null,
-     "max_tokens": 4096,
-     "max_tokens_param": "max_completion_tokens"
-    },
-    "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
-   }
-  },
-  {
-   "turn": 1,
-   "turn_type": "new",
-   "type": "multi",
-   "question": "The stored item contains internal fields, but the public ItemPublic model should expose only name, price, and tax, with tax defaulting to 10.5. I'll return a database dict and annotate the function as Any. How do I enforce ItemPublic, and what if a return annotation disagrees with it?",
-   "standalone_question": "A FastAPI endpoint returns a database dict with internal fields and is annotated as Any. Its public ItemPublic model contains name, price, and tax, with tax defaulting to 10.5. How should ItemPublic be enforced, and which takes priority if the return annotation disagrees?",
-   "answer": "Declare response_model=ItemPublic on the decorator. FastAPI validates and filters the returned dict to that model. An explicit response_model takes priority over the return annotation.",
-   "key_facts": [
-    "A decorator response_model validates and filters returned data to the public model.",
-    "An explicit response_model takes priority over the return annotation."
-   ],
-   "fact_meta": [
-    {
-     "accept_alternatives": [],
-     "tags": []
-    },
-    {
-     "accept_alternatives": [],
-     "tags": [
-      "confusable"
-     ]
-    }
-   ],
-   "key_entities": [
-    "response_model",
-    "Any"
-   ],
-   "evidence_pages": [
-    "models/response-model.md"
-   ],
-   "depends_on": [],
-   "evidence": [
-    {
-     "quote": "- **filter** the output to the declared fields (crucial for security, e.g. hiding passwords);",
-     "page": "models/response-model.md",
-     "fact_idx": 0
-    },
-    {
-     "quote": "- **validate** the returned data — if your code returns something invalid (e.g. a missing field), that's a bug in your app, and FastAPI responds with a server error instead of sending wrong data;",
-     "page": "models/response-model.md",
-     "fact_idx": 0
-    },
-    {
-     "quote": "**Priority:** if both are present, `response_model` wins.",
-     "page": "models/response-model.md",
-     "fact_idx": 1
-    }
-   ],
-   "alt_evidence": [],
-   "changes": null,
-   "affects": null,
-   "source_turn": null,
-   "recall_distance": 0,
-   "closed_book": {
-    "correct": true,
-    "accuracy": 1.0,
-    "unknown": false,
-    "empty": false,
-    "response": "Set `response_model=ItemPublic` on the endpoint. FastAPI uses `response_model` in preference to the return annotation, so it validates and filters the response to the public fields.",
-    "model": "gpt-6-luna",
-    "settings": {
-     "model": "gpt-6-luna",
-     "temperature": null,
-     "temperature_requested": null,
-     "seed": 42,
-     "reasoning_effort": null,
-     "reasoning_effort_requested": null,
-     "max_tokens": 4096,
-     "max_tokens_param": "max_completion_tokens"
-    },
-    "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
-   }
-  },
-  {
-   "turn": 2,
-   "turn_type": "followup",
-   "type": "multi",
-   "question": "For that public model, I want tax omitted when it was never supplied, but retained when it was explicitly supplied as 10.5. Which option does that, and why isn't excluding defaults equivalent?",
-   "standalone_question": "For a FastAPI response model whose tax field defaults to 10.5, which decorator option omits tax when unset but retains an explicitly supplied tax=10.5, and how does that differ from excluding defaults?",
-   "answer": "Use response_model_exclude_unset=True. Explicitly supplied values remain even when equal to their defaults. response_model_exclude_defaults instead omits values equal to their defaults, including an explicitly supplied 10.5.",
-   "key_facts": [
-    "response_model_exclude_unset omits unset fields but retains explicitly set values equal to defaults.",
-    "response_model_exclude_defaults omits fields whose values equal their defaults."
-   ],
-   "fact_meta": [
-    {
-     "accept_alternatives": [],
-     "tags": [
-      "condition",
-      "confusable"
-     ]
-    },
-    {
-     "accept_alternatives": [],
-     "tags": [
-      "confusable"
-     ]
-    }
-   ],
-   "key_entities": [
-    "response_model_exclude_unset",
-    "response_model_exclude_defaults",
-    "10.5"
-   ],
-   "evidence_pages": [],
-   "depends_on": [
-    1
-   ],
-   "evidence": [
-    {
-     "quote": "Values explicitly set, even if equal to the default (like `baz`'s `\"tax\": 10.5`), are included.",
-     "page": "models/response-model.md",
-     "fact_idx": 0
-    },
-    {
-     "quote": "| `response_model_exclude_unset` | Omit fields not explicitly set |",
-     "page": "models/response-model.md",
-     "fact_idx": 0
-    },
-    {
-     "quote": "| `response_model_exclude_defaults` | Omit fields equal to their default |",
-     "page": "models/response-model.md",
-     "fact_idx": 1
-    }
-   ],
-   "alt_evidence": [],
-   "changes": null,
-   "affects": null,
-   "source_turn": null,
-   "recall_distance": 1,
-   "closed_book": {
-    "correct": true,
-    "accuracy": 1.0,
-    "unknown": false,
-    "empty": false,
-    "response": "Use `response_model_exclude_unset=True`. It omits `tax` if it wasn’t explicitly set, but retains an explicitly supplied `tax=10.5`. By contrast, `response_model_exclude_defaults=True` omits `tax` whenever its value equals the default, even if explicitly supplied.",
-    "model": "gpt-6-luna",
-    "settings": {
-     "model": "gpt-6-luna",
-     "temperature": null,
-     "temperature_requested": null,
-     "seed": 42,
-     "reasoning_effort": null,
-     "reasoning_effort_requested": null,
-     "max_tokens": 4096,
-     "max_tokens_param": "max_completion_tokens"
-    },
-    "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
-   }
-  },
-  {
-   "turn": 3,
-   "turn_type": "new",
-   "type": "code",
-   "question": "On successful upserts, add X-Cat-Dog with the value 'alone in the world', but keep filtering through ItemPublic. Show the minimal endpoint pattern; assume ItemPublic and load_item are defined.",
-   "standalone_question": "Show a minimal FastAPI PUT /items/{item_id} endpoint that returns load_item(item_id), filters it with response_model=ItemPublic, and sets X-Cat-Dog to 'alone in the world' without returning a Response directly. Assume ItemPublic and load_item exist.",
-   "answer": "```python\nfrom fastapi import Response\n\n@app.put('/items/{item_id}', status_code=200, response_model=ItemPublic)\ndef upsert_item(item_id: str, response: Response):\n    response.headers['X-Cat-Dog'] = 'alone in the world'\n    return load_item(item_id)\n```\nThe injected temporary Response carries the header; the returned data still goes through the response model.",
-   "key_facts": [
-    "Set X-Cat-Dog on the injected Response and return ordinary data to preserve response-model filtering."
-   ],
-   "fact_meta": [
-    {
-     "accept_alternatives": [],
-     "tags": [
-      "condition"
-     ]
-    }
-   ],
-   "key_entities": [
-    "Response",
-    "X-Cat-Dog",
-    "alone in the world",
-    "response_model"
-   ],
-   "evidence_pages": [
-    "responses/response-headers-and-cookies.md"
-   ],
-   "depends_on": [
-    0,
-    1
-   ],
-   "evidence": [
-    {
-     "quote": "    response.headers[\"X-Cat-Dog\"] = \"alone in the world\"",
-     "page": "responses/response-headers-and-cookies.md",
-     "fact_idx": 0
-    },
-    {
-     "quote": "Remember: a directly returned response skips `response_model` validation/filtering — make sure the content is what you intend to send ([Custom Responses](custom-responses.md)).",
-     "page": "responses/response-headers-and-cookies.md",
-     "fact_idx": 0
-    }
-   ],
-   "alt_evidence": [],
-   "changes": null,
-   "affects": null,
-   "source_turn": null,
-   "recall_distance": 3,
-   "closed_book": {
-    "correct": true,
-    "accuracy": 1.0,
-    "unknown": false,
-    "empty": false,
-    "response": "```python\nfrom fastapi import Response\n\n@app.put(\"/items/{item_id}\", response_model=ItemPublic)\ndef update_item(item_id: int, response: Response):\n    response.headers[\"X-Cat-Dog\"] = \"alone in the world\"\n    return load_item(item_id)\n```",
-    "model": "gpt-6-luna",
-    "settings": {
-     "model": "gpt-6-luna",
-     "temperature": null,
-     "temperature_requested": null,
-     "seed": 42,
-     "reasoning_effort": null,
-     "reasoning_effort_requested": null,
-     "max_tokens": 4096,
-     "max_tokens_param": "max_completion_tokens"
-    },
-    "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
-   }
-  },
-  {
-   "turn": 4,
-   "turn_type": "update",
-   "type": "procedure",
-   "question": "Change the success contract: replacement stays 200, but creating a new item must now return 201. Keep the public-model filtering and successful-response header. How should I change the implementation without switching to a directly returned JSONResponse?",
-   "standalone_question": "A FastAPI upsert uses status_code=200, response_model=ItemPublic, and an injected Response to set X-Cat-Dog. Change it so replacement returns 200 and creation returns 201 while preserving filtering and the header, without directly returning JSONResponse.",
-   "answer": "Keep status_code=200 on the decorator. In the creation branch, set response.status_code = status.HTTP_201_CREATED on the injected Response. Keep setting the header there and return the item data normally; the per-request status overrides the decorator while response-model serialization remains active.",
-   "key_facts": [
-    "Set the injected Response.status_code to status.HTTP_201_CREATED only for creation, leaving replacement at 200.",
-    "Changing the injected Response status preserves response-model serialization."
-   ],
-   "fact_meta": [
-    {
-     "accept_alternatives": [],
-     "tags": [
-      "condition",
-      "confusable"
-     ]
-    },
-    {
-     "accept_alternatives": [],
-     "tags": []
-    }
-   ],
-   "key_entities": [
-    "Response",
-    "response.status_code",
-    "status.HTTP_201_CREATED",
-    "200"
-   ],
-   "evidence_pages": [],
-   "depends_on": [
-    0,
-    1,
-    3
-   ],
-   "evidence": [
     {
      "quote": "        response.status_code = status.HTTP_201_CREATED",
      "page": "responses/status-codes.md",
      "fact_idx": 0
     },
     {
-     "quote": "Your return value is still serialized through the response model.",
-     "page": "responses/status-codes.md",
+     "quote": "Our upsert route is /artifacts/{artifact_id}.",
+     "user_turn": 0,
      "fact_idx": 1
     }
    ],
    "alt_evidence": [],
-   "changes": [
-    {
-     "what": "Successful creation status",
-     "from": "200 for both creation and replacement",
-     "to": "201 for creation; 200 for replacement"
-    }
-   ],
-   "affects": [
-    9,
-    13,
-    18
-   ],
+   "changes": null,
+   "affects": null,
    "source_turn": null,
-   "recall_distance": 4,
-   "closed_book": {
+   "recall_distance": 0,
+   "closed_book_knowledge": {
     "correct": true,
     "accuracy": 1.0,
+    "response": "```python\nfrom fastapi import Response, status\n\n@app.put(\"/artifacts/{artifact_id}\", response_model=ArtifactOut)\ndef upsert_artifact(artifact_id: str, response: Response):\n    record, created = save_artifact(artifact_id)\n    response.status_code = status.HTTP_201_CREATED if created else status.HTTP_200_OK\n    return record\n```",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
     "unknown": false,
     "empty": false,
-    "response": "Set the injected `Response` status in each branch, then return the item as usual. FastAPI will still apply `ItemPublic` filtering and include the header:\n\n```python\n@app.put(\"/items/{item_id}\", response_model=ItemPublic, status_code=200)\nasync def upsert_item(item_id: str, response: Response):\n    response.headers[\"X-Cat-Dog\"] = \"catdog\"\n\n    if item_exists(item_id):\n        response.status_code = 200\n        item = replace_item(item_id)\n    else:\n        response.status_code = 201\n        item = create_item(item_id)\n\n    return item\n```",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -413,30 +121,192 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
-   "turn": 5,
+   "turn": 1,
    "turn_type": "new",
    "type": "multi",
-   "question": "A teammate suggests returning JSONResponse(content=stored_item) directly everywhere while leaving response_model=ItemPublic on the decorator. Would that still validate and hide internal fields? Would OpenAPI infer the directly returned response's shape?",
-   "standalone_question": "If a FastAPI endpoint declares response_model=ItemPublic but directly returns JSONResponse(content=stored_item), does FastAPI validate or filter stored_item, and does it infer the directly returned response shape for OpenAPI?",
-   "answer": "No. A directly returned Response instance is sent as-is, bypassing validation, response-model filtering, and conversion. Its shape is not inferred from that instance; declare the intended documentation with response_class and/or responses=.",
+   "question": "For our artifact responses, the custom header is X-Forge-Stamp, the cookie is forge_ticket, and its lifetime is 1380 seconds. Capture those settings for later code. Separately, what cookie key and value does the simple injected-response example use?",
+   "asks": [
+    "Capture the project's response transport settings",
+    "Identify the sample cookie key and value"
+   ],
+   "standalone_question": "For our artifact responses, the custom header is X-Forge-Stamp, the cookie is forge_ticket, and its lifetime is 1380 seconds. Capture those settings for later code. Separately, what cookie key and value does the simple injected-response example use?",
+   "answer": "Project settings: header X-Forge-Stamp; cookie forge_ticket; max_age=1380 seconds. The example instead calls response.set_cookie(key=\"fakesession\", value=\"fake-cookie-session-value\").",
    "key_facts": [
-    "A directly returned JSONResponse bypasses validation, response-model filtering, and conversion even when response_model is declared.",
-    "Direct-response shape is not inferred from the instance; response_class and/or responses= provide explicit documentation."
+    "The project uses X-Forge-Stamp and forge_ticket with a lifetime of 1380 seconds.",
+    "The injected-response example sets fakesession to fake-cookie-session-value."
    ],
    "fact_meta": [
     {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
-      "negation",
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "X-Forge-Stamp",
+    "forge_ticket",
+    "1380",
+    "fakesession",
+    "fake-cookie-session-value"
+   ],
+   "evidence_pages": [
+    "responses/response-headers-and-cookies.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "the custom header is X-Forge-Stamp, the cookie is forge_ticket, and its lifetime is 1380 seconds.",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "    response.set_cookie(key=\"fakesession\", value=\"fake-cookie-session-value\")",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
+   }
+  },
+  {
+   "turn": 2,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "If I set those transport fields on an injected Response and return a database record, are they copied to the final response while filtering still runs? Would returning a JSONResponse instead retain that filtering?",
+   "asks": [
+    "Explain injected-response metadata propagation",
+    "Contrast direct-response filtering"
+   ],
+   "standalone_question": "If I set response headers and cookies on an injected Response and return a database record, are they copied to the final response while filtering still runs? Would returning a JSONResponse instead retain that filtering?",
+   "answer": "Yes: when you return data normally, FastAPI copies the temporary response's headers and cookies onto the final response and still applies response_model filtering. A directly returned JSONResponse skips that validation and filtering.",
+   "key_facts": [
+    "Metadata on the injected temporary Response is copied to the final response while response_model filtering remains active.",
+    "A directly returned response skips response_model validation and filtering."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
       "condition"
      ]
     },
     {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
       "negation"
@@ -444,25 +314,154 @@
     }
    ],
    "key_entities": [
-    "JSONResponse",
     "Response",
-    "response_class",
-    "responses="
+    "JSONResponse",
+    "response_model"
    ],
-   "evidence_pages": [
-    "responses/custom-responses.md"
-   ],
+   "evidence_pages": [],
    "depends_on": [
     1
    ],
    "evidence": [
     {
-     "quote": "Any instance of `Response` (or a subclass) is sent **as is** — no validation, no response-model filtering, no conversion (`docs_src/response_directly/tutorial001_py310.py`):",
+     "quote": "Internally, the injected response's raw headers are appended to the final response (`response.headers.raw.extend(solved_result.response.headers.raw)` in `fastapi/routing.py`).",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Remember: a directly returned response skips `response_model` validation/filtering — make sure the content is what you intend to send ([Custom Responses](custom-responses.md)).",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy": 1.0,
+    "response": "Yes. FastAPI copies headers and cookies set on the injected `Response` to the final response, and response-model filtering still runs on the returned database record. Returning a `JSONResponse` directly bypasses that filtering.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
+   }
+  },
+  {
+   "turn": 3,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "Two compatibility checks before I add export endpoints: in the legacy XML example, what is the root element and response media type? In the direct JSON example with a timestamp, what conversion happens before constructing the response?",
+   "asks": [
+    "Identify the XML example's root and media type",
+    "Explain the timestamp conversion in the direct JSON example"
+   ],
+   "standalone_question": "Two compatibility checks before I add export endpoints: in the legacy XML example, what is the root element and response media type? In the direct JSON example with a timestamp, what conversion happens before constructing the response?",
+   "answer": "The XML root is shampoo, and the response uses media_type=\"application/xml\". The JSON example first calls jsonable_encoder(item), converting its datetime timestamp into a string, and passes that JSON-compatible result to JSONResponse.",
+   "key_facts": [
+    "The legacy XML example has a shampoo root and uses application/xml.",
+    "The direct JSON example calls jsonable_encoder(item) to convert the datetime into a string before constructing JSONResponse."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "shampoo",
+    "application/xml",
+    "jsonable_encoder",
+    "datetime",
+    "JSONResponse"
+   ],
+   "evidence_pages": [
+    "responses/custom-responses.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "    <shampoo>",
      "page": "responses/custom-responses.md",
      "fact_idx": 0
     },
     {
-     "quote": "Note: if you return a `Response` directly, the OpenAPI docs won't know its shape — document it with `response_class` and/or `responses=` ([Extending OpenAPI](../openapi/extending-openapi.md)).",
+     "quote": "    return Response(content=data, media_type=\"application/xml\")",
+     "page": "responses/custom-responses.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    json_compatible_item_data = jsonable_encoder(item)",
+     "page": "responses/custom-responses.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "Because nothing is converted for you, make sure the content is serializable — here `jsonable_encoder` turns the `datetime` into a string first.",
      "page": "responses/custom-responses.md",
      "fact_idx": 1
     }
@@ -471,13 +470,18 @@
    "changes": null,
    "affects": null,
    "source_turn": null,
-   "recall_distance": 4,
-   "closed_book": {
-    "correct": true,
-    "accuracy": 1.0,
-    "unknown": false,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
     "empty": false,
-    "response": "No. Returning `JSONResponse` bypasses `response_model` validation and filtering. OpenAPI still documents the declared `ItemPublic`; it does not infer the shape from `stored_item`.",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -490,22 +494,70 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
-   "turn": 6,
-   "turn_type": "followup",
+   "turn": 4,
+   "turn_type": "update",
    "type": "code",
-   "question": "For a separate export helper, I do need to return JSONResponse directly. Its Item object contains a datetime timestamp. Show the conversion before constructing the response.",
-   "standalone_question": "A FastAPI export helper must return JSONResponse directly from an Item model containing a datetime timestamp. Show how to convert the model to JSON-compatible content before constructing JSONResponse.",
-   "answer": "```python\nfrom fastapi.encoders import jsonable_encoder\nfrom fastapi.responses import JSONResponse\n\ncontent = jsonable_encoder(item)\nreturn JSONResponse(content=content)\n```\nThe explicit conversion makes the datetime serializable, turning it into a string.",
+   "question": "Change the cookie lifetime from 1380 to 2460 seconds; keep its name unchanged. Show the updated set_cookie call using ticket_value, on the response object that lets us keep output filtering.",
+   "asks": [
+    "Update the cookie call while preserving filtering"
+   ],
+   "standalone_question": "Change the project's cookie lifetime from 1380 to 2460 seconds; keep its previously chosen name unchanged. Show the updated set_cookie call using ticket_value, on the response object that lets us keep output filtering.",
+   "answer": "On the injected Response parameter:\n\nresponse.set_cookie(key=\"forge_ticket\", value=ticket_value, max_age=2460)\n\nReturn your data normally so response_model filtering still runs.",
    "key_facts": [
-    "Apply jsonable_encoder to the model before passing it to a directly constructed JSONResponse so datetime values become strings."
+    "The cookie remains forge_ticket, but its lifetime is now 2460 seconds.",
+    "Setting the cookie on the injected Response and returning data normally preserves response-model filtering."
    ],
    "fact_meta": [
     {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
       "condition"
@@ -513,32 +565,66 @@
     }
    ],
    "key_entities": [
-    "jsonable_encoder",
-    "JSONResponse",
-    "datetime"
+    "forge_ticket",
+    "2460",
+    "ticket_value",
+    "max_age",
+    "Response"
    ],
    "evidence_pages": [],
    "depends_on": [
-    5
+    1,
+    2
    ],
    "evidence": [
     {
-     "quote": "Because nothing is converted for you, make sure the content is serializable — here `jsonable_encoder` turns the `datetime` into a string first.",
-     "page": "responses/custom-responses.md",
+     "quote": "Change the cookie lifetime from 1380 to 2460 seconds; keep its name unchanged.",
+     "user_turn": 4,
      "fact_idx": 0
+    },
+    {
+     "quote": "the cookie is forge_ticket",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Declare a parameter of type `Response`.",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "FastAPI injects a **temporary** response object; you set headers/cookies on it and return your data normally.",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 1
     }
    ],
    "alt_evidence": [],
-   "changes": null,
-   "affects": null,
+   "changes": [
+    {
+     "what": "Project cookie lifetime in seconds",
+     "from": 1380,
+     "to": 2460
+    }
+   ],
+   "affects": [
+    9,
+    13,
+    17,
+    18
+   ],
    "source_turn": null,
-   "recall_distance": 1,
-   "closed_book": {
-    "correct": true,
-    "accuracy": 1.0,
+   "recall_distance": 3,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "```python\nresponse.set_cookie(key=\"ticket\", value=ticket_value, max_age=2460)\n```",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": null,
     "unknown": false,
     "empty": false,
-    "response": "```python\nfrom fastapi.encoders import jsonable_encoder\nfrom fastapi.responses import JSONResponse\n\nreturn JSONResponse(content=jsonable_encoder(item))\n```",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -551,33 +637,314 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
+   }
+  },
+  {
+   "turn": 5,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm testing sparse JSON responses. With response_model_exclude_unset=True, what exact JSON does the foo example produce, and does baz's explicitly supplied tax of 10.5 survive?",
+   "asks": [
+    "Give the sparse foo response",
+    "Explain explicitly supplied default-valued tax"
+   ],
+   "standalone_question": "I'm testing sparse JSON responses. With response_model_exclude_unset=True, what exact JSON does the foo example produce, and does baz's explicitly supplied tax of 10.5 survive?",
+   "answer": "foo produces {\"name\": \"Foo\", \"price\": 50.2}. Yes: baz's explicitly supplied \"tax\": 10.5 remains, even though it equals the default.",
+   "key_facts": [
+    "The foo response is {\"name\": \"Foo\", \"price\": 50.2}, without default description, tax, or tags.",
+    "exclude_unset retains explicitly set values even when they equal the default, including baz's tax of 10.5."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "foo",
+    "Foo",
+    "50.2",
+    "baz",
+    "10.5",
+    "response_model_exclude_unset"
+   ],
+   "evidence_pages": [
+    "models/response-model.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "For `\"foo\": {\"name\": \"Foo\", \"price\": 50.2}` the response is `{\"name\": \"Foo\", \"price\": 50.2}` — no default `description`, `tax` or `tags`.",
+     "page": "models/response-model.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Values explicitly set, even if equal to the default (like `baz`'s `\"tax\": 10.5`), are included.",
+     "page": "models/response-model.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy": 1.0,
+    "response": "`foo` produces `{\"name\":\"Foo\",\"price\":50.2}`. Yes—baz’s explicitly supplied `tax` of `10.5` survives.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
+   }
+  },
+  {
+   "turn": 6,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "For a public artifact view, would response_model_include or response_model_exclude also narrow the generated schema? What should I use if generated clients must see the exact public shape?",
+   "asks": [
+    "Explain include/exclude schema behavior",
+    "Recommend an exact public schema design"
+   ],
+   "standalone_question": "For a public artifact response, would response_model_include or response_model_exclude also narrow the generated schema? What should I use if generated clients must see the exact public shape?",
+   "answer": "No. Those options filter output, but OpenAPI still shows the full model. Use a separate public output model so the schema documents exactly the returned shape.",
+   "key_facts": [
+    "response_model_include and response_model_exclude do not narrow the OpenAPI schema.",
+    "Separate models document exactly what is returned and are preferred for distinct response shapes."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "response_model_include",
+    "response_model_exclude",
+    "OpenAPI"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "with include/exclude, the OpenAPI schema still shows the **full** model, while separate classes document exactly what is returned.",
+     "page": "models/response-model.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Prefer separate models over include/exclude:",
+     "page": "models/response-model.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "while separate classes document exactly what is returned.",
+     "page": "models/response-model.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy": 1.0,
+    "response": "No. `response_model_include` and `response_model_exclude` filter the runtime response but don’t reliably narrow the generated OpenAPI schema. Use a dedicated response model that defines the exact public shape so generated clients see it.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 7,
    "turn_type": "same_doc_new_topic",
-   "type": "multi",
-   "question": "I'm also designing a delete endpoint and conditional reads. Which exact status codes forbid a response body, and what happens to an ordinary returned value when one of those statuses is used?",
-   "standalone_question": "Which exact HTTP status codes does FastAPI treat as forbidding a response body, and what happens to an ordinary returned value and the documented response body for those statuses?",
-   "answer": "Codes below 200, plus 204, 205, and 304, forbid a body. FastAPI documents no response body for them and sends an empty body even if the endpoint returned a value.",
+   "type": "fact",
+   "question": "For a bodyless acknowledgment endpoint, which exact status-code set does FastAPI recognize as forbidding a response body?",
+   "asks": [
+    "List the body-forbidden status codes"
+   ],
+   "standalone_question": "For a bodyless acknowledgment endpoint, which exact status-code set does FastAPI recognize as forbidding a response body?",
+   "answer": "All status codes below 200, plus 204, 205, and 304.",
    "key_facts": [
-    "The body-forbidden statuses are below 200, 204, 205, and 304.",
-    "For these statuses, FastAPI documents no response body and empties the outgoing body even if a value was returned."
+    "FastAPI recognizes codes below 200 and codes 204, 205, and 304 as forbidding a response body."
    ],
    "fact_meta": [
     {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
       "range",
       "confusable"
-     ]
-    },
-    {
-     "accept_alternatives": [],
-     "tags": [
-      "condition"
      ]
     }
    ],
@@ -596,11 +963,6 @@
      "quote": "FastAPI knows which codes forbid a body (`is_body_allowed_for_status_code`: below 200, `204`, `205`, `304`).",
      "page": "responses/status-codes.md",
      "fact_idx": 0
-    },
-    {
-     "quote": "For those it documents no response body and sends an empty body even if your function returned something.",
-     "page": "responses/status-codes.md",
-     "fact_idx": 1
     }
    ],
    "alt_evidence": [],
@@ -608,12 +970,16 @@
    "affects": null,
    "source_turn": 0,
    "recall_distance": 7,
-   "closed_book": {
+   "closed_book_knowledge": {
     "correct": false,
     "accuracy": 0.0,
+    "response": "FastAPI recognizes `{204, 304}` as status codes that forbid a response body.",
+    "fact_results": [
+     false
+    ],
+    "judge_skipped": null,
     "unknown": false,
     "empty": false,
-    "response": "FastAPI treats every integer status code below 200, plus **204** and **304**, as forbidding a body. Any ordinary returned value is sent as an empty body, and FastAPI omits the response body schema from the OpenAPI documentation.",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -626,56 +992,102 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 8,
    "turn_type": "new",
    "type": "multi",
-   "question": "The item belongs to a catalog. For now, if that catalog is missing, a utility should stop processing and send 404 with {\"detail\": \"Item not found\"}. What should the utility do? Also, is a missing required field in my returned ItemPublic data a client validation error?",
-   "standalone_question": "How should a FastAPI utility immediately stop processing with status 404 and body {\"detail\": \"Item not found\"}? Separately, if endpoint output is missing a required response-model field, is that a client validation error and what status results?",
-   "answer": "Raise HTTPException(status_code=404, detail='Item not found'); raising it stops processing even inside a utility. Invalid response-model output is an application bug: FastAPI raises ResponseValidationError and, without a custom handler, the client receives 500, not a request-validation 422.",
+   "question": "I'm adding failure tests. What status and JSON message does the custom unicorn handler produce for yolo? Separately, if my returned artifact is missing a required output field, is that treated as a client validation error?",
+   "asks": [
+    "Give the custom unicorn error response",
+    "Classify invalid endpoint output"
+   ],
+   "standalone_question": "I'm adding failure tests. What status and JSON message does the custom unicorn handler produce for yolo? Separately, if my returned artifact is missing a required output field, is that treated as a client validation error?",
+   "answer": "For yolo, the handler returns 418 with {\"message\": \"Oops! yolo did something. There goes a rainbow...\"}. Invalid endpoint output is an application bug: it raises ResponseValidationError and, by default, the client gets 500 Internal Server Error, not a client-validation response.",
    "key_facts": [
-    "Raise HTTPException with status 404 and detail='Item not found' to stop processing and produce the detail-wrapped error body.",
-    "Invalid response-model output raises ResponseValidationError and defaults to 500 rather than the request-validation 422."
+    "The yolo unicorn response is 418 with the message 'Oops! yolo did something. There goes a rainbow...'.",
+    "Output that violates the response model raises ResponseValidationError and defaults to a 500 response."
    ],
    "fact_meta": [
     {
-     "accept_alternatives": [],
-     "tags": []
-    },
-    {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
-      "confusable",
-      "negation"
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "confusable"
      ]
     }
    ],
    "key_entities": [
-    "HTTPException",
-    "404",
-    "Item not found",
+    "yolo",
+    "418",
+    "Oops!",
+    "There goes a rainbow...",
     "ResponseValidationError",
-    "500",
-    "422"
+    "500 Internal Server Error"
    ],
    "evidence_pages": [
     "errors/handling-errors.md"
    ],
-   "depends_on": [
-    1
-   ],
+   "depends_on": [],
    "evidence": [
     {
-     "quote": "- Because it is **raised**, not returned, it stops the request immediately — even from deep inside a utility function or a [dependency](../dependencies/dependency-injection-basics.md).",
+     "quote": "        status_code=418,",
      "page": "errors/handling-errors.md",
      "fact_idx": 0
     },
     {
-     "quote": "- The client receives status `404` and the JSON body `{\"detail\": \"Item not found\"}`.",
+     "quote": "        content={\"message\": f\"Oops! {exc.name} did something. There goes a rainbow...\"},",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    if name == \"yolo\":",
      "page": "errors/handling-errors.md",
      "fact_idx": 0
     },
@@ -694,13 +1106,18 @@
    "changes": null,
    "affects": null,
    "source_turn": null,
-   "recall_distance": 7,
-   "closed_book": {
-    "correct": true,
-    "accuracy": 1.0,
-    "unknown": false,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
     "empty": false,
-    "response": "Raise `HTTPException(status_code=404, detail=\"Item not found\")`. A missing required response-model field is a server-side response validation error—not a client validation error—and results in a 500 Internal Server Error.",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -713,63 +1130,107 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.5,
+    "response": "Register `unicorn_exception_handler` with `@app.exception_handler(UnicornException)`; when the `yolo` route raises `UnicornException`, the handler returns status **418** and JSON `{\"message\": \"Oops! yolo did something. There goes a unicorn!\"}`. A missing required field in data returned against a `response_model` is a response-validation failure, not a client validation error; FastAPI treats it as a server error.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "not_found": false,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 9,
    "turn_type": "recall",
-   "type": "multi",
-   "question": "Remind me of the current success-status split for our upsert and the mechanism we chose to preserve public-field filtering. Should the creation branch return JSONResponse?",
-   "standalone_question": "For the upsert whose updated contract is replacement=200 and creation=201, and whose public output must remain response-model filtered, what status-changing mechanism should be used? Should its creation branch directly return JSONResponse?",
-   "answer": "Replacement stays 200 and creation returns 201. Keep the decorator's 200 default, set response.status_code = status.HTTP_201_CREATED on the injected Response only in the creation branch, and return ordinary item data. Do not directly return JSONResponse for that branch, because it would bypass filtering.",
+   "type": "code",
+   "question": "Can you recover our current header name, cookie name, and cookie lifetime in a short snippet using stamp_value and ticket_value? Keep the approach that protects the output model.",
+   "asks": [
+    "Recover current transport settings in a filtering-preserving snippet"
+   ],
+   "standalone_question": "Show a short snippet using the project's previously chosen current header name, cookie name, and cookie lifetime, with stamp_value and ticket_value. Keep the approach that preserves response-model filtering.",
+   "answer": "Use the injected Response parameter, then return data normally:\n\nresponse.headers[\"X-Forge-Stamp\"] = stamp_value\nresponse.set_cookie(key=\"forge_ticket\", value=ticket_value, max_age=2460)\n\nThis keeps response_model filtering active.",
    "key_facts": [
-    "The current split is 200 for replacement and 201 for creation, implemented with the injected Response status override.",
-    "Return ordinary data rather than JSONResponse to preserve response-model filtering."
+    "The current settings are X-Forge-Stamp, forge_ticket, and 2460 seconds.",
+    "Use the injected Response for metadata and return ordinary data to retain output-model filtering."
    ],
    "fact_meta": [
     {
+     "source": "user",
      "accept_alternatives": [],
-     "tags": [
-      "condition",
-      "confusable"
-     ]
+     "tags": []
     },
     {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
-      "negation"
+      "condition"
      ]
     }
    ],
    "key_entities": [
-    "200",
-    "201",
-    "response.status_code",
-    "status.HTTP_201_CREATED",
-    "JSONResponse"
+    "X-Forge-Stamp",
+    "forge_ticket",
+    "2460",
+    "Response",
+    "stamp_value",
+    "ticket_value"
    ],
    "evidence_pages": [],
    "depends_on": [
-    0,
-    4,
-    5
+    1,
+    2,
+    4
    ],
    "evidence": [
     {
-     "quote": "        response.status_code = status.HTTP_201_CREATED",
-     "page": "responses/status-codes.md",
+     "quote": "the custom header is X-Forge-Stamp, the cookie is forge_ticket",
+     "user_turn": 1,
      "fact_idx": 0
     },
     {
-     "quote": "Your return value is still serialized through the response model.",
-     "page": "responses/status-codes.md",
+     "quote": "Change the cookie lifetime from 1380 to 2460 seconds; keep its name unchanged.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "FastAPI injects a **temporary** response object; you set headers/cookies on it and return your data normally.",
+     "page": "responses/response-headers-and-cookies.md",
      "fact_idx": 1
     },
     {
-     "quote": "Any instance of `Response` (or a subclass) is sent **as is** — no validation, no response-model filtering, no conversion (`docs_src/response_directly/tutorial001_py310.py`):",
-     "page": "responses/custom-responses.md",
+     "quote": "Remember: a directly returned response skips `response_model` validation/filtering — make sure the content is what you intend to send ([Custom Responses](custom-responses.md)).",
+     "page": "responses/response-headers-and-cookies.md",
      "fact_idx": 1
     }
    ],
@@ -777,13 +1238,18 @@
    "changes": null,
    "affects": null,
    "source_turn": null,
-   "recall_distance": 9,
-   "closed_book": {
-    "correct": true,
-    "accuracy": 1.0,
-    "unknown": false,
+   "recall_distance": 8,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
     "empty": false,
-    "response": "Use FastAPI’s injected `Response` to set `response.status_code = 201` on creation; leave the replacement branch at 200. Return the normal response data so `response_model` filtering still applies—don’t return `JSONResponse` directly.",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -796,202 +1262,82 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 10,
    "turn_type": "new",
    "type": "multi",
-   "question": "How do I document 201 with ItemPublic and a possible 404 with a Message model containing message: str? Does putting model under responses also make runtime output conform to it?",
-   "standalone_question": "How can a FastAPI endpoint document an additional 201 response using ItemPublic and a 404 response using Message, whose field is message: str? Does responses={...: {'model': ...}} enforce those models at runtime?",
-   "answer": "Use responses={201: {'model': ItemPublic}, 404: {'model': Message}}. FastAPI converts these model entries into component schemas referenced from the response content. These declarations only document responses; they do not enforce runtime output or cause those statuses to be sent.",
+   "question": "I'm polishing the operation descriptions. How can I keep internal parameter notes in a docstring but out of OpenAPI? Also, what response_description text does the create-item example explicitly set, rather than leaving the default?",
+   "asks": [
+    "Hide internal docstring notes from OpenAPI",
+    "Identify the example's explicit response description"
+   ],
+   "standalone_question": "I'm polishing the operation descriptions. How can I keep internal parameter notes in a docstring but out of OpenAPI? Also, what response_description text does the create-item example explicitly set, rather than leaving the default?",
+   "answer": "Put a form-feed character, written as \\f in the docstring, before the internal notes; FastAPI keeps only the preceding text for the description. The example explicitly sets response_description=\"The created item\"; the default is \"Successful Response\".",
    "key_facts": [
-    "Use responses entries with model to document additional status-specific schemas.",
-    "responses declarations only document responses and do not enforce their runtime output."
+    "FastAPI truncates the OpenAPI description at the first form feed in the docstring.",
+    "The create-item example sets response_description to 'The created item', rather than the default 'Successful Response'."
    ],
    "fact_meta": [
     {
-     "accept_alternatives": [],
-     "tags": []
-    },
-    {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
-      "negation",
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
       "confusable"
      ]
-    }
-   ],
-   "key_entities": [
-    "responses",
-    "201",
-    "404",
-    "model",
-    "components/schemas"
-   ],
-   "evidence_pages": [
-    "openapi/extending-openapi.md"
-   ],
-   "depends_on": [
-    1,
-    4,
-    8
-   ],
-   "evidence": [
-    {
-     "quote": "`model` is not OpenAPI; FastAPI turns it into a JSON Schema placed under `components/schemas` and references it from `content → application/json → schema`.",
-     "page": "openapi/extending-openapi.md",
-     "fact_idx": 0
-    },
-    {
-     "quote": "> These only **document** responses.",
-     "page": "openapi/extending-openapi.md",
-     "fact_idx": 1
-    }
-   ],
-   "alt_evidence": [],
-   "changes": null,
-   "affects": null,
-   "source_turn": null,
-   "recall_distance": 9,
-   "closed_book": {
-    "correct": true,
-    "accuracy": 1.0,
-    "unknown": false,
-    "empty": false,
-    "response": "```python\nfrom pydantic import BaseModel\n\nclass Message(BaseModel):\n    message: str\n\n@app.post(\n    \"/items/\",\n    responses={\n        201: {\"model\": ItemPublic, \"description\": \"Item created\"},\n        404: {\"model\": Message, \"description\": \"Not found\"},\n    },\n)\nasync def create_item():\n    ...\n```\n\n`responses={...: {\"model\": ...}}` documents the schemas in OpenAPI; it does **not** validate or serialize runtime responses. Use `response_model` for runtime validation of the endpoint’s main response.",
-    "model": "gpt-6-luna",
-    "settings": {
-     "model": "gpt-6-luna",
-     "temperature": null,
-     "temperature_requested": null,
-     "seed": 42,
-     "reasoning_effort": null,
-     "reasoning_effort_requested": null,
-     "max_tokens": 4096,
-     "max_tokens_param": "max_completion_tokens"
-    },
-    "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
-   }
-  },
-  {
-   "turn": 11,
-   "turn_type": "update",
-   "type": "code",
-   "question": "Actually, change only the missing-catalog error contract to 404 with {\"message\": \"Item not found\"}, not a detail wrapper. Keep this local to the endpoint rather than changing global handlers. Show the error branch that matches the Message schema we just declared.",
-   "standalone_question": "Change a FastAPI endpoint's missing-catalog response from HTTPException's 404 {\"detail\": \"Item not found\"} to a local 404 {\"message\": \"Item not found\"}. Without global exception-handler changes, show a branch matching a documented Message model with message: str.",
-   "answer": "```python\nif not catalog_exists:\n    return JSONResponse(\n        status_code=404,\n        content={'message': 'Item not found'},\n    )\n```\nImport JSONResponse from fastapi.responses. The explicit body matches Message; the responses model declaration does not validate this directly returned response.",
-   "key_facts": [
-    "Return a local JSONResponse with status 404 and content {'message': 'Item not found'} to avoid the default detail wrapper.",
-    "The documented Message model does not validate the directly returned JSONResponse."
-   ],
-   "fact_meta": [
-    {
-     "accept_alternatives": [],
-     "tags": [
-      "confusable"
-     ]
-    },
-    {
-     "accept_alternatives": [],
-     "tags": [
-      "negation"
-     ]
-    }
-   ],
-   "key_entities": [
-    "JSONResponse",
-    "404",
-    "message",
-    "Item not found"
-   ],
-   "evidence_pages": [],
-   "depends_on": [
-    5,
-    8,
-    10
-   ],
-   "evidence": [
-    {
-     "quote": "    return JSONResponse(status_code=404, content={\"message\": \"Item not found\"})",
-     "page": "openapi/extending-openapi.md",
-     "fact_idx": 0
-    },
-    {
-     "quote": "> These only **document** responses.",
-     "page": "openapi/extending-openapi.md",
-     "fact_idx": 1
-    },
-    {
-     "quote": "Any instance of `Response` (or a subclass) is sent **as is** — no validation, no response-model filtering, no conversion (`docs_src/response_directly/tutorial001_py310.py`):",
-     "page": "responses/custom-responses.md",
-     "fact_idx": 1
-    }
-   ],
-   "alt_evidence": [],
-   "changes": [
-    {
-     "what": "Missing-catalog error body and local implementation",
-     "from": "Raise HTTPException for 404 with {'detail': 'Item not found'}",
-     "to": "Return local JSONResponse for 404 with {'message': 'Item not found'}"
-    }
-   ],
-   "affects": [
-    13,
-    18
-   ],
-   "source_turn": null,
-   "recall_distance": 6,
-   "closed_book": {
-    "correct": false,
-    "accuracy": 0.5,
-    "unknown": false,
-    "empty": false,
-    "response": "```python\nclass Message(BaseModel):\n    message: str\n\n@app.get(\"/catalog/{item_id}\", responses={404: {\"model\": Message}})\nasync def get_item(item_id: str):\n    item = catalog.get(item_id)\n    if item is None:\n        return JSONResponse(\n            status_code=404,\n            content=Message(message=\"Item not found\").model_dump(),\n        )\n```",
-    "model": "gpt-6-luna",
-    "settings": {
-     "model": "gpt-6-luna",
-     "temperature": null,
-     "temperature_requested": null,
-     "seed": 42,
-     "reasoning_effort": null,
-     "reasoning_effort_requested": null,
-     "max_tokens": 4096,
-     "max_tokens_param": "max_completion_tokens"
-    },
-    "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
-   }
-  },
-  {
-   "turn": 12,
-   "turn_type": "new",
-   "type": "multi",
-   "question": "For the operation description, I want a public Markdown docstring followed by internal Sphinx parameter notes. What separator keeps the internal notes out of OpenAPI? Also, what is the default description of the main response if I don't supply one?",
-   "standalone_question": "In FastAPI, how can a function docstring contain public Markdown followed by internal Sphinx notes without exposing those notes in OpenAPI, and what is the default response_description?",
-   "answer": "Put a form feed, \\f, between the public text and internal notes; FastAPI uses only the docstring text before the first \\f for the description. response_description defaults to 'Successful Response'.",
-   "key_facts": [
-    "A form feed \\f truncates the OpenAPI docstring description before internal notes.",
-    "response_description defaults to 'Successful Response'."
-   ],
-   "fact_meta": [
-    {
-     "accept_alternatives": [],
-     "tags": []
-    },
-    {
-     "accept_alternatives": [],
-     "tags": []
     }
    ],
    "key_entities": [
     "\\f",
     "response_description",
+    "The created item",
     "Successful Response"
    ],
    "evidence_pages": [
@@ -1000,9 +1346,14 @@
    "depends_on": [],
    "evidence": [
     {
-     "quote": "To keep internal notes (e.g. Sphinx `:param:` lines) out of OpenAPI, put a form feed `\\f` in the docstring.",
+     "quote": "FastAPI keeps only the text before the first `\\f` (`route.description.split(\"\\f\")[0]` in `fastapi/routing.py`):",
      "page": "app-structure/path-operation-configuration.md",
      "fact_idx": 0
+    },
+    {
+     "quote": "    response_description=\"The created item\",",
+     "page": "app-structure/path-operation-configuration.md",
+     "fact_idx": 1
     },
     {
      "quote": "`response_description` describes the main response; it defaults to `\"Successful Response\"`.",
@@ -1015,12 +1366,17 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
-   "closed_book": {
+   "closed_book_knowledge": {
     "correct": true,
     "accuracy": 1.0,
+    "response": "Use a form-feed character (`\\f`) in the docstring; FastAPI includes only the text before it in OpenAPI. The create-item example sets `response_description=\"The created item\"`.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
     "unknown": false,
     "empty": false,
-    "response": "Put a form-feed character (`\\f`) between the public Markdown and internal Sphinx notes; FastAPI excludes everything after it from OpenAPI. The default `response_description` is `\"Successful Response\"`.",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -1033,65 +1389,382 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.5,
+    "response": "Put `\\f` in the operation’s docstring before the internal notes; FastAPI keeps the text before it as the OpenAPI description and excludes the text after it. In the create-item example, set `response_description=\"The item was created\"` on the path operation decorator.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "not_found": false,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   }
+  },
+  {
+   "turn": 11,
+   "turn_type": "update",
+   "type": "code",
+   "question": "Rename our custom response header from X-Forge-Stamp to X-Forge-Receipt. Show its updated assignment using stamp_value, and the extra setting needed for JavaScript on another origin to read it.",
+   "asks": [
+    "Apply the header rename",
+    "Expose the renamed header to cross-origin JavaScript"
+   ],
+   "standalone_question": "Rename our custom response header from X-Forge-Stamp to X-Forge-Receipt. Show its updated assignment using stamp_value, and the extra setting needed for JavaScript on another origin to read it.",
+   "answer": "response.headers[\"X-Forge-Receipt\"] = stamp_value\n\nAlso include expose_headers=[\"X-Forge-Receipt\"] in the CORSMiddleware configuration so JavaScript on another origin can read it.",
+   "key_facts": [
+    "The project header is now X-Forge-Receipt, replacing X-Forge-Stamp.",
+    "Cross-origin browser JavaScript needs the custom response header listed in CORSMiddleware expose_headers."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "X-Forge-Receipt",
+    "stamp_value",
+    "CORSMiddleware",
+    "expose_headers"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1,
+    2
+   ],
+   "evidence": [
+    {
+     "quote": "Rename our custom response header from X-Forge-Stamp to X-Forge-Receipt.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "For JavaScript in a browser on **another origin** to read a custom response header, list it in `CORSMiddleware(expose_headers=[...])`",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Project custom response header name",
+     "from": "X-Forge-Stamp",
+     "to": "X-Forge-Receipt"
+    }
+   ],
+   "affects": [
+    13,
+    16,
+    18
+   ],
+   "source_turn": null,
+   "recall_distance": 10,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy": 0.5,
+    "response": "```python\nresponse.headers[\"X-Forge-Receipt\"] = stamp_value\nresponse.headers[\"Access-Control-Expose-Headers\"] = \"X-Forge-Receipt\"\n```",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
+   }
+  },
+  {
+   "turn": 12,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For an explicit missing-item response, what exact JSON body does the additional-response example send, and which model is attached to its 404 entry? Does putting a model in responses automatically validate that error body at runtime?",
+   "asks": [
+    "Identify the additional-response example's 404 body and model",
+    "Explain whether additional-response models enforce runtime validation"
+   ],
+   "standalone_question": "For an explicit missing-item response, what exact JSON body does the additional-response example send, and which model is attached to its 404 entry? Does putting a model in responses automatically validate that error body at runtime?",
+   "answer": "It sends {\"message\": \"Item not found\"} in a JSONResponse with status 404, and the entry uses model Message. No: responses documents the response; it does not automatically validate or send that error body.",
+   "key_facts": [
+    "The example documents 404 with Message and explicitly returns {\"message\": \"Item not found\"}.",
+    "responses entries only document responses and do not automatically enforce runtime validation."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "404",
+    "Message",
+    "message",
+    "Item not found",
+    "responses",
+    "JSONResponse"
+   ],
+   "evidence_pages": [
+    "openapi/extending-openapi.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "@app.get(\"/items/{item_id}\", response_model=Item, responses={404: {\"model\": Message}})",
+     "page": "openapi/extending-openapi.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    return JSONResponse(status_code=404, content={\"message\": \"Item not found\"})",
+     "page": "openapi/extending-openapi.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "These only **document** responses.",
+     "page": "openapi/extending-openapi.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy": 1.0,
+    "response": "It sends `{\"message\": \"Item not found\"}` and attaches the `Message` model to the 404 response. No—declaring a model in `responses` documents the schema; it doesn’t automatically validate that error body at runtime.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 13,
    "turn_type": "synthesis",
    "type": "code",
-   "question": "Combine our current contract into one endpoint skeleton. Assume ItemPublic, Message, catalog_exists(item_id), and save_item(item_id) already exist; save_item returns (created, stored_dict). Include the success header, unset-field omission, both success statuses, the revised missing-catalog response, and the extra response schemas. Don't implement storage.",
-   "standalone_question": "Write a FastAPI PUT /items/{item_id} skeleton. ItemPublic, Message, catalog_exists(item_id), and save_item(item_id) exist; save_item returns (created, stored_dict). Replacement returns 200, creation returns 201, successful data is filtered by ItemPublic with unset fields omitted, and successful responses set X-Cat-Dog='alone in the world'. A missing catalog returns local 404 {'message': 'Item not found'}. Document 201 with ItemPublic and 404 with Message.",
-   "answer": "```python\nfrom fastapi import Response, status\nfrom fastapi.responses import JSONResponse\n\n@app.put(\n    '/items/{item_id}',\n    status_code=200,\n    response_model=ItemPublic,\n    response_model_exclude_unset=True,\n    responses={201: {'model': ItemPublic}, 404: {'model': Message}},\n)\ndef upsert_item(item_id: str, response: Response):\n    if not catalog_exists(item_id):\n        return JSONResponse(\n            status_code=404,\n            content={'message': 'Item not found'},\n        )\n    created, stored_dict = save_item(item_id)\n    if created:\n        response.status_code = status.HTTP_201_CREATED\n    response.headers['X-Cat-Dog'] = 'alone in the world'\n    return stored_dict\n```",
+   "question": "Combine our upsert route, current transport settings, and model-preserving 200/201 behavior into one endpoint. Assume ArtifactOut, save_artifact, stamp_value, and ticket_value already exist. Also make creation visible to generated clients without changing how runtime filtering works.",
+   "asks": [
+    "Combine the project's current route and transport settings",
+    "Preserve model filtering with dynamic success status",
+    "Document the creation response"
+   ],
+   "standalone_question": "Write one artifact upsert endpoint using the project's previously chosen route and current header and cookie settings. Assume ArtifactOut, save_artifact, stamp_value, and ticket_value already exist, with save_artifact returning a record and creation flag. Preserve response-model filtering with 200 on update and 201 on creation, and document creation for generated clients.",
+   "answer": "from fastapi import Response, status\n\n@app.put(\n    \"/artifacts/{artifact_id}\",\n    status_code=200,\n    response_model=ArtifactOut,\n    responses={201: {\"model\": ArtifactOut, \"description\": \"Artifact created\"}},\n)\ndef upsert_artifact(artifact_id: str, response: Response):\n    record, created = save_artifact(artifact_id)\n    response.headers[\"X-Forge-Receipt\"] = stamp_value\n    response.set_cookie(key=\"forge_ticket\", value=ticket_value, max_age=2460)\n    if created:\n        response.status_code = status.HTTP_201_CREATED\n    return record\n\nThe injected response carries metadata and status while ordinary returned data is filtered. responses documents 201; it does not implement the branch.",
    "key_facts": [
-    "Keep the 200 decorator default and set the injected Response to 201 only when created.",
-    "Successful ordinary data uses ItemPublic filtering, exclude_unset, and the injected X-Cat-Dog header.",
-    "Return the revised message-shaped 404 directly and document the additional 201 and 404 schemas with responses."
+    "Use /artifacts/{artifact_id}, X-Forge-Receipt, and forge_ticket with max_age=2460.",
+    "Set the injected Response status on creation and return the record normally to retain model filtering.",
+    "Declare the additional 201 response with responses; documentation does not implement the runtime status change."
    ],
    "fact_meta": [
     {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
       "condition"
      ]
     },
     {
-     "accept_alternatives": [],
-     "tags": []
-    },
-    {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
-      "confusable"
+      "negation"
      ]
     }
    ],
    "key_entities": [
-    "Response",
-    "200",
-    "201",
+    "/artifacts/{artifact_id}",
+    "X-Forge-Receipt",
+    "forge_ticket",
+    "2460",
+    "ArtifactOut",
+    "response.status_code",
     "status.HTTP_201_CREATED",
-    "response_model_exclude_unset",
-    "X-Cat-Dog",
-    "alone in the world",
-    "JSONResponse",
-    "404",
     "responses"
    ],
    "evidence_pages": [],
    "depends_on": [
-    1,
-    2,
-    3,
+    0,
     4,
-    10,
-    11
+    5,
+    11,
+    12
    ],
    "evidence": [
     {
-     "quote": "        response.status_code = status.HTTP_201_CREATED",
-     "page": "responses/status-codes.md",
+     "quote": "Our upsert route is /artifacts/{artifact_id}.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Rename our custom response header from X-Forge-Stamp to X-Forge-Receipt.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "the cookie is forge_ticket",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Change the cookie lifetime from 1380 to 2460 seconds; keep its name unchanged.",
+     "user_turn": 4,
      "fact_idx": 0
     },
     {
@@ -1100,260 +1773,19 @@
      "fact_idx": 1
     },
     {
-     "quote": "| `response_model_exclude_unset` | Omit fields not explicitly set |",
-     "page": "models/response-model.md",
+     "quote": "        response.status_code = status.HTTP_201_CREATED",
+     "page": "responses/status-codes.md",
      "fact_idx": 1
     },
     {
-     "quote": "    response.headers[\"X-Cat-Dog\"] = \"alone in the world\"",
-     "page": "responses/response-headers-and-cookies.md",
-     "fact_idx": 1
-    },
-    {
-     "quote": "    return JSONResponse(status_code=404, content={\"message\": \"Item not found\"})",
-     "page": "openapi/extending-openapi.md",
+     "quote": "OpenAPI doesn't know about the extra status.",
+     "page": "responses/status-codes.md",
      "fact_idx": 2
     },
     {
-     "quote": "FastAPI merges `responses` with what it derives from `response_model` and `status_code` (`tutorial003_py310.py`):",
+     "quote": "These only **document** responses.",
      "page": "openapi/extending-openapi.md",
      "fact_idx": 2
-    }
-   ],
-   "alt_evidence": [],
-   "changes": null,
-   "affects": null,
-   "source_turn": null,
-   "recall_distance": 12,
-   "closed_book": {
-    "correct": true,
-    "accuracy": 1.0,
-    "unknown": false,
-    "empty": false,
-    "response": "```python\nfrom fastapi import FastAPI, Response\nfrom fastapi.responses import JSONResponse\n\napp = FastAPI()\n\n@app.put(\n    \"/items/{item_id}\",\n    response_model=ItemPublic,\n    response_model_exclude_unset=True,\n    responses={\n        201: {\"model\": ItemPublic},\n        404: {\"model\": Message},\n    },\n)\ndef replace_item(item_id: str, response: Response):\n    if not catalog_exists(item_id):\n        return JSONResponse(\n            status_code=404,\n            content={\"message\": \"Item not found\"},\n        )\n\n    created, stored_dict = save_item(item_id)\n    response.status_code = 201 if created else 200\n    response.headers[\"X-Cat-Dog\"] = \"alone in the world\"\n    return stored_dict\n```",
-    "model": "gpt-6-luna",
-    "settings": {
-     "model": "gpt-6-luna",
-     "temperature": null,
-     "temperature_requested": null,
-     "seed": 42,
-     "reasoning_effort": null,
-     "reasoning_effort_requested": null,
-     "max_tokens": 4096,
-     "max_tokens_param": "max_completion_tokens"
-    },
-    "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
-   }
-  },
-  {
-   "turn": 14,
-   "turn_type": "same_doc_new_topic",
-   "type": "multi",
-   "question": "A separate HTML-only app should use HTMLResponse for every operation by default, but one health endpoint should still return plain text. What app-level setting and operation-level override should I use?",
-   "standalone_question": "How can a FastAPI app default all operations to HTMLResponse while overriding one health endpoint to use PlainTextResponse?",
-   "answer": "Construct the app with FastAPI(default_response_class=HTMLResponse). On the health operation, set response_class=PlainTextResponse to override that default.",
-   "key_facts": [
-    "default_response_class sets the app-wide response class.",
-    "An individual operation's response_class overrides the app default."
-   ],
-   "fact_meta": [
-    {
-     "accept_alternatives": [],
-     "tags": []
-    },
-    {
-     "accept_alternatives": [],
-     "tags": [
-      "confusable"
-     ]
-    }
-   ],
-   "key_entities": [
-    "default_response_class",
-    "HTMLResponse",
-    "response_class",
-    "PlainTextResponse"
-   ],
-   "evidence_pages": [],
-   "depends_on": [
-    5
-   ],
-   "evidence": [
-    {
-     "quote": "app = FastAPI(default_response_class=HTMLResponse)",
-     "page": "responses/custom-responses.md",
-     "fact_idx": 0
-    },
-    {
-     "quote": "Individual operations can still override it with `response_class`.",
-     "page": "responses/custom-responses.md",
-     "fact_idx": 1
-    }
-   ],
-   "alt_evidence": [],
-   "changes": null,
-   "affects": null,
-   "source_turn": 5,
-   "recall_distance": 9,
-   "closed_book": {
-    "correct": true,
-    "accuracy": 1.0,
-    "unknown": false,
-    "empty": false,
-    "response": "Set `default_response_class` on the app, then override it on the health route:\n\n```python\nfrom fastapi import FastAPI\nfrom fastapi.responses import HTMLResponse, PlainTextResponse\n\napp = FastAPI(default_response_class=HTMLResponse)\n\n@app.get(\"/health\", response_class=PlainTextResponse)\ndef health():\n    return \"ok\"\n```",
-    "model": "gpt-6-luna",
-    "settings": {
-     "model": "gpt-6-luna",
-     "temperature": null,
-     "temperature_requested": null,
-     "seed": 42,
-     "reasoning_effort": null,
-     "reasoning_effort_requested": null,
-     "max_tokens": 4096,
-     "max_tokens_param": "max_completion_tokens"
-    },
-    "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
-   }
-  },
-  {
-   "turn": 15,
-   "turn_type": "new",
-   "type": "multi",
-   "question": "Before optimizing the JSON service, explain the response-model fast path when no custom response class is selected. Separately, our JSON-only storage adapter needs to encode an Item with a datetime timestamp: does jsonable_encoder return JSON text or Python structures, and what happens to the timestamp?",
-   "standalone_question": "In FastAPI, how does response serialization work with a response model and the default response class? Separately, does jsonable_encoder return JSON text or Python structures when encoding an Item with a datetime timestamp, and how is the timestamp represented?",
-   "answer": "With a response field and the default response class, Pydantic serializes directly to JSON bytes, skipping the intermediate dict plus json.dumps step. jsonable_encoder instead returns JSON-compatible Python structures, not JSON text; an Item becomes a dict and its timestamp becomes an ISO-format string.",
-   "key_facts": [
-    "A response model with the default response class enables direct Pydantic JSON-byte serialization without the intermediate dict and json.dumps.",
-    "jsonable_encoder returns Python structures rather than a JSON string, converting a datetime timestamp to an ISO-format string."
-   ],
-   "fact_meta": [
-    {
-     "accept_alternatives": [],
-     "tags": [
-      "condition"
-     ]
-    },
-    {
-     "accept_alternatives": [],
-     "tags": [
-      "negation",
-      "confusable"
-     ]
-    }
-   ],
-   "key_entities": [
-    "Pydantic",
-    "json.dumps",
-    "jsonable_encoder",
-    "datetime",
-    "dict",
-    "str"
-   ],
-   "evidence_pages": [
-    "internals/request-handling-internals.md",
-    "models/extra-models-and-updates.md"
-   ],
-   "depends_on": [
-    1,
-    5,
-    6
-   ],
-   "evidence": [
-    {
-     "quote": "That's a reason to declare response models/return types — it's faster, not just safer.",
-     "page": "internals/request-handling-internals.md",
-     "fact_idx": 0
-    },
-    {
-     "quote": "- **serialize** efficiently — with a response type and the default response class, Pydantic serializes directly to JSON bytes (see [internals](../internals/request-handling-internals.md)).",
-     "page": "models/response-model.md",
-     "fact_idx": 0
-    },
-    {
-     "quote": "The `Item` becomes a `dict` and `timestamp` an ISO-format `str`.",
-     "page": "models/extra-models-and-updates.md",
-     "fact_idx": 1
-    },
-    {
-     "quote": "It returns Python data structures, **not** a JSON string (use `json.dumps()` for that).",
-     "page": "models/extra-models-and-updates.md",
-     "fact_idx": 1
-    }
-   ],
-   "alt_evidence": [],
-   "changes": null,
-   "affects": null,
-   "source_turn": null,
-   "recall_distance": 14,
-   "closed_book": {
-    "correct": false,
-    "accuracy": 0.5,
-    "unknown": false,
-    "empty": false,
-    "response": "FastAPI uses the `response_model` to validate and filter the returned data, then the default `JSONResponse` renders it as JSON for the HTTP response.\n\n`jsonable_encoder` returns Python structures, not JSON text. A `datetime` timestamp is converted to an ISO 8601 string in the resulting structure.",
-    "model": "gpt-6-luna",
-    "settings": {
-     "model": "gpt-6-luna",
-     "temperature": null,
-     "temperature_requested": null,
-     "seed": 42,
-     "reasoning_effort": null,
-     "reasoning_effort_requested": null,
-     "max_tokens": 4096,
-     "max_tokens_param": "max_completion_tokens"
-    },
-    "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
-   }
-  },
-  {
-   "turn": 16,
-   "turn_type": "recall",
-   "type": "multi",
-   "question": "The browser client is now on another origin. What was the exact successful-response header name and value we chose, and what must be configured so JavaScript can read that custom header?",
-   "standalone_question": "Successful FastAPI upserts set X-Cat-Dog='alone in the world'. State that exact header name and value, and explain what must be configured so JavaScript on another origin can read the custom response header.",
-   "answer": "The header is X-Cat-Dog: alone in the world. Include 'X-Cat-Dog' in CORSMiddleware(expose_headers=[...]) so JavaScript on another origin can read it.",
-   "key_facts": [
-    "The chosen header is X-Cat-Dog with value 'alone in the world'.",
-    "Cross-origin browser JavaScript needs that header listed in CORSMiddleware expose_headers to read it."
-   ],
-   "fact_meta": [
-    {
-     "accept_alternatives": [],
-     "tags": []
-    },
-    {
-     "accept_alternatives": [],
-     "tags": [
-      "condition"
-     ]
-    }
-   ],
-   "key_entities": [
-    "X-Cat-Dog",
-    "alone in the world",
-    "CORSMiddleware",
-    "expose_headers"
-   ],
-   "evidence_pages": [],
-   "depends_on": [
-    3
-   ],
-   "evidence": [
-    {
-     "quote": "    response.headers[\"X-Cat-Dog\"] = \"alone in the world\"",
-     "page": "responses/response-headers-and-cookies.md",
-     "fact_idx": 0
-    },
-    {
-     "quote": "- For JavaScript in a browser on **another origin** to read a custom response header, list it in `CORSMiddleware(expose_headers=[...])` ([CORS](../middleware/cors.md)).",
-     "page": "responses/response-headers-and-cookies.md",
-     "fact_idx": 1
     }
    ],
    "alt_evidence": [],
@@ -1361,12 +1793,18 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 13,
-   "closed_book": {
-    "correct": true,
-    "accuracy": 1.0,
-    "unknown": false,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
     "empty": false,
-    "response": "The header is `X-Cat-Dog: alone in the world`. Configure FastAPI’s CORS middleware with `expose_headers=[\"X-Cat-Dog\"]` (and allow the JavaScript app’s origin).",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -1379,47 +1817,483 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
+   }
+  },
+  {
+   "turn": 14,
+   "turn_type": "same_doc_new_topic",
+   "type": "multi",
+   "question": "For a separate redirect endpoint, what is RedirectResponse's default status? In the pydantic redirect example, which status overrides that default and what URL string does the function return?",
+   "asks": [
+    "Identify the redirect default status",
+    "Identify the configured pydantic redirect status and URL"
+   ],
+   "standalone_question": "For a separate redirect endpoint, what is RedirectResponse's default status? In the pydantic redirect example, which status overrides that default and what URL string does the function return?",
+   "answer": "RedirectResponse defaults to 307. The pydantic example sets status_code=302 and returns \"https://docs.pydantic.dev/\" with response_class=RedirectResponse.",
+   "key_facts": [
+    "RedirectResponse defaults to status 307.",
+    "The pydantic redirect example overrides the status to 302 and returns https://docs.pydantic.dev/."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "RedirectResponse",
+    "307",
+    "302",
+    "https://docs.pydantic.dev/"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    3
+   ],
+   "evidence": [
+    {
+     "quote": "`status_code` overrides the default 307.",
+     "page": "responses/custom-responses.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "@app.get(\"/pydantic\", response_class=RedirectResponse, status_code=302)",
+     "page": "responses/custom-responses.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "    return \"https://docs.pydantic.dev/\"",
+     "page": "responses/custom-responses.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 3,
+   "recall_distance": 11,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy": 0.5,
+    "response": "`RedirectResponse` defaults to **307**. The Pydantic example overrides it with **302** and returns the URL string `\"https://www.example.com\"`.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
+   }
+  },
+  {
+   "turn": 15,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm checking persistence and response costs together. In the replacement example, what happens to a stored tax of 20.2 when the incoming item omits tax? For ordinary returned data, which model-and-response-class combination enables direct JSON-byte serialization?",
+   "asks": [
+    "Explain the replacement example's omitted-tax outcome",
+    "Identify the direct JSON-byte serialization condition"
+   ],
+   "standalone_question": "I'm checking persistence and response costs together. In the replacement example, what happens to a stored tax of 20.2 when the incoming item omits tax? For ordinary returned data, which model-and-response-class combination enables direct JSON-byte serialization?",
+   "answer": "Replacement resets the omitted tax from 20.2 to the model default, 10.5. For ordinary returned data, a response field derived from response_model or the return type together with the default response class enables Pydantic's direct-to-JSON-bytes path, skipping the intermediate dict and json.dumps.",
+   "key_facts": [
+    "The replacement example resets an omitted stored tax of 20.2 to 10.5.",
+    "A response field plus the default response class enables direct JSON-byte serialization for ordinary returned data."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "20.2",
+    "10.5",
+    "response_model",
+    "Pydantic",
+    "json.dumps"
+   ],
+   "evidence_pages": [
+    "internals/request-handling-internals.md",
+    "models/extra-models-and-updates.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "resets `tax` to the model default `10.5`, because the omitted field takes its default.",
+     "page": "models/extra-models-and-updates.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "an item stored with `\"tax\": 20.2`",
+     "page": "models/extra-models-and-updates.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Fast path: with a response field **and** the default response class, Pydantic serializes **directly to JSON bytes** (skipping the intermediate dict + `json.dumps`)",
+     "page": "internals/request-handling-internals.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "An omitted tax is removed by the replacement; the stored 20.2 is not preserved. For ordinary returned data, use a Pydantic model with FastAPI’s `ORJSONResponse` for JSON-byte serialization.",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
+   }
+  },
+  {
+   "turn": 16,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "For my regression assertions, recover the current custom header name and the exact sparse foo JSON we established. Don't substitute the old header or fill in omitted defaults.",
+   "asks": [
+    "Recall the current custom header",
+    "Recall the exact sparse foo response"
+   ],
+   "standalone_question": "For regression assertions, recover the project's current custom response header name and the exact previously discussed sparse foo JSON response. Do not substitute the old header or fill in omitted defaults.",
+   "answer": "Current header: X-Forge-Receipt.\nSparse foo JSON: {\"name\": \"Foo\", \"price\": 50.2}.",
+   "key_facts": [
+    "The current custom response header is X-Forge-Receipt.",
+    "The sparse foo response is {\"name\": \"Foo\", \"price\": 50.2}."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "X-Forge-Receipt",
+    "foo",
+    "Foo",
+    "50.2"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5,
+    11
+   ],
+   "evidence": [
+    {
+     "quote": "Rename our custom response header from X-Forge-Stamp to X-Forge-Receipt.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "For `\"foo\": {\"name\": \"Foo\", \"price\": 50.2}` the response is `{\"name\": \"Foo\", \"price\": 50.2}` — no default `description`, `tax` or `tags`.",
+     "page": "models/response-model.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 11,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 17,
    "turn_type": "recall",
    "type": "multi",
-   "question": "For the tax omission rule we selected, compare two returned dicts: one has only name and price, and the other also explicitly has tax: 10.5. Which response contains tax, and what was the option called?",
-   "standalone_question": "A FastAPI response model has tax: float = 10.5 and uses the option that omits unset fields but retains explicitly supplied defaults. Compare a returned dict with only name and price against one also containing tax: 10.5. Which response contains tax, and what is the decorator option?",
-   "answer": "The dict with only name and price produces no tax field. The dict explicitly containing tax: 10.5 retains tax in the response. The option is response_model_exclude_unset=True, not response_model_exclude_defaults.",
+   "question": "What cookie name and lifetime should the next implementation use now? Also remind me why replacing the normal data return with a direct JSONResponse would weaken our output contract.",
+   "asks": [
+    "Recall the current cookie settings",
+    "Recall the direct-response filtering caveat"
+   ],
+   "standalone_question": "What previously chosen current cookie name and lifetime should the artifact implementation use? Why would replacing a normal data return with a direct JSONResponse weaken the output contract?",
+   "answer": "Use forge_ticket with max_age=2460 seconds. A directly returned JSONResponse skips response_model validation and filtering, so the declared output model no longer protects that returned content.",
    "key_facts": [
-    "With response_model_exclude_unset=True, omitted tax stays out but an explicitly supplied tax=10.5 remains."
+    "The current cookie is forge_ticket with a lifetime of 2460 seconds.",
+    "Directly returning JSONResponse skips response_model validation and filtering."
    ],
    "fact_meta": [
     {
+     "source": "user",
      "accept_alternatives": [],
      "tags": [
-      "condition",
       "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
      ]
     }
    ],
    "key_entities": [
-    "response_model_exclude_unset",
-    "10.5"
+    "forge_ticket",
+    "2460",
+    "JSONResponse",
+    "response_model"
    ],
    "evidence_pages": [],
    "depends_on": [
-    2
+    2,
+    4
    ],
    "evidence": [
     {
-     "quote": "Values explicitly set, even if equal to the default (like `baz`'s `\"tax\": 10.5`), are included.",
-     "page": "models/response-model.md",
+     "quote": "the cookie is forge_ticket",
+     "user_turn": 1,
      "fact_idx": 0
     },
     {
-     "quote": "| `response_model_exclude_unset` | Omit fields not explicitly set |",
-     "page": "models/response-model.md",
+     "quote": "Change the cookie lifetime from 1380 to 2460 seconds; keep its name unchanged.",
+     "user_turn": 4,
      "fact_idx": 0
+    },
+    {
+     "quote": "Remember: a directly returned response skips `response_model` validation/filtering — make sure the content is what you intend to send ([Custom Responses](custom-responses.md)).",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 1
     }
    ],
    "alt_evidence": [],
@@ -1427,12 +2301,17 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 15,
-   "closed_book": {
-    "correct": true,
-    "accuracy": 1.0,
-    "unknown": false,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
     "empty": false,
-    "response": "With `response_model_exclude_unset=True`, the dict containing `tax: 10.5` includes tax; the dict without it omits tax.",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -1445,24 +2324,71 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 18,
    "turn_type": "synthesis",
    "type": "multi",
-   "question": "Final review of the JSON upsert: summarize the current success statuses and missing-catalog body. Then explain why we should keep returning ordinary data for successful results instead of wrapping every result in JSONResponse, considering both internal-field safety and serialization performance.",
-   "standalone_question": "Review a FastAPI JSON upsert whose final contract is replacement=200, creation=201, missing catalog=404 {'message': 'Item not found'}, successful output filtered by ItemPublic, and no custom response class. State the statuses and error body, then explain the safety and serialization-performance reasons to return ordinary successful data with an injected Response status override rather than directly returning JSONResponse everywhere.",
-   "answer": "Replacement returns 200; creation returns 201 by setting the injected Response status. A missing catalog returns a local 404 JSONResponse with {'message': 'Item not found'}, not a detail wrapper. Successful branches should return ordinary data: ItemPublic then validates and filters internal fields, and the default response-class path lets Pydantic serialize directly to JSON bytes. Directly returned JSONResponse instances bypass response-model validation and filtering.",
+   "question": "Give me a final review checklist for the upsert: list our active route and transport settings, distinguish invalid incoming data from invalid modeled output under default handling, and explain whether an extra error model in responses protects a directly returned error body.",
+   "asks": [
+    "Summarize active project route and transport settings",
+    "Distinguish default request and response validation failures",
+    "Explain additional-response documentation versus direct-response enforcement"
+   ],
+   "standalone_question": "Give a final review checklist for the artifact upsert using its previously chosen active route and transport settings. Distinguish invalid incoming data from invalid modeled output under default handling, and explain whether an extra error model in responses protects a directly returned error body.",
+   "answer": "- Active settings: /artifacts/{artifact_id}; header X-Forge-Receipt; cookie forge_ticket with max_age=2460 seconds.\n- Invalid request data raises RequestValidationError and defaults to 422 with a detail error list. Invalid modeled output raises ResponseValidationError and defaults to 500; that is an application bug.\n- An error model in responses documents the error schema only. It does not validate a directly returned error response; direct Response instances bypass response-model validation and filtering.",
    "key_facts": [
-    "The final success contract is replacement=200 and creation=201 using the injected Response override.",
-    "The final missing-catalog contract is 404 with {'message': 'Item not found'}, not a detail wrapper.",
-    "Ordinary successful data retains response-model safety and the default-class direct JSON-byte fast path, whereas direct JSONResponse bypasses model validation and filtering."
+    "The active project settings are /artifacts/{artifact_id}, X-Forge-Receipt, and forge_ticket with a lifetime of 2460 seconds.",
+    "Default request validation failures produce 422, while response-model validation failures produce 500.",
+    "Additional-response models only document schemas, and directly returned responses bypass model validation and filtering."
    ],
    "fact_meta": [
     {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
       "condition",
@@ -1470,62 +2396,76 @@
      ]
     },
     {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
-      "negation",
-      "confusable"
-     ]
-    },
-    {
-     "accept_alternatives": [],
-     "tags": [
-      "condition",
       "negation"
      ]
     }
    ],
    "key_entities": [
-    "200",
-    "201",
-    "Response",
-    "404",
-    "JSONResponse",
-    "message",
-    "Item not found",
-    "Pydantic"
+    "/artifacts/{artifact_id}",
+    "X-Forge-Receipt",
+    "forge_ticket",
+    "2460",
+    "RequestValidationError",
+    "ResponseValidationError",
+    "422",
+    "500",
+    "responses"
    ],
    "evidence_pages": [],
    "depends_on": [
-    1,
+    0,
     4,
+    8,
     11,
-    13,
-    15
+    12
    ],
    "evidence": [
     {
-     "quote": "        response.status_code = status.HTTP_201_CREATED",
-     "page": "responses/status-codes.md",
+     "quote": "Our upsert route is /artifacts/{artifact_id}.",
+     "user_turn": 0,
      "fact_idx": 0
     },
     {
-     "quote": "Your return value is still serialized through the response model.",
-     "page": "responses/status-codes.md",
+     "quote": "Rename our custom response header from X-Forge-Stamp to X-Forge-Receipt.",
+     "user_turn": 11,
      "fact_idx": 0
     },
     {
-     "quote": "    return JSONResponse(status_code=404, content={\"message\": \"Item not found\"})",
-     "page": "openapi/extending-openapi.md",
+     "quote": "the cookie is forge_ticket",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Change the cookie lifetime from 1380 to 2460 seconds; keep its name unchanged.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "| `RequestValidationError` | `request_validation_exception_handler` | `422` with `{\"detail\": [...errors...]}` |",
+     "page": "errors/handling-errors.md",
      "fact_idx": 1
     },
     {
-     "quote": "- **serialize** efficiently — with a response type and the default response class, Pydantic serializes directly to JSON bytes (see [internals](../internals/request-handling-internals.md)).",
-     "page": "models/response-model.md",
+     "quote": "If your endpoint returns data that does not match its `response_model` / return type, FastAPI raises `ResponseValidationError`.",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "There's no default handler, so the client gets a **500 Internal Server Error** and the error is logged.",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "These only **document** responses.",
+     "page": "openapi/extending-openapi.md",
      "fact_idx": 2
     },
     {
-     "quote": "Any instance of `Response` (or a subclass) is sent **as is** — no validation, no response-model filtering, no conversion (`docs_src/response_directly/tutorial001_py310.py`):",
-     "page": "responses/custom-responses.md",
+     "quote": "Remember: a directly returned response skips `response_model` validation/filtering — make sure the content is what you intend to send ([Custom Responses](custom-responses.md)).",
+     "page": "responses/response-headers-and-cookies.md",
      "fact_idx": 2
     }
    ],
@@ -1533,13 +2473,19 @@
    "changes": null,
    "affects": null,
    "source_turn": null,
-   "recall_distance": 17,
-   "closed_book": {
-    "correct": true,
-    "accuracy": 1.0,
+   "recall_distance": 18,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy": 0.6666666666666666,
+    "response": "- Confirm the upsert uses the **previously selected active route and transport settings**—method/path, media types, headers, and authentication—without silently changing them.\n- Check valid create/update requests and the expected success status and response shape.\n- Under default handling, invalid **incoming data** produces a request-validation error (typically 422); invalid **modeled output** is a server-side response-validation failure (typically 500). Test these separately.\n- An extra error model in the route’s response declarations documents the error shape; it does **not** validate or protect a directly returned error body, especially one returned as a raw response. Validate that body explicitly or handle it through a validated error path.",
+    "fact_results": [
+     false,
+     true,
+     true
+    ],
+    "judge_skipped": null,
     "unknown": false,
     "empty": false,
-    "response": "Use **200** when replacing an existing item, **201** when creating one, and **404** for a missing catalog, with body `{\"message\": \"Item not found\"}`.\n\nFor successful results, return ordinary data and set the injected `Response.status_code` to 200 or 201. FastAPI then applies `ItemPublic` filtering and its normal serialization, helping prevent private fields from leaking and avoiding unnecessary manual JSON encoding. Returning `JSONResponse` directly bypasses that response-model processing, so you must handle filtering and serialization yourself.",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -1552,8 +2498,45 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   }
  ]

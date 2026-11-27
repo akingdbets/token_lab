@@ -1,7 +1,7 @@
 {
  "schema_version": 2,
  "scenario_id": "v2_01_auth_switch",
- "title": "Switching Authentication Transports",
+ "title": "Migrating Between Bearer Tokens, Cookies, and API Keys",
  "topic": "인증 방식 전환(헤더 토큰·쿠키·API 키)",
  "status": "draft",
  "bundle": [
@@ -19,8 +19,8 @@
   "model": "gpt-6.1-sol",
   "served_model": "gpt-6.1-sol",
   "prompt": [
-   "mt_scenario_gen_v1",
-   "c567341df6e0"
+   "mt_scenario_gen_v2",
+   "14ed07361f1b"
   ],
   "settings": {
    "model": "gpt-6.1-sol",
@@ -32,50 +32,44 @@
    "max_tokens": 40000,
    "max_tokens_param": "max_completion_tokens"
   },
-  "run_id": "20261127-222104_v2_01_auth_switch",
-  "attempts": 1,
-  "created_at": "2026-11-27T22:24:02"
+  "run_id": "20261128-004432_v2_01_auth_switch",
+  "attempts": 2,
+  "created_at": "2026-11-28T00:50:25"
  },
  "turns": [
   {
    "turn": 0,
    "turn_type": "new",
    "type": "multi",
-   "question": "I'm building a first-party FastAPI dashboard. Initially it will use OAuth2PasswordBearer(tokenUrl=\"token\"). Does that create the login endpoint, what does the dependency return, and what must my login request and response look like?",
-   "standalone_question": "For a first-party FastAPI app using OAuth2PasswordBearer(tokenUrl=\"token\"), does the declaration create the login endpoint, what does the dependency extract, and what are the required login request and token response formats?",
-   "answer": "It does not create the login endpoint; implement it yourself. The relative token URL resolves against the API root. The dependency reads Authorization: Bearer <token> and returns the token string. Send username and password as form fields, not JSON; return JSON containing access_token and token_type=\"bearer\".",
+   "question": "I'm building a first-party FastAPI service. Our relative token URL will be auth/issue. How should I configure the password-flow bearer dependency, and does that declaration create the login endpoint?",
+   "asks": [
+    "Configure the chosen token URL",
+    "Explain whether the declaration creates an endpoint"
+   ],
+   "standalone_question": "For a first-party FastAPI service whose relative token URL will be auth/issue, how should I configure the password-flow bearer dependency, and does that declaration create the login endpoint?",
+   "answer": "Use `oauth2_scheme = OAuth2PasswordBearer(tokenUrl=\"auth/issue\")`. This declares where clients obtain tokens; it does not create the login endpoint. Implement that endpoint separately.",
    "key_facts": [
-    "tokenUrl=\"token\" describes a relative token URL but does not create the endpoint.",
-    "OAuth2PasswordBearer extracts the bearer token as a string.",
-    "Login uses username/password form fields, and the token response contains access_token and token_type=\"bearer\"."
+    "Configure OAuth2PasswordBearer with the project's relative token URL auth/issue.",
+    "Declaring tokenUrl does not create the login endpoint."
    ],
    "fact_meta": [
     {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
       "negation"
-     ]
-    },
-    {
-     "accept_alternatives": [],
-     "tags": [
-      "confusable"
-     ]
-    },
-    {
-     "accept_alternatives": [],
-     "tags": [
-      "confusable"
      ]
     }
    ],
    "key_entities": [
     "OAuth2PasswordBearer",
-    "tokenUrl=\"token\"",
-    "Authorization: Bearer <token>",
-    "access_token",
-    "token_type",
-    "bearer"
+    "auth/issue",
+    "tokenUrl"
    ],
    "evidence_pages": [
     "security/oauth2-password-flow.md"
@@ -83,24 +77,14 @@
    "depends_on": [],
    "evidence": [
     {
-     "quote": "It does **not** create that endpoint.",
-     "page": "security/oauth2-password-flow.md",
+     "quote": "Our relative token URL will be auth/issue.",
+     "user_turn": 0,
      "fact_idx": 0
     },
     {
-     "quote": "- As a dependency, it reads `Authorization: Bearer <token>` and returns the token string.",
+     "quote": "It does **not** create that endpoint.",
      "page": "security/oauth2-password-flow.md",
      "fact_idx": 1
-    },
-    {
-     "quote": "The OAuth2 password flow requires the client to send `username` and `password` as **form fields** (not JSON).",
-     "page": "security/oauth2-password-flow.md",
-     "fact_idx": 2
-    },
-    {
-     "quote": "The token endpoint must return JSON with `access_token` and `token_type` (`\"bearer\"`).",
-     "page": "security/oauth2-password-flow.md",
-     "fact_idx": 2
     }
    ],
    "alt_evidence": [],
@@ -108,12 +92,17 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
-   "closed_book": {
+   "closed_book_knowledge": {
     "correct": true,
     "accuracy": 1.0,
+    "response": "Configure it with `oauth2_scheme = OAuth2PasswordBearer(tokenUrl=\"auth/issue\")` and inject it with `Depends(oauth2_scheme)` in protected routes. This only declares the bearer scheme and token URL; it does **not** create the login endpoint. You must implement `POST /auth/issue` yourself.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
     "unknown": false,
     "empty": false,
-    "response": "`OAuth2PasswordBearer(tokenUrl=\"token\")` does **not** create a login endpoint; `tokenUrl` identifies the endpoint your app must implement. The dependency reads the bearer token from the `Authorization: Bearer …` header and returns the token string.\n\nThe login endpoint should accept form-encoded `username` and `password` fields (`application/x-www-form-urlencoded`), not JSON. It should return JSON containing at least `access_token` and `token_type`, typically `{\"access_token\": \"...\", \"token_type\": \"bearer\"}`.",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -126,40 +115,78 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 1,
    "turn_type": "new",
    "type": "multi",
-   "question": "Automation clients may eventually send X-API-Key instead. Which security dependency reads that header, does it validate the key, and how can I stop a missing key from immediately rejecting a request while I consider another credential?",
-   "standalone_question": "Which FastAPI security dependency reads X-API-Key, does it verify the key, and which option allows another authentication method to be considered when the key is missing?",
-   "answer": "Use APIKeyHeader(name=\"X-API-Key\"). It extracts the string; your code must verify it. Set auto_error=False so missing credentials return None instead of raising immediately, allowing a combined authentication dependency to consider another scheme.",
+   "question": "Machine clients will send their API key in X-Orbit-Key. Which security dependency should extract it, and does that dependency verify that the key is valid?",
+   "asks": [
+    "Configure the machine-client header extractor",
+    "Distinguish extraction from verification"
+   ],
+   "standalone_question": "Machine clients will send their API key in X-Orbit-Key. Which FastAPI security dependency should extract it, and does that dependency verify that the key is valid?",
+   "answer": "Use `api_key_scheme = APIKeyHeader(name=\"X-Orbit-Key\")`. It extracts the header value as a string and registers the security scheme, but your own code must verify the key.",
    "key_facts": [
-    "APIKeyHeader(name=\"X-API-Key\") extracts the named header but does not verify its value.",
-    "auto_error=False returns None instead of immediately raising for missing credentials, enabling multiple authentication methods."
+    "Use APIKeyHeader with the project's X-Orbit-Key header name.",
+    "Security utilities extract credentials; credential verification remains application code."
    ],
    "fact_meta": [
     {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
       "negation"
-     ]
-    },
-    {
-     "accept_alternatives": [],
-     "tags": [
-      "condition"
      ]
     }
    ],
    "key_entities": [
     "APIKeyHeader",
-    "X-API-Key",
-    "auto_error=False",
-    "None"
+    "X-Orbit-Key"
    ],
    "evidence_pages": [
     "security/http-basic-and-api-keys.md"
@@ -167,17 +194,12 @@
    "depends_on": [],
    "evidence": [
     {
-     "quote": "api_key_header = APIKeyHeader(name=\"X-API-Key\")",
-     "page": "security/http-basic-and-api-keys.md",
+     "quote": "Machine clients will send their API key in X-Orbit-Key.",
+     "user_turn": 1,
      "fact_idx": 0
     },
     {
      "quote": "They only **extract** credentials — **verifying** them is your code's job.",
-     "page": "security/http-basic-and-api-keys.md",
-     "fact_idx": 0
-    },
-    {
-     "quote": "With `auto_error=False`, the dependency returns `None` instead, so you can make authentication optional or try several schemes in sequence:",
      "page": "security/http-basic-and-api-keys.md",
      "fact_idx": 1
     }
@@ -187,12 +209,17 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
-   "closed_book": {
+   "closed_book_knowledge": {
     "correct": true,
     "accuracy": 1.0,
+    "response": "Use FastAPI’s `APIKeyHeader(name=\"X-Orbit-Key\")`. It extracts the key from the header but does not verify whether it is valid.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
     "unknown": false,
     "empty": false,
-    "response": "`APIKeyHeader(name=\"X-API-Key\", auto_error=False)` reads the header. It only extracts the key; your code must verify it. `auto_error=False` lets another authentication method be considered when the key is missing.",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -205,43 +232,82 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 2,
    "turn_type": "followup",
    "type": "multi",
-   "question": "Before we combine anything, what would that API-key reader do with its default settings if the header were absent? An old client expects 403; include the current challenge header.",
-   "standalone_question": "With default auto_error settings, what status and WWW-Authenticate value does APIKeyHeader return for missing credentials in FastAPI 0.122.0 and later, and how does that differ from older behavior?",
-   "answer": "It raises 401 Not authenticated with WWW-Authenticate: APIKey. Since FastAPI 0.122.0 the built-in security error is 401; the previous behavior was 403.",
+   "question": "For browsers, our cookie name will be orbit_session. Show its security extractor. Also, if gateway clients use HTTPBearer instead of the password-flow extractor, what object do I receive and where is the token?",
+   "asks": [
+    "Configure the browser-cookie security extractor",
+    "Identify HTTPBearer's return object and token field"
+   ],
+   "standalone_question": "For browsers whose cookie name will be orbit_session, show its FastAPI security extractor. If gateway clients use HTTPBearer instead of the password-flow extractor, what object does the dependency return and where is the token?",
+   "answer": "Use `cookie_scheme = APIKeyCookie(name=\"orbit_session\")`. `HTTPBearer` returns an `HTTPAuthorizationCredentials` object, not the token string directly; the token is in `.credentials`, and `.scheme` contains the scheme.",
    "key_facts": [
-    "The default missing-key response is 401 Not authenticated with WWW-Authenticate: APIKey.",
-    "The built-in status changed from 403 to 401 in FastAPI 0.122.0."
+    "The browser-cookie extractor must use the project's orbit_session cookie name.",
+    "HTTPBearer returns HTTPAuthorizationCredentials with scheme and credentials fields, unlike the password-flow extractor's string."
    ],
    "fact_meta": [
     {
+     "source": "user",
      "accept_alternatives": [],
-     "tags": [
-      "confusable"
-     ]
+     "tags": []
     },
     {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
-      "condition",
       "confusable"
      ]
     }
    ],
    "key_entities": [
-    "401",
-    "Not authenticated",
-    "WWW-Authenticate",
-    "APIKey",
-    "0.122.0",
-    "403"
+    "APIKeyCookie",
+    "orbit_session",
+    "HTTPBearer",
+    "HTTPAuthorizationCredentials",
+    "scheme",
+    "credentials"
    ],
    "evidence_pages": [],
    "depends_on": [
@@ -249,17 +315,17 @@
    ],
    "evidence": [
     {
-     "quote": "With `auto_error=True` (default), missing or malformed credentials make the dependency raise `HTTPException(401, \"Not authenticated\")` with a `WWW-Authenticate` header:",
-     "page": "security/http-basic-and-api-keys.md",
+     "quote": "For browsers, our cookie name will be orbit_session.",
+     "user_turn": 2,
      "fact_idx": 0
     },
     {
-     "quote": "- API keys: `APIKey` (not standardized, but included per the HTTP spec's requirement for 401)",
+     "quote": "| `HTTPBearer` | `Authorization: Bearer <token>` | `HTTPAuthorizationCredentials(scheme, credentials)` |",
      "page": "security/http-basic-and-api-keys.md",
-     "fact_idx": 0
+     "fact_idx": 1
     },
     {
-     "quote": "Since FastAPI 0.122.0 this is **401** (previously 403).",
+     "quote": "| `OAuth2PasswordBearer`, `OAuth2AuthorizationCodeBearer`, `OAuth2` | bearer token | `str` — see [Security Basics](oauth2-password-flow.md) |",
      "page": "security/http-basic-and-api-keys.md",
      "fact_idx": 1
     }
@@ -269,12 +335,17 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 1,
-   "closed_book": {
+   "closed_book_knowledge": {
     "correct": true,
     "accuracy": 1.0,
+    "response": "```python\nfrom fastapi.security import APIKeyCookie\n\nbrowser_auth = APIKeyCookie(name=\"orbit_session\")\n```\n\nWith `HTTPBearer`, the dependency returns an `HTTPAuthorizationCredentials` object; the token is in `.credentials` (and the scheme, usually `\"Bearer\"`, is in `.scheme`).",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
     "unknown": false,
     "empty": false,
-    "response": "In FastAPI 0.122.0 and later, missing credentials produce **401 Unauthorized** with `WWW-Authenticate: APIKey`. Older versions returned **403 Forbidden** without a `WWW-Authenticate` header.",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -287,45 +358,84 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 3,
    "turn_type": "new",
-   "type": "multi",
-   "question": "For our real access tokens, I want signed JWTs rather than usernames masquerading as tokens. How should verification constrain the algorithm, which identity claim should it read, and how should expired tokens or unknown users fail?",
-   "standalone_question": "In the FastAPI JWT authentication example using PyJWT and HS256, how is the decoding algorithm constrained, which claim identifies the user, and what response is used for expired tokens or unknown users?",
-   "answer": "Decode with jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM]), with ALGORITHM=\"HS256\", rather than accepting an arbitrary algorithm. Read sub, which should be a string unique across the application, and load that user. Expired tokens, bad signatures, missing sub, and unknown users all produce the same 401 with WWW-Authenticate: Bearer.",
+   "type": "code",
+   "question": "Our access-token lifetime will be 23 minutes. Using the signed-token helper pattern, show the call that issues a token for user.username with that lifetime. What lifetime does the helper use if I omit expires_delta?",
+   "asks": [
+    "Issue a token with the chosen lifetime",
+    "Identify the helper's fallback lifetime"
+   ],
+   "standalone_question": "With an access-token lifetime of 23 minutes, use the signed-token helper pattern to show a call issuing a token for user.username with that lifetime. What lifetime does the helper use if expires_delta is omitted?",
+   "answer": "```python\naccess_token = create_access_token(\n    data={\"sub\": user.username},\n    expires_delta=timedelta(minutes=23),\n)\n```\nIf `expires_delta` is omitted, the helper falls back to 15 minutes.",
    "key_facts": [
-    "JWT decoding pins accepted algorithms with algorithms=[ALGORITHM]; the example uses HS256.",
-    "sub identifies the subject and should be an application-wide unique string.",
-    "Expired tokens and unknown users receive the same 401 with WWW-Authenticate: Bearer as other invalid credentials."
+    "Pass timedelta(minutes=23) for the project's access-token lifetime.",
+    "The helper's fallback lifetime is 15 minutes when expires_delta is not provided."
    ],
    "fact_meta": [
     {
+     "source": "user",
      "accept_alternatives": [],
      "tags": []
     },
     {
-     "accept_alternatives": [],
-     "tags": []
-    },
-    {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
+      "example",
       "condition",
       "confusable"
      ]
     }
    ],
    "key_entities": [
-    "jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])",
-    "HS256",
-    "sub",
-    "401",
-    "WWW-Authenticate: Bearer"
+    "create_access_token",
+    "user.username",
+    "expires_delta",
+    "timedelta",
+    "23",
+    "15"
    ],
    "evidence_pages": [
     "security/oauth2-jwt.md"
@@ -333,29 +443,14 @@
    "depends_on": [],
    "evidence": [
     {
-     "quote": "        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])",
-     "page": "security/oauth2-jwt.md",
+     "quote": "Our access-token lifetime will be 23 minutes.",
+     "user_turn": 3,
      "fact_idx": 0
     },
     {
-     "quote": "- `ALGORITHM = \"HS256\"` (HMAC with SHA-256).",
-     "page": "security/oauth2-jwt.md",
-     "fact_idx": 0
-    },
-    {
-     "quote": "It should be a **string, unique across the whole application**.",
+     "quote": "        expire = datetime.now(timezone.utc) + timedelta(minutes=15)",
      "page": "security/oauth2-jwt.md",
      "fact_idx": 1
-    },
-    {
-     "quote": "JWT's `sub` (subject) identifies the token's subject.",
-     "page": "security/oauth2-jwt.md",
-     "fact_idx": 1
-    },
-    {
-     "quote": "Any problem — bad signature, expired token, missing `sub`, unknown user — results in the same `401` with `WWW-Authenticate: Bearer`.",
-     "page": "security/oauth2-jwt.md",
-     "fact_idx": 2
     }
    ],
    "alt_evidence": [],
@@ -363,12 +458,17 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
-   "closed_book": {
-    "correct": false,
-    "accuracy": 0.6666666666666666,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy": 1.0,
+    "response": "```python\naccess_token = create_access_token(\n    data={\"sub\": user.username},\n    expires_delta=timedelta(minutes=23),\n)\n```\n\nIf `expires_delta` is omitted, the helper uses **15 minutes**.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
     "unknown": false,
     "empty": false,
-    "response": "Decoding is restricted with `algorithms=[\"HS256\"]`; the `sub` claim identifies the user. Expired tokens and unknown users receive **401 Unauthorized** with `\"Could not validate credentials\"` and a `WWW-Authenticate: Bearer` header.",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -381,83 +481,121 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": true,
+    "accuracy": 1.0,
+    "response": "`create_access_token(data={\"sub\": user.username}, expires_delta=timedelta(minutes=23))`\n15 minutes",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "not_found": false,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 4,
    "turn_type": "update",
-   "type": "multi",
-   "question": "Change of plan: a gateway will issue the bearer tokens, so our API should no longer advertise its own password-login URL. Replace the bearer extractor accordingly. What should I use, and how does its return value differ from our original extractor?",
-   "standalone_question": "A FastAPI API is switching from OAuth2PasswordBearer to externally issued bearer tokens and must not document a token URL. Which extractor should replace it, and how does the returned value differ?",
-   "answer": "Use HTTPBearer. Unlike OAuth2PasswordBearer, it does not document a token URL. It returns HTTPAuthorizationCredentials containing scheme and credentials; pass its .credentials string to your token verifier rather than treating the whole object as the token.",
+   "type": "code",
+   "question": "Actually, change our access-token lifetime from 23 to 41 minutes. Show the updated issuance call, and identify the claim the helper adds for expiration.",
+   "asks": [
+    "Update the token issuance call",
+    "Identify the expiration claim"
+   ],
+   "standalone_question": "Change the project's access-token lifetime from 23 to 41 minutes. Show the updated signed-token issuance call and identify the claim the helper adds for expiration.",
+   "answer": "```python\naccess_token = create_access_token(\n    data={\"sub\": user.username},\n    expires_delta=timedelta(minutes=41),\n)\n```\nThe helper adds the `exp` claim.",
    "key_facts": [
-    "HTTPBearer is suitable for externally issued tokens and does not document a token URL.",
-    "HTTPBearer returns HTTPAuthorizationCredentials, whereas OAuth2PasswordBearer returns a token string."
+    "The project's access-token lifetime is now 41 minutes, replacing 23 minutes.",
+    "The helper stores expiration in the exp claim."
    ],
    "fact_meta": [
     {
-     "accept_alternatives": [],
-     "tags": [
-      "negation"
-     ]
-    },
-    {
+     "source": "user",
      "accept_alternatives": [],
      "tags": [
       "confusable"
      ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
     }
    ],
    "key_entities": [
-    "HTTPBearer",
-    "OAuth2PasswordBearer",
-    "HTTPAuthorizationCredentials",
-    "scheme",
-    "credentials"
+    "create_access_token",
+    "41",
+    "exp"
    ],
    "evidence_pages": [],
    "depends_on": [
-    0,
-    1
+    3
    ],
    "evidence": [
     {
-     "quote": "Unlike `OAuth2PasswordBearer`, it doesn't document a token URL — use it for tokens issued elsewhere (API gateways, external identity providers).",
-     "page": "security/http-basic-and-api-keys.md",
+     "quote": "Actually, change our access-token lifetime from 23 to 41 minutes.",
+     "user_turn": 4,
      "fact_idx": 0
     },
     {
-     "quote": "| `HTTPBearer` | `Authorization: Bearer <token>` | `HTTPAuthorizationCredentials(scheme, credentials)` |",
-     "page": "security/http-basic-and-api-keys.md",
-     "fact_idx": 1
-    },
-    {
-     "quote": "- As a dependency, it reads `Authorization: Bearer <token>` and returns the token string.",
-     "page": "security/oauth2-password-flow.md",
+     "quote": "    to_encode.update({\"exp\": expire})",
+     "page": "security/oauth2-jwt.md",
      "fact_idx": 1
     }
    ],
    "alt_evidence": [],
    "changes": [
     {
-     "what": "Bearer-token issuer and extraction scheme",
-     "from": "First-party password login described by OAuth2PasswordBearer(tokenUrl=\"token\")",
-     "to": "Gateway-issued tokens extracted with HTTPBearer, without a documented token URL"
+     "what": "Project access-token lifetime in minutes",
+     "from": 23,
+     "to": 41
     }
    ],
    "affects": [
-    9
+    9,
+    13
    ],
    "source_turn": null,
-   "recall_distance": 4,
-   "closed_book": {
-    "correct": false,
-    "accuracy": 0.5,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy": 1.0,
+    "response": "Set the signing option to `expiresIn: '41m'`, for example:\n\n```js\njwt.sign(payload, secret, { expiresIn: '41m' })\n```\n\nThe helper adds the `exp` expiration claim.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
     "unknown": false,
     "empty": false,
-    "response": "Use `HTTPBearer`. It returns an `HTTPAuthorizationCredentials` object (`scheme` and `credentials`) rather than the raw token string returned by `OAuth2PasswordBearer`.",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -470,29 +608,71 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 5,
    "turn_type": "new",
-   "type": "code",
-   "question": "I'm also prototyping browser sessions. Show a small POST /session endpoint that sets a cookie named session to a placeholder value, keeps response_model filtering, and uses the recommended auth-cookie flags. Use samesite=\"lax\" for this prototype.",
-   "standalone_question": "Show a FastAPI POST /session endpoint that sets session=\"placeholder\" using an injected Response, preserves response_model filtering, and sets httponly=True, secure=True, and samesite=\"lax\".",
-   "answer": "from fastapi import FastAPI, Response\nfrom pydantic import BaseModel\n\napp = FastAPI()\n\nclass SessionResult(BaseModel):\n    ok: bool\n\n@app.post(\"/session\", response_model=SessionResult)\ndef create_session(response: Response):\n    response.set_cookie(\n        key=\"session\", value=\"placeholder\",\n        httponly=True, secure=True, samesite=\"lax\",\n    )\n    return {\"ok\": True}\n\nThe placeholder is illustrative, not a verified session credential. The injected Response carries the cookie while the returned data still undergoes response_model filtering.",
+   "type": "procedure",
+   "question": "The browser login should set our chosen cookie while returning ordinary data through a response_model. Which response technique preserves filtering, and which authentication-cookie flags should I set?",
+   "asks": [
+    "Choose a cookie-setting technique that preserves response filtering",
+    "Identify authentication-cookie flags"
+   ],
+   "standalone_question": "For a browser login that sets the project's chosen cookie while returning ordinary data through a response_model, which response technique preserves filtering, and which authentication-cookie flags should be set?",
+   "answer": "Inject a `Response` parameter, call `response.set_cookie(...)` on it using the chosen cookie name, and return the data normally. FastAPI copies the cookie onto the final response while retaining `response_model` filtering. Set `httponly=True`, `secure=True`, and a suitable `samesite` value.",
    "key_facts": [
-    "Setting a cookie on an injected Response and returning ordinary data preserves response_model filtering.",
-    "Session/auth cookies should use httponly=True, secure=True, and a suitable samesite value."
+    "Setting cookies on the injected temporary Response preserves response_model filtering when ordinary data is returned.",
+    "Authentication cookies should use httponly=True, secure=True, and a suitable samesite."
    ],
    "fact_meta": [
     {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
       "condition"
      ]
     },
     {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": []
     }
@@ -500,16 +680,16 @@
    "key_entities": [
     "Response",
     "response_model",
-    "set_cookie",
     "httponly=True",
     "secure=True",
-    "samesite",
-    "lax"
+    "samesite"
    ],
    "evidence_pages": [
     "responses/response-headers-and-cookies.md"
    ],
-   "depends_on": [],
+   "depends_on": [
+    2
+   ],
    "evidence": [
     {
      "quote": "Declare a parameter of type `Response`.",
@@ -517,7 +697,7 @@
      "fact_idx": 0
     },
     {
-     "quote": "FastAPI injects a **temporary** response object; you set headers/cookies on it and return your data normally.",
+     "quote": "which is still built from your return value and filtered by your `response_model`.",
      "page": "responses/response-headers-and-cookies.md",
      "fact_idx": 0
     },
@@ -531,13 +711,18 @@
    "changes": null,
    "affects": null,
    "source_turn": null,
-   "recall_distance": 0,
-   "closed_book": {
+   "recall_distance": 3,
+   "closed_book_knowledge": {
     "correct": true,
     "accuracy": 1.0,
+    "response": "Inject FastAPI’s `Response`, set the cookie on it, and return the normal data object so `response_model` filtering still applies. Set the auth cookie with `httponly=True`, `secure=True`, and an appropriate `samesite` value (typically `\"lax\"`).",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
     "unknown": false,
     "empty": false,
-    "response": "```python\nfrom fastapi import FastAPI, Response\nfrom pydantic import BaseModel\n\napp = FastAPI()\n\nclass SessionOut(BaseModel):\n    status: str\n\n@app.post(\"/session\", response_model=SessionOut)\ndef create_session(response: Response):\n    response.set_cookie(\n        key=\"session\",\n        value=\"placeholder\",\n        httponly=True,\n        secure=True,\n        samesite=\"lax\",\n    )\n    return {\"status\": \"created\", \"internal\": \"filtered out\"}\n```",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -550,35 +735,81 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 6,
    "turn_type": "followup",
    "type": "multi",
-   "question": "Could a dependency refresh that cookie instead of every endpoint doing it? Also, what is the default cookie path, and what method removes the cookie on logout?",
-   "standalone_question": "Can a FastAPI dependency use an injected Response to refresh a cookie, what is the default set_cookie path, and what method deletes a cookie?",
-   "answer": "Yes. Response injection also works in dependencies, including for session-cookie refresh. The default cookie path is /. Use response.delete_cookie(key, ...) on logout.",
+   "question": "Before wiring real sessions, I want to reproduce the temporary-response cookie example as a smoke fixture. What exact cookie name and value does it set, and what message does it return?",
+   "asks": [
+    "Identify the smoke fixture's cookie name and value",
+    "Identify its returned message"
+   ],
+   "standalone_question": "In the temporary-response cookie example, what exact cookie name and value are set, and what message is returned?",
+   "answer": "It sets `fakesession` to `fake-cookie-session-value` and returns `{\"message\": \"Come to the dark side, we have cookies\"}`. Those are fixture values, not a replacement for the project's cookie setting.",
    "key_facts": [
-    "An injected Response can be used in dependencies to refresh a session cookie.",
-    "The default cookie path is /, and delete_cookie removes a cookie."
+    "The temporary-response example sets fakesession to fake-cookie-session-value.",
+    "Its returned message is Come to the dark side, we have cookies."
    ],
    "fact_meta": [
     {
+     "source": "doc",
      "accept_alternatives": [],
-     "tags": []
+     "tags": [
+      "example"
+     ]
     },
     {
+     "source": "doc",
      "accept_alternatives": [],
-     "tags": []
+     "tags": [
+      "example"
+     ]
     }
    ],
    "key_entities": [
-    "Response",
-    "/",
-    "response.delete_cookie(key, ...)"
+    "fakesession",
+    "fake-cookie-session-value",
+    "Come to the dark side, we have cookies"
    ],
    "evidence_pages": [],
    "depends_on": [
@@ -586,17 +817,12 @@
    ],
    "evidence": [
     {
-     "quote": "The `Response` parameter also works in **dependencies** — e.g. a dependency that refreshes a session cookie for every request.",
+     "quote": "    response.set_cookie(key=\"fakesession\", value=\"fake-cookie-session-value\")",
      "page": "responses/response-headers-and-cookies.md",
      "fact_idx": 0
     },
     {
-     "quote": "| `path` | Path scope (default `/`) |",
-     "page": "responses/response-headers-and-cookies.md",
-     "fact_idx": 1
-    },
-    {
-     "quote": "Use `response.delete_cookie(key, ...)` to remove one.",
+     "quote": "    return {\"message\": \"Come to the dark side, we have cookies\"}",
      "page": "responses/response-headers-and-cookies.md",
      "fact_idx": 1
     }
@@ -606,12 +832,17 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 1,
-   "closed_book": {
-    "correct": true,
-    "accuracy": 1.0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy": 0.5,
+    "response": "The cookie is named `fakesession` with value `fake-cookie-session-value`, and the message returned is `\"Come back soon!\"`.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
     "unknown": false,
     "empty": false,
-    "response": "Yes. A FastAPI dependency can use an injected `Response` to refresh a cookie with `response.set_cookie()`. The default path is `/`, and `response.delete_cookie()` deletes a cookie.",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -624,40 +855,83 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 7,
    "turn_type": "same_doc_new_topic",
    "type": "multi",
-   "question": "For a separate internal diagnostic endpoint, I'm considering HTTP Basic. How should I compare non-ASCII usernames safely, and what must a rejected login send so a browser prompts again?",
-   "standalone_question": "When implementing HTTP Basic authentication in FastAPI, how should non-ASCII username/password comparisons use secrets.compare_digest, and what response makes browsers prompt again after rejected credentials?",
-   "answer": "Encode the supplied and expected values to UTF-8 bytes, then compare using secrets.compare_digest rather than ordinary equality. compare_digest accepts ASCII strings or bytes, so bytes support non-ASCII input. Reject with 401 and WWW-Authenticate: Basic so the browser re-prompts.",
+   "question": "For a separate Basic-auth diagnostic endpoint, what exact username and password does the timing-safe comparison example check, and why does it encode the supplied values before comparing?",
+   "asks": [
+    "Identify the Basic-auth example credentials",
+    "Explain the encoding before comparison"
+   ],
+   "standalone_question": "For a Basic-auth diagnostic endpoint, what exact username and password does the timing-safe comparison example check, and why does it encode the supplied values before comparing?",
+   "answer": "The example checks username `stanleyjobson` and password `swordfish`. It encodes supplied values to UTF-8 bytes because `secrets.compare_digest()` accepts only ASCII strings or bytes; encoding supports non-ASCII input safely for that comparison.",
    "key_facts": [
-    "Encode values to UTF-8 bytes before secrets.compare_digest because string inputs must be ASCII.",
-    "A rejected Basic login should return 401 with WWW-Authenticate: Basic so browsers re-prompt."
+    "The timing-safe Basic-auth example checks stanleyjobson and swordfish.",
+    "Values are encoded to UTF-8 bytes because compare_digest accepts only ASCII str or bytes."
    ],
    "fact_meta": [
     {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
       "condition"
      ]
-    },
-    {
-     "accept_alternatives": [],
-     "tags": [
-      "confusable"
-     ]
     }
    ],
    "key_entities": [
-    "secrets.compare_digest",
+    "stanleyjobson",
+    "swordfish",
     "UTF-8",
-    "401",
-    "WWW-Authenticate: Basic"
+    "compare_digest"
    ],
    "evidence_pages": [],
    "depends_on": [
@@ -665,12 +939,17 @@
    ],
    "evidence": [
     {
-     "quote": "Encode to UTF-8 bytes first, because `compare_digest` only accepts ASCII `str` or bytes.",
+     "quote": "    correct_username_bytes = b\"stanleyjobson\"",
      "page": "security/http-basic-and-api-keys.md",
      "fact_idx": 0
     },
     {
-     "quote": "Always return `WWW-Authenticate: Basic` with the 401 so browsers re-prompt.",
+     "quote": "    correct_password_bytes = b\"swordfish\"",
+     "page": "security/http-basic-and-api-keys.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Encode to UTF-8 bytes first, because `compare_digest` only accepts ASCII `str` or bytes.",
      "page": "security/http-basic-and-api-keys.md",
      "fact_idx": 1
     }
@@ -680,12 +959,17 @@
    "affects": null,
    "source_turn": 1,
    "recall_distance": 6,
-   "closed_book": {
-    "correct": true,
-    "accuracy": 1.0,
-    "unknown": false,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
     "empty": false,
-    "response": "Encode both values as UTF-8 bytes before calling `secrets.compare_digest`. On rejection, return **401 Unauthorized** with `WWW-Authenticate: Basic` so the browser prompts again.",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -698,29 +982,72 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 8,
    "turn_type": "new",
-   "type": "code",
-   "question": "The browser dashboard runs at http://localhost:8080 and calls the API at http://localhost. Show credential-enabled CORS configuration for GET and POST with Authorization, X-API-Key, and Content-Type request headers. Avoid wildcard lists.",
-   "standalone_question": "Show FastAPI CORSMiddleware configuration allowing credentialed requests from http://localhost:8080 to an API at http://localhost, with GET/POST and Authorization, X-API-Key, and Content-Type request headers, using no wildcard lists.",
-   "answer": "from fastapi.middleware.cors import CORSMiddleware\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"http://localhost:8080\"],\n    allow_credentials=True,\n    allow_methods=[\"GET\", \"POST\"],\n    allow_headers=[\"Authorization\", \"X-API-Key\", \"Content-Type\"],\n)\n\nThe different ports make these different origins. Credentialed CORS requires explicit origins, methods, and headers rather than [\"*\"].",
+   "type": "multi",
+   "question": "I'm preparing a browser CORS smoke test. What exact four origins appear in the middleware example, and can I keep wildcard origins, methods, and headers once credentialed requests are enabled?",
+   "asks": [
+    "List the middleware example's four origins",
+    "Explain wildcard restrictions with credentials"
+   ],
+   "standalone_question": "For a browser CORS smoke test, what exact four origins appear in the middleware example, and can wildcard origins, methods, and headers be kept once credentialed requests are enabled?",
+   "answer": "The example origins are `http://localhost.tiangolo.com`, `https://localhost.tiangolo.com`, `http://localhost`, and `http://localhost:8080`. With `allow_credentials=True`, explicitly list allowed origins, methods, and headers rather than using `[\"*\"]` for those settings.",
    "key_facts": [
-    "http://localhost:8080 and http://localhost are different origins because port is part of the origin.",
-    "Enable allow_credentials and explicitly list the frontend origin, methods, and request headers instead of using wildcard lists."
+    "The example lists both HTTP and HTTPS localhost.tiangolo.com, plus http://localhost and http://localhost:8080.",
+    "Credentialed CORS configuration requires explicit origins, methods, and headers rather than wildcard lists."
    ],
    "fact_meta": [
     {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
+      "example",
       "confusable"
      ]
     },
     {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
       "condition"
@@ -728,13 +1055,11 @@
     }
    ],
    "key_entities": [
-    "CORSMiddleware",
-    "http://localhost:8080",
+    "http://localhost.tiangolo.com",
+    "https://localhost.tiangolo.com",
     "http://localhost",
-    "allow_credentials=True",
-    "allow_origins",
-    "allow_methods",
-    "allow_headers"
+    "http://localhost:8080",
+    "allow_credentials=True"
    ],
    "evidence_pages": [
     "middleware/cors.md"
@@ -742,7 +1067,22 @@
    "depends_on": [],
    "evidence": [
     {
-     "quote": "An origin is **protocol + domain + port**.",
+     "quote": "    \"http://localhost.tiangolo.com\",",
+     "page": "middleware/cors.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    \"https://localhost.tiangolo.com\",",
+     "page": "middleware/cors.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    \"http://localhost\",",
+     "page": "middleware/cors.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    \"http://localhost:8080\",",
      "page": "middleware/cors.md",
      "fact_idx": 0
     },
@@ -757,12 +1097,17 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
-   "closed_book": {
+   "closed_book_knowledge": {
     "correct": false,
-    "accuracy": 0.5,
-    "unknown": false,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
     "empty": false,
-    "response": "```python\nfrom fastapi import FastAPI\nfrom fastapi.middleware.cors import CORSMiddleware\n\napp = FastAPI()\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"http://localhost:8080\"],\n    allow_credentials=True,\n    allow_methods=[\"GET\", \"POST\"],\n    allow_headers=[\"Authorization\", \"X-API-Key\", \"Content-Type\"],\n)\n```",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -775,62 +1120,98 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 9,
    "turn_type": "recall",
    "type": "multi",
-   "question": "For the gateway arrangement we settled on, remind me which bearer extractor is active and which member reaches the verifier. If we later combine it with the automation header we chose, what option belongs on both readers?",
-   "standalone_question": "For gateway-issued bearer tokens in FastAPI, which extractor avoids documenting a login URL, which returned member contains the token, and what option should be set on it and an X-API-Key reader to allow combined authentication?",
-   "answer": "Use HTTPBearer and send its returned object's .credentials to the verifier. The automation reader is APIKeyHeader(name=\"X-API-Key\"). Configure both with auto_error=False so an absent credential yields None and the combined dependency can choose another scheme.",
+   "question": "For the deployment checklist, what explicit access-token lifetime did we settle on, and what different lifetime would accidentally take effect if the issuance call omitted its expiry argument?",
+   "asks": [
+    "Recall the current project token lifetime",
+    "Contrast it with the helper's fallback lifetime"
+   ],
+   "standalone_question": "What explicit access-token lifetime did the team settle on, and what different lifetime would the signed-token helper use if the issuance call omitted its expiry argument?",
+   "answer": "Pass an explicit lifetime of 41 minutes. Omitting `expires_delta` would instead use the helper's 15-minute fallback.",
    "key_facts": [
-    "The gateway arrangement uses HTTPBearer, whose credentials member contains the token.",
-    "Both HTTPBearer and APIKeyHeader(name=\"X-API-Key\") need auto_error=False to permit alternate authentication on missing credentials."
+    "The current project lifetime is 41 minutes.",
+    "Omitting expires_delta uses the helper's 15-minute fallback."
    ],
    "fact_meta": [
     {
+     "source": "user",
      "accept_alternatives": [],
      "tags": [
       "confusable"
      ]
     },
     {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
-      "condition"
+      "example",
+      "condition",
+      "confusable"
      ]
     }
    ],
    "key_entities": [
-    "HTTPBearer",
-    "credentials",
-    "APIKeyHeader",
-    "X-API-Key",
-    "auto_error=False",
-    "None"
+    "41",
+    "expires_delta",
+    "15"
    ],
    "evidence_pages": [],
    "depends_on": [
-    1,
+    3,
     4
    ],
    "evidence": [
     {
-     "quote": "| `HTTPBearer` | `Authorization: Bearer <token>` | `HTTPAuthorizationCredentials(scheme, credentials)` |",
-     "page": "security/http-basic-and-api-keys.md",
+     "quote": "Actually, change our access-token lifetime from 23 to 41 minutes.",
+     "user_turn": 4,
      "fact_idx": 0
     },
     {
-     "quote": "api_key_scheme = APIKeyHeader(name=\"X-API-Key\", auto_error=False)",
-     "page": "security/http-basic-and-api-keys.md",
-     "fact_idx": 1
-    },
-    {
-     "quote": "bearer_scheme = HTTPBearer(auto_error=False)",
-     "page": "security/http-basic-and-api-keys.md",
+     "quote": "        expire = datetime.now(timezone.utc) + timedelta(minutes=15)",
+     "page": "security/oauth2-jwt.md",
      "fact_idx": 1
     }
    ],
@@ -838,13 +1219,18 @@
    "changes": null,
    "affects": null,
    "source_turn": null,
-   "recall_distance": 8,
-   "closed_book": {
-    "correct": true,
-    "accuracy": 1.0,
-    "unknown": false,
+   "recall_distance": 6,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
     "empty": false,
-    "response": "Use `HTTPBearer` (not `OAuth2PasswordBearer`); the token is in `credentials.credentials`. Set `auto_error=False` on both `HTTPBearer` and the `X-API-Key` reader to allow combined authentication.",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -857,46 +1243,84 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 10,
    "turn_type": "new",
    "type": "multi",
-   "question": "While debugging transport, can a parameter x_api_key: Annotated[str | None, Header()] read X-API-Key without disabling underscore conversion? How do I read the session cookie as an ordinary parameter, and can the interactive API UI reliably send that cookie?",
-   "standalone_question": "Does FastAPI Header() map x_api_key to X-API-Key by default, how can Cookie() read an optional session cookie, and can the interactive API UI send cookies for testing?",
-   "answer": "Yes: Header() converts underscores to hyphens by default, so x_api_key reads X-API-Key. Read the cookie with session: Annotated[str | None, Cookie()] = None. The interactive UI's Try it out cannot send cookies; test with a real browser, curl, or TestClient.",
+   "question": "I'm checking raw request extraction separately from authentication. Which header does the user_agent parameter read by default, and how does the duplicate X-Token example collect its two sample values?",
+   "asks": [
+    "Identify default underscore-to-hyphen header mapping",
+    "Explain the duplicate-header example"
+   ],
+   "standalone_question": "In FastAPI raw request extraction, which header does the user_agent parameter read by default, and how does the duplicate X-Token example collect its two sample values?",
+   "answer": "`user_agent` declared with `Header()` reads `User-Agent`. For duplicate `X-Token` headers, declare `x_token: Annotated[list[str] | None, Header()] = None`; the sample values `foo` and `bar` are collected into a list, shown as `[\"bar\", \"foo\"]`.",
    "key_facts": [
-    "Header() converts underscores to hyphens by default.",
-    "An optional session cookie can be declared with Annotated[str | None, Cookie()] = None.",
-    "The interactive UI cannot send cookies; use a real browser, curl, or TestClient."
+    "By default, user_agent with Header() reads User-Agent because underscores become hyphens.",
+    "The duplicate-header example collects foo and bar through a list parameter, with an example result of [\"bar\", \"foo\"]."
    ],
    "fact_meta": [
     {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
-      "confusable"
+      "example"
      ]
     },
     {
-     "accept_alternatives": [],
-     "tags": []
-    },
-    {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
-      "negation"
+      "example"
      ]
     }
    ],
    "key_entities": [
-    "Header",
-    "Cookie()",
-    "None",
-    "TestClient",
-    "curl"
+    "user_agent",
+    "Header()",
+    "User-Agent",
+    "x_token",
+    "foo",
+    "bar"
    ],
    "evidence_pages": [
     "request/headers-and-cookies.md"
@@ -909,14 +1333,9 @@
      "fact_idx": 0
     },
     {
-     "quote": "async def read_items(ads_id: Annotated[str | None, Cookie()] = None):",
+     "quote": "Sending `X-Token: foo` and `X-Token: bar` returns all values in a list, e.g. `{\"X-Token values\": [\"bar\", \"foo\"]}`.",
      "page": "request/headers-and-cookies.md",
      "fact_idx": 1
-    },
-    {
-     "quote": "**\"Try it out\" in the docs UI can't send cookies** — test with a real browser, `curl`, or `TestClient`.",
-     "page": "request/headers-and-cookies.md",
-     "fact_idx": 2
     }
    ],
    "alt_evidence": [],
@@ -924,12 +1343,17 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
-   "closed_book": {
-    "correct": false,
-    "accuracy": 0.6666666666666666,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy": 1.0,
+    "response": "`user_agent` reads the `User-Agent` header by default. The duplicate `X-Token` example declares the header as a list and sends two `X-Token` header lines, so FastAPI collects both values into a list.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
     "unknown": false,
     "empty": false,
-    "response": "Yes. `Header()` converts underscores to hyphens by default, so `x_api_key: str = Header()` reads `X-API-Key` (header names are case-insensitive).\n\nFor an optional cookie, use `session: str | None = Cookie(default=None)`.\n\nSwagger UI generally can’t let you type a `Cookie` header directly. It can send cookies already stored by the browser for the API’s origin; otherwise, use a tool such as `curl` or Postman.",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -942,97 +1366,124 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 11,
    "turn_type": "update",
    "type": "code",
-   "question": "Let's switch the dashboard's protected routes from bearer headers to the session cookie, retaining X-API-Key for automation. The cookie wins when present; only an absent cookie permits trying the key, and a supplied invalid cookie must fail. Bearer headers are no longer accepted on these routes. Show the two optional security-reader declarations and describe where that selection policy belongs.",
-   "standalone_question": "Configure optional FastAPI security readers for a session cookie and X-API-Key, replacing bearer authentication on protected routes. The session cookie takes priority, an invalid supplied cookie must fail, and the API key is tried only when the cookie is absent. Where should selection and validation occur?",
-   "answer": "from fastapi.security import APIKeyCookie, APIKeyHeader\n\nsession_scheme = APIKeyCookie(name=\"session\", auto_error=False)\napi_key_scheme = APIKeyHeader(name=\"X-API-Key\", auto_error=False)\n\nUse a combined dependency to enforce the policy: if the cookie value is not None, validate it and fail if invalid; only otherwise consider the API key. If neither is supplied, reject authentication. These readers only extract credentials; validation is your code's responsibility. Do not include a bearer reader on these routes.",
+   "question": "Rename our browser authentication cookie from orbit_session to orbit_session_v2; machine authentication stays unchanged. Show the updated setter using the temporary response and retain the authentication-cookie protections we discussed.",
+   "asks": [
+    "Update the browser-cookie setter",
+    "Retain authentication-cookie protections"
+   ],
+   "standalone_question": "Rename the browser authentication cookie from orbit_session to orbit_session_v2 while leaving machine authentication unchanged. Show the updated temporary-response setter with the previously discussed authentication-cookie protections.",
+   "answer": "```python\nresponse.set_cookie(\n    key=\"orbit_session_v2\",\n    value=session_value,\n    httponly=True,\n    secure=True,\n    samesite=\"lax\",\n)\n```\nHere `session_value` is the session value your application issues; `lax` is suitable only if it matches your browser flow's requirements.",
    "key_facts": [
-    "Use APIKeyCookie(name=\"session\", auto_error=False) and APIKeyHeader(name=\"X-API-Key\", auto_error=False) for optional extraction.",
-    "A combined dependency must implement the requested cookie-first selection and validation; the security readers only extract credentials."
+    "The browser authentication cookie is now named orbit_session_v2 rather than orbit_session.",
+    "Retain httponly=True, secure=True, and a suitable samesite setting."
    ],
    "fact_meta": [
     {
+     "source": "user",
      "accept_alternatives": [],
      "tags": [
-      "condition"
+      "confusable"
      ]
     },
     {
+     "source": "doc",
      "accept_alternatives": [],
-     "tags": [
-      "condition",
-      "negation"
-     ]
+     "tags": []
     }
    ],
    "key_entities": [
-    "APIKeyCookie",
-    "session",
-    "APIKeyHeader",
-    "X-API-Key",
-    "auto_error=False",
-    "None"
+    "orbit_session_v2",
+    "httponly=True",
+    "secure=True",
+    "samesite"
    ],
    "evidence_pages": [],
    "depends_on": [
-    1,
-    9,
-    10
+    2,
+    5
    ],
    "evidence": [
     {
-     "quote": "`APIKeyQuery(name=\"api_key\")` and `APIKeyCookie(name=\"session\")` work the same way, reading `request.query_params` and `request.cookies`.",
-     "page": "security/http-basic-and-api-keys.md",
+     "quote": "Rename our browser authentication cookie from orbit_session to orbit_session_v2; machine authentication stays unchanged.",
+     "user_turn": 11,
      "fact_idx": 0
     },
     {
-     "quote": "api_key_scheme = APIKeyHeader(name=\"X-API-Key\", auto_error=False)",
-     "page": "security/http-basic-and-api-keys.md",
-     "fact_idx": 0
-    },
-    {
-     "quote": "With `auto_error=False`, the dependency returns `None` instead, so you can make authentication optional or try several schemes in sequence:",
-     "page": "security/http-basic-and-api-keys.md",
-     "fact_idx": 0
-    },
-    {
-     "quote": "They only **extract** credentials — **verifying** them is your code's job.",
-     "page": "security/http-basic-and-api-keys.md",
+     "quote": "For session/auth cookies, set `httponly=True`, `secure=True` and a suitable `samesite`.",
+     "page": "responses/response-headers-and-cookies.md",
      "fact_idx": 1
     }
    ],
    "alt_evidence": [],
    "changes": [
     {
-     "what": "Authentication accepted by dashboard protected routes",
-     "from": "Gateway-issued bearer tokens, with a possible X-API-Key alternative",
-     "to": "session cookie first; X-API-Key only when the cookie is absent; no bearer authentication"
-    },
-    {
-     "what": "Fallback after an invalid supplied session cookie",
-     "from": "Not specified",
-     "to": "Reject the request without trying the API key"
+     "what": "Browser authentication cookie name",
+     "from": "orbit_session",
+     "to": "orbit_session_v2"
     }
    ],
    "affects": [
     13,
+    17,
     18
    ],
    "source_turn": null,
-   "recall_distance": 10,
-   "closed_book": {
-    "correct": false,
-    "accuracy": 0.5,
+   "recall_distance": 9,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy": 1.0,
+    "response": "```ts\ntemporaryResponse.cookies.set(\"orbit_session_v2\", sessionToken, {\n  httpOnly: true,\n  secure: true,\n  sameSite: \"lax\",\n  path: \"/\",\n  // Keep the existing session lifetime.\n});\n```\n\nOnly the browser cookie name changes; leave machine authentication unchanged.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
     "unknown": false,
     "empty": false,
-    "response": "Use a shared authentication dependency on protected routes. Configure the cookie and `X-API-Key` security readers as optional (`auto_error=False`), then have the dependency choose and validate credentials: if a cookie is supplied, validate it and fail if invalid; consult the API key only when the cookie is absent. The readers extract credentials; the dependency enforces precedence and validation.",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -1045,75 +1496,102 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 12,
    "turn_type": "new",
    "type": "multi",
-   "question": "A separate legacy OAuth2 router will remain unchanged. Its active-user dependency requires scope me, and /users/me/items/ adds items through Security(). Which scopes reach the central checker, does declaring them enforce permission automatically, and what status and challenge does the example use when a scope is missing?",
-   "standalone_question": "In FastAPI OAuth2 scope handling, if an active-user dependency requires me and /users/me/items/ requires items, which scopes accumulate, must application code verify them, and what status and WWW-Authenticate challenge does the example use for insufficient scopes?",
-   "answer": "Both items and me reach the central checker through SecurityScopes. Application code must compare the required scopes with those carried by the token; declaration alone is not the permission check. The example rejects missing permissions with 401 Not enough permissions and a WWW-Authenticate challenge containing the required scopes, such as Bearer scope=\"items me\".",
+   "question": "I'm writing authentication regression assertions. In the scoped-user example, what status and detail result when items permission is missing for the user's items endpoint? Separately, what version changed built-in missing-credential errors, and what status replaced the old one?",
+   "asks": [
+    "Identify the scoped-example permission failure",
+    "Identify the built-in authentication status migration"
+   ],
+   "standalone_question": "In the scoped-user example, what status and detail result when items permission is missing for the user's items endpoint? What version changed built-in missing-credential errors, and what status replaced the old one?",
+   "answer": "Without `items`, `/users/me/items/` returns `401` with detail `Not enough permissions`. Since FastAPI `0.122.0`, built-in security classes use `401 Unauthorized` with an appropriate `WWW-Authenticate` header instead of the previous `403 Forbidden`.",
    "key_facts": [
-    "Required scopes accumulate through the dependency tree, so the items route requires both items and me.",
-    "The central checker explicitly compares required scopes with token scopes and raises 401 Not enough permissions with a scope-bearing Bearer challenge when one is missing."
+    "The scoped example returns 401 Not enough permissions when items is missing for /users/me/items/.",
+    "FastAPI 0.122.0 changed built-in authentication errors from 403 to 401 with a suitable WWW-Authenticate header."
    ],
    "fact_meta": [
     {
-     "accept_alternatives": [],
-     "tags": []
-    },
-    {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
+      "example",
       "condition",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
       "confusable"
      ]
     }
    ],
    "key_entities": [
-    "SecurityScopes",
     "items",
-    "me",
+    "/users/me/items/",
     "401",
     "Not enough permissions",
+    "0.122.0",
+    "403",
     "WWW-Authenticate"
    ],
    "evidence_pages": [
-    "security/oauth2-scopes.md"
+    "security/oauth2-scopes.md",
+    "errors/handling-errors.md"
    ],
    "depends_on": [],
    "evidence": [
     {
-     "quote": "| `/users/me/items/` | `items` (path op) + `me` → `[\"items\", \"me\"]` |",
+     "quote": "Without `items`, `/users/me/items/` returns `401 Not enough permissions`; without `me`, `/users/me/` does too.",
      "page": "security/oauth2-scopes.md",
      "fact_idx": 0
     },
     {
-     "quote": "    for scope in security_scopes.scopes:",
-     "page": "security/oauth2-scopes.md",
-     "fact_idx": 1
-    },
-    {
-     "quote": "        if scope not in token_data.scopes:",
-     "page": "security/oauth2-scopes.md",
-     "fact_idx": 1
-    },
-    {
-     "quote": "                status_code=status.HTTP_401_UNAUTHORIZED,",
-     "page": "security/oauth2-scopes.md",
-     "fact_idx": 1
-    },
-    {
-     "quote": "                detail=\"Not enough permissions\",",
-     "page": "security/oauth2-scopes.md",
-     "fact_idx": 1
-    },
-    {
-     "quote": "- Per the OAuth2 spec, the `WWW-Authenticate` header includes the required scopes: `Bearer scope=\"me items\"`.",
-     "page": "security/oauth2-scopes.md",
+     "quote": "Since FastAPI **0.122.0**, the built-in security classes respond to missing/invalid credentials with **`401 Unauthorized`** plus a suitable `WWW-Authenticate` header (previously `403 Forbidden`).",
+     "page": "errors/handling-errors.md",
      "fact_idx": 1
     }
    ],
@@ -1122,12 +1600,17 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
-   "closed_book": {
+   "closed_book_knowledge": {
     "correct": false,
     "accuracy": 0.5,
+    "response": "The missing `items` permission returns **403 Forbidden** with detail **\"Not enough permissions.\"** FastAPI **0.122.0** changed built-in missing-credential errors from **403** to **401 Unauthorized**.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
     "unknown": false,
     "empty": false,
-    "response": "The scopes accumulate as **`me` and `items`**. Your application code must check that the token includes them. If not, the example returns **403 Forbidden** with `WWW-Authenticate: Bearer scope=\"me items\"`.",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -1140,83 +1623,119 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 13,
    "turn_type": "synthesis",
-   "type": "procedure",
-   "question": "Give me a short integration checklist for the dashboard under our current authentication decision: credential extraction and priority, setting its browser credential without losing output filtering, and cross-origin configuration for the frontend address we chose. Keep the legacy router separate.",
-   "standalone_question": "Give an integration checklist for FastAPI dashboard routes using a session cookie first and X-API-Key only when the cookie is absent, rejecting invalid supplied cookies and not accepting bearer tokens. Include setting an auth cookie while preserving response_model filtering and credential-enabled CORS for http://localhost:8080 with GET/POST and explicit request headers.",
-   "answer": "1. Use optional APIKeyCookie(name=\"session\", auto_error=False) and APIKeyHeader(name=\"X-API-Key\", auto_error=False). In the combined dependency, validate a present cookie first and reject it if invalid; try the key only when the cookie is absent. Do not accept bearer headers on these routes.\n2. Set session through an injected Response, with httponly=True, secure=True, and the chosen samesite=\"lax\"; return ordinary data so response_model filtering remains active.\n3. Configure CORSMiddleware with allow_origins=[\"http://localhost:8080\"], allow_credentials=True, allow_methods=[\"GET\", \"POST\"], and an explicit allow_headers list such as [\"Authorization\", \"X-API-Key\", \"Content-Type\"]. Allowing a header through CORS does not make it an accepted authentication method. Keep the legacy OAuth2 router's separate dependency chain.",
+   "type": "multi",
+   "question": "Summarize the current browser-login checklist: our chosen cookie name and token lifetime, the wildcard restriction for credentialed CORS, and who handles a preflight request with what success or rejection status.",
+   "asks": [
+    "Recall current browser-cookie and token-lifetime settings",
+    "State credentialed CORS wildcard restrictions",
+    "Explain preflight handling and statuses"
+   ],
+   "standalone_question": "Summarize the project's current browser-login checklist: its chosen cookie name and token lifetime, the wildcard restriction for credentialed CORS, and who handles a preflight request with what success or rejection status.",
+   "answer": "Use cookie `orbit_session_v2` and an explicit token lifetime of 41 minutes. For credentialed CORS, list allowed origins, methods, and headers explicitly rather than using wildcard lists. The middleware handles qualifying preflight `OPTIONS` requests itself, returning `200` when allowed or `400` when rejected; endpoints do not receive them.",
    "key_facts": [
-    "The current dashboard policy uses optional cookie/key extraction with cookie-first validation and no bearer authentication.",
-    "An injected Response sets the auth cookie while ordinary returned data retains response_model filtering.",
-    "Credentialed CORS uses the explicit frontend origin and explicit methods and headers, not wildcard lists."
+    "The current project settings are cookie orbit_session_v2 and a 41-minute token lifetime.",
+    "Credentialed CORS should not use wildcard lists for origins, methods, or headers.",
+    "The middleware handles preflight requests itself with 200 or 400, without passing them to endpoints."
    ],
    "fact_meta": [
     {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
       "condition",
-      "negation"
-     ]
-    },
-    {
-     "accept_alternatives": [],
-     "tags": [
-      "condition"
-     ]
-    },
-    {
-     "accept_alternatives": [],
-     "tags": [
-      "condition"
+      "negation",
+      "confusable"
      ]
     }
    ],
    "key_entities": [
-    "APIKeyCookie",
-    "APIKeyHeader",
-    "auto_error=False",
-    "Response",
-    "response_model",
-    "http://localhost:8080",
-    "allow_credentials=True"
+    "orbit_session_v2",
+    "41",
+    "OPTIONS",
+    "200",
+    "400"
    ],
    "evidence_pages": [],
    "depends_on": [
-    1,
-    5,
+    4,
     8,
-    11,
-    12
+    11
    ],
    "evidence": [
     {
-     "quote": "They only **extract** credentials — **verifying** them is your code's job.",
-     "page": "security/http-basic-and-api-keys.md",
+     "quote": "Rename our browser authentication cookie from orbit_session to orbit_session_v2; machine authentication stays unchanged.",
+     "user_turn": 11,
      "fact_idx": 0
     },
     {
-     "quote": "With `auto_error=False`, the dependency returns `None` instead, so you can make authentication optional or try several schemes in sequence:",
-     "page": "security/http-basic-and-api-keys.md",
+     "quote": "Actually, change our access-token lifetime from 23 to 41 minutes.",
+     "user_turn": 4,
      "fact_idx": 0
-    },
-    {
-     "quote": "FastAPI injects a **temporary** response object; you set headers/cookies on it and return your data normally.",
-     "page": "responses/response-headers-and-cookies.md",
-     "fact_idx": 1
-    },
-    {
-     "quote": "For session/auth cookies, set `httponly=True`, `secure=True` and a suitable `samesite`.",
-     "page": "responses/response-headers-and-cookies.md",
-     "fact_idx": 1
     },
     {
      "quote": "the docs state that `allow_origins`, `allow_methods` and `allow_headers` should not be `[\"*\"]` when `allow_credentials=True`.",
+     "page": "middleware/cors.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "The middleware answers them itself with the CORS headers and `200` (allowed) or `400` (not allowed); your endpoints never see them.",
      "page": "middleware/cors.md",
      "fact_idx": 2
     }
@@ -1225,13 +1744,19 @@
    "changes": null,
    "affects": null,
    "source_turn": null,
-   "recall_distance": 12,
-   "closed_book": {
-    "correct": true,
-    "accuracy": 1.0,
-    "unknown": false,
+   "recall_distance": 9,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
     "empty": false,
-    "response": "- Add one auth dependency to dashboard routes:\n  - If the session cookie is present, validate it; reject an invalid or empty cookie with `401` and **do not** fall back.\n  - Only if the cookie is absent, validate `X-API-Key`.\n  - Reject requests with neither valid credential. Do not configure bearer-token authentication or read `Authorization`.\n- Set the session cookie through FastAPI’s injected `Response` (for example, `response.set_cookie(...)`) and return the normal data object. This preserves `response_model` filtering. Use `HttpOnly`, an appropriate `Secure` setting, and a deliberate `SameSite` policy.\n- Configure CORS for exactly `http://localhost:8080`, with `allow_credentials=True`, methods `GET` and `POST`, and explicit headers such as `Content-Type`, `Accept`, and `X-API-Key`—not `*` or `Authorization`.\n- Have the browser send cookie credentials on cross-origin requests; allow the API-key header only where that fallback is needed.",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -1244,31 +1769,70 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 14,
    "turn_type": "same_doc_new_topic",
    "type": "fact",
-   "question": "A teammate rewrote /session to construct and return JSONResponse directly, setting the cookie on that object. Is response_model still a filtering safety net for the returned body?",
-   "standalone_question": "If a FastAPI endpoint constructs and directly returns JSONResponse with a cookie set on it, does response_model still validate and filter its body?",
-   "answer": "No. A directly returned Response, including JSONResponse, skips response_model validation and filtering. The endpoint must construct the intended safe content itself.",
+   "question": "A teammate wants the login handler to return a constructed JSONResponse directly instead of returning data through the temporary response. What response_model safety check would that bypass?",
+   "asks": [
+    "Identify the filtering consequence of returning a response directly"
+   ],
+   "standalone_question": "If a login handler returns a constructed JSONResponse directly instead of returning data while using a temporary response, what response_model safety check does it bypass?",
+   "answer": "A directly returned response skips `response_model` validation and filtering, so the handler must ensure the content is safe and correct itself.",
    "key_facts": [
-    "Directly returning JSONResponse bypasses response_model validation and filtering."
+    "Returning a Response directly skips response_model validation and filtering."
    ],
    "fact_meta": [
     {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
-      "negation",
-      "confusable"
+      "negation"
      ]
     }
    ],
    "key_entities": [
-    "JSONResponse",
     "response_model"
    ],
    "evidence_pages": [],
@@ -1277,7 +1841,7 @@
    ],
    "evidence": [
     {
-     "quote": "Remember: a directly returned response skips `response_model` validation/filtering — make sure the content is what you intend to send ([Custom Responses](custom-responses.md)).",
+     "quote": "Remember: a directly returned response skips `response_model` validation/filtering — make sure the content is what you intend to send",
      "page": "responses/response-headers-and-cookies.md",
      "fact_idx": 0
     }
@@ -1287,12 +1851,16 @@
    "affects": null,
    "source_turn": 5,
    "recall_distance": 9,
-   "closed_book": {
+   "closed_book_knowledge": {
     "correct": true,
     "accuracy": 1.0,
+    "response": "It bypasses FastAPI’s `response_model` validation and filtering.",
+    "fact_results": [
+     true
+    ],
+    "judge_skipped": null,
     "unknown": false,
     "empty": false,
-    "response": "No. Returning a `JSONResponse` directly bypasses `response_model` validation and filtering; the cookie doesn’t change that.",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -1305,51 +1873,94 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 15,
    "turn_type": "new",
-   "type": "procedure",
-   "question": "For business-logic tests, how do I replace get_identity with a fixed test identity and clean up afterward? Separately, for an older bearer-only compatibility endpoint, how can I restore its expected 403 behavior without changing every authentication error globally?",
-   "standalone_question": "How can FastAPI tests override get_identity with a fixed identity and reset the override, and how can a separate HTTPBearer-based endpoint restore the pre-0.122.0 missing-credentials status of 403 without globally rewriting errors?",
-   "answer": "Set app.dependency_overrides[get_identity] to a replacement callable such as lambda: fake_user, then clear the overrides in cleanup, preferably in finally. The original dependency and its sub-dependencies will not run.\n\nFor the compatibility endpoint, subclass HTTPBearer and override make_not_authenticated_error() to return HTTPException(status_code=403, detail=\"Not authenticated\"). Use an instance of that subclass only on that endpoint. The method returns the exception; the security class raises it.",
+   "type": "multi",
+   "question": "For endpoint tests, how do I replace a current-user dependency with a fixed user, and does its original dependency tree still run? Also, for a startup smoke test, how must I use TestClient and what exact two entries does the lifespan example populate?",
+   "asks": [
+    "Override current-user resolution and explain bypass behavior",
+    "Run lifespan and identify its example entries"
+   ],
+   "standalone_question": "How can a FastAPI endpoint test replace a current-user dependency with a fixed user, and does the original dependency tree still run? For a startup smoke test, how must TestClient be used and what exact two entries does the lifespan example populate?",
+   "answer": "Set `app.dependency_overrides[get_current_user] = lambda: fake_user`, using the actual original callable as the key. The original dependency and its sub-dependencies do not run. Use `with TestClient(app) as client:` to run lifespan. The example populates `{\"foo\": {\"name\": \"Fighters\"}, \"bar\": {\"name\": \"Tenders\"}}`.",
    "key_facts": [
-    "dependency_overrides maps the original callable to a replacement; the original dependency and its sub-dependencies do not run.",
-    "Clear dependency_overrides after the test to isolate later tests.",
-    "A local HTTPBearer subclass can restore 403 by returning an HTTPException from make_not_authenticated_error()."
+    "dependency_overrides maps the original callable to a replacement, bypassing the original and its sub-dependencies.",
+    "TestClient runs lifespan only when used as a context manager.",
+    "The lifespan example creates foo named Fighters and bar named Tenders."
    ],
    "fact_meta": [
     {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
       "negation"
      ]
     },
     {
-     "accept_alternatives": [],
-     "tags": []
-    },
-    {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
-      "confusable"
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
      ]
     }
    ],
    "key_entities": [
     "app.dependency_overrides",
-    "HTTPBearer",
-    "make_not_authenticated_error",
-    "HTTPException",
-    "403",
-    "Not authenticated"
+    "TestClient",
+    "foo",
+    "Fighters",
+    "bar",
+    "Tenders"
    ],
    "evidence_pages": [
-    "testing/testing-dependencies-events-websockets.md",
-    "errors/handling-errors.md"
+    "testing/testing-dependencies-events-websockets.md"
    ],
    "depends_on": [],
    "evidence": [
@@ -1364,28 +1975,18 @@
      "fact_idx": 0
     },
     {
-     "quote": "app.dependency_overrides.clear()",
+     "quote": "`TestClient` runs the app's **lifespan** only when used as a **context manager**.",
      "page": "testing/testing-dependencies-events-websockets.md",
      "fact_idx": 1
     },
     {
-     "quote": "class HTTPBearer403(HTTPBearer):",
-     "page": "errors/handling-errors.md",
+     "quote": "    items[\"foo\"] = {\"name\": \"Fighters\"}",
+     "page": "testing/testing-dependencies-events-websockets.md",
      "fact_idx": 2
     },
     {
-     "quote": "    def make_not_authenticated_error(self) -> HTTPException:",
-     "page": "errors/handling-errors.md",
-     "fact_idx": 2
-    },
-    {
-     "quote": "            status_code=status.HTTP_403_FORBIDDEN, detail=\"Not authenticated\"",
-     "page": "errors/handling-errors.md",
-     "fact_idx": 2
-    },
-    {
-     "quote": "The method **returns** the exception; the security class raises it.",
-     "page": "errors/handling-errors.md",
+     "quote": "    items[\"bar\"] = {\"name\": \"Tenders\"}",
+     "page": "testing/testing-dependencies-events-websockets.md",
      "fact_idx": 2
     }
    ],
@@ -1394,12 +1995,18 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
-   "closed_book": {
+   "closed_book_knowledge": {
     "correct": false,
-    "accuracy": 0.3333333333333333,
+    "accuracy": 0.6666666666666666,
+    "response": "Set `app.dependency_overrides[get_current_user]` to a callable that returns your fixed user. FastAPI skips the original dependency **and its sub-dependencies** for that override.\n\nUse `with TestClient(app) as client:` so startup and shutdown lifespan handlers run. The standard FastAPI lifespan example populates one entry—`ml_models[\"answer_to_everything\"] = fake_answer_to_everything`—then clears the mapping; it does not populate two.",
+    "fact_results": [
+     true,
+     true,
+     false
+    ],
+    "judge_skipped": null,
     "unknown": false,
     "empty": false,
-    "response": "Override the exact dependency used by the route, then remove the override during teardown:\n\n```python\nold = app.dependency_overrides.get(get_identity)\napp.dependency_overrides[get_identity] = lambda: fixed_identity\ntry:\n    response = client.get(\"/me\")\nfinally:\n    if old is None:\n        app.dependency_overrides.pop(get_identity, None)\n    else:\n        app.dependency_overrides[get_identity] = old\n```\n\nFor just the endpoint that needs the old missing-credentials response, disable `HTTPBearer`’s automatic error and raise 403 locally:\n\n```python\nbearer = HTTPBearer(auto_error=False)\n\ndef require_bearer(\n    credentials: HTTPAuthorizationCredentials | None = Depends(bearer),\n):\n    if credentials is None:\n        raise HTTPException(status_code=403, detail=\"Not authenticated\")\n    return credentials\n\n@app.get(\"/legacy\")\ndef legacy(credentials=Depends(require_bearer)):\n    ...\n```\n\nThis keeps the 403 behavior scoped to that endpoint rather than rewriting errors globally.",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -1412,29 +2019,70 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 16,
    "turn_type": "recall",
    "type": "multi",
-   "question": "I'm writing a migration note about the original password-login design, not changing the current dashboard. Remind me whether its relative token URL created a route, whether credentials were JSON, and which two response keys its login needed.",
-   "standalone_question": "In the original FastAPI OAuth2PasswordBearer(tokenUrl=\"token\") password-login design, did tokenUrl create the route, were username/password sent as JSON or form fields, and which two JSON response keys were required?",
-   "answer": "The relative token URL only described where clients obtain tokens; it did not create a route. Username and password were form fields, not JSON. The login response needed access_token and token_type, with token_type set to \"bearer\".",
+   "question": "I'm finishing the machine-client adapter. What custom header name did we choose, and should I treat its API-key extractor result like the object returned by HTTPBearer?",
+   "asks": [
+    "Recall the machine-client header name",
+    "Contrast API-key and bearer extractor return types"
+   ],
+   "standalone_question": "What custom header name did the project choose for machine clients, and should its API-key extractor result be treated like the object returned by HTTPBearer?",
+   "answer": "The header is `X-Orbit-Key`. `APIKeyHeader` returns a string, whereas `HTTPBearer` returns `HTTPAuthorizationCredentials`; only the latter requires accessing `.credentials` to get the token.",
    "key_facts": [
-    "tokenUrl did not create a login route.",
-    "Username/password were form fields, and the JSON response required access_token and token_type=\"bearer\"."
+    "The project's machine-client header is X-Orbit-Key.",
+    "APIKeyHeader returns str, while HTTPBearer returns HTTPAuthorizationCredentials with a credentials field."
    ],
    "fact_meta": [
     {
+     "source": "user",
      "accept_alternatives": [],
-     "tags": [
-      "negation"
-     ]
+     "tags": []
     },
     {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
       "confusable"
@@ -1442,29 +2090,32 @@
     }
    ],
    "key_entities": [
-    "tokenUrl",
-    "access_token",
-    "token_type",
-    "bearer"
+    "X-Orbit-Key",
+    "APIKeyHeader",
+    "str",
+    "HTTPBearer",
+    "HTTPAuthorizationCredentials",
+    "credentials"
    ],
    "evidence_pages": [],
    "depends_on": [
-    0
+    1,
+    2
    ],
    "evidence": [
     {
-     "quote": "It does **not** create that endpoint.",
-     "page": "security/oauth2-password-flow.md",
+     "quote": "Machine clients will send their API key in X-Orbit-Key.",
+     "user_turn": 1,
      "fact_idx": 0
     },
     {
-     "quote": "The OAuth2 password flow requires the client to send `username` and `password` as **form fields** (not JSON).",
-     "page": "security/oauth2-password-flow.md",
+     "quote": "| `APIKeyHeader(name=...)` | the named header | `str` |",
+     "page": "security/http-basic-and-api-keys.md",
      "fact_idx": 1
     },
     {
-     "quote": "The token endpoint must return JSON with `access_token` and `token_type` (`\"bearer\"`).",
-     "page": "security/oauth2-password-flow.md",
+     "quote": "| `HTTPBearer` | `Authorization: Bearer <token>` | `HTTPAuthorizationCredentials(scheme, credentials)` |",
+     "page": "security/http-basic-and-api-keys.md",
      "fact_idx": 1
     }
    ],
@@ -1472,13 +2123,18 @@
    "changes": null,
    "affects": null,
    "source_turn": null,
-   "recall_distance": 16,
-   "closed_book": {
+   "recall_distance": 15,
+   "closed_book_knowledge": {
     "correct": false,
     "accuracy": 0.5,
+    "response": "The custom header is `X-API-Key`. No—the extractor returns the raw key string, not an `HTTPBearer` credentials object.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
     "unknown": false,
     "empty": false,
-    "response": "`tokenUrl` did not create the route. Username and password were sent as form fields, and the JSON response required `access_token` and `token_type`.",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -1491,59 +2147,97 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 17,
    "turn_type": "recall",
    "type": "multi",
-   "question": "For the signed-token verifier we discussed, remind me of the exact decode-call shape and the subject claim's requirements. Should an expired token and a token naming a deleted user produce different authentication responses?",
-   "standalone_question": "In the discussed FastAPI JWT verifier using PyJWT, what is the algorithm-pinned decode call, what requirements apply to sub, and should expired tokens and tokens naming unknown users receive different authentication responses?",
-   "answer": "Use jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM]); the example pins ALGORITHM=\"HS256\". The sub claim should be a string unique across the whole application. No: an expired token and an unknown user both receive the same 401 with WWW-Authenticate: Bearer.",
+   "question": "For the browser regression test, which cookie name must I send now? Can I rely on the interactive API UI's Try it out to send that cookie?",
+   "asks": [
+    "Recall the current browser-cookie name",
+    "Identify the interactive UI's cookie-testing limitation"
+   ],
+   "standalone_question": "For the project's browser regression test, which currently selected cookie name must be sent, and can the interactive API UI's Try it out be relied on to send that cookie?",
+   "answer": "Send `orbit_session_v2`. No: the interactive UI's Try it out cannot send cookies. Use a real browser, `curl`, or `TestClient` for the cookie test.",
    "key_facts": [
-    "Decode using jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM]) and require an application-wide unique string sub.",
-    "Expired tokens and unknown users share the same 401 response and Bearer challenge."
+    "The current browser authentication cookie is orbit_session_v2.",
+    "Try it out cannot send cookies; cookie behavior should be tested with a real browser, curl, or TestClient."
    ],
    "fact_meta": [
     {
-     "accept_alternatives": [],
-     "tags": []
-    },
-    {
+     "source": "user",
      "accept_alternatives": [],
      "tags": [
-      "negation",
       "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
      ]
     }
    ],
    "key_entities": [
-    "jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])",
-    "HS256",
-    "sub",
-    "401",
-    "WWW-Authenticate: Bearer"
+    "orbit_session_v2",
+    "Try it out",
+    "curl",
+    "TestClient"
    ],
    "evidence_pages": [],
    "depends_on": [
-    3
+    10,
+    11
    ],
    "evidence": [
     {
-     "quote": "        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])",
-     "page": "security/oauth2-jwt.md",
+     "quote": "Rename our browser authentication cookie from orbit_session to orbit_session_v2; machine authentication stays unchanged.",
+     "user_turn": 11,
      "fact_idx": 0
     },
     {
-     "quote": "It should be a **string, unique across the whole application**.",
-     "page": "security/oauth2-jwt.md",
-     "fact_idx": 0
-    },
-    {
-     "quote": "Any problem — bad signature, expired token, missing `sub`, unknown user — results in the same `401` with `WWW-Authenticate: Bearer`.",
-     "page": "security/oauth2-jwt.md",
+     "quote": "**\"Try it out\" in the docs UI can't send cookies** — test with a real browser, `curl`, or `TestClient`.",
+     "page": "request/headers-and-cookies.md",
      "fact_idx": 1
     }
    ],
@@ -1551,13 +2245,18 @@
    "changes": null,
    "affects": null,
    "source_turn": null,
-   "recall_distance": 14,
-   "closed_book": {
+   "recall_distance": 7,
+   "closed_book_knowledge": {
     "correct": false,
-    "accuracy": 0.5,
-    "unknown": false,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
     "empty": false,
-    "response": "Use `jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])`. Require `sub` to be present and a non-empty string identifying the user. Expired tokens and tokens for unknown users should receive the same generic authentication response, typically 401.",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -1570,94 +2269,150 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   },
   {
    "turn": 18,
    "turn_type": "synthesis",
    "type": "procedure",
-   "question": "Finish with a focused test plan for the current dashboard: how should I separate fixed-identity business tests from real authentication tests, which credential combinations should the authentication tests cover, and does success with TestClient prove the cross-origin browser setup works?",
-   "standalone_question": "Give a FastAPI test plan for dashboard routes accepting a session cookie first and X-API-Key only if the cookie is absent, rejecting invalid supplied cookies and not accepting bearer-only requests. Explain how get_identity overrides affect authentication coverage and whether TestClient success proves browser CORS works.",
-   "answer": "1. For business tests, override get_identity with a fixed user and clear the override afterward. Those tests bypass the original dependency and its sub-dependencies, so they do not test credential extraction or verification.\n2. For authentication tests, leave get_identity unoverridden. Cover a valid cookie; an absent cookie with a valid X-API-Key; an invalid supplied cookie with a valid key, which must still fail; neither credential; and bearer-only input, which must fail under the current dashboard policy. TestClient can exercise cookie requests even though the interactive UI cannot.\n3. Verify cross-origin behavior in a real browser as well. TestClient requests are not subject to browser CORS enforcement, so successful authentication tests do not prove that the frontend origin and credentialed CORS configuration work.",
+   "question": "Give a compact smoke-test plan using our configured token URL, machine header, and current browser cookie. Explain whether replacing the current-user dependency exercises authentication, and how to clean up overrides afterward.",
+   "asks": [
+    "Use the project's current authentication transport settings in a smoke-test plan",
+    "Distinguish authentication tests from current-user override tests",
+    "Clean up dependency overrides"
+   ],
+   "standalone_question": "Give a compact smoke-test plan using the project's configured token URL, machine header, and current browser cookie. Explain whether replacing the current-user dependency exercises authentication, and how to clean up overrides afterward.",
+   "answer": "1. With authentication overrides disabled, exercise token issuance at the relative URL `auth/issue`, machine authentication through `X-Orbit-Key`, and browser authentication through `orbit_session_v2`.\n2. Keep fixed-user endpoint tests separate: overriding the current-user dependency bypasses that dependency and its sub-dependencies, so those tests do not exercise that authentication chain.\n3. In teardown, call `app.dependency_overrides.clear()` so overrides do not leak into other tests.",
    "key_facts": [
-    "Overriding get_identity bypasses its original dependency tree, so fixed-identity business tests do not establish authentication correctness.",
-    "Unmocked authentication tests must follow the updated cookie-first policy, including rejection of invalid-cookie-plus-valid-key and bearer-only requests.",
-    "TestClient can test cookies but is not subject to browser CORS, so passing tests do not establish browser CORS success."
+    "The project's settings are auth/issue for token issuance, X-Orbit-Key for machine keys, and orbit_session_v2 for browser authentication.",
+    "A current-user override bypasses the original dependency and its sub-dependencies, so it does not test that authentication chain.",
+    "Clear dependency_overrides after tests to preserve isolation."
    ],
    "fact_meta": [
     {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
      "accept_alternatives": [],
      "tags": [
       "negation"
      ]
     },
     {
-     "accept_alternatives": [],
-     "tags": [
-      "condition"
-     ]
-    },
-    {
-     "accept_alternatives": [],
-     "tags": [
-      "negation",
-      "condition"
-     ]
+     "source": "doc",
+     "accept_alternatives": [
+      "Reset overrides with app.dependency_overrides = {}."
+     ],
+     "tags": []
     }
    ],
    "key_entities": [
-    "get_identity",
-    "X-API-Key",
-    "TestClient",
-    "CORS"
+    "auth/issue",
+    "X-Orbit-Key",
+    "orbit_session_v2",
+    "app.dependency_overrides.clear()"
    ],
    "evidence_pages": [],
    "depends_on": [
-    8,
-    10,
+    0,
+    1,
     11,
     15
    ],
    "evidence": [
     {
-     "quote": "the original and its sub-dependencies don't run.",
-     "page": "testing/testing-dependencies-events-websockets.md",
+     "quote": "Our relative token URL will be auth/issue.",
+     "user_turn": 0,
      "fact_idx": 0
     },
     {
-     "quote": "They only **extract** credentials — **verifying** them is your code's job.",
-     "page": "security/http-basic-and-api-keys.md",
+     "quote": "Machine clients will send their API key in X-Orbit-Key.",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Rename our browser authentication cookie from orbit_session to orbit_session_v2; machine authentication stays unchanged.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "the original and its sub-dependencies don't run.",
+     "page": "testing/testing-dependencies-events-websockets.md",
      "fact_idx": 1
     },
     {
-     "quote": "With `auto_error=False`, the dependency returns `None` instead, so you can make authentication optional or try several schemes in sequence:",
-     "page": "security/http-basic-and-api-keys.md",
-     "fact_idx": 1
-    },
-    {
-     "quote": "**\"Try it out\" in the docs UI can't send cookies** — test with a real browser, `curl`, or `TestClient`.",
-     "page": "request/headers-and-cookies.md",
-     "fact_idx": 2
-    },
-    {
-     "quote": "Server-to-server calls, `curl`, mobile apps and your tests are not subject to CORS.",
-     "page": "middleware/cors.md",
+     "quote": "app.dependency_overrides.clear()",
+     "page": "testing/testing-dependencies-events-websockets.md",
      "fact_idx": 2
     }
    ],
-   "alt_evidence": [],
+   "alt_evidence": [
+    {
+     "quote": "app.dependency_overrides = {}",
+     "page": "testing/testing-dependencies-events-websockets.md",
+     "fact_idx": 2,
+     "alt_idx": 0
+    }
+   ],
    "changes": null,
    "affects": null,
    "source_turn": null,
-   "recall_distance": 10,
-   "closed_book": {
-    "correct": true,
-    "accuracy": 1.0,
+   "recall_distance": 18,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy": 0.3333333333333333,
+    "response": "- Use the project’s configured token URL and machine header to obtain a token, then call the protected endpoint with the current browser cookie and whatever auth headers the configured flow requires. Confirm success; repeat without or with invalid credentials and expect an auth failure.\n- Replacing the current-user dependency **does not test authentication**: it bypasses the checks that resolve the user. Use it only to test downstream endpoint behavior.\n- If you add an override, save any existing override and restore it in a `finally` block; otherwise remove just that entry afterward.",
+    "fact_results": [
+     false,
+     true,
+     false
+    ],
+    "judge_skipped": null,
     "unknown": false,
     "empty": false,
-    "response": "Test the dashboard routes with authentication dependencies **not overridden**:\n\n- Valid session cookie → succeeds, using the cookie identity.\n- No cookie + valid `X-API-Key` → succeeds.\n- No cookie + missing or invalid API key → returns 401/403.\n- Invalid supplied cookie + valid API key → rejected; it must not fall back to the key.\n- Bearer token only → rejected.\n- Optionally verify a valid cookie takes precedence when both credentials are supplied.\n\nIf tests override `get_identity`, they bypass its real credential parsing and precedence rules. Those tests cover route behavior under a supplied identity, not authentication; keep separate tests using the real dependency.\n\nA successful `TestClient` request does **not** prove browser CORS works. Test CORS headers and preflight behavior separately, and use a browser-level test if you need to verify the browser’s enforcement.",
     "model": "gpt-6-luna",
     "settings": {
      "model": "gpt-6-luna",
@@ -1670,8 +2425,45 @@
      "max_tokens_param": "max_completion_tokens"
     },
     "judge": "deepseek-flash",
-    "judge_prompt": "fact_judge_v2",
-    "run_id": "20261127-222727"
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-005056"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-005056"
    }
   }
  ]
