@@ -9,7 +9,10 @@ from __future__ import annotations
 import os
 import sys
 import tempfile
+import threading
+import time
 import unittest
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from unittest import mock
 
@@ -116,6 +119,101 @@ class CacheTest(unittest.TestCase):
     def test_passthrough_attrs(self):
         self.assertEqual(CachedLLM(FakeLLM(), path=self.path).model, "gpt-6.1-sol")
 
+
+
+class SlowLLM(FakeLLM):
+    """호출이 겹치도록 느린 가짜 LLM. 호출마다 다른 답을 낸다 (동시 중복 호출이면 답이 갈린다)."""
+
+    def __init__(self, delay=0.2, **kw):
+        super().__init__(**kw)
+        self.delay = delay
+        self._n = 0
+        self._lock = threading.Lock()
+
+    def chat(self, messages, stream_ttft=False):
+        with self._lock:
+            self._n += 1
+            n = self._n
+        time.sleep(self.delay)
+        with self._lock:
+            self.calls += 1
+        return LLMResult(text=f"answer {n}", prompt_tokens=100, completion_tokens=10, latency=self.delay,
+                         model=self.model)
+
+
+class ConcurrencyTest(unittest.TestCase):
+    """같은 요청을 동시에 보내면 API 는 한 번만 부르고 모두 같은 답을 받는다 (2026-11 replay 경합 재현)."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+
+    def _parallel(self, cached, n, fn):
+        barrier = threading.Barrier(n)
+
+        def task(i):
+            barrier.wait()
+            return fn(i)
+        with ThreadPoolExecutor(n) as ex:
+            return list(ex.map(task, range(n)))
+
+    def test_same_key_concurrent_calls_once(self):
+        llm = SlowLLM()
+        cached = CachedLLM(llm, path=Path(self.tmp.name) / "c.sqlite", enabled=True)
+        self.addCleanup(cached.close)
+        out = self._parallel(cached, 6, lambda i: cached.chat(MSGS, sample_idx=0))
+        self.assertEqual(llm.calls, 1)
+        self.assertEqual({r.text for r, _ in out}, {"answer 1"})
+        self.assertEqual(sorted(h for _, h in out), [False] + [True] * 5)
+        self.assertEqual(cached.chat(MSGS, sample_idx=0)[0].text, "answer 1")      # 저장된 것도 첫 응답
+
+    def test_different_keys_run_in_parallel(self):
+        llm = SlowLLM(delay=0.3)
+        cached = CachedLLM(llm, path=Path(self.tmp.name) / "c.sqlite", enabled=True)
+        self.addCleanup(cached.close)
+        t0 = time.perf_counter()
+        out = self._parallel(cached, 4, lambda i: cached.chat(MSGS, sample_idx=i))
+        self.assertEqual(llm.calls, 4)
+        self.assertLess(time.perf_counter() - t0, 0.3 * 3)             # 키가 다르면 서로 기다리지 않는다
+        self.assertEqual(len({r.text for r, _ in out}), 4)
+
+    def test_bound_judge_path_also_deduplicated(self):
+        llm = SlowLLM()
+        cached = CachedLLM(llm, path=Path(self.tmp.name) / "c.sqlite", enabled=True)
+        self.addCleanup(cached.close)
+        judge = cached.bind(0)
+        out = self._parallel(cached, 4, lambda i: judge.ask("same prompt").text)
+        self.assertEqual((llm.calls, set(out)), (1, {"answer 1"}))
+
+    def test_two_wrappers_same_file_share_lock(self):
+        llm = SlowLLM()
+        path = Path(self.tmp.name) / "c.sqlite"
+        a, b = CachedLLM(llm, path=path, enabled=True), CachedLLM(llm, path=path, enabled=True)
+        self.addCleanup(a.close)
+        self.addCleanup(b.close)
+        out = self._parallel(a, 4, lambda i: (a if i % 2 else b).chat(MSGS, sample_idx=0)[0].text)
+        self.assertEqual((llm.calls, set(out)), (1, {"answer 1"}))
+
+    def test_store_if_failure_lets_waiter_retry(self):
+        """첫 응답이 store_if 를 통과 못하면 저장하지 않으므로, 기다리던 요청은 새로 호출한다 (실패를 공유하지 않는다)."""
+        llm = SlowLLM(delay=0.1)
+        cached = CachedLLM(llm, path=Path(self.tmp.name) / "c.sqlite", enabled=True)
+        self.addCleanup(cached.close)
+        ok = lambda r: r.text != "answer 1"
+        out = self._parallel(cached, 2, lambda i: cached.chat(MSGS, sample_idx=0, store_if=ok))
+        self.assertEqual(llm.calls, 2)
+        self.assertEqual(cached.chat(MSGS, sample_idx=0, store_if=ok)[0].text, "answer 2")
+
+    def test_existing_row_not_overwritten(self):
+        llm = SlowLLM(delay=0)
+        cached = CachedLLM(llm, path=Path(self.tmp.name) / "c.sqlite", enabled=True)
+        self.addCleanup(cached.close)
+        key = cache_key(llm, MSGS, 0)
+        first = LLMResult(text="first", prompt_tokens=1, completion_tokens=1, latency=0.0, model=llm.model)
+        cached.put(key, first, 0)
+        cached.put(key, LLMResult(text="second", prompt_tokens=1, completion_tokens=1, latency=0.0,
+                                  model=llm.model), 0)
+        self.assertEqual(cached.get(key).text, "first")
 
 if __name__ == "__main__":
     unittest.main()

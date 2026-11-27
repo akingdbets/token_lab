@@ -555,6 +555,14 @@ def git_head() -> str | None:
         return None
 
 
+def _rel(path: Path) -> str:
+    """출력용 경로: 저장소 안이면 상대 경로, 밖이면(테스트의 임시 results_dir 등) 절대 경로."""
+    try:
+        return path.relative_to(CFG.root).as_posix()
+    except ValueError:
+        return path.as_posix()
+
+
 # 이어서 실행할 때 처음 실행의 값을 그대로 쓰는 인자 (같은 run 안에서 조건이 섞이지 않게)
 RUN_ARGS = ("compressors", "split", "limit", "ids", "no_judge", "judge_mode", "semantic", "answer_prompt")
 
@@ -592,7 +600,7 @@ def _report_failed_run(out_dir: Path, e: BaseException) -> None:
     why = f"{type(e).__name__}: {e}" if str(e) else type(e).__name__
     trials = out_dir / "trials.jsonl"
     n = sum(1 for line in open(trials, encoding="utf-8") if line.strip()) if trials.exists() else 0
-    rel = out_dir.relative_to(CFG.root).as_posix()
+    rel = _rel(out_dir)
     resume = f"  이어서: python src/experiment.py --resume {out_dir.name}"
     if n == 0:
         shutil.rmtree(out_dir, ignore_errors=True)
@@ -641,7 +649,7 @@ def _run(args, run_id: str, out_dir: Path) -> Path:
     print(f"답변 지시문: {prompt.version} ({prompt.sha256})")
     if fact_judge is not None:
         print(f"key_facts judge: {FACT_JUDGE_PROMPT_VERSION} ({FACT_JUDGE_PROMPT_HASH})  mode={args.judge_mode}")
-    print(f"문항 {len(items)}개 x 압축기 {names}  ->  {out_dir.relative_to(CFG.root).as_posix()}")
+    print(f"문항 {len(items)}개 x 압축기 {names}  ->  {_rel(out_dir)}")
     print("모델 로딩 (첫 호출은 측정에서 제외)...", flush=True)
     llm.ask("Reply with OK.")
 
@@ -830,7 +838,7 @@ def _run(args, run_id: str, out_dir: Path) -> Path:
     }
     (out_dir / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     print_summary(summary["results"], names)
-    print(f"\n저장: {out_dir.relative_to(CFG.root).as_posix()}/ (trials.jsonl, summary.json, contexts/)")
+    print(f"\n저장: {_rel(out_dir)}/ (trials.jsonl, summary.json, contexts/)")
     return out_dir
 
 
