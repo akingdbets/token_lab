@@ -2,6 +2,8 @@
 멀티턴 시나리오 (data/evalsets/multiturn-v1/*.json, 시나리오 하나 = JSON 하나)
 
 스키마 (필드 의미는 싱글턴 평가셋과 같다. 자세한 설명은 data/evalsets/multiturn-v1/README.md)
+    schema_version 2 (multiturn-v2) 는 turn_type 에 update, same_doc_new_topic 을 더 받는다. v2 전용 규칙은 multiturn/scenario_v2.py.
+    schema_version 이 없으면 v1 규칙 그대로 (turn_type 4종).
     scenario_id, title, topic, status ("draft" | "reviewed")
     turns: [
         turn            0 부터 순서대로
@@ -25,7 +27,10 @@ import json
 import re
 from pathlib import Path
 
-TURN_TYPES = ("new", "followup", "recall", "synthesis")
+TURN_TYPES_V1 = ("new", "followup", "recall", "synthesis")
+# multiturn-v2 (schema_version 2) 에서 추가: update (앞 조건을 바꿈), same_doc_new_topic (앞서 첨부한 문서의 다른 부분)
+TURN_TYPES_V2 = TURN_TYPES_V1 + ("update", "same_doc_new_topic")
+TURN_TYPES = TURN_TYPES_V2          # 집계·표시용 전체 목록. 검증은 시나리오의 schema_version 으로 고른다
 ANSWER_TYPES = ("fact", "code", "procedure", "multi", "default")
 STATUSES = ("draft", "reviewed")
 MIN_RECALL = 2
@@ -56,6 +61,7 @@ def validate_scenario(s: dict) -> list[str]:
     if errs:
         return errs
     sid = s["scenario_id"]
+    allowed_types = TURN_TYPES_V2 if s.get("schema_version") == 2 else TURN_TYPES_V1
     if s["status"] not in STATUSES:
         errs.append(f"{sid}: status 는 {STATUSES} 중 하나")
     turns = s["turns"]
@@ -72,8 +78,8 @@ def validate_scenario(s: dict) -> list[str]:
         if bad_fields:
             errs.append(f"{p}: 필드가 없거나 타입이 다름 {bad_fields}")
             continue
-        if t.get("turn_type") not in TURN_TYPES:
-            errs.append(f"{p}: turn_type 은 {TURN_TYPES} 중 하나")
+        if t.get("turn_type") not in allowed_types:
+            errs.append(f"{p}: turn_type 은 {allowed_types} 중 하나")
         if t.get("type") not in ANSWER_TYPES:
             errs.append(f"{p}: type 은 {ANSWER_TYPES} 중 하나")
         if not [f for f in t["key_facts"] if str(f).strip()]:
@@ -88,9 +94,9 @@ def validate_scenario(s: dict) -> list[str]:
         tt = t.get("turn_type")
         if tt == "new" and not t["evidence_pages"]:
             errs.append(f"{p}: new 턴은 evidence_pages 가 있어야 합니다")
-        if tt in ("recall", "synthesis") and t["evidence_pages"]:
+        if tt in ("recall", "synthesis", "same_doc_new_topic") and t["evidence_pages"]:
             errs.append(f"{p}: {tt} 턴은 문서를 다시 첨부하지 않습니다")
-        if tt in ("followup", "recall", "synthesis") and not t["depends_on"]:
+        if tt in ("followup", "recall", "synthesis", "update", "same_doc_new_topic") and not t["depends_on"]:
             errs.append(f"{p}: {tt} 턴은 depends_on 이 있어야 합니다")
         if tt == "synthesis" and len(t["depends_on"]) < 2:
             errs.append(f"{p}: synthesis 턴은 이전 턴 2개 이상에 의존해야 합니다")
