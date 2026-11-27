@@ -159,3 +159,31 @@ class V2RulesTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ToolsTest(unittest.TestCase):
+    def test_ratio_overflow_counts_only_long_history(self):
+        from multiturn.scenario_v2 import ratio_overflow
+
+        class P:
+            @staticmethod
+            def user_message(t, corpus):
+                return ("x " * 2000) if t["evidence_pages"] else "q"
+        s = valid()
+        ro = ratio_overflow(s, CORPUS, P, lambda txt: len(txt.split()), min_history=4000)
+        self.assertGreater(ro["turns_counted"], 0)
+        self.assertTrue(all(r["history"] >= 4000 for r in ro["rows"]))
+        self.assertLessEqual(ro["r75_overflow_rate"], ro["r25_overflow_rate"])
+
+    def test_review_rows_and_leak(self):
+        from multiturn.review_sheet import COLUMNS, rows_for
+        from multiturn.scenario_report import leak_entities
+        s = valid()
+        rows = rows_for(s, {3: ["오류 예시"]})
+        self.assertEqual(len(rows), len(s["turns"]))
+        self.assertEqual(set(rows[0]), set(COLUMNS))
+        self.assertEqual(rows[3]["auto_check"], "오류 예시")
+        self.assertEqual(rows[0]["verdict"], "")
+        t = dict(s["turns"][0], key_entities=["X-Cat-Dog"], question="What header did we choose?",
+                 standalone_question="Which header, X-Cat-Dog?")
+        self.assertEqual(leak_entities(t), ["X-Cat-Dog"])

@@ -295,3 +295,36 @@ def rule_report(s: dict, corpus=None) -> dict:
                     "sections": sorted({section_of(text, e["quote"]) or "?" for e in t["evidence"] if e["page"] == page}),
                 })
     return rep
+
+
+RATIOS = (0.25, 0.5, 0.75)
+MIN_HISTORY_FOR_RATIO = 4000
+
+
+def ratio_overflow(s: dict, corpus, prompt, token_counter, ratios=RATIOS, keep_recent: int = 1,
+                   min_history: int = MIN_HISTORY_FOR_RATIO) -> dict:
+    """비율 압축 강도에서 overflow 가 생기는 턴 비율 (예산형 압축기 기준, 구현 전 설계 점검용).
+    턴 k 의 예산 = ceil(r × 과거 기록 원문 토큰). 최근 keep_recent 턴은 넘쳐도 남기므로, 그 턴만으로 예산을 넘으면 overflow.
+    과거 답변 자리에는 시나리오의 참고 정답(answer)을 넣는다 (실제 모델 답변 길이와 다를 수 있다).
+    기록이 min_history 토큰 이상인 턴만 센다."""
+    import math
+
+    from multiturn.history_compressors.base import split_turns
+    from multiturn.history_compressors.budget import history_tokens
+
+    past, rows = [], []
+    for t in s["turns"]:
+        hist = history_tokens(past, token_counter)
+        if past and hist >= min_history:
+            recent = split_turns(past)[-keep_recent:] if keep_recent else []
+            recent_tokens = history_tokens([m for tr in recent for m in tr], token_counter)
+            rows.append({"turn": t["turn"], "history": hist, "recent": recent_tokens,
+                         **{f"r{int(r * 100)}": recent_tokens > math.ceil(r * hist) for r in ratios}})
+        past = past + [{"role": "user", "content": prompt.user_message(t, corpus)},
+                       {"role": "assistant", "content": t["answer"]}]
+    final = history_tokens(past[:-2], token_counter) if len(past) >= 2 else 0
+    n = len(rows)
+    return {"turns_counted": n, "final_history": final,
+            **{f"r{int(r * 100)}_overflow_rate": (sum(x[f"r{int(r * 100)}"] for x in rows) / n if n else None)
+               for r in ratios},
+            "rows": rows}
