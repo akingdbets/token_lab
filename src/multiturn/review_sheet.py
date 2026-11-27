@@ -10,6 +10,8 @@ multiturn-v2 시나리오 검수 시트 (API 호출 없음)
 
 검수 칸
     standalone_same_fact   standalone_question 이 원래 질문과 같은 사실을 묻는가: 예 / 아니오
+    alt_judge_label        대안(accept_alternatives)이 있는 fact 의 judge(fact_judge_v3) 판정이 맞는가: 맞음 / 틀림
+                           (대안 블록이 붙은 판정은 80행 비교로 잴 수 없어 검수 때 사람 라벨로 따로 확인한다)
     verdict                OK / 수정 필요 / 제외
     memo, reviewer
 자동 검사 결과(근거 확인·규칙 위반)와 closed-book 결과를 함께 보여 준다. 판정은 사람이 한다.
@@ -28,23 +30,25 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from config import CFG  # noqa: E402
 
 COLUMNS = ["row_id", "scenario_id", "turn", "turn_type", "type", "depends_on", "recall_distance", "evidence_pages",
-           "question", "standalone_question", "answer", "key_facts", "evidence", "update_info", "closed_book",
-           "auto_check", "standalone_same_fact", "verdict", "memo", "reviewer"]
-REVIEW_COLS = ("standalone_same_fact", "verdict", "memo", "reviewer")
+           "question", "asks", "standalone_question", "answer", "key_facts", "evidence", "update_info",
+           "closed_book_knowledge", "closed_book_grounded", "alt_judgments", "auto_check",
+           "standalone_same_fact", "alt_judge_label", "verdict", "memo", "reviewer"]
+REVIEW_COLS = ("standalone_same_fact", "alt_judge_label", "verdict", "memo", "reviewer")
 
 
 def _facts(t: dict) -> str:
     out = []
     for i, f in enumerate(t["key_facts"]):
         m = (t.get("fact_meta") or [{}] * len(t["key_facts"]))[i] or {}
-        tags = f" [{', '.join(m.get('tags') or [])}]" if m.get("tags") else ""
+        tags = " [" + ", ".join([f"source={m.get('source', '?')}"] + list(m.get("tags") or [])) + "]"
         alts = "".join(f"\n    대안: {a}" for a in m.get("accept_alternatives") or [])
         out.append(f"[{i}] {f}{tags}{alts}")
     return "\n".join(out)
 
 
 def _evidence(t: dict) -> str:
-    rows = [f"[{e['fact_idx']}] {e['page']}: {e['quote']}" for e in t["evidence"]]
+    rows = [f"[{e['fact_idx']}] " + (f"{e['page']}: " if "page" in e else f"(사용자 발화, 턴 {e.get('user_turn')}): ")
+            + e["quote"] for e in t["evidence"]]
     rows += [f"[{e['fact_idx']} 대안 {e['alt_idx']}] {e['page']}: {e['quote']}" for e in t.get("alt_evidence") or []]
     return "\n".join(rows)
 
@@ -58,13 +62,28 @@ def _update_info(t: dict) -> str:
     return ""
 
 
-def _closed_book(t: dict) -> str:
-    cb = t.get("closed_book")
+def _closed_book(t: dict, kind: str) -> str:
+    cb = t.get(f"closed_book_{kind}")
     if not cb:
         return "(검사 전)"
     acc = cb.get("accuracy")
-    verdict = "맞힘" if cb.get("correct") else ("UNKNOWN" if cb.get("unknown") else f"정확도 {acc}")
+    verdict = ("맞힘" if cb.get("correct") else "UNKNOWN" if cb.get("unknown") else "NOT FOUND" if cb.get("not_found")
+               else f"정확도 {acc}")
     return f"{verdict} | 답: {cb.get('response', '')[:300]}"
+
+
+def _alt_judgments(t: dict) -> str:
+    """대안이 있는 fact 의 closed-book 판정 (fact_judge_v3, 대안 블록이 붙은 프롬프트). 없으면 빈 칸."""
+    out = []
+    for i, m in enumerate(t.get("fact_meta") or []):
+        if not (m or {}).get("accept_alternatives"):
+            continue
+        for kind in ("knowledge", "grounded"):
+            cb = t.get(f"closed_book_{kind}") or {}
+            fr = cb.get("fact_results") or []
+            if i < len(fr) and not cb.get("judge_skipped"):
+                out.append(f"[{i}] {kind}: {'충족' if fr[i] else '불충족'} (답: {cb.get('response', '')[:160]})")
+    return "\n".join(out)
 
 
 def rows_for(s: dict, errors_by_turn: dict) -> list[dict]:
@@ -74,9 +93,12 @@ def rows_for(s: dict, errors_by_turn: dict) -> list[dict]:
             "row_id": f"{s['scenario_id']}#{t['turn']:02d}", "scenario_id": s["scenario_id"], "turn": t["turn"],
             "turn_type": t["turn_type"], "type": t["type"], "depends_on": ",".join(map(str, t["depends_on"])),
             "recall_distance": t.get("recall_distance"), "evidence_pages": ", ".join(t["evidence_pages"]),
-            "question": t["question"], "standalone_question": t.get("standalone_question", ""), "answer": t["answer"],
+            "question": t["question"], "asks": " / ".join(t.get("asks") or []),
+            "standalone_question": t.get("standalone_question", ""), "answer": t["answer"],
             "key_facts": _facts(t), "evidence": _evidence(t), "update_info": _update_info(t),
-            "closed_book": _closed_book(t), "auto_check": "\n".join(errors_by_turn.get(t["turn"], [])) or "OK",
+            "closed_book_knowledge": _closed_book(t, "knowledge"), "closed_book_grounded": _closed_book(t, "grounded"),
+            "alt_judgments": _alt_judgments(t),
+            "auto_check": "\n".join(errors_by_turn.get(t["turn"], [])) or "OK",
             **{c: "" for c in REVIEW_COLS},
         })
     return out
@@ -84,8 +106,8 @@ def rows_for(s: dict, errors_by_turn: dict) -> list[dict]:
 
 def errors_by_turn(s: dict, corpus) -> tuple[dict, list[str]]:
     from multiturn.scenario_v2 import check_grounding_v2, validate_scenario_v2
-    by, whole = {}, []
-    for e in validate_scenario_v2(s) + check_grounding_v2(s, corpus):
+    by, whole, warns = {}, [], []
+    for e in validate_scenario_v2(s) + check_grounding_v2(s, corpus, warns) + warns:
         marker = f"{s['scenario_id']} 턴 "
         if e.startswith(marker):
             k = int(e[len(marker):].split(":")[0].split(" ")[0])
@@ -143,8 +165,10 @@ function render() {
       <span class="note">depends_on [${esc(r.depends_on)}] · 거리 ${esc(r.recall_distance)}${r.evidence_pages ? " · 첨부 " + esc(r.evidence_pages) : ""}</span></div>
       ${field("질문", r.question)}${field("standalone_question (closed-book 용)", r.standalone_question)}${field("정답", r.answer)}
       ${field("key_facts [태그] / 대안", r.key_facts, true)}${field("근거 인용", r.evidence, true)}${field("update / same_doc", r.update_info)}
-      ${field("closed-book", r.closed_book)}<div class="k">자동 검사</div><div class="v ${r.auto_check === "OK" ? "okc" : "warn"}">${esc(r.auto_check)}</div>
+      ${field("묻는 사항 (asks)", r.asks)}${field("closed-book knowledge (사전 지식, UNKNOWN 허용)", r.closed_book_knowledge)}
+      ${field("closed-book grounded (실험 지시문, NOT FOUND 규칙)", r.closed_book_grounded)}${field("대안 붙은 판정 (fact_judge_v3)", r.alt_judgments)}<div class="k">자동 검사</div><div class="v ${r.auto_check === "OK" ? "okc" : "warn"}">${esc(r.auto_check)}</div>
       <div class="rev"><span>같은 사실을 묻는가: ${opt("standalone_same_fact", ["예", "아니오"])}</span>
+      ${r.alt_judgments ? `<span>대안 판정이 맞는가: ${opt("alt_judge_label", ["맞음", "틀림"])}</span>` : ""}
       <span>판정: ${opt("verdict", ["OK", "수정 필요", "제외"])}</span>
       <textarea placeholder="메모" data-id="${r.row_id}" data-k="memo">${esc(s.memo || "")}</textarea></div></div>`;
   }

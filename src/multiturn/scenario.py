@@ -3,7 +3,8 @@
 
 스키마 (필드 의미는 싱글턴 평가셋과 같다. 자세한 설명은 data/evalsets/multiturn-v1/README.md)
     schema_version 2 (multiturn-v2) 는 turn_type 에 update, same_doc_new_topic 을 더 받는다. v2 전용 규칙은 multiturn/scenario_v2.py.
-    schema_version 이 없으면 v1 규칙 그대로 (turn_type 4종).
+    schema_version 2 의 evidence 는 사용자 발화 인용 {quote, user_turn, fact_idx} 도 받는다 (근거 확인은 scenario_v2).
+    schema_version 이 없으면 v1 규칙 그대로 (turn_type 4종, evidence 는 page 인용만).
     scenario_id, title, topic, status ("draft" | "reviewed")
     turns: [
         turn            0 부터 순서대로
@@ -102,9 +103,13 @@ def validate_scenario(s: dict) -> list[str]:
             errs.append(f"{p}: synthesis 턴은 이전 턴 2개 이상에 의존해야 합니다")
         covered = set()
         for e in t["evidence"]:
-            if not (isinstance(e, dict) and isinstance(e.get("quote"), str) and isinstance(e.get("page"), str)
-                    and isinstance(e.get("fact_idx"), int)):
-                errs.append(f"{p}: evidence 항목은 {{quote, page, fact_idx}}")
+            # schema_version 2 는 사용자 발화 인용 {quote, user_turn, fact_idx} 도 받는다 (v1 은 page 인용만)
+            src_ok = isinstance(e, dict) and (isinstance(e.get("page"), str) or (
+                s.get("schema_version") == 2 and isinstance(e.get("user_turn"), int)
+                and not isinstance(e.get("user_turn"), bool)))
+            if not (src_ok and isinstance(e.get("quote"), str) and isinstance(e.get("fact_idx"), int)):
+                errs.append(f"{p}: evidence 항목은 {{quote, page, fact_idx}}"
+                            + (" 또는 {quote, user_turn, fact_idx}" if s.get("schema_version") == 2 else ""))
                 continue
             if not 0 <= e["fact_idx"] < len(t["key_facts"]):
                 errs.append(f"{p}: evidence fact_idx {e['fact_idx']} 범위 밖")

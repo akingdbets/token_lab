@@ -16,7 +16,12 @@ import re
 
 from multiturn.scenario import _squash, grounding_pages, validate_scenario
 
-FACT_TAGS = ("condition", "negation", "range", "confusable")
+FACT_TAGS = ("condition", "negation", "range", "confusable", "example")
+FACT_SOURCES = ("doc", "user")          # key_fact 출처: 문서 | 사용자가 대화 중 정한 프로젝트 고유 값
+USER_SHARE_MIN, USER_SHARE_MAX = 0.3, 0.5   # recall·synthesis 턴 key_fact 중 source=user 비율
+MIN_USER_UPDATES = 1                    # source=user key_fact 를 가진 update 턴
+MAX_KEY_FACTS = 3                       # 턴당 key_fact 최대
+MAX_ASKS = 2                            # synthesis 를 뺀 턴이 묻는 사항 수 최대 (asks 필드)
 MIN_TURNS, MAX_TURNS = 16, 20
 MIN_COUNTS = {"new": 7, "followup": 2, "recall": 3, "synthesis": 2, "update": 2, "same_doc_new_topic": 2}
 MIN_FAR_RECALL, FAR_RECALL_DISTANCE = 2, 6
@@ -51,6 +56,42 @@ def _count(types, name):
     return sum(1 for x in types if x == name)
 
 
+def chain_turns(s: dict, k: int) -> list[int]:
+    """턴 k 와 depends_on 을 거슬러 올라간 턴들 (grounding_pages 와 같은 범위)."""
+    seen, stack = set(), [k]
+    while stack:
+        i = stack.pop()
+        if i in seen or not 0 <= i < len(s["turns"]):
+            continue
+        seen.add(i)
+        stack.extend(d for d in s["turns"][i].get("depends_on") or [] if isinstance(d, int))
+    return sorted(seen)
+
+
+def is_symbol_entity(e: str) -> bool:
+    """한두 글자 기호 entity ('/', '{}' 등). 정규화 매칭이 기호를 다루지 못해 근거 확인·누설 검사에서 빼고 경고만 한다."""
+    e = e.strip()
+    return len(e) <= 2 and not any(ch.isalnum() for ch in e)
+
+
+def leak_entities(t: dict) -> list[str]:
+    """standalone_question 에는 있고 원래 question 에는 없는 key_entity (답 누설)."""
+    from core_match import find_normalized
+    sq, q = t.get("standalone_question") or "", t.get("question") or ""
+    return [e for e in t.get("key_entities") or [] if isinstance(e, str) and e.strip() and not is_symbol_entity(e)
+            and find_normalized(sq, e) is not None and find_normalized(q, e) is None]
+
+
+def fact_sources(t: dict) -> list[str | None]:
+    return [(m or {}).get("source") if isinstance(m, dict) else None for m in t.get("fact_meta") or []]
+
+
+def user_share(s: dict) -> tuple[int, int]:
+    """(recall·synthesis 턴 key_fact 중 source=user 수, 전체 수)."""
+    src = [x for t in s["turns"] if t.get("turn_type") in ("recall", "synthesis") for x in fact_sources(t)]
+    return sum(1 for x in src if x == "user"), len(src)
+
+
 def validate_scenario_v2(s: dict) -> list[str]:
     errs = list(validate_scenario(s))
     sid = s.get("scenario_id", "?")
@@ -82,11 +123,40 @@ def validate_scenario_v2(s: dict) -> list[str]:
                 errs.append(f"{p}: alt_evidence 항목은 {{quote, page, fact_idx, alt_idx}}")
                 continue
             alt_cov.add((e["fact_idx"], e["alt_idx"]))
+        if len(t["key_facts"]) > MAX_KEY_FACTS:
+            errs.append(f"{p}: key_facts {len(t['key_facts'])}개 (최대 {MAX_KEY_FACTS})")
+        asks = t.get("asks")
+        if not (isinstance(asks, list) and asks and all(isinstance(x, str) and x.strip() for x in asks)):
+            errs.append(f"{p}: asks (이 턴이 묻는 사항 목록) 가 없습니다")
+        elif tt != "synthesis" and len(asks) > MAX_ASKS:
+            errs.append(f"{p}: {tt} 턴이 {len(asks)}가지를 묻습니다 (synthesis 외 최대 {MAX_ASKS})")
+        leaks = leak_entities(t)
+        if leaks:
+            errs.append(f"{p}: standalone_question 에 원래 질문에 없던 key_entity {leaks} (답 누설)")
+        chain = set(chain_turns(s, k))
+        ev_kind = {}                                    # fact_idx -> {"doc", "user"}
+        for e in t["evidence"]:
+            if not isinstance(e, dict):
+                continue
+            if isinstance(e.get("user_turn"), int):
+                ut = e["user_turn"]
+                ev_kind.setdefault(e.get("fact_idx"), set()).add("user")
+                if ut not in chain:
+                    errs.append(f"{p}: 사용자 발화 인용 턴 {ut} 이 이 턴과 depends_on 사슬 밖입니다")
+                elif _squash(e.get("quote") or "") not in _squash(turns[ut]["question"]):
+                    errs.append(f"{p}: 사용자 발화 인용문이 턴 {ut} 질문에 없음: {str(e.get('quote'))[:60]!r}")
+            elif isinstance(e.get("page"), str):
+                ev_kind.setdefault(e.get("fact_idx"), set()).add("doc")
         for i, m in enumerate(meta):
             if not (isinstance(m, dict) and isinstance(m.get("accept_alternatives"), list)
                     and isinstance(m.get("tags"), list)):
-                errs.append(f"{p}: fact_meta[{i}] 는 {{accept_alternatives: [], tags: []}}")
+                errs.append(f"{p}: fact_meta[{i}] 는 {{accept_alternatives: [], tags: [], source}}")
                 continue
+            if m.get("source") not in FACT_SOURCES:
+                errs.append(f"{p}: fact_meta[{i}].source 는 {FACT_SOURCES} 중 하나")
+            elif m["source"] not in ev_kind.get(i, set()):
+                errs.append(f"{p}: fact {i} (source={m['source']}) 에 "
+                            f"{'사용자 발화' if m['source'] == 'user' else '문서'} 근거 인용이 없습니다")
             bad = [x for x in m["tags"] if x not in FACT_TAGS]
             if bad:
                 errs.append(f"{p}: fact_meta[{i}] 알 수 없는 태그 {bad} (허용 {FACT_TAGS})")
@@ -128,7 +198,7 @@ def validate_scenario_v2(s: dict) -> list[str]:
                 if not src_pages:
                     errs.append(f"{p}: source_turn {st} 에 첨부 문서가 없습니다")
                 for e in t["evidence"]:
-                    if e.get("page") not in src_pages:
+                    if "page" in e and e.get("page") not in src_pages:
                         errs.append(f"{p}: 근거 페이지 {e.get('page')} 가 source_turn {st} 의 첨부 문서가 아닙니다")
         if tt != "update" and (t.get("changes") or t.get("affects")):
             errs.append(f"{p}: changes / affects 는 update 턴에만")
@@ -146,6 +216,13 @@ def validate_scenario_v2(s: dict) -> list[str]:
         errs.append(f"{sid}: condition/negation/range 태그 key_fact {n_cond}개 (최소 {MIN_CONDITION_TAGS})")
     if n_conf < MIN_CONFUSABLE_TAGS:
         errs.append(f"{sid}: confusable 태그 key_fact {n_conf}개 (최소 {MIN_CONFUSABLE_TAGS})")
+    nu, nt = user_share(s)
+    if nt and not USER_SHARE_MIN <= nu / nt <= USER_SHARE_MAX:
+        errs.append(f"{sid}: recall·synthesis key_fact 중 source=user {nu}/{nt} = {nu / nt:.0%} "
+                    f"(규칙 {USER_SHARE_MIN:.0%}~{USER_SHARE_MAX:.0%})")
+    n_user_upd = sum(1 for t in turns if t.get("turn_type") == "update" and "user" in fact_sources(t))
+    if n_user_upd < MIN_USER_UPDATES:
+        errs.append(f"{sid}: source=user key_fact 를 가진 update 턴 {n_user_upd}개 (최소 {MIN_USER_UPDATES})")
     # 배치
     if types[:2] != ["new", "new"]:
         errs.append(f"{sid}: 턴 0·1 은 new 여야 합니다 ({types[:2]})")
@@ -212,11 +289,44 @@ def _page_titles(text: str) -> list[str]:
     return [x for x in titles if len(x) >= 8]
 
 
-def check_grounding_v2(s: dict, corpus) -> list[str]:
-    from multiturn.scenario import check_grounding
+def check_grounding_v2(s: dict, corpus, warnings: list | None = None) -> list[str]:
+    """v1 check_grounding 과 같은 확인을 하되
+    - 사용자 발화 인용({quote, user_turn}) 은 validate_scenario_v2 가 확인하므로 건너뛴다
+    - key_entity 는 근거 페이지 + 이 턴과 depends_on 사슬 턴들의 사용자 질문에서 찾는다 (사용자 고유 값)
+    - 한두 글자 기호 entity 는 오류가 아니라 warnings 에 넣는다 (정규화 매칭이 기호를 다루지 못함)"""
+    from core_match import find_normalized
 
-    errs = list(check_grounding(s, corpus))
+    errs = []
     turns = s["turns"]
+    for t in turns:
+        p = f"{s['scenario_id']} 턴 {t['turn']}"
+        pages = grounding_pages(s, t["turn"])
+        for page in t["evidence_pages"]:
+            try:
+                corpus.get(page)
+            except KeyError:
+                errs.append(f"{p}: 코퍼스에 없는 페이지 {page}")
+        texts = {}
+        for page in pages:
+            try:
+                texts[page] = corpus.get(page).text
+            except KeyError:
+                pass
+        for e in t["evidence"]:
+            if "page" not in e:
+                continue
+            if e["page"] not in pages:
+                errs.append(f"{p}: 인용 페이지 {e['page']} 가 근거 페이지 {pages} 밖")
+            elif _squash(e["quote"]) not in _squash(texts.get(e["page"], "")):
+                errs.append(f"{p}: 인용문이 {e['page']} 에 없음: {e['quote'][:60]!r}")
+        joined = "\n".join(list(texts.values()) + [turns[i]["question"] for i in chain_turns(s, t["turn"])])
+        for ent in t["key_entities"]:
+            if is_symbol_entity(ent):
+                if warnings is not None:
+                    warnings.append(f"{p}: key_entity {ent!r} 는 기호뿐이라 근거 확인에서 뺌 (경고)")
+                continue
+            if find_normalized(joined, ent) is None:
+                errs.append(f"{p}: key_entity {ent!r} 가 근거 페이지·사용자 발화에 없음")
     all_titles = set()
     for page in s.get("bundle") or []:
         try:
@@ -274,9 +384,24 @@ def rule_report(s: dict, corpus=None) -> dict:
         "confusable_facts": [{"turn": t["turn"], "fact": t["key_facts"][i]} for t in turns
                              for i, m in enumerate(t.get("fact_meta") or []) if "confusable" in m["tags"]],
         "alternatives": sum(len(m["accept_alternatives"]) for t in turns for m in t.get("fact_meta") or []),
-        "updates": [{"turn": t["turn"], "changes": t.get("changes"), "affects": t.get("affects")}
+        "updates": [{"turn": t["turn"], "changes": t.get("changes"), "affects": t.get("affects"),
+                     "user_source": "user" in fact_sources(t)}
                     for t in turns if t["turn_type"] == "update"],
         "same_doc": [],
+        # 출처 (source=doc | user)
+        "facts_by_source": {src: sum(1 for t in turns for x in fact_sources(t) if x == src) for src in FACT_SOURCES},
+        "user_share_recall_synthesis": user_share(s),
+        "user_facts": [{"turn": t["turn"], "turn_type": t["turn_type"], "fact": t["key_facts"][i]}
+                       for t in turns for i, x in enumerate(fact_sources(t)) if x == "user"],
+        # 문서 고유 예시 값 (example 태그, 생성 모델이 붙인 것)
+        "doc_example_facts": (sum(1 for t in turns for i, m in enumerate(t.get("fact_meta") or [])
+                                  if m.get("source") == "doc" and "example" in m.get("tags", [])),
+                              sum(1 for t in turns for x in fact_sources(t) if x == "doc")),
+        # 턴당 질문 수: asks 길이 (생성 모델이 적은 것) 와 질문의 물음표 수 (교차 확인)
+        "asks": [len(t.get("asks") or []) for t in turns],
+        "question_marks": [t["question"].count("?") for t in turns],
+        "key_fact_counts": [len(t["key_facts"]) for t in turns],
+        "leaks": [{"turn": t["turn"], "entities": leak_entities(t)} for t in turns if leak_entities(t)],
     }
     if corpus is not None:
         for t in turns:
@@ -291,8 +416,8 @@ def rule_report(s: dict, corpus=None) -> dict:
                 rep["same_doc"].append({
                     "turn": t["turn"], "source_turn": t["source_turn"], "page": page,
                     "source_sections": sorted({section_of(text, e["quote"]) or "?" for e in src["evidence"]
-                                               if e["page"] == page}),
-                    "sections": sorted({section_of(text, e["quote"]) or "?" for e in t["evidence"] if e["page"] == page}),
+                                               if e.get("page") == page}),
+                    "sections": sorted({section_of(text, e["quote"]) or "?" for e in t["evidence"] if e.get("page") == page}),
                 })
     return rep
 

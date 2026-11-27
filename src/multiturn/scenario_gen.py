@@ -1,5 +1,5 @@
 """
-multiturn-v2 시나리오 후보 생성 (생성 모델 gpt-6.1-sol, 프롬프트 src/prompts/mt_scenario_gen_v1.md)
+multiturn-v2 시나리오 후보 생성 (생성 모델 gpt-6.1-sol, 프롬프트 src/prompts/mt_scenario_gen_<version>.md, 기본 v2)
 
     python src/multiturn/scenario_gen.py --bundle v2_01 --scenario-id v2_01_auth_switch
     python src/multiturn/scenario_gen.py --bundle v2_01 --scenario-id v2_01_auth_switch --dry-run   # 프롬프트만 저장
@@ -31,14 +31,15 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from config import CFG  # noqa: E402
 
-PROMPT_PATH = Path(__file__).resolve().parents[1] / "prompts" / "mt_scenario_gen_v1.md"
+PROMPTS_DIR = Path(__file__).resolve().parents[1] / "prompts"
+GEN_PROMPT_VERSION = "v2"     # v1: B단계 첫 샘플 (2026-11-27). v2: closed-book 결과에 따른 설계 변경 (2026-11-28)
 BUNDLES = CFG.root / "docs" / "experiments" / "multiturn_v2" / "bundles.json"
 OUT_DIR = CFG.root / "data" / "evalsets" / "multiturn-v2"
 GEN_MODEL = "gpt-6.1-sol"
 
 
-def load_gen_prompt() -> dict:
-    text = PROMPT_PATH.read_text(encoding="utf-8").replace("\r\n", "\n")
+def load_gen_prompt(version: str = GEN_PROMPT_VERSION) -> dict:
+    text = (PROMPTS_DIR / f"mt_scenario_gen_{version}.md").read_text(encoding="utf-8").replace("\r\n", "\n")
     sections, cur = {}, None
     for line in text.split("\n"):
         m = re.match(r"## (\w+)\s*$", line)
@@ -48,7 +49,7 @@ def load_gen_prompt() -> dict:
         elif cur:
             sections[cur].append(line)
     out = {k: "\n".join(v).strip() for k, v in sections.items()}
-    out["version"] = "mt_scenario_gen_v1"
+    out["version"] = f"mt_scenario_gen_{version}"
     out["sha256"] = hashlib.sha256(text.encode("utf-8")).hexdigest()[:12]
     return out
 
@@ -81,13 +82,14 @@ def make_llm(max_tokens: int, reasoning_effort: str):
     return configure_llm(LLM(role="answer"), GEN_MODEL, reasoning_effort, max_tokens, "server_default")
 
 
-def generate(bundle_id: str, scenario_id: str, *, corpus, llm, run_dir: Path, max_repairs: int = 1) -> dict:
+def generate(bundle_id: str, scenario_id: str, *, corpus, llm, run_dir: Path, max_repairs: int = 1,
+             prompt_version: str = GEN_PROMPT_VERSION) -> dict:
     from cost import compute_cost
     from multiturn.scenario_v2 import check_grounding_v2, fill_derived, rule_report, validate_scenario_v2
 
     bundles = json.loads(BUNDLES.read_text(encoding="utf-8"))
     b = bundles[bundle_id]
-    prompt = load_gen_prompt()
+    prompt = load_gen_prompt(prompt_version)
     messages = build_messages(prompt, scenario_id, b["topic"], b["pages"], corpus)
     run_dir.mkdir(parents=True, exist_ok=True)
     attempts, usd, scenario, errs = [], 0.0, None, []
@@ -137,6 +139,7 @@ def main(argv=None):
     ap.add_argument("--max-completion-tokens", type=int, default=40000)
     ap.add_argument("--reasoning-effort", default="server_default")
     ap.add_argument("--max-repairs", type=int, default=1)
+    ap.add_argument("--prompt-version", default=GEN_PROMPT_VERSION)
     ap.add_argument("--dry-run", action="store_true", help="API 를 부르지 않고 프롬프트만 저장")
     a = ap.parse_args(argv)
     from corpus import load_corpus
@@ -145,14 +148,14 @@ def main(argv=None):
     if a.dry_run:
         b = json.loads(BUNDLES.read_text(encoding="utf-8"))[a.bundle]
         run_dir.mkdir(parents=True, exist_ok=True)
-        msgs = build_messages(load_gen_prompt(), a.scenario_id, b["topic"], b["pages"], corpus)
+        msgs = build_messages(load_gen_prompt(a.prompt_version), a.scenario_id, b["topic"], b["pages"], corpus)
         _save(run_dir / "request_dry.json", {"messages": msgs})
         from llm import count_message_tokens
         print(f"프롬프트 {count_message_tokens(msgs)} 토큰 -> {run_dir}")
         return
     checks = generate(a.bundle, a.scenario_id, corpus=corpus,
                       llm=make_llm(a.max_completion_tokens, a.reasoning_effort), run_dir=run_dir,
-                      max_repairs=a.max_repairs)
+                      max_repairs=a.max_repairs, prompt_version=a.prompt_version)
     print(json.dumps({k: checks[k] for k in ("scenario_id", "validate_errors", "grounding_errors", "usd")},
                      ensure_ascii=False, indent=1))
     print(f"run: {run_dir}")

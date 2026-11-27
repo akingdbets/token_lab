@@ -37,15 +37,26 @@ CORPUS = FakeCorpus({f"p{i}.md": PAGE_A if i % 2 == 0 else PAGE_B for i in range
 QUOTE = {"p%d.md" % i: ("The limit is 10 by default." if i % 2 == 0 else "It returns 404 when missing.") for i in range(10)}
 
 
-def turn(i, tt, pages=(), deps=(), tags=(), quote_page=None, quote=None, **extra):
+def turn(i, tt, pages=(), deps=(), tags=(), quote_page=None, quote=None, user_quote=None, question=None, **extra):
+    """user_quote=(user_turn, quote) 면 key_fact 하나가 source=user (사용자 발화 인용)."""
     qp = quote_page or (pages[0] if pages else "p0.md")
-    t = {"turn": i, "turn_type": tt, "type": "fact", "question": f"What about item {i}?",
+    t = {"turn": i, "turn_type": tt, "type": "fact", "question": question or f"What about item {i}?",
+         "asks": [f"item {i}"],
          "standalone_question": f"In FastAPI, what about item {i}?", "answer": "a", "key_facts": ["fact"],
-         "fact_meta": [{"accept_alternatives": [], "tags": list(tags)}], "key_entities": [],
+         "fact_meta": [{"source": "doc", "accept_alternatives": [], "tags": list(tags)}], "key_entities": [],
          "evidence_pages": list(pages), "depends_on": list(deps),
          "evidence": [{"quote": quote or QUOTE[qp], "page": qp, "fact_idx": 0}], "alt_evidence": []}
+    if user_quote:
+        ut, uq = user_quote
+        t["key_facts"].append("user fact")
+        t["fact_meta"].append({"source": "user", "accept_alternatives": [], "tags": []})
+        t["evidence"].append({"quote": uq, "user_turn": ut, "fact_idx": 1})
     t.update(extra)
     return t
+
+
+USER_Q2 = "Our token expiry is 17 minutes; what about item 2?"
+USER_Q9 = "Change the expiry to 45 minutes; what about item 9?"
 
 
 def valid():
@@ -53,7 +64,7 @@ def valid():
     T = [
         turn(0, "new", ["p0.md"], tags=["negation"]),
         turn(1, "new", ["p1.md"], tags=["confusable"]),
-        turn(2, "followup", [], [1], quote_page="p1.md"),
+        turn(2, "followup", [], [1], quote_page="p1.md", question=USER_Q2, user_quote=(2, "token expiry is 17 minutes")),
         turn(3, "new", ["p2.md"], tags=["condition"]),
         turn(4, "update", [], [3], quote_page="p2.md", changes=[{"what": "x", "from": "a", "to": "b"}], affects=[6]),
         turn(5, "new", ["p3.md"]),
@@ -61,17 +72,18 @@ def valid():
         turn(7, "same_doc_new_topic", [], [0], quote_page="p0.md", source_turn=0,
              quote="The timeout is 30 seconds unless overridden."),
         turn(8, "new", ["p4.md"], tags=["range", "confusable"]),
-        turn(9, "update", [], [8], quote_page="p4.md", changes=[{"what": "y", "from": "c", "to": "d"}], affects=[13]),
+        turn(9, "update", [], [8, 2], quote_page="p4.md", changes=[{"what": "expiry", "from": "17", "to": "45"}],
+             affects=[13], question=USER_Q9, user_quote=(9, "expiry to 45 minutes")),
         turn(10, "new", ["p5.md"]),
         turn(11, "same_doc_new_topic", [], [3], quote_page="p2.md", source_turn=3,
              quote="The timeout is 30 seconds unless overridden."),
         turn(12, "new", ["p6.md"]),
-        turn(13, "synthesis", [], [9, 3, 0], quote_page="p0.md"),
+        turn(13, "synthesis", [], [9, 3, 0], quote_page="p0.md", user_quote=(9, "expiry to 45 minutes")),
         turn(14, "new", ["p7.md"]),
-        turn(15, "recall", [], [1], quote_page="p1.md"),
+        turn(15, "recall", [], [2], quote_page="p1.md", user_quote=(2, "token expiry is 17 minutes")),
         turn(16, "recall", [], [5], quote_page="p3.md"),
         turn(17, "recall", [], [8], quote_page="p4.md"),
-        turn(18, "synthesis", [], [12, 14], quote_page="p6.md"),
+        turn(18, "synthesis", [], [12, 14, 2], quote_page="p6.md", user_quote=(2, "token expiry is 17 minutes")),
     ]
     s = {"schema_version": 2, "scenario_id": "v2_t", "title": "t", "topic": "t", "status": "draft",
          "bundle": [f"p{i}.md" for i in range(8)], "generation": {"model": "m"}, "turns": T}
@@ -105,7 +117,7 @@ class V2RulesTest(unittest.TestCase):
 
     def test_counts_and_distance(self):
         self.assertTrue(any("update 턴 1개" in e for e in self._errs(
-            lambda s: s["turns"][9].update(turn_type="followup", changes=None, affects=None))))
+            lambda s: s["turns"][4].update(turn_type="followup", changes=None, affects=None))))
         def near(s):
             for k in (15, 16, 17):
                 s["turns"][k]["depends_on"] = [k - 1]
@@ -157,9 +169,6 @@ class V2RulesTest(unittest.TestCase):
         self.assertEqual(rep["same_doc"][0]["source_sections"], ["Limits"])
 
 
-if __name__ == "__main__":
-    unittest.main()
-
 
 class ToolsTest(unittest.TestCase):
     def test_ratio_overflow_counts_only_long_history(self):
@@ -177,7 +186,7 @@ class ToolsTest(unittest.TestCase):
 
     def test_review_rows_and_leak(self):
         from multiturn.review_sheet import COLUMNS, rows_for
-        from multiturn.scenario_report import leak_entities
+        from multiturn.scenario_v2 import leak_entities
         s = valid()
         rows = rows_for(s, {3: ["오류 예시"]})
         self.assertEqual(len(rows), len(s["turns"]))
@@ -187,3 +196,139 @@ class ToolsTest(unittest.TestCase):
         t = dict(s["turns"][0], key_entities=["X-Cat-Dog"], question="What header did we choose?",
                  standalone_question="Which header, X-Cat-Dog?")
         self.assertEqual(leak_entities(t), ["X-Cat-Dog"])
+
+
+class UserSourceAndLeakTest(unittest.TestCase):
+    """2026-11-28 설계 변경: 사용자 고유 값(source=user), 누설 검사, 질문 크기, 기호 entity."""
+
+    def _errs(self, mutate):
+        s = valid()
+        mutate(s)
+        return validate_scenario_v2(s)
+
+    def test_user_evidence_accepted_by_v1_validator_only_for_v2(self):
+        s = valid()
+        self.assertEqual(validate_scenario(s), [])
+        del s["schema_version"]
+        self.assertTrue(any("evidence 항목은" in e for e in validate_scenario(s)))
+
+    def test_user_quote_must_be_in_chain_and_verbatim(self):
+        self.assertTrue(any("사슬 밖" in e for e in self._errs(
+            lambda s: s["turns"][15]["evidence"][1].update(user_turn=9))))
+        self.assertTrue(any("질문에 없음" in e for e in self._errs(
+            lambda s: s["turns"][15]["evidence"][1].update(quote="expiry is 99 minutes"))))
+
+    def test_source_needs_matching_evidence(self):
+        self.assertTrue(any("source=user) 에 사용자 발화 근거" in e for e in self._errs(
+            lambda s: s["turns"][15]["evidence"].pop(1))))
+        self.assertTrue(any("source 는" in e for e in self._errs(
+            lambda s: s["turns"][0]["fact_meta"][0].pop("source"))))
+
+    def test_user_share_range_and_user_update(self):
+        def no_user(s):
+            for k in (13, 15):
+                s["turns"][k]["fact_meta"][1]["source"] = "doc"
+                s["turns"][k]["evidence"][1] = {"quote": QUOTE["p0.md"], "page": "p0.md", "fact_idx": 1}
+        errs = self._errs(no_user)
+        self.assertTrue(any("source=user 1/8" in e for e in errs))
+
+        def all_user(s):
+            for k in (16, 17, 18):
+                q = (2, "token expiry is 17 minutes")
+                s["turns"][k]["depends_on"] = sorted(set(s["turns"][k]["depends_on"]) | {2})
+                s["turns"][k]["fact_meta"][0]["source"] = "user"
+                s["turns"][k]["evidence"][0] = {"quote": q[1], "user_turn": q[0], "fact_idx": 0}
+            fill_derived(s)
+        self.assertTrue(any("source=user 6/8" in e for e in self._errs(all_user)))
+
+        def no_user_update(s):
+            t = s["turns"][9]
+            t["fact_meta"][1]["source"] = "doc"
+            t["evidence"][1] = {"quote": QUOTE["p4.md"], "page": "p4.md", "fact_idx": 1}
+        self.assertTrue(any("user key_fact 를 가진 update 턴 0개" in e for e in self._errs(no_user_update)))
+
+    def test_leak_is_error(self):
+        def leak(s):
+            t = s["turns"][15]
+            t["key_entities"] = ["17 minutes"]
+            t["standalone_question"] = "With a 17 minutes expiry, what is item 15?"
+        self.assertTrue(any("답 누설" in e for e in self._errs(leak)))
+
+    def test_question_size(self):
+        self.assertTrue(any("3가지를 묻습니다" in e for e in self._errs(
+            lambda s: s["turns"][0].update(asks=["a", "b", "c"]))))
+        self.assertEqual(self._errs(lambda s: s["turns"][18].update(asks=["a", "b", "c"])), [])   # synthesis 는 허용
+        self.assertTrue(any("asks" in e for e in self._errs(lambda s: s["turns"][0].pop("asks"))))
+
+        def four_facts(s):
+            t = s["turns"][0]
+            t["key_facts"] = ["f"] * 4
+            t["fact_meta"] = [{"source": "doc", "accept_alternatives": [], "tags": []} for _ in range(4)]
+            t["evidence"] = [{"quote": QUOTE["p0.md"], "page": "p0.md", "fact_idx": i} for i in range(4)]
+        self.assertTrue(any("key_facts 4개" in e for e in self._errs(four_facts)))
+
+    def test_grounding_user_entities_and_symbol_warning(self):
+        s = valid()
+        s["turns"][15]["key_entities"] = ["17 minutes", "/"]
+        warns = []
+        self.assertEqual(check_grounding_v2(s, CORPUS, warns), [])
+        self.assertEqual(len(warns), 1)
+        s["turns"][16]["key_entities"] = ["17 minutes"]           # 턴 16 의 사슬에는 턴 2 가 없다
+        self.assertTrue(any("17 minutes" in e for e in check_grounding_v2(s, CORPUS)))
+
+    def test_report_source_fields(self):
+        rep = rule_report(valid(), CORPUS)
+        self.assertEqual(rep["user_share_recall_synthesis"], (3, 8))
+        self.assertEqual(rep["facts_by_source"]["user"], 5)
+        self.assertEqual([u["user_source"] for u in rep["updates"]], [False, True])
+
+
+class ClosedBookV2Test(unittest.TestCase):
+    def test_grounded_messages_use_experiment_prompt(self):
+        from multiturn.closed_book_v2 import grounded_messages
+        from multiturn.prompt import load_mt_prompt
+        p = load_mt_prompt("v2")
+        t = valid()["turns"][15]
+        m = grounded_messages(t, p)
+        self.assertEqual(m[0], {"role": "system", "content": p.system})
+        self.assertIn("NOT FOUND", m[0]["content"])
+        self.assertEqual(m[1]["content"], p.user_text(t["standalone_question"], "fact", None))
+        self.assertNotIn("<documentation>", m[1]["content"])
+
+    def test_check_scenario_with_fakes(self):
+        from multiturn import closed_book_v2 as cb
+        from multiturn.prompt import load_mt_prompt
+
+        class R:
+            def __init__(self, text):
+                self.text, self.prompt_tokens, self.completion_tokens = text, 10, 2
+                self.finish_reason, self.model, self.usage_source = "stop", "fake", "api"
+
+        class Answer:
+            def ask(self, prompt, system=None):
+                return R("UNKNOWN")
+
+            def chat(self, messages):
+                return R("NOT FOUND")
+
+            def sampling_info(self):
+                return {"model": "fake"}
+
+        class Judge:
+            model = "judge"
+
+        s = valid()
+        s["turns"][0]["closed_book"] = {"correct": True}
+        rows = []
+        out = cb.check_scenario(s, Answer(), Judge(), "rid", rows, load_mt_prompt("v2"))
+        self.assertEqual((out["knowledge_correct"], out["grounded_correct"]), (0, 0))
+        self.assertEqual(out["grounded_not_found"], len(s["turns"]))
+        t = s["turns"][0]
+        self.assertNotIn("closed_book", t)
+        self.assertEqual(t["closed_book_grounded"]["judge_prompt"][0], "fact_judge_v3")
+        self.assertTrue(t["closed_book_knowledge"]["unknown"])
+        self.assertEqual(len(rows), 2 * len(s["turns"]))
+
+
+if __name__ == "__main__":
+    unittest.main()

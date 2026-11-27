@@ -1,6 +1,6 @@
 # multiturn-v2 (FastAPI 정식 시나리오) 설계안
 
-상태: A단계 확정 (2026-11-27). B단계(샘플 2개) 진행 중. 기존 `data/evalsets/multiturn-v1` 과 코드 동작은 바꾸지 않는다.
+상태: A단계 확정 (2026-11-27). B단계(샘플 2개) 진행 중, 2026-11-28 설계 변경 후 샘플 재생성 (9절 변경 이력). 기존 `data/evalsets/multiturn-v1` 과 코드 동작은 바꾸지 않는다.
 
 ## 0. 전제 (멘토 회의 결정)
 
@@ -108,6 +108,12 @@
 - 헷갈리는 묶음: 위 표처럼 비슷한 값이 다른 페이지에 다른 의미로 나오게 묶는다. 시나리오당 confusable 태그 key_fact 2개 이상.
 - 조건·부정·범위가 핵심인 key_fact (`below 200`, `does not`, `only when`, `at least`) 를 시나리오당 3개 이상. 태그 `condition`/`negation`/`range`.
 - synthesis 중 1개 이상은 3개 이상 턴을 묶는다.
+- (2026-11-28 추가) **사용자 고유 값**: 사용자가 대화 중 정하는 프로젝트 고유 값(토큰 만료 17분, 헤더 이름 X-Tenant-Key 같은 것)을
+  사용자 발화에 넣고 recall·synthesis·update 의 대상으로 쓴다. key_fact 마다 출처 `source=doc | user`.
+  recall·synthesis 턴의 key_fact 중 user 가 30~50% (문서 출처도 반드시 남긴다), user 값을 바꾸는 update 턴 1개 이상.
+- (2026-11-28 추가) 문서 고유 예시 값(`fake-super-secret-token`, 예시 숫자 등)을 묻는 key_fact 를 우선한다. 태그 `example` (집계용, 검사 규칙 아님).
+- (2026-11-28 추가) synthesis 를 뺀 턴은 1~2가지만 묻는다 (`asks` 필드). key_fact 는 턴당 최대 3개.
+- (2026-11-28 추가) `standalone_question` 에 원래 질문에 없던 key_entity 를 넣지 않는다 (답 누설, 검사기 오류).
 - **모델 성능을 보고 문항을 거르거나 다시 만들지 않는다.** 제외 사유는 (1) 근거 확인 실패, (2) closed-book 검사 결과에 따른 별도 집계 표시,
   (3) 사람 검수의 "제외" 판정 세 가지뿐이다. 이 원칙과 제외 기록은 `data/evalsets/multiturn-v2/README.md` 에 적는다.
 
@@ -142,11 +148,14 @@ v1 필드는 그대로 두고 추가한다 (`schema_version: 2`). 압축기·rep
 | `turn_type` | v1 4종 + `update`, `same_doc_new_topic` |
 | `standalone_question` | 대화 맥락 없이도 뜻이 통하게 다시 쓴 질문 (출처 단서는 여전히 금지). closed-book 검사에만 쓴다. 대화 맥락으로 가리키는 질문을 그대로 물으면 closed-book 이 의미가 없기 때문. 검수 시트에서 "원래 질문과 같은 사실을 묻는가" 를 확인한다 |
 | `fact_meta[i].accept_alternatives` | key_fact i 대신 받아 줄 문서상 정당한 다른 답. 각각 `alt_evidence` 로 근거 인용 |
-| `fact_meta[i].tags` | `condition` / `negation` / `range` / `confusable` (난이도 규칙 검사용, 분석에서 태그별 집계) |
+| `fact_meta[i].tags` | `condition` / `negation` / `range` / `confusable` / `example` (난이도 규칙 검사용, 분석에서 태그별 집계) |
+| `fact_meta[i].source` | (2026-11-28) `doc` (문서) / `user` (사용자가 대화 중 정한 값). 분석은 출처별로 따로 |
+| `evidence[]` 의 사용자 발화 인용 | (2026-11-28) `{quote, user_turn, fact_idx}`. quote 는 `user_turn` 턴 질문에 글자 그대로 있어야 하고, 그 턴은 이 턴 또는 depends_on 사슬 안 |
+| `asks` | (2026-11-28) 이 턴이 묻는 사항 목록. synthesis 외 1~2개 |
 | `changes`, `affects` | update 턴만. 바뀐 조건과 영향 받는 뒤 턴 |
 | `source_turn` | same_doc_new_topic 만. 그 문서를 첨부한 턴 |
 | `recall_distance` | 자동 계산 (`turn − min(depends_on)`, 없으면 0). 손으로 쓰지 않는다 |
-| `closed_book` | closed-book 검사 결과 (검사 도구가 채운다) |
+| `closed_book_knowledge`, `closed_book_grounded` | closed-book 검사 두 종류 결과 (검사 도구가 채운다, 6절). 예전 `closed_book` 은 `closed_book_knowledge` 로 바뀜 |
 
 `validate_scenario_v2(s)` (새 함수, v1 의 `validate_scenario` 는 그대로)
 
@@ -155,7 +164,10 @@ v1 필드는 그대로 두고 추가한다 (`schema_version: 2`). 압축기·rep
 - update: `changes` 비어 있지 않음, `affects` 는 뒤 턴이고 그 턴들의 `depends_on` 에 update 턴 포함, 마지막 3턴 금지
 - same_doc_new_topic: `evidence_pages` 비어 있음, `source_turn` 이 그 페이지를 첨부한 턴이고 3턴 이상 전, 인용 구간이 첨부 턴 인용과 다른 소제목
 - `recall_distance` 가 자동 계산값과 같음, 질문 금지 표현 없음
-- `check_grounding_v2`: v1 근거 확인 + `alt_evidence` 인용문 확인
+- `check_grounding_v2`: v1 근거 확인 + `alt_evidence` 인용문 확인. key_entity 는 근거 페이지와 사슬 안 사용자 발화에서 찾는다.
+  한두 글자 기호 entity (`/` 등) 는 정규화 매칭이 다루지 못해 근거 확인에서 빼고 경고만 한다 (2026-11-28)
+- (2026-11-28) source 별 근거 (user → 사용자 발화 인용, doc → 페이지 인용), user 비율 30~50%, user update 1개 이상,
+  key_fact 최대 3개, synthesis 외 asks 1~2개, standalone_question 누설 없음
 
 grader 의 `accept_alternatives` 사용 (채점 프롬프트 새 버전 파일, 기존 v2 는 그대로)
 
@@ -163,6 +175,10 @@ grader 의 `accept_alternatives` 사용 (채점 프롬프트 새 버전 파일, 
   대안이 없는 fact 는 v2 와 글자 그대로 같은 프롬프트가 되게 만든다.
 - 결정 (2026-11-27): 사람 라벨 80행(judge_check_test)으로 v2 와 v3 의 일치율을 잰다. **v3 가 v2 보다 낮지 않으면 multiturn-v2 실험의 채점은 v3**
   (none 포함 모든 압축기에 똑같이, 채점 버전을 결과에 기록). 낮으면 v2 를 쓰고 `accept_alternatives` 는 분석용으로만 쓴다.
+- 결과 (2026-11-27): v2 0.863, v3 0.850 (80행). 규칙대로면 v2.
+- **변경 (2026-11-28): fact_judge_v3 를 쓴다.** 80행에는 대안이 없어 v3 와 v2 는 글자 그대로 같은 프롬프트를 보냈고 (테스트로 확인),
+  1행 차이는 같은 프롬프트에서의 채점기 변동이다 (80행 중 3행이 뒤집힘). v3 가 나쁘다는 근거가 아니다.
+  대안 블록이 붙은 판정은 v2 시나리오 검수 때 사람 라벨로 따로 확인한다 (7절 alt_judge_label).
 
 ## 5. 생성 파이프라인
 
@@ -202,8 +218,14 @@ grader 의 `accept_alternatives` 사용 (채점 프롬프트 새 버전 파일, 
   (`grade_answer_accuracy`, UNKNOWN·빈 답변 처리)을 그대로 import 해서 쓴다. 싱글턴 파일은 고치지 않는다.
 - 질문은 `standalone_question`, 문서와 이전 대화 없이. 답변 모델 설정은 실험과 같게 replay 의 `configure_llm` 을 쓴다
   (gpt-6-luna, reasoning_effort server_default, 출력 한도 4096, temperature 보내지 않음).
-- 채점: deepseek-flash, fact_judge_v2, per_fact. `closed_book.correct = accuracy == 1.0`.
-- 맞힌 문항은 제외하지 않고 표시만 한다. 분석에서 closed_book=true/false 로 나눠 집계한다.
+- 채점: deepseek-flash, fact_judge_v3 (2026-11-28 결정, 4절), per_fact, `accept_alternatives` 를 넘긴다. `correct = accuracy == 1.0`.
+- 맞힌 문항은 제외하지 않고 표시만 한다. 분석에서 맞힘/못 맞힘으로 나눠 집계한다.
+- (2026-11-28) 두 종류로 나눈다. 둘 다 턴마다 표시하고 보고에 두 비율을 나란히 낸다.
+
+| 검사 | 지시문 | 무엇을 보나 | 턴 필드 |
+|---|---|---|---|
+| knowledge | 싱글턴 `CLOSED_BOOK_PROMPT` (모르면 UNKNOWN) | 모델이 사전 지식으로 맞히는지 | `closed_book_knowledge` |
+| grounded | 실험 답변 지시문 `mt_answer_v2` (system + user_no_docs, NOT FOUND 규칙), 문서·기록 없이 | NOT FOUND 대신 정답을 내는지. **압축 결과를 오염시키는 쪽** (압축으로 정보를 잃어도 맞힐 수 있다) | `closed_book_grounded` |
 
 ## 7. 검수 시트
 
@@ -211,6 +233,9 @@ grader 의 `accept_alternatives` 사용 (채점 프롬프트 새 버전 파일, 
 - 행 = 턴. 열: scenario_id, turn, turn_type, depends_on, recall_distance, question, standalone_question, answer,
   key_facts (태그·대안 포함), evidence 인용문(페이지), closed_book (응답 포함), auto_check (근거 확인·규칙 위반),
   **standalone_same_fact** (standalone_question 이 원래 질문과 같은 사실을 묻는가: 예 / 아니오), **verdict** (OK / 수정 필요 / 제외), **memo**, reviewer.
+- (2026-11-28) asks, closed_book_knowledge·closed_book_grounded 두 열, key_facts 에 source 표시, 사용자 발화 인용 표시.
+  **alt_judgments** (대안이 있는 fact 의 fact_judge_v3 판정) 와 **alt_judge_label** (그 판정이 맞는가: 맞음 / 틀림, 사람 라벨).
+  대안 블록이 붙은 판정은 80행 비교로 잴 수 없어 검수 때 따로 확인한다.
 - 검수 결과 반영: `apply_review` 류 스크립트로 verdict 를 시나리오 JSON 의 `review` 필드에 넣고, 제외 턴과 사유를 README 의 제외 기록 표에 남긴다.
 - 제외 턴을 빼면 depends_on 이 깨지는 경우: 그 턴에 의존하는 턴도 함께 표시해 검수자가 판단한다 (자동 삭제 없음).
 
@@ -225,3 +250,25 @@ grader 의 `accept_alternatives` 사용 (채점 프롬프트 새 버전 파일, 
   - 거리 6 이상 recall 은 keep_recent(최근 1턴) 밖에 있어 비율 예산에서 실제로 압축 대상이 된다.
   - 문서 한 페이지(최대 2.7k)가 r25 예산보다 큰 경우가 생긴다 → 기존 overflow 표시를 그대로 쓴다.
 - 절대 예산(2000·4000·8000)도 함께 돌릴 수 있게 둔다 (v1 과 비교용).
+
+## 9. 변경 이력
+
+### 2026-11-28 샘플 closed-book 결과에 따른 설계 변경
+
+B단계 첫 샘플 2개 (생성 프롬프트 `mt_scenario_gen_v1`) 의 closed-book 검사에서 문서·대화 없이 맞힌 턴이 38개 중 26개였다.
+원인은 (1) `standalone_question` 이 앞 대화의 답을 담아 흘린 것 (원래 질문에 없던 key_entity 를 새로 담은 턴 20개 중 15개를 맞힘),
+(2) FastAPI 문서의 일반 지식이었다. 그래서 아래처럼 바꾸고 샘플 2개를 `mt_scenario_gen_v2` 로 다시 만들었다.
+
+| 변경 | 내용 |
+|---|---|
+| 누설 방지 | standalone_question 에 원래 질문에 없던 key_entity 가 있으면 검사기 오류. 생성 프롬프트에도 금지 |
+| 사용자 고유 값 | `fact_meta.source = doc / user`, 사용자 발화 인용 `{quote, user_turn, fact_idx}`. recall·synthesis key_fact 의 user 30~50%, user 값 update 1개 이상 |
+| 문서 고유 예시 값 | 생성 프롬프트에서 우선. 태그 `example` 로 집계 |
+| 질문 크기 | synthesis 외 1~2가지만 (`asks`), key_fact 턴당 최대 3개 |
+| closed-book 두 종류 | knowledge (기존) + grounded (실험 지시문 mt_answer_v2, NOT FOUND 규칙) |
+| 채점 | fact_judge_v3 (4절) |
+| 기호 entity | 한두 글자 기호 key_entity 는 근거 확인에서 빼고 경고만 |
+
+**"모델 성능을 보고 문항을 거르지 않는다" 원칙과 충돌하지 않는 이유.** 샘플은 draft 이고, 이 변경은 압축 결과(실험 결과)가 아니라
+closed-book 검사 결과(문항 설계의 타당성 점검)에 따른 **설계 변경**이다. 특정 문항을 골라 빼거나 정답률을 보고 다시 만든 것이 아니라,
+생성 규칙과 검사기를 바꾼 뒤 같은 묶음으로 처음부터 다시 생성했다. 압축기 결과는 아직 하나도 보지 않았다.
