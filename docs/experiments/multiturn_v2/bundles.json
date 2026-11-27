@@ -1,0 +1,275 @@
+{
+ "v2_01": {
+  "topic": "인증 방식 전환(헤더 토큰·쿠키·API 키)",
+  "pages": [
+   "security/oauth2-password-flow.md",
+   "security/oauth2-jwt.md",
+   "security/http-basic-and-api-keys.md",
+   "security/oauth2-scopes.md",
+   "request/headers-and-cookies.md",
+   "responses/response-headers-and-cookies.md",
+   "middleware/cors.md",
+   "errors/handling-errors.md",
+   "testing/testing-dependencies-events-websockets.md"
+  ]
+ },
+ "v2_02": {
+  "topic": "응답 상태·형식 설계",
+  "pages": [
+   "responses/status-codes.md",
+   "responses/custom-responses.md",
+   "models/response-model.md",
+   "errors/handling-errors.md",
+   "app-structure/path-operation-configuration.md",
+   "openapi/extending-openapi.md",
+   "responses/response-headers-and-cookies.md",
+   "internals/request-handling-internals.md",
+   "models/extra-models-and-updates.md"
+  ]
+ },
+ "v2_03": {
+  "topic": "요청 입력 검증",
+  "pages": [
+   "request/query-parameters.md",
+   "request/path-parameters.md",
+   "request/request-body.md",
+   "request/forms-and-files.md",
+   "request/headers-and-cookies.md",
+   "request/extra-data-types-and-examples.md",
+   "errors/handling-errors.md",
+   "models/dataclasses-and-pydantic-versions.md"
+  ]
+ },
+ "v2_04": {
+  "topic": "의존성 수명과 정리",
+  "pages": [
+   "dependencies/dependency-injection-basics.md",
+   "dependencies/dependencies-with-yield.md",
+   "dependencies/advanced-dependencies.md",
+   "dependencies/decorator-and-global-dependencies.md",
+   "app-structure/lifespan-events.md",
+   "integrations/background-tasks.md",
+   "integrations/sql-databases.md",
+   "testing/testing-dependencies-events-websockets.md",
+   "errors/handling-errors.md"
+  ]
+ },
+ "v2_05": {
+  "topic": "배포 구성(서버·컨테이너·프록시)",
+  "pages": [
+   "deployment/deployment-concepts-and-servers.md",
+   "deployment/docker.md",
+   "deployment/https-and-cloud.md",
+   "app-structure/sub-applications-proxy-and-wsgi.md",
+   "app-structure/settings.md",
+   "getting-started/development-workflow.md",
+   "middleware/middleware.md",
+   "app-structure/lifespan-events.md",
+   "quickstart.md"
+  ]
+ },
+ "v2_06": {
+  "topic": "미들웨어와 교차 출처",
+  "pages": [
+   "middleware/middleware.md",
+   "middleware/cors.md",
+   "responses/response-headers-and-cookies.md",
+   "request/headers-and-cookies.md",
+   "app-structure/sub-applications-proxy-and-wsgi.md",
+   "errors/handling-errors.md",
+   "internals/request-handling-internals.md",
+   "security/http-basic-and-api-keys.md",
+   "deployment/https-and-cloud.md"
+  ]
+ },
+ "v2_07": {
+  "topic": "스트리밍·실시간",
+  "pages": [
+   "responses/streaming-and-sse.md",
+   "integrations/websockets.md",
+   "responses/custom-responses.md",
+   "integrations/background-tasks.md",
+   "testing/testing-dependencies-events-websockets.md",
+   "middleware/middleware.md",
+   "internals/request-handling-internals.md",
+   "getting-started/python-types-and-async.md"
+  ]
+ },
+ "v2_08": {
+  "topic": "모델 설계와 직렬화",
+  "pages": [
+   "models/response-model.md",
+   "models/extra-models-and-updates.md",
+   "models/dataclasses-and-pydantic-versions.md",
+   "request/request-body.md",
+   "request/extra-data-types-and-examples.md",
+   "integrations/sql-databases.md",
+   "openapi/generating-clients.md",
+   "responses/custom-responses.md"
+  ]
+ },
+ "v2_09": {
+  "topic": "OpenAPI 문서 꾸미기",
+  "pages": [
+   "openapi/metadata-and-docs-ui.md",
+   "openapi/extending-openapi.md",
+   "openapi/generating-clients.md",
+   "app-structure/path-operation-configuration.md",
+   "request/extra-data-types-and-examples.md",
+   "app-structure/bigger-applications.md",
+   "app-structure/static-files-templates-and-frontend.md",
+   "security/oauth2-scopes.md"
+  ]
+ },
+ "v2_10": {
+  "topic": "큰 앱 구조와 라우터",
+  "pages": [
+   "app-structure/bigger-applications.md",
+   "app-structure/sub-applications-proxy-and-wsgi.md",
+   "app-structure/path-operation-configuration.md",
+   "dependencies/decorator-and-global-dependencies.md",
+   "app-structure/settings.md",
+   "app-structure/static-files-templates-and-frontend.md",
+   "openapi/metadata-and-docs-ui.md",
+   "testing/testing-basics.md",
+   "quickstart.md"
+  ]
+ },
+ "v2_11": {
+  "topic": "테스트 전략",
+  "pages": [
+   "testing/testing-basics.md",
+   "testing/testing-dependencies-events-websockets.md",
+   "testing/async-tests-and-database-testing.md",
+   "app-structure/settings.md",
+   "dependencies/advanced-dependencies.md",
+   "integrations/sql-databases.md",
+   "app-structure/lifespan-events.md",
+   "integrations/websockets.md",
+   "security/oauth2-jwt.md"
+  ]
+ },
+ "v2_12": {
+  "topic": "데이터베이스 연동",
+  "pages": [
+   "integrations/sql-databases.md",
+   "dependencies/dependencies-with-yield.md",
+   "models/extra-models-and-updates.md",
+   "testing/async-tests-and-database-testing.md",
+   "app-structure/lifespan-events.md",
+   "models/response-model.md",
+   "request/query-parameters.md",
+   "app-structure/settings.md",
+   "getting-started/python-types-and-async.md"
+  ]
+ },
+ "v2_13": {
+  "topic": "에러 처리 일관성",
+  "pages": [
+   "errors/handling-errors.md",
+   "responses/status-codes.md",
+   "request/request-body.md",
+   "dependencies/dependencies-with-yield.md",
+   "middleware/middleware.md",
+   "internals/request-handling-internals.md",
+   "security/oauth2-password-flow.md",
+   "responses/custom-responses.md",
+   "openapi/extending-openapi.md"
+  ]
+ },
+ "v2_14": {
+  "topic": "파일·폼·정적 파일",
+  "pages": [
+   "request/forms-and-files.md",
+   "app-structure/static-files-templates-and-frontend.md",
+   "responses/custom-responses.md",
+   "responses/streaming-and-sse.md",
+   "request/using-request-directly.md",
+   "middleware/middleware.md",
+   "deployment/docker.md",
+   "openapi/extending-openapi.md"
+  ]
+ },
+ "v2_15": {
+  "topic": "설정과 환경 분리",
+  "pages": [
+   "app-structure/settings.md",
+   "getting-started/development-workflow.md",
+   "deployment/deployment-concepts-and-servers.md",
+   "app-structure/lifespan-events.md",
+   "openapi/metadata-and-docs-ui.md",
+   "deployment/docker.md",
+   "testing/testing-dependencies-events-websockets.md",
+   "app-structure/static-files-templates-and-frontend.md",
+   "dependencies/advanced-dependencies.md"
+  ]
+ },
+ "v2_16": {
+  "topic": "권한 범위와 사용자 모델",
+  "pages": [
+   "security/oauth2-scopes.md",
+   "security/oauth2-jwt.md",
+   "security/oauth2-password-flow.md",
+   "models/extra-models-and-updates.md",
+   "models/response-model.md",
+   "dependencies/advanced-dependencies.md",
+   "openapi/metadata-and-docs-ui.md",
+   "security/http-basic-and-api-keys.md",
+   "errors/handling-errors.md"
+  ]
+ },
+ "v2_17": {
+  "topic": "요청 객체와 내부 동작",
+  "pages": [
+   "request/using-request-directly.md",
+   "internals/request-handling-internals.md",
+   "middleware/middleware.md",
+   "request/headers-and-cookies.md",
+   "responses/response-headers-and-cookies.md",
+   "dependencies/dependency-injection-basics.md",
+   "request/path-parameters.md",
+   "getting-started/python-types-and-async.md"
+  ]
+ },
+ "v2_18": {
+  "topic": "외부 연동(GraphQL·관측·백그라운드)",
+  "pages": [
+   "integrations/graphql-and-opentelemetry.md",
+   "integrations/background-tasks.md",
+   "app-structure/sub-applications-proxy-and-wsgi.md",
+   "middleware/middleware.md",
+   "app-structure/lifespan-events.md",
+   "integrations/websockets.md",
+   "deployment/deployment-concepts-and-servers.md",
+   "about/features-and-ecosystem.md",
+   "openapi/generating-clients.md"
+  ]
+ },
+ "v2_19": {
+  "topic": "첫 서비스 만들기(입문에서 운영까지)",
+  "pages": [
+   "quickstart.md",
+   "getting-started/first-steps.md",
+   "getting-started/development-workflow.md",
+   "getting-started/python-types-and-async.md",
+   "request/path-parameters.md",
+   "request/query-parameters.md",
+   "deployment/docker.md",
+   "about/features-and-ecosystem.md",
+   "testing/testing-basics.md"
+  ]
+ },
+ "v2_20": {
+  "topic": "클라이언트 생성과 API 계약",
+  "pages": [
+   "openapi/generating-clients.md",
+   "openapi/extending-openapi.md",
+   "models/response-model.md",
+   "app-structure/path-operation-configuration.md",
+   "responses/status-codes.md",
+   "models/dataclasses-and-pydantic-versions.md",
+   "request/extra-data-types-and-examples.md",
+   "app-structure/bigger-applications.md"
+  ]
+ }
+}
