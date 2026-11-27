@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:5e5a9a467878dc426ac1134faa6080946addd4830f9ff643346db2e55b4c2abf",
+  "claims": [
+    {
+      "id": "claim_32c40361caf6439e9d81270ea036d2f2",
+      "statement": "DuckDB versions before 2.0 cannot read database files created by DuckDB 2.0, although the storage format has been backwards-compatible since v0.10.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/connect/overview.md#L25-L34",
+          "version": "repo-lines-v1:sha256:13523c30b7733faa8e4b6cc29170981862058d470fbcb6e6c320eef22ea79b99:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmNTMyYTgxM2I4MmM0NTEzN2RlYmYwNzA1NDBiMTBhZDgwN2U0NzBkOWQ4ZTBiZGMwZGY1MDFkMjA3YjRlNDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM0MjE0ZmUwZDQ4MzlkN2VhZjQxZWY3N2JlMWFmYTUzNzY3OTJlMDNhN2Y5OTBmODk4YzlmNjliZmQ0MzFiYzEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYTBhZmFiM2NlNWU5NzZkMzNkMjJkZjJkNzgxOWNhZTIxYzg3YTkzYzkwZjViZTJkMmM0ODY5ZDdlMzIzNGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNlOGJiNzA3M2MzNzk4YjdlZjEwZWFhMTNjMjkzMjVjYWMxMzI1NDJkNjA1ZDcxZmI5NDZjNDZmNjdhYmU2ODkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f5f38b95cb13405bb843f32e0dbeca2a",
+      "statement": "Passing :memory: or omitting the database file creates an in-memory database whose data is lost when the process ends; both modes spill to disk for larger-than-memory workloads.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/connect/overview.md#L21-L38",
+          "version": "repo-lines-v1:sha256:8d29361d75250374763a7beef8ef3c5fe4fc9de5169ae845ed6938810df2b855:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVjNDI0NDllYzNlZTQ4ZjYxODYyYzY2N2ZkZGE2NmVjNzI5MTc0YWRmZDRkMGU2NzRkODk1MWZhNDYyMDI5YmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhNGNiNmE2NjgwODZhNzE1OTlkZWNlZGFjNzAzOGNiZDlkYWZlZGJiM2ZkNjMzZDRhYTM0YmEzZGY2NzI2YzEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBjZTM0OTA5N2QwYzQ4M2NlYjhiNWYzMjBhY2YxY2YyMGY2ZWJhNGY2MDE2NGFmZTY2YjAwOTdhNjUxMWU3ZDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4487638042014cdb85320a7f81194c9a",
+      "statement": "In-process DuckDB allows one read-write process or multiple read-only processes; within the writer process multiple threads write using MVCC and optimistic concurrency control.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/connect/concurrency.md#L14-L21",
+          "version": "repo-lines-v1:sha256:8310ab1153877a72b4da1f0dc245bf2a7b1965b8ce04dfc4910d005f3b095e3c:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzk5NjYxZjE1NmYzNDk4YTdiMzJhMzNlMmMxZDYwYjFmNGIxMGRhZDBhMWNmNmM0YWYwYTg3N2FiZjhmYmQ1ZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiM2ZkMGRiNjEyZDRkNWE0MDVkODE1ZDNiMWUxYzM5Mzk0MWIwNTYzYjBmNDcxODkwNmM5NDI3MTVjNmI5MzQ5OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMmY1OTU4MWRlNGIxODJlN2IyOWNhOTJmYWYyYjZiZGQyZDZhMTJhODNiNzFkZjVlMDg2Y2M4NWQ3YWZiNjVkNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWVkYTAxNTAxMzdkM2IxYjQwODg1NjFiZTFlNWRmZDEwZDkwNDk4ODJlYTBkZWVlMzU0ZjI2MTE1NjA3M2VhMiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_b2582b86201a463e905b0ee2f936d0dd",
+      "statement": "Appends never conflict, while two threads editing the same row cause the second to fail with a transaction conflict error that is typically handled by rerunning the transaction.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/connect/concurrency.md#L23-L41",
+          "version": "repo-lines-v1:sha256:2a15d13f9e7b8f6013c3bcc6f885d697f45f04b6e0401ee038eb0b8dc6d2cea7:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQyY2I2N2RlN2Q1OWJiNDFjYmNmZjI1MDUxNmRhZmE5OTNmZDY3NDNmZjcxYWY3ZjE0MDE0MDQ3MmFhNjNhYzAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwNWEzMTgyZDA5Y2IwY2M2ZTM1ZDFkZjQyNDFiMTMzMWRlMWQ3YmRjYWI4Njg4NDEzN2M2M2NlZGU5ZGNmZmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMzN2I2NWZhZjMwNjgwZmM4ZmJlYzIxYzVlYjAzOTY1YTAyZjg2YzY4NTI5Y2Y1Nzk2ZGQwM2M2ZWViOTA1NDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBjNjk1M2FlMmMyYzVmZDMzMTc4ODg5N2IyNDU5NGI5MDA4OThhYThmYWQ4NjFiZTFkY2FhOGI4YzRhMDVkZTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_dcd5b5ae68cb48718df7676fa1fa8563",
+      "statement": "Multi-process writes to the native format are supported via the Quack remote protocol, or via DuckLake with a PostgreSQL catalog.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/connect/concurrency.md#L27-L31",
+          "version": "repo-lines-v1:sha256:d92f0337f83520325872737551c2dd32536eabaff104693c0a9d233db65eadac:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTAwOTFhMWI5YmJiMmEzZjhjMWJjMzc4MDg3NTYzYTRkYzc0OTM2NGVkMjg0ZDE3MGI4MGU4ZmViMDQxN2I2MSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWU3NGZhNjcyZjkwYjNiZmZlY2E4OWEyNjUxODI1MGFlMzU5YTM3NDk2ZjlmNzVhZjZmN2ZmMTQ0MGUxZWM0YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNGNkZWY1YzZmMzMxNWFiZjBlY2Q1ZDZhNTE4MjIxYmEzZThjOTM3MmM3ZmUzYTA0ODA1ODBjMzQzMDcxMDgzYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDBkYjM2YzhiMjI1YWY5YWJlZTJlZDViNDgyYzk3ZTkyNzBmY2EyNzJhYzI2MDc5YTNhMmNjMmU4ODFlYjQ0MCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_96c4ecf2bd4c4668b60d4da7308b2b10",
+      "statement": "CONNECT and DISCONNECT, introduced in DuckDB 2.0, route a session to a remote Quack, PostgreSQL or MySQL database; local in-process databases do not support CONNECT.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/connect.md#L11-L66",
+          "version": "repo-lines-v1:sha256:6ea59236dd6520c29e6bc47a5652ccab56ef331462811ad71f136f1c472af94f:eyJzZWxlY3RlZExpbmVDb3VudCI6NTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZmNzcwZGZkOGEyNzQ1YzA2MjhiYmY3ZDM3NTlkMDM1ZTAzNjExZTExZjRjYzc5MWZmZjg5NjUxMTQxZjU2YzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmZDM5MDc3YjZkZmM3NzlmMWY4NzdhZmI5MDhiOGM5OGI5YTYwNzViNzE3MzQ0ZDdhZjkzOWM5OTdmODczNjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJjYjJiYzQwODQyYWEyM2U5OWNkODI5MDQ4ODY3YTI4YTRmOWNhNTRmMDZkODcyYWI1MWNhMjE3MzU5MjJkOTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:b05f142f755e0735f363084f680c10ca4b80648c2abd96a5dbd50d2dd2e77657",
+  "claims": [
+    {
+      "id": "claim_cbdc9a80f6f84aa3a1afc150a2918b25",
+      "statement": "Dot commands must be entered on a single line, with no whitespace before the period and no trailing semicolon.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/cli/dot_commands.md#L14-L14",
+          "version": "repo-lines-v1:sha256:d49cf425ead5f4fc4d0dc5b61c9bb340376d08a04db5560160f794a724f7ca78:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDQ5Y2Y0MjVlYWQ1ZjRmYzRkMGRjNWI2MWM5YmIzNDAzNzZkMDhhMDRkYjU1NjAxNjBmNzk0YTcyNGY3Y2E3OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDQ5Y2Y0MjVlYWQ1ZjRmYzRkMGRjNWI2MWM5YmIzNDAzNzZkMDhhMDRkYjU1NjAxNjBmNzk0YTcyNGY3Y2E3OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzUwMjZhZWJlZWVkNjllOTg1Mjk5MTBkOWM2MmJjNTM2M2RjNGZmZmE1ZjY2YzRhOGUzNzEzMTc2MzIwYTA2MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2JjMzg0NjY2MDRkODhiYzBiNzJhNDRkMTE1YzE5MjNkZWQyYWE4OGRhYzc0OGJhMGZiNTUzM2M0NTg4NDQ4YiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_70d7a54f9b2a499dafe47377379cca51",
+      "statement": ".maxrows defaults to 40 rows (-1 shows all) and .large_number_rendering defaults to footer in duckbox mode.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/cli/dot_commands.md#L48-L54",
+          "version": "repo-lines-v1:sha256:4300feaa9a66cfaf97cef98bdbe525f21a97731ac6a677c4ff38f74445125ebc:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGRiMWE5OTc0ZjdlMjg0MmNjMzlhZjk5YzhkODU4ODEzOWZmYjQxZWI5ZTE5ZDIwYTYzNzU1NWUxYjBjNzdkMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTg0MDMyODM5YjJiZTQ3MGZjNzRlNzZjNjNlZTliNjMxZWU1MWM0YWY2ZTJmZWVjNTM1ODFhOWMzYjdjZDI1YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDk5YWNlOTE5ZTIwZGU5OTMxODQ4MTc3ZTlkYjM4MjY0MGRjMTQ1MGNmM2M1ODgzOGNhMjY2NTU5OTY3NWNiNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZmFiNTZiNzgwMmM0YjdiZTc3NzYwNWY5NDBjOWI2YjUzMWY5MjZkNTc3ODk5MDRlNzAxMGVjYjQ3MjUyMjA5YSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_73a67eaca13c486f89838b0a7ada7c8a",
+      "statement": "As of DuckDB 2.0, .schema pretty-prints and highlights by default; -no-indent (alias -no-format) restores the single-line form.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/cli/dot_commands.md#L233-L267",
+          "version": "repo-lines-v1:sha256:6b5f67dd4ce9622f9a2359998258c69fb670f1ffc2043eb2ea99ddfa0bed1378:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzYjNhOGIzYzg1OTkxYmM0NGNhM2JmMGJjMzY4MDc4MTUyZGRhN2JjMGMxNjg3OGU4YjdmOTY4OTgyYjliNDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJiN2UwMGEyMjRiNmE1YzM2YzYxMWQxOWVhM2EwZDZlYTVmYWI1MzllNDkzNzRmYzIzMDU5OWNhZTZhMWVhZmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUwZGFkZDQ5N2M4NTdkODE4ZWJlMTlmNWZjZTliMWE5MDE1ZjY3YmIxYTQ2NWI2NzgyYjRmNTc4MWJhY2RmNjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzNTI4YmQyZDE2OGNkNDM3NWRlNjI5N2Q4Njc1MjYxNTM5MGMzZWRhYzE2YTk4YmEzZGQ1ZTA3MDY4NDY2YzAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_853319153ffa4e77859cfe65eb9f89d8",
+      "statement": "The .history command and shell_history() table function, and the .manual command, were introduced in DuckDB 2.0; .manual reads from duckdb_functions().",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/cli/dot_commands.md#L289-L358",
+          "version": "repo-lines-v1:sha256:4b16ffc4cacd82eaf13e07fdcab87003eaea63897ed9e2a82ad9b2b98b85a919:eyJzZWxlY3RlZExpbmVDb3VudCI6NzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMzOTAwYjI5YWI3YWEwYThlYzY4MjdmNTg1NGQyNjkxZDhlODE3MmNiZjIxYTExNWMxYmZmMzdhNWNiYTQyYzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRlZjJhZTczYTM2NjNkYjVlYjQxZjM5MGZjN2JmYzU4NThlMDllNDRhZTgwMjQ3MDQ4NWZmYWI3NjczMDVmOGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFiODc4OGViMDdkNjUxMjkzYjFjNTg0YWU2OTcwNjZlYzdlMzc4Njc4MTNhMzg3NGVmMDUzNjM3MDFmMzI1YmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1991fc98c054438bb5e1acdfd74b32c0",
+      "statement": ".import uses read_csv/read_json/read_parquet with auto-detection, creates the table if missing, and infers the format from the extension unless -csv/-json/-parquet is given.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/cli/dot_commands.md#L492-L518",
+          "version": "repo-lines-v1:sha256:8174782c93ca8c024f39fad32b44a40abb8118f75366d66dbee0a2f1ab853fc9:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhNzNhNDhkZjIzNDUzOTQwNjA4YzgyZjZlYWRiZWMxZDNjNTBmOWIwMTM3NmEyYjRmMDEwMjExMjllNTJlNjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdkMGZiNzQ2MTczYzQ3MDNiZGJiNmU1N2VlMjBlMzI3NzU3ZmQ3NWIzNzk1MmJlMTM2YTVhOGVmNjE5NjMyZjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_38e207f29903448aa24ef3e2c3d2b6ed",
+      "statement": "duckbox is the default output mode, and changing the mode resets the separator.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/cli/output_formats.md#L35-L84",
+          "version": "repo-lines-v1:sha256:e82db0edb0282776e29de53ad515165135ef0e2085520e98e9e272ec036f6232:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNhNjg5MWJiN2JkZjllMjk4Y2MyM2ZjNTExZGE1ZDcxMDUzZGFlM2QxYWZkMDE5YzFmMDY4ZWFlOTI5YWU1MjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgxOGY5NTFlOWI1YWJhOTBmODhkOWQ5ZmQ2YzRiODdkNmM0MTAwYzdjZGNmNzM4Y2E5YjNlNGM5NzM0OGZjOTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgwNTBjZTgwZmQ5YWI2NDhhY2IwNmUwMDgzNGNmMzIyMGYyYjM3MThjMjZmNmQ3MjJmYzhkNTE2ZDYyODY2NGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_557175e1bea14471935648bade3ad58f",
+      "statement": "The pager defaults to automatic mode and its command can be configured via DUCKDB_PAGER or PAGER environment variables.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/cli/output_formats.md#L111-L146",
+          "version": "repo-lines-v1:sha256:2bf48cdbaf575c0a367ee7bcef6de5c19bdcbb2cda84357b2e89834686884e66:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRhNTFlMmRkMWI0ZjY4NDFkZWE5Y2YzY2FkZDk0OWI3MTllNjJmNzA1YTM4ZDM5OTBmMzcyOTIxZjU2ZDUyYWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRiMzFiNTA5MjNhMWJjOWYyNjg3NTM1NTQzOGVjYzM5YjQ2MGY0NzAwOGIzODE5MDY2MGMxYzA4YWY4ZmI2MmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI2N2UzYzRiZTliZmU1NWMwYzQwZDA2ZjY5NzE0MzViNzgyODdjZjY3MjU3ODMwMzk3MTY1MmM2NzlkMjlmNmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNlYWI1YzA5MGM2YWE4MzdmOTVkNWM0MjQxMDlmM2Y3MWEwZmY5YzYyOWQ1NzBiMjMzNDQ0OThmYTc2NzQwYjAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5888b6a6a25e4ad2a7dc52d3ae7bb017",
+      "statement": "Duckbox tables can be re-imported by converting them with sed into a file separated by the U+2502 character and reading it with read_csv(delim = '│').",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/snippets/importing_duckbox_tables.md#L31-L71",
+          "version": "repo-lines-v1:sha256:945c555a51668dc806481d6f7c7d4b23625a109bb979d958173fde5882e700d8:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzBkZmI1ODc3NGU5NWE2NDU1ODEwYzU4ODkyYjUzYTkwMTk3YTZkY2E5NzM1ODhlZTY0NzE4ZWY0MTE0ZDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjliZjQ3YzQwODYxMzNjZDY5NjVjMmY5YjA2MWI0YTMwM2Y2YWFiMWEyYTU3NDVhYmQ5MTM4YTgyOGIyZTViNmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRiMTk5MzRmNjcyMGU0OTI0ZTBiMWUyZTcyMmE2YmJhMGNkM2YwOGM5ZWVjYmFlMTFiZGNkNDQwMDMxODM4ZmIifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

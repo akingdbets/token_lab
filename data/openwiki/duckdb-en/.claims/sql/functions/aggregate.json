@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:b4be4e635d2dfc8cb2362e452bffa8d7207478fa61aa0e4a35a3b491589d9998",
+  "claims": [
+    {
+      "id": "claim_ecc91501a6c74965976f9c77e5bc99c2",
+      "statement": "An ORDER BY clause inside an aggregate call follows the last argument without a comma, and order-sensitive aggregates such as first, last, list and string_agg are non-deterministic without it.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/aggregates.md#L102-L137",
+          "version": "repo-lines-v1:sha256:f080e16832a1b6307a63a8ca968d70f62e3580d1373cd1af515d9b9f7c49b1d4:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNlM2MwNGMwMDNhZDBkMjAzZjEyMWNjZTMxZGMwNTBmYjlhMzVmMWZjNmFlY2Y2ZGEyMmMzYjllYmQ0ZjRjMjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0NzI5NWNmY2FmOGI4OGExYTE3NzNjNDFlZWM1OGVlYzM4ZmZlNDllNTQzMzFjZTk1MDc4NzUzYTg3NGE5YjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBjM2U4MGI3ZGZlOWRjMTgwYjEwYzQ3ODI5OTk3YjQ3NTMzM2FiZTNjMjI5ODA2MjdhNGE3ZTNkNDViYzRjYmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEwNWRmMDk0YmEyMzg5ZjUzMjg3MmRlNWY5MTM2MGRhNDg1ZWQ0YmJlOGZkZTQ2NmIzNWFmZmY3YjA3MmEzZTcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a8a0afd7c6f14571892b4d66cb444c2a",
+      "statement": "In a DISTINCT aggregate, all ORDER BY expressions must appear in the argument list.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/aggregates.md#L96-L122",
+          "version": "repo-lines-v1:sha256:b375aef4060e2c289fc3914ca27663f680b794be265fee6db1bed644e5e5a121:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkzZjBjZDlhMWQwNGNiN2E5YjJjOTE4ZjA0OWNmYzg5NGNlYzJmZDAxM2U1ZjFiNWFlZjUzMzI0MmUzODhkMDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYwN2NlZjFjMWZhMTI2YWE0NzQ2ZTUyMGNmMDY2MzNjYmI4OWY2NzZkZjIwYjRkYjFjOGIwY2ExMmU5YWFjMmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyNjQ4NTg4MTZiNTdmNGU1MjM1MjE5YjJlOWVkZTZmNjk3ZjgxNzk2NDhlMGU4ZTc2NzdmY2M0ZDU1ZWYyZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM5ZjY2ODE2MWRlMDVhZDJhZmI1OTA4N2NkNTlhMDk4MzNkMmNiODdmZDRjOTRkYmZkOGQzOGYyODJhYWMzNDYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d0f2ffdfc96b4488bbc99e3f33a473a1",
+      "statement": "All general aggregates ignore NULLs except list, first and last, and all except count return NULL on empty groups.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/aggregates.md#L139-L146",
+          "version": "repo-lines-v1:sha256:6ca4765233001333a05895516f26b800f9368c53e3d4b312a98db1fb94d21399:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGYyZDBjNjE5NmUxNmYyZDIwOWM0MmUyNDY5YjFjOWQ4MmJiYTY3MTkzNjk5YjFhYzZjMjdmMWYwMTI4ZDEwMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjZhNWExNDYxZTA1ZjJmMDBiM2E2MzM4OWU3ZGYyMWQ4Y2YyN2U2OWMxZTc3M2VkMjk3NGM5OTE1ZmYzMjdkNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTE1MDBmOGNkY2VmZGI1MTY0MTJlNjg1ZTIxMzhlYmUwZDZkNTkzZGUxNjc2ZDE2YTUxZDA1NGIyOTJhMzlkYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjljZjJkOWU0ZjZhYTg3NjdkMjZjMjVlYTNlMWJmN2RhYWE5YzAxNjk1Y2ZkOTFmYTIxODcxZTFiODFlMmU5YiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_21c39c139f7147d7a854281139891c65",
+      "statement": "The lttb downsampling aggregate and decimal_average were introduced in DuckDB 2.0.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/aggregates.md#L341-L341",
+          "version": "repo-lines-v1:sha256:801cc0b9b38b5d5e5ef2df15e68d86e55bd609a4223d214469b50c9e3f585346:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODAxY2MwYjliMzhiNWQ1ZTVlZjJkZjE1ZTY4ZDg2ZTU1YmQ2MDlhNDIyM2QyMTQ0NjliNTBjOWUzZjU4NTM0NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiODAxY2MwYjliMzhiNWQ1ZTVlZjJkZjE1ZTY4ZDg2ZTU1YmQ2MDlhNDIyM2QyMTQ0NjliNTBjOWUzZjU4NTM0NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWU4MzBiMDEyYTk2NGIzMmU1MDRmNDNhNTgyMjFiMDY0YTc4MDQwOWJmOGIzNTFkMjE3MGQ0MDBhZGVmZjNiZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiY2JmMDlhN2Y5MzA4ZDg1MmE2MDJlOGE3YTE4MDQ4MTdkOGQ3NzM0MmRjM2Y3YjliMjkzZTM5YmY1Nzc4N2U1MyJ9"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/functions/aggregates.md#L416-L425",
+          "version": "repo-lines-v1:sha256:ebbffa3f763d1713104a9493e6b088c1bc097ee96d417a293c69c7f0c0f6e95e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc5YjAzMGUyODFhZmExY2YyNDY1MTk2YjhkOGE2ZjRjOTRmN2U0YWQxYzc3MGI1NWRkYWYyOWNiZTViNzA3ZjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYxNDdiNTY1YWNjZGRiMGM3NDk2Y2I4NTNhZmYyNjhiMDlkODI1ZWU2Yzg1ZTMxYjUxY2ZmMDM0NDNhZTUwZDQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_35e37e58f8df4710b02ba7aa52dd5718",
+      "statement": "arg_max has aliases argmax and max_by, string_agg has aliases group_concat and listagg, and list has alias array_agg.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/aggregates.md#L208-L238",
+          "version": "repo-lines-v1:sha256:bf989ea25211fa43fb1c89dba54c3ef89730a0b8f690d8a99f42579c50094e27:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1MGQxMzYwMDVmNTVlYWJmMWQzMGZkMzNlMDgyYjBjMzkwNTYwNjUyOWQ1YjJjMTUwYzg3NjFjMzIxNDI3NDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdhOTA5MWE3NGIwNjdmOTU2OTgwMDU4ZDBlYWZhYzc3YWEyNzgyZWNiYTI3ODUwZmQ5N2ExYWJlYzY4ODFjZTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjViMGI0MjA4ZDRlOTM1MDE2OTJlOTBmODljNDc3YTFhNjE0NzAzY2E0ODlhMGY0ZjI3NzNkN2M0YjY2NDEwNWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhhYzc0ODk4MTUyYTZjYzEwYzA5MWQ1NTQyYTlmNjFkZjM2ZmUyNDdiMGJkMmI5NDBlODgxYzIyNDdhNTBhNGYifQ"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/functions/aggregates.md#L415-L475",
+          "version": "repo-lines-v1:sha256:f0810c545f3140a965ad526078307d46a3931b57640cf5285aaac6fdc49f312f:eyJzZWxlY3RlZExpbmVDb3VudCI6NjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjNjkwM2ZlZTI3NjVhMTJkNTEyZmYyNGY5ZDFjMDc1ODE4OWY1ZDc5YWJkMWQ5MTYwNDMzMjk0N2Q0YzdhZjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5MGIzZjE2ZmE5NDg5N2JkYjRiNWQ1MTczMGMwNTg3YzYzMDc0ODkwM2Y5ZWZhYjUwOTcyZjBmZDk5ZWQ3YzQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBkODdhNjE2ZjM0ODg5MGIxMWQyNjNhOGM5OTU1NDYzMjZhODVkMzA5ZDQ0MmIwZWRjYzhhZTA3NTkzMzllZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc3YzEzMTEwMmNiZDRhYzk1ZTI2M2ZkZjk1ZmNlZGUwZWNiYmQ1MjBhNGQyM2RmMzExNTM2MmQyNDJiYjdiZmUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_016c6869d9b943df8514c34144377353",
+      "statement": "reservoir_quantile uses a default sample size of 8192, approx_count_distinct uses HyperLogLog and approx_quantile uses T-Digest.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/aggregates.md#L492-L501",
+          "version": "repo-lines-v1:sha256:97f26ed583a505aa6f302ec008604dc0e76349c664d3bc20d47b6351e797a6e5:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQzODUzMDlhNzFhMjU5Y2UxZDhmNzBhOTNiZTA3Y2E1M2Y2N2M1YWJiMWU2NzUwZjZiNmMzMDUxOTk2OTE0MWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcwMWVlODBkNzE5ZGU1YjI3YzAzMTZiMzIwYmZkOTQ5NDM0ZTg1YmNjNTgyY2RlOGU3OTBmMTEwY2NkYWZmYjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZjZmI0MjA1YzQ2MjlmNjljMGY4M2U4ZmU0ZGUyODA0NzA4ODkwMmUwOWRkY2JjZDkzNDYxMzIyODY4MTFkNGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU0YzY4ODczMTU5NGEwNzMyY2E3MDAwODA0Y2ZlYTUyZGFmNDY3ZTUwNTU0ZmYwMGJkYWM3ZmNiZjc0NjBiNDAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0cb504ef094a4fb08e87e2283aaa1cc8",
+      "statement": "Ordered-set aggregates using WITHIN GROUP (ORDER BY ...) are rewritten to mode, quantile_cont and quantile_disc with ORDER BY.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/aggregates.md#L732-L745",
+          "version": "repo-lines-v1:sha256:fc832a9becde54aee08070d159088b32f991573e22a35cab892157031072c620:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNkYThhNWJiNTBkMGI5MWE5ZGI3MzQzZGNhMjVlNjM5MTZhN2E1YTFkYzMxOWQ4NWUyYmIxOGMwYzllNWNiODciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZhZmQyN2YwM2YzMTQzNDA1NTQ0ZTllMjkxOTI0MjdjZmE1ODgyNDcxN2QxOGFmNWFjYTQ0ZDZjZTk1YzhlMWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVmODc0YTM5OWYzNzBiM2U1NTNmYzZlOTRiNDQ4OWVjMWU0OTM0NTFhNTg2ZDRkNTNlNTFiNTlkZWM4NTkzYjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRmYmUxNzg0YzI2NGU0YmQ2ZmI2MGNmODE1NjkwY2I4YzY1MmIzNGZjZjBjNzg5ZWM2MDk3ZmU2YjQ1M2U0ZjIifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:c9ae93c6fe1bf332544e1c2fb2a44aa1c2d44f94961f0433f722093b78135d47",
+  "claims": [
+    {
+      "id": "claim_8608c68369df4cf287b6fb1b27a1949b",
+      "statement": "ATTACH definitions are not persisted between sessions, and HTTP and S3 databases are attached read-only by default.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/attach.md#L101-L125",
+          "version": "repo-lines-v1:sha256:8d86f926a96f8010b7c589a0b142e71e3a677ca85cd29f5697e1460e5605af89:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjllZjVkNDk0ZWRmMGViYTk2YWI2MjRiMjIwOThlMjVjN2QwZGQ1Yjk3Njk0ZDUxMzc4ZWE5N2M4OGQyZWZmOTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcyZTVkZmIyNWU4Zjk1MmRiMmU4MTYxMDI5MzY3OGUzNWEwZjAzMGJlMWE0ZTQ4NDQ1MzNmOTBlNmMyMWQ3OWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJmMmYxZTU4NzYzNDgzYzY5MTZiNGMxMGEzMTQ2NjIzM2E3OGQ2NzM4OGFhYjk2NDExZDE4MjIwMTZlMzhhNTkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_10c00e6ac08845fbafb5f315b7c3a500",
+      "statement": "Since DuckDB 2.0.0 new database files use the latest storage version by default; STORAGE_VERSION 'v1.5.0' keeps files readable by older versions.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/attach.md#L127-L145",
+          "version": "repo-lines-v1:sha256:8731fa65ee77fceb3b8fed01f8dcfc478213079fe7ec0852b6bcd74c28ec9794:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc2ZGNjODMwYzgzYmMyZTQyZDBlN2QxMTExMTE4ODAxYzE4MDRhNGY4MDQ3ZDQ3MzlkNTNjMWRhNzMwY2Y4OTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg2MjljY2I1ZGViZDFkYmQyYWU1MTFkNjczNmFmOWE0YTg5NjUzZmY0YTEyMDUwZGQ1ZWEzYWM5YWRmNGVhZjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ4ODFiMTk1N2QwZDE0MDFmMzNlZTEwMTdkMjQyYzY0YzIwYjNlMzhlZjA1ZDliNjcwM2YzMDFiMWE5ZTI2MDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkzN2QxNzUyMjIyN2JkYjVlN2I5NDhkMWNhYjljOWU0MjhkMjBiYTAyMTdmMGZlZjc5ODkyYTU3M2I0MDliNWYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3c87495ca4474358a5e29a056a2297cd",
+      "statement": "ATTACH option defaults are READ_ONLY false, TYPE DUCKDB, BLOCK_SIZE 262144 (power of two within 16384-262144), ROW_GROUP_SIZE 122880, and STORAGE_VERSION latest.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/attach.md#L199-L216",
+          "version": "repo-lines-v1:sha256:fb1d50c6dbf1fa321c85696593e7b4380f5c23bdb40836d8814aa1f262aae5e6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFiZGM0ODMzMmIyY2EwMjcwNWM5Y2JhMTlhZDU2MzA5NjRiM2M3MGZlMTM2ZTY5Nzg1MmQ3ZmE1MmUwYjBhOTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJjN2ZkZTQ5YzI3NzBhZjY2N2U2YmIzODUyZTgxYzRlNzhlNjExYzc4MWMxYTFjNTU4OTZiYTY5ZjMxMWRlYjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ2NWUyOWFiMWVjMTI0NGYwNjk0ZjQ0OGU2ZjRhNWY1MjI2YWYxZjFjMWFhMmQ4MDI4YTIzNDQyMTM1ODdkOTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc5ZjRhYWM3MmY5ODJmOGViYzRlYTIwZTg4ZDYyNjkzYzc4MWM3ZDZmM2E4YjcwM2UxNjE3Y2Y0N2VhNjdkMmEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_564e1c3ed48f43fca6ac4dd064c4d5fa",
+      "statement": "Database encryption defaults to AES-256 GCM, requires storage version 1.4.0 or later, and is faster with httpfs's OpenSSL.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/attach.md#L147-L169",
+          "version": "repo-lines-v1:sha256:a8544c1afda8bacc3a896d125c5519447bbbdf456496c5e26ecf89ac88995123:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM4MmQzYmVjOWI1OTIzOTFlMzEyYTg4OWJhNGJiZGYxZWJhNjM3ZTUxNjRmODFmODBiYWVlMzA4YWI3MmVjNzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA0OWU5MjhkYzBiODc3OGM1YWZiNTRlNmZjOTVmYzZiNTdjZDQzNDk3MGYxYTczNWU0YzE0YTNiZDYzMmVhODgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU2Y2JmZDBkYzFhZDQzODdhYzY4M2Y2MzdlOTY1NDQzZWJhM2VlZTQ3NzJiMzljODNmOTA0YjFjMjhiMDJjOTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVhNzQyYzU3ZTJjNzA2NzAwMDE2OTFmNjRkMmFjMDBiM2E5NDg0ZWQ2NmM3MmI1OTE2NjM3NTE4ODRiZDUwNDQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5d91596aece244b6a2f0e4fb7c2febbd",
+      "statement": "Since DuckDB 2.0 the ATTACH path and options can be scalar expressions evaluated at bind time.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/attach.md#L171-L197",
+          "version": "repo-lines-v1:sha256:dbd029e14459ce24c39eeec9bb67f3fd0c34d40820f5b314960e95acf94e0f8c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE5NTc3MDM5YjZmZTM4NzExZTYwMjJkMzU0OTY1NmVmOTc4NDI5NzNlZjk3NjAwMzQ0YmYzZjM4YTEzOWY5MTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFlYjk2OTljOTMzODM5Y2IxZjI4YmNmMTRhNzE3Zjc2ODI1ZmRhMTU4ZWUxMWUyNGY3MTMzMzAxY2E4NjBiZjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU4MzVlMTU2ZTViZGM1Zjg4NWQzMWE1MDEyN2VmZDBkNmZjNDVlM2JiNjAxZTUwMDgzNGRkM2I3NTVjZjQ5NTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYwNWQwYzczMDlkNDhjMGEzNzBhNzQ2YTdhOTFlMDU3MjlkNWUzODI4ZGJiOWRkMzM4NTg1OTIzM2EyODY3MzUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f835a85a3f3f4ce9807480aa5fc6a61f",
+      "statement": "When TYPE is omitted DuckDB deduces it from a scheme prefix or the file header, and an explicit TYPE DUCKDB disables deduction.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/attach.md#L218-L227",
+          "version": "repo-lines-v1:sha256:879a074f291db3b14a99ad9ec63b9bad76eb5ad356551541cef8ff05ef43f493:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM4NDc4NzJlMDFhNDY3ZTQ2ODZhZTdiZTllYzZkODgwZjdkY2MyNjRkYTE1MDE3ODFkYzQxNTg3ZDE2MjI4OGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5YTk2YzYxZjUwNjhiOTI0MWM0OTNiZDAxN2YxYzIxMTgwODU4MjM1Y2FkMGFmYmM4ZWFkYTE3YTNkNWU3ZjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFjZjgxNWYyMTdiYjc4MjQ2YWEyOTA5YjI2MGFiZTU5MDhkOWJkZTljNjVlNTVjNWFiZDE5MjMxZTZkYmE5ZjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIyNmZmNjY4ODkyMzliMzdjOWIzOWIxMGRmYTVhNTQwNzhiOTdiNDMwYTFjYjAxMTdiNTg3MGNmZTNkMGRhMjMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d3ac5fb53a8a4eab8effb324066df98b",
+      "statement": "A single transaction can only write to one attached database because atomicity is only maintained within each database file.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/attach.md#L438-L449",
+          "version": "repo-lines-v1:sha256:1a973758f3a4aa57141444be37f9709ac0d9e222b984b12a6b1a2baae33d2eea:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmMDZjYzQ4ZDJjYmNlZDg5MWZjOGRiNmJiZGUwMDJmZmJiM2Q3ZjJjM2Y1OGRkNzhmMmJkYTMyYzIyYjNhOWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBlZTc1MWJiZjkyOGI5MTllZWM1NTA0N2M2ZGU4MTcyMTViYjhkOWNlNDYwOTA2N2YxMzgyYTYzNjM0NTkxZWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIwOWMzNjQ3OTdmNzc2NzNlMmFmZDE0Nzc5M2MwYjUwYTI5ZTljN2U4NDdjZmM3NDc0ZmU4OTZhZGY1MGRiZTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fb265d9147904a33b02a98796447a262",
+      "statement": "ALTER DATABASE RENAME is not supported in DuckDB 2.0.0; databases are renamed by detaching and reattaching.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/alter_database.md#L9-L9",
+          "version": "repo-lines-v1:sha256:e249939189a2f65be4e1a9b49c4e23ce18f8835d35bbd896468aaf377a1c5bca:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTI0OTkzOTE4OWEyZjY1YmU0ZTFhOWI0OWM0ZTIzY2UxOGY4ODM1ZDM1YmJkODk2NDY4YWFmMzc3YTFjNWJjYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTI0OTkzOTE4OWEyZjY1YmU0ZTFhOWI0OWM0ZTIzY2UxOGY4ODM1ZDM1YmJkODk2NDY4YWFmMzc3YTFjNWJjYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWZlZTBmMWY2MGNlZmY1ODFjN2I5MzM1NDFlZDY1Y2FjNmZmN2NmMGVjZGQ5Zjc4Y2RlYWEzNjFiZTc5ZjFhMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOGFmODE3YjQyZDEwNjg2MDIxZmY1NzVjODgwZTFkYTgzNDMwN2FlZjU3NjU3NDhkOGI4ZTEwYTQxNGQwYWYwYiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_8dc3d36873684e36b51e8577f71fafc1",
+      "statement": "read_duckdb attaches a database read-only, reads one table, supports globs, and does not support views.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/file_formats/read_duckdb.md#L12-L104",
+          "version": "repo-lines-v1:sha256:d2252fc103fbcbc61a62408ba79c910b6c9545b8a362cb7b19ea1495805c3458:eyJzZWxlY3RlZExpbmVDb3VudCI6OTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1OWNhMTMzYmE0ZjEyZDFkMThlODE1NDBjYzI4NjJiYWE4Mzg1ZWQ0ZDE2YjVmZDgyMWU2YjJhMjMzMTMzN2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUyM2Y3NjJmMzkwMDFmN2I0ZGYzMTgyMTZlY2UyODk3MWM4MGZkZDA1MDczYzI1MjNhNzUzYmQ1OWUxMTc2ZTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFlMGNiMmU0NDAxZjBmYWQzNTRjM2ViODNmNTg4NjVmZDBjYzU2NDE2OTJhOGM1MzIzZWZlNTM2ZmEwZjRhYzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

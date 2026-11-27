@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:a98ed8349945f89decfc16df8eaaa3a0d0683b123bf69cf62d14afaf1995ab09",
+  "claims": [
+    {
+      "id": "claim_f798ecaf90004aabace1a7f7c756305e",
+      "statement": "CREATE TABLE t1 AS FROM t2 WITH NO DATA (or LIMIT 0) copies only column names and types; CTAS cannot declare constraints.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/create_table.md#L144-L162",
+          "version": "repo-lines-v1:sha256:d1c8bc76e2443e3e8be2b611c8300e4890c478f77b329e8a354932b4638af3db:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU1NTJhNjM0MzdkODM4NDljZTJhOWViYTQ1ZTg2ODk5YmNhMjhjNDdjNTIwZDExOGU4YmM2Y2NhYjMyZTZjN2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc4OWIwNjMxNzQxNGFiZmZiZDdhN2RhZjQ4NDAwMGZkNGZlNmFhZThhYjRkMWRmYTMxN2E1NGZkMGFjYzA3ZmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc2NzY1OTg4MmU2MmNiMWFiMjVkZjZmYTI0MjExZjk5MDJkNzU5MjQ2N2Y3MWFlNGIzMTE5NmFmZWZkMjAxN2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzNTY2ZjgyYjFmYzljNGU2OGUzZTZlMmJjYmRiNmYzNGYxOGRkNjk3OWE5YmQzODQ2YTMzNTVhOWQ2NGVjNTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_195caf99821d4e2b840c0135a4c51ea8",
+      "statement": "Temporary tables are session-scoped, live in the temp.main schema, reside in memory, and spill to disk only if temp_directory is set.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/create_table.md#L78-L97",
+          "version": "repo-lines-v1:sha256:2540abeed23ea5c216144abb3e421663ffe51e8317597beec1e11e5c66d83f21:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwNTA5MTE3ZGUzYzJmOTU3OGFkZTk2Mjg5Y2IzZDkyZTI2NGY3NzE1NDc4NWJhNDU4MjNiYWExYWE1MDk1NDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxNWViY2VmMzhmYTEzZWU2ZDZiZjdiYjM3N2I3MWMzMDEwNzZkODY1ZTM2ZWE4YjM3NjAwM2JlZmNmMTlmODMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM5OTBlODM1MDMyYzk2NjQ2MWYwZTkzOWY0ODQ3NGE3NmJjNjEzZGVlMGVhMzhmMWRiN2QzZjYzZjdiN2IwNTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhMzc5NjhkNzQ5ZTg2YTNjNjZlNTVlMTMyZTRiODM2NmZiN2JiY2FkNmMyODc0MzUzY2JkODc0YjE1YTEzN2IifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8d7c1de9a35543b0af4ad70fd7d3e0ed",
+      "statement": "Only VIRTUAL generated columns are currently supported, and VIRTUAL is the default.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/create_table.md#L293-L317",
+          "version": "repo-lines-v1:sha256:09f3de588c49ee14a8ec6def973ee5a714b0b59984933677e99d3823801d4ee5:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImExYjkyN2EzYmQ5NmY3YzRjNzAwODhmODQ3YWZmZDg2NzBjYWFmYTA0NjAxMTE4YTkyYWIyOTJiNWNmMDdmYzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2MTBhNTU5MDg4NmIzZGI1OWQ1YjFhOGY1MDgxNzMyOGU0ZTcxZDk5NjFhNThjYjg2OGE0OTI4OTRjOTBjYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJiODM2ODYxZmEyNGUwYzY1NjFhMDM4NzJlY2I3NmQyNmJmNWQ3ODNkNGM0ZWU3ODZjMzMyOGNiZGZkMzAxNmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZjMjRiYTgwYjRmZTJiNmZmZTM0OWM2ZTY2NGJlNjUxM2M3NzYwZWRjMGRiMDAzMWVlMDAyMzg2MDVkNTVhNWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f2fd6091bd9b47ac9a2a9b1d4acf6b60",
+      "statement": "Foreign keys with ON DELETE CASCADE are not supported.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/create_table.md#L280-L290",
+          "version": "repo-lines-v1:sha256:3f72704447102b289d37380e22e8be650f4dd9e81b2d263755c3bbf758b50665:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjczMTA4ZjY5NGQ5YTcxMTRjNjU0NDBkM2E0MDk4YTIyODJiMWMyZTkyNjFjMjRjOWE5ODQ0ODkyYmNjNTFjMGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImExMDI0Y2U2MTU1MTI0NDYwNWQyNDMzOTA5YzgwNzk0N2U5ZTIwNjZjOGQ2ODUzYzhlNjY1MmQ3YmJlYTA0NzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkzOWRiMTM5M2I3MjAzZmJhYmIxMjk2YjFkZGQ5N2Q2MzgxMjg3OTdhZjRmMTBmNzJiYjZmMDliZTg4MzA1ZDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc2N2E4MzlkMDMyODkyMzQ3N2EzOWI4MDZmODUyYjkyMTQxYmUyNjY5NGU5MmZkZjFiY2VhNWIwMmE4Zjc1NzgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5b0fb47352ad42cdae97081e249d7e54",
+      "statement": "Since DuckDB 2.0, PRIMARY KEY and UNIQUE constraints can be DEFERRED and are then checked at COMMIT.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/constraints.md#L121-L137",
+          "version": "repo-lines-v1:sha256:1875dd11eca4b00bf5a3befa7010d8e8740d9d83bda6285d890f49f5b70965dd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkOTQ1ZjI4MDFmMzUyY2Q2NmU0YTc0NzNhMjc2YWUyOTExMGQzM2IxYjMxYjkwZGE2MjkxYjQzMmM4Y2NmNGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiZjkzYmY2Nzk0NjlhNjE2YWE4NWRlNDA2OWYyOGU4MzM4MzZiMDYxMTI1OGFkMDAyMTE0OTg2MjRlNTg4OGIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhiOTY4NzlhMTRjOWRhOGVkNTg0ZTExOTFlOWNmYzI2OGZiYjkxMjM0Y2RkMTZlYjY2OWY5MTAyMmY3ZjY1YmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdmZjhiMzA0MGYyNzA2NzI3YTEzY2JhZDJhNjA5ZDY1ZTBkY2FjZWMwNDBiYmFiNzE2MjY5NTQ1MTlkYmZkNDkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ac73559055e14cc88cfc01f5a77a8715",
+      "statement": "An ART index is created automatically for every primary key, unique and foreign key constraint.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/constraints.md#L163-L163",
+          "version": "repo-lines-v1:sha256:487aa5abc625f8adbab69e0fbebe1ceb37deb2f1154f017a67a09584f72920b0:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg3YWE1YWJjNjI1ZjhhZGJhYjY5ZTBmYmViZTFjZWIzN2RlYjJmMTE1NGYwMTdhNjdhMDk1ODRmNzI5MjBiMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg3YWE1YWJjNjI1ZjhhZGJhYjY5ZTBmYmViZTFjZWIzN2RlYjJmMTE1NGYwMTdhNjdhMDk1ODRmNzI5MjBiMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmRkNWQzNTkwNTVmZGRjNDdhZGQ0NTlhMzkxOGE0MTM2OWE0NmYzYjc0ZDM1NzVkZGU0NjFhOTc3MzdkODI0ZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjIsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWU0MjQxNjRkNWJjMmM4NGVkNmQ1ZWRjZWQzM2M5ZmI2YjdjYWNjYWFlNWIxMjg1MjUyNWMwYmM0MTQ4YTJjNCJ9"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/constraints.md#L77-L77",
+          "version": "repo-lines-v1:sha256:41215c0990cb91eec82217403e9901b10c8a0e672287d8d3dc3b0fe423f33ea2:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyMTVjMDk5MGNiOTFlZWM4MjIxNzQwM2U5OTAxYjEwYzhhMGU2NzIyODdkOGQzZGMzYjBmZTQyM2YzM2VhMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyMTVjMDk5MGNiOTFlZWM4MjIxNzQwM2U5OTAxYjEwYzhhMGU2NzIyODdkOGQzZGMzYjBmZTQyM2YzM2VhMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTA2MzYyNDNlMzllZmExNjBkMWRiOWM3OTZkYzdkMGJhYWNiODUwYTRmOTZlZTA4MDkzOGU1Mjk3Zjk1NGI4YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTQzYjRjOTkzN2QxMzA4YjEyZjlmODUyNGE3MWZhNTQ5YzgwNDNhNzczMjUyYTFiZDk5NzA0MzZmNmE0NjM0MyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_e16d8eaf56ec44d694b1f65ad91b7e7b",
+      "statement": "Most ALTER TABLE operations are refused on a table with an index; adding columns and setting or dropping defaults are allowed. Adding CHECK or FOREIGN KEY constraints and DROP CONSTRAINT are not supported.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/alter_table.md#L263-L263",
+          "version": "repo-lines-v1:sha256:63742aa1767b561f12ef5941adb26c45e81debf4f5f98a5bece050403ddff940:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjM3NDJhYTE3NjdiNTYxZjEyZWY1OTQxYWRiMjZjNDVlODFkZWJmNGY1Zjk4YTViZWNlMDUwNDAzZGRmZjk0MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjM3NDJhYTE3NjdiNTYxZjEyZWY1OTQxYWRiMjZjNDVlODFkZWJmNGY1Zjk4YTViZWNlMDUwNDAzZGRmZjk0MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiN2Y2NjViNmU4OWM5ODQ5MmYwNTM5ZjMyNDQyMjYyZWI2MTRiZDU4ZmMwMTNjNjk3OTM0MDc1NmFmZjJjNTQzZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTE2NTUzMmZmN2I1ZjJlYjkxNGM1ZDA2ODUxNGUxYmNiM2E2ZWZmZjIzNDRhMTFmMGJkZGIxNGI0ODY3MDdmOSJ9"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/statements/alter_table.md#L341-L345",
+          "version": "repo-lines-v1:sha256:b0b57b70ca045c462f6db70c32d8f258b5166fca3bedbf2ed39a1a3a29834efb:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDUwZTdlYTRmMTIwM2U0MTgyYTRkNTMxN2M5MzZiOGUxNDI1N2U1MmJhOTUzZjZiMzE3ZmJhMTM5Mjg3NmZlNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWQ5NzkyZTJkYjI4YWZhZTY4Zjk5Nzc4YWVhYmM3MTliMzVjMzUwYzMwYzljMjdlMTdiZmU5OTQ1OTM3Yjc5YSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTBkNjk0NzdmYzI3MGVlNDY5OWM4OGJmZjA0OTFhMWRiMGQ2YzlhNmRmZDUyNDMxNDBiMzlmZTUyNjE3M2YzZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTczYjQ2M2YzZGFjYzRlZTJhMTc3YTFmYzE3YTRiZjMyYWRmOTE2YWFmZmJjYjM0ZjIyMGM3NGMyOTgyYzhhZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_69d1efc734d4481ab28ca286d5da11c7",
+      "statement": "DROP defaults to RESTRICT and CASCADE drops dependents; dependencies on views are not tracked.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/drop.md#L75-L133",
+          "version": "repo-lines-v1:sha256:095486f1e46f05547fff44d9741d61f97763b3d84995da8891b9c21063d87fc5:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM1NWQ0NmJkZThlOWU2ZGY2Njg1MWIwNmQ2OGUyOGUxNGJhMDQ1NjFiYTZjYjg3NDE1NDdlOWQyMjdiYmZhNDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRiN2Y4NjM4OTJlMzkwYTk5MWZkODJmMTNjOGI1M2NiYTE3YWVhY2I4YTY3NjNjNzNkMWJhZWIzMDgyZGU2NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzMzI2YzZhN2FiYzU5YWQxMTQ0NjIwMjEwN2ZmMzgyMzVkZjI3OWQ1YTA0MGRiN2U5YmNhZGFmZDg0NDIzM2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJhYWU0ZGIyZDExZmUwNWI0MjMxNjA4Y2JkMzE2YzFiZmI5NTlmNjdmMzUzNjNjNWM1MTljNGVkMzg5OWY5MzIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ee1d7c293fd84496b5436937cd32d266",
+      "statement": "Nested schemas and the setval sequence function were introduced in DuckDB 2.0; setval's is_called argument defaults to true.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/create_schema.md#L51-L60",
+          "version": "repo-lines-v1:sha256:5ea53efa46163d4684767dd53ebede4ed6536ec1541e7c8aedc9fa64cf13fbf1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmMTQwODg4NTI0NTNmYmFhODY0NDYyN2EzZTZiYTRiMTI0MTM4MTQwZmMwNjdhNzk2ZGJiZDgyNDI1YTk5ZGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJhNTJiZTY4NzUzOWFiNTNlYjY2MGMwMzAwMDNmYmEyMGZiMDhmNjM1NGQyNmQ1MmFkNjlmYWE5ZGEyODMyYjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlhYjM5NTI2NGM3OGZmY2RmMDE3MDAzYWU4MDRmNzJiNjc5MDBhODc5MTg1MDBiMzcyZjAyOTk5NTQ5YTgyZGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZjMjRiYTgwYjRmZTJiNmZmZTM0OWM2ZTY2NGJlNjUxM2M3NzYwZWRjMGRiMDAzMWVlMDAyMzg2MDVkNTVhNWMifQ"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/statements/create_sequence.md#L154-L178",
+          "version": "repo-lines-v1:sha256:dfb4cf37816866db4d72ee656b130616574cf8a185539aaf803da868564d9e22:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI5NThjYjAyYjI3N2JmNmMyNzNiZDcxYTU1YjYxMjU4NjIwMmRlMDk3YjQxZDM5Y2E2ZjgxZDg3NDhlNjcwMDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYxMDJkZjQ0MDkwMWIxZDlkMmU4Zjg2NzliOWRkMTJkZGYxY2Q2MTQ5YzcwNDdkY2RkZWUzNGVkZmI0MmIyMTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQyYWE3MmE4MmVmZTUyZjM2MWM1YmJhYTY0YTAzMWUxZWFlOTE5ZDljOTY5MmIwYWExNjFmOTE3YzAxNDMwZDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhhZjgxN2I0MmQxMDY4NjAyMWZmNTc1Yzg4MGUxZGE4MzQzMDdhZWY1NzY1NzQ4ZDhiOGUxMGE0MTRkMGFmMGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bf8384218c7f427f99c9a254cb7f1d82",
+      "statement": "DROP SEQUENCE ... CASCADE on a sequence used by a column DEFAULT drops the entire table, because dependencies are tracked at table level.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/create_sequence.md#L204-L244",
+          "version": "repo-lines-v1:sha256:1fbcc65a9f33071ad679e9798fdda33b59fdf66b944b990a69a4617b8e2e2e9d:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1NzBjYjcxYjk0MGJkODJiYTQwYTNiZjdhMDhlZmY5NzNmNTNmYjU3M2MyYjFhY2U4Y2I4ODAwNDIwMDI1MTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRiN2Y4NjM4OTJlMzkwYTk5MWZkODJmMTNjOGI1M2NiYTE3YWVhY2I4YTY3NjNjNzNkMWJhZWIzMDgyZGU2NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA0NTM0YTY1MWYzOTUzYzk4ZWVjMGQwNWRmMjg5YjIyMDcwODhhZTRiOTcxM2E3MzA0ZmU0ZTNhNWFiMWQ1YzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA4MzM4ZTdjYmU4YzYzMTVjNDNhMWIyZmNhYjc2NmI5OWVlZTgzNzJlYjcyNTY3MDU0Mzg0Y2Q1ZDgzZTgyZWQifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

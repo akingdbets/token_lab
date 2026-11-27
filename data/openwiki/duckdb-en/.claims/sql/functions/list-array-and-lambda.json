@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:e3f38ed1e3738ae67afe4e60d17dfbffcac8e8e6ed533cc5aa965d49f828770b",
+  "claims": [
+    {
+      "id": "claim_6c807909f0fd4dc2a3608789ca1f219f",
+      "statement": "List slices are inclusive with negative indexes counting from the end, and a negative step reverses the slice by swapping begin and end before applying bounds rules.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/list.md#L1019-L1110",
+          "version": "repo-lines-v1:sha256:e9389463450299f7d3fb26310b4c12cd7348225fdfd5fd778dc578f2c18213db:eyJzZWxlY3RlZExpbmVDb3VudCI6OTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkNzRkNDRiZDkzMzAzY2YwMDI2YjBjODA5YzcxZDFlMGU0ZWNjMTlmMzkwMDM0ZmVkNTM5MTRjZDFiNDk1OGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYxYTE2MDk3MzkwYzJkYzFmYWFmNjNlNDg1ZTg1ZDllY2ZiMjIyMjgxZjNhZDY0N2MyMjQ2MmRiMjg3YjcyMjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI3NDY5MjUwN2E1NDg1NTBlMjYwZWVmMDlmNjZkY2QwZTE0NTljYjI5ZTY0YzNhMWNhYjE3YWUyOTU3Yjc5ZmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU0ODc5YmIxNTVlNmU0YTE5ZDk0ZTg1Y2MwMDBmZjllMGNjZjY2ZjMwMWY5MDNiNjFlNTg0ZDQzYmQzZjM3OTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_aa718d589008421688a993f11caa305f",
+      "statement": "The || operator returns NULL if any input is NULL, whereas list_concat skips NULL inputs.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/list.md#L830-L843",
+          "version": "repo-lines-v1:sha256:62663970dcc93a1e116160076478a1c0876cd8fec78c2bc40a0af68aaf2721e0:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZkZDI4M2ZlYjUxYjU1ZjEzZGYyMmU4ZTBmMmJjOWNlYjFmNTkzYjU5OTJiMDcwNzE1YjA4MGI1ZTUzOWI4OTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliMWZhYzgxMDExZmMwYWNjZDlkNDlkMDg4ZTgzNmEyMmMyMTRiYTU4YWM4MzYxNTYyOWU0MTNmMjE5NWJiZjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRiODU2M2IwZmUzMDhiZjBmYzEwZDEzNjYxOTBkMDI0MTkxY2U2YjA3ZTk2MDM4ZmE3YTI1YjM2M2VmMzFmYTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZlYTRjZGRlMWZhODM3MmFjYzQ2OTY5OWZhYWNlMDIzNTIwYTk1NjE3ZGNlMjcxOGVhMWQxMWRiNTcxMWQ1NTAifQ"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/functions/list.md#L90-L90",
+          "version": "repo-lines-v1:sha256:d068db9421235fb5107dc5cc64e1767f56ad84d4e0ff95bb20770ece8bbb93bc:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDA2OGRiOTQyMTIzNWZiNTEwN2RjNWNjNjRlMTc2N2Y1NmFkODRkNGUwZmY5NWJiMjA3NzBlY2U4YmJiOTNiYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDA2OGRiOTQyMTIzNWZiNTEwN2RjNWNjNjRlMTc2N2Y1NmFkODRkNGUwZmY5NWJiMjA3NzBlY2U4YmJiOTNiYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDQzOWNkODNlOTBkNDY1MWQwZGNmNzAxNjRhNWFhNGZlYjFhYzE3YjMwZDM1YWQ5MDM4MzUxMGYzNDUxM2EwZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDE4NWVhNDZiOTYyN2I0ZTA2ZjM1M2IwZjJkZTkyNGQxNDg5M2QzZjMxY2ExYjYyMDZjOTcwZTU3NWEyMzcxYSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_3aa566860ebd49ef9c40c2eb2fdc5e58",
+      "statement": "list_distinct removes duplicates and NULL values and does not preserve the original order.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/list.md#L96-L96",
+          "version": "repo-lines-v1:sha256:94ce8b93f7f8e1815a68e036ef395bd869f1c15c2a07183e7698dd80abed5d0e:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTRjZThiOTNmN2Y4ZTE4MTVhNjhlMDM2ZWYzOTViZDg2OWYxYzE1YzJhMDcxODNlNzY5OGRkODBhYmVkNWQwZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTRjZThiOTNmN2Y4ZTE4MTVhNjhlMDM2ZWYzOTViZDg2OWYxYzE1YzJhMDcxODNlNzY5OGRkODBhYmVkNWQwZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjY5ZTYyYjhhNGUzN2Y3NmViYmM4YzdhOGNkMzJjZTc4ZDE2NDczZDZmZDY1MjQ4NDkxNjUxNWVlM2JjOGExNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTVhYTBmOGJmOTNmZDhjNTQ0MTNjZjU5MTNmZmUwMGI4YjdjZmMzODM1ZGNiOTU2ZGM3MTkwYzU5MDA1Y2M5ZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7e46bdf8bcfb4d03add36a3e50b03ec6",
+      "statement": "range excludes the stop value while generate_series includes it; for timestamps stop and step must be given explicitly.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/list.md#L896-L1017",
+          "version": "repo-lines-v1:sha256:6df2bdd6d2c4386a88a77d2a123d9d0d4b21039c32a866ca0bcb20dff2328e49:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJjNDQ1ZGQ4NTYwYzk5ZGMxMDRiZDA4ZWIxZTIxZjM3N2UzZTNkYzFjNTA5YjkzNGI5M2YzNTJmOWNkYWNlOTBlIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJmNjQzMjA2MDE4YWQyZGE0NjkwZjg2YzQ2MGIzNzlmZGY5NTlhMWM4YTIxYjYwZjRlYWUyMjIyNWM1MzJiYjU1IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIzNWZkOGEzZTBjZDczYjVhMGI3ZGZhMDExODgwYzNiNjU3YWIyOTkwOWY1NDVjNGNhZGFlNmIyZGFkODZkZDIzIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlZTdlYWE0MmVhOTY5M2Q4ZjA1MjZjMzUzNzJhZjlkNWNjNWE4YjgzMmJmZDc0NTQ4MmQ3N2I2ZTE2MzZiZjRmIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_527afcce2d0f4c26a90b4405afeb37f6",
+      "statement": "list_aggregate runs any aggregate over list elements but does not support ORDER BY, DISTINCT or FILTER.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/list.md#L1113-L1151",
+          "version": "repo-lines-v1:sha256:59ae5581f319e8c30cc7d6f5b9dc9f47b1afeb2583dd604642a11835fb586b4d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2MmYzZmU3NzRhMzRjMjQ5NjQ4ZjhjOTk1NjQ1MjYyNGE2NjM3NDMyNDYxYmVmZDcyOTdkY2ViN2ZjODAyMDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg4NGFjNmY1OWYwMjc5YWJlMzViZTliYzRjMDZjNzM4NGI1ODRiNjU2NmVlNGFlZDQ1ODg4NTkxYWJiODliZWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI4ZjQ1MWM0MDllMThlYTdhZDNhMmU2MmY1YjVlNWQyZDdlMWVkY2FhNTQyNjg0OTcxNjEzYWIyZDJkNThhNzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFmMTU4YTRiYjRkZGIyM2JiYTdkMjkwMWRlNjRiMmJmZTY0YzliMWUwNDQzZGIwYTU2Yjg5NTQwMDQyZmY0ZTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3ca2894eeffd4730923f5c8e540c4560",
+      "statement": "list_sort defaults to ASC NULLS LAST and accepts optional order and NULL-order arguments.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/list.md#L1204-L1272",
+          "version": "repo-lines-v1:sha256:f7d5f7e373c686169737f5143c7a6b1109f73eb11a6ecf96e7f1b2bb4502513f:eyJzZWxlY3RlZExpbmVDb3VudCI6NjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgzMDViZDQ5YzY1MDQ0NTllNzY2ZWUyMjk3YzAxYjEzYWNmNjUzYTU3ZWQ4MDc1ZWQxMGU4MGUyNzMwNGZiZGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1ZTY5MDhkOWMxZDg1OTQ3YWMzNDJjMGMwZTFhM2ViMDQ0MjQ2NGNhMzI0NGJkM2YwNDE4ZTkyZTdkN2RkYTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZmNDBhNDViNzc0ZjY1ZWY4Zjc3YjYxY2E3ZGZkOTM4YWExYzQ2NzY5YjVkNmMwOTBmY2YzOWFmNmUwZGFlNDYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ2MGQ4MmM1NGE0NDRmNWM2YjQ0NTk4NzExMjRmOWUxNTcwODZmMmM0MDk4NWVjYzMxYWIzZTdiYzBjMDNjMGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4db262a370b24c89ac3caa448da3d26f",
+      "statement": "flatten concatenates only one level of sub-lists.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/list.md#L1275-L1365",
+          "version": "repo-lines-v1:sha256:a7cd93e96de3ae3f66ba1aaeb9ea00a09ec8f7217c7a23b17947788b7ce4b631:eyJzZWxlY3RlZExpbmVDb3VudCI6OTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViZjJkODkzZDZmZTMyZDMwZGFhNjdmY2ZiNTBhNjVjMGFkOGY0ZDQ4YmRkOTFlZDUxZTBiNzM3MjU4NzVlOGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0ZTEzZWI3YzBkMWVmNTgwOGNjMjYzY2M5NDdjNjQ4NWE2OGU5Zjc0Y2JkYjJmOTZkODBjY2UzNzA2MmNhMzMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI3N2ZlMmQxNWI4MjUwNDA2ZjkwNzdhMDZmNjExZDQxMmVkMTdiYjBmZTJmZTU0Nzk5OGZjMTlmZTMzMWM4ZTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU1ZGQyMGY5YTBkZDc3OWM4MDhjNjZlYmQ3MmQyZjQ2ZmQ5MThjOTNhMzAzNWU5ZjMwNTRiNjU1YThkNGU5YTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3e3fefba608d4022bde739ce952fb943",
+      "statement": "Lambda functions take an optional last parameter with the 1-based element index, cannot contain subqueries, and resolve names in the order inner lambda, outer lambda, columns, macro parameters.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/lambda.md#L20-L160",
+          "version": "repo-lines-v1:sha256:6d0383e7dde66358b2a9c598c81f4eed2f55d57ce7fa54a23f8aaa18f025ff3e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQxLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIwMzgwY2YyMWE0ZTgzNDAzZTEzYzRiYWVhMjdlOGNjZDQ3NTk3ODc1OGU5YWFjZjNkNzU0ZWExYjE1NDg4YjljIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI3ZWM1NjhlYWRkY2M0ODQwMjZmMWUzMmFmMjJjNzVmMzg1MzYyY2YyYzVjMWRkOTY4YzA1OTJmNTcxOTU4MzMwIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIwMDFhOGY0NzcxMjBlMmRlODc2ZDhmMDU1YzhhODg1YzYzNTBkOGU3NTU5NThhMDBjNDE3YmQ1YTkzMTU2ZjhjIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIzYjhlNDMyMzliZGU3OGI5ZWQ4NTUxMGQyMTU0MzA3MzUxZDA4MDFmNjVlMDNjZGE4MzQwMWQxZTAzMTFhMWI5In0"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/functions/lambda.md#L295-L309",
+          "version": "repo-lines-v1:sha256:3b02c305abc3b600946a9de86dc29ee50628951c3f2103db6b8ca3d863f7a365:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1NzBjYjcxYjk0MGJkODJiYTQwYTNiZjdhMDhlZmY5NzNmNTNmYjU3M2MyYjFhY2U4Y2I4ODAwNDIwMDI1MTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA5OTliOTNmOGM4MGE3ZGYyYjQ3MGQzYjMxMWY4MDI5ZDc2NWI5YWMwNWQwNjk5OWJhYjA3ZWNhYTYyZjFlMWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlmZmI3MWRlN2QzNGEwOTM3NjBmZGUzNWQ2MmMyNGI4YTcxOGRiODdiNGRmMzgxNWRjMmRkMzdmOGEzZGNmM2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlhYjMzYWM5ODU4NGQ5NWM4Y2FiNjE3NTY5YmE1OWM4YTBjY2MzZTUyY2Q0MmU3MDNiMWE0OTBkMzI1MmUxYmUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d9517fd5cef44420acf68d9e17529ce7",
+      "statement": "DuckDB 2.0 disables the single-arrow lambda syntax by default, and DuckDB 2.1 will remove it entirely.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/lambda.md#L311-L332",
+          "version": "repo-lines-v1:sha256:ab973090b66b6310829891b107ba5797b28ef8b387e46185a85a337fbcb44331:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYyODU0ZWZlN2E4MzllNzcwOTEzNWQ4YjMxYTEyOGNjMTM0ZThiNzk5ZDlkMTlmNzE2ZmJmNjkwMTZiZmQwYTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgwMjk0YzViY2Q5MGViYTQ3ZjdlMzRiYTYyNGUwNzFkYTI0NzY1MzU3ZWI1ODgyNmU0MGZkMDY2NGExZmYxNWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYyMjRmM2QzNjExMDk0Yjg4MGFjOWVmNTE5M2YyNGU4NmM5ZjMwZGFjNzUwZDA2OTM2ZGQyMDIzMWY3MjU5YmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

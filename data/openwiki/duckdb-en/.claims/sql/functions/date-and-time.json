@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:e0583995709d71cb1669d3f1510eff0483b5f3a94fda9754705a5977b8799aa4",
+  "claims": [
+    {
+      "id": "claim_cd0c2764e66a4bc3901bbe891fb5d0c8",
+      "statement": "Adding an interval to a DATE returns a timestamp, subtracting two DATEs returns an integer number of days, and arithmetic on infinite dates returns the same infinite value.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/date.md#L17-L30",
+          "version": "repo-lines-v1:sha256:1b09fd5d683f138f83ee1b290af5698a6b2f6fa4c8b4b486a2c679135d4dad1f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYxMjk3OWFlNGQ3ZWE5MzZmMjkzMzcxNzRiNmRjOWU1NzRkODQ2ZmQxMTYzODNmM2UwZDQyYTQxMDE3NjUxMTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZiN2IyNjUwM2E1YzlmZjRmZWEzZDAzYTM5ODc0M2FjZjI5MjIyN2YxZjdmZGFlNGI3NjIxY2UwY2VjZmUxMDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQyMmM3OTNhNzQ3Y2I4YzYyNTQ3OTU1MzQxZGRlNjY4MTljMjQ5ZGM1YjFiZTI2YjgyNTAxODkxYmEwZmU5ZmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg5YWUxMjc4N2IzMWI0ZDdiMGFkNWQ0M2JhMTY4MGM3MDRkYjM1MDE3M2ZlYzE1ZDBhOTBkYzQ4MzQwNTc2ZjMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_994656a6a38d406592a8a685e822ba14",
+      "statement": "date_diff counts part boundaries between two dates, whereas date_sub returns the signed length truncated to whole parts.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/date.md#L39-L43",
+          "version": "repo-lines-v1:sha256:5f4d091d3bf7a7318fe0605a600daef4ea6238ab2ef8de58faa5fae59d7b1563:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzVkYmVlMjlkYTRmYjU4MDYwOTkzYzEwMDk0ZjBlYjU4ZmE1MWFiNmYzZmRhOWMzMWRmNTA1YjJjOGU1Y2ExMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDNhNGVjMGI3YjZiNTVjMzc3ZWQ1NDU0MDllYzExYjU4ZjUxMDY1ZDUwZmUzNGNiOThhOTc4YzU2ZjljNDQ4MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTE5OTEyNDY4ODFlM2E0MTZkYmU2OWFlMDJmZThhZGZlNjY5NGVmMGRhZmVlNGY0YTM4MzBkNDQ4YzJkNDMwNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGRjNDFkY2YwNzJkOTc0ODgzZGJhZWQxZDdiZTVhNTMxMzEzMTdkZTZmYWU5NDdhZjFlMTM5ZTllNTRmZWI4ZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_25544bde0f854787a85549e2c9b99551",
+      "statement": "time_bucket grids are anchored at 2000-01-01 for month-or-coarser widths and 2000-01-03 otherwise, unless an origin is given.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/date.md#L56-L57",
+          "version": "repo-lines-v1:sha256:cd6c629df1ba03d04ac493548794e6fd6b6bd0377c3c61f161ce09813fe92bfd:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWUwOTk1NmIzMDhmMGNmMjkwMTIyYTczM2MxMjU1NzI2MmUxNDM4YzZjNjUzOGRkZjAxNjVmNDZkYTEwMWNjMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMWUzNTAyMWRjMWZiZjU0YjVlNDYyZjE5YTE4Zjg4YzU5YzgxZmY3NDhhMjBjNTJiNWQyZWE1NDg3ZTJlZDBjYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmVmNTkxNmJkZjBiM2E5NTliYjI3Mjk5ZjQxNGE0Y2RhMjM3YjEzNzYwOGE3YmY4MDg3ZWJiZmE3MTRiNzkwMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDVmNmFlNjk3NTJkN2Y4MzZkMTA4ODJhZDE3OWUxODc0OGZlZTZiNWQzOWI3OTRjMzUwM2VmMDdjYzE1OGNjNyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_9ce16f6372f84729b50be77b6b93346e",
+      "statement": "Only epoch, hours, minutes, seconds, milliseconds and microseconds date parts are defined for TIME values.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/time.md#L39-L39",
+          "version": "repo-lines-v1:sha256:c484db027a57cba3699ef18ea71cc6342ec03b217466851437061fafb6a59471:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzQ4NGRiMDI3YTU3Y2JhMzY5OWVmMThlYTcxY2M2MzQyZWMwM2IyMTc0NjY4NTE0MzcwNjFmYWZiNmE1OTQ3MSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzQ4NGRiMDI3YTU3Y2JhMzY5OWVmMThlYTcxY2M2MzQyZWMwM2IyMTc0NjY4NTE0MzcwNjFmYWZiNmE1OTQ3MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTNmMjM1YzAxODEwODIwYTUwOWJiNTZjNWFiYzhmYzk4ZGExYmI5NTYzZjQwZWExMzRkNWVjNWYyZGJjZGNmZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTI5ZDFkMjJjNWY1YTcwNTdmMDc4MDJmMDAwZjZiMjRmMTk0OWY2YWIyOWM1OTU1MDE5ZDcxZmE2ZGU2ZTA5NCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_9afac81deda04e299433d0387bb61ac3",
+      "statement": "Interval constructors to_days, to_months, to_years and similar build intervals from integers, and epoch(interval) returns total seconds as DOUBLE.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/interval.md#L31-L56",
+          "version": "repo-lines-v1:sha256:75074bd812ccdb5f44111037fc0c84bde0353e00b7c088200107a94fa894475a:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhN2E3YzRmNTU0YzJmZmUxMjUwNzc0MjIwZGU4NDlmMmUyZmZjNGU2MWQxODg1MzBhYzgxYmQ1NjllOWNhMzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFlMWIwZTllODNlYjEyOWQwYjg2NTljOTQ1Yzg0NzI0ZDJjY2EyZTFjNmU1Yzk5NDRjMGEwNDc2MDdhZDI2NGMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg0YWJlYjBhNzc2OGFiYjk2ZTU5OTZiMzE0MzY5MTcwMmMwODhmODgzNDllMzhiZGZhMzdjOTRjY2I3ZTFjMzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRmZmE4ZTg2MjliNTI4MjllMjc2NDcxN2I3MWNkYTU4ZjEyZjM2NTU0ZTcyYmFmMDA5YjI5NWFlODVkZGYxYjYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ae41f763b8cf4132b5492775738772ba",
+      "statement": "All date parts are extracted as integers except julian and epoch, and infinite timestamps return NULL; time zone parts are zero without a time zone extension.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/datepart.md#L14-L57",
+          "version": "repo-lines-v1:sha256:36194a80fa6036d8d77e0dfd0e59869436081fefb88bc3c91491e8e9e915f8ec:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVhNTA0MjUyYTE0NmFmZGViNTI4NzBhN2FlMjM2MjQyNDc2NmYyZWZlMGQzOTAyYWFkZjA5NzJmYmFkOTM0MGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2NzNlZmIwNTU4MzI5MjMzMGE0MGJlMDc0MWNlNWIxMzVlNTA0NDkwODJhMTUzMzU4YTkxY2EzMDI1NWY4NWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU4ODk3ZjhjZjY4NzNmMjY4NjJkYWM1YjBiY2I0ZjUyZjY2MDRmMTg3YTBkNWE2NGIyNGE0M2Q4NmNkMzBmNDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkwODY1OTg4M2YzYzAxNzY5YzRlZDczMmRmNDM5NzNmMWRiN2Y3MDc5OTZkMGFjMjdmMzYyOTdmY2Q2ZWMwOWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a31923a6b07d456395e96503823d71b3",
+      "statement": "strptime raises an error on unparsable input while try_strptime returns NULL, and the same format specifiers can be given as DATEFORMAT/TIMESTAMPFORMAT when reading CSV.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/dateformat.md#L34-L93",
+          "version": "repo-lines-v1:sha256:8508d0dfe770b38623af9243d23698fae7413a432a95ebcae50f96e98aa22f1d:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU0MDYwMDZhOGY0MjRkODViNjA4NDBlZjg0YThmZjNjN2E4NDM2YmU1OGM1MjYzMDdmMzU4ZTNjN2JmZTRjNzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE0NjQwNTY1NWI0MTczZDJkMzc0NjA3NDgyOTQyOWNkYjk5YzBkZWNmMmQ1Mjk1ZWNhNWNjMWM5MzExOGFhNTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM1N2EwYzUxYWIwYzAwZTc1ZjliNDEwMGM3MGI2YmYyMzllMzM2ZGZmODViN2NmNzM5MWZjMGNhNzNiNTIwZjgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_278adf64ef4e4f979b78a7dccd4ccbec",
+      "statement": "The %y specifier maps 00-68 to 2000-2068 and 69-99 to 1969-1999, and %V must be combined with %G rather than %Y.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/dateformat.md#L127-L134",
+          "version": "repo-lines-v1:sha256:ed169b589178043899d2e358f06414995c78bf3c9fdb96f5eb6a9a938bd5f17e:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZGE0ZDAxYTNmNzQ3MTc0YzhhZjdiZWIwNzZlZTA2NmE3MGU4OTUyY2Q3NDVhODFlMGQ3ZTA2NmI5MjY4NjMwOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDVkNTljMmRiMmU4MmNhODM1MTFhZmMxNDQ5MmQzYWFiNzUzNjhmZGNmMWUyYTk0N2M2NjBkY2RhYTZlYWFiYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTE1YmYxYjA4MTE4OTMwNDAzODAxNTIyNDE2Njc1Y2RiMzgzNzk3Y2NkYjYyNzk3NDQyYzRhOTU0MzkyM2E5YiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODEzYTk1OTUzOGEzOGI4YTY5YTg0OWVjMTU3MWM2NDFlMTJjODk1ZDJjYjQ5NDMzZGVlZTcwMzQ0M2MxOTEwOSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

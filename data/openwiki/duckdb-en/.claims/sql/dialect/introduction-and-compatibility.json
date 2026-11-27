@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:badf5ff89ecefd55bade9589eca8d04e7a2b0cf0d229786e49ca21b97dc0ec0e",
+  "claims": [
+    {
+      "id": "claim_0dde21a2dfdc4a29b8ed82ebe06d9022",
+      "statement": "DuckDB's SQL dialect is based on PostgreSQL but preserves insertion order by default for interchangeability with data frame libraries.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/dialect/overview.md#L12-L15",
+          "version": "repo-lines-v1:sha256:8724de1a344cd0a0fc297a0115d31226e767cdaa83ddbd37c69350667e68ebc2:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzYyZDQwNDg1ODY5Zjg4NDMxNjViM2JkNWZlOWI5YTliYzdmNmQ0ZGZiNWU0NTY5ODkwNzU1ZTAxMTY1NWFiNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWM0Mjk1MTcwNWY0NWQ4MjVlMjk5MmFlM2M0MzAxMGU4MTE2YWRmMTdjOGZiMDQ0MGZhOWMzYWIxZTYzMGI3NSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjdmZmY5YTc2M2JmYTRjYTFlZDlkMGU4NmNmMzA3NzY0ZmRkNDk5ODVmMWI4NjQwM2IxMGU3OWQ2NjQyNmMyMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjIsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDk4ZTVhNWI2ZTBhNmY1ZDFhZDk5YzIwNmMxZDM0NDJjYmRkMTUwYmM0M2Y4ZGQ5MWY1OThkNTVlNzBlMzQ3NiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_fab4a93f2d1040fea8de33ca1a1d9773",
+      "statement": "As of DuckDB 2.0 identifiers can also be quoted with backticks, and duplicate column names are deduplicated as name_1, name_2.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/dialect/keywords_and_identifiers.md#L15-L45",
+          "version": "repo-lines-v1:sha256:075c6057391282e7bc9ca4b96b06e769af466ae4d42cdf75ae2d3b46393bd4cc:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhN2I3ZjAyZDVkNjEzNTkyNTJjZjFiY2IzMjBjNzVkZTM0Mjk2ZWEwZDM0NjAxOGE1YzFkOGVjMTY5NzgxZmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk0ZWM4NTQ3MmVmN2JkM2Y2Y2JiNGIzNThlODcwMjE0ZjBhZGMzZWRkZTVjYzcwNGJkMjQ0OGVlNTg4ZjExZmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhmNDI1ODkwNTc5NzBkYmM2YjRmZDMwMjI4YzM5MmM0YzJmZDdmN2E2NmNkMDM2MDczMDFjMTZjMGQyNGQ4Y2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNjNWZlZTYzYjQwNTFlOGEzMDIxZDZhYjRmZDkyYjM5NmRjMzkzM2EzZTdhZWI2MGE4OTIyNmJiMDVkNTdhYjMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d2f836cc9cfc41dd9af7fcb28c6ce518",
+      "statement": "DuckDB identifiers, including quoted ones, are case-insensitive via ASCII comparison while preserving their original case; preserve_identifier_case became a VARCHAR option in 2.0.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/dialect/keywords_and_identifiers.md#L86-L188",
+          "version": "repo-lines-v1:sha256:0583e312f613f6c1d7705fc2225969f6cfa239696bcf79593332fdaffc23dcbd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAzLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJhNThjMWMxYzMzNDk0NDZjNDJiNzBlMzdlNzVkMWIxNGI1ZmUyNmVmMzY1ZDNiOWI4MTE2NWQzYWYwNWQxNjY3IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJkYWVkMmRiYTE5NTYzMDk5MjQyYjg1NDUxZmYyNzY0MzM1ZGNhYTU0YTA2ZGFhY2RiMmQwNTAxNGEzNjI5N2I2IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIwMzhjYTQyNmIzMTBjNjA3ZTA1ZjdhNGNkM2ExMWU2MDVhZTg1ZmNhNGQwYjA1OGE5MDQ5YTA3ZGI3YzRlY2JkIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_1dd53bd57d4044e69aa36379422d861c",
+      "statement": "Unlike PostgreSQL, DuckDB performs float division for integer / and follows IEEE 754 for division by zero, returning Infinity or NaN.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/dialect/postgresql_compatibility.md#L16-L58",
+          "version": "repo-lines-v1:sha256:1c632f39fad410b7a1734df5380a8075424da33e24cd539fa5a60e40f8ac1f1a:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliMjM1OTdjM2QyZjg5ZDIzYmE4ZGI2OWUxYmM4MmI3YzcwODBiZTE2MWU3YWJmMTlmMmU1ZDEwMGExNjA2YWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNhM2E5MjViZTFkNmI1NjAzNGFiZTRiOTUwZjM3NWZmZWM2YjUyNDc5NzMzNjk5ZDQ4YjIxZjc2NGNjOTE3YTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk2OWVmZGNlMDFlYWE3ZTYxYzIyZjQ2OTFhOTljNzIyY2E3Mjg3NWNiYjlkOGZmZjRiZGY0OGFhMTEyOWEwZWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZmNzE5OTRjMWQzZDQyODkzMzEwZTdhYWFmZWE4NGRjOWZlZWFlNzU0MTY4MTA5MjllZjUxNTcyY2RjNWU2NDQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6337abcc3f094e2f8c4f219651bc46fa",
+      "statement": "DuckDB does not exploit functional dependencies in GROUP BY, does not support to_date, and its regexp_extract returns empty strings instead of NULL.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/dialect/postgresql_compatibility.md#L208-L277",
+          "version": "repo-lines-v1:sha256:d15ab48babac77d17919e0be5e4ef64ec741e3300dbe4a5589b00d60631a16af:eyJzZWxlY3RlZExpbmVDb3VudCI6NzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYxODI3MmMwZWExY2M1YTE5NzI0ZTlmZGEyMjM5OWMzODA0NGU1ZjcyNmZlNDNjZjA5NDgyZDZkM2RiZTZiYmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ4YTFlZDEzMGJmOGE0M2QwMWVmZTg2YjgxZGMwMzYxOTAwMTMzYjhjMjgyMTczNmY5OTE2N2YyYTJmN2Y0MDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyMmRhMTQxMDQ5N2RjZGM3MGI2NDk5NGMzZmYzYjA2ZDU5NDg3MDFkYzAxNjQ5ZGE5NGZiMDA3MWZlMjdmMzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNmOTNmNTE4MTE2ZDhiMjZiYzQ3MzlhYzE3MjdlMDBlYjQ3YTY0YWE0ZjczMmZlYWU1ZWNkODJiMzg3ODllOTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7354aac251994d84ba6e023ea053c385",
+      "statement": "sum, list and string_agg return NULL on empty groups, and -2^2 evaluates to 4.0 because unary minus binds tighter.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/dialect/sql_quirks.md#L18-L61",
+          "version": "repo-lines-v1:sha256:7538cb36215c9378085722fda63bc7547741c47c7f5b8a698e993d2bb22e1de8:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVhMTUxMDRiMjNlMTJmMDIxZDU1MTFiOGExMWE5YmM3YWMwNWVhMDEwZTEyYjEyNmY3MWI0NWZkZjkwMmUyNTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE3MWU1Y2RjMGY2ZGU4YTNhZWM3MzU5NjkwN2ZmNTFkZDg1Nzc3MGIzOWQ0MTJhZWNkZWI4M2FlZDllZGM5MGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJmZmZjOTA1ZjFjYzZhODA2ODJlNDgyZTUzZWMwNTZiOWViMGYyNmI4ZWQ4YzMyMjVkNjk1NDFhNzkzMWEwMzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZlYTRjZGRlMWZhODM3MmFjYzQ2OTY5OWZhYWNlMDIzNTIwYTk1NjE3ZGNlMjcxOGVhMWQxMWRiNTcxMWQ1NTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b01ae89c3aa544508f849b1b4765ff60",
+      "statement": "Implicit conversion of bare identifiers in table function arguments is deprecated in 2.0 and controlled by table_function_identifier_conversion.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/dialect/sql_quirks.md#L100-L113",
+          "version": "repo-lines-v1:sha256:eabdee3780e3403c743db21511a13b181454a61e119bb4145a9ce5d8cb8adad2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjYzYxYTdmNDQzN2U4YzZkYTAwZDBkNDNiN2Y1OGQwNWVlZmRmMTRhNmQwMWEyZGZiOTBkNzZiYmNiY2YwYjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY1MzU5MTEzMmZhODNkZTY2NWMzOGE5NGM1OWMxZDFhNTQ4YzZiOWFhNjZiNWRhYTgxODIxZDE1MmQxYzkwNDgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFiMDJlNzc0NWMzZjVjYTQ4OWU0NGU0ZGZiZWVmY2MzZTdhNGUwNjQ4NjUzODQ2MzMzZWY2NGNmYmQwMzczM2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d5a965ab3bfd405795ab23a5d6451990",
+      "statement": "SELECT, WHERE, LIMIT, OFFSET, UNION ALL and single-table FROM preserve row order, while JOIN, GROUP BY, ORDER BY and UNION do not guarantee it.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/dialect/order_preservation.md#L49-L97",
+          "version": "repo-lines-v1:sha256:808f4e1f242a5e47d80f0682167d6b57b703b62b99130921bef169017a88bd4c:eyJzZWxlY3RlZExpbmVDb3VudCI6NDksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBmMWUxOTA2N2Y5MWRiZmQ5YjhlOTJiMzU2OTI2MjdhNGZkZDZlMjZlMTRmNGQ0YWNhMzZjZGMyNmEyMmZhNDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0Mzc1NGY0ZGUzYjA4YTAzNzc1Mzg5YjFiNzA0NGEyYmY5MDg5YTAwMDdiOTkzYjU4M2JiOGMwOTE3YTFkOWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUwYjg1N2QxYjFlZGZmZGU0ZTE1YWQ4ZjRiNzdmNzhmMTFmZWY5ZDk3NDgwMzQxYzU3ZjliMDQ1NTkzNWRlNTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZmYzY5ZWJhZjBkNWU4MzNjMTczMTFkMzNmMzRhOTZmZjE3MmVhYzE3ZWE3YWY0YmFjN2UzZDFiNDc5ZmYwY2EifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_88a00ae3d5004db9bd44a206f7d8b4a4",
+      "statement": "Starting with DuckDB 2.0 the PEG parser is the default, and SET enable_legacy_parser = true falls back to the legacy parser via the legacy_parser extension.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/peg_parser.md#L11-L88",
+          "version": "repo-lines-v1:sha256:3428c307c7db00c6163812e1fe8b88d081b11b267059dfffa14f210c7edca19f:eyJzZWxlY3RlZExpbmVDb3VudCI6NzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2MjUwNjA3NTRmMmUyODY1YjNiMWRiOTZiNGRhYjQ0NmRmNDdjOGYyNWRiOGU3ZTdkMzdlY2Y1Nzc5MzRiODQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFlYmRlMzYwNjgzMzdlN2JlMzMyYjY0MWNjZTVmMDU3MjIwYmU3MjZkNGE4ZWI0Yzg4YjE5ZDJjYjRmZTkzNzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEyMmIwNWQ4M2Q2YWE3NmFiZDEzMWNmNmExMzIxZjhmMWIyZTQyYmZjYzg0OTM4YmI0ZGIwMzY0ZjZjZDYzMTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZjMDhlMWFmMmY2YWFkZmRmZjZkOTc1N2IyYmFmOTI1NWMzMWYwNzEwNTZhODU0MmIxZTExZDhiMGYxMGMyOGQifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

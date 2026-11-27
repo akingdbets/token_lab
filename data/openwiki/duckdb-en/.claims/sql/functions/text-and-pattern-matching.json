@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:a93f47052fe436664eff0ea4469c7faa71cf88887cb5e7ddf25b0444b5c00ffd",
+  "claims": [
+    {
+      "id": "claim_8a46361b3f694323911a6315f4c574bc",
+      "statement": "concat and concat_ws skip NULL inputs while the || operator returns NULL for any NULL input.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/text.md#L29-L41",
+          "version": "repo-lines-v1:sha256:34331229753e31d7e0ea5278b4f7f7ef89cc6e967ff7bad5a073c2e1252618d6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ4NDFmOTdkNGU3OTI0ZWI4ZGQ2ZjE3NDJiMzZmYzgwMTg3MWQxNWU5N2JiMGMxMjIzZDVjOWM3YTQ1NzIyMjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM2MThlODAxM2JkZTRiZjMxODA5MTdkZTQxNzM5MzQwNzBlODRlZjMyOGFhMzliYjA4OTRlM2E2NGM3MmRmMmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIxNDE2NjFjMTI1OTEyMThjYjdmNDc0MTQ5ZDVkNmIzNGZhMDQwMTgyYTE5MzFjMzRlMDNiMGUxYzQ2Njc0MjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc0ZmYxOWEzYTVjZGQwNjJjZTJjNjEzZGY3Zjc3MmNkODkxOTc0MTMyOTA0YmIxYzFjZDBiMjNkZjNhMzVjMjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_58cb36acb1a74169a7d72ff8562cca5a",
+      "statement": "The overlay function, introduced in DuckDB 2.0, replaces a substring and supports both SQL-standard PLACING ... FROM ... FOR syntax and regular function syntax.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/text.md#L860-L885",
+          "version": "repo-lines-v1:sha256:bf9559bda22846ca633bb68886b78bd5c128c364a00637cfab4338cda0735535:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjViMmI2YTlkMWM1NDkwNGNkZDA0OTBjZTRhMGI2ZmQzZmU1ZjNjNzUyMWQ4MTk0ODMyMDk1YzM4YTA0Mjk1MDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYzMzI5M2YxNDEwYjQxNmFjMTM5OTI0NTVkNjMxN2ZiOThmMWVjMGJkZWM4NTQ3MWY2MDc2ODY5MDJmNWU5ZmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY1YTI3ZTY0YzQ2N2RjY2EwODkwNDgwMGY1OWExZWIzY2UyYTZlMDk1ZGIyNzI2NjM3OWMyODg1ZTExYWYyY2UiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQwZTBiNmFjMTJkMTZhYWJmNjdhYWQ0OTc4ZWViNTFlMjY4MmRlNDhkY2I5MTBmN2EyNzZhM2Y1ODkwMGRkZDAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_95425c001b06419298eb76215b3084e7",
+      "statement": "format() follows the {fmt} syntax and printf() follows C printf syntax, both supporting positional arguments and thousands separators.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/text.md#L969-L1197",
+          "version": "repo-lines-v1:sha256:0e8981d548a57f7907feba2a8bbd3c19ceb5e21325d6f042adfb81f77e6ee3d9:eyJzZWxlY3RlZExpbmVDb3VudCI6MjI5LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJhN2I1Yzc4NjVkZDgyZDIwM2U3MjU3ZGJmZTRiYWFmOGIzNTg5NTU0ZDFkZWJmMTZiNWMyOWM4ODI0ZjY3YWI0IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJmNjZjYWM3OTdmN2ViNThmNWVmYjRkYTM1ZGY1NjQyNzZkZjY4MmU0MWQyODRjNjI4ODRjNDFiNGQyOTQzM2U1IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2NWEyN2U2NGM0NjdkY2NhMDg5MDQ4MDBmNTlhMWViM2NlMmE2ZTA5NWRiMjcyNjYzNzljMjg4NWUxMWFmMmNlIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MSwiZm9sbG93aW5nQ29udGV4dEhhc2giOiI3ZWM1NjhlYWRkY2M0ODQwMjZmMWUzMmFmMjJjNzVmMzg1MzYyY2YyYzVjMWRkOTY4YzA1OTJmNTcxOTU4MzMwIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_6f7649280dbf438a8037b582c30921fc",
+      "statement": "LIKE patterns must match the whole string, ILIKE is case-insensitive, and ESCAPE allows matching literal wildcards; ~~ and ~~* are PostgreSQL-style aliases.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/pattern_matching.md#L20-L78",
+          "version": "repo-lines-v1:sha256:f2b4abd25c025e05c1cbfc656d47678f361bd05d08fc323dc6631750b55190ef:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg2MjMwZGU5ZWFmZDg4OGRlMWQwYzA5M2VmYjFiMThmMTMyZDc0Yjc2NGE2NWNmMzg1MmI3OTIzMDFjNjBhZmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQzMmE0N2FiZjBhYzVkNzM0MWNkNjhlY2I1NDhmMmFjMzgzNTM1YjAxNWNiZTE4OWE1NTE5OGI4M2Y2MDRhM2YiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ1YjVhZTg1YWJiMmNkZGQ1N2M1OTE0OGM3YWZiMGI3MzcxMTVmMWFmZWYyODNiYTEzMjYxNGZiNDM1ZDkwN2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFjYzRmODhiZmIxOWU1ODQzYzY4OTZmODAzMzJkNzU0YzllYzE5MzlhMDY0YjY0NDQ5NzljNTU0ZjA4ZGI3NWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e7fff483cef6439fbaf43b54dda5c62b",
+      "statement": "GLOB uses ?, * and case-sensitive bracket sets with ! negation, and ** matches any number of subdirectories including none.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/pattern_matching.md#L102-L188",
+          "version": "repo-lines-v1:sha256:2f4ba94d082c918af9d8b54e58146dc401ad94cb61b358df0dc2bfd96edbc2ce:eyJzZWxlY3RlZExpbmVDb3VudCI6ODcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc1NzY1M2E1ODdjMjc3N2E3MmMzNzIwMTVmZmNmM2RlNWRiZGNmZGIzNjExYjlkOWUwZDMyMTc4MjU3NzVlNjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM3M2RkYjA4MWJmNjc3NzBkMDQ4MGI4MmFkMzQ1MzFmNzU5ZjYyMjJkYzVhYWVlNTI3MmE1MThkOWYxNTUxZGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFkNjBjOTQzNGM4NzY3YzY0MjEwYTIzMWIzM2ZkNDJkMmFhOWE1ZjI2YzQxNWQwYWFkZDRiM2M3ZDZlYjBkZTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJhMzQ5YjA1YzI0MTdkNTUwMzJlZWZkYTczMDkwMTNkNmYzYjg3ZDAzYzNhMGExMzk4NjdlNTgwMGVhYjU1MDgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_89f8bbcb8e324e6dba69d76fa918df1b",
+      "statement": "As of DuckDB 2.0 the ~ and !~ operators perform partial matching and ~* and !~* are supported; regex_match_operator_semantics = 'full' restores the legacy behavior.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/pattern_matching.md#L190-L206",
+          "version": "repo-lines-v1:sha256:abdc6cb35089a7a482cd8abbc4deb3767ddcfb27a347eb7facc81d3add4c6a9b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5ZDc2NzU3YzljN2FhYTYyOTAwYjYzODVmOTE2M2MyNGZmMjI0OWExY2IxMjc3MWJjNTdmYTNhYzkyYTdiZjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3ZTc2MTdmNTBmNzAxNjZmYTEyODFiMTNlZTY0MjUxMmIwOTMzMDgzMDBjYThmZjU1MmFlZWIyMDY2MTdjYzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ1ZTUyNDQ0MDE1MzI3YjUyMDU1YmE0YWRkMWRhNzUzMDY3MWM4MDliYzA0YWUxYWYxNzAyNGNiZDI2MjkzMmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b8858ddec6cb49f886eae84efdb34fbe",
+      "statement": "DuckDB uses the RE2 engine; regexp_replace replaces only the first match unless the 'g' option is given, and options include c, i, l, m/n/p and s.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/regular_expressions.md#L22-L173",
+          "version": "repo-lines-v1:sha256:c1cbf835306eef92101c6b0ffcbe44e52ccbd888e7311be0f0b383a1dd1d09ed:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI5NjQ3NWQxNjhmOWRlYzBhYjQxMjQzY2FlMzA2MzBhNTE4MGIzOGYyZmVmZTI0NWViNDk0ZjIwYjY3YWJmNTVkIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI2OWRmZjJhNmI3NGU2ZDMzZWI5NTAyNTBkOTJjMzg5NjQ0MDFkOTMwZDhjNWVlMTRjZGEzNzhmY2E5YzZkYWNkIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIyNGFhZTRmMjgwOTNmM2Q5ZGVhOWM3ZDUzYTNmNmVlMTIwODc3NmU5MjlkMDU0ZjFlNzZmODVmMGZjM2UxMzQ4IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlOTc5MmZjOWNmNmFmYTA0YjdlNmYxMDdhZWJhZGRjYjMwZmU2ZWNjNWE2OTA3NGJmYWQ3NWYzMTE3MTA5YTU2In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_a0aa64e4cf9c4a87a61d975ace580045",
+      "statement": "regexp_extract returns an empty string when there is no match, supports a name_list returning a STRUCT, and in 2.0 accepts options without a group.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/regular_expressions.md#L176-L225",
+          "version": "repo-lines-v1:sha256:8851f6446c3492f0b204f9d20dfd8a88d8eee7878352e4edd197de60b4453654:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIyMTI3YmI4ZTg3N2VkZjA3NDFiNzdhZTEzMDJmZmUyYmE5MTJhZGM5YjFhZDI3YjUwMGVhMTY4MGM1OWJhOGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQwZTA3YWE5MDA1M2MwOTM1YjhhMTA1ZjM3YjljMzJiOGNkYTU2YzM0MjM5MDg0ODZjZTUzMTBiMWM5YmI0ZTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYwYTg5MzQ1YmEzOTQ0OGI4ODUyMTQ0MDExMGY0NjA0MmY3MjEzNGRiOGJhYTkxNWRmMWZiYmY5N2IwMzU0NTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU3M2I0NjNmM2RhY2M0ZWUyYTE3N2ExZmMxN2E0YmYzMmFkZjkxNmFhZmZiY2IzNGYyMjBjNzRjMjk4MmM4YWYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ce23537dda4b463eade5751ff96cbb13",
+      "statement": "Regular expressions support only 9 capture groups.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/regular_expressions.md#L227-L230",
+          "version": "repo-lines-v1:sha256:3f863823c8a15719c270b6fcce8a5fc2ce34e0f3320b57137fd7e80620b7b3a1:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDU3MGNiNzFiOTQwYmQ4MmJhNDBhM2JmN2EwOGVmZjk3M2Y1M2ZiNTczYzJiMWFjZThjYjg4MDA0MjAwMjUxMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTNkZmYzYjgzNmQ5ZDUwZGNiNDRkZDcyY2Q5ZjBkOGY5ZGE1OGUzNzM4MGNmMDdlZjBkYTI5NjNlMjg0NDI4NSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTVkOWZiZWNmMmMzY2VlMjI4Mzg4NzlhYjc5YjEwY2M1NmRiOTc4OGRiYTc2ZjMzNmVhNWMwN2ZjMTUzZTZhYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

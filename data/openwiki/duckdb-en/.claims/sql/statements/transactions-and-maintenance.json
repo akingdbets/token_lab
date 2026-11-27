@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:ea5ea628ff81df6ccd03b087372e0ff1f1e1eec1bf3e72870edeb0a316e77ed6",
+  "claims": [
+    {
+      "id": "claim_3ff985e0489c41949f5972246bb57bb7",
+      "statement": "Statements submitted together run in auto-commit mode: each successful statement commits immediately, execution stops at the first failure, and earlier statements are not rolled back.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/transactions.md#L57-L59",
+          "version": "repo-lines-v1:sha256:9b214b6ae778b27cc07ce59e7ba9c7664144355ab11e214a8041f2b75ec1c81d:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmI5YzBkNzc2MzRmMGI4NGMzMWE4MWExMzEzZmFjNTczOTNkNDFmMTdlYjYwZWE0M2I3NDE1YjkyMDhlNWQzZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzIwYTdmYjNhYmM1ODk0YTAyMzAyMzI5MTc5NWQzZWI3Nzg0MDZkZmQ5ODgxNjhkZmUzOThkYzFkNGFhNzcwZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzE4NGViYWNhODJmYjJjMjM3MWYxYzFjZGU0Mjg1YjU5YjhmNDJlYjQzYjQwNjg5ZGJmYzVjMWFhNGNlODM1YiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWE2ZDE1MjIwN2ZhZWEzNjNiYTk5Yjk3ZDIwNDNmMTE1ZjQ3Yzc5OTVkODg2NjJkODIzMzU5MjgzYzFiOGVkMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_a629651ae2164006b35dcb57159eb8fc",
+      "statement": "DuckDB guarantees snapshot isolation, corresponding to PostgreSQL's repeatable read; violating transactions are aborted.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/transactions.md#L61-L65",
+          "version": "repo-lines-v1:sha256:cf18a6985dd653bcbf08911cd712c4ff03dec280035f672347a7027047173cf4:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWZhZmM2ZDBmNjA5OWE4ZGM2Zjg0ZjRmNjE2MThkYjEwNGJmNzJkOTlmMGE4YzczZjkzMzAyMDUwNDI5MDI5NSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjA4OTU1ZWEyNmE3MDY1ZmRjNjA2ZTJhZjc3ZDRmYzVhZDE0YzMzODNjOTA1MjkzODdiMjJhYmJhOTNkYWJjMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWU0ODM1MzNiNTE4Mjc3NmU1Mzk2ZTczZDNjOTU4MDAxMjg0MmExYmZhNmZmZTBlMWMyMGM4YzgzNmRlYmFlOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiM2Q0ZmI5MDBiZTIyMmZhOGQzYzlhNzEzOGVhZmRhYWQ0ZjIzNDY3MjBlMDA2NTVlZTUyZThiZWIyM2U3NmJkNyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_dfbbe5e95d304061a8ade68f68ee12aa",
+      "statement": "ABORT behaves identically to ROLLBACK, and COMMIT/ROLLBACK/ABORT fail outside an active transaction.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/transactions.md#L37-L55",
+          "version": "repo-lines-v1:sha256:8e7f63d115523f427cd707eafa195465d9cdf0afb20ff7dd4c25a186f2782255:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYxZjA3OGFlN2JkYzM5NTliNDFkYjA5NDkwYTMyMWU1YmEzMzNhOTk2YmU4NTYzNWFmMjY5MjExMDFmMGZhMTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBiNjAyNDc5OTZkNzEyY2JjZDkxMTE5NWNjMGYzMTQzNTY0MzQ2ODdhM2UwYWY3Y2JkNzZjMDk2MjY4NTRkZjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFjMTI2NTdhZDMxNmNjOWQ2ZDk1YmZhZmY1ODE1N2RiZjI0MTc4ZDEwMjQzYjNlMjczNzU2YmJmYWVhYTE2ZGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgwNjljMGZhNDFkNTJjMzc4OTQ3OTIyMDVjZTBiYmVlYjIzZGVlOTE3Y2NmZDdkZGM0ODUzNWNmN2Y1ZmM4YmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_11e97a547a9f4f888dda7ff563039655",
+      "statement": "Plain CHECKPOINT fails if transactions are running; since v1.4, FORCE CHECKPOINT waits for the checkpoint lock instead of aborting transactions.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/checkpoint.md#L29-L36",
+          "version": "repo-lines-v1:sha256:fc89c1e42f2a82cc913709656f88892f34bfe0eebebf9810cf69ff6f02864d1e:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDM2N2QxZjFjMDMxZTNlMTZlM2Q1NjZkY2NiNDljMWE2MjAxYjc3ZmM5NWYyNzEyNjYxYjVkYjY0Yjk1NzNiYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTA4M2FhNDI3MDMyODQxZmRhYzE0ZjBjMTgxZjA3YjE3NDM0OWM0MzkwMWU5OWQwYzZkZjZjYzVmN2JmNDMxNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmVmOGY4ODk3ZWE2Y2E0ZjMwNWI4ODNiMDBlNjI0YzljZWRkNDQ5MWEyOTkyMmQxYjllZjBmZmI0NWYyZTRlOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWU3ODMzNWE0OTA4MzQ3NGIwNzIwMjU4NWJjZGU5ODgzNGM0MDc5YjdlZGZhOTM1ZWIyYTk0NzQxMjAzZjkyZCJ9"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/statements/checkpoint.md#L58-L62",
+          "version": "repo-lines-v1:sha256:466afae00f7bb6fba5f4b836f7ee4f7a87488dff824f6ff7d294d593cc184ee9:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDY5ODMyMjE1Y2U1NWM0ZTdjZWMyNGJjOGI4MmVkODc4ZjAzNTJjMWE1NmE2ZWRjZWU2YWU0YWZmNGRkOTE0YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTJhZTgzNGE0MmRmMjBlZWMyYTkxODJlMTk5YTUzZDdhMWNjOWU1MzRmZDNiYTVlNjRjM2U1ODc1MTBlMDRhZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNGFiZjRiNjJlYTkxMTI1NjQwYzlkY2QyMTljYjgyODgxMGM0MWE5MzY1Njk0YTJkMGQ3MWVlZDU4OWExYjg5MSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTA2YjYyZTY5YjJkNjg0NjhmNzdlZTgxNjNhNGQ0YTM3NTViNGIzMjc4OTQyYTVhZmJkNTg3NTkyNmExMzhhOSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_f9dfd77a160441df9eb325c4ad1ba0df",
+      "statement": "Since v1.4.0, in-memory tables support checkpointing, enabling compression via ATTACH ':memory:' ... (COMPRESS) and vacuuming deleted rows.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/checkpoint.md#L38-L49",
+          "version": "repo-lines-v1:sha256:ef0e0ba804b24e7464bba7bca8b0016a6864e2543f82a25e253099321cfff6f1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhMTA2NmM2NjgxMzk5NDhlNWFmOTJjODk4MjgwMzExODM2Mjg4MDc0ZTdiOTQwZWExYjA4MmFhYWI3NjY2YTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI2YTFhNWUyZjA3YzdlMjZkM2YwNDRhZGJkYzhjMDk4OWZmNWZkODgwNTc1MDVlZmRkNjk3MWUwMWUxZThhNmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM5MmQwMDQyMzhhOWU2YTAwOWNlMzQ4YTA3MGY4OGVkMzlmOWM5NGIzOTM2ZjFjNDU0NTM0MGUyY2M4YWE2ZTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhhZjgxN2I0MmQxMDY4NjAyMWZmNTc1Yzg4MGUxZGE4MzQzMDdhZWY1NzY1NzQ4ZDhiOGUxMGE0MTRkMGFmMGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a6be3d1e6a3c41748902ec6bb4636153",
+      "statement": "Checkpoints partially reclaim deleted-row space by merging row groups, which currently requires about 25% of rows deleted in adjacent row groups.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/checkpoint.md#L66-L68",
+          "version": "repo-lines-v1:sha256:f0d52c06c9082b564d2581a3eb9aac7ab295e7d5d9af0b3e198b3d626cab1d14:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTE0YWI0ZmYxMjUzNzYxNDdiNjQ3MWMxNzRjMWY5M2I4MWFlMTk5NzkxNGZkMTdiM2MwNzRkY2RkZThhMmVmMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjEyOGQ0NjcwMjM4MDU4MDY0M2E1ZTZiYWIwZDc3NzE1YzNmYjgxOGNlODc5Y2E3NmNmMDhlYWZiNzYwYzlkYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTA2YjYyZTY5YjJkNjg0NjhmNzdlZTgxNjNhNGQ0YTM3NTViNGIzMjc4OTQyYTVhZmJkNTg3NTkyNmExMzhhOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTA2ZGZlNWRjYjRmMWYzZWE1YjgyZDY5ZWI0YWEzNjM0MWIwODI4MGEwMDM0MDRhOTc5YTcxMDE5NDAzYmRiMSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_090795c3ddff4c0f868d1136fefcdb92",
+      "statement": "VACUUM does not reclaim space; plain VACUUM and VACUUM ANALYZE are no-ops, VACUUM tbl(col) rebuilds statistics, and VACUUM FULL is not implemented.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/vacuum.md#L13-L62",
+          "version": "repo-lines-v1:sha256:a9272c13badc7ba6aba348a5e1d9a0d82b37babb87230d098cda476e7fca7cba:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE4ZDkxOTM4N2VhNjQ4M2Y4ZWE2ZjdlYzk0NzMwZTA0Nzc5OGNiNWI2YTBjNDYzMzk3NmQ2NjU2NWM0ZDQ0MDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU4ZDZiNTM4MmZlNWU3ZWE3M2EwNmViNWNkZDQ2M2U5NGQzMDU0OWQwZDMyYmUzNGQ0OGY3ZjZkZmI3ZTg3NzQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE0MWU5YzQzYTcxMjM4NDM2NTNkZTMyNjFjYTQ5MDc5MTc0NTJiZDI4YjEyNzc4N2ExNDQ1MjhlMWMyZTFkYmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhhZjgxN2I0MmQxMDY4NjAyMWZmNTc1Yzg4MGUxZGE4MzQzMDdhZWY1NzY1NzQ4ZDhiOGUxMGE0MTRkMGFmMGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cedd048bda7e4245a53b330f7366224e",
+      "statement": "Since DuckDB 2.0, checkpoint vacuuming compacts tables with ART indexes on storage version 2.0.0 or later by remapping index entries incrementally.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/vacuum.md#L51-L57",
+          "version": "repo-lines-v1:sha256:3d29741353f2f8105d6a2dd287a65f3e8c38dca53e4fd8f5872b4c0d2b30a614:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODM2OGJmODhiMjcxZTc4NWJiZWUyMzQzMzNmOGVjZGYwN2RiZGQzOTU4YjZiNjE5NTZiNmUzNWQyNmI4N2E0OSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTUyYThiYTMzYzc0MTdjOWRiZDM3MzMzMGE2NTJkYTk4YjFmOTNmMTZkNzIwZTllOGEyN2UwMThmMjc5ODIzMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjYxMzcyOTQ4YjMyMjYzNzM5Y2M0OTVlYmQ1YTAyNzg3YTY1MzAzMzRmMmFlODQ4YmQ4YmI5NWI5MjkxNDE2MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTNkMWNkZGJkNWE4MGY5YTk4N2U1MjM1YjFkZDA0MzRhZWRlYmI2MWRmMTE3YjcxM2RmYmU0NWQ3MGI1YjJlNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_2d1e562bb63b4840958105eca201f2e8",
+      "statement": "Statistics recomputed by ANALYZE are used only for join order optimization.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/analyze.md#L12-L21",
+          "version": "repo-lines-v1:sha256:441e3c78a27700afdb8c46577c142fffcbe60bf36f2a097d93e2e82e12a3df4d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUzMDEzZDYzMmI0ZTVmZDk3MWRlYTJjOGZlZjY3MTY3MGQ3YjEyM2M4YjBlNzgwOTdmNzZjZTMyNDQ3MmY3YTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdjN2E0YzFjYTY1ODY5OTUzOGY4NmQ3ODVkYmI0OGY0NjhlMWQ5YzljMjk1OTM0ZWFmYjJhMjkzOWIxMTAwZmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFiNzU0NGRlNjJjMzZlZjMyZmU4NjFlNGFkMDYwMmEwMTQ3M2QzOTM5ODUzNjFiZWUyY2Y2ZDU5ZDJhNmIyNjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c1675f27843941398e474771ddac607a",
+      "statement": "A DuckDB database file can be compacted by copying it into a fresh database with COPY FROM DATABASE.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/operations_manual/footprint_of_duckdb/reclaiming_space.md#L22-L29",
+          "version": "repo-lines-v1:sha256:c6de7ac9051ef1bf3f91b2c483a21510a1efd47565d30305dd8313bdd3076d4c:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzRlYTNlMDJjOTk3MjI2Nzg1NDBhMDU3MGQ5ODUxZDNmODg3ZWNmNmY5NTQ2NjBlMTkxZWEwYTgzMDRlMjIyZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjYxMzViNzA0MWI4YTcxOTk2YWE4ZTVjOTIyY2U4NzJiNWYwZmZlZDQ1OTIxOTQ5NzZjYTAwZTk0ODg4ODgyYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDljYWNkZWJkNTVjNGEwNTZmZDc5ZTRiNTg2MzM2ZWQ2ZjliYTgzNDRlYmI4MmI2MjFiOWEzNzE4NDM1ZDkxNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2VjNTY4ZWFkZGNjNDg0MDI2ZjFlMzJhZjIyYzc1ZjM4NTM2MmNmMmM1YzFkZDk2OGMwNTkyZjU3MTk1ODMzMCJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:9fe77080ea21b0a077f407a628fb174f1ea2f511a14646c1bffea9c94f0858d0",
+  "claims": [
+    {
+      "id": "claim_17ac062e6c2646c58ff101378991cddb",
+      "statement": "File lock errors such as 'Could not set lock on file' occur because only one process may write to a database file at a time.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/troubleshooting.md#L13-L17",
+          "version": "repo-lines-v1:sha256:4e635a59288e0c6024b1623796d2704e7c0857f7e11c783e694a3b0f60ffcc8a:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDY4MWVlMDk1MjQ3OGZiNTllMTQ1MWUzNDcxMDU5OTBkOTVmMWUzYzViOTY4ZWZiMDhmNTYwZTlkMzYwZjQ3YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDVmMzM0OTY0MDgzNzYwNzcyYWE1YTA0OTRjNWVkMDhjNmJiYjAzYmZkMjE3MDRhZDRkODY5NDg4MjE5NzFhNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjgwZWE2NzRmMWFjZjkwYzliMWM0YmU5YTVmN2I1ODY4Y2YzNTU3NTk1OWQ0Y2RhNWI2MmIyMWU1MzdkNDA0NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDRhYzQzMjgwNTdiNGE5ODQwOGU1OWQ3ZGE5MmMxMGU3NzFkZTA5ODg3ZjhkYTI4YmJkOWM4MGEyNjA3NDE1ZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_6d7d0b72fa104c3baf44ade099b9b71c",
+      "statement": "Out-of-memory problems appear either as an OutOfMemoryException from DuckDB's allocator or as the process being killed by the Linux OOM reaper, diagnosable with dmesg.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/troubleshooting/oom_errors.md#L16-L49",
+          "version": "repo-lines-v1:sha256:953549736e92436bc8197454ae20a0197dfc7fb8e5ced5d1a28f0757d17caa06:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA0YTg2Yzk1NGMwMGM5MmE0ZTkwOTJkODMzNTI2MjEwODBlM2M2MzQ1OTAyNjY5OWYwNmRiN2JhOTNlZTcyNDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI4MGQ3OTlmYzZjMjY3NjQ3ZGYxNTllYWRmMTM5MmNiZTcxYWYyODg2ZTYyOTcyYjhiNTk2NTFmMmRjNzhiOGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVmZmNlZjhlN2QwNDNiZmQwNGQ5NzE3MDc0NDg0ZWQ2ZjY2MjJmZDllNDJkZTk1OTA1MWNlY2MxM2RlODRjN2YifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_83f92a6fc2d34257980cb07d467fe606",
+      "statement": "After an internal error, DuckDB invalidates the database and requires a restart before further use.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/troubleshooting/crashes.md#L22-L35",
+          "version": "repo-lines-v1:sha256:9570fcd9db641b3174571de0931d0cdab58a6acebf6fc076f03ade20825b66e6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM1YjNlYTc3NGExMmQxOWJlZWFmYzMxNDdiOTNkYTk1YjlmZWIyZDU1MDllZjA1N2JhODU5NDkxYTc2ZTdjYmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg0NmM0NTg0ZWQ4NmEyNWQ1NmY5MjljMGM3MGI3MjgzOGI2NzJmZDczZjYxYTc2MWJhNjc3ZDY5ZTEzMjM0ZWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg5NzhjYzUxOGM0ZWViY2ExYjg5MjAwYmE1YzQwYTYzYjY5ZTExM2NlY2RkMDEwNjhmNWM4MDUxYzUxYjA3NGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE0NTQ5ZDJjOTg1NGZhNjA4MDY1OWM1YzJhM2JkNmU2OGZjOGJlNTk2ZTdkMzYwZGU3MjdjMjk3ZmQ5MjU5MDgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f468c079e63f49e49aafe66333cd71fc",
+      "statement": "Checksum errors in database or WAL files most often indicate a faulty disk.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/troubleshooting/crashes.md#L41-L56",
+          "version": "repo-lines-v1:sha256:823e0cb4caa2673a18faa3d62f4557195a90d2e02775f7a19e6455f559618645:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJjMmU2N2YxZWIzZTg5ZmU5NjA1ZGVjNzQyNzQ1Y2FiNDQ3ZDg4ODJlOTkzOWU5ZWFhN2IzYzM2YmI3ZDFlOGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxYzVkOTVhN2M5NTdlMTE4YzhjMDRlNGUzMzdlNTgxNDQwMDY3YTA2YWQwNmM5NmIyOWMwYTdiODVmMWE4ZjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM2Y2VhNDQyNGM4ZWUyMmZhMjAzM2M3OTZmOWU1MzU1ZTc3MzllNzI4OGIzYjM4MGNmNDVlOWNjNmE2YzBiZTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIxNTYxMmM0YTg3MDVkYjcwYjUxY2RlZGJiOGRlZDNjYTc3MmVkMGQ4Y2UzNDViYzVkMDEyZjhhODQwODFhY2QifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_50ba1a9fbde94373b60a5c0cfda38310",
+      "statement": "After a crash, reopening the database replays the WAL file and checkpoints, restoring the pre-crash state.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/troubleshooting/crashes.md#L58-L63",
+          "version": "repo-lines-v1:sha256:45ac8bb706489481890d63758ddbd63773a2ee1adfdc360537f357cf77561d9f:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODk3ODk0Y2M0YmFkZTYwMjg0ZWM4NGE2NjViY2EwNjhkYzkzNGUwYzFmZjkyODA2ZTY3NDM0ZTA2NmJkZWZhMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiY2NhNmUxMDVlOWM3NmQ0NmJkYjYyNGFmNWMzODM2NTEwMmVjNWY1MDRlNzM4ZGEzN2UyMzRkY2MwNjI3MTViMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDYwZTgyNDAxNGM4ODI1M2RiYWJhOWE3ZThkN2E5MzY5YTNjYzk4MjBjZDgwZTJmYmI1MGVhNWRhOTI2NzQzYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDQzMzc3ODg4ZTVjNzcwNjg4NzBjOTE2YTAyOGE4NjhkMzZiOGMzMzFkNjQ2OTFiMjdmMzYyOTliZjIwZWQyNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_f4b56fc20ff84613ac8fb4c1ce9da7fd",
+      "statement": "PRAGMA disable_optimizer helps determine whether a crash is caused by optimizer rules.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/troubleshooting/crashes.md#L82-L92",
+          "version": "repo-lines-v1:sha256:f5bcaeeefcee9e4f87acaf49742a01a36fcde8c74b1cf43f23d84a06640d5c35:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjczZTM0MzlkOTlhYWU2ZGVmMjZhYmU0NGQ2OTMwZWM3ZGEyMzI2MTc3ZWI3MjY3NTViYmNlNWIxMmU4YjczYWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5ZWY5MmRiNDkxYTYxNWZiZGU5Y2I2MmQyM2E1ZDUzOTA3MDg5OWQwNDdlNjI0YWVkOTU0N2Y1YzViMGZlYzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM4OTE5ZDI0YzRmOTRmMTRkY2M1ZGNhNjg0MDVjNzhkNTVjZDc3Y2YyMDQzYWEwM2YyMDE1MWUxYjE2OTYyNTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIxM2RkYTY2YjQ5YmU0YTk2ODNjZmNiMTI1OTQ5MzJjYzk0ZDM5YTFjOTY0MDU4OWE2ZGM3ZjU0OTUyY2E1ODcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d7a23ec0dcfc4095a8a8b376504e3f8f",
+      "statement": "Set semantics, array_distinct ordering and multi-threaded floating-point aggregates are expected sources of non-determinism, mitigated by SET threads = 1 or ORDER BY ALL.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/operations_manual/non-deterministic_behavior.md#L13-L96",
+          "version": "repo-lines-v1:sha256:e17ddae2e0c9944a63397d6d9d2839362778eaea559aafb03308360de0e89d07:eyJzZWxlY3RlZExpbmVDb3VudCI6ODQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ4NzlmNzkxN2ZjOWE4MjgwOGY4MTg0NTlkYWFhZWU3ZWJhNjc5YjljZDFjMjA5NTEyY2QwMTYxMTJmOTIyN2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQwOTQwMTBjNDY1MzI1Zjg5NTlhNjFlM2Q5YzIzODUzOWU2Y2JiNWE0NzBhZTNkY2Q2OGUxOWMxZWE4MDE4M2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY5MjY1ZDhjMjJmMzQ2MjUyZTdmM2MxMmVlNzAxMWM5NjEzZGMxZWJlNjNiYzAwOTI3NTU3MzcwMjExMjBiOTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

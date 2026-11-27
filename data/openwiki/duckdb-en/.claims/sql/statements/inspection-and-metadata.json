@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:2fe2f3a730aba6d88e8a224aaa07f20275b4cc51d258c5d5dc40aded1ecc9003",
+  "claims": [
+    {
+      "id": "claim_7dac12bf6a634c069051250a49156d4d",
+      "statement": "DESCRIBE shows the schema of a table, view or query; using SHOW for this is deprecated as of DuckDB 2.0 and prints a warning.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/describe.md#L12-L28",
+          "version": "repo-lines-v1:sha256:9e0ba6467ece1abe9aecebdf333e6bb1de1717690473a8e2d0d3833d6067baab:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEyMGQwOWUzMjBkZjAxMzY0NWE3MjVlNzJjYjE4ZTRjNDljZDkwNGY0NmFjOTBhNDczYjg0MjA5NTNjNWRjOWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYyYzQ5M2RkMmZiZTYwNGIzMWZmYjIwMDE3YTQxMmE5NjQ4YzA4MzE3ZWQ3OTQ5NTMxYTUzMGE1YjIxNjRmYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZjMTQzYmJkNzQzY2YzMDU2ZTA0ZGQzNWUyMGJkNGJiODQyMTA4OTE0Y2FlMDY0ZWY1NGZlMjA1YWQ2YmE5MGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImExNDExYzc0YjRjNTA4NGE4N2U4MjZiMmZjMGQ5NGRjNDZkOThjNjdlYmNkNjY4NzBlN2IzZTkxMzg5NTYxMzEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_357bfcaccda84886afb7705a8965558a",
+      "statement": "Since DuckDB 2.0, SHOW prints a configuration setting when the name is not a table; the show_behavior setting ('auto' default, 'table', 'setting') controls resolution.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/show.md#L15-L39",
+          "version": "repo-lines-v1:sha256:f5a7e968b941005d0eef0fe1bbc7589facbf7123e6f64a8fba8aa1093c44ddf8:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcwMjlhMGY3NmY0NDYxNDEzZGFkZDk0NzM5MmQzNTlmMDMxMTNjNTlhODA2MTU2Y2E1MTE3ODIyMDEyZTUzYmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVmYzMwZTE1YWI4OTQ5ZTQ1NDE2NDcyZWUyOThmN2FkMzFjMDZlM2NhZjFmNzY0YTcwNWE1ZWU3MTFjYzZmOTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ4ZmE0NTQ1NmFkMTNkODI4NjgwMzMwZTIzN2M1NWRlMDllNTJiOTE1NTRkMzVmMzMzOGVjYTkxMGNjMDI2ZTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRiNjYxNDI4MzRiM2Q5MTg5OThhNTFjYWEzNDYzOTZkZjgyMmFhNWE0YTY5ZDg0ZTE3MTY2Y2RkNjAxMDgxYzUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_350357ef9e434968a62a9ef8e1aebccd",
+      "statement": "SHOW SCHEMAS (since 1.5) lists schemas with a current column; SHOW VARIABLES lists SQL-level variables with name, value and type.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/show.md#L65-L98",
+          "version": "repo-lines-v1:sha256:c6ff4451f471d82b1592881d488c980f33729a5e9ce6bde5cbd990ccbf5751d1:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxMWFiYzAxY2Q0ODY3N2IwNmEzOWFjYWMzMGJhNGY5NjI0NGU5MzgyZDgzZTYzMjAwZThkZWIzY2FiMjUwZWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk2NjI0MGUyOGQ1OWMxMzdkNTg5NDFlNTgyNWRmNmNlYzlhNDUwODgzMjgzMDgyNGIxNDNkNmZkODdmM2QwM2UiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ0MGY2MWQ1MzZmNTdhZGFmMDM4Y2I0YzE5YjI4NWFjZTZlMmE2ZDNmM2Q5YTMwOTc2MGM4N2U2YjdhN2I3NWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc1OTZiNjllMzJkM2Y5ZWQxNmNkNTdjODUzMmI1NTEyYTlhYmUwN2U3MTY5ZDcwZGEwNzFlZDU0YjIwODk5MTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1dd7239ffd76411c95c33d871a863614",
+      "statement": "Since DuckDB 2.0.1, SHOW EXTERNAL RESOURCES supports WITH TYPE and is a query usable as a subquery; SHOW EXTERNAL RESOURCE TYPES was introduced in 2.0.1.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/show.md#L100-L130",
+          "version": "repo-lines-v1:sha256:71fbddabcaa8e3e3c1dd9ce569b52848c1ed79acf42001f661673e8247cfdedf:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJlMDdhNmM3YTRkZTRhNTZjYjk0MzE1NjMyMTMwY2Y3Nzc2ZmYwODgwMjRiNzVlOWFkOWFjN2QzODBmNDgyOTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA5Y2M3ZTI0ZGZmNGU2NDlmMjYyZGM5ODI4YzI4ZWYzNmNlZTVkYmVlM2EwNDE3NGQxMGNkZmE0NjEwYWI2OWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA0ZDRlNTRmNWZkYWZkMmZlMmUzNTJiZWQxNzYyMjAxOWExMmI1NzJlNjkwZmFjNmQ0OTI0NjA5NGJiMWJlODUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1be3f57d8b33445fb086c16be68191bc",
+      "statement": "EXPLAIN (SQL), new in DuckDB 2.0, renders the optimized logical plan as SQL without executing it, supports only SELECT, VALUES, WITH, INSERT, UPDATE, DELETE and MERGE INTO, and cannot be combined with ANALYZE or FORMAT.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/profiling.md#L24-L36",
+          "version": "repo-lines-v1:sha256:0461f3cfc6c0ea0871036e1a95f4ef98f2ee58eb9c2202cc8247220543892542:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdhZWI5NzhmYjQ0MjUzZWMxY2FkYzFhYjQ4NTE3ZDFlYzQxZGQwMGI5YTMzMTE5MTAyNmE0OGM4YjZmOTY4NTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA1YzgzZGU4NGY2YTUwYTRjNWJkMzQ5ZWY0ZmM2MDQyMjFhZWFiZTlkZTViMGRhY2U1NzVlZTFlZTE3Mzk4YjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRhMjhhODQxZDI3NjlkYzdkMGZhZTlkYmM1NzEyNTM1ZTliMGFjMzUxNDM2YWIwNGVjNzQyNTFmNjgwYjYzNmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYzYWRkYzA1M2VkNWJiM2VhY2M3MmU1YjA5Mjg2MDBhZmY1ZDBlM2ZjMjYxNGYyZjQ0MjBlNTQyYTM2NzMwMDkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_62795a1a411e4d14be32852f762c0800",
+      "statement": "EXPLAIN ANALYZE runs the query and reports actual cardinalities and cumulative wall-clock time per operator.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/profiling.md#L38-L47",
+          "version": "repo-lines-v1:sha256:97492184490080697fd4f719b90486a4ed267d69b5335daee0fad4fff517fd96:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk1ZTRkNDEzZDUyZGYyOTAxODk5ZTUyMTI2ZGE1MTdiY2ViMTM3YTFiNzhjNDI1OWUzMWU0YzAxOTBjODgxZWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZhNjdjYzQ3Nzk1MTIzMjdmZWQwN2U5YTU2NmE2YjRmZmUyZjMzNTJlZGIyMWNhYzczMDg0NDk0YjBlZjdhOWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRiNzAxMmU3ZDgwZmQ3ZWFlNTllZDExZDUyNDdmMjllZDc5NDcwZDQxMzZjODJjMTE1NTFhOThhZjBkMjk0N2UiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_03045e534787401ba6df1966af25dfe6",
+      "statement": "CALL invokes a table function; because procedures are table functions, FROM can be used instead.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/call.md#L14-L37",
+          "version": "repo-lines-v1:sha256:1baf17973ca804d54a747ac38f0f6510ea69248a79d7b1a1e8e2f77e2e230be4:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEwOTUxYzg0N2FkZDI2MzA3NzYzYmU5MDk5ZjU3MWZkMzA2NjBhNTEzMGNkMjY0YTc0ZDk4OTgwOTczMWNmZGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE5MTY4MzE1OTJmMDBlZDI5N2Y0YTk5NWU0OGE2MGFjMjRhZmRhMGFmNGFiYzg1OTA2NDQ4NjA3N2QzN2Y1MGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUyMzhmMzk3ODE3NzNkYWRkMTZmZGE4NmQ4YjhhNjcxODc0Yzg5YjdkZDEwNmQxMjA1ODFjY2Y4NzRmYzk0NDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZjMjRiYTgwYjRmZTJiNmZmZTM0OWM2ZTY2NGJlNjUxM2M3NzYwZWRjMGRiMDAzMWVlMDAyMzg2MDVkNTVhNWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c7637237568246e8a6da02d35fe12c16",
+      "statement": "duckdb_* metadata table functions require parentheses; identically named views filter out internal objects.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/meta/duckdb_table_functions.md#L14-L46",
+          "version": "repo-lines-v1:sha256:76c47c26d3b7080d4c1204baa58e34afe84d2f72b8458e84d8c94151523a8f3c:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZmZjRlYzhiZTBhY2M0ODk4NzkzZWEwNzFhMThlYTZjMDk0NDQ3ZGRlNDE5NjQ5ZWRlYjA5ZDkyYjQ2NjVmOGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ1OTNlYWM1NGRiMWEyYTM0NmI4NTQwMmIxNzk1NTI0MWE5NTU5YjE0ZWExZTliYTA0YjRkMzFjN2M0N2M1MzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBkYjE3MDQyMzMyMzk0NWI5NmI4MTYxZWM3ODYyYjJkNDk5ZGFjYWJkZTZlMTdiZjY0MzM2ODQ1NmIyNWNiMzMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_70cd647e99e248a7bff8bd850a4b52da",
+      "statement": "As of DuckDB 2.0, duckdb_settings() accepts debug, deprecated and include_all named parameters; include_all cannot be combined with the other two.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/meta/duckdb_table_functions.md#L508-L516",
+          "version": "repo-lines-v1:sha256:d79dd7b0ab090e759d05447a001c02eb1e256739f4df18b61cc8fbc8de3bfb5b:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzJjOTZjNWY0NjcyNmE4ZDkzMzBjMDFiMTRiNzFlZjNkOGMyZWI0Njc1NjhhYjQxNDAwZWI3MjBiZmRlMWMyZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiODUwYjBlNzFkOGQ4YTYzMWY3YTA4YmQ5ZDJmNDVmNGVhYWU0ODA2NDgxYTdhODc4MDlkZDQ2NjNlOThhYjg0ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTYxMWI1NWUyMDMyODQxNmM2MDM4Mjk0YjQzM2M0YzA5ODRiOTAyOWQ4YWVhMDg0ZDliYjVkN2E4ZTdhZmRlMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjM5NTc4NjA5MTNkNDUyYWJkNTAxN2I1YmQxNDQxYzg5MzY0ZjdmODViYmVlZGViZTUyYTcyNTMxNmJkOGI3YyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_2975dd9bba6f4ebe9c1ece533215fe41",
+      "statement": "information_schema.columns gained is_generated and generation_expression columns in DuckDB 2.0; current_catalog() defaults to 'memory' and current_schema() to 'main'.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/meta/information_schema.md#L146-L154",
+          "version": "repo-lines-v1:sha256:ff120626966c1bbad9ec6cdd4d293e0b545df601cf634631fd5b669ae8a3cb3e:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWEzYzg0MTUwZGM2Y2JkZGViY2Y2YWIzZDI2OThmMWM4YjI4OWRkOWYzYmNlZjQ3MDRiMzRmZWYxOGYzYWViMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmM2NmM1YjlmMjJmNzdkYTQ2NmUxYjA5YWYwMDZhY2YxMDlmZDRiOWVkZThkNzIyZjhlYmM3ZTUxYTE0YTA2ZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWQzYmY0YmM4YjIyMmZhM2U5M2MzZDhlMWQzZjhlYThmMWViN2JlMjBkYWY2N2Y0YzcwYWIxZTk5OTE4YWQyZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/meta/information_schema.md#L53-L53",
+          "version": "repo-lines-v1:sha256:24ab058a6e8993b44a3f299a10292c476b12b05a7f61e54c63a3fafb1e0351e6:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjRhYjA1OGE2ZTg5OTNiNDRhM2YyOTlhMTAyOTJjNDc2YjEyYjA1YTdmNjFlNTRjNjNhM2ZhZmIxZTAzNTFlNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjRhYjA1OGE2ZTg5OTNiNDRhM2YyOTlhMTAyOTJjNDc2YjEyYjA1YTdmNjFlNTRjNjNhM2ZhZmIxZTAzNTFlNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDQ0ZjVhZWE0NWEwMmI2ODE5MjM3OWY3NjQ4NmM2NmVmMTI1ZGI3ODIzMWI4YTYzNGUwOGRiNzM5NjMxNjk3MSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDg5NDc4MWMzZDk4M2VlYjAwNGIzZGFmNTE0MGU2Y2M1YmJlODg0NmYzZTg4MTliZGRjN2FiN2JlZmU4NmQ4YSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

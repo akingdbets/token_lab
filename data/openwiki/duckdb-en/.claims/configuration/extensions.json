@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:5d14508892297224f3ed41cd72991db7765aa72f4fbaf1485f9db12da7920e1c",
+  "claims": [
+    {
+      "id": "claim_86155296318040759abe67082f8f42f1",
+      "statement": "LOAD does not install extensions and fails if the extension is not installed, while autoloading handles known core extensions.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/load_and_install.md#L35-L39",
+          "version": "repo-lines-v1:sha256:37f6a5895d4c6b799101f1314094e4030589cf680ddf9818c0f5ba2e61442873:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDhkN2YyN2EyZTU0Y2E1YWQ1ZTY5YmU3M2QyZTE3NjRkODc4ZTRjYjM2Mjg1ZWNjYzQ5MmQ0OWIxMGRiN2I1NCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNGYyOTI0ZGFkNjgxOTQ4MGRkNWNmZjg1Mjg3ZDcyZDllN2Y0MGE5OWUzYzZlOTFhMTMwZjhkOWFhYzkxMmFiNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTYyMDJiODNiYWNkYTlmZjk2NDA0Mzc2NjUyODc5MTgzNWRiYWY2ZDAzMGI2MjY4ZDcwOWIwY2JiNzFiZGZjZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWM1MzlkMjBlYWFiNjhhMjUzNjAzY2NjNWQ4YWQ4MDgzY2YyODk1YTQ3ZWUxNGEwMTVlMjlhZmNjZDE0Y2I1NyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_2357104b84a041928b3def25d7c8d0c2",
+      "statement": "INSTALL AND LOAD, introduced in DuckDB 2.0, installs and loads in one step, skipping steps already done, and supports FORCE, FROM and VERSION clauses.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/load_and_install.md#L65-L91",
+          "version": "repo-lines-v1:sha256:7c5d6b161ffe14e7a3dd31aedc3e8d944cf3321cbe20f8175840f2d0e1b60cfd:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4MTI4ZGFmZTI2NTlhMGY2YzBkZGRjMThmYzYwNDUyODQ2ZTlkZDQyNDU0NzBhYWI4OTkyMjMxMjljNTJjYjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEwZjVjM2Q5ZWQzODIwNGFmZWZlYzFkMGNjYTliYjg3N2VjYmRiM2FhYTA0ZDQ2ODVkZGZlZGI1M2RkZTU4YTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_268e9a76712b45c3ac65b5e1b6a89f87",
+      "statement": "UPDATE EXTENSIONS does not reload updated extensions (a restart is needed), skips statically linked extensions, and since v2.0.1 also checks custom-repository installs.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/update_extensions.md#L12-L53",
+          "version": "repo-lines-v1:sha256:1c8b1a8bb14a51390bb06cd2795c56af3d0b38821a6b9461383d3cfae31ae100:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJlMjdkNGI1MTA1NzRjZTgxNTJjNWFkYzJmMmQwMTQ1YTAxNTM5YjQ0NzAyMWMxYmM2OTgzZGNkYTQzNjUyY2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIzNmEzMDYxZTI2YjUxZGI2NjFhZWMxMmFlNGQ3ZTYwY2E1Yzk0MDJiNDUwMjJhNjZhZGVlZDU3YTBmZmZhOTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlmODcxY2M3NWMxZDkyZGQwNDI3OTBiN2MzNTJkMDY2NTE0MzcxZDk1MGUyZTA5MzI2YTk1NWU5YjQxMTk3ZTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg5OTgyYzc1YzQzOWNhOGEzYjAzMDQ0MzkwNmE4OGY1YWYzYTRkOWU3MDgwZDRiNDVkYzM2MGFlNmZkNDU0MmUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_50fb85ea7e9049ab99f5061eb4ec3412",
+      "statement": "UPDATE EXTENSIONS uses stored ETags with conditional GET requests and performs FORCE INSTALL for changed extensions.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/update_extensions.md#L55-L71",
+          "version": "repo-lines-v1:sha256:b82fe6986909b454a72d70002ef2e5b172440a10914f147f6538bd493ef22c14:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2OWUxYjRlNGU4ZTI0OGMzNDU1MjYwNTg0N2MwMjFmZjgzYTAwYzg4ZDExZWRkMGIzOWEwYWRjNTIxOGY1MjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRhMTNiN2U1MWYzZDhlM2VkODk5OGIxMWEwMWU5YjNkMWVjMzQ3ZjFkNWFkNDg3OGE4NGEzNGZmOTcyOWUwNGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_367abc802020447288972b18c9aafa6d",
+      "statement": "INSTALL automatically falls back to backup servers for the core and community repositories on unreachable primaries or 5xx errors, but not for 4xx errors or custom repositories.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/operations_manual/backup_extension_repositories.md#L11-L34",
+          "version": "repo-lines-v1:sha256:7336eedafbcc4e162fb26e630e7e62aabbf37060c355d57d6396840813a67499:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRlZjRiZmU0N2Q1OGNmOWY4MDI4MTM5MWYzZWRjZTAwMjk4NTc5MDRlZWU0ZjM5ZWZhNDM5MWQxMWFiZTEzNWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZkZTAxMWM2YWVjMzkwMzM4N2I1Zjk4NmMxZWRlMTBjMDM3Y2FkMDYxZDIyOGNkNmVhOTkwNTU4OGI5NzBkOTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_63e6e7356f054702a6215a19082dd19d",
+      "statement": "CREATE, REGISTER and DESTROY EXTERNAL RESOURCE were introduced in DuckDB 2.0.0 and are refused when enable_external_access is false.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/create_external_resource.md#L13-L34",
+          "version": "repo-lines-v1:sha256:fe2cd50c225b764668316841c9c5e4cddb5f1a4fce2a17c1928a0a4e988c522c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMwNDFmYmE5YjIzNTAwMDBlMThlM2I1NTk0NzkxYWM1Y2RlMmZiNzE4NTA0MGIwMGM4NGE3YjRkZTI5MGU1OGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5ZTE3NWRmODk3YTJiNzMwYzZhNDk5MTRkZjJhNjZlM2E3NWRlZjc2MTlhZGQwODI0ZTBkMmYzYjRlYWMwNTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ2YzcwZmY2MzFlZTMzOWZlYjI1ZTAyNjYzNzFjMDVmYjUyMDA0MTkxNmExZTg2MGQ1OTkwM2JjMWU5NjkzZGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNiOGU0MzIzOWJkZTc4YjllZDg1NTEwZDIxNTQzMDczNTFkMDgwMWY2NWUwM2NkYTgzNDAxZDFlMDMxMWExYjkifQ"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/statements/destroy_external_resource.md#L13-L25",
+          "version": "repo-lines-v1:sha256:038320664f68efcd6f9cb01dd8b9c55c7a52d91f7d3e2cd3ff4e8ca80801e670:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg0ODgxNTBkMzg0YzMxNjliMThjZjI5ODMxODI4OTc3NTBhOTA0MTQ1MTQ4N2M4NjhhNDhjOGYyNGI0Nzg4ZTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJjMTliMTdhNTNjMTE5YWUzN2JkNjk5N2U2N2Q1YjMyMzkyYzMxZGEwZmVkNTllY2Q3M2IyMGI5NzE3NzgwMDYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM3ZDcxNDY5NjljNmYwNjUwNThjODNlZDA0MTQ3NjNjZTUzYzE1ZTRiNDYxZWM1MGEyOTNlNjAwZWMxMzM1MzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNiOGU0MzIzOWJkZTc4YjllZDg1NTEwZDIxNTQzMDczNTFkMDgwMWY2NWUwM2NkYTgzNDAxZDFlMDMxMWExYjkifQ"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/statements/register_external_resource.md#L13-L27",
+          "version": "repo-lines-v1:sha256:6ddf3a7c21c38452e4e8c39c386c64b9a31901ed1bad37fab149db1c3eada19c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI2YjBkM2E3YmY1NWQ4YzJkNzAwMDI4MWYyOTNkYzE5ODE1YzRjYmMyNGFjZWNkZTQ0Zjc1ZTJjZDc0NGVkNmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliZDY4ZDU2MDQ4MzQ4OGMwNDJmYTIwMGZkNmU1ZTdiYmZhMzcxMjQ5N2IyMTQ1ZDJjYjg0MzEwNTY2MTIwMmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM3ZDcxNDY5NjljNmYwNjUwNThjODNlZDA0MTQ3NjNjZTUzYzE1ZTRiNDYxZWM1MGEyOTNlNjAwZWMxMzM1MzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNiOGU0MzIzOWJkZTc4YjllZDg1NTEwZDIxNTQzMDczNTFkMDgwMWY2NWUwM2NkYTgzNDAxZDFlMDMxMWExYjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1342a645c548401bbd6779c05e8a0fae",
+      "statement": "Full-text indexes are created with PRAGMA create_fts_index, ranked with match_bm25, and do not auto-update when data changes.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/sql_features/full_text_search.md#L41-L82",
+          "version": "repo-lines-v1:sha256:b661fad017da1a5011be1a3f11acb7b178c475bef1ddcfe65a5a8c65b7e5c39a:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjMzMzYzY3MmIyNGQ4Njk1Y2JjOTBiZDY1ZTQyZmVkMzIyYTBiNTRkOTMzNDMxMzc0NTBhMDdlZmFkOGVmYzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjViMmFhNDgwMWYxNTQ4NzVhNzY0Yjg2NmU1YzA3MjI3NzA5YWU2ZDMwYzk4MDFiMzE2NDc3ZDg1OGJlOTg1MDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRkODEyMThiMmQ3NDRmMTAzYmI1OTU3MWE4YjE1YWUwOWNmMTMwYmM1ZDMwODE3ZGJlMWUyM2UzNDY3ZWY3YjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk1ZWJkNjYyNDAxZTJlYzQ4MzEzNDlmODlhZDU4MzExZDQ2ZmU1MzM0YzhmNzk0ZGMyMzU2NWIyMGNjM2M4OGMifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

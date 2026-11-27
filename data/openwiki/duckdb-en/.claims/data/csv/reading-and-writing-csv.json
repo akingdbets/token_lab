@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:5aee4e29868838f5fa4c5a4ad04e5372ec3d789893036609af94c62c4c866efe",
+  "claims": [
+    {
+      "id": "claim_3d10173d1d8c47229ddf75c153b77923",
+      "statement": "CSV auto-detection is enabled by default and setting an explicit option only overrides that option; auto_detect = false disables detection entirely.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/csv/overview.md#L76-L76",
+          "version": "repo-lines-v1:sha256:09c8a31072121f38fc610d155c9fec0b39e9644f4d24ea76c54f1d480558a924:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDljOGEzMTA3MjEyMWYzOGZjNjEwZDE1NWM5ZmVjMGIzOWU5NjQ0ZjRkMjRlYTc2YzU0ZjFkNDgwNTU4YTkyNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDljOGEzMTA3MjEyMWYzOGZjNjEwZDE1NWM5ZmVjMGIzOWU5NjQ0ZjRkMjRlYTc2YzU0ZjFkNDgwNTU4YTkyNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWI2ZGQzODk2MTg5Y2Y2MGFmZjQ5NTVkZjE3YzkzODJhOTFlZTAxMTc5NzcwYjE4ZmExMzk3OGRhM2MxZmEyMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODIxZGRhZWVkY2MxZTBhNDRhYmNkODY2ZDNhODUzZjc2YTk0NmY3NzgwM2E2MDgyODY5YjU1MDRmMmFjZTIxNCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_b3e9e2baaa4c4289a16bebd911fab4ee",
+      "statement": "The allow_empty read_csv parameter, added in DuckDB 2.0, returns an empty result instead of an error when no files match.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/csv/overview.md#L85-L85",
+          "version": "repo-lines-v1:sha256:fe1e95a0637f585f7a4bcdeceee63d1f0499c2a64e9877f67bc82fa09be9bb83:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmUxZTk1YTA2MzdmNTg1ZjdhNGJjZGVjZWVlNjNkMWYwNDk5YzJhNjRlOTg3N2Y2N2JjODJmYTA5YmU5YmI4MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmUxZTk1YTA2MzdmNTg1ZjdhNGJjZGVjZWVlNjNkMWYwNDk5YzJhNjRlOTg3N2Y2N2JjODJmYTA5YmU5YmI4MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDk0N2NjYTk1ODEzYWZmOGI5Y2JiODM3ZmExNzBlNmRiZWRiOGNhYjc4YzdkMmQ1NTlkNWIzNGI5ZDM5YThhYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTJiNTU0NWM4NmU1ODlkNmJkNTRhYmRjYThhNjcwM2NiODMzNmIwNzY4MTQ0OTMwY2M1N2ViODY4ZTQwZjAxMiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_e6cfa551a9c14bad969a4f3a14f83c92",
+      "statement": "read_csv defaults include delim ',', quote and escape '\"', sample_size 20480, max_line_size 2000000, files_to_sniff 10, parallel true and strict_mode true.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/csv/overview.md#L82-L127",
+          "version": "repo-lines-v1:sha256:27b25d493fc6a1db677df02cf62ec7c955ec29d26b8ba742adf31c23de7de74a:eyJzZWxlY3RlZExpbmVDb3VudCI6NDYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjNWE2YTExYmE4NzdjYjBjODZiNjIxZDM1ODc5NjRjMzMzNmIzNDJjMWY4ZTE5ZGFmYzA0ODhiNTQ4NDE4ZmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlMmQyNmJjZDU4MmQ4MWM4MjM1NzEzNTM2MzgzYWU2NWQyMWY1MDZiN2ZhYjcxMTljMjQxZWNjNDhhMzJhZjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMwMTFkOWQxOTMxMjgxYmY2Njg1YTMxMjNlNjI0ZDhhMGNhZTU2ZmU1NmNjYjY5YTJiMDdjMjAzMTIxMjE4ZDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIyYjdkNjRjYjQ1NWY3ZGQ1ODM4NGM0YzlhYTZlZGU5YzE1NjlhNDQ2YTA0NmUxYTM3YjYxNjcwMmU3OTM1ZjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ac101fa49b51495095b07181514b2d89",
+      "statement": "The default auto_type_candidates are NULL, BOOLEAN, BIGINT, HUGEINT, BIGNUM, DOUBLE, TIME, DATE, TIMESTAMP, TIMESTAMPTZ and VARCHAR.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/csv/overview.md#L137-L146",
+          "version": "repo-lines-v1:sha256:dcb02cba2404390bcd8e7b4c7c8f00b0c7e4ed8269af287d5c421351c3f5d449:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM2Y2JhMWU5NmNlMDRlYTdiZjlhZWQyYTFhZGQ2NWFiYzM3MzU4ZWIxZjViY2RiZTI4ZDk0NjQxNTlkZWY4MmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjJkZjhlMTRhMWZmYzBkOGFmYTFiYzEwMTM4ZGY2NTZmYTY5MThjY2FiODA1MTAwODQzZTllNWM4ZmM1MjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFlODg2MGQ4ZjM3YTljZTI4ZWMyYTZiZDBjOTBiODk5OWU2ODc1N2U1NTZlNjNjZDk5ODE4NTdlYzJkYzAyZDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjViNDIyZTQ2NWRlNzI0ZmU0ZmI2NzdlNjcxNzE1MTIwNTgwNmVmNzQyODQwYzAyNGZkNTgyMzEzYTIzZGExY2UifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3ca5b31226894ca2b9a7a05764381e7b",
+      "statement": "COPY ... FROM a CSV file uses the target table's schema instead of auto-detecting types, which is faster and avoids detection mistakes.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/csv/overview.md#L191-L218",
+          "version": "repo-lines-v1:sha256:963186a734fb9f1048759e2c3694ec3985743f1a4a20e39cba7252e92ec42182:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRmNWMwMjU3ZjkyYmQ2YTBkMDk1ZGNkNjlmOTA5YjgyMTI4ODMzYWU0MjJjYWU4YmJlZGFhMmE1ZWE1NmEwZWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOWFjN2Q1MTUxZjZmZGQxM2JkYzdhYjJiZmFiNmY1YWU5NzIzODJjZGJlZTE5ODIxZjY4ZmY0MDE3MTdhYTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJmM2FiNDNjM2YzOGQwOGY4MmRhYTE1OGZkODgxNzI4M2YzODhhMWU0NGMzZTc2OTBjOWFhZDI3MDQ2MzFkY2YifQ"
+        },
+        {
+          "resource": "repo://docs/2.0/data/csv/tips.md#L38-L44",
+          "version": "repo-lines-v1:sha256:660ce08bf6e2e493704c0b71af9a824a5a081a2b516ce12ff1e59e865f19ce07:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDRhMWU3NDM4ZTMxZmE1NmJiZDUzMjJhYmQ1ZGMwYjkwNzkxN2Q2NDFmY2U5MDJmOWFkMjRhNzlkNTIwNjUwNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2VjNTY4ZWFkZGNjNDg0MDI2ZjFlMzJhZjIyYzc1ZjM4NTM2MmNmMmM1YzFkZDk2OGMwNTkyZjU3MTk1ODMzMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTJhYjlmYjljMDdjNjhmNjMwMWIzNGUwODMwZWUxNTg5YWEyYzRjN2YwZGM5OGIyNWUxODliNWVlYzA5OGM4ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOGUyZTg1MDQ3MmMzZWZkMzYyYWRkMDY3M2U5YTk3NzZlMmY4NjI3Yzk3M2RiNGE0NTQxNzY4MTMwMDZkN2JlYSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_a2816b522ec94752912a29cf20843b17",
+      "statement": "The CSV reader preserves file row order when preserve_insertion_order is true (the default).",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/csv/overview.md#L224-L228",
+          "version": "repo-lines-v1:sha256:c2eb2fe170ecd69cab56d1a8f143cdf20711f453205bf6234567c8633b1a7b91:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzE3YzgzYTFlYmI5YjI3YTQ3NWZiNmU4ZDlhNDI4MDI1MDk2NjU1NTUwNWRlOTBiMGIzYzA4ZjVhNDJhZWE5MSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjk4Yjg5OTE5ZDM4YjZmMTA5NWZlYzMyMmM3Y2Y4MmQxNWMzNzg3YTc4OGRiMDAxNGJiMDI2YWM0MjE4MjMwOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjljODdkMjBhOTIzZTRjNTg5ZjdmYTY2NDE3MDgzYTBkYjUwMmMxZDFiMmNjM2YxMDQ3ZWI3Mzg1NjJlOWM4OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzE5NDJiOGE3M2QzMDJiNzAyYmU1ZWJiZmU5MTE0NTkxN2U0ZGQ0NDczODBiMDg0MjJhYjk3Mjk0NjQwZDUxMSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_0c511e2bc84747a68b2ff735055d7c5a",
+      "statement": "CSV export with COPY TO writes a header by default and supports DELIM, QUOTE, ESCAPE, FORCE_QUOTE, NULLSTR, PREFIX/SUFFIX and compression detected from the extension.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/file_formats/csv_export.md#L14-L24",
+          "version": "repo-lines-v1:sha256:81cd550eff60427ed7e25659530438ad3788b2a4d1c1b89df756d5eb5208e1bc:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc4YmYxMjk0OWEwYmMyZmJlZTkxNjhjMjk0ZmE3Yzc1NGQxODZiNWMzZDQwZDgzOWNmNGYwYjNhMDNhNWViNzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFlMGNiMmU0NDAxZjBmYWQzNTRjM2ViODNmNTg4NjVmZDBjYzU2NDE2OTJhOGM1MzIzZWZlNTM2ZmEwZjRhYzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxNjhlOGNhM2U5MjRmNDYzMTFlNzNjMDlkMWMyODllMWU5ZDJjMDYxODgyNmFmNGEyZTk2ZGRmMWNlOGExNmUifQ"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/statements/copy.md#L354-L371",
+          "version": "repo-lines-v1:sha256:f5024c82dd1df6037b278d66f5b1b068e19345d0d2aa08b1bfe377de5ef02c15:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM5YTI4MmNiNzA2ZmJmMWFiZWZiZmQ1NGI5MDk0ZmYwYjllYmFmMTVjNTQ1NmJlYTQ1NzAwM2MyNDM4M2RmYTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZiZTY1NTQyMGY4OWI4YjIwYmEzNGE3M2RhNzU0ODY2MjBiYjIxOTlhMGM4ZmExNjVjMGRmNjNkMTAxYmQ4NmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA0NDZhZmNiOTVlYWYwMGY4ZThmOTExY2E2NGY1ZWVjZjRlMDc3ZDc5ZTcxZjFmNjZmZjI2ZmVlY2IyZGMzZGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEwYWE4MzU0YzI5MTVkMTZmMzA4OGI1MGExZWMzYjVjNzUwMDQ1MzY3MTE1NTMyYzE4MDY5M2I4OWYzMjU5MWUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

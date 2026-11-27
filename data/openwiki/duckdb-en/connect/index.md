@@ -1,0 +1,4 @@
+# Files
+
+- [ATTACH, DETACH, USE and Multiple Databases](attach-and-multiple-databases.md) - Work with several databases in one DuckDB session — ATTACH options (READ_ONLY, TYPE, BLOCK_SIZE, ROW_GROUP_SIZE, STORAGE_VERSION, ENCRYPTION_KEY, RECOVERY_MODE), remote and encrypted databases, attaching Parquet/CSV/JSON files, DETACH, USE, name qualification and search_path, single-database write transactions, copying an in-memory database to a file, and read_duckdb.
+- [Connecting, Persistence and Concurrency](connecting-and-concurrency.md) - How to open in-memory and persistent DuckDB databases, storage-format compatibility with DuckDB 2.0, read-only access, the CONNECT/DISCONNECT statements for remote databases (new in 2.0), and DuckDB's concurrency model — one writer process, MVCC with optimistic concurrency control within it, Quack or DuckLake for multi-process writes, and transaction conflicts.

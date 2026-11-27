@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:63f1b92ce4d79a6b2771df3c0089c41690a76e5f07808984de6814d299516a5f",
+  "claims": [
+    {
+      "id": "claim_7babaa93d1d647f3ae9bd0a0c4d170e0",
+      "statement": "DECIMAL defaults to precision 18 and scale 3, and MAP keys are case-sensitive while STRUCT and UNION keys are case-insensitive.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/overview.md#L26-L26",
+          "version": "repo-lines-v1:sha256:129e136a9103fac926ab4422051ebb85c997971569d484e2130962eb29bceccb:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTI5ZTEzNmE5MTAzZmFjOTI2YWI0NDIyMDUxZWJiODVjOTk3OTcxNTY5ZDQ4NGUyMTMwOTYyZWIyOWJjZWNjYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTI5ZTEzNmE5MTAzZmFjOTI2YWI0NDIyMDUxZWJiODVjOTk3OTcxNTY5ZDQ4NGUyMTMwOTYyZWIyOWJjZWNjYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDdjYzhiNjRmMGQ0YjRjZTIxNjM4NTY1OWUyNmJkNzJmYTYzYmM0ODZlZmY2OGQwZjI2ZDMyMWE1OWFmYmFjNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjBlM2Y5MDg2MDExYzc2MWVkYmIzM2UwZDNhYWM1NmIwMzNlMTJhNmM2YWNlMjU5NzU3YjM0NzhiYzFkYTBmNCJ9"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/data_types/overview.md#L63-L66",
+          "version": "repo-lines-v1:sha256:6d2775cb36d78fdeab2a613491f0ace664932ee579966838a0905828ddc08758:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzM0ODNjMDAxYTdlYTc0OWFiYjAzMTJhMmY1NWI4YzRkNmEwZjkzMTNhYzc5ZGJiODMzMGUwNjJhOGExN2YzOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiM2JlNzg0ZjVhZDVkMDljMjRkM2Y4ZTk2M2RlNGI0YjdkYmI0OWRkYzg1MDkxOTMxMWIxNTk5N2QwMDA2YTUyZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNmE4N2FlNmFhNWQ0ZmVlNGU3MzkzYTliMmQwYTAzODljMzZhZTEzZTNjYzc2ODY1NjRjZDBhYTQ4OTI2YWE2ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNmM5NjE0NmVhYTFkMGZhMjI1YjgyNTQ5NTBjOGM0ZTEzMTc5MmFmMzYzYWE5YTE0MTk5OWJhMDJkOTI2ZTYwMiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_0bb2cff13cc142fca7d5ed4a96be841d",
+      "statement": "Implicit casts are only added where the cast cannot fail, such as INTEGER to DOUBLE but not DOUBLE to INTEGER.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/typecasting.md#L20-L28",
+          "version": "repo-lines-v1:sha256:a65ad183dd69bde633d0d245789092f9569c85c29f3879aad6035f5f79c27aed:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjVlYWU3Y2JmNWE5NDlkZmNlYmExODMwN2VkZmYyOWY5ODU0MmExNDBjYjUzOGM1NTc5OTQ2ZmZmZGNhM2I2OSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiODQwNDc3ODgyOGQ3MjJiMzRhYzFjYzE4ZjlkYTVjYWExMWEyY2IyNzFlYmZjNmVjNTRjNjg3ZGM1OGI4MDQzMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiN2ViZjEzM2Y1ZGFiNzk3NTgxNDZjNGRmZmFmNWJjYjk4ZmEyY2Q3MjRkZWEwNTg3NDE4ZjQ1Yjg1NzA0NTcyYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzQ5N2FkZTZiMzZkOTc4Y2U2OGEwMmQxNDNlMzllMjZjOTMzZjMzNDkyZTk1ZWRjODU3NTNmM2M5OGU0NGE5NCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_07579b9457b04615872dd76182698451",
+      "statement": "Combination casting chooses a common parent type for comparisons, set operations and nested constructors, e.g. list_value(1::INT64, 1::UINT64) yields INT128[].",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/typecasting.md#L30-L34",
+          "version": "repo-lines-v1:sha256:76e6df38cadb6b07f706253082d56e062fc6ff1a1f5c6a7cb09fca719d2cc835:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTdiYTExNjFiNjdmZjUzMmJkMzY0MTJjODVhNzczOTIzNmI0OTAzNjQ5ZGZmYzRiNzVkNWJhMzg0ODI0M2M5YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmZlYmFiOWRmOWUwOTg0NjJhY2VjM2MxMTMzZDJiZGY2Nzk0ZGFkNjA0ZTEyMzEzMjc4ZTExNjAwMmI2YjdjYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGVlODk4ZTg4NjI0MjA3NzU5NDQ1YTNjZTA1ZTkyNTYxZDM3MjViMTRhODY0YTY0NTQ1ODU5ZWQ4OGNiNjJjNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2ZlZThhNTZjNDgzN2VkMTI0OGM0ZDVkZDlkZWVmM2Y1OWMwOTNmYjRhMTllN2MzNzMzYjVhYTFhNzYxODY0MiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_03026dcdd6da427e9549938a5bdf5fd7",
+      "statement": "Since 0.10.0 values are no longer implicitly cast to VARCHAR during function binding; old_implicit_casting restores the old behavior.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/typecasting.md#L84-L87",
+          "version": "repo-lines-v1:sha256:90e74e68386cfdf336deddd1607205a0d290ed354aaa6b8206d9a85b6f3c9a1b:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMGQ2ODE0YmEyNjI3YWFhOTFjYmViNDMwNjJmN2ZkZjM5MDYwMGVmZGM5NWM5YjM5NzVhNjQ1MTZjMjYzZWQ2OSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmJjZDk5N2I4MDFmNjdmZjllZjk2NjM4YTA3YWMzMzc4MzViM2RhODA0Y2ZjZDY1MGFkYzAyMzYxZTEwYjE3MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTVmMDI3Zjk2OTY1MTY5YTQ1ODE4MjI4NzA5Mjg2MzY2NDE2NjVkNzU3NWNjY2M2Mjg5ZjRhMjExOWY2ZTI0OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGJmODAwNDQwMjk0NWNhN2I4OWFmZTAyN2M4MjY4OTNkYTc2NmMzNWY5Mzk1MDcyMjE2MzVmNThmMWVhYWYxNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_1215ae49c6f74503ac9d68a2643b7184",
+      "statement": "Overflowing casts raise a Conversion Error, while TRY_CAST returns NULL instead.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/typecasting.md#L102-L115",
+          "version": "repo-lines-v1:sha256:ef58e00ec376bb79f1a4f6e4e75a89fcce5355c0a62c6c62a01dc14609fe2d11:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE5YjVjYjIzMGE1NmQ5ZDFmZTQ4YWY2ODZhNWY1NjgwNDliYjFjMWFlNjVmZTE3N2Q2NmI3ZTk5MTBmZWI1YTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5N2MxNjM2YTIzOWMxYzFhNmU0YzZiYmI2ODY0MzY0NTQ3YzgzNDA2MThiNDc3ZTk0ZDhiZTVkODZmYTY3MzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVjOWNiNDI2ZmQ1ODQxMzUyYjg2NzI5MmMxYWVjNDIxNTZmMmE1MGNhZmNiYzRjZGYwMGU3ZGYzZmJkY2U1NmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE1YjY1MWU0NWJjMzk1ZjYxMTdlYjM3MmE2N2VkMjkxMmZlN2U3MTZlZDA1YWQ3ZmFhYWVkZDA2YzY1OWRjMWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3c33fc7475e94db29862ba385201999c",
+      "statement": "Struct casts require at least one shared field; missing target fields become NULL and source-only fields are ignored.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/typecasting.md#L155-L193",
+          "version": "repo-lines-v1:sha256:ffd43503bd77bf7bd9e8c8f6196008fc4719de86f1eb1958b7dd9e4f8488188a:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY3MjQwZjUzZjEzZDI2ZjY4Y2FjYTA4Mjc0ZWM3NWY1YTc3NzE1ZWY1MzNjZjdiMzA4ZjQ0ZTJkYjRjYjg3M2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwZDVkYjI3N2RlNDQ0MGZmY2I2NmU3NWYyOWZhZTM3MTJhY2ZjZGY1NWQyYzUxMzViMjg1YzEyMzhhNWQ3ZjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZiZDFkYWJhOGIxMDVmYWY1NGIwZjk5OGMxMTlmODQ1YzBjNzU0NTI1ZTExYzcxZWVjYWQ4MTc0YzkxZGVmNTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE3NmZiMjIxNGJjYmM1MGUzN2NjM2ViNzNjYjI5MTdhNGRhNDdjZmFlYWE3NjRhMGI0ODBlYTYzNTA3NDNiM2IifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_39e786a26992445eb15bab4f0e4832fd",
+      "statement": "String literals implicitly convert to any type, but VARCHAR values cannot be compared with dates without an explicit cast.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/literal_types.md#L109-L134",
+          "version": "repo-lines-v1:sha256:5e055fa13e37d353d1040f901450561f5529a2c71c80926529b7d3e3b4b18e6b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRmOWNhZjAzNTZmNzE1Y2Q1ZTRkODFhODRmMmYwN2RkM2Q4NzM5ZDFiNzM5ZDRkMTlhY2QyYThmMjQ5ZTkyNTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVjZmVhMThlM2E5MzU1YjY1NWJiNzgwMDdiMDQyNDQwMGJiNGEyYWM0NGQ0ODgzOTAwNTNmMDAyYmQ2NTA1Y2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhlM2ZlNTUwM2VhZTQ0M2U4MmQyZDc5NDU3M2Y2ZDBiNWQwMDIyNTUzMzFkMmY2NjQ3ZjE0OWJiNWVkYTQwNzEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_45a2bfc2a52f4435bafa93a64fc93abe",
+      "statement": "Adjacent single-quoted string literals are concatenated only when separated by whitespace containing a newline.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/literal_types.md#L69-L107",
+          "version": "repo-lines-v1:sha256:8f7d9b1492bdd195e4d5dccd152d7fae1e7f42ad01416d974be9d3f31baadda6:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjMjgwZTU0YjY3MDExMGQ5MTQ2YWYyYzZhOThlZTRmMDYyZThiODkwNTBlZWE4YjUwYjIzNGRlMjI0MThhNTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA5NWQyNDUxZjcwNDhhOTc0ZWMzZWNmYWZiMDcxMzc1OTZkMDE1NDJkMzk4MzE1ZWQyYmM4OGNjNWViODA3NWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFjZjk3Yjk3MzVlMTg4Y2FjZTA0NjFhMTcyYTI0ZWU2MjMzZGExNTMxNjAwNTU1Njc3ZTU0YjUyZDU4MjZlYmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM4NGY1OGVkZjZkYWNhZjUyZTBmZDZmNDI1YzRiZmZjMDAzY2Y1ZmU1MTA4M2VmNDY2OTRmMDYyYmRjYmFkMTQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2ac4b32789ab43c5b1cd6afb32a400b5",
+      "statement": "Any comparison with NULL returns NULL, and the aggregates first, last, list and array_agg do not ignore NULLs.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/nulls.md#L23-L145",
+          "version": "repo-lines-v1:sha256:d9fad6cf7e6c04cdeb3f547d474636a0ecf338246a188554197ce9d6c530847d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIzLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJlNzdhMmJjZmEyZGUzNTgyNWNkMGMzNDQzZjdmOWE0MThiMWQ2YmM0YmI5YTg5NzhjZDc4MmQwNjE0YjVkNmZmIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0NTkzYzg5YjRkNjAxNjFkNzhmZWYzZjQ4MzEyZDc4MzM2NDliODc2YTBjMWQ3NjJjYjViOWQ3M2FjYWEwYTIwIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlZjMxYjQ5NzNlZDhmMDQ4MDdiN2NlMWI3NTVkNTJiYjlkOTU3NTIxN2UwZWM2M2RlZjZkNTA2YmE4N2IwM2M4IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MSwiZm9sbG93aW5nQ29udGV4dEhhc2giOiI3ZWM1NjhlYWRkY2M0ODQwMjZmMWUzMmFmMjJjNzVmMzg1MzYyY2YyYzVjMWRkOTY4YzA1OTJmNTcxOTU4MzMwIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_89e03b2864c74c4fa9c8b464b69f66ef",
+      "statement": "BOOLEAN follows three-valued logic where false AND NULL is false and true OR NULL is true.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/boolean.md#L47-L69",
+          "version": "repo-lines-v1:sha256:7069bb5c206359d6f6e8899fba3ae56489ebf6f3fc2b2d5879bfa5130b7f9dd3:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJiNjgwM2M1YjQwYTBiN2I1NGJkMTBmYTA5ZTZkYWUwMWU1MWEwZTQ3NGYwNjJkM2E4ZjkyN2ZhZmFjOTQyZDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM2MDIxNmEzODc0M2VlMzIyNzYzY2EzODJjMjY5MjFiNmQ0NWVlOWY5MTU0ZTZjZjViMzg5ZTk1MTA4ODI1MzkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA0MDlhMWRkYzk4MTQ0NzBiZTlmYTAzOTI4ZDQ0ODliZmM2OTZjYTdmNGUyZWQwNzY2NTVkNWY5NzFiZGIzZWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFkNGE0YmYxNmQ2NzlkYWIxYTk4ZmQ0ZDg5YmQ1ODA4YTBmNmI5NmMwMTY3NDY0M2EzOGRkYzljYWIxMTc5NmMifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

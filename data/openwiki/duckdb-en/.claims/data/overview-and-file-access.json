@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:4448c00b255404b5f9a23283b9a6afc3e111f9e58d789865f627cab1103050af",
+  "claims": [
+    {
+      "id": "claim_cec2a9a681c840f28806ee2bcbe0ff23",
+      "statement": "INSERT statements have significant per-row overhead and should be avoided for bulk loading; relative file paths resolve against file_search_path or the working directory.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/overview.md#L16-L29",
+          "version": "repo-lines-v1:sha256:2bf8b06176628ded2681bc5ef44ff24b33cc4950be92666bd2c5feac73554572:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgzOTExZjE2ZmJkN2JjOGU4NDk0NGJkZmIzNGMwYzM2NjA1ZTBlOWU1MDE5YzEzZWYzNjQ0NGMyNDY5MDYwMWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM3MzE3NzlhZmFlZWM3ODA3NWQ3OWYwNjM5NWE3MDE1OTIzZmExNDUzODJhM2FkOGFhMDNmZDFhMzhmMGUwNWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVmMjgxOWYyZWExY2QxYzQ2YmM3NTRhZjY4ZWMzYzE0YjdlMTgzY2Q1NzdhMzIzOTlkZTNhNTAwYWVhODZmZDMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNlYjQxNzZmZGJmZWE5ZTk2YzcwMWQxYjdkNjBlZjc0ZGIzYzI1OTJlODQ2NWVkODlkNTM4Yjc1MzViNDkxZDEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8330e1d1df144a5d99de6111b05e1266",
+      "statement": "CSV, JSON and Parquet readers expose filename (since 1.3.0) and file_index virtual columns.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/overview.md#L112-L134",
+          "version": "repo-lines-v1:sha256:99dbd57dc75cdc3be438d8556d3b047846d0c77880f62b74b14ee2cdaf7094cb:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2Y2VjM2Y3ZTBiYjRlYjgwNTEwMTJmNjcyYzAxZDczMjI4NTVjMWMyNDQyOTNkYWNlOWI2OWYwNzJhMTAzYzYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU4M2RkMGIzM2I4MDgzNjU2OWE5ZWZiNGFmZTYxZWQwYmFmM2MyZGQyYjYwODlmOGIzOGNiMzRkMGQ3Mjk2NTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM1OTM3OTkwMzEzODk3NTVkYTVkODVmZDA3NDJhMWY0ZTA5OWZmMzQ4ZTQyNDEwMzA2ZGE5NjUzOGEyMzcxOWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBjNTc1YjIzMGViZmNmZjgxZTk0MDA5YWU3ZWRkYTJmNDcyNWZhYzg1ZWU4ZGVkZmE2YzUzZmQ4MTA3NDFjYzEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cc315578b7d24fd9be59aedde49686bd",
+      "statement": "read_text and read_blob return filename, content, size and last_modified, have a 3.9 GiB maximum file size, and skip reading data when content is not projected.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/file_formats/read_file.md#L14-L101",
+          "version": "repo-lines-v1:sha256:8653e27d9e77f563f632439c950d2cf5d7914e69a6cb5f93746d5ec71decd13e:eyJzZWxlY3RlZExpbmVDb3VudCI6ODgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyMGRkMmUyN2IxMjYwNTAxMmJjOGFiMWNiNWIwYjc3MmRjMTQ3YzE5NDE3YTZlMjIzNWE4NGVjYTBlNjNmNDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM4ZjFjZTk4ZDA2NGE3MjY4NWIzMzdkZTQ1MzY1MWQ2MTQ2NGViNGQ2MWRmMmNkNmIzNThkNjhlYWYwMDE3ZjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFlMGNiMmU0NDAxZjBmYWQzNTRjM2ViODNmNTg4NjVmZDBjYzU2NDE2OTJhOGM1MzIzZWZlNTM2ZmEwZjRhYzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bca5157b9082420494414c851c0d7ac3",
+      "statement": "The file: protocol supports file:/path, file:///path and file://localhost/path but not relative paths, double-slash paths or remote hosts.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/file_formats/file_access.md#L13-L24",
+          "version": "repo-lines-v1:sha256:037985924e6e5154d4e678dd70d4aad941a2a4b152d57f09cd3033784637c672:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhMGNjYzUyYTRkMTBiZmNmMmI0M2I5YzA4YTg5NWE0MmUzZWNiZWQwN2ZlYjQwM2QzOTU3ZTkxNTgwMjQ2MWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIyNDA4YWUxNmI3NWRkOWNlOGVkMzlhNzE0ZmY5MTk1NWY2Y2IzMWNkNDEzNjFjNGEwNmVjN2ExMTViZTFiZjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFlMGNiMmU0NDAxZjBmYWQzNTRjM2ViODNmNTg4NjVmZDBjYzU2NDE2OTJhOGM1MzIzZWZlNTM2ZmEwZjRhYzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_be8f73631e9e45359540c2fb57c9e21e",
+      "statement": "read_xlsx loads the first sheet by default, infers a header when all first-row cells are non-empty strings, and treats empty cells as DOUBLE unless empty_as_varchar is set; .xls is not supported.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/file_formats/excel_import.md#L14-L135",
+          "version": "repo-lines-v1:sha256:1c35e56dadae39fe61256e54529d912cdaebdb5dafa47ac652a37a011e60e044:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIyMWU5NjliM2Q3MTEzM2Y0NTZlYzQxYjQxZDMwMTUzMDU1MDE4OTM2ODk4NzhjMjQwODViN2Y4ZjBmM2UyMjIyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI3ZWM1NjhlYWRkY2M0ODQwMjZmMWUzMmFmMjJjNzVmMzg1MzYyY2YyYzVjMWRkOTY4YzA1OTJmNTcxOTU4MzMwIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIxZTBjYjJlNDQwMWYwZmFkMzU0YzNlYjgzZjU4ODY1ZmQwY2M1NjQxNjkyYThjNTMyM2VmZTUzNmZhMGY0YWM0IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJhMTQxMWM3NGI0YzUwODRhODdlODI2YjJmYzBkOTRkYzQ2ZDk4YzY3ZWJjZDY2ODcwZTdiM2U5MTM4OTU2MTMxIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_16a0e7f69c9d4da9b9ccf06e3270d836",
+      "statement": "Exporting to XLSX casts numerics to DOUBLE, converts temporal values to Excel serial numbers, and casts TZ types to UTC losing the time zone.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/file_formats/excel_export.md#L55-L69",
+          "version": "repo-lines-v1:sha256:1a0ee3ccb43b1afcb9b61dfa911a81124943002d6a5388f6c14c0903f7e55f76:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3OTczODVmOGUzOWIxNTA4NjczZGQ4Y2I5MzBjMzRmMTcyODlkYjlmNWE3NDQ3M2FiYmE3NWY1YmYyZDUxZmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA1MTJlMDU0MmRmOGQ3MzMyZTRmMzk0ODc2OWNiZWUwNzY5NWFkNTgxNWVlNDJmNGIzNWQwMmE2NjE5ZWJhYWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImExNDExYzc0YjRjNTA4NGE4N2U4MjZiMmZjMGQ5NGRjNDZkOThjNjdlYmNkNjY4NzBlN2IzZTkxMzg5NTYxMzEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8ac20405b2e84ac6b8b9cecc41a21a2e",
+      "statement": "Asynchronous I/O, new in DuckDB 2.0, applies to Parquet, uncompressed seekable UTF-8 CSV and native storage; async_threads defaults to four times the system threads capped at 256 and read_ahead_depth defaults to -1.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/io.md#L14-L63",
+          "version": "repo-lines-v1:sha256:024a512a789fd2fa615476aa056b97810f18d48d2d7ddfd2e35abc2712456c7a:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZkYTEyMGFhODI5ODgwNGFhMDVlY2M3ZjllY2U2NDQzZjg0ZjNiNjIxMmE4OWY3MzA4MWRlM2YwZDIxZGMwZmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ0NmEzNzUxMDY2ZDEyZTY0MTlmYjgzZWIwYTQ4MmM2YzhjOTdjNzQ5YjBlNWJiMjk3MjRhNTBkZTMyMDhmOWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNkMzQyZTg0MDE0Y2EyNzZlODRjNTQ1M2Q1YjdkOWExMGJjOTQyOGU0YWVjMjZkNTY2MTQ4NzFkMDAzMGY1MWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgxODMzOGFmMzVhNmRiNDQzMDI1NGFlMjUxYmVhMGJhZTVkMmE4OTk4Yjk3Zjc5M2MxZmVmOGY3YmFkMjg1MzcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_624083bc99b7455f828df6c7cdf635c8",
+      "statement": "fsync_mode defaults to STANDARD, and NONE may cause data loss or corruption on crashes or power loss.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/io.md#L85-L101",
+          "version": "repo-lines-v1:sha256:737bab702dc46624830be829d4bca098040cb44fed7d6cca76f3d6ffe5bf8c5c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA1OGRjNTI0NTAyOGFjMDU2NGVjYzBiNmViODlkOTJkMDg0OWU4OTVlNjU2MjI1NzkxYTVkMGJjMjNmNGZkODgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ0MDQ4NzgxNGFhZDQzOWEyMGFlMjBlZjk0MzI4MzAyNmExNTI0OGFjOTEzZmUwODhiZjU1MGY4YmRhZGEyNzQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI3MmNjZjg0ZTBlNWY1MDBjMTk0NGYzMjU5ZTNhYTI1NjJmNTE2ZjM5NGM3M2M3NGM5NjljMDJiOWVjNWJjM2UiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

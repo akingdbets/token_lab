@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:d14a544777e20220ea964fa82ff6f3d3b150c1fd2f774f72f543f948aa109523",
+  "claims": [
+    {
+      "id": "claim_3c4a6030cd7b4b3f83f4206fb89853ff",
+      "statement": "date_diff counts part boundaries between timestamps while date_sub returns whole elapsed parts, e.g. 2 versus 1 hours for 23:59:59 to 01:58:00.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/timestamp.md#L40-L43",
+          "version": "repo-lines-v1:sha256:53f25f362040f171af99e46ffd713d22386f3faa7cb2e2431d2a7e127ed71d73:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDU2N2VkODg5YzIxNjM5YmI5YjJiOWZmOTQzMGIxMGM3OTBmY2NmZDdiN2YyODU0OTJmODgwNmRiZmY1NGM1MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTk3ZjM0OTVjYzhmNGYzNTMxYzNlZTUxMTZmZTgwZjQ1NDc5Nzc5OGRlMzg5NjhkZTVmNjMwMmI4ZGRiM2E0NyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDY1OTcyMGQ5MmM0YWRhZDY1NmIwNzE0YzI2YTFkNmE5ZGQ4OWEwYmU5NDFjY2JlZWJiYmM1NTY0NmRiNzUyNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDUyNmU1OTBjZjQ1NTA2ZjliZjQyNzY3ZmVhMGE3Yjc4NjQxMTkyYzE0MDNjZjQxYmU1NzM4NTY1ODlkOWZjNiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_2557e2ae88944b49a0e792a5b6fddbf6",
+      "statement": "date_part with a constant list of parts returns a struct of the requested subfields.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/timestamp.md#L41-L41",
+          "version": "repo-lines-v1:sha256:b1c4bad1b997d3d8cb58a71e7d7f4fec7f4b5efb11272fd8217d35fb6fd8b1dc:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjFjNGJhZDFiOTk3ZDNkOGNiNThhNzFlN2Q3ZjRmZWM3ZjRiNWVmYjExMjcyZmQ4MjE3ZDM1ZmI2ZmQ4YjFkYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjFjNGJhZDFiOTk3ZDNkOGNiNThhNzFlN2Q3ZjRmZWM3ZjRiNWVmYjExMjcyZmQ4MjE3ZDM1ZmI2ZmQ4YjFkYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWViY2JhYzY5YzUxNjc3ODBjMzZhMWU2ZDVjN2RjNGM1NmEzYWFhNDFmZTVhZGI3MjY2NWEzOGQ2Nzk2ODk0YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMWMxZTc4MjVjZTZmMGE2MWExYmUwNTlhNTQ4NzNiYWJkNzdkYTdjMGVhMTQ0MGYyMzFiYmE4NGJmZDM4Y2VjYSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_4f7278d9694e43b4be894aa114f82fdf",
+      "statement": "epoch returns a DOUBLE retaining sub-second precision while epoch_ms, epoch_us and epoch_ns return BIGINT.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/timestamp.md#L196-L196",
+          "version": "repo-lines-v1:sha256:f7a07a1805ab1af7fa9966167b0f231434f870316cb580877cd32e5c6a7da8f6:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjdhMDdhMTgwNWFiMWFmN2ZhOTk2NjE2N2IwZjIzMTQzNGY4NzAzMTZjYjU4MDg3N2NkMzJlNWM2YTdkYThmNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjdhMDdhMTgwNWFiMWFmN2ZhOTk2NjE2N2IwZjIzMTQzNGY4NzAzMTZjYjU4MDg3N2NkMzJlNWM2YTdkYThmNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjA5ZWVkZjA0OGU1M2YwZGY4MTRjMjgzNDE5MTBiYzFhMmM3MmVmYTY0Yjg3ODgwYWY2MDEwMTMyMjUyODkyNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGZiY2Y2M2ZhZGZjZTE3ZDNiYWY1YWU0YzViMjUwYmJiZDYyYTdkYWRiYTQ3ZDhlMTViM2RkOTMwYzUwMDQ1NiJ9"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/functions/timestamp.md#L46-L49",
+          "version": "repo-lines-v1:sha256:00c3dfcd64d659571b75cc55b5caaec2e113df2ad4bc17968ad3519301fc4eb6:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzllODg0MTM2ZmI1ZGVjZGIwYzYwNzY5NjRiOTZlNmFjNzQ5YzdlOTAzMjRiMzQ4NTE2Yzk2NTNiYzVhMmM2ZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzViN2IwYzQwMzY0NGE2NGQ0NzMzZDUxOTE2NzM4OThiZGZkY2JmMWVmMTA3NjE0OGIzY2UyMjI5MGRhMDU4OSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODEzMmEwYmRkYzA4ZDdkNTk4NDZiM2ZlYjgzNjI3YWVhOTA4MjczYTRkMWM1NWRhOWNhYjY5ZGMzYWUwMTc5NyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDk5MDAyNGQ2MjY2NjBiYTgzMWNjNTMzZmQxOWNmMzBlZGQ5MTAyMjViYjRhZjFiNTYyYzZmZWZlOGQxZmNmNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_b9eb0c9ef1354d3ca3a7247f55ca5caa",
+      "statement": "strptime accepts a list of formats and applies them until one succeeds; try_strptime returns NULL on failure.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/timestamp.md#L63-L68",
+          "version": "repo-lines-v1:sha256:67d0006a940a195768ee6201c68a0e930c3543c15c5e701c3014d003b4ce938a:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGEzMmYxNGIxZDFiYTZlZmZlZWJhMjRkNjI3OWVhOTExNmY3ZTczMjY3MzM3OGI1OTI5MDdiZDIxZjQxZGZlNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDNhNGU5YzA1YTcyZDllNjFmMjczMTA3NmNjZTVlYmZiYTIzMjFiYmYzYTJiZDVkNmFmMWVmMTNjYTk2ZWY0ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjNmMTY1MzkwZWZjZThkM2EzODlmZWM0NDcyNGUxODQwNWM0NzFjYzc2NmRkYWExMWE5ZTI0YjA3ODhhOWE4MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYmEyODJhMmNiNDM3ZjY0NjY2ZGEwMDlhZmU1ZGI0MTBjNGEwZDkyZjRkZmFkZmQyNzAyNzNhODY3NzcyYjJiOSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c7648a5d18d3444393972c254ff0fdb9",
+      "statement": "Timestamp generate_series is a closed range while range is half-open, and infinite values are not allowed as bounds.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/timestamp.md#L350-L359",
+          "version": "repo-lines-v1:sha256:708d8b8d283817e3ca43c49bf8eb6f111e3c19f9961ab36b4c37513c64398a0e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3ODVjNmJlMGI4NjY5N2EwYTE3ZGJlOTdiY2Q4ZmQ0MWU5YzUwYzg5NzdiMDk4ZDljNWFjMzFlNDYyZTM3YzAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcwMTRkMTlmMjg2ZTAzYzA5ZjE0OWIxYTgyODNjNGIyZmRjNjc4YThiYmExNTlhNjQyNGU5N2U4ODExYzAwZDQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRiNjEyZmU2ZDQ3YTc3ZWJiNjA0ZDBkOWY1YmRlNGRiNWQwMGY3YzYxOTMyODYwNjA5YzFhYzkzOTkwYTRmYzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUyZGNkYWZmNjg0MmNhYTk1ODVjYjFkZjAyYzU3NzMzMzNjOTM3MTdhYTI5NTI4ZjUwZTk5M2JkZDU2ODMzZDUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b4a2779cb8774337bf67b52be779dd25",
+      "statement": "current_timestamp, now(), get_current_timestamp() and transaction_timestamp() return the start time of the current transaction.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/timestamptz.md#L28-L39",
+          "version": "repo-lines-v1:sha256:bb6807edce5c90ebbf799bf73cc38756fe1c62f9aaa5ceeb7884e59f56da4a3e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUzZjk5NjQ0NWJkMjBiYWY0OWMyOGUzOWE2M2EyMDUyNWYxYzc2ZjUxZjI2YTExZWNjNzc5ZDRmN2ExMzRjYmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmMWY2NGIxMDk0MDNiNGZlMjAyODJlMzBmNTZkNDRjYjUwNDA1Njg1YTcxZWM4ODRlOGMzZGFmOTVkN2NhMmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVlMGJlMjdjNGNhOGJhNjY4ZDRiMzAwZThhMGM0ZjhkMjUwMjgyNTRhMzRjN2NjZGY5OTc0MmViMDJhZTZjNjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBjYzU3N2ZmM2Y2ZWVjZjNlNmY0NTU1OWY2MWU0MjRjYTY4MzY5NzU0NmYyNDg1ZmYxODM0YTA0Y2M4YTNlMjAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5a8ae22c640c4ec4882451af843df579",
+      "statement": "Without a time zone extension TIMESTAMPTZ values are cast using offset notation and displayed in GMT.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/timestamptz.md#L121-L144",
+          "version": "repo-lines-v1:sha256:06deb25df96978af19be0099bf8f420ee9b2ff92c7ab71bdd9ef24ed0bbb8513:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk2MmVjNGNhNjJiZDk2NjZkNzgwMmM3MTY2N2ZiYzE3ZGIwZWRmZTc2MmI3Mzc1M2QxNWZmZDU0NjI3MmNjZGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk2MmVmMDExZjg5NGQ4ZjVmYTRlYjU5MzU1NmEzNmQ4MzRiMzQyZWIwOWM1NDJhYmVmZjlkZThiMWJlNWI0NGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY2ZDcwZjg0MDhhZTBlYTIzYzE4NmRkYmZiNTE4MTk1Y2U2YzM3NzUzNzI3NjE1MmZmNzQ2NGE0NTY4ZTE4MWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE2NzBjYmRhODJiMzRlZGZhMjQ4ZjI4N2YyYjIwMmVlMGUwYWRjYTUyZmQyMjA2OTQ2ZDljYTFlZmU3MWY0OGEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f095d9ca99084d91b64967dc6739a4da",
+      "statement": "AT TIME ZONE is syntactic sugar for the two-argument timezone function and does not accept numeric time zones.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/timestamptz.md#L438-L465",
+          "version": "repo-lines-v1:sha256:5043efee25aee9712498f8fa453130ad253d97829ae0e898e9b1ad9958175db5:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE3OTk2N2M5NmE5ODUzMTU0NWE2MWRlMWIyNWVhYmU0Y2MxMGNmMmM0YTVmMTUyZmYxNzc5ZTg0ZDE3NTRiMDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUyMGY4MzJmOGYxOGRmNDJmZjdhOWVlNTk3ZmFhNmRlY2E3NmYwZThkYjc0ZjRhYWZkNTUzMmJiNTIyNmY4NWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA1NjY3NmNkZjc3MmJiYjJiZGY2ZTEwNDE0MzU2MmRjMWJiYjU2OTBkOWJhZGJkZmE3MjhmYTQ1N2NlZGYyZDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ4ZDM3ZDUxNGMxMzZlMDhmOTQ0Yjg4NDhlOWM4MTE0NmQxM2ExZDhhZDQ4YzY2NDBhMDAzOWQ3N2E2MDJjNTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0bfa2d1c91b44c8883bb80f95e9102f6",
+      "statement": "Adding calendar intervals that land in a DST gap moves the result forward to the next valid timestamp, following PostgreSQL.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/timestamptz.md#L481-L499",
+          "version": "repo-lines-v1:sha256:848cad80bd0757ac92f5e3186b7e3c332acbf16405414a4c6a4bfe10eba2b3ca:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNiNGEyM2NlMDc1NDUwYzQ1OWQwMzNmNWFmODAwZDdhMmYxMzc3ZWJiZTI5YzZkNGM0ZTYzMzhjNjQxMDQxOGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmZTIxMjYyYzM2NGU4NDBkMGM0YzcyZmM5MWZmYjIxODFkZWEzODRlMjU4NzBlOWM5YWNkMGFkNzMxZTA1ZTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJmYmVhOTQ2Mzg3YTg4NDg0ZDk5NDIxYjMyYjhkODBlYzdjOTM5ZmEzMzFlMTNjMzRjYzYxYjVhYmYzYmI0Y2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

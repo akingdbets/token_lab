@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:864c5b19c165a3417ce2165eef83bf388bed7e8e817afe6e33f6a8248ab57771",
+  "claims": [
+    {
+      "id": "claim_2609e154d3d34e9cb102a1a20f7217c3",
+      "statement": "DuckDB needs at least about 125 MB of memory per thread and works best with 1-4 GB per thread; aggregation-heavy workloads need about 1-2 GB and join-heavy workloads 3-4 GB per thread.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/performance/environment.md#L23-L42",
+          "version": "repo-lines-v1:sha256:0af4b2449937af12b4cf6b7d26ffa258b5383ec218b0c20b8a1ada927729fdcc:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM4NjVjMThhYWY2OTJjODI4MmQ4NDcwMWYyMTlhN2ViMGZiNDc3ZDIzZTBkMGIyYmQwOWEwMjQ2MWQwZWI4NTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImExNDU4N2VlYmUyMzBiMDc4MDFiNTk5NmNjOGQxYjA3ZDkwMzc3NzljMWFmZTk3ZjE3NzI2M2VkZmE0YWQ3NTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNjZmUwYjhiNmVhODE5ZWExMWZlZWE0MDFmOTQ2ZmZiZWM4OWUyZDUzNTg4ZjdkYzRjMDA5YjM4N2YyOTNlOGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMzNjgwZDZhZGFhYzEwNGI3MDQ2ZjY4NjAzYTgzODkwNmNkNTcxOWUwNDUzYTliZWY3MjE0YmFmZTJhYTIwZmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_58e89d9a423c419bbab179d3c8b8f105",
+      "statement": "Read-write use of DuckDB's native format on network-attached storage such as NFS or SMB is not recommended; read-only use is fine and DuckLake is suggested instead.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/performance/environment.md#L66-L85",
+          "version": "repo-lines-v1:sha256:029d83d8d0b88add48c83e542bdf02f7d47b65278c112d6c1ca492db394d43ce:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk2Yzg0N2RiZTQwMjdlMjBhZGZiNDg2NDdkMGM0MzFiMGYzZGM4MmMzNjRkOTUxMzYyNWYzNDE3OWQ0ZjFlZjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1YjFlZjhkZDdhZDRhMDJjNzg2ZTJlY2RkZDA5NzczMWE0ZDkzZDBjY2U1NGIwY2ZiNmRiMThlYmE4ZjA3NzkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRiOTQ0NGNlZDYzNTkxZjM1ZTY3NWJiNzRkOGVlNTI2YTFmNzU1ZTk3MWRiMzFlMTVhZTVkOWQ1ZTZhOGYwNmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA0NDI5OWVlNTZmZWU2OWNhNDMzMmNiZDhjODIyMzZjNDBmNjc2MTYzOGY2OWVjN2E5ZjNjNTVjYThmNDcyODgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_84dcc230a89642c0a6d5d7213082f1d7",
+      "statement": "musl libc builds can be more than 5x slower on compute-intensive workloads than glibc builds; XFS performs best on Linux.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/performance/environment.md#L60-L101",
+          "version": "repo-lines-v1:sha256:8bef39cc3fd3524dd65852114e4a920a76184fb8892a5cabdbfb7142a56154ab:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU0N2Q4ZTg1NTEzMmE1NjEzYzdkNmIyNzcwNWI2M2QyZTgyZThmMWUwNDk3MjM0NTYyODI5N2FmNjQxOTJlOWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgwOWE1MDMwODUyOGVkZDhlOTljZTY1ZTE3ZDlhNjFiNTJjZjVmOGI0M2I0ZTlmZmQzNzE3YjA4NmYwZjkzYTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVlNGZkNTEzZDNkN2Y2ZThiYjRhZmEwZmM1MTc1ZDJiM2NiYWZiNjJkMzdlMTZjMWMwOWQ0OTBiMWUyMmNlMzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc0ZjY2MTkxOGZkYWE3N2Y5MGY0MTVmMWY0YTFhNDM1YzNhYmNmNWY2MmQ0NTI0N2YzNThiMzU3YjNlZWIxYTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_67b2a404b49f4c268b199d99e2f971a6",
+      "statement": "DuckDB parallelizes over row groups of default 122,880 rows, so a query needs at least k times 122,880 rows to use k threads.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/performance/how_to_tune_workloads.md#L47-L65",
+          "version": "repo-lines-v1:sha256:68e1c45c543134605e790642389a2323fb0d6cf8dcc012f0ce0fd2429e0817e9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVjZThhNWI5YjY3ZWYwYTU0MTBmNjEwYTU4NjBjZTU2MTI2ZmFlNDE0YWVmMTZiOWZlNDM4ZjUyOTAyODEwMzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYyZTQzNWViZGZjYWEzNjNhODM1ZDAzNTFmMzk1MjI3YjUxMTUzMmFlM2UyMjRmZWE2YzNmYzFjOWQ3OGIzMDQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ4M2ExMTE2OTY5MTI5NTBiODk5YjhlODhjM2RkNGFhM2FmZTA3ZTcyYzgwNTA2ZGIxNTI3MTI0NGM0OWEzYjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhkZTc2YjcwY2ZkMWZkODg5ZWVkZjc2OTVjZmQ0Nzc4ZDc1ZmMyODQyOGM0NGRmOGYwYmRkZDkzNzEzYzhiZmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9ad27207820e43e18eaad3427233e8f0",
+      "statement": "GROUP BY, JOIN, ORDER BY and window functions support spilling to disk, but multiple blocking operators, string_agg and ordered aggregates can still cause out-of-memory errors.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/performance/how_to_tune_workloads.md#L67-L103",
+          "version": "repo-lines-v1:sha256:53bc7f8c3bb9832e8ab8af9674315fa5fe426f5548b5905e35a60f5f0185c541:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmODY5M2QzMGRkMTc1YzA5ODQyNDFhNDg1NDk1ZWI2ZDU0ZDZmZjQ0Y2U4MzcyMTA5NGU1ZjM2ZDEyYWUzNzYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAyZjAxYzI3ZWE3MGIzY2EzNjY0NjkyMTY1N2JiN2I4MTUxNmQzOWNhOWM2N2JhMGEyMDBlNjYwZDI2MTNiMjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdkYjQ2YTNlNjhkZWE5ZjMzZjQwNzI1MGQwOGRkMzFkNDUxZDYyNThjYWJhMDU5Mjg3YjUyNTc3ZGU5MmE5MWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVlZWQ5NTk3N2U0ZjI2MDc4MjNiZWVmNTZmNjc1MzlhMDM3NjdhMDc5MjEzOTk3ZmJhZmQxOWZkOWM4NDY1ZmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f61732395e0b495585a09699944cead4",
+      "statement": "Since 2.0 async I/O removes the need to raise threads for Parquet, while JSON and compressed CSV still use synchronous I/O where 2-5x CPU cores threads can help.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/performance/how_to_tune_workloads.md#L124-L128",
+          "version": "repo-lines-v1:sha256:7643f19b8734ed535ea6bd8f24cbda0fd51ef0278c92303c064c2f6b4f325226:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTkwOTY1NjI2MGE0ZTNjOWI3YWYxYWRmYTNlYmM0NGMzNzdmZjE4ODFjNDRmYmUyMzcxNDRkOWYxMjNlZmNkZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDg0ZGVmYjY1MDFkZGIyODc4NmYwZjUzZThlNjZiYjIzNzQwOTlkYjAyNTEyODc2YTQ1NGViYTRiMjE3Y2JhOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjgzNTVmM2QwYjM3NTMwM2NkYTZiZjE4NDVkMzcyYTA4NzE1ZDAwMDMyYjUzMGYyNjVjYWM1ZTMxZDMxZTAxYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDY5MzM2MzAyOWJlZWQ0ZGMzODEwZDRmMTYzOWJmNDE3ZDY4NmIwNDZlZDg0OGUwZDMyYmRhYjU1ZmY5ZWUyZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_ece704aafef34f1f9f790d60614ec022",
+      "statement": "The external file cache honors Cache-Control headers unless enable_external_file_cache is set explicitly, and is shared by all connections of an instance.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/performance/how_to_tune_workloads.md#L142-L160",
+          "version": "repo-lines-v1:sha256:b374421f1239e7fec5b04c85a51967f4057951ab03299e622fba231b8734c537:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjOGVjZWY3OTI5NmUxNTVlODg0OTA4YmEwODAyYWM3MzIyZmRkZjkxM2VjZGMzY2E0MWRjMjY1ZGNjNjA2NmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkyZjQ1OGRmMmRiMGM4NmI1YzBjMDdhYjUxNjA4ZDU0ZWYxN2E5YmQ4ZjQ0NTAyZGRkNWZlYTZjZTAzZmY2ZWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVjNWUzYzBkMGJjNjNkNzM1MWQ1YWU2MzAwZDM2ZTQzMzg0YTkxNGMxODMzMGVkN2VhZjYyZjkzODY3ODljMGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjliMjMxZDNjMDAwMDFkOTg3YzAxZjVjOGEwZjdlYTRjM2JkMzFjMGRmMGMzNzEzMjJhOWYzNDY0NDczZDZmM2UifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_411191ac32cf418d9ada68eb713916d3",
+      "statement": "Compressed databases ran TPC-H Q1 about 1.5x faster than an uncompressed in-memory database, since compression is applied only at checkpoint.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/performance/how_to_tune_workloads.md#L168-L190",
+          "version": "repo-lines-v1:sha256:5b74b3bab28747631f9fdb378674ffe41b45e1f4fd4856f754a6892cfd92e9c7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNjMTU3NjFmZGFjOTMxMjdhNjU1ZmU0ZDY1MTJhOTg3YWFlNzYyMTIwNjFiNDQwNjJhODU0MTgyOTY2M2NiMmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxYjRiOTBiM2M4OTg2ZDAwY2E4M2QyMTY3ZjFkMTMxNWE4NGJiYTI1ZmRiZjJlZmI5MmQyMjUyZDhhMmU2N2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRkN2YwYjc2MDg5MDk3M2Q3NzdkYTk1NGU5ZDBhOTUyN2EwZjU4YzFhN2MyZjU4MDI5OGIzZGIxYTUxYzQzMTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMyYWZkYTA1OWI4Mjc0OGIxMmY1Yjc2NDgyMDA3NzNhZjNmZWY5NDQ1YmRkMGIzZjZjODUyOWIxMzk5ZWIyNWEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5d256d3e57394aa296e136957306a236",
+      "statement": "The slow-workload checklist covers memory per thread, lowering memory_limit, fast disks, disabling constraints, correct types, Parquet layout, query plans, parallelism and thread count.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/performance/my_workload_is_slow.md#L14-L24",
+          "version": "repo-lines-v1:sha256:35de89e9141cb9b6980e58d56885be452babc5ca8244a315923ee818f6f529d2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBlN2I2NTIyODc3NmU5YjFiNWY3YjhkZTM5ZDMxZGMwZWQ4NDU2OWJjNzkxYjE1NTQyNDJjNzk1MjcxMDgyMjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQxNGQyOTg4NDM0MzQ2YjhiZTdjMmI0YjhkYTA0Y2JlNjE2NzY0MmU4YTA5MWZhNjcxNzczZjI3OWI2NTA3MmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM0Nzc3YWM3MzVjMmFjMmIyNTRkNjc5N2FiMGFhOWRmYjZjNTVlYThmNWIwMWVlZDE1ZjBmYzZjYzA2YzUyMTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFkZDM5YjdiMjk0MjhkOWM2ZDQzNDJhOGU0NjIwNmQ2YjczNDQxZTg1MzkzYWJiMmZlMWE3YjQ5ZGE0ZWE1NTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3808a2053f354d4397c1110e2f3ae89f",
+      "statement": "The performance guide benchmarks were run with DuckDB v2.0.0 on an 18-core M5 Pro MacBook Pro using TPC-H and LDBC datasets.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/performance/benchmarks.md#L13-L36",
+          "version": "repo-lines-v1:sha256:b42c4832cca74295bac7da2edd5774ce72b5cd3c7acc4688591f565794010f83:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk4ODEyNDk1NWI0NGIzMzcyNDJhZDZhNGIyYjQyMTc4OTJjM2NmNmEyMWViYTQ2MzMzMjM5ZTBhZDE4MzBhMzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU4Y2RjNTkzYWY1MWE1ZTgxNTlkODFlY2VjMGZmNGVjNDI4ZmM3NWMwNDM3MjcyMWZjYzliODAwZGRiZjYyOGYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM0Nzc3YWM3MzVjMmFjMmIyNTRkNjc5N2FiMGFhOWRmYjZjNTVlYThmNWIwMWVlZDE1ZjBmYzZjYzA2YzUyMTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

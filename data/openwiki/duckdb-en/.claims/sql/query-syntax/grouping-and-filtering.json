@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:37c6723f0a757800ebc329f8b549dbb6ddc243fe8c15e2b6e9d554e4196c6134",
+  "claims": [
+    {
+      "id": "claim_3f94caecc5d04744bcec3c4b67080ee0",
+      "statement": "GROUP BY ALL groups by all SELECT columns not wrapped in aggregate functions.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/groupby.md#L19-L23",
+          "version": "repo-lines-v1:sha256:586bc03c1a38bc620b97fc44fe817c08ec129b5ccf9c442d7eae5ffde8cff569:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTE4MWJmNzdjMzhhODAwMzMxMzdhMThlZGM4N2Q3OWM4YjMyOTUyODFjMGIxOWNhNDAyNGUzODEzYmQxMDliMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTdhMWMyNjYzOTdjNDEyMjMyZTI2MTI2ODMxMDYyMjlkNjljYzBkZmUyZDU3YjM4YjBhZjk2ZmVhZjQ5NzUyNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDA4NTA3YWIzZTI0MjU5ZWZmNGQxODUwNWFiNmY4YzU1OTc0MDRiZDM2YjhhYTkzODY0M2U4ZDQ0OTMzYWI3MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjFiNWQ3NWYwNjc5NGYzZjE1MGZiYmNkMmNkOWE4MTc0MTFiMzUwMjg1Y2Y5NWQ3MmRmZjYyMTc4Y2U2YmI4NSJ9"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/groupby.md#L68-L84",
+          "version": "repo-lines-v1:sha256:4133eef6c81cebdb51c5d9b610698a7f9a97b1da1f34ea8b988284e1ec5bfff4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJiNjU5ODFlOTQ2OWYzZjM5YWZhZTE4Y2JhODNjZDYxZDMwYzFjZDU1YTUwNmJjMDg3ZjYzZjAxNGFjN2VkMmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU0MmU3MzNiYjBiNjhhYzc3ZjNhYTk4ZjUzZDI2MGIxM2ZkMDgyNzNmMjgzZGFhNTE4ZGUxZmNiZThlZjBkMzMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEwMzMwMGIzNjhmNTIwOTM4MDQ1YTAyNDNmM2M5YWUzZTFjYmU1MjYyNjI1YWZhZTJmZTQyNzI3MzFlODM3YzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZjMjRiYTgwYjRmZTJiNmZmZTM0OWM2ZTY2NGJlNjUxM2M3NzYwZWRjMGRiMDAzMWVlMDAyMzg2MDVkNTVhNWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_55fadfcde8fd4a168842f5250969e77c",
+      "statement": "Grouping directly by unnest in the GROUP BY clause was introduced in DuckDB 2.0.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/groupby.md#L31-L41",
+          "version": "repo-lines-v1:sha256:ab007a26993e2c8248eb644ab743bb34b9eb8e85757e83bb270c8bf07cce8522:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU3NjI4YzFhYmJlZjU5N2UzMzEwMmI4ZmEyYTAyZTI3Y2Y2NjFlNGFkYmMyMDc2N2M2OTA0MzU1NWNiMzI0OTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2MDNhMzE0ODNmMDA5MDE1MDVjMWQxOGZjOGNlNTJmYTFjNGZhYTI0M2IxNjE1YjRmZDZjMzJjODYyYmEyMTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE0N2M5ODNmYjNjNDc4MTk2NjgxNjI3MGQzNjM1YzExNjcxNjNiNmE0YTljNDcyMTZmZTlhMDBkZmY1ZWFkODYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMwODkzZjVkMDc0NTM3MWE1ODg4ZjliNzE1ZDcwMTBhZjdlN2ZkZDBkZmM3N2NmMGFmNTNlODhlNjE5YzE4ZDUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ae2356db94e74672b638c1a5a6cd00c9",
+      "statement": "GROUPING SETS, ROLLUP and CUBE group along multiple dimensions, are not compatible with GROUP BY ALL, and ROLLUP produces hierarchical sub-groups while CUBE produces all 2^n combinations.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/grouping_sets.md#L14-L111",
+          "version": "repo-lines-v1:sha256:528af0ea2bc527ff0461f84641f6f22792adf60c7c8ce6499d6a457b77a47b6f:eyJzZWxlY3RlZExpbmVDb3VudCI6OTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmNjg4ZDVjNzY4NjFjYjc4NDI2YmU3Mjk3Mjk5OTgyNGUxNjU5MDVlZWViODI1ODk4Y2I3YzA0MWYyZDdiMzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxZDU0YTdkOGE2YWQ3ZDdmNjUzZDVmMGM1YWRkZjE1MDUyOWJiNzJjMWEyM2I2NDMyMDQ4MzNiODU4ZWRmZDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRkNjc0ZDAwNWE2ZDViYzNlNjAzODQ3YmU3NjczNWE5ZmZjMmU0MDUyNzQ4YmJjYmEzMTYxNDg2Y2Y0NWFhNzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIwMDIyOWFhNWUzODQ2ZTNiNzFiYzk1YTM4OTVhYzM3MDk2MDdkNmJlNjM2Yzg4MTg3OTRmMWVhZTAwN2NjMmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_eb0a70b9196341efbfd9c14a6a56f682",
+      "statement": "GROUPING_ID returns 0 for regular aggregate rows and a bitfield for super-aggregate rows where the first bit corresponds to the last argument; since 2.0 calling it without arguments uses all GROUP BY columns.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/grouping_sets.md#L113-L212",
+          "version": "repo-lines-v1:sha256:e65ada9304728c6bb38bb5251cb102324f522e148a178a0dc36a39c3fa083fc9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAwLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI1YTRlYzY4MzFiNjk5MmM5MDg0Yjg5NDAyZGU0OTRlZjRjYThiYTU2Mzk0YjJmZTEzYmNhMjMxZjY5YjMzYTYzIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIwOGRmNjUyMGRjN2Y1YzZiNGZmMzZjZjNmZGQyY2UyY2NlNTVhMWZmNTQ4ZjA3NmRmMmVjZTY2OGZiZDcwYjE0IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI0OTdkNzA5MjBlYTBlNzlmMTM5Njk3NWE5NGZlYWQ2NzhlYzYyNzFhNDZiNWNlOWEwZDM2MjIyZjdmNGRlNGRjIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI4YWY4MTdiNDJkMTA2ODYwMjFmZjU3NWM4ODBlMWRhODM0MzA3YWVmNTc2NTc0OGQ4YjhlMTBhNDE0ZDBhZjBiIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_ceb394cac75942c994a98c6f1bef72b3",
+      "statement": "HAVING filters groups after aggregation and must directly follow the GROUP BY clause.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/having.md#L13-L34",
+          "version": "repo-lines-v1:sha256:afd7b913d2ba17974d14427805fc86a94c9a2b056a5fce3ab3e972ba468217f0:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4MWI1MGEwNzc5YmEzODJhNzA1NmRlOGU5YjAwNzExMTY3NGNlYTY2OTJhZjNlZmNhZjE0MzRjZGRhZDE3ZTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU0OGM3ZjZiZjlhZjc1NTc5NWFhM2E5Mzc1MjdjOGI2ZmNhNjg2ZGZiOGVhNWFkNmQ2ZmUzYWFmOTRmYzExNTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdlOGNkZjIzZTQwYzdiZTM3MzY3NjZhYzEwNDk4ZDc1ZWNlN2FkYjVjZTkxYmZjZDUxYTM0MGIzNTlhZjFkNjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVhODU5OWM5MjdkNGU2ZjEyZmFlZTdlOTQ0MTE4NDRmYjY1MGNhYzE4OTUzNjE3MWMyNGUzZmQ2YmVlNjg1ZTMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_185b95df7d0d4291ac27c1ba7dce04c2",
+      "statement": "FILTER restricts the rows fed into an individual aggregate, acts on rows rather than list values, and unlike CASE WHEN works correctly with NULL-retaining aggregates such as first.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/filter.md#L14-L158",
+          "version": "repo-lines-v1:sha256:2e1b63f81c075a5d6dca123470e0bb3d14fb2262d974950444ae33aad1f3b8c6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQ1LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIzZjI4OTNmZGExMWY5ZmIxYzlhZWU1Njk0YzY5ZmM1YWFmN2NiNTFmM2I3ODE4YmEzMDVlNDUwYmVjZWM2OWE1IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJjMDQwNzc1MDA4ZGJmZDY5ZmYwMzVmN2I4ZjBjNGU4MDUwNGI5N2U5ZWExZWU2Njg3NmQ3YzAzMjRhNDUyMzUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJhMzdkZGYzYTVhMGVlYjIxODNmZWVmZjE1YmJmYTUxMzM0MDZiYjY1YmMwNzU1Y2Y5MDQzMzA0MTY4ZmEyODIxIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIxOTZlMDk1OTAzOGFkZmM2NTc3MjZmMGNjZTI3YjAzMTIwZDhjY2NkZTYwNjE5NDhiNGM0ODljZGJlYzRhOGIyIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_3b68da7305974ba6a6ac33060fd93654",
+      "statement": "QUALIFY filters window function results without a subquery, is placed after the WINDOW clause and before ORDER BY, and can reference window function aliases from SELECT.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/qualify.md#L14-L94",
+          "version": "repo-lines-v1:sha256:c93a7c92b4091858519f710ff958f74bec2feaf8c41584774c2fb76212565415:eyJzZWxlY3RlZExpbmVDb3VudCI6ODEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0MTlmNzI2M2JkZDQ0Y2VmNzZhZGY3OWE5NTBmZTBkNTM4MjkwZDFlOGIxOGJlNGEyYzVkZTFhNDBiNjFmMjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU1NTIyZWYxYzExYTg1MzZjNDdiZTdjZTE3NDQ1MDEwNWM5MTc5NzRlOThjMWY3ZTY1NTAzYzliZTE1MDQzMWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRmMDFmNGI5MDI2YjRkZjQwZmNmMjgxNTcxOTJhNWUyZDM3MmMyZWI4MWVkN2ViZWU2NzJjZTBiMWYyMDNhNWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJlYmY2NDQyMzhhMDM5MjllMDU1NGNlOTY1YTc3ZjY4ZTM1MDhkZGU2Y2EyMDU2Mzc2YmMzZGI3NjY5NWVhMGYifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

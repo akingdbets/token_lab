@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:a0d57dfbb97dbe40b68b6fa79144ed4af3a2ab46507b391c458b83a873ace246",
+  "claims": [
+    {
+      "id": "claim_f298b5bd4828464aa6d698bc5c030b79",
+      "statement": "The DuckDB Spark API implements PySpark via the relational API, is tested against PySpark 4.2.0 and 3.5.9, is experimental, receives bug fixes only and will be deprecated.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/spark_api.md#L13-L17",
+          "version": "repo-lines-v1:sha256:fb99110bb5e4074264be391f0d571fbce345c8a6891c75290dc75b4bc3d9a979:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzYxNDNjZjg1Mjg1Njk1N2UyNWViMDEwYzdkZjZlNjNiMzQzNDFhOTZhODM0ZDYyMTA1NWJiNjc1NTAyNjQ0NSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjJlYzNmNjcyZmJiZWY5MmNkYTVlMmM0YjViMzM2NWRmOTkyMzcyMTNjOGY3Mzg3NjJmZGI4YmM0MDNlYjAwNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTQ4OTExOWI5MzQ1NWQ2MjIzMjg0YTE0N2VhZGFjNDBhOThhMzJjNjMzODQyOTRkZTVhMzMxMGM1ZmU0ZGU3NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiM2Q0ZmI5MDBiZTIyMmZhOGQzYzlhNzEzOGVhZmRhYWQ0ZjIzNDY3MjBlMDA2NTVlZTUyZThiZWIyM2U3NmJkNyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_4c1161aa9d0e4fd7944aed44f3e8f19a",
+      "statement": "Ibis 12.0.0 and earlier do not support DuckDB 2.0, so the Ibis guide installs DuckDB pinned below 2.0.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/python/ibis.md#L15-L23",
+          "version": "repo-lines-v1:sha256:75eba30a8f5e61950e62a84a920f2f9edeb27638ca9ad89f1ecdbbf9b508ae74:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDAwMTE4MWY4OTBiOTgwNjkxNGQxNmY1ZDdiY2UxMTljZTM0N2ZkMGQ0NjdjYzg0Y2Y5ZTA0Y2NmZmZmOThjNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2VjNTY4ZWFkZGNjNDg0MDI2ZjFlMzJhZjIyYzc1ZjM4NTM2MmNmMmM1YzFkZDk2OGMwNTkyZjU3MTk1ODMzMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzJjMDhmMWUyYmVmZTk2ZDhkNGQyNzU0OGRhNjU2NTgzYjg0MGQ1Y2Q5NWQ1Mjc0ZDJmYzBjZGQ3ZmJjYmNhMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzM4NWQ4MTFiOGIwZWYxZjc4ZDM4ODNlMjNjMDE3NzU0OTk5Y2IzMjNhZDc1NzllYTg1ZjMyNTgzM2MxOWEwNiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_87ba7b29e28e4c77bb75b73cf61de68b",
+      "statement": "Ibis evaluates lazily and DuckDB executes the query; results are only pulled back when to_pandas is called.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/python/ibis.md#L72-L107",
+          "version": "repo-lines-v1:sha256:d29df7bcb2734d5f14c1055f70c3c65ebed1e16c736eb42bb1c53e0b197a73f0:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMyNzdiMjgwZWFiNGQ4MjZkNThhMmUxYzFhNTQ0NTdkMDFkMWFiNzBmNzJlNDdmMzVkZDRjYTIxM2JiMWNjMTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMDlhM2RmZmQwNTYzZGY0MTMzYWJiNGQxN2EwNTIwNjZkMjdhZTI3YTY0OWVhOGVlNzQ0NWM4MTgxOWIxODUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBmODUwYmE5N2UxZTJkMjE0OGYyNDhkNjYzMmRkNWI5YmQ2MzFlZTU5YTVhNTQ4MWRmYjIwNzNjYTIzNzUwMjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNlNDU1MTljNGRiMGEwMjAzZWQwNmE4OWRlN2I0OWI4ZmI3NTIxZGE0ZWRmMDg4NzA1NmZkNGMwNzIwMmRkMGUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c77fa2f925fb4b6f9490c67d484d8914",
+      "statement": "For PyTorch, DuckDB pushes filters and selected columns into the Arrow dataset scan and to_arrow_reader streams result batches; torch() returns a dict of one tensor per column.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/python/pytorch.md#L51-L78",
+          "version": "repo-lines-v1:sha256:98a004e2571bdf97b73e117878b2d2b86bb52d97617e591c0ac7d3297be93cf9:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk0NWQ3NDk1ZjVhNjY1NjcwYTdjOWY4M2FjZjhiNGQxNDUyNTdiZDA4YTQyYzlkOTFmYzcxNjM0ZjYxM2UxNGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZkMGI4ZDlmNGRlODg4M2I2ZmRjMzFiYmU0NzM1YWNiNTNhMGJlM2RkYmU2OTJiZWVhNjRhYTlhN2UwYjA5NzIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU4MGMyZTIxZmQ5ZGM0NWEwMDY3MTM0ODYyMDIyMzAzY2JjYzZmNzY3MmIwZDM0NDQyYzAzZDAwODJmN2RhYzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRiOGU4ZTY3YWZmMGMxMjZmYzAwNGY3OTM4N2M3NDRmYzIwYTk5ZWE2NTM2NzZiZTk2MDRlYTZiMGMzODY4ZmIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_85846fc785604589a16c5369344b4626",
+      "statement": "marimo SQL cells are serialized as mo.sql() f-strings, auto-discover DuckDB connections, and prefer a database table over a local DataFrame of the same name.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/python/marimo.md#L48-L107",
+          "version": "repo-lines-v1:sha256:13ca9d927c9bd715884419c765c74be35b8a18e7d33c7e4e03b72dfc8ef6e8d7:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmZGU5YzE2NGJiZDRjMTNiN2EyZWM3NDUxNTAwZjAwNWQyNmFkNDQ5NTFlMDkwN2JjMmI2YTllN2MzMTJkYzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ2NGYxNzljMWFiZTkwZmMyZTMxYTIxMWQwYjAwYjFlNDAzYjU3NmUwODhjNjliYjAxMTZiNzkzMTkzODM2OTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNiYjU4OGNkMGFkOTc1M2UwMjRjOGYyMTJiMTI3NzdlMWUzNWU0NDgzMTFkYWM0MjQ2OTk2YTdiYjM2ODQ0MzQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_280d7ed1bc5a451e9181d35a30ee78e5",
+      "statement": "duckdb.register_filesystem registers fsspec filesystems for querying storage httpfs does not support, with potentially lower performance because they are not implemented in C++.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/python/filesystems.md#L13-L38",
+          "version": "repo-lines-v1:sha256:878ca2f69aa7274d245a0b785ef9032e933e1b28689938a64db7ed9f358c35b7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhMTZhMWY3YjRmYTVmODU3NzdjODA0YjBlOTE4ODk3MDlmMGJlNzExZTkyYjI0YTVjNjg5NGE4MjJhZmY5NTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY5MWE1ZTc5ZGFjMDAzZTgzYWU2ZTQyYmJmNmQ1YjBkNjkxMzJlZWNmN2RiMmQ2Yjg2OTQ0ZTcxMTExZmRiYmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZiMWI0NjFkM2ZhMzY1MTExMDdmNDZkYWQ5NDhhZjdiY2EwNjM4NzVhZWZkNWZjNzEzMzRhMDg2N2E5MjVjOTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

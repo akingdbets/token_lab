@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:32ee9368ff66efac9b9deef894306ee0e0f8ec54cc2f548d020046c4ea299b66",
+  "claims": [
+    {
+      "id": "claim_10882e554f66415981940072589ee366",
+      "statement": "Position-based struct functions such as struct[idx], struct_extract_at, struct_contains, struct_position and struct_values also work on TUPLE values, using 1-based indexes.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/struct.md#L14-L33",
+          "version": "repo-lines-v1:sha256:a932c91b40d927a1ee4dab6c5f9bf2ee356a10e458a0522d24c8c4f8f055b1e3:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI5ZjZhYWM4NjBiZTVmODUwYjU5NjgxZWE2ODY5OWVmYzUzNWYyNjI2MGU1ZDZkMzQ2YTdiMDI0MmMwNmFlMTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjczMTE3NDM0ZjM1ZjRiNTZlNTU0ZDlhYmU3MTRmNjE1YjY2MDIzYTRhNmVmNjg3M2UwMTIxYjM0ZDNjYTJiYmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU4ODk3ZjhjZjY4NzNmMjY4NjJkYWM1YjBiY2I0ZjUyZjY2MDRmMTg3YTBkNWE2NGIyNGE0M2Q4NmNkMzBmNDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk4ZDdiNDQzNmIwZTIzZjZiZGU2MzA1MTk4YTc2YTk1YzZmNzA2OWRiMzU2MWMwMTg1MDc0MDNhYTgyZDA5YTkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3531e343838746abb5d7a5c439d87110",
+      "statement": "struct_insert adds fields while struct_update adds or updates fields of an existing STRUCT.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/struct.md#L123-L157",
+          "version": "repo-lines-v1:sha256:7b660aead4fc41fce8fbb6bb67d2a9e104220ab468d62173567865cd1a0077b4:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmMTgxMmEwOGIxODYwM2UxYTAyMjY2OGQyZmM2Zjg4OTdhYzg1NWY0YWI3ZWJlYWE2YzY0MWIyYTUxMmE2YTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJlYWViNTI4NzkwYmIzYjY0OGViZjkzNmVkZGMwN2NjNmRmZGFkMDZmY2Q1OGE3YmMxMjdkYzg0MDVmYjIwYzkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQzODU4M2I5NzQyYTM0MjdiYTFlOGIwMGIwMmQxZjEyNDU3NjM2ZmQzOGM4NWQ5ZTU5ZGYyOGE1NmI3YWJjMTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM4NjQyNDlhZjhlYmQ3YmY3MWE2MTAwZWI1Y2U2ZWMxOWE0NzEzOTJiZmE4NGEwNDZlYmNhZWU5MjQ3Y2M3MTUifQ"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/functions/struct.md#L28-L32",
+          "version": "repo-lines-v1:sha256:df7efa9420d6a5dd1da04dd908ae0b556d76a42acfcb0c75d909eb367954e4a2:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiY2QyMjUwYjNhYzdhNmE3NGFhMjA4YjBhOWVjNTIyZDg0ODRlYTQzZWMzZGI4ZjFlNTAxOGRjNDVhNjAzM2RhYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZGIzY2Q4N2ZjYjMxOTQyNDFmOGFlNjVmNzE2ZTEzYTcwYWIzNGZlMWM4Y2YzYzkxY2NhM2I0NzU2OGQ5ODEwOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGU2MmNmNTMzYTEyMGU2YWJjNTAyZGIzMjU5NWE5NWNkYjk0NDY5ZmY1NzljOWY0YzMzMDQxZWNlNWQ4ZmQ2MSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMGQ5ZjkzN2IxZGQxY2MzMGIwNjAzZDM5Y2JjMTljZThiZWMzMWNlMmM5YTEwMjRjMjA4NjA2MDg3NzM0Y2ExMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_d56d37945b334e20ae858e52ad464ff5",
+      "statement": "remap_struct reshapes STRUCT, LIST or MAP values into a target type using a field mapping and defaults.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/struct.md#L21-L21",
+          "version": "repo-lines-v1:sha256:ecfe654b9eeebf2d15ddbb03f17e51ad163cc8bb835e7a250dca69af2e435ade:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWNmZTY1NGI5ZWVlYmYyZDE1ZGRiYjAzZjE3ZTUxYWQxNjNjYzhiYjgzNWU3YTI1MGRjYTY5YWYyZTQzNWFkZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWNmZTY1NGI5ZWVlYmYyZDE1ZGRiYjAzZjE3ZTUxYWQxNjNjYzhiYjgzNWU3YTI1MGRjYTY5YWYyZTQzNWFkZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDNhY2UzOWEwN2NkMDcwMTVmMzg0N2EzMWQ4MGU0YjJlZThlMGZkMWEyOGRlZDI0N2Q0NWFhOWIxNmNhN2MwNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGMwNDEzYWQ2OTYyMDg5MmNkNjc3MzU2OTUzNDNjMzVlZTA0MTczYzAwYTZkNjlkMjRhYTg5OTdlNDBlN2M2NiJ9"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/functions/struct.md#L64-L67",
+          "version": "repo-lines-v1:sha256:bdce2d1827e62a35a1bc80f5697dca17695e3e90d4927f4c085ecfb8d1085465:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzI1ODczM2MxYTVhNDcwOWZiMTNkMTA4OWRhYzI0YTFlZmZjZmVmZGI5YzhhMDE5ZmJhM2M4MWFlMTg0Nzg5NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTEzNWFjMGFmOTE3MWVkZThkYmUxMWRjNWFmOTYwNWM0Nzc1OTA3Njc3ODhjMzVlOWM3ZjE1NGQ2MGJiYjZjYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTljZWQ2MTBjZGJlMjU5ZWViMGZmN2Q5ODE0ZjFmZTk4MjI0MzkxYTU5ZmFjYWQwOGRhM2UwNTdjNjU2MDQ4ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNWYyY2RmYTk3MjI4OGI0MTIxOGU2YzQzYjk4NzVjM2NmOWQ0MzE1NDgxMTJhODdmYTI2MTk3NGQ1ZTk5ODdkNiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_3a89ac20ea23411ca977ccc7f5675b11",
+      "statement": "map_extract and element_at return the value wrapped in a list (empty if missing) while map_extract_value and bracket access return the value or NULL.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/map.md#L17-L29",
+          "version": "repo-lines-v1:sha256:398f365f9587d3c6b1bd2bdc52fbe7cebee37722859eb201614ce5d491546e32:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYwZTM5OWQ5NTk5ZDNmZDM3NDE3MTEzYmRjNWU1MzJmMWRjN2RjNTFkMGUzMDFhZWNiNTExMTQ3MjliYTBiMmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVjNjZkOGY3MTIyMDRjNGNiMjdlMGIwYzNkYjMyNjllN2ViMmI5MDVjYTVlNmRjMjcyYWNhMWQ3ZDdlY2U1ODgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA1ZDFhM2Q4ZWI2YWRlMDEwZDdiNWU0MjViOThhMzZlZTZmYzg3NzE0MDFjYWNmOTZiNzk3NTA5MjRiMWFjMzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc0ZjQzNzg0ZTkyODAyM2ZiNmIyYTM2YmQ2YTVmMTlhNDlmZDY0YzQyN2UxZTU2NDVlMWM1YTBhNDRmMTllY2UifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2ea741990db84c5e96bf497c72ac2c7f",
+      "statement": "map_concat merges maps with the last map's value winning on key collisions.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/map.md#L18-L18",
+          "version": "repo-lines-v1:sha256:7043d179e493b0633c05d5f94139f265195d661448551033f2afff89abc41805:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzA0M2QxNzllNDkzYjA2MzNjMDVkNWY5NDEzOWYyNjUxOTVkNjYxNDQ4NTUxMDMzZjJhZmZmODlhYmM0MTgwNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzA0M2QxNzllNDkzYjA2MzNjMDVkNWY5NDEzOWYyNjUxOTVkNjYxNDQ4NTUxMDMzZjJhZmZmODlhYmM0MTgwNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTdmZmI4ZDRjZWY3MDBlY2I2NzZhZDRjYTAyNzkzYjZkYTZkZGVkYjc5Yjc2ZTQyNWNiZjEzY2M4YjhhNjE3ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDYzMWI5Y2FjZmU4YjcxY2EyYWVlMDUzNDU2MzJhNDIxOGY0OGM4YTRjOTRhMGRlNTMzYTc1MWFhOTI5NWU4ZiJ9"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/functions/map.md#L54-L55",
+          "version": "repo-lines-v1:sha256:fa36585039cd6f0a18e5b1c50be2b647c9f48af65d7a301331cec82549f11560:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTZjMDNmZjI5MjlmNTVkMmMyOGI5MTBkYWU3OGEwMjMxZGVmYjhjYzA3MTZiZWFlNTZjYmQyYzYzY2I5ZjY3NSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2MzOGIzMWYxMTQ3MmVlNDVhNTcxZmYzYTI3ZmJlNDZkMGNjYTFlM2JjYzI2OTU4N2ZhMTc5NmIzMWM1MTVjZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWJmMmIwOTA0ZTE2MGFiMGJjZjZiYzhhNmI3Y2YwNDE2YzM2MGNhYjhmMWNhZDU5OWVlYTFhOWFhYjQyZmYxOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMmZhZWVkMmY5ODkxMzk0MTFlYThlZDZjMGI4OWMyZjFiZmQ5ZDlkZjFmM2FjZmI5NGUyMTRjYjFjZWM0ZjhjNiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_4d345efff7fb45adaa6a262ec1214bde",
+      "statement": "union_extract returns NULL when the requested tag is not selected, and union_tag returns the active tag as an ENUM.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/union.md#L14-L51",
+          "version": "repo-lines-v1:sha256:c0f6bdcdc36a4c4a344f60373c90f008fef2f8460330f87dbd55fb70508b37bc:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUzZjk5NjQ0NWJkMjBiYWY0OWMyOGUzOWE2M2EyMDUyNWYxYzc2ZjUxZjI2YTExZWNjNzc5ZDRmN2ExMzRjYmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAwMWY0Y2MzNDMzYjMyZGRlNDVlZjg4YWEwOGYzYjA5ZjNkMjcxYzVlNmIyMjlkMWJmN2MwNTgzN2RjNDdhNTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU4ODk3ZjhjZjY4NzNmMjY4NjJkYWM1YjBiY2I0ZjUyZjY2MDRmMTg3YTBkNWE2NGIyNGE0M2Q4NmNkMzBmNDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_009613aae7094165b43f78865ae9addd",
+      "statement": "enum_code returns the 0-based backing value of an enum value, and enum_range returns all values of the enum type.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/enum.md#L22-L72",
+          "version": "repo-lines-v1:sha256:61cbaf42337dd63c99566e4743a9e58ad8b1f64148fbc6a66b26d52e058a7e01:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFlODVlMmY1NTAwMDg2YTRlOWFiOGM4Zjg0YWUyYTAzY2Y3Mzg4NGY5NGUyN2Y1MzcwZDMxNDg4YWNjNTYzZDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE5ZWYxMjAyODIyMzlhNzFlMTI2ODI1ODk2ZWMyODE3NmUyZjE5ZWVkODVlZGUwY2Y5ODBmMjZmYTdlYzFmOTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMyOTgxNmYxMDRhZGVhMTk2Mzk1ZDgxODhhMTc5NmExZDQyZTI5NDQ1MjkxYmQ4ODlmNDY4NWI3MTIyYWUzZDYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

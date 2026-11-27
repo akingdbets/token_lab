@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:307747fa21efe4f60ad742c01f6b4a3f965c6566a21ed0b295f1d7488926d468",
+  "claims": [
+    {
+      "id": "claim_19ff7934aa894053a905575e4de2d852",
+      "statement": "The CSV sniffer detects dialect, column types and header, with a default sample_size of 20,480 rows; -1 samples the whole file, and non-seekable files are sampled only from the beginning.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/csv/auto_detection.md#L12-L33",
+          "version": "repo-lines-v1:sha256:225a706fbabba409a828a45bfc1e2428cacfa1a7f203fa3a53f73f640d08b724:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI4NGQzMTVmNWI4ZTlmMzQ0NTZhNWQ5MWQyMDY0NGJhMzJhNmNmZWUzNzhkYmQ2N2FiMjg4OTlhNzdhMmRlYzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmMGIzZmM2MDM5NzlhNGNiYzhmZWQxMGU1ZGM1ZjQwZjhmNjNjYmY4OTM2YTEyMTdkZmI1YjU5OWZkZjMzZTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJkZTk1ZjJkMDdmZmViYWUyZjM1NGU4MmRjNTQzMGJkMmYxMDRhNTUzMmFjMTE0ZmZhNTA2MTU1MmVmZGE5ZTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZiYjVjOGRiNWM5MDZkZTI3Y2I1NDM1Yzc0ODQ3ZGFkODhjMzdlYmMwNWIxOGUyNzgxMzNiYzAzMGMyNTExZmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_70ec9ff18cdb4ec4888ccc66afece33a",
+      "statement": "sniff_csv returns the detected properties including a Prompt column with a ready read_csv call, treating passed parameters as fixed.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/csv/auto_detection.md#L35-L75",
+          "version": "repo-lines-v1:sha256:1204ed7e9dd7fdd67114d0ea2a8371eb91320f295da87ad04043a8f18650ba23:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFiMGFhNTU3MWMxNWY1NzRkMzcyY2Y3MDQxMzdlMzI5MmExNGExMjA5YWRjYzcyMjJmNWU1MmZmNWNhNmM3NGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJmNjgwMTJmNjRhYjY1OGQ1NzA2ZWFkOTJmZGJhZjM3ZDEyNjRlMjU3NWE2M2RkNjY2NGE2YjgxMjM2YTlmNmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcxNWFkZjExMTY2ZmY0YTMzOWI4NzYwODU1NGQzN2E1ZDdjMjVkYjI1Nzc4NjU4YzUwY2UzZDFhZTk3YzdlZjQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_359432abb4af41db976146276ccbf070",
+      "statement": "Dialect detection picks the candidate yielding a consistent and highest number of columns, considering delimiters , | ; and tab.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/csv/auto_detection.md#L79-L111",
+          "version": "repo-lines-v1:sha256:f7621c6b1b657ac42817f102224202619e7142ebfa974a09e41d0e78c76a1337:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBkOTA5ZTE3YTNiODE1ZDQzOTQ2MjkxYzI3YzY5MDI0NzA4Yjk5NjM2YzQ0NTY1YTdmYTdlOWYxMjYyYjUyMTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYxYWRiYWUyZmNmN2JmYWIyY2FiNzU2MzViZDM2ODYwMTcwZTE3NjcxNzE4OTRhZTI4YTI2MjI0MzI0OTkxYzUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcxNWFkZjExMTY2ZmY0YTMzOWI4NzYwODU1NGQzN2E1ZDdjMjVkYjI1Nzc4NjU4YzUwY2UzZDFhZTk3YzdlZjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYwZTg0ODEzYzI1NzllODY2NDQ4OWEzN2VkZGYzNDE5YjJiZWI3ZDgzYmY3NDJkYTYyMTQ4NDBlZTYxNzViNDkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ab6330ddd98240059d7b92db87656462",
+      "statement": "Default type candidates range from NULL through VARCHAR, with VARCHAR as the lowest-priority fallback; auto_type_candidates can add TINYINT, SMALLINT, INTEGER, DECIMAL and FLOAT.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/csv/auto_detection.md#L113-L157",
+          "version": "repo-lines-v1:sha256:b149704a47335e307ad04e7a76e7831c3cd316dc773897ce1f6c06bf8f804a14:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE2YTU0NTZmMDI4ZTJkNWMyZTU3MWFiMTJiMWVkZWJkM2IzY2IzNmI0YzEzOWE3MzNhM2ZlOGE0Nzg5YTY4YTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUzZTk5MThmYjc3MzUxNTRiOTIwMTMwNWY0ODM3ZTM0MDM3NmFkM2RmNzllM2QxMTNjZmEwNGZhMjZhNGM1NWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI4ODM1N2E0ZjIzYzk4N2E1NWRhYmE2MWNhYjI1MDUwMTg0NjQzM2MxZTE2Mjk2ZjEyN2ZkMDYxNzZhOTU5MzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ3YTM0MmY4M2M5ZDY0OGFlMDhlODQxYzg4NzQ3NTE0NWY2NjY0MzYwMWRiYzYyNjVkMzZiYmE0MjA3ZTQwODUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a680bbbda92e4465a0a9fe92fdcc0b87",
+      "statement": "If all columns are VARCHAR the header cannot be detected and DuckDB assumes the file has a header.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/csv/auto_detection.md#L170-L176",
+          "version": "repo-lines-v1:sha256:9b4c1afa2dfe2474a6d48802565b1e5c02d3a89084b47508cd8f03785ff68521:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2VhZWYxOWMzMjhjYjEwM2UxOWM4MjE0MGQxYzdiODE0NzgzMWMyNTA0YTljOGEzY2U3NGNjZTMxYTVhNWM5NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNmM3NTBkMWIyZGQ3NmE4OTNmZWJkMTQ0Nzg3Mzc4ZmEwZGQyMjU4MGY2ODgxMmQxNTA4ZWU2Y2EyNTA3NjgxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjFlZjdlMTQ5YTVmZDA3OGI0NWU5NWIxYjkwNTg0ZGQwOGI3ZGEwNDM5NWNmOTU0NjhkYzU5MGY1NjNmMjM4YyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGRlNmE2NTNhMTQ0ODhiZWQ2M2U4ZjQyZGY2NGZjZjczZWFhYmI5YTJiNzE2OTI3MTNmYjZiYTZkNzAzMjRhYiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_b367b689a06547d1bb0836fb8be8f8ed",
+      "statement": "By default the CSV scanner stops at the first structural error; max_line_size defaults to 2,000,000 bytes.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/csv/reading_faulty_csv_files.md#L23-L34",
+          "version": "repo-lines-v1:sha256:bfc09d443ee0c6938604219ffc778df184d13db291531fbf872990d3c4b66e8d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc5M2FlNzUyNGFkMWQ1YzczZjcwOGNkYTU4MDBmYzZhZmIyOWFmMzJlMGY4MTcwZWMwY2FjZTQ0OGYwNGQ1ZGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFjNjc5MGZlZDdiYjBmN2U1ZWNkNmRiYmMxM2QwZjdjODYxZjQyYzJhNTcwYmVjMmEyMDg4Zjg3YTA4ZDA4NTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRjNWE1ZGQxOGIxMWUxNjUwNGNmOWEyYWMwNGU4NDgwNzM4ODZmZWI3ZmFkODBmZDQ3OTM2YWMzMjhlOWUzZDQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNjOWViZDM5Zjg5MmMzOTQwNzk5MmQ5NTViZDY4ZDdmMmRjNWZiYmE0ZmZjNzRjMjJjNGI1NDEzYTA1NDZlOWEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_89ba50267133463aba6ce4e0f1e767b8",
+      "statement": "With ignore_errors, projection pushdown means rows are only rejected if the erroneous column is actually read.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/csv/reading_faulty_csv_files.md#L91-L138",
+          "version": "repo-lines-v1:sha256:d48541260315632b1ac7ee38ce1a45b78a676ef058cdb85609df2d15522ce633:eyJzZWxlY3RlZExpbmVDb3VudCI6NDgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1MmNiZTM0ZDgzZjExOWM1NjIxYzBjMjkzN2Q3YTY5ODM3YjAyYjU1NmJkMzU0ZmJmNzJiNTNmZTU0ZGQ1NDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzNDhhMjk3ZDMzNDU3OWE2MDhhYzEyMDdmYWI2ZWRhYjQ2MDkxZTI3YjY1YmYxMDRhNWZmNzQxZDhjMDA1MjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRkNTZmYzNkMzBiYmQwNjZkOTYzMGY4NWIzOTQ1OTZlMjQwZWVjYmFjOThhMzgwYTczNjYzMjQyNGE1Y2ZmNTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRmZGM4YWU5Zjc0OGE5YzIwYWUzNGE3ZjNkYzZhNDM1OTA3M2UxMTdjNDdiZTZlMTM4ODRlZjhhMjZlMjI5NWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6423b65c05404e4f824d9fe7894ef78a",
+      "statement": "store_rejects records faulty lines in temporary tables reject_scans and reject_errors; rejects_line_size_limit (new in 2.0) defaults to 10000 characters.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/csv/reading_faulty_csv_files.md#L140-L235",
+          "version": "repo-lines-v1:sha256:0d84ea53aa76fc811b80076751e066b24061fac744d44e86b4f7c324d950257b:eyJzZWxlY3RlZExpbmVDb3VudCI6OTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk0MzQ4ZGIwMTI5NWVlNWFkNTc4NzM5YjhjMTliZWFiNzU5Yzc4Y2M5MjY1NjUyYzlkN2RiZDA0NTM5ZGQwZDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZjY2U4NTZiMjE0ZDUxYTZhYjJiZmY5ZjQyMDQ1MThhNWJjYWFjM2JhZmNmZDZmODUzZmVlODQyMzgzOTY0ZGYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYwODc0NzA1YzZhNGZhOTEyNjU3MzhjNmI4MmY3Y2Q2NjhkNDU4MmRmZTQzZDY0OWE2OGVlZDE2NWU2ZWE4MmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

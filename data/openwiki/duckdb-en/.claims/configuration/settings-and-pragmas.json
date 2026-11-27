@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:b2d791e2b5bc51f77823c0bb1351f3f0e3f3478ac212a1cc6cb300f19e942405",
+  "claims": [
+    {
+      "id": "claim_efd1152e88ba44e79bfa1cac38a5318d",
+      "statement": "SET supports GLOBAL and SESSION scopes (LOCAL is not implemented); most options default to GLOBAL, and GLOBAL settings are not persisted across instances.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/set.md#L79-L102",
+          "version": "repo-lines-v1:sha256:73ff81edf325ba03f6b5219f15e78ccc6201e0467cfc01645c9f1acaf74c787c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVjOTBhNWRmYWMyNGJjMDZhYjg5ZTY2OTA2NTY2NjhhZmQzNGQxMjQyNmEzZTgyODg3MmE4ZDU3ODQ3ZmZmYTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZmZDk0MTc0ZGU3MTk1YmEwYjkzOTkxYzM1YTA4ZjQyN2YwY2U5Mzc1MDAyYjI4MjVkYWQwNDczMmI2MTdkNDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdkYTA5ZTgwYTVhODQxMzI1MjhhYmQ2MzAxZmM3ZGZjM2UyODg2NDllZjRmNzg4NThlZmNjMTI3ZmEwMzQ1YmUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_089fcddf2a0e42109cd60a509ae6b0a6",
+      "statement": "In DuckDB 2.0 the TimeZone option defaults to the SESSION scope.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/set.md#L91-L102",
+          "version": "repo-lines-v1:sha256:a5546a2e1af71ed9b19092bfd23ab3d0d25d5d6187b978c5f279923269d09fd3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMwYzU2MjRlNzljMDZjM2NkNjllYzg5OWE5MmI4M2IwZjMzNjEwMWEzYTZjNzgyZGZiMjhmN2I2MjBkM2ZmOWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFmNGY4ZjBjYzY5ZTE1NWJhZWYzZWU1YTA4MzZmZmVjYmIwMWIzYzc3ODFiNmMyYTkzM2Y0OTY0ODQ0MmM4MGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdkYTA5ZTgwYTVhODQxMzI1MjhhYmQ2MzAxZmM3ZGZjM2UyODg2NDllZjRmNzg4NThlZmNjMTI3ZmEwMzQ1YmUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_628a598f05a4464e9a4108b23188572e",
+      "statement": "memory_limit defaults to 80% of RAM, threads to the number of CPU cores, preserve_insertion_order to true, default_null_order to NULLS_LAST, and checkpoint_threshold to 16.0 MiB.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/configuration/overview.md#L204-L329",
+          "version": "repo-lines-v1:sha256:e3e86b1ada10330d7731df76cf4f584132311f5b27e7f059caa1a8e22f577c2f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTI2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJmMWM3NTI3NjJkOGU1YTRhZTNiNzlhNTA5ZTU4ZjM0MzdlYzkxMWI2YTIyYzE0NmM5NzUxZDRkMzViZGMyYjY5IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI2MjM1N2NmNjZlODc1MDY5YmVkOWU5YmZhMzYzYjQxZGM3ZWMyOWZiM2U5MTRmYmJmNzE0YjBhYjgxNTMxNGZmIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI5MjAzNmNiYTAxYjliMDQwY2I3OTdjMDM0NWRlYzRjMjVhNmQ3MTRiYmJiZGEwNzJlZTM4YTA5ZmRmZDU2ZDJhIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJhMjllNDExNmYyN2IxMDk4NjAyNTA1Nzg0YTg5NzQwZmYyMmE0MjQ2MzA2MDAyMDYwYmNmNWUzOGM1ZjY3NDBkIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_11b1b95eb9a94464b909f09a6c5ae5ac",
+      "statement": "As of DuckDB 2.0 memory_limit accepts a percentage, max_execution_time bounds query time in milliseconds (default 0), and operator_memory_limit caps per-connection operator memory (default unset).",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/configuration/pragmas.md#L164-L200",
+          "version": "repo-lines-v1:sha256:5124348133d009df7dc4d62468c7504e07b7d89618e362d6c342fd27a5649c74:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYwZGQ2ZmM4MDE4NTAxZmZjYmQ2MDJjOWFiYjkyZTRkOTJiZDVhMDM2ODNjODI0Y2Y0NjU3YWI0MzVmYTZhOWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMzZTEzOWZjNTkwODAwODFhNGU3YWViM2JlZDZlY2NlZDA5OWJiNzgwNTg3ZTc3ODYyMGVmZWRlNDg1ZDI4ZWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzZDY0ZWEyNjg2ZmU1MzljMTA1NzBjZmFmNGQzYzU5OTU3ZjdiYTQ2ZWMxZGVkYTE2NzdlNzU2OGRiZjkxZTMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d53f87ca756d4485823edb1757940909",
+      "statement": "The memory limit applies only to the buffer manager, so actual memory consumption can exceed it.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/configuration/pragmas.md#L170-L174",
+          "version": "repo-lines-v1:sha256:5d6613c191cfb532a68a6b473ae7b76b20ba88af86ba521431a3c91bb35e2a3f:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzQ0N2ZmYjBlMzE2ZWY0Y2M4N2Y5NTBhYjlmOTQ0NjAzZWIxMjcyZDUyMGE1MTA5MmYzNWFkNTcwYWUwODVjMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTA0OWRkNWI3MmQ5OWUzNDk5ZjNhZWYyNGM5OGEwMmQ4NTI2NjQ3Yjg0ZmUzMTViMWY5YWNjZjkwMjgyODE5MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMGQ5MzAxYWFhNDlkNzQwYjA4ODc1NGI1NTg4Njc0OWVmODg3ZjBjM2Q0ODc4NTRjNjdlODBhMDY1YWRlYjc3MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzE4ODhmYWM3MDEwYTE5NzY3MTNmNjE5NTU3MDBmNWJlMDEyYThlZTE1NGU0ZTQyNzU4ZGNhNWJjNmEyOWEyOSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7798cdcdadb64d9897eaf28ee432d534",
+      "statement": "Assigning settings via PRAGMA name = value is deprecated in favor of SET, while function-style pragmas are unaffected.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/configuration/pragmas.md#L19-L19",
+          "version": "repo-lines-v1:sha256:336aebde7555dc734a97f1763e9d460ba036b0caa1dd9a7a24b195aad2b6fe93:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzM2YWViZGU3NTU1ZGM3MzRhOTdmMTc2M2U5ZDQ2MGJhMDM2YjBjYWExZGQ5YTdhMjRiMTk1YWFkMmI2ZmU5MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzM2YWViZGU3NTU1ZGM3MzRhOTdmMTc2M2U5ZDQ2MGJhMDM2YjBjYWExZGQ5YTdhMjRiMTk1YWFkMmI2ZmU5MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWI5OGU1OGQzNjM1NWY3ZTgxZDUxMWJlMGJkZDI2NTFiYmYzZmNlMWY0ZGI3YTBhMDUxYWNjNTdiOGVjMDAzMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjdmZjRjNjNmY2E1ZDk4OTM1MTUxYzNkMmJhODM4NTk0NzY0ZWEzNjQyMzMzZjE0YTg3ZWJmZjQxODgzZDEwMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_148d13c015574259999d068a767146a9",
+      "statement": "Since DuckDB 2.0 integer division by zero raises an error by default; error_on_division_by_zero = false restores NULL but is deprecated in favor of TRY.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/configuration/pragmas.md#L643-L654",
+          "version": "repo-lines-v1:sha256:15aa187921bfbeb2f2942a88404713fb48bccb428f90ddbe5a0b6ad7e7ec0750:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRmNmQzYjgyOGRkOGY0MmEwMjU2NGM2OTQyNGJiODhlN2NlOTNjOWMwMzgwZjA5OTQyOTQ5YTZlYzAyNzNhOGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NDZmNTE1ZjlkYzIwODNjZmQ3MDNiNDUyYTcyOTZhMzQ5ZTU2MTdmZTBiMWZjNjQ5NWZiYTM2ZGFiODhkZTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE3ZTc3YjJiMzQ5MTJhNTYxMWQxYzdhODM5OWMzZTQ1YTQyNmEyYTNjNTRiM2UyZGVhMzdmMjk5ZTNlMTc0ZTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM2NjdiN2E1YzZjZjU3ZGZiZjdhY2QxMTU3YjgwYThlM2RlNjIyOWYyYzBjODdkMzQzMWJiMDBmZTljYmU1ZGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f479066b39cf42bb87fc6c5f5ca1752d",
+      "statement": "SQL variables are session-only; the $name shorthand introduced in DuckDB 2.0 raises an error for unset variables whereas getvariable returns NULL.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/set_variable.md#L13-L140",
+          "version": "repo-lines-v1:sha256:07f50eec6c755176b17c1e2b02f410617740ecf10b8a5e22454fc9df7d21d24c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTI4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI5ZGU1MjMwNDJkMjdhODZhMDI4MjhlMjJlOGU0YzE2OTA4M2U3NDE2ZWE5ZDc0NmZlYTQyYmI3OTExN2JkZjU3IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIyN2U5ZGVlOTkxNjJiZmQwNzJmZmI0MWQzNzAxMjI0NjMzZWQzNDhkMTZkZDI3OWQ0MGY5OWIzZTAzYzdmNTAzIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIzYzA4YzlmYTVjMzZlZjM1ZmMzMjkzMWU1Yjk4YzljZmM0Mzg4ZTQ3Yzk5MTYwOTRiMjdjZTFkYmNkMTRiYTVjIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI3MWRlMjZmZDc3NDExY2U1MjMzN2NjNzZmMmZhNjE2N2QyNjFmYjJiYWE4NDIzMjZhOGJiMjE1YTJjYjE2YTRlIn0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

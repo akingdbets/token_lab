@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:3be0f8aed237362ac88882def9b6371aa245fa275272bfd183950c46ba4d5b5d",
+  "claims": [
+    {
+      "id": "claim_46f2c9ae908c4597bca50192f0d79f23",
+      "statement": "DuckDB sorts ASC NULLS LAST by default and keeps NULLS LAST for DESC, unlike PostgreSQL; default_null_order = 'NULLS_LAST_ON_ASC_FIRST_ON_DESC' gives PostgreSQL behavior.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/orderby.md#L31-L44",
+          "version": "repo-lines-v1:sha256:9680c6219a8ff02b5066e0806f285329e1ed5221c41600abae41786a3e0f6496:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU0N2Y2MjI2MDRmZTA2ZDNjYjhmYTdiZmIxM2M0Njg1YTNlNzhkOWNmZDA5NWMxNzg2NjlhN2NhNmU0OTYwMWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgyYTU5MTg0NmI2ZGJmNDExMThjNzljNWY4OTQwNWNmNGFiMzllNzk0MWMxNGJlMTBiMGI3NzRlNGU2Mjg1MjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI2ODQyYTMxNWFiNTI1NzA4NTJmOWFlZjI0MzcwODY2ZmMxZDJlZjgzZmJlMzQ5N2U1YTI3ZjVhMGM4NzliM2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRiOGJhNjRkNmEwMWU5ZGEyMTBiZTQ5YzI1NWVkODJlNTJmNjdhMjY5ZmEwYjc2MDI2NjExZjM1YmQyOTExYzIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_febfc2d5a139490e9bea9c2ee0a103ee",
+      "statement": "The SQL-standard FETCH FIRST ... ROWS ONLY syntax was introduced in DuckDB 2.0 and can be combined with OFFSET.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/limit.md#L54-L81",
+          "version": "repo-lines-v1:sha256:2c54a26ba47ba4a7994b5395aa33c65297debc9f89caa0c4ce78510f5f071c2b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNlNTZhODZjYzNhODcwMzVhMGFiNjFmODliMGM1ZTc4NGVmYzVhMjJlZTZhY2IxMWY0YWJkOGE0MDVlYTI4MWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAyNGVjNmZlMDMxMzVkYzc3OGIyZjZjMGFiODU3OGNjODFmMzQwNzVlYzg4YjAyOGFlOTBhNTdmNjIxNGJiYzkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhlMWY1MmI0N2JjYzgwZmViZjE0ZDg4MGY0ZGM0ODMwMTMzM2UxN2Y5MmYyNzlkMzRhZjQ1YTJhZDQxODhmNzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZjMjRiYTgwYjRmZTJiNmZmZTM0OWM2ZTY2NGJlNjUxM2M3NzYwZWRjMGRiMDAzMWVlMDAyMzg2MDVkNTVhNWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c18010acb92146f8ae847a5eff13fe68",
+      "statement": "The default sampling method is reservoir when a row count is given and system when a percentage is given; only reservoir supports a fixed number of rows.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/samples.md#L92-L94",
+          "version": "repo-lines-v1:sha256:a67fe79dc488e533ebb33b6b77ed31c6c9f940d1a531f3d4d4310b2534a835da:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTA0MTkxYzAyZTRhOWFiNDZiYWI4YzdmNTIyMThlMjFmNzk3NzI1ZjVlNDFmNDVhNjBkMGEwYmEzNWUxYWVjMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzlhZDI4MzZiYzQ5YTljNTA5NmEyNDgzNTc1YTA0OWVmMDg4ZDhkMDFmODM1YTcwOTNmNWRjZTI2YWFkMmMzYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTQ2ZWE4Zjk3N2VkOWJmZWU3M2Q4MjdhMDU3ZGNjMjg4OTMxMDQ3M2Y3YmUxYzRiNWNmNmY2ODgzZDAzYjkwMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzkxNjNlMDAxNWU0MDdkOTY2NDZhNDFmY2EwODNlMDIyZDY4NjkzYmM2Y2JhZWMwOWY2OWUzNTg5NjU4NTU5OCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_75eb9eae914c49f2a43ec261357de0ce",
+      "statement": "A sampling seed guarantees a reproducible sample only when DuckDB runs single-threaded (SET threads = 1).",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/samples.md#L96-L105",
+          "version": "repo-lines-v1:sha256:b57f085befda207a7d739d65f582c3961fa513dcabbf803115efa707280c5753:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNiMzk3NmU1NmQ2ZDk2ODgyNTkzZjQzZDcwMmI5OWYyODVjZTcxN2JhYmMzMzg5YTY5YWU4NTA5MGQ4MjMwNjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5NDUxZTNkMzYwMWJjNGFhNDY0ZjIyY2NhOTA3ZDJkM2NiMDFiNGJkNWYzMDU2MDVmNGNhMjg5N2Q1YzQ1ODciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQyNzM2ODg4M2ExYTk4OWZmZTAxYTVjOGVmMzY3ZTQ0MjljMjFlYTgyMTE5OTk0NDI2Zjc3MWRjNDM2NjUwOWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI5NjYzMzljM2MxMTIwY2IyMDAxOWM0NmFlNzU0NzJmMzZjNWEyNDdlN2ExYWY5YzY2NGNkNTg0Y2E0ZWFlYjQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b3293248e78e49328382345d06841b19",
+      "statement": "System sampling includes whole vectors with the sampling probability, so for tables under about 10k rows bernoulli sampling is recommended.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/samples.md#L126-L130",
+          "version": "repo-lines-v1:sha256:4982b8bfaa1ca6d0396d649e825b1fa46282aad1b42eacbb2846a578b0bfb6c3:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjEzZTNjNzJiNzdiNzA3Mjg1ZTBjODU0YWRhODkxMTllMjE4YWM2OWIzMWRjMDZlNGFhYmVkODIxMmM4YmIzMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTUwNjI0NWMzOGQyYmFhMGI2OTJkOWExMmJiOTQ1YTFlZmE1ODZlZjhlNDI0NzNjNzcwYmI4N2RkNTAxODE0ZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMmQxYmUwMWViYzkzYjk1YjE3ODg4NTJhMmZlZjFkNDkzZDk0MTJhNTNjYjIzMDZmOTNiOThhNzliNzQ3MGUxZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjc5NTM3ZDA1ZDUyNzQwNTdkMTI5OGZkY2I3NTM3OTk0MGUxOGI4M2I1YmEwOTYwNjNjZWQ1ZjY5YjM5MzBkNSJ9"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/samples.md#L34-L34",
+          "version": "repo-lines-v1:sha256:28c49baaba4d23e92708498bc016f61e6905ce5191dd9187ba024c8264fdd4f2:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjhjNDliYWFiYTRkMjNlOTI3MDg0OThiYzAxNmY2MWU2OTA1Y2U1MTkxZGQ5MTg3YmEwMjRjODI2NGZkZDRmMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjhjNDliYWFiYTRkMjNlOTI3MDg0OThiYzAxNmY2MWU2OTA1Y2U1MTkxZGQ5MTg3YmEwMjRjODI2NGZkZDRmMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWUzNjU5OTA0NTE1MDgxNzY2MmNhYjIwYzlmMjgwZDQ2M2I1ZGNlZWY4ZTEyNDU0ZWMyZmRkMGE0NWFiYjk1OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTk3N2MxOGRjYTExZDUwNTUyMjEwNjE2ZDNmOWJhYjQwNmZmMGEzYzk2M2E1NTRiZjExMzg2NzNhODU1OGM0MSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_6ed18fb646cd4162a0e4bc81858ea217",
+      "statement": "TABLESAMPLE samples a table before a join, while USING SAMPLE on a join samples the join result.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/samples.md#L132-L164",
+          "version": "repo-lines-v1:sha256:a2441bb30df79d8e302302e301f888776d09dc990c889e5e72b64a514487f77d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwNDQ5NDJiZmExYjRmODY0NTFlZDA0ZWZlYjFjYzFhZDEwMjg3YjRjYmU2ZTBmYmYxZTczMDQ2Zjk4YTdlY2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ3NWE5Njc4YjQwNmE5ZThhNTQwZjYwYjZhMzZiZDc0MTZkZTlhNWZjZjRjMDIwMDU0MDQ3Mjg4MmE1NWRkMDYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU0NDIyN2UwOTMyZjJiOTE1MGE2ZDNjMzI4MThjNjQzMzA3OTgxNmU1ZDVjMTc5ZTJhMzRiMzAxNDBjZjUyN2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAifQ"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/samples.md#L66-L80",
+          "version": "repo-lines-v1:sha256:f6e325c98f4211dd05fe3c52bdc40d12967f22796c4566ee4bb48e00d1b6e3e0:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2MTQzOWVlYTY0NjJhZjFkMzQ2NzQzNGQ4N2JkM2VkYWUxYWI3OGI0NWU3ODJkOWUxZTQzMGY2NTg5YTY3MzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE3Mzg0ZDY0MzY3YWEzY2M1MmU5NDUzYjYzMzM4M2I0ODg4YWIzODg4OTUzYzg0NTNkOWY3NmVkMDYxZDE1YjQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU1NmRkYzI3OGE1ODFmMTVmZDFhZTk1MmYyZThkNzBjNzMyYWM3MDcyYzBlMTY3NjU5YTdhNTYxYmQyZDAwYWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYwNzg2NDFlNTQ0YjVlNDQ3NWIyYjBmNWNiNGU4OTBhMzRjYmEyN2Q3NjdlMjUzZTExMjkyOTVlYTAxZGVmYjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cb9565e81d71414f9ae7edc5d4089361",
+      "statement": "Prepared statements support ? auto-incremented, $1 positional and $name named parameters; the JDBC client supports only auto-incremented parameters.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/prepared_statements.md#L18-L92",
+          "version": "repo-lines-v1:sha256:fb6510a3f69266accdd7892d2475faa5dae63928678937e7cb272011555995e1:eyJzZWxlY3RlZExpbmVDb3VudCI6NzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQwM2ZiMDg5MDgyMDg2ZWZkYWQyODIwYzNkOWM5MWRiZTdhMzI3NzZlYTk2YmM1YTYyYjdiNmE5Mzc5Y2JiZmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBmNThkNzdjMjg4YWMyM2E1Zjk1YWI3YjE2ODllODliYTE0Y2I1ZjA5ZTI2NjNkY2I0NmQzOGIyNDZmNTczNGIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhhZjgxN2I0MmQxMDY4NjAyMWZmNTc1Yzg4MGUxZGE4MzQzMDdhZWY1NzY1NzQ4ZDhiOGUxMGE0MTRkMGFmMGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBjOTJiZWM2YTZhMGY5ZDg0NjkyNGE0MDg0YTgzYjQzMzEwNWIzN2QzY2VlMWYwZTlkMmNkYjFkMTNlNGQ1OWIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c59a61a390ea4487ad712c03ebd00d6b",
+      "statement": "Since DuckDB 2.0, unbound named parameters of a prepared statement default to session variables of the same name set with SET VARIABLE.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/prepared_statements.md#L95-L138",
+          "version": "repo-lines-v1:sha256:f0fab469fb925ac2a796cc406af91462e5e0f8d25fbe3644ee5ca15287ddf8fe:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI2NjVmZWVhN2EwYTQ3MWZlNDkwZmU5MmQzZjM4ZjI1YmM4NTZkN2YzY2M5NTQ4YzM0MTVmNTYyZjA5MDZlMWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEyMThjNmYyM2U3MWRkZDMyMDNmMWFhMTFmZTRmM2Y5NzE1MGEyNDI0ZDQyNWUwODEyYzdkZWRmZDllYzU0MDgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI2NmM5NjdmODE2NTQ4MzIxYjgyNjcyNWUzOWZhMDg1ZjRmN2JiYjRiMTU0NzNjNzBmNThiNjZlZWNhOWUyYmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQzMzVhMjZmZGZlODA3MDIwZTUyZjdhNGMwYTgwMWY1MTNlMGUwMWI5MzU5MDE3MDIzYmEyMDgwNjg5MzMzMjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2b1124a4c0ea454ba5d6b769a9c556a6",
+      "statement": "The rowid pseudocolumn holds contiguous identifiers if no rows were deleted, should not be used as an identifier, and is shadowed by a user column named rowid.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/select.md#L147-L183",
+          "version": "repo-lines-v1:sha256:2eb62b942f727942a4c68014209b8a2aa1dcb98fea8974cdeed9021b0bea2490:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYjA0ODZiY2YwN2EwOGI1ZDMwZjNlZmIwMDZlZGMyM2UzYjk2NTExOTdiZDE2NDUwYjRiYTRiM2UwNTQ0MzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEyZDgxMWVkN2FhODZmNWRiNTE4MzU4NGQyOGUxMDU5YWNkN2IwM2ViOWVkNDRmNDg0MTcxYmQ5NTdhMTI1NjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVhMzBjNjFiNDY1MGY1YWM5MjMzOGI4ZDE4NjhhZjZhODhhODJhY2ZmMTc1YzMyYThkNmMwN2YwZGY5OTgxM2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI5NmQ1NGE3NTkyN2RhNGM0NTcwMmU0NGIxZTM4ZTNiMGZkOWM3MTNlN2QxMGY3MjVlYjdkYThmNWJjNWFmOTQifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

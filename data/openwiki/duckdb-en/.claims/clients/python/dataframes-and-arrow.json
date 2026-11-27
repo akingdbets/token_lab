@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:4d02544b0ac91e66c1e975eec20f9d5c117996967714da2800a1ca213298848d",
+  "claims": [
+    {
+      "id": "claim_39b80722e80045c89f35c151553a7763",
+      "statement": "DuckDB queries pandas, Polars, NumPy and Arrow objects by variable name via replacement scans; precedence is registered objects, then native tables/views, then replacement scans, and replacement scans can be disabled with python_enable_replacements = false.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/data_ingestion.md#L147-L205",
+          "version": "repo-lines-v1:sha256:2fdf82115cce9803369a4ee91a65f1febf654a86d03c03d9258e9937dffcb560:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY1MTUxZDQ1ODk5YWI1ZDQ4ODNjZDYwZjNjZDc1MTRkNGE0NzcxZTMxMzFmMGE2YWIyZDQwYjRiOTIyMzVkYjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlZDc3NmE2ZjM5NzQ2YmFjMzdjMGJjMzk3MDkyNmVjNzIzMjgzYTY1NWEwYzY5ODE5NzdlMzIwNDdmMWZjZTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRmOTBmNGEyMzRiZjRmOGE4ZmUyODRmMmY3NmYyMDBjYTlkZTY2ZTYwMjNjYjRiOWU1ZDdmMzZhOTAxM2YxMDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU1N2RiYmVlZTM4ODZjMGZiNjY4NzFjZjQyZDQ2NTkwNmViZTdiNWM1NWIxOTJmNDJiY2Q5MmYwMGEzNzQyNzMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6750c4b8e83c4f5aaf3e01409971cd75",
+      "statement": "Filters are pushed into Arrow datasets and Polars LazyFrames, while Arrow tables, record batches, readers, scanners and Polars DataFrames are read whole; a RecordBatchReader can only be scanned once.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/data_ingestion.md#L207-L211",
+          "version": "repo-lines-v1:sha256:d9920595077c58137879c60eff92887bcce752535d6ff6c53dbabe0e503ea5c6:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzAwOTU3NmY3NGEyYTI2ODQ4NWJmZGFmODVhOTkzYjcwNWQ1M2VjNWUzNTlmY2IzNmU1ZjY1ZmVhOWRlNjQ0ZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMWRiM2ZkZDZlMDY4MDExM2I3OWE0NjVkZmE4NGFlZTYwNWM2NmQ3NjU1NjQ5MWYxZmU4NmI1MmRhOGMwMTMyNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTBhNzdmMWIzNDlkYjZlZjEzYWQ4ZDk3Y2FmOWJiYjNiNjVkOTFhMjIzYjA3ZmFmNTcyYmViZDk2MGE3ZjViNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODYxMzk4NzUzMDhlNDg4NDRlZWY5NjBkZThhOGZlMjBlZDkwNDdiOGQ3MjQ2OGE0ZTEzOWVkMmQwZGYwZTg3OSJ9"
+        },
+        {
+          "resource": "repo://docs/2.0/guides/python/polars.md#L21-L23",
+          "version": "repo-lines-v1:sha256:6fac8192011420796e6ce784a9e672abc628e76a65b845f0555e3d464948888c:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTg2MzMzOWE5ZDcyODQ5NDk4NmVjZWQ2NTVmNTZmNzQ1NDM3ODlkOGRjMzYwMzUwN2I3ZTU2MzZhNzNkZjVlOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiY2Y5YzkxODdiODJlZDNiNTJmNTJkZWJmMTNlMDIxMTk1N2QwMmU3MjM4NjRmMDE2MDE5YmEyNzAwNjE5MTBhNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjI5ZTgyNTk5YmI2NmEzZDUzMmE2ODMzZDAyY2I1M2QyNTJkN2JmZDJiYWVlMzhiODIzYWMyMDI1NGI4MjJmMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYmQ3MTI4YzA4OGQ1NTM3M2FmMTlkN2MzNTY5MTE4YmNkMzYxMDM5ZTI0ZjE0YTFjODc0ZGY5ZjQ3MWVhMTRiOCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_ab2936c1a0c043519fd7297b177a54ca",
+      "statement": "Pandas object columns are type-analyzed on a sample whose default size is 1000, configurable with pandas_analyze_sample.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/data_ingestion.md#L238-L250",
+          "version": "repo-lines-v1:sha256:2dddb962c77df23d81ac354131072dfd49ce469d72d37c4935bd0979eb5bccad:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIyNWUxMGMwNmMzODU5ZWJjOTNjYzYyNDg3YzJjZmU5ZDJhYjBiYjVmZDIxMTVhYmZmMWUzZDVmYTYzZjg2M2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM0ZmUxYjc0OTE4NGU0Njc2NWE5ZmJlZjkxNTQ0OTI0YjMyY2MyMzdkMzEzZjk5MzI5OTJjNzllMTVkZDYwNTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA5MmMzOTBlM2I2MWMwOTA2YjYzMmEyMmMyYmM0NGE3Zjk0NTM3YjFmYWJlODk4MzgzNTRiNzNhYWRlZjM0ZjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_dae6469e8184445db69048b3e32c201b",
+      "statement": "Relations offer fetchall, iter_rows, to_dicts, fetchnumpy, df, to_arrow_table, to_arrow_reader, pl, torch and tf, but no fetchone/fetchmany/fetch_df_chunk because they are stateless.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/conversion.md#L16-L33",
+          "version": "repo-lines-v1:sha256:c614d3fecb4013f33f0a9077bed661e556bf3ca03b05af59ad2ca35747ea2f52:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBlZjQxZmZjNDY1ZWRiYjdmNWMzYjI3ZjVlYWZlMDcwZDkyMGNhYjkyMmZhNjlkZmNiMTdjMDk5NWRhNDkxZGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM1ZThiNDMxNDBlYTk4Nzg1NDk5YjgxMWFkMWRiYzZhMDUxMjExMTVmNWU4ZjdlMjFjZjcwNzEzZWQ1ZDM2YWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNjMTc0MWFlN2EwYzEwMzVjYzM3NmJiOWQ0MmQ1OTBkYTdlMjRjNjZmMjlkMDBmMjFiZDcwYmU2ZmFkOTQyMTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVjNTM5ZDIwZWFhYjY4YTI1MzYwM2NjYzVkOGFkODA4M2NmMjg5NWE0N2VlMTRhMDE1ZTI5YWZjY2QxNGNiNTcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_746ae8fa322b49b0ba4355c6ddab8b85",
+      "statement": "to_arrow_reader defaults to a batch size of 131072, and Arrow output on a con.execute() result makes an extra copy and emits a UserWarning.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/conversion.md#L107-L116",
+          "version": "repo-lines-v1:sha256:bcd7c7834881c8120ca245c5120d4296698beade9d90db10d4ccd6265c7c7605:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3NGU5YmIzMTgwNDg4YjA4N2FjOTcyMWEzZDAyMDg2OWJhNjQwNmVhYWNkYzIzNjBiZjdlYjJiYWIyODY5YmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhZDJiMmQ3YjI0OGIyYWZkMDA3YTc3MmJkM2E4NTVhZmU4NjM3NzZlNjU1ZWRlYTcxNDc0YjljYTA4YzQ1OGIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgyZTc2NzNlMGJjNmE5MWZiNmNlZjA2YTA3MDUwOTNmYWZiZThhNTc5MmJhNDgyOTk2MzVlY2I3YzQ2MTZkY2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEyMjQ2ZGIwYWMyNzM1MzBlYzZiZTQ3NjI0NDA3MWM2YWY5MjAwMTQzZWZkNjI3ODBjZjUxNzhlZDM5Y2I5NDgifQ"
+        },
+        {
+          "resource": "repo://docs/2.0/guides/python/export_arrow.md#L13-L17",
+          "version": "repo-lines-v1:sha256:7f90671cb3bcbf3fc5b9d5c0dd83a29e67cfe75b54aa2c1b26b6cf8d496a6fbc:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmRmMWI3MTkxZTRjODNiN2M3ZjhkZmM2MmY3NGNiMGNiZTk5YWZhODBkNTM4OWMzNTA0NTljZWQwMzcwOTU4ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiY2I3ZTg4MmFiZTVjZDM4ZGY2MjZjNmFkMDI3MzZjZmM0NDNkYzBkZGZkNGE3NWNiMDJiNzY2YTcyZWM4NmIyYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNmIxYjQ2MWQzZmEzNjUxMTEwN2Y0NmRhZDk0OGFmN2JjYTA2Mzg3NWFlZmQ1ZmM3MTMzNGEwODY3YTkyNWM5OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDUwZGRkZjgxOGJmMTBhOTRhMWJjZTljNzdlOGEwYjQzODZmYmY4ZTgxZGRhYjc5ZTA4ODYwNTNmZWU3Yzg1MCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c39f3f338f5e46608c224135c4f86c3a",
+      "statement": "A Python int converts to the first fitting type among INTEGER, BIGINT, UBIGINT, HUGEINT and UHUGEINT, and a float always converts to DOUBLE.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/conversion.md#L153-L181",
+          "version": "repo-lines-v1:sha256:8606ae1e1aade25b9547b2cc9e32d4f295df6e0ff7190b919c6a5c84731e0049:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmMTk0NjE1ZTg3NzI3NjYyMTdhNDFmMWNkYmE3OTFjZTY4NzdlZDgzNDFjZWFhMzlkOWFiZDk1NjI1ZDA3Y2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxYzNiN2NmNzUyYmIyMzYzMGY3ZTIwYzJmOWUyZTlmM2FhZDFlMmIwMzViY2E5YjJjOThiYzdiNjBhMzllNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAyYmFhNWVkNDQ2OTA5N2Y5YmE4ODYxNjQ1MTdkOTIxZjZkODY4NzU2NjU1ZWZhZjgwYmNhN2IyMTY3YjExNTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkyNzkwZmE3ZjRjNmVhNWU1ZDFiYjU0ZmJiOGM3NGRmMzhhMWYyMGMwNmRlY2JlOGY0MGRmNTM2MDU0NzVlNmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_83bf23b45aef48be8f7aac302582ea46",
+      "statement": "A Python dict with string keys converts to a STRUCT, while a dict with exactly key and value list entries converts to a MAP as a query parameter and in values().",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/conversion.md#L217-L223",
+          "version": "repo-lines-v1:sha256:5b71527453798e3a7b38c4c6ac99dc2f4673c069b17fea1536bfdb2c301b231e:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmFlNGViOTNhZWIxMDU5YWMzYmY3YTJhNDM1NjA1ZmViZTRiYjUyMTgwM2VkMWQ4MjdiOGM5MTFmNWY5YjY2MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWYyYzYyZDg1MmJkZWE0OWQ1OTI0MjcyYzAwNTVmY2YxYjU1OGViMWMxZGRjZDNjYTcyZjZmMTMyMDhhZDUzMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMzY2Y2I5ODBkZDkzNzYxZGRiODRlMDgxZjdhN2QzMTc2OWUzZGJkMTVhYzRkNDU4OGUwOGY4N2I4ZDg5OGE1MyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTk1NTMyM2U3ZTE5NDU3OGNjMGRlOTM1NGQwMTViZjVlZjAxNjQwMmU2MWIwNmY2YjY3MWVmOTliMjc1Nzc5YyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_8fbe3f92111d4b78ac02848e024e93e6",
+      "statement": "A relation implements the Arrow PyCapsule interface so pyarrow.table(rel) and polars.DataFrame(rel) read it directly, the latter without pyarrow installed.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/python/export_arrow.md#L80-L106",
+          "version": "repo-lines-v1:sha256:1382f914963937c9da644510a0ecc8a4c1967d49266c289da11dd8e2f24d98ef:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI4N2E4NmU3NDU3YTJlNzcxZjY4OTFmMWY2YTk4NDhmNzAzZThiODUyM2Y0NTljM2MwMThlMWE1NTllYzIyYzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZmMmE1ZTI1NzY4NDUxY2Q2NjUxMmZhNTRhNjQzMGQ0YTI1ZGZlZjAwYTBlN2M0YTk5ZDc0ZWNkZTI1MmMyODMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

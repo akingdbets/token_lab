@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:ddebcd0896deb5605c1d43bfa4f3bc873013dd1ea85460c79e4c1f22bf4105da",
+  "claims": [
+    {
+      "id": "claim_b525e62b51ed4a958854691ce8dddc9a",
+      "statement": "DATE values use the Gregorian calendar exclusively, and DATE and TIMESTAMP support the special inputs epoch, infinity and -infinity.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/date.md#L17-L45",
+          "version": "repo-lines-v1:sha256:aca6acd50443afe22e63705234ea7630abecde4e9b78cd6ec6aa73be6d241e9b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU1MDg5YTA5YTdmOGE3OGNmYmJmNDk4NDE3YWJkZmUzZDdkMmZlMDE3OGVmMjNhZGFmZjY4MDA4ZjE4NDUzY2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkwYWRkOWEwYzY4MjM0YTJiY2Q4OTY2N2RjN2I5ODc1ZjY3Yjc0MzJkNWU5YTkxOGFkNzQzNWZhMjU5MzZhNTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNhZTQ5OGIxOWE3NzBjOTIwYjYxNzU0YzU2Yzk1MmJlZDg2MzRhNTE0MzlmMjVkN2Q3YzBlYmY5NzlmNThkYzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM4OWI2ZDhjMjNkNTA4NGQwZThlNWJhZDJiYWY3OTQ1OGQ2MTBiYTE5OGNmNGFjZGVjZTFhZjEwYTdmZmU0NzkifQ"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/data_types/timestamp.md#L121-L139",
+          "version": "repo-lines-v1:sha256:45fa166c17115a92939e3d2900c76ea0336e5c6277dcb06315c7058f5c25e726:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI4MTgxMDdkZTIxMDllYWY5ZmE1ZGE1NzUyMzI5MmMwMTg1ZjkxYzkzZGM4YTc5MDlkNDliZmYyNzNhOTRkYTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcxNDg5NjVlYTU1MGEwOGIyODg4NGE2Y2U4MzAxNTU3ZjM3ZTVkNzUwNTNmYjliNTRiNTE4ZDBhODc2MTRkYTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJkYjkwZjY5NTU3Njk5ODA3Y2RiNDg2OWY0MzJhOTU3MjQ1OTEwZjg4Nzg1NzVjZjNlNWZjNzFjMjJhNDg1ZGEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM4OWI2ZDhjMjNkNTA4NGQwZThlNWJhZDJiYWY3OTQ1OGQ2MTBiYTE5OGNmNGFjZGVjZTFhZjEwYTdmZmU0NzkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9dcb85412d4d457096f511722fc1a8f0",
+      "statement": "DuckDB offers TIMESTAMP_NS, TIMESTAMP, TIMESTAMP_MS, TIMESTAMP_S, TIMESTAMPTZ and TIMESTAMPTZ_NS, the last introduced in DuckDB 2.0.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/timestamp.md#L16-L85",
+          "version": "repo-lines-v1:sha256:3d5f6b9f7ddde6f0c9269d1078ee7a08389710f8ab735fcb5433c2afb1e90b24:eyJzZWxlY3RlZExpbmVDb3VudCI6NzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMwZDBmMGViZDY5YmQzNjQ4OGIzNzJmOGRhYzAxOGE1NmJmMDZhMzBiZDg5ZWY1ZTc2MjI5ODk5ZWJjOTA3ZTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdlYmFlNzc1ZWJkMjA5NDA3N2QxMWFjODZjODdlYjkxYzhjZDYxMGExNzFhNjJiOGFlN2Y2NmMxODEzYjAyMzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMxNWU4MjgzZGRkYWVhYjVmMjczNDY0ZTllNjdiODllOTViOGI0NmU1OGI4NGE0NDQxYTEzNTllMGE4MTIzNTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5bd1e95a689945d48d2f6b7ed174a71c",
+      "statement": "TIMESTAMP WITH TIME ZONE stores only microseconds since the Unix epoch, not a time zone; strings without offsets converted to it are interpreted in the configured time zone.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/timestamp.md#L87-L103",
+          "version": "repo-lines-v1:sha256:c35a47771ac6233175c2b9e75e50a40cac24f20fa267a48dc5901cadc6de898f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzNmQ4MzVkNGMyZTZkMGUxMWQ0OGIyMDhmMjE5Y2VmNGQ3M2RlNzg2NDk3NDY4YjA4OWQyMGQ4YTJhNGVmN2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgyZjRhMTU4MGJhMWNkOTI2NGVlNTY5MGI3YTk2ODZjMmUwNTZjYTFiNjUzYmM0MGJlNzJhYzQ1NzcyY2Y0NzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZiYTUwMTkwMWFjMGU4NWYyNDc0YzBiOGI0Y2RjZTU3YjUxYjM2ODNhMDhmMzJhYzNlYmE3YzA3MTc2YWU4MzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU2ZjQyMGZkODg2YjU2YTczNzQ1YTFhYmM3OWU2ODQyYjRhMDNiODhiMDQyYjU1MjM4MGEzZDZhZjBiMjhiYzUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_182a97f3ba3d456fb6a00731664d4991",
+      "statement": "Starting with DuckDB 2.0, time zone names in strings cast to WITHOUT TIME ZONE types are ignored rather than raising an error.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/timestamp.md#L100-L101",
+          "version": "repo-lines-v1:sha256:a2303870b840096aa89e77456167425f5534ede1c397f2e9a3f34041e6d08bc2:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmQ5MWEwOTRjODc0YzA1MTNmMmNiMjA4NzU0MjIyMDAxMTlhOWNkOTYxNTg5Yjc3MmE2M2IzMTA0YTg4MWJiOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGFmNGNlYWRhYjk3YjNiMTZjNjhhMjZlYjhjOGZiOGIxYzZlM2E3ODhiODJkN2Q4YTM3ZjQ4YmExZjllOTkzMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTgwZDE4YmFjMDJkNDE5Y2RhNTMxMjk2ODY1ODhhZGQxMjBhMTRhZWE0OWE5ZjMxMjkxM2RhNjAxYTUwMzIxNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTNmN2E1ZjYyNjkxOWYzYjYzMDE3MzQ0NDgzOTE0YTk2NzEyZjk2NzA2MzhmZGM5Y2Q2ZWNlOWNmOGYyOTI2NCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_03846d8c4f6f42fb962ac55a2197904e",
+      "statement": "Since DuckDB 2.0 the icu extension implements time zones, calendars and collations natively without the ICU library, and TimeZone/Calendar settings control TIMESTAMPTZ binning.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/sql_features/timestamps.md#L78-L82",
+          "version": "repo-lines-v1:sha256:38df6946a81711ea7e38d7779eb937c30e50d7649a35ca93b558ac33fefffdb7:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjJmZTc2Yzk1NTcwMjI4NzcwMDQ0OGExYjQxMTMyNzYzNmFkY2JkNzUyYmZiYmViYWY1NzRjOTk3YmJkZjgwNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMWQ1MmY1NTlkY2Q5ZWU4N2Y5OGFmODdiMzgzZTVlNGY2MDk2NzUyNmQ0YmY0NGQyYzg0NDAxYWI2Y2RkYzk4YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWFmNDE3YmRjOTc0NjY3MmIzYTI5YzliZWI2ZjRjZTY3MzdmZTdmNTQ1ZGYyMjFmN2JkN2MwZGRiMGUxNjNlNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2UxOTIxNzIzNmI3YzljNGIyMzkzNGU3NTg1ZTM1OTRkOGI4ZWNjMzUzYTRhOGZkYzY4YmIxMGY0NTI4OThkOCJ9"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/data_types/timestamp.md#L199-L282",
+          "version": "repo-lines-v1:sha256:a06bfbe02b5eb9e9695c0f03e7b7ba3ec12afe05072ba86accafca4c43a37f2d:eyJzZWxlY3RlZExpbmVDb3VudCI6ODQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUzZmU1ZTcwNjE2ZTYzMWJjMzUwMWE1ZWM0N2JlMjZkZjFkYmI4ZDM0ZTBmNzJmNzEzZGM0NjJiYjY0YTRjNjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzODQ3MWNhOGNhYjc1NDJiZmIyYmU4OTc4MTkxNDIyMDliNzAzMWZkNTdiOGZhYTE2ZTBlMmNkMDU2NDA3OGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM1N2Y3ZDA4YWQxYWY1NDg0MmZmNTY0NjY1MDNkZDdjOTIyMmRiZGFiNzNkY2ZjNDUyZGExZTU4YTI3OGYyNDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3c64d45333e44f41b32da8201fe82e05",
+      "statement": "INTERVAL stores months, days and microseconds separately, and decimal amounts with unit keywords are truncated except for seconds and milliseconds.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/interval.md#L14-L43",
+          "version": "repo-lines-v1:sha256:0680bd2d33a5b9b1b1b0225847fbc9c71b1154e3b3f20d63f1fd76edc00b7adb:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ1Njc1Y2RlOWM3NDZhNDY2OTY4NzBiYWYwYTIwNjZmOWYyZTIwZTE2MTFiNTc4YmVlMjRhMjIwMDFmMDdhNWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI5OGYwNTI3ZjYyYmIwNWY5ZjdmOWFhNWRmM2UyNWVkN2RkMzE5MjU4OGU4NmQ3YjUwOTJjNGRlYzNjMjkxNmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNiM2NmYjZkZTIzOTViOWNhZTNiNTk3MzRjN2ZlM2JkODI3MDI1NDVlMzc1NjIxNGEzZmMzZmI5MzJhYzY1ZTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE4ZmQ3ODFjYTM1NjM4Y2Y2ZTJiZmUxMTA2MGJiZjI1YjFlYzBiNmFiZTEwZjFkYTM3MjI2Njg4MWUwYzYxMjgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ee1a78c3b0e24d87bd59d334a5be6eeb",
+      "statement": "Adding an INTERVAL to a DATE returns a TIMESTAMP, subtracting timestamps yields days and microseconds only, and subtracting DATEs returns an integer number of days.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/interval.md#L108-L131",
+          "version": "repo-lines-v1:sha256:0d82f104cb168990bd340dc90cadf2900252eaf6add2f90be656c5a344bc3274:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRmZjdkNzljOTRkOGZlMDg1YWViNzhkNTQ3ZTk0ODMyNTMwYTU0MGEwZWVkMzQ0OTBkODhkZmIyZTJmNzNlMGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIxYzM1YjMyODQxOWY5MWI0OTVhNmZlNDY2YjA0NzA1OTk5OTE4MzIyNGU5Y2NiNjcxODJmYWNiMWViNGNiYzIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI1ZDZmM2IzZjA0OTYzNmFlZDRhYTFiMDU1NDZlNzYzNzAwMDkzMTg5YmNhNjk0ZWJlZDczOTJhYjU4YTA1NjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU5MTZkZjhkMGVkMGQwNWM1ZTlmZmI5NjY1MDkzZGVjNzNlYmMxNWViNTBkYTQyMDNiODIxOTdjMWY2OTYwMGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_43cc0ddd1608469091f867d0a1c39cad",
+      "statement": "For INTERVAL comparisons, months count as 30 days and days as 24 hours, so equal intervals can produce different dates when added.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/interval.md#L142-L156",
+          "version": "repo-lines-v1:sha256:3000cc1ba28bc46fdff08acf02b861bf24cfa62e6c120cf2d0b2eb933b560243:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3YzE2ODY4NGFmN2EyMTI2NWE1MGQxNDI1NzA3NDRiZTg4YmM4OTlmZTdmOTBhNDIxYjlkM2NjNzZlMzAyODIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVlNjg5ZDM2NzRhNDEwNzFjNGZmNTgwZGQ3NDJjNzgwYTZmOTQ1NThjYzU2YTQ2Zjg3NDNmNDNlNDM0ZDM1ODkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY4MjA4ZTg5NGQzNGNiZDNiNjdjMzhlZWEwOThiMmU2ODIwMzQwMzA5Y2FjMzIzNjZjZjIyNGVmZWRmOTQ0NTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM4OWI2ZDhjMjNkNTA4NGQwZThlNWJhZDJiYWY3OTQ1OGQ2MTBiYTE5OGNmNGFjZGVjZTFhZjEwYTdmZmU0NzkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_531742a0fee84a8a94fefbefbb8a7139",
+      "statement": "DATE to TIMESTAMPTZ promotion uses midnight in the current time zone, so plain TIMESTAMP is recommended unless time zone display or binning is needed; BETWEEN is closed-closed.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/sql_features/timestamps.md#L12-L137",
+          "version": "repo-lines-v1:sha256:fbcd4356353d7153ef99a894e8b5477b513590d00f1e54bb6ef211172e45b4b8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTI2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIxYWVmYzAzNTdmZWY3MjJkNThhNWUwMDg0ZGUwOGYzZGJjZTQ0OTRkY2JiNzNkY2E0M2Q1OGM1MjE5NjkzMmY1IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0NDRkMWIxMzJiNWZjNThjZGYzOTVhY2Y2M2UwZGQxNWRkNzIzMjQ2ZjRkNzcwNTRiYzlkMmEwYTUzNzljMjU1IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlMmY1ODZjMjNiNDM4ZTIzNTkzZmMwZGNmZTk1YzI4YTE0M2E3YzQ4YWE0ZDA0OGViOTI3MWFhMDk3YzRlNDI0IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

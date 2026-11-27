@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:186a29f1510bbe9eb52dcd0769d58a9306aa1628d7c2dfd35731b0c3405c34e6",
+  "claims": [
+    {
+      "id": "claim_116f75eb38c34b0381c78c950820a9cb",
+      "statement": "Views are not materialized; the view query runs every time the view is referenced.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/create_view.md#L58-L60",
+          "version": "repo-lines-v1:sha256:b81f963b0386a08b35a45ae9dc8d98c59a25b74e9a05ebf00487870e1e571d9c:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWRhYmYzZThmZDQ3ZTUwYTZkMmQ2OGQ5NDlmNWE2YTFhYzgzMmRlMjYyMzJkYmI4N2I1NDc4ODg2NDZlNjJhMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzY0YTMyODYzOTgwMWYxYzNmNWY1ZGMxMTdiMjhkYzhkZDVjMGZhZDk4ZDMyYWViNjNjZTU5MTliZjIwYmY4NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTMzMjZjNmE3YWJjNTlhZDExNDQ2MjAyMTA3ZmYzODIzNWRmMjc5ZDVhMDQwZGI3ZTliY2FkYWZkODQ0MjMzZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjM1MjVjYTJiZjNmNjQyYjUxNDBiZjY5YTAyNGE5YmM3ZGY5MmYyMGQ5MDQ1YmE3YzI0ZTY1YzZhNGIzZWUwMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_97319c7345e34ba7849d7dbc04308e10",
+      "statement": "CREATE SECURE VIEW, new in DuckDB 2.0, prevents leaking underlying data via stats() and shows a single Secure View node in EXPLAIN ANALYZE.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/create_view.md#L35-L44",
+          "version": "repo-lines-v1:sha256:75d6cc80caa447f682edbc3d87feecbe5e94f990f9918cf8aac797961e966e31:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNlNTBlMGRlOTYzZGY1ZmUxNmJhOGIxN2Y1NThmYTNiZjZhZGQwZTg2OTQzMGUzZmZhOGQ0YTA2YjU5ZmMyOWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFlZTVlZWYxNTIxNGIyZmJlYzlmMmFkMTRhNzcwMTg4MmY1NDEwMTAwZTllOTAwYWEzN2YyM2JiNjJmNWVjZmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY2MmM1Y2JjMDhkZmM3ODliYmRkOGQ1ZTE5NWI3YjRjNGZmZmQzZGNiMzE0ZDNkMmRhMWZjZWI1ODM2ZTlhNGEifQ"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/statements/create_view.md#L62-L62",
+          "version": "repo-lines-v1:sha256:8a6e2a46f5ab50d6341e10b2b7aa9979961497de6f9e454b089119878025a5c4:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGE2ZTJhNDZmNWFiNTBkNjM0MWUxMGIyYjdhYTk5Nzk5NjE0OTdkZTZmOWU0NTRiMDg5MTE5ODc4MDI1YTVjNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGE2ZTJhNDZmNWFiNTBkNjM0MWUxMGIyYjdhYTk5Nzk5NjE0OTdkZTZmOWU0NTRiMDg5MTE5ODc4MDI1YTVjNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNGJlNmRhMzc2NDlmNWJlNTFkMGY1MmVjNGUyOWNmNWJiOTgzYzExNTFjNjUyMzJjYjBkNTc1YWJiZWVkMDNmMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjIsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGMzNGNlZmJmNDI1MzFkNmRhZGY4NjE3NDBhZjU1MzQ1MjMyYTFhZTgzODNlNzNhYzI5NTFhMGUwMmJiOWY4ZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_9835b90d8d2d4838920c9e01a8308774",
+      "statement": "CREATE FUNCTION is an alias for CREATE MACRO; macros are persisted unless TEMPORARY, and OR REPLACE and IF NOT EXISTS cannot both be used.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/create_macro.md#L19-L30",
+          "version": "repo-lines-v1:sha256:c7fc4950f3a878296469860f22ed3daa9e42e71cfdc3a83897a392dbd76abd1f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgyZDAzMmM2MWM3ZjAyNzBiN2UwYzE1ZGJmNTdkODQ5MDRlMjA2ZWU0N2M0ZTBlMzM0ZThhOTBjZTIzNDNkMTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQxZTk4YmJlNWE1M2Y0N2Y2ZGI3ODhlNGYxY2E3MTUzM2NiZjFhM2EwNTIyZDNkOTc3ODY3ZDRkNzg3OWVkOWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNjZWVhMjBjNTg4NTBlYmZjNjNkOTI3MmQxMDA5ZWM4NjRlMGU2MWFmNTRlMzZkMTg1YmY0ZjU4Zjc1ZjJjMGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU4MTY1YzJiODIyOTUwMWJlODEyMDQ4YTE3MWQ1Y2QwMjljYzRiNTUwYzA4ZjE2YzJlNGYyNDI0MWM1M2EwMDUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_870acb66eda449bda1933bf89dbe765d",
+      "statement": "Macro default parameter values are evaluated at definition time, and parameters with defaults must follow those without.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/create_macro.md#L53-L56",
+          "version": "repo-lines-v1:sha256:860ba8d8da62f9b61b424b3cf3b9ca0dae43671afb295fff02d528caf0357212:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjk5YjI3ZDVkNWM4ODliNGViMDRmZjg3NzEyYmM0YjViMTlhYTRkZGZmYjc1OWI4MDgyMDhiNmE4ZTA0ZjgyMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjI3NzlkMzlmNTRkM2VkZjMwNmRjZTY5YmE5Yzc4MDAzMmNhODZmMTJkZDQ4YmVjYzI5M2I1MWY5MGRjNDEwMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNmM1NjFhODJmMWE1Y2RkY2VjMmFjYTZjNzJhMmY3NjRkYWMwOGQ1YWMzMjc5ZjdiZTM5YWJlNjE3MTdmNTQ0MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjgwY2MxYmZhN2NjOGE4ZjcwZmRjN2NhYWE5NWNiY2Y5YzQxOTA0YWVhYjZhZDQ1ZWQwYjcyMjMyYWFmZjhlNiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_2d3385837e9542beb3b6fbfc62600925",
+      "statement": "Named macro arguments must use :=; using = is interpreted as a comparison and becomes a positional argument.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/create_macro.md#L85-L91",
+          "version": "repo-lines-v1:sha256:d39752693c59fb0896b3b044cc2a0b7c1e5bca826faf465f0a66f9bcd0abd22f:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjgyOTIwOTcwOTY1YTYwMDQ2NDY4ZTk2ZmE5YmVhOWExOTkyMmQxZDY5MmIwZWI3MDQxYmQ1ZTE5MDE5NDM0YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDgzZjdkMGQ2MDJhMWQ0MDE2NzNiY2QyOTdhMDBlY2UzZGRkM2M5ZjI3ZDk0OTg3YzllMjBjODI3NDRkYjlhMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTFkMjA3NmUyYWYyZDc4ZjUxNjZmYjhhYjYyYTBmNTI4Y2E1OTk3M2I3YWZjY2Y2ZmFjODhmMDg1MTdhNzQ2OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiM2I4ZTQzMjM5YmRlNzhiOWVkODU1MTBkMjE1NDMwNzM1MWQwODAxZjY1ZTAzY2RhODM0MDFkMWUwMzExYTFiOSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_56d22a7c31694650af9c2eed43ee796c",
+      "statement": "A table macro's expression is bound at creation, so hard-coded file names are resolved then; passing the file name as a parameter defers resolution to call time.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/create_macro.md#L205-L221",
+          "version": "repo-lines-v1:sha256:bb5f586a8d73947e541b94418409998bf0c706156ac830bdf352a8e9a23706bd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NTNkMmQ3Y2ZjNDViYjZiMDY4MDQ1NTQwMThlNTgxYmNkOGM3ZjljNzJmMzAyZGM2ZGYyYzgxOGQwM2Y4MWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmNTUxMTdhYWY0NGQ5MzgwZWI2MGU1MGY1YTM5M2I2MzA5M2NlYTlhYWY5NDkxYTc3YjI3ZjQwNWE5NGY1MjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ2NjNkNzQ3YzVmMzI3NTI5MDA2OGMwMmUzOWEyODU4ZTVkOWUxNjExMGQzM2UyNGNjYzIwOGM3ZmQ0ZDg1NzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUyODU0YmI0ZDljOTI4ODc3OTUyOWJiNDY4MjZiMzZmYjIzOTM1M2U4ODg1YmQyMGYyYmY2OTU0NWQ5MTc3ODMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_11045a02bbe34bf097c42aca6d404cf9",
+      "statement": "Recursive macros are not supported, and table macros or subquery-based scalar macros cannot be used in table function arguments.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/create_macro.md#L373-L406",
+          "version": "repo-lines-v1:sha256:6464bff98d73b6dc3adc325678fa1744a35c3038a71b80ecb4ee2bd0dfd14fab:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1NzBjYjcxYjk0MGJkODJiYTQwYTNiZjdhMDhlZmY5NzNmNTNmYjU3M2MyYjFhY2U4Y2I4ODAwNDIwMDI1MTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZmMDA1ZTg1ZjY5ZjFmOWNiYWUwZTM3M2JkN2RiNTI2Mjk1MGYyZWZlM2VmYjkyNDIyODlmM2M0MTg0YWYxMTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkxZDhhYjY2OGJkMjE2MjMxMmQxNDljODQwODJmZDVkODI4MWY5YzdjMTE5NjIzOGZjZTJkZjQ4MDlhMjEzYzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcwMmM3OTdiMDZhMTgwMDdlODVhNGZjNDU5MjdiMzk4MmY2MTBlNWY4ZmJkYzE4ZWQ1ZTI1NjQ2NDU5MTQxNzIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9bf9c6940569431fb2a7d65ed07782dc",
+      "statement": "Macros stored in a database file can be shared by attaching that file, including over HTTPS with httpfs.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/snippets/sharing_macros.md#L44-L66",
+          "version": "repo-lines-v1:sha256:9a4502f5fc71c355c0c819157a97c2722fd25bf3a5679178a13232b37ebe05cd:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNjN2Q4MzViY2U3NmRiYjEyOTg4ZTA3MTdkMTQ1OTBmMzU5ZDA0Y2QyODYxMjVlMmU1OGFmZWYzM2QwOWQ4OWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQxMjI4NDczOWRlZmY4ZWIzYmI0ZjUwZDQ0NDMwMjcyMmZiN2QxZmEwNWNhMzgyYzIyMjEwNGM4OGU5OTY2NjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdlMWRiYWU1ZWI1NTIzYTUxYWM2YjIzZDU1NDJhNDkxZmQ4YmE5NjJjNWNkMzI4N2RmYzY0NWE3MWE5ZjdmMzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQwZTBiNmFjMTJkMTZhYWJmNjdhYWQ0OTc4ZWViNTFlMjY4MmRlNDhkY2I5MTBmN2EyNzZhM2Y1ODkwMGRkZDAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c3c25be0d5404c04bb64c232f7701db1",
+      "statement": "CREATE TRIGGER was introduced in DuckDB 2.0 with BEFORE/AFTER timing, FOR EACH ROW or FOR EACH STATEMENT granularity, and OLD TABLE/NEW TABLE transition tables for statement-level triggers.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/create_trigger.md#L12-L102",
+          "version": "repo-lines-v1:sha256:3c254dfcbba8935fe8945f5bc4991b8777588c6bf0c50bb831f7253229bb0658:eyJzZWxlY3RlZExpbmVDb3VudCI6OTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjViZjkzM2VhYjNhOGFlY2RjZmFmZWY1OTM2NDU5MTNiOTI5Mzg3ZTM3YTE3NDEyMzdiNGY3N2NkY2RkNzM2MTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI2YTk1MmI3NjZmZDQ4OGQ5MTQ1MDM1YmE1MWY1ZjEyYzc0YjQwMjNlNDYyNTJiNTBhOTM2ZDVkZmM3YWZjMGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE1MmIxODA2ZjZjZWE4MTY4YzNiODgyNTI5NzFhODgzYzdlYTFkOWI4NWRlNmYzMzBkYWFkMDM4OTRjM2U2YjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFkYmY3NmQ5ZWEyYTI0YzM3MzI3YmU4ZDA1NmM4NWI1NzZlOTUwYTJhOWRlYWFmNmZjMmYzYWNlZDEwODk3ZmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c340c281faf64c47abe74365498ace58",
+      "statement": "In DuckDB 2.0, BEFORE ... FOR EACH ROW, UPDATE ... FOR EACH ROW, INSTEAD OF and temporary triggers are unsupported, and MERGE INTO is not supported on tables with triggers.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/create_trigger.md#L159-L170",
+          "version": "repo-lines-v1:sha256:1bae9659d23d2a1ff89f40ad698434e8bcfd3dd6feedf2bfb41dc0ba71fdcb0b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1NzBjYjcxYjk0MGJkODJiYTQwYTNiZjdhMDhlZmY5NzNmNTNmYjU3M2MyYjFhY2U4Y2I4ODAwNDIwMDI1MTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI2NmY3ZmYxNzQ0NTEwZmFhNDUzZjk0Zjk1ZjM2MDVkZGNjM2U2MDNjZGM0ZWY1YzhjNjdiZGRiMzJjNzgzY2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg3YjAyZGEyMWEyM2YxMTIxNmZlMjY1ZDg3OTBhM2ViOGZlZjIyNzEzOTA3NzYzNGUxYWRiMjZhODcwNmE5ZjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2d2e27a59be943dfa2c8feb5a81ed144",
+      "statement": "COMMENT ON supports tables, columns, views, indexes, sequences, types, macros and table macros, but not schemas or databases; comments are read from the comment column of duckdb_* functions.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/comment_on.md#L13-L128",
+          "version": "repo-lines-v1:sha256:30091d7d490fd27bbfbaf529055123d062840fc22cee931ade2be0498f421cb0:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI3MmU3YWQ2ZDc5ZGUyYzhkZDU3N2I1OTEwNDgzMGU2NGNjYmY5OTY0MTJjYmQ1ZDEwNDU4N2M4ZjY4NTBlMzk5IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJhOTc5NTYyNzBiYzYwZmUzOTZjZGM1MTk1NDExYjNkYTA3MTVhNmY5NWJhNWIwYmRjMzc4OWQ1ZTVmNzdiNzY4IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIyMWRhY2VhYjZkNGEwYmZmMjUzNTM4ZTRjMDRjN2UzMzk5YzMzOGNkOWIzOWE4NWViNTQ3MGM5MTgwNzYxZTViIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI4YWY4MTdiNDJkMTA2ODYwMjFmZjU3NWM4ODBlMWRhODM0MzA3YWVmNTc2NTc0OGQ4YjhlMTBhNDE0ZDBhZjBiIn0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}
