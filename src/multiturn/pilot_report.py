@@ -40,6 +40,11 @@ def _yn(v):
     return "–" if v is None else ("✓" if v else "✗")
 
 
+def _prefix(block: dict, side: str):
+    """캐시 지표(--cost-mode cache 에서만 summary 에 있음). 없으면 None."""
+    return ((block.get("cache") or {}).get(side) or {}).get("prefix_share_mean")
+
+
 def _mean(xs):
     xs = [x for x in xs if x is not None]
     return statistics.mean(xs) if xs else None
@@ -83,19 +88,20 @@ def main_table(s: dict) -> list[str]:
              "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
     none_prefix = None
     for b in comps.values():
-        none_prefix = b["all"]["cache"]["none"]["prefix_share_mean"]
+        none_prefix = _prefix(b["all"], "none")
         none_reason = b["all"]["reasoning_tokens"]["none_mean"]
+        lines.append(f"| none | – | – | – | – | – | {_pct(none_prefix * 100 if none_prefix is not None else None, False)} "
+                     f"| – | – | {_num(none_reason)} | – | – | – | – | – |")
         break
-    if none_prefix is not None:
-        lines.append(f"| none | – | – | – | – | – | {none_prefix * 100:.1f}% | – | – | {none_reason:.1f} | – | – | – | – | – |")
     for name, b in comps.items():
         a = b["all"]
         ni = a.get("non_inferiority") or {}
         nic = a.get("non_inferiority_cluster") or {}
         lines.append(
             f"| {name} | {_pct(a['input_reduction_pct'], False)} | {_pct(a['total_token_reduction_pct'], False)} "
-            f"| {_pct(a['cost_reduction_pct_sim'])} | {_pct(a.get('cost_reduction_pct_sim_write'))} "
-            f"| {_pct(a.get('cost_reduction_pct_nocache'))} | {a['cache']['compressed']['prefix_share_mean'] * 100:.1f}% "
+            f"| {_pct(a.get('cost_reduction_pct_sim'))} | {_pct(a.get('cost_reduction_pct_sim_write'))} "
+            f"| {_pct(a.get('cost_reduction_pct_nocache'))} "
+            f"| {_pct(_prefix(a, 'compressed') * 100 if _prefix(a, 'compressed') is not None else None, False)} "
             f"| {_pct(a['retention_pct'], False)} | {_yn(ni.get('non_inferior'))} / {_yn(nic.get('non_inferior'))} "
             f"| {_num(a['reasoning_tokens']['compressed_mean'])} | {a.get('summary_calls') or 0} "
             f"| ${a.get('compress_cost_usd') or 0:.4f} | {a.get('recompress_count') or 0} "
@@ -119,12 +125,13 @@ def prefix_compare(s: dict) -> list[str]:
             if name.startswith(fam + "("):
                 budget = name[len(fam) + 1:name.index(")")]
                 sre = name.split("[sre=")[1].rstrip("]") if "[sre=" in name else "-"
-                rows[(budget, sre)][fam] = b["all"]["cache"]["compressed"]["prefix_share_mean"]
+                if _prefix(b["all"], "compressed") is not None:
+                    rows[(budget, sre)][fam] = _prefix(b["all"], "compressed")
     if not rows:
         return []
     lines = ["## frozen 대 rolling 접두부 공유율", "",
              "| 예산 | 요약 추론 | rolling | frozen | frozen 이 높은가 |", "|---|---|---|---|---|"]
-    for (budget, sre), v in sorted(rows.items(), key=lambda x: (int(x[0][0]), x[0][1])):
+    for (budget, sre), v in sorted(rows.items(), key=lambda x: (float(x[0][0].removeprefix("r=")), x[0][1])):
         r, f = v.get("rolling_summary"), v.get("frozen_summary")
         lines.append(f"| {budget} | {sre} | {_pct(r * 100 if r is not None else None, False)} "
                      f"| {_pct(f * 100 if f is not None else None, False)} "
@@ -139,7 +146,9 @@ def turn_type_table(rows: list[dict], comps: list[str]) -> list[str]:
             continue
         acc[(r["compressor"], r["turn_type"])].append(r["answer_accuracy"])
         nf[(r["compressor"], r["turn_type"])].append(1 if r.get("not_found") else 0)
-    types = ("new", "followup", "recall", "synthesis")
+    order = ("new", "followup", "recall", "synthesis")          # 아는 유형은 이 순서, 나머지(v2 의 update 등)는 뒤에 이름순
+    seen = {r["turn_type"] for r in rows}
+    types = [t for t in order if t in seen] + sorted(seen - set(order))
     lines = ["## turn_type 별 정확도 (not_found 비율)", "",
              "| 압축기 | " + " | ".join(types) + " |", "|---|" + "---|" * len(types)]
     for c in ["none"] + comps:

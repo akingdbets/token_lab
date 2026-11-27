@@ -17,7 +17,12 @@
 
 from __future__ import annotations
 
+import contextvars
 from dataclasses import dataclass, field
+
+# 이 턴의 원본 과거 기록 (system·현재 턴 제외, 압축 전). 비율 예산(budget.py) 이 읽는다.
+# 바깥 compress_history 호출이 넣고, 체인의 단계들은 compress_past 만 부르므로 원본이 유지된다.
+RAW_PAST: contextvars.ContextVar = contextvars.ContextVar("raw_past", default=None)
 
 
 @dataclass
@@ -49,7 +54,11 @@ class HistoryCompressor:
             raise ValueError("system 메시지는 기록 맨 앞에만 둘 수 있습니다")
         system = history[:1] if history and history[0]["role"] == "system" else []
         past = [dict(m) for m in history[len(system):]]
-        res = self.compress_past(past, current_user, budget_tokens, state)
+        token = RAW_PAST.set([dict(m) for m in past])
+        try:
+            res = self.compress_past(past, current_user, budget_tokens, state)
+        finally:
+            RAW_PAST.reset(token)
         res.messages = [dict(m) for m in system] + res.messages + [{"role": "user", "content": current_user}]
         return res
 

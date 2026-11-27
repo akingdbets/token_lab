@@ -1,0 +1,15 @@
+{
+ "prompt": [
+  "v1",
+  "4ae49ac29c1d"
+ ],
+ "model": "gpt-6-luna",
+ "reasoning_effort": "server_default",
+ "max_tokens": 4096,
+ "target_ratio": 0.25,
+ "temperature": "server_default",
+ "min_target_tokens": 60,
+ "tokenizer": "tiktoken:o200k_base",
+ "backend": "openai",
+ "base_url": "https://api.openai.com"
+}
