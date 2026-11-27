@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:fc4434cb80fc564bd0a057575020a2fc15345dc15513aa8312adf4a3bf5aba42",
+  "claims": [
+    {
+      "id": "claim_a556beecf89f4f958c4a30233d9a18a4",
+      "statement": "Running duckdb quickstart.duckdb creates the database file if it does not exist (or opens it), and tables created in it are saved to the file.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/quickstart.md#L19-L28",
+          "version": "repo-lines-v1:sha256:4853e7ed0bec3e9232b9e6a2ff6818c8827b9663ff583e9d4127875b33584db6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM2MjUzYzUyMjU5NTAzNTU5NDkxNGYyNTYwNzI3NDJkMzU0NGNlNjNlYmEwNmZjMmI1MzNjZTI4YTM4NTA3YWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVlZTc2Yjc0NTBlNmExODFiNzAwZDdhNDQ3ZGIxYjliMDMwOTM5N2RhYmQzMjUzMGZiOWMwZDEzOWQ5MWY3MjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJhZmM5M2NlZTk0YWEzYzAzYWNjNDIyY2I4ZTJhNDM4YjA3N2U5ZGFlYjQ0ZTFiODMzNDZlMzY5MTBjY2Y4NDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJkYThjMTBhODFlYTY2MjQzMzI1MWM3Y2JmYWFkYTVjMDg5YjQ3MWMwOTZlM2I4ZTE2MzM4ZjA5NjIxMjEwYTYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_088cc2146a5b4efab7113c03a77fb0e0",
+      "statement": "read_csv detects the CSV header and column types automatically, and CREATE TABLE ... AS SELECT * FROM read_csv(...) saves the data as a table.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/quickstart.md#L40-L69",
+          "version": "repo-lines-v1:sha256:5da747198250eb09e58901100cb1eac9446833f3227d3cb344b608585abac6b5:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjZjY0OTlhMDVmZTFiYjBmOWM5MWE1ZDVhNzIxNDViNGNjYjg4MWFiZjgwOWZjYjFkZjBmODIxZWQ4YmJmMDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRiNjRjMzNjZmVkZmUwMzEwMzg0ZGFkOGI3ZmI4OTBhZTVlZGFiZTBiMmIwMjc0ZTlhNWU4NGUzODQ0ODY5YzgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYxNWM1NTFlNTM3MTVhMmNjZTExZDk3ZDllYTVjNDYwZDg3MDljMWRjZmZjYzY3YTE3OTcxMWM2OGZhYTI2YzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQzZWZiNGExZjVmNzMyMjdmNDcxODk1YmU5NDZkMTVmNzk3Y2U4MjIzYmRjZTVhNGU3NGJlNjhhYmFlYTQ1NDUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6c950dded054466a88c189f37699b042",
+      "statement": "DuckDB 2.0 ships the quack extension for running DuckDB as a server and adds CONNECT/DISCONNECT statements and CLI -serve/-connect arguments.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/whats_new_in_the_docs.md#L13-L21",
+          "version": "repo-lines-v1:sha256:b7187db078ca6dd6c2a8ad7f8e2d3b0e4884c04532bfafbba95899397cabd239:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTE1ODFlNDg4ZmFjNjkwY2Q2ZmIzNzdiYmYxNGZmNDYyZTcyZTdkMDRlYTRjZTIyM2ZhYzVkMTdkZThkZmUzMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDZkYzUwZDkzOGJlZDFiZTNhNGIwZTFhY2RiYTVhNzA5MzQ5YzgxNzc2NGQ1YWJkODdkMWNkYTdiNGU4ZWJiMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODI3ZGU2MTEyYWViNzU1YWE3YzczNzQ4MTMxYjAyZjVlMzU0NmE1NmI5NDY3ZTQ0ZTQ3NzYzYTVlNGQ3NGVlYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZmUxNmI1N2VhODBlN2QwODNiYTY2OTA5YTg0YTgyNzFmYzlhNjgxY2ZhM2JjOTY2YjVlZWM1ZjM3Y2Q5NjZkMSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_dfc121f9b98d41cf840fd9c21e03817b",
+      "statement": "DuckDB 2.0 introduced asynchronous I/O that issues reads in the background with multiple requests in flight, speeding up object-storage reads.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/whats_new_in_the_docs.md#L53-L55",
+          "version": "repo-lines-v1:sha256:8f8678a1408a7ccbe3ea7b1e61874c9caac31426b8048f218c8f467726f997f3:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmRhMTIwYWE4Mjk4ODA0YWEwNWVjYzdmOWVjZTY0NDNmODRmM2I2MjEyYTg5ZjczMDgxZGUzZjBkMjFkYzBmYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzAwOTdiYTEwMjAxM2I0N2VmZDZhYzljNTU1MzkwY2E2NmVmNjBiZmQwOTllZjg5NmEyZTkyMDk2Mjc5ZWRkYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjNhZTU1NjE3ZmIzZTBjMGVhMjJiMjBhMTEzMzdjMjZmZTJmN2UxN2I5NmM2MGY0ZjhhNjJkN2RmYjY1N2FkMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTFhNGI4MjI0MmFiNmIwMDgxYTI4OTllZTg2OGJiZWY2MGI3NDcxNDJmODE1NDg1NGQyNDI0NTlmMDdlYjAxYiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_3be7cc78aca74eaaa427eb6091d2df76",
+      "statement": "New database files use the v2.0.0 storage format by default, which DuckDB versions before 2.0 cannot read.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/whats_new_in_the_docs.md#L68-L70",
+          "version": "repo-lines-v1:sha256:3bc4bdf33e0897db6790cccd3c89c67054967653c791e423a57462711a6dde4a:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzZlOTU4NjgzYzYzNWQ5MTAzODk2NWM1OWM2ZDNmOTE1MWMxNzk4NWFmYjVmMDY0OWNmY2Y5ODI3NjZiNmYwYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTU3NGRiYTdjNDg1NDA2NDFjNWQzODJhZmUzOGVlOWFjZTZkMjRmZGQzYzQ5ZTc4YWI3NGQ1Yjc0MzkyNjdhMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTQ1ZDA2Mzk3Nzc2YmYyZmI5YWYwOTBiOWM3MDRhZWIyNTU5ZDVjYjQzZDI2ZDk0NjA1YzczYjlhYTE2ZTAwMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDEzMzgyYmY1OTk0MjllMDE1MzZhMmQzZjY1ODNmY2IxNGIxNGU2N2FjYWQwZTE1ZjNiMWFmZTI5NGQxNDFlOCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_68302d3c156240d8ad0ddd40eee0ffe2",
+      "statement": "DuckDB 2.0 replaced the PostgreSQL-derived parser with a PEG-based parser that lets extensions contribute grammar, with a legacy parser extension for switching back.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/whats_new_in_the_docs.md#L76-L81",
+          "version": "repo-lines-v1:sha256:fd10515c6706edfd56f0b5bcef83e4ff40eda945ad8aac15d15b0d96c8620f07:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWM5ZTI0YWRiMDk4OWY5MzJiY2ViOGIwZDFiNWU5NTE3MjdjM2E1ZjQ2ZDA4ZmVhODlmMjhmZmI5YTVmNmQ2NSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2ZjYTNjMTYwMzYzMjcyNjU1NjI4NmI3NDcyYjVjM2RjNGZjNTFlNjk1YTIwOGQxNzNjNDkzYTcwZGYxNGYwZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTVkZjk3MGUxODJjYTAyMTkzYTc1YTJiZjMwMGYxZTJmOWY4NDNlN2FiNGE2NmFjZDNhN2MwOGI2YjYyOGFjMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjA4ZjU0ZTk4NDdhNDY5N2ZiNzI4ZTQ4YzM5NDliZTEyNjcwZDgwNjY5ZjBjOGVlMjY3ODUyYjJlYWYyNTM3MCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_87a9149f7b2e45e7895124ea27f357db",
+      "statement": "DuckDB 2.0 disables the single-arrow lambda syntax by default and supports macOS x86_64 community extensions only on a best-effort basis.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/whats_new_in_the_docs.md#L105-L110",
+          "version": "repo-lines-v1:sha256:008d7ad3219d281c10f1f04028638ecd30d3ea33deee5033da4dec17d650a688:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2NhMjc1YmUxN2ZmYTVmNWU1NGI2ZmIzMDZlY2M2YzU4NjllOTNjNGQ0NTRmYTUxOTVlNDRhZDdkMWZhODA0YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmU4MmMxY2QwYTRjZTYwY2U4YTk3NWM3ZGE5OGU5ZGJhOTI0MDg3MzQ0ZjczZDczOWI2MDNiMDg4YmEzNTg0MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDI2NjFhOWU2OGMzYjEwNWIzOGUyNzI1N2MzZTViNWJkOGI2NDI2YTIyMTU5ODVkYzAxZjdmOWExYTJhYjVjZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjY3ZjJjYzI5NzdiMmVlY2MyMDIxNGI1NWU1Mzk4ZWRkYzM5YTU3NGFkMWRkYzk2ZjM2NzNkMzBhYTg4MmViYiJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T16:06:49.309Z"
+  }
+}

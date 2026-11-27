@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:85aef45f2bbb0e66d8b3509d6bd86a27507b0cbdfe05df81131662db8008f10f",
+  "claims": [
+    {
+      "id": "claim_bf27a64aae3b461e820a73bda0ddc94d",
+      "statement": "read_parquet on a directory path recursively reads only files with the .parquet extension, equivalent to dir/**/*.parquet.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/multiple_files/overview.md#L87-L100",
+          "version": "repo-lines-v1:sha256:1e13d6035a183962a0a5d6968ff4a14199ef9c00b961c466d060e9c7487b45e1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ0MWQxNGViNTJkZTgzMDcxZmQ2MzBjYjk4NjQyNzdkYmNjZjUyMjIzYmFkYzhlMjc1NTA0MTNmZDc5NjdiYWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmZmIxMjc3YTEwZTdkODhiZmU4ZDgxYTg4YmQ0ZGZkNTBiYWNiMzhiNzg1MmYxMGNhNTdlNTQzY2Q2OTdjZjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU5YWZmNTNmNzU0MzNhMjkyNjk1YzYyNzdkYjBjYzRlZDUyMjFmY2YwODEzZDc4MzBhZjUyNGFmN2MxNTEyYjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZkZjFjMWQ0ZmFhYjQzYjkxMDI0NjNhNGQ1MDQ0NWExNjZhYzNlZjFlYWIwZTdmOTUwYzc0NzczNjJiNjU0YzQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_681bb858f19d4270bff95e11228ccac4",
+      "statement": "Glob wildcards are *, **, ?, [abc] and [a-z]; ? is not supported over S3.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/multiple_files/overview.md#L113-L125",
+          "version": "repo-lines-v1:sha256:0b83ac1d2e6070cfe0f1267d4e86843f5ce9347254bb6dac8e9daaad3f25d8b6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxYTk5ZThlYmE5NjdiZmNhM2MzNWQyNTllZDAyZGZmY2UzYjM1NTFjNThhMTI2YmY5ODk2ZGY1ZWI5YjdiYzYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1MmRjOTBhMWQwMDAxMjA0Y2QzNTczYWU5NTE1MmVlN2YxZjI4YmJkNzNiY2Y1MWI5MTZiNWE0ZjMwOGU3YTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY4MTI5ZjdlYzFiZTliZDQ5ZTcyOTk3YWRlZDUzNDkxN2ZiOGQwYmM0MjlmZDMzZmY5NjRmMDI0ZDRjZTEyNDMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIyZWE5ODQxMTUzMmZkMzYxOWI0OTgwNWQ1OWI1MDBmYWRlMmFhMmQ2YzAwOWE1ZTQzMDk0OWJlNmY3YjhjZTcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b5febc1cd66a48d1bba516f1b9c8e766",
+      "statement": "A glob matching no files raises an error; since DuckDB 2.0 allow_empty returns an empty result, and the glob function returns an empty result instead of erroring.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/multiple_files/overview.md#L136-L168",
+          "version": "repo-lines-v1:sha256:a995f375a060ad3ab452ce6a01baaedb450b7b2bd59d014e542762c40598d080:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmN2ZjYzU5MzIwNjdlM2U3ZGE2MTE5ZGRjYzFkYjg4Y2Y2ZmI0ODA2NGU5NjE0MGJiMjBhZThiNTYwYTdiNGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3ZDQ1NjhjZmJjNWE1ODVmNTJmNmFlZmUyZTQ3Yjc5ZDVkZDRiMDFiZjQ2NzJhYjA1YjRlZTlmMWEyOWJiMTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ1NWNiODIzNzQ3NjQ0NTllNmU4MjYzM2IzMTk5OWU2NjBiNDczZWE5OTQzNTA2ODZlMDJjY2ViZDMzZmI0NjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNhNDAwZTE4ZTI0MDFkMjllNDhlNzg1NTUzMmM0NzgwMDMzMzdlZjY2NzQzYTAwMGZiMmNlMWIzNDIyYWNhODcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cf45e6d30922412a96a3bedb995bdc06",
+      "statement": "By default DuckDB uses the first file's schema, silently dropping columns missing from it; union_by_name unifies by name with NULLs and increases memory consumption.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/multiple_files/combining_schemas.md#L28-L98",
+          "version": "repo-lines-v1:sha256:1bf9950e61849c72d365374ba7c1dcad2d8c15c66196f5e51affebbc34ac6b0d:eyJzZWxlY3RlZExpbmVDb3VudCI6NzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU1MmZkY2YwMGRhYmY3MDdkNDY0NGQxYjE5Yzk4OTY1ZjYwZWU2YzhiNTQwOWJlMjQ0ODE3YzQ3ZTczOTU0YzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNiMTBmZjI4N2JlNzE2MTRjMzllZmY2MjA4MDM5NzhkMGExOTM0MzE0N2JkNzRiNjY1MjdlZjEyZjllNGJhMjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYwY2ZjOGQ1MTQyMzgwNGUzNjU2ZjgwNTgxYzc3OTBiOWJjYzkxYzA2MGExNGRkZTM2NzVhNjhmNDA0NmY5NzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c7276b730e0f42cc84be7bbf3f5c5cfd",
+      "statement": "Hive partitioning is auto-detected, pushes filters on partition keys down to skip files, and auto-detects DATE, TIMESTAMP and BIGINT partition types.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/partitioning/hive_partitioning.md#L74-L117",
+          "version": "repo-lines-v1:sha256:40bdf307817b89c6e6eefda2c0ef64152acddb7b63116783836d39238d5177b6:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5MTI2N2M4NTU2NTlkNzk2MjZmOGQ0YmM4Y2IwMmY0NjRkNmNjZmY3YWZjOWI4ZDVkZmQzM2M1ODQ0MmM2ZjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhMzViNjhiZWM2OWMwYjE3NTEzNTQ1NmQxN2YxZTgwOWUwOWVhZDAwNzAzNTEwNjgxODY5ZmQ0ZmE4ZjNmNzEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdkY2YzMzI1YTcwNjVlOGQxZGNmYTk2OWQ0YzYzZmFhOGIzMDc5ZjI2NmZhMDI1MDhkNzI4NzI0MDYxNTMyN2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE1OWMyODM1OGZkODk4M2JhMjliMTMwOTNmYmYxYzU1MjNlNDRlMGYzODBmMDNiZWMzMmE2ZDczMzBmN2JlYzYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4f1be43564c14ecfb4de6b348a47730d",
+      "statement": "SQL NULL partition values are written as __HIVE_DEFAULT_PARTITION__ and read back as NULL.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/partitioning/hive_partitioning.md#L119-L140",
+          "version": "repo-lines-v1:sha256:76dadd95d36d8c1fd3c2b2388cd24fff614efd136ff690f99e17754ff109d4ee:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2NDMzODIwOGU3OWUyZDcwZWE1ZmExMDZlYzI4ZmI3NTFhYzQwZTJjN2I0YmZkMTYxZWNhNDI0Mzg5ZThjODIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhYjIyZDJmOTkzYzRiMWQyY2Q0YTliY2FmZjMzNzg2YzY5Yzg5YWEwNmY1ZWVhMDU4ZTkxYTIxMTY3N2NkODkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZjYmE2OTQwYjYxNWJkZDZiYmU1Njc4ZDk4OTIxMWViZTJkM2Y4NzdlZThjOWFlZWNhODBlZGE5Y2I3YWQ2YmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM2Mzc4YzQ3M2JjMjA4MjgyNTJmNmU0ZjkxM2U2Mjc5NTRiNGRkZGYyYjIyYTIyODhiYmVjNzMwNjFiNTAyZGUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_72662b20c3124fefaf8ffb925359d779",
+      "statement": "partitioned_write_max_open_files defaults to 100, and the docs recommend at least 100 MB of data per partition.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/partitioning/partitioned_writes.md#L55-L63",
+          "version": "repo-lines-v1:sha256:4fe3add75d1530af3acbdde38997d78bed30ace7ab4b85da8a18a050608c47ae:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDg4ZjA5YWEzZWZhYzEyN2Q4ZTBjNTVkNmIyZGRkYzhhM2VlNmRiMTFiNmUxM2FkNDQ1NDVjNmY3M2JlODNiZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDk3NDcwNmJiOWNlNTM5Yjc2YmNkMmJkY2JjMzZjNWY1ZjFiYWU2YzBlNzRiNmJiODgxNWYyMmRlOWQ4ZjY2NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzI2ZWJmZjNkZjk4NzhiM2U4YjZmODNjNzBkMjQ4MWM0NjI2Y2RiZjY3MjYzNmRkYmQ5YWVlODBkYjYxNTk2NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTE1MmZiYzk4MDE0OTg3ZjJlNGY0NGJjMWQ4OTcxMmQ1NTQyZTI0YmM2Y2ZmNWU2OGMwMjYyNWVhMTYzZTliYyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_34443503844743098aab2b37458bfc4a",
+      "statement": "DuckDB 2.0 adds the PARTITION_PATH and ORDER_BY copy options for custom partition directories and sorting rows within partitions.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/partitioning/partitioned_writes.md#L86-L142",
+          "version": "repo-lines-v1:sha256:bb72f707ffe09c2d7f1675edf21f991408a88754f0518db23f8dd878f0e4d5af:eyJzZWxlY3RlZExpbmVDb3VudCI6NTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFkNTRkZmUwZDVhM2JhYmRlN2ZhODhiZTYwNjJjODY2NzU2Y2FmMTFkZTEyOTA3YTc2Y2E5NmJiM2QwZDFlMDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdkOTFlMjYzMTFmMTg4YjM4NWMxODViNDk5ZTI5ODdmODIwM2E1NzUyNjJjMDNkMWZlZWVlZmE0MWIzNjQ0NjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkxMjhiYWExOGQ0MjY2YzA5OWY0N2M1ZWJiOTVhNDdjOWRjMTFkMmQwYmQ3YTI5MmNmMWRlMTU2YTQ2YjBlZWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJiYTg2MDg3ZTg1ZmQ1NDcxNThkZGE0YjRmZTVjYmMyYWRmN2RiMjJjOTA2MTVhMTRhYTE3ZTNhZWQxNTUxNDQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e6ec4337bd48418a89b2739d98b3b96b",
+      "statement": "Partitioned writes cannot overwrite existing directories by default, overwriting is unsupported on remote file systems, and APPEND uses UUID file names with a clash check.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/partitioning/partitioned_writes.md#L144-L160",
+          "version": "repo-lines-v1:sha256:bc2e7fd53d5dfa7716e650cbf31ce5ad5464bf7abdd924077175f9e41af96178:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3YTJmMTI4MjFjNmI1ZmRlZjJmOTI0MTU1NGJlZDA2N2YxMmYxNjM3MmNmOTk1MDc5NTdlOGZhOWNjZDNiZDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUyZjI5N2MxNjMzZTdjZDMxMmUwOGExNDc3MGFhZDlkZmVlODBmZTdkMmU3NjIzNDgyNDA3YWZmMDFjYWQ5ZWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRjOTQwYzAxMDQzYzNhMzk3NWRiYTU4YmEyMGMzMGUwNGMwYWIwZjI3MDY3NTg5MDRhNmU0M2Q5NDAxZmM4MmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIyNmQzZDFhYTdiZTBmMTM4YjY4Y2NiNWMzZDE2MTU1YTAzMjA4Y2ZiYjE4NWI4MWMyZmU5ZDEzM2ZkMzk2MjUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

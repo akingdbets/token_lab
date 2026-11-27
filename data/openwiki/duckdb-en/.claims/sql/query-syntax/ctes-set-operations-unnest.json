@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:a895ac494dadcf6eca50585ba8559e0083968a1adc5f34ace2a8a5d3dc402375",
+  "claims": [
+    {
+      "id": "claim_168af24d8e4141b7b46c0a52a1f60603",
+      "statement": "CTEs are materialized by default, and DuckDB inlines them only under heuristics such as single reference, no volatile functions, and no grouped aggregation; AS MATERIALIZED and AS NOT MATERIALIZED are explicit hints.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/with.md#L51-L108",
+          "version": "repo-lines-v1:sha256:4d940404e54959aae622afe5c3064297a8896f1d4198a47817b40f7a1b361786:eyJzZWxlY3RlZExpbmVDb3VudCI6NTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRlODMyOTIwOTQwMjg3YmVjMmQzZmViNWQwYTgxMTNmYTQ5MTJiMTRkNjA1ZjdkZjYwOTMxOTk3ZTlhNDZlNTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNkYTMxMGU0MTcxYmQ4NWQxODk0MmQxY2U1ZTQ5YTM0OTNlMTkyMWFjZjkxY2FiMTNjN2U0MTEwYzJjMmVmYmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRhYzgxZjBlNDgxYjgzNmY1MzFjZWQzMTQ2NjY1MGI0YzE1OGY0ZmI1MWNiNWNjYjM2ZmU2NGY0NzgxYzJlOTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI2MzIxOWRlYjQzNDNmZTg3ZWYzZTA5YTlmNDdhZDdmZDA2YmVhZWI5MjkyYjcxNTU2YmQwNWFmOGE1OWMwMzMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_becf7a1009b94a9aab966307156a7df0",
+      "statement": "Data-modifying CTEs with INSERT, UPDATE, DELETE or COPY were introduced in DuckDB 2.0, and should be marked MATERIALIZED when later parts depend on them.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/with.md#L110-L139",
+          "version": "repo-lines-v1:sha256:301a8425ac0e04691f1a2d990f9e1e99bc65c613da9c5ca23ff8b1f151b00a2b:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVkZjk5ZDc1OGRmZTNmMjFkNTkwYjRjOGQ5N2ZmMjc1ZTZiNjg2ZDc3ODM0NTIzMzk4ZWIxYmFiMzc2YWM0ODAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVkY2NlZThiOWQ5ZGQwZjVhYjQyNTYyYjY1NDJlMjBlNWRmNTJhOWIwMjRlMWU2NGRjYzllOGVlNjUxNzE0NjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNjYWFkZWU5ZjA4MTliZjM3Y2E4MWIyNzBiNThiZmU4YzBhYWNjN2RhMzNkZjkyMjVhNGUxMzBjN2I5ODhmZmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZiNWI2MzE3M2QyOWFkNDM2NTljY2ZhNjA1ZjE5NDNiNGU3OWI4Njc0Mjk1Mjk4N2NiYjUwZjljNGIwYjlmMDMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_de53d3509fad4b299344a229122d906d",
+      "statement": "Within a recursive term the CTE name refers to the last iteration's rows, while the recurring prefix accesses all accumulated rows.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/with.md#L379-L403",
+          "version": "repo-lines-v1:sha256:2399f11ae99b7e0f193d3db10a4f22ab3a0adc351c5f1d0c6c02af1e06cb1d51:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUyZWNkZmZlODFkNmM0NTI1NmFkOTQ5OWUxNTU2ZDM5ODJlMzExOWNmYWFhODAyN2I0NGIxMWYwNDA5YWRhZDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY1NjIwNjRlMmU2ZGJmZGZlMmJjOGM0NWYxZjU3NTRkZTY4ODU4OThmZDA2MzQzYTM5M2Y3NWRmODRiZjczYTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkwMDQ1ZjUzMzg0YWZlNzhiMjYyNWRiZjIyNDZlNTA0MTJkYWU3OTRhNGY1MDE5YWRlOTljNGI5OWQwYzY1MzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZlNDVhNzkxN2JhNWJlMGVkOTVjMjk4YmJkOWQ4OWFhYjI3MDlmZDA2Y2VhODk5MzcyODc3M2Y2MGU5YjRjZTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_eb272cc4631d49eeb0d7adb00f3bf96f",
+      "statement": "USING KEY recursive CTEs overwrite payloads for existing keys, support per-column payload aggregates, and in 2.0 UNION forwards only new or changed keys while UNION ALL forwards all candidates.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/with.md#L405-L515",
+          "version": "repo-lines-v1:sha256:c2d009ec426e031e67ed1f5ea8194e8614f060c3a6c1a6486b2bf82f2b52bc92:eyJzZWxlY3RlZExpbmVDb3VudCI6MTExLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIxOTBlMjViMzU2ZTNmOGZkZjFhYzQ2YzMwZmVkNjZkMGRmMjkyYjFiYTMzYTNmODk1NWNjMzM2NWI1YmVlMWMxIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIwN2Q4MDlkODkyNjIzZGNmYmE5NjQ3MDc1NzNhZTIxMWI0MDRkNWU4MGVmNmM2NDM1N2QzZDk1MWVhMGMxNGFkIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIyYTg0NWJiOTg4YmM5MWRjNGMyMGExNzJlMGZmNTAxZDRlYjdkYzFiM2VkOTU3OWZmYTY0ZWRiNDI1NWRiOGU2IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIxMWZkY2MwZjhmYjg3YWM2Njc4MTcyZWQ3YmExOTM0MDg2MDFhYTliZTkyMWNjY2Q1NDU3NTllNjViNWFiZTZjIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_3ef64427d9ff4a52b6bcc76fbe0d5791",
+      "statement": "DuckDB does not support mutually recursive CTEs.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/with.md#L582-L584",
+          "version": "repo-lines-v1:sha256:d9591c36f59823af0f025d04f14d5273b29392743ad92c23319c70282dc292a8:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDU3MGNiNzFiOTQwYmQ4MmJhNDBhM2JmN2EwOGVmZjk3M2Y1M2ZiNTczYzJiMWFjZThjYjg4MDA0MjAwMjUxMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWQ4MzA2NGM3ZTE0ODgwMjIxNDliMDJlZjhkYjUzNmRkNTU4ZmEwYzBmNDA4MjcyMjI4MjIzNWU4ZGU5Y2I1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzA0NWYxY2Q1ZjhiM2ZmMzhkNGQ4Y2U1MTAzOTFmODE2NDliZjBkYzgyZmRhODkxYzc3N2YzMzZlMzg2OGYyOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOGFmODE3YjQyZDEwNjg2MDIxZmY1NzVjODgwZTFkYTgzNDMwN2FlZjU3NjU3NDhkOGI4ZTEwYTQxNGQwYWYwYiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c047b1c5280d48fe82bb3be2d922616d",
+      "statement": "UNION BY NAME combines columns by name filling missing columns with NULL, and UNION, INTERSECT and EXCEPT use set semantics while their ALL variants use bag semantics.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/setops.md#L14-L153",
+          "version": "repo-lines-v1:sha256:dc3816903f0a41cfca12e59443caa54576d2440dd1e6a568ffa3e751ed9972b5:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQwLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJlZmEwYmEyMDIxMjk3NzVhZDE4OThiZWRmYjE1MzFlOTBlNTk1Y2FjNGMxYTg0ODVmZDRmZjA0YzgyMTEyMWFhIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI4Mzc2MzgyYjU1NzUwYjdmNTYzY2IwNzcyYTIzODU1ZmZjMzc3NDIyYzUyYzZjMTE4MGE2NDRlNzRjMjZiNzYzIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI5Mjc4ZWI5ZWM4MWQwNzNmYzFhYmY4NzMzNWQxYjA0MzZkZTAzMWViNjdhYmZmNjA1ZmJmODI2NDg5ODNmMDVlIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJkOWVhODhhMDM4Y2M0ZjNhNWJjM2JlMGNjNzkyZTA3Zjk0YjM2OWUzY2I0Njc3Mjg1MWIyNTBiMjVmMDNhM2QyIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_ce299eedea8f48f990464bd907c6ee80",
+      "statement": "Multiple unnest calls align by position padding with NULL, empty or NULL lists produce zero rows, and since 2.0 unnest can be used in GROUP BY.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/unnest.md#L20-L134",
+          "version": "repo-lines-v1:sha256:aa279653077f14f87c81d58c0c5ce8a2c0603bf170fd557c4baa898c06a9ef0f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE1LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJhZTExOWE4MzA4ZGUzYmQ0NjhlYzc5ZGNiNjc2ZTRmNDhhNWY2ZmIxODMzNzU3NWI3NDhlYTVlYTE0OGViZmMxIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0NTkzODYwOGYwODFiMDNkZWQyNDIwZGZmZWJkMGViZmRkNDUzMzZiZjIwMGEzOTM3Y2RmZDBhYTNhNTEzMGI0IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIzNDBlYjM4ZjdhZjkyZTdhZjI1OWY4N2JlODVlZjkzY2YzNDBhNGNiNWVkMzUyMTI0NDg2YTE0ZDI2M2UxYjY4IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI3ODA2ODVkMzczMDgzMGZlNTE3Yjc3ZDJiYzVhOGQwODg4MDg5ZTU3ZWM3YTI0MzlhNjExOTg3NGJlNTA5MjM2In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_f785c61aaa004785b9fa39738420e582",
+      "statement": "unnest's recursive defaults to false, max_depth defaults to 1, and keep_parent_names defaults to false.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/unnest.md#L54-L67",
+          "version": "repo-lines-v1:sha256:d24a74f98dd05df684c0c49aa7735c5f5d801e030771d673aef7b83c457be8f3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdjMGU2MmE3YWVkMGU0YWUwMmMyMmE0NzRlNzE5YmUwZDE0MWZmNDgzN2UzNDBmOWZlOTU3MTlmZDFjNDM3ZTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRlYjBkNjllM2YzMWUwYjQzNzc2MWQ0NDk1MjZjMjdjOGFhNzIyYzVhOTA5N2E4ZGQzMGRmM2IxOTFmNzIzOWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA3MTk1ZjEwNzgxY2U5OWRkZTEzYTJkM2Q2NGMzNWI2MWExNTNmMTgzY2Q3YTdhNjQ1NjI3Y2RhMWU5ZjkwZGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVjNTM5ZDIwZWFhYjY4YTI1MzYwM2NjYzVkOGFkODA4M2NmMjg5NWE0N2VlMTRhMDE1ZTI5YWZjY2QxNGNiNTcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a3592183da0540c6a76c4f99b1624ed4",
+      "statement": "query and query_table accept only constant strings and enable dynamic SQL such as table names passed as prepared statement parameters.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/sql_features/query_and_query_table_functions.md#L13-L78",
+          "version": "repo-lines-v1:sha256:513dcdf2db6673b192a2a5e609a6821d50b7b5394c2de037092302e3a0cce842:eyJzZWxlY3RlZExpbmVDb3VudCI6NjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkzY2QwZDUyMTgxMTA4ZTc1N2NlNjAyMDVlZDUyMzg3MmRlZDU3NjEyZDE3M2QwNzk5MTZjYzY3MjI3ODljN2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwNTk3NTNlZDMzMDhiNjU0M2E0NGU3Yzg2NzY5NDk4M2Y3NzJkZDAxYTM3NTYxOGZiYjc0NTk5NTg0ODU3ZmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUyZjU4NmMyM2I0MzhlMjM1OTNmYzBkY2ZlOTVjMjhhMTQzYTdjNDhhYTRkMDQ4ZWI5MjcxYWEwOTdjNGU0MjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA2YzZlOTA2MWM5OWYxMWEyZDQwOTE4ZjE4ODM3NzIzNTQxZjExOTkxZTg5OGQxYmJlOTg2NDgwYTAzZTZmNjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8f25a899e3f6454baadcecad347a5bd1",
+      "statement": "Since DuckDB 2.0, syntax-extending extensions such as DuckPGQ must be enabled via active_grammar_extensions.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/sql_features/graph_queries.md#L18-L30",
+          "version": "repo-lines-v1:sha256:eb26e08c477b82934b3ee9378033c9ecc3b79a56e75602f1fd1fe2f18c1fa725:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJjNGNjZWI4YzM0ZTg5ZTFkNDQyZDllZWEwNGVkY2NjNDZmY2RlOTFlYzk5MTM0NzM2OGRhY2M3MTI2OGRlNzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM5NjZjZmJlZGVjYzBiMzJiYjFjY2E0NDkxZTI3OWEwNWQxYzI5ZmVmNWE1YzI5NWU2MDIyNDdkNTcyMjA0MDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImViNjAxNGJjYWJhODM3NjY0N2MxYWYyYTdkZjcxZTBmMDlhNTdjZmRmNmZhOTViNjBhOTU3ZjE4YjZlYTgwYmMifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

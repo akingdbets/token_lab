@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:70b1fa83b7878f480f72a627b086f4a3d1c9c2becb7dde6b111a0b7ad20e35b1",
+  "claims": [
+    {
+      "id": "claim_c10640dd326c4900b158247bad634e1d",
+      "statement": "LIST indexing is 1-based with negative indexes counting from the end, and lists are ordered positionally with the longer list sorting last when prefixes are equal.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/list.md#L55-L122",
+          "version": "repo-lines-v1:sha256:6ae947fa2b640d22c7fb5379d2b3235289477bbad6ef2e6f3ef5910288961c09:eyJzZWxlY3RlZExpbmVDb3VudCI6NjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5YTA4NzdlOGFhYjZlMzI1YTdhMzczYjNkYzNlZTQzZDcyYTdlMGMzYmI3MDkwYTkxZGMyNTU1NTE5ZjMxY2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg3YWRkMjI2Nzc1MWMwY2I5MGMwMzBiZWI3MTk2ODNiOWFhN2EwMGY1OWRiM2Q2NjYzODI2ZmY2ZmI3OTZiZGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI2MGNhNmM5ODRiMWZlZWZhZjhjODI1ZDQ2ZGY5M2QzOGY2MmUyZGJkNDI3MzQ0NzY1NGJjYTdhZTczM2QwMDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUwY2IwZWM5MTc1YTIxMjE4MTc1M2NiYjBkNWRlYzFhM2UzYjI1ZWM0ZTgwOGQyZjQ0NDYzMGJiMGVlMjc3ZDgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_59026d94f36d41049f24581afe214dbc",
+      "statement": "DuckDB's ARRAY type is fixed-length, implicitly casts to LIST, and slicing an array returns a LIST.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/array.md#L13-L95",
+          "version": "repo-lines-v1:sha256:0c9507887a62dbac07400dcf7bfd855a1bd4d53bf43b405802e6eebf0bd3aeaa:eyJzZWxlY3RlZExpbmVDb3VudCI6ODMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0YmZmM2EwYjI1NzY0OWY5ODNjMzUwZDJmODBhMmJkNmE2ODRjMGU2OTkxNDlhNjJmZDg3MjJjMjNkZTM2M2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFkOTkwNDA2Y2QxMzJhOGJiYjc2MGQwOWJiN2M2ZTlmOGFhZGIwZTZmY2RiMmE5NjkyZGQ1ZDlmNWZjNDU5ZWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA0NDdlZjdkNzI3MzYxMjRkZWVhM2YzNDVmYzFmNDc1YTA4MTI4Y2UzMDY4ZTlhOWY1YjQ0MGM1ZTZhNmJiYmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNiOGU0MzIzOWJkZTc4YjllZDg1NTEwZDIxNTQzMDczNTFkMDgwMWY2NWUwM2NkYTgzNDAxZDFlMDMxMWExYjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a03ed4c388f04dcca7278f74e0c58d71",
+      "statement": "As of DuckDB 2.0, STRUCT types may be empty and struct_pack() returns {}.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/struct.md#L71-L75",
+          "version": "repo-lines-v1:sha256:4a60f51107ed84e0a2a0e002cc929f17003ad8c84407eb5972759065251d059e:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWVkMzE4MzVlYmI3NzQzNDRmOGViZjdiYzE0ZTZmYzFmNmJjODE3NGE3MzFhODEyZWNmM2I1NDczMTg2OGRmYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2VjNTY4ZWFkZGNjNDg0MDI2ZjFlMzJhZjIyYzc1ZjM4NTM2MmNmMmM1YzFkZDk2OGMwNTkyZjU3MTk1ODMzMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMGMxOGE5MjRmMjUzNWQ0YjI5NzgyZWYzM2M4Y2M5NjliNTk0NGNlZmFlMGE3NWJhYmFjODM0YzRlOGIzMzYxNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjllYzc0NzgyZmQxN2UzZWU0OWZhY2E2YmQ0Mzc2MzEyMWIxM2M3Mjg2OTEyNTY3NmFiZjVhMDlmYzYyMDkyYyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_1dc19ada1a22438684b38f357b1bdf94",
+      "statement": "The TUPLE type, introduced in DuckDB 2.0, is an unnamed struct accessed by 1-based position and is written to Parquet as a struct with keys element1, element2, etc.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/struct.md#L183-L303",
+          "version": "repo-lines-v1:sha256:eb2ad0b6fc46e1f69fa46a5d19332c60b14c6a5f387788b492e3ad449b501132:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIxLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIxMTQ3MzRkZWVhYzYxMmRmMzc5ODllNzA4ODNlYWJiNzhhZGEwMjQxM2QwYjNkZTlmZTI1ODk2YWQxM2U2MmRkIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI1ZWY5Nzc1MzI0OWVhMDU0NTI1MGUwMTAwYzU2NWFlNzU4YjE3ZTg5MGUwZDk0NTljZWNkOGYwYzVlNmI1OThiIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI1OTk5NTNlMzVjYTlkM2E3YTkzMDJkOWNiYzNjZWQ1YmEyOWI0MWFhZWQxYjBmODMxMTM5YmE5MjJlZjk0MzUyIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJkYTIwZTdiODg4ZGNlODY5M2I5NTNjOTE1NmUwMGUxZGE4NjU1OTUwM2M0MGQ3NDc1ZTRhZjdlZWY3YWU2ODVmIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_657b04c36c034655a2e01dbeac2ddb84",
+      "statement": "Casting between structs requires at least one matching field name, and struct comparison uses IS NOT DISTINCT FROM semantics after casting to the union of keys.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/struct.md#L305-L341",
+          "version": "repo-lines-v1:sha256:fb36ee4c30369d6cae195a38e56b5f23903bfe11b2891d69b414b4f3930412ec:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY4OTk1ZGI5NWUxN2Y2OWM0YmRjYzVkZmI5ZGFiMWYzM2ZiZDQ4YmVkZWQzNTg2ZDA2ZGMyYmQ0MDgxNjU3NDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJjZDIwYzkyMDI5ZDExODdmOGVmMTE3ODU2NGVkOThkN2Q0YTA1YWIxODY0MzhlNzNjZDZiN2QxZTI0ZWRiN2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM2MjM5ZjE4ZmU2Yjk1OWI4MjhlNzQ3ODg1ZTY0MGI3ZmM0ZTc5OGJiMjMyNDBkMWQyZTBlZDhmYjAwMjVjN2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA4OTU5MzBjODJkZGJmNTFiNmYyMTU3ODQ5MDVjZGNkOGU1ODBmODQyZTY4ZmVkZDgzODMxZmU4OWJkMjZkOGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_749afdecca474509a44f96da93dad66b",
+      "statement": "Since DuckDB 1.3.0, ALTER TABLE can add, drop and rename fields inside STRUCT columns.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/struct.md#L391-L447",
+          "version": "repo-lines-v1:sha256:c276ea58e200fe9521bfa03455489d4c238775fda8d78c302bb45c51baa6edd6:eyJzZWxlY3RlZExpbmVDb3VudCI6NTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhMTUzMmRlM2RkOWE1OTlhMTc5NjQ3NDg4NDBkYmFmYTRkYjdiOGJkZTk3MzBiYTNkNmYxYmE1N2IyZmI3YWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5NmE3MTg1MTNkNzQ2NmZlMjUyY2NlYTAwYzdkZWYyNTU0M2Q4YTFkMTUxYTEwMDk4YjcxYTRhYjFiZjBjOGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA3MmZlNTZmMTc3YTc3MzVkZWU2M2Y0NGVjMzk5NTQ5NGU0ODcwODMxZmE4NGJlYWExMjBmZjljMDI5ZDA5ZTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQwZTBiNmFjMTJkMTZhYWJmNjdhYWQ0OTc4ZWViNTFlMjY4MmRlNDhkY2I5MTBmN2EyNzZhM2Y1ODkwMGRkZDAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_248a041fae1a4cbcab6099bfb1260951",
+      "statement": "MAP lookups with bracket notation return NULL for missing keys and error for wrong key types, while map_extract returns an empty list for missing keys.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/map.md#L59-L96",
+          "version": "repo-lines-v1:sha256:26ef421a846b02fb1cdcba72e5d0775c540dda09368fdcee0243b5bec83c1663:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3ZDI2NzQ0Mzk0NjgzNGNiZGZkOTQ3ZTY0YjFmM2E1NmE4NDEzYzIzZjQ4NTc3OWI2YzgwZDU1NDFiMzQ2NTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE1MzM4ZDk1NWIwOTA0NmVjMGIxNmYzYTk2MjViNzk1NWM3NjNhYWUwN2RjNzIyZTQ3NGU2MDc4NzQ1ZjkzMmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhiN2Y0NjQ2YWYzMWUwNWMxYmI4OTJkZjMzMzMzZWQ5YmViMjE1OGI5MTc5MzJiYzNlNjlmZjVlNjJlNTI0YmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcxZTg1ZjU2NDFhN2QzNWEwODU0NDQwYjE3ZTg1MGI2MGQ5YTcxOWNkZDVkYjZhZGM0MzJkYjY3OTc3MTQzNzkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9abc653beb8c419b980f5ba476732654",
+      "statement": "UNION types have at most 255 members, are implemented on STRUCT with the tag first, and cannot be implicitly cast to a member type except VARCHAR.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/union.md#L13-L111",
+          "version": "repo-lines-v1:sha256:736e8de4ea671d426471ae04fabe155e627890a120fa7c40c1a2017d1ae9f7ff:eyJzZWxlY3RlZExpbmVDb3VudCI6OTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdiYWY4ZTk1YjdhMzRlYmY0MmUxYmY1NzVhZWNlYWNkZWZkNjE2MGVhY2Q5NzYxZjE1OTEzODJhY2Y0MDVmOTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU0NmUwYjBjYWFlMWQzY2ZlNDlhMmFkZWJiYWUzNmI1YTUwMmM5NGI0M2IyYzAyZjAxMWZmNGU2OWIxMjJjYTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRkNzI0ZDEwYzEzMjM5NzExMWZmYTg4MDk2NGVhOWZmOTYzMDQyNTQ1NTU5YzVjM2M2NTIyOGE0NmQ4ZjFmOTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRkOWY4NmE0NWY3OWU1MzQzMjI4ZTkyZmE2ZDRhZmQ2ZmU5Nzg5YWNjOGQzY2FlMmY0YTY3ZTA4ZDcxYzkyYzcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5f513059af7441d6bc862835b029eeff",
+      "statement": "ENUM values are case-sensitive and ordered by definition, but comparisons against VARCHAR or other enums are string comparisons, so a bogus constant silently matches nothing.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/enum.md#L69-L239",
+          "version": "repo-lines-v1:sha256:98ee46de5fd623ee4b46954be1eb4c82d9bcb15721d342d6def45655d005b2bf:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcxLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIyZWMyMzEzMTk2ODJmM2U5NzE3YjZhNDAyZjUyNjAxNmMwMmNkZjQyN2YwMTcwNDk4MWY5MWQ5M2VkMzM5ZTgwIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIxMmEwZmZmNmI0OTg0MDIyNWZhZDc0ZmM3YzEyNGU4MzlhMDRiYzQ0NjM1M2JmN2Q0OWE2ZWQyNDAxZDhiMzI5IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIyMjQ1ODRhZWU0ZmRjOTE2NjE0M2U3MWY5YTIxZjM3M2FhMzIzZDhhZWQxZDI5ZWE3ZmMzZTIzZDU0ZjVlYTg4IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIzODliNmQ4YzIzZDUwODRkMGU4ZTViYWQyYmFmNzk0NThkNjEwYmExOThjZjRhY2RlY2UxYWYxMGE3ZmZlNDc5In0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

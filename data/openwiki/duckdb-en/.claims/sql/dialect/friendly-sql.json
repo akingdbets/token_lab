@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:b82826d9ab8a327a789b47ce73848b8b339800902aa322ad94083c674bc0fcad",
+  "claims": [
+    {
+      "id": "claim_715a9f139bdd4c58a9f0bb25af367b00",
+      "statement": "DuckDB allows trailing commas in entity lists and LIST literals.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/dialect/friendly_sql.md#L116-L128",
+          "version": "repo-lines-v1:sha256:9c33ffbbfec98ede50ad81c16ac7adadaf75ce191032bfe41982b412e77da2c2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhNDEzNWYwOGQzMWZkOGE0MjZmMDRhMzg3MmFjMzYzODJjNGI2OTE0OTZmNzU3ZTcxMDFmM2I2Y2FlZTAyMzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE4MWUwOTg4YTFiNmYwZTlkOGE5NTZlMWFhYjNhYzJiMmI4NjY5YWQ3NjY3NTUzZmQ4OTlkYzhjZTg2YjI5MzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImViNGFmZmEzNTdhNTFkNTUxMWM4MDRmYzc3ZDk0ZGQ1YjIzOTdjYWZmNzU3M2YxMjZhOWVjNDI1MzllYTNhZjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a35658b7d2c146e494aa31bebf33ffef",
+      "statement": "The aggregates max(arg, n), min(arg, n), arg_max, arg_min, max_by and min_by with an n argument return top-N values per group more concisely than window-function subqueries.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/dialect/friendly_sql.md#L130-L180",
+          "version": "repo-lines-v1:sha256:5ca05ee5f50e3f58041ac9dd1fcc6169b2087c682425a0f6dc953014d4dd6c27:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ0OWNlM2E2MDU1YmZiMTBkOTlmZjY3NGYyZmRlMDczY2FhODhkYzE0ZjJlNjg1ZmIxMDVkMWI5YWYzOTY5MzYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNkYzQyNGYzN2QxMTE0NTc2NTgwMWEwOGZkMDE3ODQ1ZmJmYWViMDc2MjZiODk2MTkxMmEwMzc4NTdlYjIxMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI1ZDZmM2IzZjA0OTYzNmFlZDRhYTFiMDU1NDZlNzYzNzAwMDkzMTg5YmNhNjk0ZWJlZDczOTJhYjU4YTA1NjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQwZTBiNmFjMTJkMTZhYWJmNjdhYWQ0OTc4ZWViNTFlMjY4MmRlNDhkY2I5MTBmN2EyNzZhM2Y1ODkwMGRkZDAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b88db81b293c473ebf308572fc98fcca",
+      "statement": "Column aliases can be used in WHERE, GROUP BY and HAVING but not in JOIN ON clauses, and reusable lateral column aliases are supported.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/dialect/friendly_sql.md#L57-L62",
+          "version": "repo-lines-v1:sha256:f971ee32b1845a58acce2caefdc0bc19c31816907056a1115163bbb2ecbbcc5f:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODQ1ZmUzNzc1M2UzNDE5Y2Q2MTMyY2MxN2UyMmMyOWNmZTJkMmJjNjhkNjBiMWZkOWZlMzdmMGI0ZjVmNWNlYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDY4MmYwMTExNDQ3OTUyMjYwZTFmYTJlYWFkMjE4ZWMwZWFiNmQwYWJjMTE2YTBlMWUwODM3ZGEzMTA0MWY3OSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNmRiYWEwNGI0OGI4NDY1ZGM1NGRmNGQwOWRlYTQ5NTBlOTVhNTEzOTU0MGYxZDcwYjljNjlkZWYwYjE3MGJlNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzM0NDNjMWFkNWI2NmNmMjU5MjU2NDI5N2YzNjhkMzZmYWJlMDRiMzRmMjhkNDIxMjBlMDM3ZWJjMjIxMTA2NiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_42370c924c774d0fb860595df654f660",
+      "statement": "As of DuckDB 2.0, EXCEPT is accepted as a synonym for EXCLUDE in star expressions.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/expressions/star.md#L57-L71",
+          "version": "repo-lines-v1:sha256:01f5ee63122100bc44024b273371ed2309e92bd88519d811d760b14fa88f3ecf:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQwNGJmMDk3YmNhNjQ2MTU1ZjVhODg5YWVjZWJiOGQ2OTM2YTgzYzJlMDBhM2FiNDU1MmY0MTBjNWU5MjJiNTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0NjlhNzc5MjI3YjhiOGMwZjIyYmM3ZGZlOTliNGVhYjYyMTliZTc2NTQyMTU5YWUxM2Q3NDE4MGM3MmRlOWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI3M2YyYTZjN2QyZWVkYzY4ODlmNTBkYTc5MzgwODZjODdhNTYzYTM1MWE4NmJiN2I4MzM4NDQxNWMxZWQ5NjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjliMmIzYTEwN2VlM2JiYWI5NTBhMjYzOTQ1YzgxYzk1NWNlMDA3MjJkYzY1ZjRmZDk1NGE5NzU5OWU5MWZkMjIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0683bca140d44ebba33f94b96114828d",
+      "statement": "Star expressions support EXCLUDE, REPLACE, RENAME and LIKE/GLOB/SIMILAR TO column-name filters.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/expressions/star.md#L57-L114",
+          "version": "repo-lines-v1:sha256:e7c7e7da6645b65bfb5a1daec8f84e5792872cdc1fae3e256abec50446d7c584:eyJzZWxlY3RlZExpbmVDb3VudCI6NTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQwNGJmMDk3YmNhNjQ2MTU1ZjVhODg5YWVjZWJiOGQ2OTM2YTgzYzJlMDBhM2FiNDU1MmY0MTBjNWU5MjJiNTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNkNzc3MDAxMTI0OTAzMDI4NmUyZDJlZDg4NDkwNWY1YTQ2YjE1YTZlMmMwYWJkMDk5ZGJjMDQ4MTM0YjMzNTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI3M2YyYTZjN2QyZWVkYzY4ODlmNTBkYTc5MzgwODZjODdhNTYzYTM1MWE4NmJiN2I4MzM4NDQxNWMxZWQ5NjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhmNjU5ZGJhNmZjMjE2MzBlMjE3MTZjMWU4YTZjNWJkYWRiMmVmZmM0NmIyNDhmMjA2YzE1OTY3N2E3NjNjMmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_11ee40d45a6848b4a1466a7376450758",
+      "statement": "COLUMNS supports regular expressions with capture-group renaming, lambdas, lists, and in WHERE clauses combines conditions with AND.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/expressions/star.md#L117-L292",
+          "version": "repo-lines-v1:sha256:6755a7994d2b2d1c8b983920b16bab66d6cefdff2a31a2bb1aae4187e430c2f3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTc2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJjNDMwNDY0N2MwYTYyOWRlNzY5OGI2YTNkODMzNDlhMzA4NjNkMDcxOTIwMzRiNDY3N2QwMjI5ODk0NWRlOTA5IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIwNjFmYjgwZWI4ZTQyOGMxOGQ0MTkyYzg2YmYyM2RlNzc0ZjA2YjVmMjJlYjcxMmM3ZTM1ZjVkZjU3YTkzNjUzIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI3M2IwZDkzNWFjMTY3MDM3ZTNhNmFiZmE1NmM3NjA3MWE3MzdkMDc3NjBlZDQ1YWJlN2Q0NDEwNGQzNGJiMzBiIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlZjNjZDU5ODA4YWQ5MWNjMzBjMjZjY2UxYzUzOWYyNzE1NGE0NDBlM2UzNDVhNjYyM2Q1YjFjNjM4M2M2MTE4In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_6cdda323b5d34c238b1fe4ea7004fff9",
+      "statement": "UNPACK expands a COLUMNS expression into its parent expression, and * can replace UNPACK only when applied directly to COLUMNS.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/expressions/star.md#L294-L340",
+          "version": "repo-lines-v1:sha256:4fb9521dae94fd09c6eb3c12ba8408739e569e12e5a595aa7c17d45b85bb75b0:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxY2Y0ZDA0NWYxZmFmZmYyOTcxNTQwZTM4YjU1ODZkYjM3YzQ2ZmIzYzc0YmE5OTI5ODdlNWUxMjFmZjFjYzAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI5YmQ5OTBmNTYzZjYzNzMwODkxNzQ4Y2IwMmNjNTkzMjc3MzZjZTUzYTVkZTE3MWRkNzlmYTU1MWFkY2NmMGIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjViZTI2N2ZkNmZhNjkwZjM0ZjM5MTI2NTFkNWRmOWE3NGViMzQyZTYzYjUxZmUwOWI5NWJhYzNlYWU1YjI1NWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRmYTZhZWUwOWZmYzU3MDM0N2JkM2VmYjE2OTIxZTg0MTE1NTllNGNkYzI5ZDg2Y2QxMTZkMDM0NGMxOTZhODYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_665db505407a4b32b38469fd8925b93b",
+      "statement": "DuckDB uses 1-based indexing except for JSON, which uses 0-based indexing.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/dialect/indexing.md#L12-L36",
+          "version": "repo-lines-v1:sha256:3c1de18c8c78b62241c76b7cd2e02efb805ccf1f82c48c9bbc2ef7a86eac5332:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYyYTMyNjIyODQ1ZDI0YzM0ZWRiNDY5MjU4NzVmYzdlYzdjZTIwNmNmODgyYzU2YTU4ZGY5MGIwMGViYjk5ZTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjMzIxZWM4OTc3OWRiODgwYzUzYjNlOWQwZTQ0NzQzNzc0MjE5OGVlNjQ3MjBkYTY2YzgyM2RkYjUxNjNhMWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNlZTYxM2FiNmQzNDZhOWFhZjVjNDM4N2FmYmM2YWFmOTgzNmI5NDkyMmU4ZmQxYWRiZWE4MTU4MWIyOTliMWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQwZTBiNmFjMTJkMTZhYWJmNjdhYWQ0OTc4ZWViNTFlMjY4MmRlNDhkY2I5MTBmN2EyNzZhM2Y1ODkwMGRkZDAifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

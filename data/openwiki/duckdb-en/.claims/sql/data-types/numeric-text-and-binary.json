@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:18ca1a115b1824c4b15e6f5e50a754d7244beb763b5688bb72ce22ea03a4f4ec",
+  "claims": [
+    {
+      "id": "claim_63937fec42b84396948cdb465a53db31",
+      "statement": "INT8 is a 64-bit signed integer alias of BIGINT, whereas UINT8 is an unsigned 8-bit integer.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/numeric.md#L21-L34",
+          "version": "repo-lines-v1:sha256:bdcb28e5e64f4ccfa3f50c54391c99b9ab385ba6d74c9c5089053e5d199b525a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5ZmI0MGMyM2JkZGZhMjZmZWIxM2FiOGUwMzU0YjU4ZmI3OTY0ZjBhYzRiYWQyOTQ2ZTRlMDhjNjQ3NzlmMWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNlMjYzMTM2NGEyZGRjNzFjYzgyMDkxODJiOTY5NTExN2E5YTkwZDkwYzVmNzk1OWVmYzVhZDYxZDEzMDg3MGIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEzY2U0MjYwZmNhZjAyYjE4NzliYTdlMzk4MmNiNTM1ODYyZjlkYmYwMThhZGM1ODU0NDA4ODI0YmMzYmM0OGEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIyMDFkMzMxMTA4OWQ1NmI3ZWNjNGY4ZDUwMjdlYWE5OWUxOTcxMWFlNmZmMTk4MWY2YjA4MmY2MWNhMjA2YTQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6d85b171f1d84e26868b1c1156e3e5e6",
+      "statement": "A bare DECIMAL binds to DECIMAL(18, 3); WIDTH must be 1-38, SCALE may not exceed WIDTH, and negative scale is unsupported.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/numeric.md#L49-L99",
+          "version": "repo-lines-v1:sha256:f8a74e0b925ae22704feb509aa7e68471f782c2f215914e89da178be04bd00e0:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkOWNiYzY0ZmY3ZmY1NTRlYzZmY2VkZDdiNGJjOGZkYWNlMGRiNDYxNWQ4MzFjMDgwNjQzZDMxZWQyYmNiYjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMzZjE4ZDk3ZmMyMGRhNGE2OTgyMDU0NjkxMjZmMmU1ZjEyNDIyM2M4Y2E5ZTVkYjRjZDhlODM3ZGRiZjk1YTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNmYjNjOTQ2NDI4NDcyNTU5M2I2MzM1MjFhZmQxMGIwOWUwZGM5NTJhMTVjMmYzYmFhOTdhZmIzOTI0Y2M5YWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNlNGEyM2Q4NzMyOGJjOWM5MzU5ZDZiZjIxMDliZDZlYWI3MTk5MGQ5YzIzMTcxN2YwZTBiYTRmM2E2MWU4ZmEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a1481c9316ad4757b00b6f7382826231",
+      "statement": "Decimal division uses floating-point arithmetic, and decimals wider than 18 digits use INT128 and are much slower.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/numeric.md#L102-L117",
+          "version": "repo-lines-v1:sha256:164e0cf6e3be13122319b86ddf0320ce66982f378b48a3d09f0f8828afd92e91:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI4M2NjMjc5YWMxNTAwMDRhNTA5NzAzNGE4YTg4YWQwNmMzOGIzZjcyNWYyMzNlNWQwMWMxNjRjNDNiMTA5ZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMzMmFlMDdkMGEzNDliN2VmNjQ5ZjFmZjcxY2JiOGFiMjI3MjFjMTI2ZGQ5OWI0MmQ4MTgyNjQ3MTliOGJiOGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY2NWE4N2YxNjE0YjhkNWExYzJiOWE3MzJhNWYyYzY1MmNmODAyNGVjYThkNjNhZjg1MWFjOGFjMzMyNmNjOTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFhYWU0ZTBkZWQ0ZDgzYTdhMDMyZjQ0NWE5ZDBkNTNiMzQ5MmFjZDA5MzEwMzMxNDk0YTczZTIzZjJhYTgyMjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_541c145e89ba47f0b3585b9a3cc85b5e",
+      "statement": "In DuckDB, NaN compares equal to NaN and greater than any other floating-point number.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/numeric.md#L141-L163",
+          "version": "repo-lines-v1:sha256:418447362da2142390df80dba9dcf2929498519d2e00251f7b0d038b4a922e82:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRlYTU1MDc4OThjNzdhMmY1MmJkYzBmODc4MjA3ODFmNmFhNDJkOGEwNmI5MDU4NTI5MzJjZGNiZGIxMTE2NDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUxODFhMDBmOTgwZTAwYTc2ODRlMGI2M2YxNTBiZDJjZjdmYWFiZjc3M2ZjMWE2NzFiNzdhNjNkNWMyYjczNDciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVkMTFmYzFkNzFiNGVlMGM2ZDNlZTAyM2Q4ZTFjMzJiZDAyMjlkYWI0NWE5MzdhY2EzZjkyZGQ3MjhiZWMxYzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYzZTViNTYzNzE3M2Q1YjBjMjZjMmIwM2MwNjIzYWE2MDM0Y2RhMmNjNzVkN2U4NmQ1ODBiNjA3YjgwNTBlNDcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4039144ac4c741918b6a8d74e382dfa9",
+      "statement": "Casting FLOAT/DOUBLE to integer rounds half to even, while casting DECIMAL (including numeric literals) rounds half away from zero.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/numeric.md#L196-L233",
+          "version": "repo-lines-v1:sha256:b14a05a31cbde6c3be6970679f046ad581721bbe1fc31e4c71a8d174eab06f2d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0YmNmNGZhZDNiODY2YjBhMWZlYmQzMDcwODE1ZTk0MGE4MjU3OTMyYTk3MzI3MTFlMWE2OWNmYTQxMzBmNTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIxYjMxMjk2YTZkOTY4OGNkMzY3ZjJlZGM0MTQ2MjhiNTY5ZDg0ZWRhNjU1YTc5ZWRjYTA5ODJjZjg0ZTQyYjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc3MTVjNzcyMjA2MjAzMzcyYjY5NjZkMGEyZjA5ODQ1YmFhYzMyOGI2ODY4NTQ4NWI3ZWEzNTIyMzViYThiMGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM4OWI2ZDhjMjNkNTA4NGQwZThlNWJhZDJiYWY3OTQ1OGQ2MTBiYTE5OGNmNGFjZGVjZTFhZjEwYTdmZmU0NzkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_17a4db80c29348dcb25fa13d85b92637",
+      "statement": "The VARCHAR length parameter has no effect; CHECK constraints should be used to limit length.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/text.md#L16-L31",
+          "version": "repo-lines-v1:sha256:bf0589a7f4de59ff38404545fa7eaacdb64a0fd64bdaa8dd85a1fe9d0e1fea8b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE3ZDRlYzE4Zjk1MzQzZGNhNjExYzYwZjFjNDI3MDE2Y2M4ZGVjNmJlNzBhZGNmYjZlOGY4MTA0YjVhOWY5YzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZiM2FiNjc4NjViNTAzM2IxMGRlNjI5ZGU1NWU2MDBhOTIzYTYwNDc4ZGMxZTUzZDcwNDViMGVlNDlkNDUxNzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjljYzRlNzU0MzQ4NjBiOGE5YjFiZWU5ZDMzYjNiZTlkZjQ2ODQ5YjkwYzYzYTAwMjljMWZkZDhiYmY5ODM0ZmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5c8f1b382afe4ea3a71734e17e270f65",
+      "statement": "Starting with DuckDB 2.0, X'...' literals are BLOB values and B'...' literals are BITSTRING values instead of VARCHAR strings.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/bitstring.md#L37-L49",
+          "version": "repo-lines-v1:sha256:5591addc9440830f30ceb8e40de9107c507ab4a7bb3898bf66a712c4e7fae14b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYyNzZlMWZlMGM5ZTFhZGUwZThlNzBhZDQzOTQxNDJiOTk2MTljNjJmNWVlMTA1ZjdhOWE2YWE4OGZmMTU4NTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZiNWQzOWMzZWVlMTRhMWRkMTljNTNmMGM0MGM1YWJhNWViN2RkNGQzNWFkNTkwZTI2Y2JjNzhmZDA1ZWRhNjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdjMDNlYzJhNzNjOWEzOTRlZDBjMjUxNzhiODMwMjNjNDQ0M2M2MjBmZWI3NDA0OWRjYzU2ZDU5NzViMmIzMWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMTNlZGViMTU5N2QxNjIzNTEyZDZiZTc3NTVjMThlNTY2MWE5YTgyNmFkYmVhZmM1NDI4ZDBmMWU0ZmYwM2UifQ"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/data_types/blob.md#L39-L45",
+          "version": "repo-lines-v1:sha256:8467f628e8ac75a27c2115fbda849ae904619a1aa65802a1f6d08be7447289c6:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWQxZmNlY2IzMTM4NGJjYTI2M2VhMTg1MWEwNTE2MTc0NDUzMTRiMTlkZDdjNmRkZmUyYzk3ZjhkODE2NDFhMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzNlOTI3MTg0MmU3OThmNTg3Mjk1MGUxMTIwYzQzYjAxYTBjMDE5NmYzZmE0NWMwMDE0Yjk3NTA0ZjkxY2YxNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTdiMDcwZmViMDZjYzVkOWU5MWYyNmE2N2M5YjE3MThjNmI4NGNhNjgxNmY4ZTQ0Yzk3NDczNzEzODM3MzI5MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMGU0OWNhZGE5ZGYyY2EwOTdmMDQxZmQwNDk3ZTdkZGJkNDZjN2JiMzA4ZjkwOTZkYThkZGZkMGI5ZmU0Mzg0YyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_5d562a69e02f430b9f1d48546ea63a11",
+      "statement": "decode(blob, on_error) supports 'strict' (default), 'replace' and 'ignore' handling of invalid UTF-8.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/blob.md#L56-L63",
+          "version": "repo-lines-v1:sha256:8436f32dca06025b14815758a6900040b733331e2f8a8a5af398ff871f25dcb2:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDQ5MDZjM2E1YmI4MjNkMTJjZjg2MTgwMDUxMjNiZGI0YmFjZDE5NDEyZmFhZTQxYzRmZDgxZWM4MDVhNzQ3MSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjQ2MGRhZjg0MjcyMTk1YWEyYWJhZGQyMjE4OTg1MWZkZWMzOTQ1MzVlNmFlMWY3NzFhZWEwYmEyODBhYWE1MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTE4ZjJjOWRmNWYyYWQ2MGUzNmRjYWNkNzIyMzJkMmVhOWNmZjZmMzFjZmQ5N2ZiZWJjYTJmYzg0YjUxYjc0YiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzk4ZDgzN2M4ZTBmZDY3MDBjNjQ1ZTRiMzczN2JhYmQ2ZDQzNzUzNzMyOTQ1OTBmN2QxZmYzM2RhMmZmYTk5NCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_ebf05f8dac90475e82d3f223e1377a23",
+      "statement": "Bitstring AND, OR and XOR require equal lengths, get_bit and set_bit use 0-based indexes, and bitstring_agg with bit_count can replace count(DISTINCT).",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/bitstring.md#L15-L161",
+          "version": "repo-lines-v1:sha256:8a8a1b93027d2ddc19c58a60804583942e88b660879cb21575a6d958a0344ebc:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQ3LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI3Zjg0NzVlNzc3ODIwMTYzNmRlMDUxODAyN2VlYzBlY2RkZmVhNmMyZGE1NTgwMTc4ZDU2NmJmNTJlZTYzMjlhIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIzYTU0NzQwOWU0ODkzNzFkM2JkMGNmZDU0NjEzMzg5ZGYxZjAyMzM4M2RlYTE4ZWJhYmRhMTVmOGRmMTQyZjYwIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI1ODg5N2Y4Y2Y2ODczZjI2ODYyZGFjNWIwYmNiNGY1MmY2NjA0ZjE4N2EwZDVhNjRiMjRhNDNkODZjZDMwZjQ4IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

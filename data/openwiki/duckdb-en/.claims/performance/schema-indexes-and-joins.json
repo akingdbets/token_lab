@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:3c4fbe9c2950172daa488b76433cd3c58c3429c57cebb473588b5cd8ff73c479",
+  "claims": [
+    {
+      "id": "claim_31a4970a6bf9451d9f972ddb76064a73",
+      "statement": "Storing timestamps as DATETIME instead of VARCHAR gave smaller storage and roughly 10x faster aggregation, and joining on UUID was about 1.9x faster than on VARCHAR.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/performance/schema.md#L13-L68",
+          "version": "repo-lines-v1:sha256:dfe5670cf6c4d6c5e5002ddc988fa92568d81a540a6ddc9b8316d9b5bc776636:eyJzZWxlY3RlZExpbmVDb3VudCI6NTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4ZjQyNjcyYjI5ZjliOWYwNTE5ODMzODU1YjYyODc2OTNkNjU4NDA4MjlhZjdkZDgxMGQ2ODljNzgzODExNjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZiMWRhMzRiNTI2MDU4MzNkNWM0NGVkN2E0ZTVhZjM3NTExZGIwZTVlYTNkZGRhOTcyYTlkZjFmNDgzM2QyNzkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM0Nzc3YWM3MzVjMmFjMmIyNTRkNjc5N2FiMGFhOWRmYjZjNTVlYThmNWIwMWVlZDE1ZjBmYzZjYzA2YzUyMTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI1NDVkNDhlN2RmYWQxNWQzNDA3ZmYxNWIyNzM3MDAzMDM5ZGQzMGIxOTA1NWI1MGUzOGNmYTlkNjRhMmJlNTMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_793d595dc2354109b47d0eb563603016",
+      "statement": "Constraints slow loading and rarely improve query performance; loading with a primary key was about 3.5x slower than without, so constraints should be added after bulk loading.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/performance/schema.md#L100-L127",
+          "version": "repo-lines-v1:sha256:3e10601c5127f629ad25bd453b80d96d5892e9181740b4cc53f772ad385d6cc8:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5NGZjMjA2MmZmMGE1ZGZhZTUzOWM0ODRlZGJlZjAyYTk3YTg2MzA3M2ExZTYwY2Y4ZjhiYWY1ZDExYTRmYjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkyNjY0MmY3MmIwMGU3ZmRhOWVkMWMwODJiZDQzMDNiNjMzMDY0ZGRjNTUyNjE2MGEzYzZlYjA1YTJhOTE4ODMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZlOTM3OGI1YjAxZDc2ZmNmYTQ5OTUzODE2ZjcwN2FmOTE2MzdlZGE4N2Y4N2E1NzAyNWQ3ZTYzZWUwNmQ1MjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_aef840b4a30e452c8fb787ddd89b48c1",
+      "statement": "Zonemaps are created automatically for general-purpose types and are more effective when data is ordered on filtered columns.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/performance/indexing.md#L15-L47",
+          "version": "repo-lines-v1:sha256:11ac0050bfd111e335a1ae3bfe17c252b5014f2003904fa17a2baab1b0dddfdf:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZlMGJmMzRlM2ExMjNjNjYzOGFhMmY3M2NlYmI1ZjM4OWE4Y2MwNjU0ODQ5MTY1MmY3Y2U2MjI2YTNlYmI3ODgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3NTY2M2U3ZDY5MDRlZTI5ZjI2ZjU3YTZkZDk3ODU1ZjJmNWJlZDljM2U0ODRiMTBiYTc2OWEzYzJlNjVjM2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIxOTFhNDk5NzFjZDA2Y2VmNTczNzExZDIxZGM0ZThhYzc2ZTQ3YzRmZjNkMGIwNzhjNmU3OTJhZmMxYjgwOTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVlNzBmMzhmYWY1NTdhNDI0YzQ0ODNiNDFhMGQ1MTE4OWZmN2U1NDk5ODJjMzM5NDQyYWNjNzIyMmI4MDExNzAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_25e4ca5363174e28bd07cd2268833390",
+      "statement": "ART indexes are created implicitly for PRIMARY KEY, FOREIGN KEY and UNIQUE constraints or with CREATE INDEX, and do not affect join, aggregation or sorting performance.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/performance/indexing.md#L49-L62",
+          "version": "repo-lines-v1:sha256:2f33b3712dddec0262b1fbbd3f204f9397739782455e1e9d36f11fa15b934ca1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxMDZhZjkxOGQ1NjZjZTAyY2M2NzFjODNlOTdkZmRkZmEyYjEzNmEyOTQ0NTE0NjhjMDliYmY2YzZiNmY5MTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQyMmQ2NmYwOTkxMzM2YTE2YTk0M2UyYzc3NGMzY2UyODZjZmFhNjcyNzNhZmM5NTM1NjJmY2Y0OTFkN2RiNzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE3YWNmYTdkOGY5NzY1NjdkZmQ2MThlYTRjNjYwNjI4YjljYTlhNzI1YmRkNTVhMzY5ZjkzZDQ2MGJlYmI5NzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU1YWRjODZmOWNjYWVkNmM3MzdkMjAzZTQxNDdiYjc4YTZlNGZhY2FkNzZkNDdhZDFmOGVjMTcyMTNmNzRjYmIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5e04c585e4e14b069db03b1fa96d4b2f",
+      "statement": "Index scans only apply to single-column indexes without expressions, with a default threshold of MAX(2048, 0.001 * table_cardinality).",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/performance/indexing.md#L64-L87",
+          "version": "repo-lines-v1:sha256:e75eb0041d7a1daa0f4c98b600f3ae45c5bedfb0eed9ef251f8e95ec33de254b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIxZDg5ODEyYWI1Yzk4NjVhZjA2NmRiNWM5ZjQzNDA0ZTg1MTNkMzliMDJmZmVjM2E1M2NjOWI1ZmRmMjRjOGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI4MjMyNTY0NWM2OTFhMDc4NzhmOTE1ZTk3MWM1ZmIxNTI2NjMzYzFkZmEyOTk0OGFiZGRhYTMyMWNhNjliMGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVjN2FiOWEwNDg1NzJjYWNmMWU4ZTRiM2FiMDY1OTZlNjQyOTM5ODA1OGRiYzI1N2U1MTM5ZWU1NDEwZGNiZWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA5MjIzMWNjZTY3ZjI1NzQxYzViYWExNjQwOGIzN2EzZWViY2RjNWIzMGE2MmI2YmRjNmE3ZWZmNDAwNDFlNDMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_010a953459424f45b77726bcf7924254",
+      "statement": "ART index memory is not buffer-managed and indexes must fit in memory during creation.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/performance/indexing.md#L89-L96",
+          "version": "repo-lines-v1:sha256:2f11d5711ee24dcb58dee31c3a25bd37928d5e01cdad8b2cf094922503dce6ca:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2NhMmE1MWMzYTk3MjkyNjBiZDEwMDI1YjMzY2NjOTE4MjE4YWU1NmNjZDMxMGUyMjQ0Njg1YWU1MjRiM2IzNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMWNkMzNmZDQ0MGM2YzE2NWQ4MzE5YjExNGRiN2M4YWY4ZDgyZGJhN2RmZWY1OGEyNmNlMWYwOTZjNzE5Y2JmZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDI5MTViYzU0NjkwZmUzMTk0ZGUzZDczNjY4ODMzNmIxZDQwNTEwYzMxZmI4YThiYWY3YzJmMzQyNGM0MWE1MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiM2ExNjNiZWQxNGRlNmU5NmE3MzBmZjNhMzRiNDllMTVkZDFlODZmZmM1ZmQzOWE5YzAyMTc4ZjY3MDI2ZDk2MSJ9"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/indexes.md#L21-L25",
+          "version": "repo-lines-v1:sha256:e0ff148359f7362894fc58dd1754e4867a9ef2f95b3d61faad4ca505744cba4e:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTllMTBlOWU5ODRhZjI2NmUyNjMzODg2OThjZDM3ZGEyNGMzNjIxMjFlNjEwMDI0NjE4ZDBhM2ZhZTg5Y2JiYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjE2MmM4NWE3ZGFhYTQ3ZjEyYzA0MjFkNmJkYTZhY2RjYTlhMTM1NGMyYThhMjMyNzYwZTk3OWIzY2JmYTJkNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzA5ZTdkN2ZkNjdjMGI5MmZkYzUwNTU1N2ZmN2Y5MDBjMDA5MDlkYzYxY2Q3M2JjZTQ5NDUxN2Q0YzYwMTg0YyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzA5ZjRjN2Y1NGZiNGQzNzFjMGIwMzVhODk5NWRlYzAzY2Y2YWY5NmNlMTQzMDhhYTFmOTQ3ZmFiMjdlOWQ3YiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_dbf5c4ae9c0e4e358ae8cffb23cb7174",
+      "statement": "UPDATEs on indexed columns are rewritten as DELETE plus INSERT per chunk, which can cause spurious primary key violations.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/indexes.md#L48-L90",
+          "version": "repo-lines-v1:sha256:3b0420adc8d067d8ae35d56396f58a0f22a636597f577e97744ea4d73e4d6a8d:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYxOWM3NDEyNTYwYTg1YWM4NzU2NWUyZTYwODk0Y2YxOGIxMjk0ZmU4YzJiMGU1NTgxNDlhNmM4MDM1YmEwYjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdjZmFjOGQ3Y2ZjMzNjYTBhODVmMTgwMzcwMzk0Nzc3NWI1ZDg2NTgyMmE4NmVjODg4YTU3Y2JiMGViMGFkN2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc3ZmMwMDQ1MjE4NjU0NTliYzhlYWNjOTNjOWVjNmQ3NWNhYjU3NjY2MTI2ZGM2ZjcxYjBlNjNjZGU4MTA3YjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5b30ac876bf8434185511ac4ee19c125",
+      "statement": "CREATE INDEX does not support OR REPLACE, and CREATE INDEX IF NOT EXISTS has no early exit.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/create_index.md#L37-L37",
+          "version": "repo-lines-v1:sha256:7599ee8c8af9106f4a0a32d8b55ddbbfc5546c6123c8cca9388558f4114114db:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzU5OWVlOGM4YWY5MTA2ZjRhMGEzMmQ4YjU1ZGRiYmZjNTU0NmM2MTIzYzhjY2E5Mzg4NTU4ZjQxMTQxMTRkYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzU5OWVlOGM4YWY5MTA2ZjRhMGEzMmQ4YjU1ZGRiYmZjNTU0NmM2MTIzYzhjY2E5Mzg4NTU4ZjQxMTQxMTRkYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjRhNDg0YWFmNjUxZGVjYzgzNGY0YTRmYTdiODQwYTdiMWVjNWNkZTkyNTE3NTJhMjYwMzY1ZjZiMjZkZWNiZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2Q3MGMzNDk2MWMzZWQwNmIwZTUzMWY3ZTg4NGNkMjM3M2RkYWRiN2FlMTk5MjRmNmRmZGVhZGJlNmJlOWZiOCJ9"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/statements/create_index.md#L90-L92",
+          "version": "repo-lines-v1:sha256:db81a35be4608742f14dd6b3f9dd65eae391bbe7660048ab10e1adf1b7c46af0:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDU3MGNiNzFiOTQwYmQ4MmJhNDBhM2JmN2EwOGVmZjk3M2Y1M2ZiNTczYzJiMWFjZThjYjg4MDA0MjAwMjUxMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiODg3NjYxYzAzNzJkZTMzOGVkMDMxM2U1ZDlmNDQ2MzEyOWU1MWVmNzk0YjFiY2ZmNDAwMzI3ZDE4ODc0NGE5NyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTYyMDJiODNiYWNkYTlmZjk2NDA0Mzc2NjUyODc5MTgzNWRiYWY2ZDAzMGI2MjY4ZDcwOWIwY2JiNzFiZGZjZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_b2567764b94b4103930c7cdb600a7b43",
+      "statement": "Join order can be forced by disabling the join_order and build_side_probe_side optimizers; approximate_join_order_threshold defaults to 12.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/performance/join_operations.md#L13-L76",
+          "version": "repo-lines-v1:sha256:8facf20ef982ca2948aee2a765c3681e01e65c6cf63bf85ae4faef098a891df4:eyJzZWxlY3RlZExpbmVDb3VudCI6NjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4ODZmZjg3ZTBjNWE2YzMwNDFhYTE1MjJiODNjNTgxNDVjZDMzMDUxNWJjYWI3YjMxNWFjYTJhNWQ5YTQ3MzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1ODYyMGY4NDVlMGZjNWNhNGJlMDI4NTBiM2VmMWRhMTRiNDZmZjRlNjIyZmIwODM4NTBkOWIxYzlhYjJlNTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM0Nzc3YWM3MzVjMmFjMmIyNTRkNjc5N2FiMGFhOWRmYjZjNTVlYThmNWIwMWVlZDE1ZjBmYzZjYzA2YzUyMTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

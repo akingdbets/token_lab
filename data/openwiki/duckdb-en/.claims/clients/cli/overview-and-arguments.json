@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:46260ef6451b71f072d6b1bcf166c4160cb1e42862612506626d7b096e065ff2",
+  "claims": [
+    {
+      "id": "claim_3120223d9d744886aee43463eb4076ac",
+      "statement": "Without a filename argument the CLI opens a temporary in-memory database; a path opens or creates a persistent database.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/cli/overview.md#L66-L85",
+          "version": "repo-lines-v1:sha256:57c8b816564e6aed1828c41049ae4cacfa748fc43d6af83d08f8d2fb22f83842:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQzMTA4NmM0NmE1ZTQzZmViNzUzYmQ5MGIyMDU4NDJlZDQxNmExMDAwMWZmYTEwNmMwYWI1ODU3MDcwMTQ5NDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMwNjZjM2Q0OTNiYWEwNDFhNDFlODFkY2E4NmU2NThjZDVmZGM5NGY0ZmZhNTBjOGQ3MTA3MjFlYmIxODdiMmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE4NzI5MTU1OGNjNDQwYTRlMzQxNDhmZjM4YjZkZjdiN2YxNDkzZmYyMGQ3OWVhZDNjOWU2MDMzZDNiZjU5OTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1a846ce478584400923650786f2ee4d8",
+      "statement": "On startup the CLI executes ~/.duckdbrc; -init selects a different file and -no-init skips it.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/cli/overview.md#L113-L118",
+          "version": "repo-lines-v1:sha256:862ba3c6b6b1c9f07f677b331d249805aed548ec5ac56929d629657f6c7fb778:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmY5ZGQ3NzNiYTRjZmQzYThmM2I5ZjAwNDhlOTQ0Yjc4OTAxOGJhNTdiNjY0ZGVmNmZlOTUzODEwMzc2YTA4MSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjQ2OWE3NzkyMjdiOGI4YzBmMjJiYzdkZmU5OWI0ZWFiNjIxOWJlNzY1NDIxNTlhZTEzZDc0MTgwYzcyZGU5YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2I5NDgwMzNiMzBjNDYzMDhjODRhZjQ0ZjhkYzNlOTFjMTY4NjQ2NGZlNzg4YTg4NzI4NTI1NjNiMzRmODczZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMmMzOGM1ODM3NGI0NWU5NjI2ZmU5NDdiNDcyYTMzZTE2NWVjZTI4YTMxZWQ2YWUwNWFkZDU0MGU2MGMxZmQ0NSJ9"
+        },
+        {
+          "resource": "repo://docs/2.0/clients/cli/overview.md#L233-L238",
+          "version": "repo-lines-v1:sha256:e7d3ce64682261343041b5a7ebd357fd355a2dc179baed206c1ebc0bc0ab52a0:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMWZjNjQ3ZTljZTg5OWE0M2RmNDJjNTcwOTZhMWNhOWMxNmRjNDgwMzZiZjQ3NGNkMzNjZmE2ZTFlZWE0ODQ4YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjk5ZDNmZWIwOGNiYTNlYTYyOTBkYzk1ODYyYTFhNzQ2MWQxOTc0YmZiODcwNjI3ZDZkNmYyMmViODJhZWY0ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWQ2YzlmNGE5MTc4YTNkYjQ1MzkwYjM3MTI3ZDY4YmJlOGVmMDhmOTUzYTQ4NWQxYTQwZGZlZjNhNmJlZDVjNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTk4NTI3MjhlZWQ2NjMxNjBlZGI2NTAwZjJhZGE2NjE4ZWEyNmI2NTYxZDc4YzlhODQxMjk4YWY0ZjhjODI3YyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_e989a4d2a6554372855e9f87879e550a",
+      "statement": "The getenv function requires enable_external_access = true (the default) and is only available in the CLI client.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/cli/overview.md#L333-L358",
+          "version": "repo-lines-v1:sha256:98367abd4901f26d44e3f0cb28287fdca79f325ba18ea792ea3ca3c698cb81aa:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMwYTI3YWUxNTg0NzgwYzRkNzFhZjI1MjUyZjhhNzQwMWY0NTQ0OThlOTJkMDQ0OGExNjFiZjAyZGI1ZGU4YWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3NzNjY2MyZGFiYTg3ZDMzMTNhN2M2YzE0OTg4MTVjZWFmMzljOTRkYjM4MDAxMmQ2ZmIwYjQ1MzQyNDkwYzMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg3YjBjOTc4ZmFkZjgyZGQ1YTg2ZmU4NWFmYjcyM2Q3OTkzZDU3OTA4ODY3YThjZTE1OGE5NjE2Mzc5NTM2NGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY3MDA4YjRhZmNjYTEyZjE2MjU5N2NkNDQ3MDUxZmJlNzVlZWVmYzM0YmUzMzUzZmZhNzI1MzM1OGZmMjQwNWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2e8b4cb4887141269f6b4aa047fcb2b7",
+      "statement": "CLI arguments are processed in order, except the init script, which always runs before any -cmd, -c or -s command.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/cli/arguments.md#L108-L125",
+          "version": "repo-lines-v1:sha256:1846218f326a344d0153867f25d2b3d7163090781edde319eaa22f400f159473:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmMzdkMjlmN2Q2MWUzZDU3Zjg2N2YwYTFjZTRmZGQ0ZGRjY2ZmYzdjNTMyN2Y0YWQ1MWJmZTY2ZjcyMDk2M2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxMzM1MjM2OGFmN2M4Mzk4ZWMxMjAwMTM2NzM3NzE5NzQ1NGQzNjc0YzZiYmE2OWQxZGI4NTA0MzllZDBjMDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRhNTZiZWFhN2QyMDU2YzlhY2IzMDhmOGE4MmMyMWI1ZmU3Y2U4ODhmOWQ4MTkyNDM0NWEzM2ZmNTU1MGZhZmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f28ded79dbe041bda2d4d4e846ab9235",
+      "statement": "The -serve and -connect arguments were introduced in DuckDB 2.0; -serve serves on localhost:9494 by default, and -connect uses the default quack secret that -serve creates if missing.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/cli/arguments.md#L75-L106",
+          "version": "repo-lines-v1:sha256:a5bd0772b443fbbc255e7a292f30122edb7771aa3fbe97611eabb178117a5149:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg5NWE1NTBkZGMwZWZhYmZiYmYwZTA1MTMyMDM1NTdhMGNkNjI2NjViMzViMDM0ODRiOWRiOTM1OTVhN2YwODMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmMjFmNThiNzYxZTI2NzM3ZmUxN2RiZjBkMDc5YjcyNjQ0YzhmMGYyMjJiYjk4MmY0NWY1MzMzMTE1NWU4ODEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZlYTRjZGRlMWZhODM3MmFjYzQ2OTY5OWZhYWNlMDIzNTIwYTk1NjE3ZGNlMjcxOGVhMWQxMWRiNTcxMWQ1NTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVhNzg3OTBmYmExZDY2MWM5MDM4ZDQ2YWU2ZTM1YzkzNGM0OTEzMTM5NDY2NzYxYjg3MTIwYzBhYzJjYTUwYzYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6c7063dd6dd1477281baec50b98bec10",
+      "statement": "When CLI output is piped and an AI agent environment variable is set, the CLI switches to agent mode; -no-agent, DUCKDB_AGENT_MODE=0 or an explicit output-mode flag disables it.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/troubleshooting/command_line.md#L12-L41",
+          "version": "repo-lines-v1:sha256:785939adeb799f94664771c85f554f569375f01994b99ceab111f585f41d4eaf:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmNmY4OTU3MmU3NWZkNTkwOTIwNWEyYTA0ZjI5NzJkMjQ5ZjNhZjNmZmIxMTdkMWYxOTUxNzMzM2YzMTQ1OTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFkMDA2MTRmYTlkMDI4YzAwNGYzYjE1YTI3ZjJkZWZiODBjYzkxNjY4ZDY1ZDYyMTcxOGQ1M2EwZmJmNDM4ZTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU2MjhhNGM5NzZhODViOGFkZGYxODMyNzYyZWRhMmRhNWY3OGNlZjkxMWZiZDNkN2U0ZGQzZDZmYjRhODlkMGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_04eca242a722446fb076a6adb528dc83",
+      "statement": "The CLI can be installed via pip as the duckdb-cli package, and extensions can be installed as its extras.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/cli/overview.md#L29-L40",
+          "version": "repo-lines-v1:sha256:00017a513e601036e2c0f8c046f306667b087f636b62acc1488dfe06c5874565:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNjMDI5YjM4NTNhZmRiODU4Yjc3OGZlZGJkNGEyNzRlMTEyNTgyYTZhNTBhNzU4NmRhZmJkNWE1MTAzOTEzMDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViMTEwZGE2MTFkODZkOTVjOTQ3Zjk5ZjAzYWEyOWVlNTdlZDFlNWI3ZTQxZmMyNjliN2FlOTA1ZTM4MTE5MDkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU5YTg2NDlmOGIyOGNkMjc0MzM3ZGYzMTYyMjQxNjY0NDliNjBkNjdlOGJjZGM1YmNkODQxYTFmNTAyNzFjOTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk5NWIxZTE0NTUxOGEwYjUzMWEyZmE2NTkxYWFjMjdmZTg5ZWVjMmRkM2JjYTQ0ZjY5NTg1OWMzMDNmY2U4NTkifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

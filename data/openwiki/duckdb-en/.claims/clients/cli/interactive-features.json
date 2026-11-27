@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:472b8793f3cece07e030678d92239d048908c8464ad135fa5d4bf42f643ebd33",
+  "claims": [
+    {
+      "id": "claim_eceebbe56ba94ff79b854b655dd7dbea",
+      "statement": "Agent mode, introduced in DuckDB 2.0, activates automatically when an AI agent environment variable is set, stdout is not a terminal and no output-mode flag is passed; -agent/-no-agent flags take precedence over DUCKDB_AGENT_MODE.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/cli/agent_mode.md#L11-L42",
+          "version": "repo-lines-v1:sha256:8a4cc73c1f7bb92782c3d686672b34c2530c1fdedd7c79b5dcddf9135d8c0f75:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA5NTk4NjQ2MGIxYTYxYjZjNWQzZDE1ZTRlZTFmZmNjOGIzZGNlMjAwYzg3YzUwZjA0OTA5M2MyZTgxYzYwZTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg2ZTUyZDFjYTk3NTYwY2RhMTFjYjEzZTU0Y2RhZGFjYzk3MDFhOTI0MjkwYzYxNjg2MzA3ZTA0Mzg0YmMzY2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZlNDJlNTUzMmU1ZTU2ZTRhNTY3YjkxZDkxYmE4OTcwMmEwODc2M2MzYjgwYjA0OGQ5N2Y4ZWFjOTlkZGVmMzAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4a8deab2ca4b4b76916eebacba5f7186",
+      "statement": "In agent mode results up to 1,000 rows and 10,000 bytes are rendered whole, cells are truncated at 500 characters, and errors are emitted as JSON on stderr.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/cli/agent_mode.md#L44-L62",
+          "version": "repo-lines-v1:sha256:d6bf8bd0d529e4dc45748bdd5a4c152821ef9cd6269541d02527e2783719bb3b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0ZGZmYmZjMDE3NzMxMmEwMmQ2MzQ5ZGRhZTkyYTVjZDMxNzg5MTg3MDM1MjA5MzQwYmJlYmFkZDk5ZDU0NjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNjM2IwMDA5YTU2YWIyMmQ1OGY3OTUxOWZmZmEzNjMxZTE2MDg5MWQwZWY2NDEyNzRiZWZmYjViZDU2YjJlNDEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFkNDBiMDY4YzRkZDU0NDQyOGZlMTFjOGUyMTA5NzkxYmFlYzc3OGVmYmI5YjQxNDRhODgxZmZjMDg1ZTQ5YzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJkNTk1OWNmZDk5OGMwNTg4ZGNiYzA4MzBjMDViNTBkM2RkMGUzNjMyZWZjMjNjOTRmMDg5ZDcxYjRhNjUwOWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9d143b91ccff417c87250e5ce31e9685",
+      "statement": "Safe mode disables file-touching dot commands, getenv, and filesystem autocomplete, sets enable_external_access to false, and cannot be deactivated in the same session.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/cli/safe_mode.md#L12-L45",
+          "version": "repo-lines-v1:sha256:fa160f950edbf977d0a81cc7427090c227de3133d1d1f3e1fa1ae35425ff75ff:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1YzFmMGI2MmYxYjBmNzQ0NzUyMDdlNWU0ZDAzODdjZTMzMjNiMmJmOThiYzUzMDJkMmE4YjQ0NGUwMTNmZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUxZTU1MzA2ZTA2N2FmMjJmZDMwNjk3OWQ0MDIzZWVmMWExZTFmMTI3MTVjZDhhMmM1ODdmY2M0ZmE5ZGJiYTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEwZDExYjczMzc2MjFlODdiNmVlMmNkNTQ3OTU4MWJkNzg2ZGQyMjM3NzMyZWEyODNiZGYxOGRhYmQ2MWFhZjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_99d615c082f94c959b2024c8cc5e2326",
+      "statement": "The external editor is chosen from DUCKDB_EDITOR, EDITOR, VISUAL in that order, falling back to vi.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/cli/editing.md#L92-L99",
+          "version": "repo-lines-v1:sha256:8565caf440f80c7d1bc6f478331fd8ea9b164382ac2cfd65e6afbe69c901edc1:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjQ2N2FhNWU0OWUzNTk3ZjI2ZmE1NjM3MmNlOWIyYmIyY2UxMzcxOGFkODJlODg0ZjE5ZGZkYzExM2VlZWZhNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDRmMDkzMmU2NzdiY2NkMmM1MDFjZWQyNDEwYjcwMDY5NThkODA4YjA5YTQ1ZDg0YjE3NjFlMTE4MzIyZDFlNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGJiNDQzNWFlMTI3NmU4OGU3Y2YzN2ZhYjYyNTdhNTkxN2U2NmY3NDZiODkyMDI2ZWFmNzJjMjRkOGYwYThkZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzRmYjk4ZWRjOGI3Y2E2ODE3OGE0YzZjZGViNTg4YzNhNzUwOGI5MGU3YTU1MjgyYjg0NGU4N2M3MDYzNGQ4NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7ab297fafa02464da1281ebcaff5ee44",
+      "statement": "Default syntax highlighting colors are green for keywords, yellow for numeric and string constants, gray for comments, and red for errors.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/cli/syntax_highlighting.md#L24-L40",
+          "version": "repo-lines-v1:sha256:0c3f3b350fa767a588f834adf0466b6dd0eeeb5934744fcd4ae2d09536353b06:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhiZmYzNjVlMTA3MTMxOWNlNTkxMTM4ODlhOWU5NGZhYzIxOGRkOGM3YTRhMDU1ODExZmM5YzQxYjdiZWFlZjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAzMjJjMWU3MzI3MzUxYTBkMjA1NTg0ZDQ0OTMzN2NmMjRjMDUzNDNjOWMwYWM2ODQxNjA5MWEwZTgzMGNjN2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVhNGVlOWFlNWVjNjMyMGU2ZjRmOTA1Mjc2YjA3MGJlOTM0MmQ4MTk3MGU3YzNhYWFkZGQwMjcwNDc0YTVlMWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJlZjkyODgwMzg0ZjRjOGRmZTg5NjUyNzc0NTA4NzU0M2Q1MDRmMmM1MTBkYWFjZWJmZGQ5ZWRiOTJlOGI4YjMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8e45c2f41d8e4e59af4701bf729c843f",
+      "statement": "The _ table returns the result of the last query and raises a Binder Error if the last statement produced no result.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/cli/friendly_cli.md#L64-L96",
+          "version": "repo-lines-v1:sha256:a9f871207f5200f437610eb2ae9af0b3711ba4f3c30e46e7cdd7e5b93d6f109c:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM2N2M5MzIzMGVkYTU0NDk1ZDQ0ZGUxNGE0MjU5YTM5Mzg0ZTlkZDkzMGNmYTY2OWY1OGI3NjZjMTAyYmYwMmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQxY2FjMjg0MDJlYjcwYWI4NzM1MDFkYWU1MzllNmI3NDJmYjkwM2FiZTQ0YmI3N2QyNmQxYTYzYWE2ZmI0MDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_34f2ed6d0bdb4e1693837fc4528fb24a",
+      "statement": "Autocomplete is provided by the autocomplete extension and completes keywords, table names/table functions, column names/scalar functions and file names based on cursor position.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/cli/autocomplete.md#L13-L64",
+          "version": "repo-lines-v1:sha256:b1d6a22ea8f3f31ee8a56a2af2b6174e582a017b5b8184c71fc68259bd7574af:eyJzZWxlY3RlZExpbmVDb3VudCI6NTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg0ODI4NDg1YjhlNGIwNGFjOWE1MTNhODc1ODg1NjhiN2QwZjhlMzI3YjU0Mjk4ZDhlNDNkYzBhNWUzNjA2YTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI4OWJhN2JjNjI1OWEyODYyMjgxYWZkNTU4MmI2NTJlYjkyYWFiNzQwYjMxZWQzNzUwNjk4MTI3ZTBjN2QyYjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_48c438774b0f474797aa685aaa3a6f3f",
+      "statement": "On WSL 2 and older distributions such as RHEL 8, max_memory and memory_limit may be reported as values above 1000 PiB.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/cli/known_issues.md#L11-L31",
+          "version": "repo-lines-v1:sha256:d21f528307d83e7aa1627d431766dcf8b7ccfda99f7cacefdd824c3efdab7d24:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI5OWJlZThiNTdkODFhN2JjOWZmMTNlMWRhNjdmMWI4NWY4ZjlhMjc2ZjA5ZWQyYjNjY2ViNDkxNzAxM2UyMDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQzMzFjYjM5MjljZTc1MzI5ODM5ZTFkMmE4OGZlYzFhMGE3MjRiNzJjMDMwMTk4ZWViZDA4YzAxOTQ3OTRlMDMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

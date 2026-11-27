@@ -1,0 +1,4 @@
+# Files
+
+- [Friendly SQL](friendly-sql.md) - DuckDB's "friendly SQL" conveniences — FROM-first queries, GROUP BY ALL / ORDER BY ALL, star expressions with EXCLUDE (and EXCEPT, new in 2.0), REPLACE, RENAME and pattern filters, the COLUMNS() expression with regexes, lambdas, lists and UNPACK, prefix and reusable aliases, trailing commas, top-N aggregates, 1-based indexing, and a map of other friendly features.
+- [SQL Introduction, Dialect and PostgreSQL Compatibility](introduction-and-compatibility.md) - DuckDB's SQL dialect basics — a quick SQL tour, identifier rules (double quotes and backticks new in 2.0, deduplication), case-insensitive identifiers that preserve case and preserve_identifier_case, differences from PostgreSQL (float division, implicit casts, regex operators, functional dependencies), SQL quirks, order preservation guarantees, and the PEG parser that became the default in DuckDB 2.0.

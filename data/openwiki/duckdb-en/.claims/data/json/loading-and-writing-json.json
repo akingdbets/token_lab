@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:fb17c324d4b760fb05b623b8c86660a3e712f2b3459887ac0b4683e80bd04d14",
+  "claims": [
+    {
+      "id": "claim_3003fa1eaef44d2cbee45a7cabd52068",
+      "statement": "The json extension ships with most DuckDB builds and is autoloaded on first use; it can be installed and loaded manually with INSTALL json and LOAD json.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/json/installing_and_loading.md#L12-L17",
+          "version": "repo-lines-v1:sha256:fa480df72a978830ff377a0da429d52c37d8f9acc8330d3926db77dfa8199694:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2Y4OTgyZGFkMzFiMDM2MDk3ZjEwOGYyYWYyYTY2OTJmNTU5OWMwOGQ5OWViOWIzMTRiNzFmZTBkNWE0NDYyNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2VjNTY4ZWFkZGNjNDg0MDI2ZjFlMzJhZjIyYzc1ZjM4NTM2MmNmMmM1YzFkZDk2OGMwNTkyZjU3MTk1ODMzMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTU0NjlkNGViOTRkMzM4ZGYzYmIxODNmNTdmYjIyN2Q5NWI0YWZmZTFmNDUxMDU2OTJhZTMyNGY3MWJiMjQ0ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://docs/2.0/data/json/overview.md#L14-L16",
+          "version": "repo-lines-v1:sha256:0a7f01ad5fd1cbd8d46a976365b5d405d32e26b906de2ebdd912f916163bd2cc:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWE2NzMzOWIwODA0YWIxYTJjOTVmYzVhODVhMWQzMmZhMDBmNWFmMTNiMTI0ZDdiMDQ4Zjg5YzkzNWZhNTZkMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTU5NDUyNGRkMGUwZjU1ZTEwZjM1NDg3YWU4OWM0OGUxNDBmYzhiMmYxNjk4ZjNjNjA4NmFhNTM2M2NhMjI2MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTJkYTEyMzIxY2M5MjEzOThmZjFmMmU3MGE2ODc0MjE4ODI1YTUyZjY4NGEwZDI5YWZlYzJkNzY1Y2I2NGI5ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDhjMzg3Njc0OWJiY2NiZGYxNjMzYmY2NGY5ZDY4MzYyZWI3ZTcyMDZiZjE2NWEzZGFiM2JkZDViOWMyY2FmNyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_d69f993912b643659986dfafca812c72",
+      "statement": "read_json defaults include format auto, records auto, sample_size 20480, maximum_object_size 16777216, maximum_depth -1, maximum_sample_files 32 and map_inference_threshold 200.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/json/loading_json.md#L84-L207",
+          "version": "repo-lines-v1:sha256:5d2618cef8ae9879327509574aafceee9839eadae0d48d336466aeea6878b6aa:eyJzZWxlY3RlZExpbmVDb3VudCI6MTI0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI1ZWM2YjFjNzFmNzMzYzRlNDBkZDk4MDkzOThhM2Q0ODRiMDQ3OTM5YmJmYjNlNzg1ZWJiMTZmYjZhNTVhOTJmIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0ZjhhMDQ5MmI0ZTM2NDhjNzBjMGIwYjAyYjAxNzBjODA4NzMxMzBmZGI4YjJiYjRlMzllMzM1YjUwMTJkNTZjIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI5N2Q3Yjc0MDhkZDU4ZDg2OTg3ODYyNzI3Nzc4ODI2OTk0NjA1ZWQ3ODRjMmFhM2YxN2QyODAxZWI3OTU0YTQ1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI5YTM2ZmU0YmNjMDMwMjU5MmU0ZDZkZDFjMWM1MzkxOWM3NDc0YmJhZTE2YjdkYzZmMmFlYWU4OGJkNzhlM2FmIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_37a8ef4be57f44ccacdd7fefdd10850e",
+      "statement": "When columns specifies only a subset of keys, read_json excludes the unspecified columns.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/json/loading_json.md#L51-L70",
+          "version": "repo-lines-v1:sha256:b46bc848e9e3ff60571d62ed247a8c7751a82b29e3dd081194cac2614e016827:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM0NDgzNzZjODNiOGU2MjA4ZmJiYmM4ZjgyNDBkNmJmMDBiNmRmZTQ3MDAxYzk1OWIyOWJmMTNiNWJiZDBkMmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNiOGUyYWJmYTdjNDAxNDVlYzgwMGE1MjRiZjk5YzY0N2M0NTRjYjU3MmQ3YWYwM2VhMzc0NDEwNDNkYzA3ZDQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdmODQwMDNmYTdlZmY3MTY5YjNhZjBkNDM3ODdiMTgwZGU2YjYyYWMwMTM0MWM1ZTQ3Yzc2MWU4YzYyN2IxYjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyOWFjN2Q1MTUxZjZmZGQxM2JkYzdhYjJiZmFiNmY1YWU5NzIzODJjZGJlZTE5ODIxZjY4ZmY0MDE3MTdhYTkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4c146be61a1b4b11b9a055c60bd77fbb",
+      "statement": "The allow_empty and array parameters of the JSON reader were added in DuckDB 2.0.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/json/loading_json.md#L196-L196",
+          "version": "repo-lines-v1:sha256:621cc63cb9285869488817906044d10f640aedc60cf6f62c3d5abf7d708159ba:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjIxY2M2M2NiOTI4NTg2OTQ4ODgxNzkwNjA0NGQxMGY2NDBhZWRjNjBjZjZmNjJjM2Q1YWJmN2Q3MDgxNTliYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjIxY2M2M2NiOTI4NTg2OTQ4ODgxNzkwNjA0NGQxMGY2NDBhZWRjNjBjZjZmNjJjM2Q1YWJmN2Q3MDgxNTliYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWI1ZmIxNmJhZGM1ZTc1MDY0Y2VjMmJlYmVmN2ZlZjk3ZTdmZDRmNWUyMWI0OThkMjA5NDUxM2VkYzJjMGNiZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzkwNmQzOTRjNDMyNWFmNTgzNzI0ODNiYTcwMDhjZTk5NzhhODRiMzNjNzk0NDI1MzRiMzNhMjk3OGNiMDY3MCJ9"
+        },
+        {
+          "resource": "repo://docs/2.0/data/json/loading_json.md#L90-L90",
+          "version": "repo-lines-v1:sha256:1dcb002a39b207b5a7cfc439da6d1e0e222e931ab01c4c3eed81158ea2e44390:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMWRjYjAwMmEzOWIyMDdiNWE3Y2ZjNDM5ZGE2ZDFlMGUyMjJlOTMxYWIwMWM0YzNlZWQ4MTE1OGVhMmU0NDM5MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMWRjYjAwMmEzOWIyMDdiNWE3Y2ZjNDM5ZGE2ZDFlMGUyMjJlOTMxYWIwMWM0YzNlZWQ4MTE1OGVhMmU0NDM5MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzM2OGRlNTYyZWRmOTM1OWE1YmU2ZTNmZTBhNzFlN2ZlMzk0MjgyZTBiMmU2ODI1YTEyN2FkZWExYTk1MzE0OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDc4NzUwMjRkMTE1YWRkNGYwMzk2YmVkNTZmYjQ3NDYyNzBkMTdjMDE3ZGI4ZmE1MTVhN2Q5ZmU1ZDI0ZjU5NyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7cc13f33b9d841068ea9427c94a46115",
+      "statement": "records = false keeps each top-level JSON value as a single json column, allowing non-object JSON to be read.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/json/format_settings.md#L108-L168",
+          "version": "repo-lines-v1:sha256:747e2ec3006c832341b5c2c8d3417025cefe3908a2a74acb75dbbd87de45d063:eyJzZWxlY3RlZExpbmVDb3VudCI6NjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwNTIzMmVmYmUxYmEyZDBiZjFlNTM1NWY5ZGJmYjlmOGUyNmYyMjczNDg3NDdiOWRiMjk4ZjQ1ZjRiYzY1ZGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg5NmE1OGRjNzcwNGZkOTI5NDM2NTc5N2M4MzJmMmFlZTk0Y2I4YTZkNzMzNjBkMGU2NDlkOTFkYWIwNjFjMTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcxNzcxZTkzYzFmZWQzODE1MzFkNWY3Yzc4ODI3OGFlMGFkZjQ4YjM3ZTVmZmRjNjRjMzE5YTA3NzQzMzFlMWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fd980a1f73a540ce899cde9eccf25224",
+      "statement": "COPY TO writes newline-delimited JSON by default, and the ARRAY option writes a single JSON array.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/json/loading_json.md#L312-L354",
+          "version": "repo-lines-v1:sha256:6788477632aee0748c739cdc908ec9d4aa62d6092ffafc6c943e191af533efd5:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEwNzI3YzEwZjFiMjhhYWIwNzQ0MzIzZDBmNmUzYzI5MmE2YmRmNzg2Mjc4MjU2YzA0YmVjMzliNzNmMDFjNzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg4MTc0NWUyMzQ5NmE1NjBmMDU1NmE3YmMzNGI2ZTVjYTlhZTk2MTMzNWI2MTY5YTc5MzMxY2M3YmEwN2E5NmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU2NjA3ODBkYWZhOTUwYjM0YTIzNzQ2ZmVhZDM2ZTJhZjA4ZjY0ZjI2NzhlMjAxNDYzM2IxMDNmODg4MGRjOWQifQ"
+        },
+        {
+          "resource": "repo://docs/2.0/guides/file_formats/json_export.md#L32-L37",
+          "version": "repo-lines-v1:sha256:2edcf19d121f64d4561f79614efa4ea762b454c4566b0bf798b8ca0b8acbd96b:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2M3ZjQ1ZTBlYmQ2ZjQ0ODYzMGY5ZTU5MmY2NDhmYmEwNDY3OTE0ZjEwOTY0NmRmNzI5Yzc1ODk5ZjZiMTQ3YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2VjNTY4ZWFkZGNjNDg0MDI2ZjFlMzJhZjIyYzc1ZjM4NTM2MmNmMmM1YzFkZDk2OGMwNTkyZjU3MTk1ODMzMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzgxMTc3NzJkZjY1YTEwODA0NDQzZjZmNmI3YTA1MDBmODM1ZjdkZDc0MGQwZjY0MjlhNGY1ZGQ2ODgzMjQ5NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGFjMDZjMmVmNzM4MzJhZWFhZjRlZTIyNmUxYzAwNjRiYmQ1ZDczZjc0NmM1MzQ3ODkyMjZlMzVhZjVkNDQ2NyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_92c4f6f849294fffb0698aa3232aa5bf",
+      "statement": "DuckDB 2.0 adds GeoJSON reading via geojson := true and writing via FORMAT GEOJSON and GEOJSONL.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/json/loading_json.md#L356-L367",
+          "version": "repo-lines-v1:sha256:7380a7f4dd1980fd6187bfa6b1c914e3762f0218e6f952e9b6e1bf06833e2a0b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjExMzVkNWNjMjliZWIxMDk0YmY4NmVkN2UwNmE0ZmVlNWZkMmI0ZmUxMTE4OGI0MzQ2NDcyN2YxYjA5MmEyY2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlZWQ1M2IxZDRmZTM0N2YwMzJlODNmNzJmNzE5NWEzZDVjMWM1YmQ0ZmMyMDkzZGI1YWI3ZDZlODA5ZWFjODUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE5ZDMzYzM5NmZiOGEyZmEzNGVkMzY2OGExYTY5ZDY4ODZkYTg5YzdhOWM0ZmI0ZTQ2Y2U5NmE2ZWMwMTE4MGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYifQ"
+        },
+        {
+          "resource": "repo://docs/2.0/data/json/writing_json.md#L30-L43",
+          "version": "repo-lines-v1:sha256:8a62a0e62e95c965620e0b136e198741c95eeebd4730b6d6892d7bff874d9103:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjExMzVkNWNjMjliZWIxMDk0YmY4NmVkN2UwNmE0ZmVlNWZkMmI0ZmUxMTE4OGI0MzQ2NDcyN2YxYjA5MmEyY2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU0YmZmMGQ0MGE4ZDdjMzZjODM3MWRmYjUyYWMwMzc1OTcwNmQ0MzVhZDMxNDJiNzAyMGEwYWZjZTZkMzYyZGMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMwMWVlYWI2Y2JkYWI0ZTc5NWJlMThiNGZjMjk4NTEzZTljMzhiMjZkOGQ2ZjUyOGFlODI0YzNjNDA2ZjJkN2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a330ad15e0fb48c6a71e683980b6418a",
+      "statement": "DuckDB uses 1-based indexing for LIST and ARRAY but 0-based indexing for JSON, and supports only lookup subsets of JSONPath.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/json/overview.md#L23-L37",
+          "version": "repo-lines-v1:sha256:67a884e4e3f613e96ada0699a61484b5ad110e0c4b1c174486d67e6ffc05c7a9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjljNzJhZDgyYTM4NTZlMjQ0NmVlMDU1NmQzMzk3ODgxMTAzNzI5MmUzMDEzM2QyMzZhNDQ5OGEwNDk0YmQzOTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM1YTA0YjU1MDQ5N2M5ZmFjYzBiNWZhNzNjZjRlYzBjOTlkMDA5NGEyZjljZThjNzk3YmJiMmE1MWY4NmNiM2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQwNTA5NzI2ZTlhNjc3NWM3Mzk3MGRjZDNhMGQ5MGMyMmI2ZjQ4MDBkNGY2YWZlMmVkZmEzZDNlZjdlODRjN2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNiOGU0MzIzOWJkZTc4YjllZDg1NTEwZDIxNTQzMDczNTFkMDgwMWY2NWUwM2NkYTgzNDAxZDFlMDMxMWExYjkifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:7aeb17ef969ae916777e4d4d9253bc22115e04808976732822cd2bd7601b2525",
+  "claims": [
+    {
+      "id": "claim_ea0c2d71b97c4e7e90d49181bc088ab3",
+      "statement": "Dot-operator chaining rewrites fn(arg1, ...) as arg1.fn(...), requires parentheses around numeric literals, and does not work for table functions.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/overview.md#L18-L66",
+          "version": "repo-lines-v1:sha256:5dc7161ccb25fa6187117d78322a6b1e47a9e9c75bf5dd2b0cad1aa3c64fe1a4:eyJzZWxlY3RlZExpbmVDb3VudCI6NDksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc4NzA3ODIxZTA5YjMyNjQxMTY3MzM5ZjgzMWRhMWY0MTdkZjZlYjAxMTgwNTgxOWZjYjIyYjRlY2ZhMDRiMGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg0ZjQ3ZDZhYjY2YTI5NDliNjc4ODk0ZDA2NDRjNzM2MzYzMDczMDNiOGY3MWMwZjZjOGNkZWRhYTMxZjJhOGIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzMzI2YzZhN2FiYzU5YWQxMTQ0NjIwMjEwN2ZmMzgyMzVkZjI3OWQ1YTA0MGRiN2U5YmNhZGFmZDg0NDIzM2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUxOTRhNjIyYWJlMmI0NGZkMDIzNDEzM2E5OTY5MzUxN2UyYjMzNmNhNTJlZGQyYmY5OWFjZjU0NDBhZjMwNzMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_81904c2c1f0041c890fb946745e60c56",
+      "statement": "duckdb_functions() lists built-in functions with their types, parameters and descriptions.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/overview.md#L69-L95",
+          "version": "repo-lines-v1:sha256:7df99621a9ab8196ded8ae033af3c144c98e9bb86646ccb0d38a1980a7114018:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkyMmE5NjY3NWYwNzZiMDRhNmY1MTU3YWU1OGU0YmM0ZmFlMDZiODgxODFmNjBiZDM1OGVhMDc4OWJhYzUwNjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZjN2EyNmFlMWY0MjkxNDkwYTAyYmY4Y2I4ZjI4MWI2OWIxMWI2NjdiMDg0ZTVhMDhhZDAxMDQxNjkxNzc5OTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI4NTQ5YTdmOTVmMjZlM2IzN2NhMmQ2MWNhMmQyMDRlYzU2NjQyNGNmOTg5MDNlMjc3ZTYyNmE3MDlhNjAzOTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_13fe472246444328bd4d9010dc8d62a7",
+      "statement": "With two integer operands / performs float division while // performs integer division.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/numeric.md#L40-L44",
+          "version": "repo-lines-v1:sha256:b1b56c13e36f988315e317b7577eed65e7cc86ab9ae10309457f1496de2f2fbe:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGU0NWIxYTI4N2ExNjg1ODZmM2VhZGM0NjM4ZTFhMmI2ZWNmYTFjMzJjNzQzZDk0ZDhmNGRhOTk1MzNjNWQyMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTE5MDg0NGJjYjgzMWUxMGY5YTMyYzUzOWE2OWZjZTM2NjNlMzJhMzI4NTY3ZThkODg0YmViMzhlZjAwMTJiNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNmVhNGNkZGUxZmE4MzcyYWNjNDY5Njk5ZmFhY2UwMjM1MjBhOTU2MTdkY2UyNzE4ZWExZDExZGI1NzExZDU1MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTkwMjFjYmZmZjgzNzhmZmE0ODg2NzVkMDFlZTNiZDZlZWI0NWQzZDhiNTc0ZDFiZWM1YjUyMWY1MzU3ZGVlMiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_5d5b5aa48c444c5e9ad8010d0f5d380b",
+      "statement": "Integer division, modulo and INTERVAL / 0 raise an Invalid Input Error on division by zero; TRY or error_on_division_by_zero = false return NULL.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/numeric.md#L46-L46",
+          "version": "repo-lines-v1:sha256:0b58f862c3f861d3f1eef0c1d9704882f73025078063c321d9fbd63a7fa93610:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMGI1OGY4NjJjM2Y4NjFkM2YxZWVmMGMxZDk3MDQ4ODJmNzMwMjUwNzgwNjNjMzIxZDlmYmQ2M2E3ZmE5MzYxMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMGI1OGY4NjJjM2Y4NjFkM2YxZWVmMGMxZDk3MDQ4ODJmNzMwMjUwNzgwNjNjMzIxZDlmYmQ2M2E3ZmE5MzYxMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODVjMTM4MWU2MmNlZDk2NWQ5NzRkNzA2MjVkZGYwYjVkMDg3NjczNzBiZTZkYjdkMWU5NGRlNzBmNWZiZWU4YyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMmY5Y2Y2OGYzMGZiZGZiNjJkNGRjNjE3MDdhODJlNmZmNTNhZWNhZjdkNTFjZWQzNGMzNGY0ZjNlZTdhOWM5MiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_db8bb3b681c8411a85bfb37e33d55ad0",
+      "statement": "In DuckDB 2.0 the factorial operator ! binds more tightly, so 2 * 3! returns 12 instead of 720.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/numeric.md#L319-L319",
+          "version": "repo-lines-v1:sha256:d11c82877440ab0f0c826d989012625f87bd04d945486505a389c30715e3be14:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDExYzgyODc3NDQwYWIwZjBjODI2ZDk4OTAxMjYyNWY4N2JkMDRkOTQ1NDg2NTA1YTM4OWMzMDcxNWUzYmUxNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDExYzgyODc3NDQwYWIwZjBjODI2ZDk4OTAxMjYyNWY4N2JkMDRkOTQ1NDg2NTA1YTM4OWMzMDcxNWUzYmUxNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNGY5NTBmNzg0Y2Q3OTUzOTQyMGUzNDVjMThiZWYyYTQ2MTJhNDIxYTQ1YWVhZjIwNjFiOWM1ZDA1YzVjZDY5NyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNWY1Y2M5NDZiMzI0YmY4ZWQ3MDI3NTBkOWM4MGI2ZTlmZDkzOGFjZThjNTdhMjAzMTExMjg4YjBmZTQ4ZTA4NiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c11b355cf85e454182a1136121004577",
+      "statement": "round rounds halves away from zero while round_even/roundbankers round half to even, and decimal_division was added in DuckDB 2.0.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/numeric.md#L108-L110",
+          "version": "repo-lines-v1:sha256:1b2c2ed1dbe1f5cff23c76151f17226bc28a5f9f1d9b603030e794f5a663722d:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2ViMjJjNmY4NDVlOWIyN2VjZDgwZWJmODljOWJjZTdmMDllM2ZkNTAxZGMzMjdhZGZhYjg4NTMwZDAzNTBjMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNGY5Zjk5ZDcxMGUwZDhkNzgwY2Y4ZTllNjk4NjQ3NzA2OTVlYjlkMzgyYzRmOTZmYzdmMTFiMjE1ZmUwZTQzNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZmY0YjYzNmYwZGQ1MTliZGMwYTFjNWRiZThmNWZmZmQxZjNhNjNjN2M2MmUzYmExYWVjYjFjMTI5M2Q4NjY5YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDJhMDU4YmIzYjE5Mjc5ODk1MWY5MmY3NGE0Njk3N2JlYTExYWM3MDRmMjkxMTZmNGQ3ZmNmZGFmYjYzOWNiYSJ9"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/functions/numeric.md#L277-L277",
+          "version": "repo-lines-v1:sha256:39f406de87419914ae74074835bb061b134f24ee86103612a4bd8dfe34b335d9:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzlmNDA2ZGU4NzQxOTkxNGFlNzQwNzQ4MzViYjA2MWIxMzRmMjRlZTg2MTAzNjEyYTRiZDhkZmUzNGIzMzVkOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzlmNDA2ZGU4NzQxOTkxNGFlNzQwNzQ4MzViYjA2MWIxMzRmMjRlZTg2MTAzNjEyYTRiZDhkZmUzNGIzMzVkOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzVlZjZkZWFkOWMzY2UyNTMxOGZmNzVhZGE3YzIyMGE4NWY2NjY1MjAzODkyNDA3ODVlZDBiZjg0MzViMzllYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMWM5Y2UzNGJmNDk1MzZkMzkzNDU1YzUwYzA3MmE5YjMxNjJjMGM5NTE4ZWUxYWYxOGRkZWMzNWM2NzE3NTRkZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_1fb88a1b526f43c0a3384947844a6008",
+      "statement": "getenv is only available in the command line client, and hash values may change across DuckDB versions.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/utility.md#L43-L45",
+          "version": "repo-lines-v1:sha256:f78b34a65040436ef4621f05885b0b42bab4980e87b7ee008ee94c67ed717d33:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDBkYjg1MmFkNDNjYTQwYWU3NGI4YzA0NjViNmY5MjE1YzI3ZTg5NDdlMmNmMmNlNjE5ZDliN2YzOGRiZGNlMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTU4MWUwZDdiMjAxNDY1NTU4NzllNDM1OGFhZDI0ZjlhOWQ0MzQyZGE0YjdjZjc4NmUwZDZkYjM3YmQ2ZDBmNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjE3M2JlNWU5YTVhMDRhMzJjNTBkZWYzMmU0NTIyZmFmMjhlNWI0YmFjNzMwZmM5Y2IwNTY4NGUxYWFmODY1NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2Y0OTEwZGNhY2MyNzc5ODg3ZWQ0YmE0OTM4YmE1YzIyYmYxMDFlNDQ3ZWZmNzA3YmE5OTk5ZTg4ODAyMzQ5ZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_3249c5e8de39470cbd40cc90dabba8b4",
+      "statement": "Utility table functions include glob, range, generate_series, repeat_row, query, query_table and sql_tokenize.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/utility.md#L522-L539",
+          "version": "repo-lines-v1:sha256:262795f8c1e5e6f0300c5958d62cdeba8981f4b7b814cecc48c6cb300d0db8ec:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZiMzE4ZDA5MzVjZjZhY2YxOTA1NTEzMjJjNzdkNzIxNTAzMmE2ZWMwNTY4NzNmNzI0ZjI1ZTJmM2EzZTg5Y2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3MzM4N2E4MTI2Y2QwYjI4Y2Y4ZGZjZmQwZTc5MDAyNWE4MWE5ZDJjNTdjNGJiN2FkYjFlMWUyM2NhOWNmZjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk2Y2Q5YTE1YTRiZWRiZmVjZjE5OTFiN2E4OGUwNzhkNjEyOGI4ZGUxNjEyNWRlNDM5ODUyYTcyNGNkZWYyYTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJmZDRmMjI4NzA2NGE5YmYxODQ5OWI5NWM2NjEwMmM3NzYyZDQ0ODA4NWFjNTE1MmQ1MjU1MWU1YjMyNzc2NzgifQ"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/functions/utility.md#L60-L62",
+          "version": "repo-lines-v1:sha256:d411c0a5cdd4d05815c5f7fa6e73ad28594f25798f64df6f2b014ecc46498c8b:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmZiZTg4N2RkNzA3MzIzYWY2ZTE0MGE3ZDZjOTk4ZmY3ZTk0YWZlZDdmZWQxNTBmYmQ3YTljZjJkYjUwNDEzZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWZkOWM4YmUwNGU1OGZiZGQ5NjAzNjQxOGIxMWJlYzY4NWUzMWIzNDU2YzU1ZDgzODZiZWRjOWI3MmYxNTJhYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTdmY2RjNjg3YWNjMDY1NmQzOGIwMzEwNTNhNWJiNzJkMTc2NDNlZjU0MWYzMmYzMmE3ODNmYTE3ZDk4NjQ0MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTkzODZkNjE2MmExYTI2ZDFkZGFjYzg1YmY4YjRmZWZhZjkwZDBiYjA4MTBkMjQwODNiZTg0NDY4YWQzMDg1YiJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

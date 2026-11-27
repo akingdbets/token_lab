@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:5d570e9f57eee4a1835538278077b11db566cc545d2007b2692d96ca0866592c",
+  "claims": [
+    {
+      "id": "claim_b2735db963064ab682a770a5bf8549b9",
+      "statement": "Building a relation runs nothing; the query runs when an output method reads it and again on every read, while non-reading statements passed to sql() run at the call.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/relational_api.md#L16-L65",
+          "version": "repo-lines-v1:sha256:388f3dd6f0f117507eee0841e0f5a453673f09d6b5dc3a2026fdad5094890a2d:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0N2U2OWFmMzc3ODI0MWM2MTBiNzcxN2I2NTgwYTBlZmY5ZDU4NTFiYmExMWU4MTcwOThkOWRhNDI5OWIwMzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc4YTkxNDJkN2VkMTgxMWZlYmJlOGQ5Y2FiMjNmNmFlNTRjNDhmMjg3NjEyYjE4NGUzOTgwODM2ZDM2MWM3ZTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRhZWM5OTgzYzUwODNiY2RiMmRlMjY1OGQ2NDM1ZWMzNjFlZTQ4NjhmYzdhZTgwMjU1MmVkM2U0MjA1MDM2ZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRhMmQ4ZjBlMmNiMGMyMmUzOWNiOTFhYTZlMDA5MmYyMDNiNzJhYzg4NjNlNjZlZjNiMzI3MDgyMzJmNTUyZGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7a561362a27c4074b757864094b21397",
+      "statement": "materialize() runs the relation once and returns a relation over rows held in client memory that does not see later changes, replacing the removed execute().",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/relational_api.md#L6132-L6145",
+          "version": "repo-lines-v1:sha256:c660482419cd11b4cb44a9fff861874075f4349684dc957eb792c222d48fca25:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM3YTEwMTcwOTQ5ZjkxN2ZmYTI2MmVlMTVlZmYyY2ZlNTA0OTczMGE2ZjQ3NDQyZTAwNjk3YzJjODljM2VkNTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM2ZWNiNjM3ZmZlZDFlMTU5MWU1ZTgyNjc2MGYyYzhhMjBkNjA0MDY2MzllZTg3MWRhZjMyOTE4NGQyNTAxNzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVmZmY0OGIwOWJiZDRkNWQxNjc1ODllYjRlN2I3YjAxOTFkNTY3NjE2MmZhODg3MGEwNmM0Nzg4MTg2NzdhY2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjExNTYyNTUwZTdmMmVhOGYwZmJmN2FiYzQ3MzBjOWI3MWY5MmE5NzE2YzJmMDgzMjUyNmM2MDU4MGM0NTQ0NjAifQ"
+        },
+        {
+          "resource": "repo://docs/2.0/clients/python/relational_api.md#L66-L86",
+          "version": "repo-lines-v1:sha256:83ad7bbed338450ae3be23cefe4c1ddde75e67f4f4b36bc62332fa54d096fb21:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhY2MxMjdkODFkMjQzMTFiNTk2MzE1NTVjY2U3MmI0YTMzYzhlMzliNTc5OWU1NTI1ZDA5M2Q1NTcwZDA2MWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU2ZmIxYWQxNjFkZTMxMzJkYTU0NmIwYWU4N2U0MTg0MDY5MTA0NzFmNWExY2ViMDQ1YWIyZTRlOTMzYzU1OWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVkOTdhMzRhNjA5YjRhNTA4YjA0ZGQzNzc4NTAzNDYzMmY1MWI3MjVmNjg4MGU5MjM5ZmZkMDI5NGJjNTI4MzYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c99c3425a4d94071adfb6218446bf929",
+      "statement": "Relation join supports inner, left, right, outer, full, semi, anti, cross, positional, natural and asof; conditioned join types raise InvalidInputException without a condition.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/relational_api.md#L1975-L2005",
+          "version": "repo-lines-v1:sha256:3fcd43c04c001ee2049e505598803825c2f2a4147d68ef8dbf5c05964c81850d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQzMTc4MTBmYTNhMDQyYzVlNjI5ZmM2ODA3YmI1NzZhMWI1ZDY4ZDVmNzQ1ZDY1YjIyZTc4OGQ3MWJhYzBjODYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM2ZWNiNjM3ZmZlZDFlMTU5MWU1ZTgyNjc2MGYyYzhhMjBkNjA0MDY2MzllZTg3MWRhZjMyOTE4NGQyNTAxNzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVmZmY0OGIwOWJiZDRkNWQxNjc1ODllYjRlN2I3YjAxOTFkNTY3NjE2MmZhODg3MGEwNmM0Nzg4MTg2NzdhY2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjExNTYyNTUwZTdmMmVhOGYwZmJmN2FiYzQ3MzBjOWI3MWY5MmE5NzE2YzJmMDgzMjUyNmM2MDU4MGM0NTQ0NjAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1d2925e66dd7452b9dbd57b936e92b92",
+      "statement": "aggregate() with an empty or None group_expr groups by every non-aggregate column (GROUP BY ALL).",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/relational_api.md#L1434-L1450",
+          "version": "repo-lines-v1:sha256:460683de6b8663e3031658e377f724aa1adc3fe282fe33fa54e2c4326477e405:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUxNGE0YzBiMTA1NTVhZWY1YTg4ZGI0ZTQyZGY1M2MyZThkMDE1MTNiMmU5YTc4MDUxOWNiNTJhMmFiZjExODciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQzNzM2MTcyNTVhZmFjZDY5Njg4YTdjZjRjYjk3YWZmYTE4Mjg5OTUwYjY1NTNlZjYxMDE0NzFlNGIxYWMzYTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk5M2ZhNjk1NTRmZWQ3MTBlYzBlZjNjNmY0ZjQyOTE4ODljOWNlOTRkMzM2MDkxOTcyMWFmZDdiMGNhNTQwODkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_78491bcfb4c442fc97f67abe24928956",
+      "statement": "iter_rows defaults to a batch size of 1024 and reads all batches from a single run of the relation.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/relational_api.md#L6078-L6095",
+          "version": "repo-lines-v1:sha256:75ffa0ea611ddc7656aeb347b8d28ea0a642fe239193d0c2d1418ecae93264e1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgyYTkxYjgwYjNlYjUxZTJmOTg1YmUwYTBhNzI3ZGYwYTE1Nzc3NTBkNGRhOWQ4NWJjNDcyMWQ4YjI5ZWI3NTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVmZmY0OGIwOWJiZDRkNWQxNjc1ODllYjRlN2I3YjAxOTFkNTY3NjE2MmZhODg3MGEwNmM0Nzg4MTg2NzdhY2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk5M2ZhNjk1NTRmZWQ3MTBlYzBlZjNjNmY0ZjQyOTE4ODljOWNlOTRkMzM2MDkxOTcyMWFmZDdiMGNhNTQwODkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_14471e455d75499a972351bbfef46b9f",
+      "statement": "write_csv and write_parquet map their options to COPY ... TO; overwrite=False raises IOException for an existing file.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/relational_api.md#L6449-L6490",
+          "version": "repo-lines-v1:sha256:b0e26e581c777d1b4f45ec4d04f564117d53de54b81b1035322f2ec63ff4f50a:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVjMWYyOTNlZjEwNzQ2Njc1YTVmMjI1OWUzYjJhMzU0ZjczN2FiOTBiY2ZlOGI1N2Q0YjgxYTRmZDUwM2QyMDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzNTIzNWU5NTg2ODFlMDFmOTJjYmUzYjJiOTVkMmFmMDA4ZDk0ZjMyNGI5OTExNzJmMDdjMGU1Mzk2OTY0NDEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVmZmY0OGIwOWJiZDRkNWQxNjc1ODllYjRlN2I3YjAxOTFkNTY3NjE2MmZhODg3MGEwNmM0Nzg4MTg2NzdhY2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVlOTNiNDI3Y2Q3ODE0NjJjYjlhNDg5NWFiN2U1ZDE4MTYwODEyMTY4MWVhYjU5YjEzY2FiYjg2NDdkODg4NzAifQ"
+        },
+        {
+          "resource": "repo://docs/2.0/clients/python/relational_api.md#L6536-L6560",
+          "version": "repo-lines-v1:sha256:c4b5aa051f7144ef278aff53f6d80ec98284f043c207f1cfff1f5907a503a362:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIzOWZmZDJhZjNhZjllZjc4YzdhNjEzMTZiNjM4N2ZmMmM5MGVhZWYyYzVkYTNhYjYwN2Q4ZGJmZWJlMjdjYTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVmZmY0OGIwOWJiZDRkNWQxNjc1ODllYjRlN2I3YjAxOTFkNTY3NjE2MmZhODg3MGEwNmM0Nzg4MTg2NzdhY2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU4OGQwNjA4ZWFjNWQ3MGZmN2NjMWNhY2QzNDc3ZGI1NjdhZWYxNDljZGRiNzk5ZDViNGQ1ZGY2OTFjNDdiZmEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_57b950f0c85748f1924c595fa9cf6f6b",
+      "statement": "write_parquet defaults to snappy compression and a row_group_size of 122880 rows.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/relational_api.md#L6536-L6560",
+          "version": "repo-lines-v1:sha256:c4b5aa051f7144ef278aff53f6d80ec98284f043c207f1cfff1f5907a503a362:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIzOWZmZDJhZjNhZjllZjc4YzdhNjEzMTZiNjM4N2ZmMmM5MGVhZWYyYzVkYTNhYjYwN2Q4ZGJmZWJlMjdjYTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVmZmY0OGIwOWJiZDRkNWQxNjc1ODllYjRlN2I3YjAxOTFkNTY3NjE2MmZhODg3MGEwNmM0Nzg4MTg2NzdhY2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU4OGQwNjA4ZWFjNWQ3MGZmN2NjMWNhY2QzNDc3ZGI1NjdhZWYxNDljZGRiNzk5ZDViNGQ1ZGY2OTFjNDdiZmEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b90906119ab4404997d3a15c42229235",
+      "statement": "Relational operators can be chained lazily on pandas DataFrames via from_df and executed by requesting df().",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/python/relational_api_pandas.md#L13-L35",
+          "version": "repo-lines-v1:sha256:093362a8293b8ed217f68060e18467061d6a09d2633d11962973dc076bce2b46:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkZjE4MWE2NzE3YWI1NzZiNjk5NGI1OTMwZDM3YmNmOGZiZmZmNDA5NWY3NzMxMjg4MTA1ZjFjMDdlN2MxZDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZiMWI0NjFkM2ZhMzY1MTExMDdmNDZkYWQ5NDhhZjdiY2EwNjM4NzVhZWZkNWZjNzEzMzRhMDg2N2E5MjVjOTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ4ZjUwOWFkZGYyY2FiZWZjYmU4NzJhYzU1Y2Q2YTA1NTE2Mjc2YTUwMTcxYzNiNTNiYWQ5ODVmMmI2OTVlMzMifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:998a4a965902aec9576ee020fcfe7335bc555087425ede325593163f4d7ce4bb",
+  "claims": [
+    {
+      "id": "claim_d84993b86a7248068c4c274a2ac3a65e",
+      "statement": "DuckDB's native format has HyperLogLog statistics that Parquet lacks, so join-heavy or repeated workloads benefit from loading Parquet into DuckDB; TPC-H SF30 ran 1.1-4.1x slower on Parquet.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/performance/file_formats.md#L19-L39",
+          "version": "repo-lines-v1:sha256:7fc7103bdc7d57381c00ef9e851beee54f1ae1edf533e7bbffcf992b0bdbf410:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5ZTJlMjZlZGUyYTRhZmZkYjhlOTZjNWIxNjRjMTBiOGYxNzdlMDAzYzE5ZDFmOGNhYTg3Nzk4OTg3MzU4ZDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxOGU5NTg3NTc0ZjVlYjMwODhhMmZlMTI0M2Y3Y2U1ODIzOWJiOTE5N2Q4OGFlYjE1NmJhN2RmYWQ0NTBhNDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ4NmM3Y2UxYjg3YjkxMWI2OTBmZmQ1MDg5NGZkZDQ5M2ViNDA5YmM3ZmY3ZWMzZDEwOTVhZjMxZGIzMTZjZTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA5Y2QyN2YwY2U1N2EwMGM1NzY0ODI3NzMyZWI0OGY0NjhhY2VkYzQzNDlkZGQyOGNhYzlhZThmMzgyOTQyYmIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0bde2b16fa89435bbe9759df1628d5cc",
+      "statement": "DuckDB parallelizes over Parquet row groups and works best with 100K-1M rows per row group; 2,048-row groups were about 3.7x slower.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/performance/file_formats.md#L41-L65",
+          "version": "repo-lines-v1:sha256:2d9f0e74146147bf9762cb7fae4ba946bd9df9acd4b3fc8d14082492447ef6a9:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE2OTEyNzc3YWJlMDcwYzU5OTY0ODRlNzA0ODBlOWYyYjUyOWM4ZDdkN2EwN2QzN2UxZmM2MDhjMDFjMjM1MTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjYmQ0MDNkOGEyZjU1MGVmNjI4ZjBhMzYxZmZlMTg0MTIyOGI2MmYwNmNmZjk5MGQ5OWY2YzUzODYzOTcyMGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjViNGU5YTE1NTliZmU4MzEwYzFmZDk1ZGJmYTU3MmFjMWMxNjI2OWEzYmEzYThjNTNmM2E5ZDViY2NlNzVlNjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAzOThmOTlhYWE0MTZlZmI5MjFkNWIyYjY1OTFmZjhmZmY4ZDg4NzE0NTg3ODk5MjY5NjA2YzUxMWY4YTI0YmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ed1ae7f3cf574f0cbea5349997106ba7",
+      "statement": "The docs recommend at least as many total row groups as CPU threads and individual Parquet files between 100 MB and 10 GB.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/performance/file_formats.md#L67-L71",
+          "version": "repo-lines-v1:sha256:a20b706edef5a872421c0decc64f9dda9162f302f059de81089da335a5b0ec53:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiY2QwNGZiMmYyZTFlZjNhMzc5NTZlMmU2N2NiNjZlZjU0MmI1NmMwMDY5NGM2ZDM1MTE4YjYwMDkyYzJmYzM4ZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjhmN2NjNjNmNjYxZmNhNWQzMmVhY2RjNmZmY2VlNDBlZmE2NzUwNjcyNjk5NjYzOWFiODBiYzIwOTk1YjQ1NyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZmU2YTFkOWM1OWE3OWY0ZGE5ZmIzZDQ2NjgxMmFhNzY2MjhmYmRjYmZlNTUzOWNiZTE0YmRhZDJmZDcyYzNhZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMWRkNjhkMjg2NTdhNWU3YTY0ZTEyZTVhZTIzZTA1NzIxNTQ3NWVmOWFjZjg3ODU4YWVjMjQzNzk5ODE0NGU0ZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_b667bef4eeeb403983f6eccf8d3367e7",
+      "statement": "Loading gzip-compressed CSV directly is typically faster than decompressing first, and disabling the sniffer speeds up loading many small CSV files.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/performance/file_formats.md#L81-L109",
+          "version": "repo-lines-v1:sha256:eea8031959b8f7788928b1186b6d378d433b509dfb0acf2f84b2bcc781e998be:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVkZjEzNWRjZGM0MzhhYjk3NDNiYzEzMzBjYzU2NDMxY2NmY2M5MGIxYzBkYWY4NDJkMDhlMzAyN2ZjNGRjOTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBkNmY0ODc0OTc4MzJlZGFkZDQ2NTFkZTUxZDQwMTA5MDYzNmZiMDIyYjZiODdkNmM2YmRkYWIyNGQ1MTNlZDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU0ZjVhYmQwNjJlNjEyM2IzMmI4Mzk3NDQwMzIxYmJiZTMzMGRjNDRlOWYzOTIwYjQ5NTc0ZDUwNzA0ZjVhNmIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4243a1421a4245758f32f168df268705",
+      "statement": "Recommended import order is scanner extensions, then bulk export to Parquet/CSV, then the Appender; row-by-row inserts should be avoided beyond about 100k rows.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/performance/import.md#L14-L28",
+          "version": "repo-lines-v1:sha256:f9f265c4209690f38763e56480ee4ca793e939bde4696f3997883459c6829d95:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE3NTgxYjc5ZWE5ZWNjNDE1NTMzNjk0ZWU1NDY4NjU0MGUyZDJmNmM4OTJhMzllYzlhMjNlMzNkZjkyNDYzZjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmOTk2MGQxZjMyNGNjNDliZDgyYTRhZjBjM2Y3ZDg0NTY4ZGE3ODM4ZjZjZTc5ZmMyOGExNTlhNGNkMmRjMGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM0Nzc3YWM3MzVjMmFjMmIyNTRkNjc5N2FiMGFhOWRmYjZjNTVlYThmNWIwMWVlZDE1ZjBmYzZjYzA2YzUyMTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0633f8ced72b4afab5080080a0f0e737",
+      "statement": "To avoid out-of-memory errors, reduce threads, set memory_limit to 50-60% if the OS kills DuckDB, and set preserve_insertion_order = false; indexes are not buffer-managed.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/performance/oom.md#L13-L33",
+          "version": "repo-lines-v1:sha256:b1d6906e97d7b41286905fdb6179415e3efccdc8ad9ee2b4622005eefa24468c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzNmNkMWNjMTUzOTJiNjVhOGM2ZTY4YTFlZmQwZDQxYmM2YThmZmRjYjVhYzMzNjdiYWE1YTg3NmMyNGM3NWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBkZDA0NTVkODc1ZWU4MzkwM2Y5Zjc5NjliNTU5ZjA5MmQ0NjViM2QyNTIxYzE2MWNjZjgwOWU0YzNjZjQwYjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM0Nzc3YWM3MzVjMmFjMmIyNTRkNjc5N2FiMGFhOWRmYjZjNTVlYThmNWIwMWVlZDE1ZjBmYzZjYzA2YzUyMTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_dea59320e10343b98361b322ecf62b06",
+      "statement": "Huge databases are limited by object storage file sizes such as 5 TB on S3, checkpointing can be slow, and XFS performs best on Linux; DuckLake is suggested for large data.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/performance/working_with_huge_databases.md#L12-L24",
+          "version": "repo-lines-v1:sha256:d1b663ee845bfd7d212107e4b0d037241bad049a2fec5eaff8208087078b5b18:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMyYjc1MDQyYzIyMWZjY2UyODg0ZDA5NTJhYTFmOWE3Mjc0ZmZkOWM4ODM1NDk4MzQ0ZTVkYzU5ZDA1MzM2ZTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3NTQ3ODM2ZmNiMGNkZjgxZDAyMDhhYjNiZjVkYzk2NzI5OTVkNTUxOTkyZTU3ZWFhNWE4ZjAwNDVhMzMxMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM0Nzc3YWM3MzVjMmFjMmIyNTRkNjc5N2FiMGFhOWRmYjZjNTVlYThmNWIwMWVlZDE1ZjBmYzZjYzA2YzUyMTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

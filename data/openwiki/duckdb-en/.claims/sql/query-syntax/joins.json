@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:1cd1ea4d7123c1d5db4dfcdf3644fd7a5ce0b0e44a24a2887dd75916b0eb3450",
+  "claims": [
+    {
+      "id": "claim_5cde61a9f17348e39f0c3bd18453212e",
+      "statement": "All table functions support a WITH ORDINALITY suffix that adds an ordinality column numbered from 1.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/from.md#L128-L156",
+          "version": "repo-lines-v1:sha256:449aa36ed72a71b89e15fea5603816f98bc0f17f26c9cfd502b9be143d990d5e:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiZDVmNzIxMGZkMTQ0M2RhYmNjZmNmMDA1OTdkY2FlZGViNTgzMWM1MmY1MGI4N2Y4MzgyNzZmOWExYzRiM2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEyNmUwOTRjZWM4MjRiYWRjNGM2NGQxMzlkNzM1ZWIwMDk4MWQwMzA5ZjhhZWNiMjI1MzZhZDFlNjM0MzcwNzUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQxZWI2ODVlZTVkYjZlMmQ1NjM0ODY4ZjI1NWYzYzg0MDU5NGIxZTBjYzgwMDQ4ZDlmMWVhM2I2NmE0YzM3ZTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQwNTRiNjQ1ZWJkNTU4YjY0YzQ1NzQ4YzZkYTAxZjY5ODQ0ZjQ2NmUyNzNjYjUyMzRjM2VhMzdlNDFjMzg0MmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2d069f145a2e4470bdfc6d9ca4e70fad",
+      "statement": "Semi joins behave like IN and anti joins like NOT IN except that anti joins ignore NULL values from the right table; neither returns more rows than the left side.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/from.md#L315-L368",
+          "version": "repo-lines-v1:sha256:df80bb34973280fd649a566e461029c6b91eca9c98beb351ac3ff8355af13642:eyJzZWxlY3RlZExpbmVDb3VudCI6NTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmY2QwMjQ2ZDAxMWU0ODRjOTEwNzJiZTYxOTg5MTU3ODM2YmVkZTY1MDlkMjU2ZDI5MjU2ZjUzYzNjNDQxZjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRmYWVlMmY3YTUwOTdmMTczNzM2ZDJhNjQxNjA0YzljN2Q2YmQzYzYzOGJiYWVhZWNmMjA1ZTZiOTY0M2U5M2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ4ODk5OWQ3MjA3MWY5YWMyMjQ2ZTQwOTY4MzJjOWI2MzM2MTBkMjkwZTc1YjA1N2RkZjc0ZWY4NmVhMGE2OTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNjZTA5ZDZjMWVjODJhZjZlMzljMzI2NzUwZWNkNzE0ZWRkODQxYWYyNWQxMTM5NjgyZjUzNTE0OTljNDM3MjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8d8445a72c244cc9be5758014aa43751",
+      "statement": "LATERAL lets FROM subqueries refer to earlier items, and DuckDB detects lateral joins automatically making the keyword optional.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/from.md#L371-L429",
+          "version": "repo-lines-v1:sha256:9a11d8c37357ec8f8c5407b5318ea128ee10664b06740f4bfea21945724327af:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmODBkNmUyMmE5ZWVkZmUzZWZlNDU1YzdiYTU5NzYxMzc3ZTI0NGYyZTJkN2EzYjcyNGM4ODNmZTQ1ZWU0ODgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIyMmI5YTAwODI2ZWQ0ZThmMTdiOGU1MjBmMmNmMjU5MmJiNDY1YWM1NmIxZTlkMzJjZDA1MGEzOGM0NDUwMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY2ZDVkYjI5NzhiZTExODI2MWQ1ZGM3YWEzOTZhNDEyNTJmMmNiMGVkNmM2YTIzNGRiZmIyMTc1YmQ1ZWNlYzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE4MGIyNmE3YjhlNTE5Y2Q2NjA2ZGM0ZTQzNDYyZmZmOWY0NmU4M2Y0MGU4YTMxOGNiOTAzZDE1ZWVmN2VjYmYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9c4346aad660454c980f1840a0eb0f46",
+      "statement": "Positional joins pair rows by physical order and are always full outer joins.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/from.md#L431-L469",
+          "version": "repo-lines-v1:sha256:64826b09727fbe53a5dcc193be3709b510edc608b8182d7d326d3c23f0b837ed:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM1NjIzNmUzNDBhYjRjNzE2MmI5MzVmYWI0ZGQ2YmY0OThkY2ZlYTVjNGEzMjc4ODM2Nzc2ZmM1N2MwM2Y2NGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhiODBhMGZjMjJhM2RkNGRhNzcyMDQ5NmY4NjQ1M2Y1MGQ5NjFhYmQ4ODZiZDVjNzgzNjNlOTZjNGY1MjE3ZTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg4YjcxZmRhYzk4MTZjOGM1ODVlOTFlNjYxN2NkMWZiYzIxZTI5ZGJiMmUwOGU4YTBkODk5Y2ExNGEwYjNlMWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU1ZWEyMmFlMzNmMTgwNTYxNjhkZTVmMGRkNDU0Y2FkYWI4ZDQ5N2ZjYjE5OGNhMjM1YmE1YjJiNWRmYWQzN2MifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c2c0234f9cf642df8abdfefeac3671cd",
+      "statement": "ASOF joins require at least one inequality condition, other conditions must be equalities, and each left row matches at most one right row; with USING the last column is the >= inequality.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/sql_features/asof_join.md#L124-L170",
+          "version": "repo-lines-v1:sha256:a84b2fb3803c5e42c55540ab663874869067e9c8cd16288821b7a01b6bcfa29b:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVkOWUzMTVlMTVlM2VlODY1NDkyMjg3NDc0OTY3YWJiZWYyNmJjMzRiYzFlYTBmZGJlZTgzZmZhYjM0Njk3YmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYwNzA3NDg1ZTg1ZDAwODM2YjExNDc4ZmY5OWNiZGJhMTRmNmYxYWIwZjg1OTFhOWU0ZDY1N2UyNmMyMDgxNzMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQwNGFiNzBiZDRjMGUwMjFmMTJmNWEwYWU2NTc5NWVlMjFkZDA4NzliNWUzYTZhNDI2ZDc5MmMyOGI3MWYxYjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImExNDExYzc0YjRjNTA4NGE4N2U4MjZiMmZjMGQ5NGRjNDZkOThjNjdlYmNkNjY4NzBlN2IzZTkxMzg5NTYxMzEifQ"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/from.md#L471-L526",
+          "version": "repo-lines-v1:sha256:a51172a045a6e5c7c002247acf90ee830389a5b75844c9f59f381c501061061c:eyJzZWxlY3RlZExpbmVDb3VudCI6NTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNlZTczNDdlNDhiMGRlMzdhN2UxZDY4ZGFhY2MzYmRmYjU4NzQxNjI2OWZhY2JkNWI5NWRhNGYwMmNjMTRhZjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5ZDQyZTUzODE0YTI3YTQzZDY0M2UxZmRiZTJkYmU2NDQwYWRmZTM4NzRhNzgxMGI1MTRiZWMzYmU0ZmEyZTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ0ZGU5NmQzYWQ4YjU4YjlkYmNhYTU0N2JmN2Q0NWQ2MTdmYzhhZTgzZTk4MWE5YmUzZTk5NWVmMTUxZDlkMmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg2MmFkOWJkNmI0OGY0MGU1YTAwYThkNjAwNTQxZDZiMzRhMTU2ZGE2ZjFlYzVmMDliNWFkNGVlOTk2MWUyN2IifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3124214787bf41508c694951cca8c3df",
+      "statement": "An inner ASOF join drops left rows without a match, while ASOF LEFT JOIN keeps them with NULLs.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/guides/sql_features/asof_join.md#L68-L110",
+          "version": "repo-lines-v1:sha256:ecd1754acb74d57b88b13ad0e285c3d902e4fefd33234dc752de43ab58fa4b30:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5NjBhZGQwNWM4ZWVjNmUxNzQ4MDM1NWEyMzRjYWJjZDUxZDk2ZDBiY2QxODdkNDE5ZmEwMzAwNjk0Y2ZjMTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0YjMyN2UzZjFlY2U4NDEzZjE3OTZmOTRkNzU2OWY0YTcxYjExNWFhYzczNWNjZTQwZTVjYzk1N2NlNzg3YzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFjNjg0OGJiZDAzMGUxZTgxMmYyNjNhZTdlNWIyZGUzNGQxZjI1OTljZThhMGJiMGJjOTM1YWFhMzA2NmU3ZjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJlZDA5MjM5MTk4MDhhODk2MGJiNjc1Y2IwZGU1ZDUyMjJiZjI0NmIxMzI1NjhmOWUwMGNkYmUyMTdlY2UzOGEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7212a5aa612e48648a226094c8027b08",
+      "statement": "NEAREST joins, introduced in DuckDB 2.0, match each left row with the top-k right rows by SIMILARITY or DISTANCE, optionally APPROX.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/from.md#L529-L550",
+          "version": "repo-lines-v1:sha256:5bc66b97b6a1e328c37272fde2e408e6b56e63cf5d5cd2a2a0ac17f0376715bb:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI0YzcxN2Q2ZmY5OTI4NmFhYzQzOTJjMGQ4NzAxZmMyZjllN2E0ZjBlMjRiN2VmYWNkNDRiMGRkZjFkNzE1N2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVkYzFlZGQ1MmNiMjg2YmM4OGQwYmFmZTYxMzU2YTY0OTY1M2NhOGJkYjM1MWYyNDA5MTAzMTJhYTVkYjAxNjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAwMTA2M2NlYWFmMmUyZWM4Mzg5YmVmMmU3NjVmZWU1MDQzNmNiYmM3Y2Y0MTQyMzM0N2JlNGJjZmFiNjhmMTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZlMDhmYWYwYzIwYmEzMTk5NDg1ZWZhYjg4MjhhZTVmYTE2NjhiOTk4OTBjMGFkMzVlNjc1NTk3NWUxODkyNDQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_61d4af2eaf8a4688b422c5298c52a541",
+      "statement": "Self-joins require table aliases, otherwise a Binder Error about an ambiguous reference is raised.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/from.md#L553-L571",
+          "version": "repo-lines-v1:sha256:fdd235e4b07d018e849b3f6cf67850855b8be0d819330b211c6091fe83d3c570:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRiMGViYzhlNWE3ODljYjA3ZTEzM2UxMjQ4OWIzNzg1NDk1YjIwZTQxY2FlYzVhNjI3MzBjOWY4ZGQwMDMzNTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ0ZjQ5NzgxMDJiOTcxYTZkZDBkOWYxNjU0Y2I5MmNkYjI1Y2FmZmU1MDFhNWI2MDE3NzI1ZDI4ZGZiYTY1OTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIyYzY1YmM2MmJhZjg3M2MwOWI3NjZkMDE0ZDdmMGY1M2UzYzEzOTI4OGFhMzQxZWIyNGU4YjExOWRiNGMwNTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVkZDk0MzljZmVlMjRkYWE3ZDM3NjlhN2IxOGI1YWZhMWE4Nzg4OWE0ZWIzN2ExN2ZiMDliNTRlYTA0Mjk0NDkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_20838c0425424332a20448110f5031f9",
+      "statement": "JOIN BY (TYPE ...) syntax, introduced in DuckDB 2.0, selects join types explicitly including right_semi, right_anti, mark and single.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/from.md#L601-L639",
+          "version": "repo-lines-v1:sha256:f88767055826f72f63b3ac53ce826076c6a653ee0f8e595e0a86369fb67fe12d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiZGIzMjRjZGYxYThkYWI5MmNkMjM2OTVkNTIzZGI2MTQ0YzZjNjU1ZGQ3Y2RjYTdkYjhiYjA1NzI0YjllOTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMyNjc3ZjY4ZGMxNDE4MTVmZmE2NGM5N2RlMjU0Njg4YjhjOWRmODkzZTVmMTdiM2IxN2MxNDBiOTA0MjA0YTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc2NTM3OTgyMTM2YzNjYTczZWI2NzA4ZGZhNjNjMWM1NmJmYTlmYTA5MzllOWJlYTdmOTA5NGFiZjNkNTI5NGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYwZmJhMTAwODA0MDRiZWJjNDY5ZjQwMTlhMmFjNTQyMjAzZmM4Nzc0ZmEyMDVkNzM2YjcwNzA5YzM2YmJhNWIifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

@@ -1,0 +1,4 @@
+# Files
+
+- [The JSON Type and JSON Functions](json-type-and-functions.md) - DuckDB's JSON logical type and its casting rules, extraction with json_extract / -> and json_extract_string / ->> (JSONPath and JSON Pointer, 0-based), scalar, patching, mutation (new in 2.0), aggregate and table functions (json_each, json_tree), transforming JSON to STRUCT/LIST with json_transform, creating JSON with to_json/json_object, SQL-to-JSON serialization, and equality caveats.
+- [Loading and Writing JSON Files](loading-and-writing-json.md) - Read JSON files with read_json / read_ndjson (auto-detected format and schema) or as raw objects with read_json_objects, the format (auto, newline_delimited, array, unstructured) and records settings, all reader parameters with defaults, COPY ... FROM/TO with FORMAT json and ARRAY, and GeoJSON reading/writing (new in 2.0).

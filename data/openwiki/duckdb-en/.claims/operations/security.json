@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:9ae295480c3fdfc66a1ff57223fe3fbfcbc64aea0a80a49ec4c2de62de2b7d31",
+  "claims": [
+    {
+      "id": "claim_2d9406a03a494436a8dccee6a9da91f7",
+      "statement": "DuckDB executes SQL with the full privileges of its user, so untrusted SQL must be sandboxed; security settings are defense-in-depth rather than a substitute.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/operations_manual/securing_duckdb/overview.md#L19-L39",
+          "version": "repo-lines-v1:sha256:b26720e97f35a0d70c38a1012dad76d43d87f22a628ef03bd50c7c765e2d9557:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRiYTg2OGI0MjM0ODU1YTgxNmQxOWIyNGQ1Y2MwM2U5NWUxODdlOGFmNmY0ZDU0OTZmMGZiMTg1YzZiYzk1MmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0M2U4ODcyYjk1Y2E5MjE0YzA2OTk4MTdmNDRlNWZmNTFjZTAzMGQ3ZTYxYTM2ZGZjMzg0OWM5YWFhYTAzNjQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI2ZWIyZGQxYTQ2M2VhYTkyNTVkMDRjYjYwNDQzZjI1NDAzNjA1OTZhMWQzMWFhZGZkODdkZDdkY2RhNGMwOWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk1YzgyMDFiNzUwYThjMTgzMzc2Zjg1OGI4MzJkNDg1YzVlNDhlMGMwZDc3ZTNjNDE0ODRmMDhjMDU2MDExYzQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_be501fa933214c6b8f8b92e6c5a75c23",
+      "statement": "enable_external_access = false prevents ATTACH of database files, COPY file access, and external reads by read_csv, read_parquet and read_json.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/operations_manual/securing_duckdb/overview.md#L138-L148",
+          "version": "repo-lines-v1:sha256:364412641332a5d3867dc9607bae7e003a3b6952ab0142288cffc4292226bfad:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc4NzQyNjg1MjEzOWFiMWFlOGEyZGQyNWEzZjJhYmZkNTQ0NTI1YTMwMGM4NzlkNWY4M2JiODMyZTk2YWFmNjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlkZmU4YTM3MDk5ZmMxMDIwMzNhYTI4NzM0ZTgxMDUwNGRkYzhlMzVjYjViN2ZmY2E2ODU3Mjk0MjliOTk4NWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY5NjI3Y2VjNmFiNTEwODZmNjU1MGNiMGZkODNmNmU0MTUyZTgyZDFlNWU5NDY5ZmNlZDI1NDkyOGI0YjFlM2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc0MTNkODJhMmVkOGU3ZWNkMjIyNzc1MjBkYzQ0MjVhODA1YmYzOTdjMjZkZWQyYTk2ZGRjMGMzYzY1MTViOTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_952d96f3f5ea493da1337e15f304be04",
+      "statement": "allowed_directories and allowed_paths permit both reading and writing, and cannot be changed once enable_external_access is false.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/operations_manual/securing_duckdb/overview.md#L150-L190",
+          "version": "repo-lines-v1:sha256:92e1157a6f5b65c9b3bc3e6bc35bbb1c62145ca3949d7fb32b6971694b525fe1:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcwNDQzMWRiNTQzZWU2NDJkYWVmMzZhOGU0ZGM4NWM1ODdmNGYyNDQyYTdiMGE2YzAyODgyMWY0YjhmNjQzNWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU1MGEzZTc1MmMwNzJhMmE0NDgxZTJiZDRkYzM1OTMyNmRjOTI0N2UyMDM3ODU2ZGExNjA5ZmY3ZmQ2NjJiMDMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA3ODg0NmNmYTQxZDAyNzc5ODlmMjRmZDEyYTUwZDRkYzI1MmNiYjQwZmZmNGVhMmIzZGVkZTI2NGUyZTVjM2QifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9f1dac2e7c9c45ffafe71a2c714f9644",
+      "statement": "disabled_filesystems can only be set with SET on a running database and cannot be undone until restart.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/operations_manual/securing_duckdb/overview.md#L128-L136",
+          "version": "repo-lines-v1:sha256:60f6205ee7f5ff3521a589551bca80fd1d1cee71187ce0d5198341cde2352279:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTgzNGViNDBiYzNmNDhjMjA3MDM4NTUwNzE1NDdiNjZjYTM0YTVlMjkwNzdjZDc1ODNlNmNiYzcxNDVhYTg0MSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDhjMzMzYmM0YzNlYjA3MDI4ODMyNGU2NGU0ZjMxNjIxYjUxYzQyODBjZjlmYjhmMzlmMzQzOGRkM2UxYjlkOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTVlOGJiZTkwM2E0Y2EzZTQ5Mzk4Y2JhZmFjZWMzNjkzMzAwNmQ4ZDliZjQ3ZWUzZGE0ZGYyMWE2MGQ5Y2YxZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjY5NGJkNmY0MjMwNWMzOGRhYmY4Yjk5MDJlYTkzN2ExMmY3MDUyYmZhNWEwOTViZTA4ZDdhNjNiZjRiNmRmNyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_338ab290c4894876841ed5d430d2190e",
+      "statement": "Security settings lock themselves, lock_configuration freezes all settings, and allowed_configs keeps selected settings changeable.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/operations_manual/securing_duckdb/overview.md#L194-L220",
+          "version": "repo-lines-v1:sha256:cab898b8a888ddf25c06af4aa960cf8cbd91981f3294a345dcaf27e6b04c0fd0:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlMWZiZWIzODgzNWU5OWRjMmMyZDJmMzkwZGE2MWFjMmQzOTdmZDczNDcwZmI0NzhjZmQxY2YxZDNiMjg0MzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2OWM2MGUzMGRmN2QzZDliYTVhMWM1N2FiMTNkZjA4MmMxODhkYjhhOThiOTljNGVkNzljYWMwMWNkNzAxOTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA3ODg0NmNmYTQxZDAyNzc5ODlmMjRmZDEyYTUwZDRkYzI1MmNiYjQwZmZmNGVhMmIzZGVkZTI2NGUyZTVjM2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMyNDc1ZjZiYzkzNDA0OThjNTU1NWU4MDgxNDE0ODk0NmQzZDYxZWU1YmRiMjFkMDA3MjZmOTRhMGJkNjVhNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4e1b0c3c0c7446f9853d495f30a1e366",
+      "statement": "allow_unredacted_secrets can only be set at instantiation, and the secret directory is opened on first use of secrets.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/operations_manual/securing_duckdb/overview.md#L222-L232",
+          "version": "repo-lines-v1:sha256:7bd87ebecaace3abac4d1297197adeb08f526945f4407c0c8e728aa13f3c9b7f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE5ZjE4MDFiNDQ5MzliYTczZDg4MzVhNGViNmMyNjI2MTUyYjhmZTRkYWVmMTEyMmNhNzc3NGE0OWJmODJmOWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxMTM0MDQ4YmM3M2E3OWE3ZWY4YWUyN2VjMDJiYTEyNzhkMWJjYzg3OWNlMTRlNzUwMzEzMTViYjVhNWMzMGIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU1NjcwYjA3YWI4ZDIzYzUxYzI5NzY3YmViM2YzYTNmMjc3NGVhNjE5NjY5OTkzYzU4NTY4M2Q2YWNjZjQxMGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRmYTkxNmE1NzEzYzI1ZThkOGEzZDM3NzdkZTFkODMyYmIzZjk4ZjIxMWFhNWRmZWU1Mjc1Njc5ODMyZjFhOGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_469d4bf89c4741ae96d8d93cd569d346",
+      "statement": "By default DuckDB loads core- and community-signed extensions; unsigned extensions require allow_unsigned_extensions at startup, and allow_community_extensions = false restricts to core.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/operations_manual/securing_duckdb/securing_extensions.md#L16-L48",
+          "version": "repo-lines-v1:sha256:15c91af007b030440f9bc14697254ab2f19abc59384b29d6e9e2db96fa719bd7:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc1NWVlZTE4NmMyMjQ4Mzg4YzMyNmY4OWRiMWRjNjI3NzQ2MmE2NmJmN2MwNjUxY2ZiMTA5ODJjZjcxZGI0M2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI2MjFmYmFhNWRlNDdhNDczZTAwOGU3Zjk2NGRhZDliMjYyYmVmMGEwNGQ3MmVjNTI3Mjg0YTliZWMwOGM4YTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBkOGQ4MGE1YmE5NGMxYzc4ZGM0YjZlMGYwMDI2MTg1YjNkYWRmZjQ2MTJlZWY1YjhjY2I2NTY4MTdiNWFmYjAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d36bff1e6af44cc08410b9bf53083f88",
+      "statement": "Custom extension repositories, introduced in 2.0.0, are controlled by allow_extension_repositories (default 'hosts') and can be forbidden entirely.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/operations_manual/securing_duckdb/securing_extensions.md#L50-L69",
+          "version": "repo-lines-v1:sha256:2d51e450493d2311f8ca007955b7e408b7c3cdb52d34f1b67c1d053471ece657:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQwYTlmZjA4MjJlMTYzNjkxMjg5NjI5OTJmYzcyYmI5OGIwOTQ4NDc5ZTg0M2ExYzU0NWE0M2ZmN2FhMmFkYzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJjZmU5ODEzZTkxMGE2MmQ2NWM4Y2FiOTAzMDU4YWNlZjE0YzIwNGJjOGJiYjNjOGI1ODdhNTVlOWYyNzE4OWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc4MWNjZDE1NTljNTUyZWI0NmRkOTIyNDBhMjY2NzUwOWE0NDFmZGRhMjU0MjZkZGZjZDY2OGU4YTEwYTE4YTQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d7088b5bd8ec4af5a9258f88d8c702be",
+      "statement": "The CLI is not intended for embedding because features like .sh execute shell commands; client libraries should be used instead.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/operations_manual/securing_duckdb/embedding_duckdb.md#L13-L24",
+          "version": "repo-lines-v1:sha256:bdac28d737db5994e2b741d416c94e911a08771de83db2be9631a11ef5b1c790:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViYzZlMzVlMTgzNjYwNTdjMmFmYThhYWUxMDNiNDY1MDVjZDYzMWZiMjdiMzRhZThhMTY1NGU0ZjkxZTQ4MzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM2MGJkZjgzYzcyYjVmZDk5MmU5MGM3YzdhNzkwZWYxNzlhYTMwNmYyYmU5Yzk2ZDEzZTM1MTdiZmM2NjM3NzMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdjYjI5NGFiN2Y5YzY2NDQ2ZjIxNDAyZTQ5NWNlMjM1OTMzYmJhZThiMmQ2MWM5Y2I5MWUyN2EzMmIwZWQ0NDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

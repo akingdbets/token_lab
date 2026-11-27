@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:031b128b4d6d466af4f75981dc558e84e1132ab3f89c43a2a6ad5dca97681431",
+  "claims": [
+    {
+      "id": "claim_ae974ef85c84495380fa8c953573e5c6",
+      "statement": "The JSON type is physically stored as VARCHAR, so whitespace and key order are significant for equality, and casting VARCHAR to JSON parses and validates rather than converts.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/json/json_type.md#L14-L109",
+          "version": "repo-lines-v1:sha256:d56aa09c0c5aa0506bf396e05ea1af88c2e3e4bd1d99ff2a1c815fc55c6abfaf:eyJzZWxlY3RlZExpbmVDb3VudCI6OTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJjZWMyM2FlODc2MTYxZmNlZjhhMWIyOTIyZWVkMDdjOTEzODlhNDM2MTQ0ZWNiZGIzMDgzN2ZkMTA4MDkzMjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg2N2U2Nzg1ZTBkM2M1MTlkNGEzYTg0YWU2YjMzODE4ZTkyYjdjZjE1NGRlOWVmN2QyNTM1YzdjY2RjYjJhMTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQyNTk1MzI1MGVmNzI3MzZlM2U5ZjcyN2YxYmQyZDQ3NmMxZjRiZjc0ZjE4Nzk5YTc2MjhjOTNmZDc4Y2Y5MTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_87439a3772754cbc876486ae79aa6a1e",
+      "statement": "json_extract (operator ->) returns JSON and json_extract_string (operator ->>) returns VARCHAR; JSON uses 0-based indexing.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/json/json_functions.md#L13-L39",
+          "version": "repo-lines-v1:sha256:cb9f1adcbe7d05302a1daeedbcf9d12c9fb2868ef63191d873120e27b73c42c6:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0ZjI2YTgyMzdhYWQwODkzYzhjNDRiMjRmOWZiN2I2MjRlMzUyNDMwNDk0MGE1NjBhZWUzMWRiMjhlYjM3YjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk0NjE4YmQyNjQ5M2Q0M2M4NmE4YmVmY2Q5Yjc4OTAyZGQ0ZWE4NDdhZjcwOWU2YmNlYThjNDRjZWI3MGI4YjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU0OTFhNWQ5ZmIzZmIzOGVhM2VlYTJmNDM0NmQ3ZjYwOGMxYTM0M2ZmOGJjOWRmODkzNmE1NTgxN2Q4ZDNiNDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEzZjRiMDliOTA5NjZhZmFhMDE0ZGNmZTA1NDYwOGNjNTI3ZDFmYjg0M2E1ZjNmNDg1OGFlYTljODk4NDkwZDEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6f8088c9b2f7465ea4c04a101a0eaa3c",
+      "statement": "Unlike DuckDB 1.x, JSON arrow operators bind more tightly than AND and OR.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/json/json_functions.md#L32-L37",
+          "version": "repo-lines-v1:sha256:89e235405d5eb3a6e3ca777d006b30516974640407ce64d6583d0838a3dc8433:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWYzNWViYWMwZjBhYzQ2MDYzYThjNGM2MDNmMDYyZDgxZWM0MjY3NjMyOTM1ZDI2YTZlMTJjNTJmNTFkZmI2OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2VjNTY4ZWFkZGNjNDg0MDI2ZjFlMzJhZjIyYzc1ZjM4NTM2MmNmMmM1YzFkZDk2OGMwNTkyZjU3MTk1ODMzMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTFkOWRhYzgwNDg3MDc0YzNiMWEwYWNkMGY2YTBiOGRhODExNmRkN2M5NGY0N2VlM2RlMmU4ZDczN2E1Y2FlNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMmY5YTRhNjRhMjI0ZjQ0ODNhZDUxOTY3Y2JhMTljOGE4Y2ZmM2E2YmFmYzhhZDRhNjhhYTM5OGI2ZGM4ODA4MiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_8c1b487843304f919e5f01a28e1249fb",
+      "statement": "Extracting a list of paths in one json_extract call parses the JSON once and is faster than multiple extractions.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/json/json_functions.md#L147-L177",
+          "version": "repo-lines-v1:sha256:1ac0807514614f8ddd66e907e392e3cb8f29f32ff57bab6a3ec4404d70cb5a26:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMyYjZiZjc0MjdkOTE2ZTNkZmFhYTI4Mjc0ZTI2ODQxMDI5NzAyNDNkYjc2MDRjNzcxZjAzNmQ2MjFjZDE5ZWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMxNWJlMzIyMTgxMWNjNjBhZWRiNDAyNjI0ZmQ1ZTYyNTg4NmUwZjRiNWJhMDQ2Y2IyZDk4ZWVkYjU5ZjZlMTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhkYzg4NGU1MGViNjRhNmIwOTQ3NTQ5MmIxNTFmNTM2ZTZjNzI2NzA5ZTAxNTdlM2ZiZTUzY2Y5NjNkZDY5NmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_238e9d88bb3d47028ea482558ee0c399",
+      "statement": "JSON mutation functions json_set, json_insert, json_replace and json_remove were introduced in DuckDB 2.0.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/json/json_functions.md#L505-L516",
+          "version": "repo-lines-v1:sha256:bf9f7b5b63c3f0c4ceb6c6113ab5dc971c34058f46ab253be7b9962ee9f333a1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJkNWYwNTM5YTI3MjExMDYxYmNlZDllNjQ2MzMwNjkxZjA1ZDlkNjE4YTA1OWIxZmRhMGY2NTE2NTFmOWUyMzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQwNzZiNjYyOGE4YzliZmI0N2EzMGNmMDI2Nzc0ZGRiZDVkMjgxMTUwZDllNzc5MTAyNDM2NGQ1ODZmMDcwYWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJiYTVjMDk5NDczY2I4NzZiOTI0YmRlMjQxZWI3MDk4NWRlY2VjNTFhNzgwZmQ3MDIzNzZjNWQ1YWZkZDIzNjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI4YTIzZGIxYjRhYzRhYTNkNTM3YzMwNTNjZWJjZTQ3YjA4NmZiNjg5MGI3MDBmMjc0M2IzMjgyYWMxYzRjMmIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bfd5323419c84469b9a3c7971f76ab85",
+      "statement": "json_transform converts JSON to nested types using a json_structure-style structure, returning NULL for failed casts, while json_transform_strict raises errors.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/json/json_functions.md#L600-L651",
+          "version": "repo-lines-v1:sha256:b993a83bf4240c1615791322f2ba6f123ab425c4a08bbf65a4f9fc4db6831666:eyJzZWxlY3RlZExpbmVDb3VudCI6NTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRmY2NkZTcyYWRiOGJkZjE5YTllNzgzYjViNTRhNGE1ZGU5ZWYwZDZiNzRmM2I5MDQ4NjJiYWY0YzA4OWVjYWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFiYTc5ZWE1ZTYwZWY1MGM3MDUwOWUzNmU1MDhjNmI2YTU3MDYxMTY1NDdkZGZhMDdlM2M3NDlmZDE5MmJhODMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ1ZTIxNjlkYjI2ZjIyODAzODYwMzc3NGEwZDFlMDY5ZGJjNjI5MDUxMjU5MzRjNWExMTRjZjA5YTEzOGJkNjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhkMDFhZmZmMDllNWNkOWU5NGZjN2M2ZDg5OTVjYTJhMTY5NGRiY2YwZjgxYjM3YzBiODk2MWU3NTliYTQ3ZjMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7d39661891744dec89f199e7a9fe01e8",
+      "statement": "to_json converts LIST to a JSON array and STRUCT/MAP to a JSON object; json_object requires an even number of arguments.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/json/creating_json.md#L13-L25",
+          "version": "repo-lines-v1:sha256:712d6b38453ce41de0d655f87ac5a8a6b7ea69cdfdb57e25d60f8c188dd9403d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY1MzcxZDZkYjcxZDk4MTFmZGMwNGU4OGQyNDUxZDY4N2VlNmUwMzFkODRlMzM5NTJjZjgxZmMzNjc0NWY1YzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYyM2QyMjE0Nzc3MGJjZWEwMTdmYWVjZWE4OTU4MzQ4Y2Y4M2YwYTNjMmYwNWYzYjUyZDA4Y2Q3M2NjOGIxY2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ5MDA5ZmIyZjQ5ZjlmNmVkMDljNzk1Nzc5YTViYzRmYmM4YmZlYmU1MjY1NDczYTMyZmFhNTA3MWVhZDViN2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEzZjRiMDliOTA5NjZhZmFhMDE0ZGNmZTA1NDYwOGNjNTI3ZDFmYjg0M2E1ZjNmNDg1OGFlYTljODk4NDkwZDEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_38e95fa9158f40cfa1aa4bf705922727",
+      "statement": "json_execute_serialized_sql cannot see transaction-local changes, and SQL round-tripped through json_serialize_sql loses syntactic sugar but stays semantically equivalent.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/json/sql_to_and_from_json.md#L13-L27",
+          "version": "repo-lines-v1:sha256:340fc8e0efd1f3b96dae2c87e1126dc21e57fbd49ea2263cde19f6017cd86c61:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFlMThjYWRjZDdkOGU0ZDdjYWQ1MzNiM2JhZWZjMjg1YjI3MzA0ZWMzMzZkYjJjNmExZmRlMmIxZGE3NzQ2NjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcyMmJkOTQxNTQ0ODIwYWNmYmYwYTRmNzJiNjNlYjlmMjM5NTk2MjM1M2QyYTQ3OTAzZDg0NDMxYTI3ZTJkOWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQzNjhkZDdkNzBjZWVlZDZjNjg1MTU1ZTg4MzMzODc1MmEyMGFhMDQyYmQ0MmYyMWJiMDBmNzdiNzY5MmFiYjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNiOGU0MzIzOWJkZTc4YjllZDg1NTEwZDIxNTQzMDczNTFkMDgwMWY2NWUwM2NkYTgzNDAxZDFlMDMxMWExYjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bc76bca93a3a41d79863f4c5b17e37df",
+      "statement": "JSON equality comparison can be textual or logical depending on context.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/json/caveats.md#L12-L38",
+          "version": "repo-lines-v1:sha256:501986f64b1ab1f53d6bf114193157abeb3b3ff72262b600b9764427c4062556:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJlZWZhODg1ODI4YmJkM2JkMzI1NjliYzliNDA5OTM5M2M0Y2QwNzk4NTdmZmNlMTEwM2ZkMzliMWFiOTRmYjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM4MDRlNjdiYWU1ODI1MmQ5NTAwYzcyNmZhM2I1NjdhZjhjYjM0NDc2YjYyYmI3YmFiMWYwMzdkYjgxY2NhMTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgxMGJmMDdlNjJmZTg5OTYwZWE0NWIyOTg5ZWRlYTU3ODk0OTYzNTQ2MjVlM2UyMTg5NDQ5NjhiMDZlNzZkNTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

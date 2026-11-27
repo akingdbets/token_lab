@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:19381832c0aedb3a4f034579f644d45019f1979b79be1d2dc0ebbcff341480c7",
+  "claims": [
+    {
+      "id": "claim_ffecb92af7a64af98c1148249d88605b",
+      "statement": "DuckDB supports simplified and SQL-standard PIVOT syntax; PIVOT_WIDER is a synonym for PIVOT and PIVOT_LONGER for UNPIVOT.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/pivot.md#L16-L20",
+          "version": "repo-lines-v1:sha256:fe041c5f44423e5cddf6155a76b297c25e35ae96fe2bd121500b2c84370ef01e:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzRiZDY3MDdmZjVmODEzMDg3M2MwMWM0MDhmZGU1Njc5ZGMyOWEyZDU5YTY3NTNmYTI4NTI5MGRhZDI0YzMxZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjAwOGQzYjZjMjdlYzc1MzgxYTJkOWFhOTY2MDAzNTEyYjlmZTExY2NkN2RhZWQ0NzdhNDE4NjNiN2NmOWY4NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzUyN2FiYzY5NGI4NTVlNDY0NzJkMWViMDY0Yzg0ZmQyZDMxNzc5NGJhMDZmYTQ4ZjA4YWMxNjAzODU3YjFmNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjQ1YjI2NDk0MWQwMmJlYzJhZTBhMmE4MTQyYTY3YTc1ZWIzYWJhOTcwZDllM2VlZTk5MTA5MDI4YzY5YTZlNyJ9"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/statements/unpivot.md#L16-L21",
+          "version": "repo-lines-v1:sha256:22e0fbdb30806d2a42f0ee54b52b2b5295a2cfb7bd75ed96bbb2b225c6d368f3:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODAyOTUyYTk5ZjQ5NDdhNmU5M2RjYmJlMWFjNjNhYmVmNDM3ZjA1ZjM1YzliMzhkZGY3Yjk4Y2Q0MjdiZTE5OSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDliNzAzYjUyOTYxYjYzMGY0MTRlNmU1OGViOTc0NTFmOGNjOGIxNzRkMWM5OTYxMjhhYmZjYmRjZWE4OTg1NSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjg4Y2UwYzliYzUyMTJkZDU2YTgyNjk4YjY4ZTcyNmUwY2Q3ZWU1M2YwMDBjNDJhZDBjOGIzNDBmMjM2NWUxYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODliZDMwMGE0ZWZiNmMzOTJiODI3NjU5ZjRjYTVlOTRmZGFlZmU1NzJjZjE0NjAwOTg3ZDBmNjViYmIxM2Q3YSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_ba003e89def14aa48b78545717da76da",
+      "statement": "In simplified PIVOT, USING defaults to count(*), and FILTER clauses on USING aggregates are currently silently ignored.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/pivot.md#L84-L114",
+          "version": "repo-lines-v1:sha256:067dd2092e5ab27c37391661ddbdd0a209ed1dd61769c90ad2d52f5c35ede516:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMwNjc1Mjg0Mzc3ZDQ2YzM2ODMwYzFjZTg1NTAxZjYyMTU4YmYzNjA1MmI4MGE2M2YzOTBhYzJkZDA5NDg0YWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMyYTdmMWFhMjYxYTRlYzNhNzgxZGQ1OGRjMWFiYTM1ZDM3OTljOWMwYzBjMDhiNTZiYzJiM2Y1YzA1Y2EyOTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc0Y2Y5MzM2MmMyZGZhMjg5MDE0MjcwZDc1YTRjMGIwOWNjZjcwNTE4NjU2MzYxMDJlZDU4Zjk2NmRhMzBhN2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIxYzY2NGM1NzE0OWNjNDE0Y2U2MWI5OWViMmJmZGUyMmEyZmIwZTg2YjM4NDM0YTk0ZDlmOGVlY2YxNGIyN2EifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9a37e89caba44c6cb7d64068a9a6654a",
+      "statement": "Multiple ON columns produce a column per combination of distinct values (Cartesian product), filling absent combinations with NULL; an ON expression pivots only existing combinations.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/pivot.md#L157-L187",
+          "version": "repo-lines-v1:sha256:b87f25d0ce3c83652aa87383e888c94959132c1444c085b6d5fae35c6af422ac:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZhYmZjYzk5N2I5MmMxMjUwN2Q2MWI2M2UxM2M2NjBiYzgwNDk0MGI0NTZiM2MwYzc5OGQ0MzYyOTIxNjllMGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVjMDliYzk5MTQ0MDE1YjFiODg3NTYzMDQzNjgyYTk3YWM4YWMwZDNlYjc0NDY0MTBlNWE0NjQzZGZhYTIwYTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA0Y2Y2Y2NmOWEzMGFmMjU0ZTQ2YTEyM2JkZTNlNmM0NWQxYzIwYTM3ZTA2MzA4NjlhZDM0ZmQ3NDIyODAwNzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY0ZjUwZDVlYWIwNGM0OWRlNzIyNjQwNmY3YWQwNDFjZjYyNTZhNTljZmVkNjE3Nzg1NDQxNTYxMmQ5M2EyMTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_10e60fdca1ff404f96092a4b5dd004cc",
+      "statement": "PIVOT GROUP BY requires column names rather than positions and does not support expressions.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/pivot.md#L216-L225",
+          "version": "repo-lines-v1:sha256:298512bfc7c779273b4ae9ad1902a7cb6a7702f6b8ad406036e438829b909aee:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgyMmIwM2Q2NDY3ODIyOTNmOTZjYTc4YzZhODA2NGU4NzViZGFmNGQwNTJmOGYxMDdmNzA1NzVkYWJjM2QwMDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYzODkzMDExNjlhMTQ0MjJmOGNiMGNhZTUyOTI3MWJjZDEyNDYxYmY0NjdlZjBjNDliODY2ZmFkNTdiYzU4NjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIyY2IzOTExNmFhMGRiZmNhOTIyOTYxYzViZGFmNWJiMTUxOGFjZTVjOWIyNTA0ZGQ4N2I3ZmM3Njk0ODM3NzUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImViODE3MWMyYjQyNjU2MWU2MmIxMDZiZmZlOGQzZmJkYmZiODkwNGFhMjI4MzE1MTg2NTNiNTEzYWI0MDkwZGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5b6a7b04a50a463594e4b12fcf22bdda",
+      "statement": "The SQL-standard PIVOT requires an IN list for every pivoted column, so the simplified syntax is recommended for dynamic pivoting.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/pivot.md#L288-L308",
+          "version": "repo-lines-v1:sha256:cb66f4efaad12075d28a660192751543daf790aad1f2898845dc0a0510a1ada5:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI1YzllNTk5YTQ0ZTFlNTM3NmQ4ZGQwNGViNmYyNDNkODk4NTVmZmJlODI3ZjlkZTFhY2ExZWUyNDUzZDc3ZjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE5YjE1MWEwYWVkNGFkZjRkOGFmZjg3MGYxZmJhZGQ1Mjk4M2RlNGNlZGIyYmVkOWQxMGU3NTFkODQwNzFiMmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzMzI2YzZhN2FiYzU5YWQxMTQ0NjIwMjEwN2ZmMzgyMzVkZjI3OWQ1YTA0MGRiN2U5YmNhZGFmZDg0NDIzM2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNiOGU0MzIzOWJkZTc4YjllZDg1NTEwZDIxNTQzMDczNTFkMDgwMWY2NWUwM2NkYTgzNDAxZDFlMDMxMWExYjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e764b46365874cfc94edbbb6dea3722e",
+      "statement": "UNPIVOT can use a COLUMNS expression to unpivot columns dynamically, and supports multiple value columns when each ON column set matches the VALUE column count.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/unpivot.md#L103-L156",
+          "version": "repo-lines-v1:sha256:6460b93c32000eca975f17c6d1ac291421e67f5843fce5f2b03beee07e96cb2e:eyJzZWxlY3RlZExpbmVDb3VudCI6NTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUzNDAzMmU4YmEwZmRmYjhkOTE4ZWNjNWVmN2M1NWViYmQwYWIwMmJhMTBmMWZjZGRjMGEzNDg3ZWMyMjg2NzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkzMzg0YWI0ZTBmYWQ1MmI3MmI3ZTc3OWVkZDkwZmYzN2QwZjgwNDczMTA5ZjY0ODc4Yjc5M2MwZTFiYmM3YWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYwYzJjY2M2Yzk5M2JhNzAyZjM3YmRlMzc4ZDMwNmM2YjY5ZmFiOGFlNmYxNjI0ZDNjNWZjZTMxMDM0ZTI4YzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ4NWVhM2VlZGE5YzZkNWU5NDMzMGI2ZGNkNDcyYjkxMzBlOTVmNDYxZDFmZGI1M2Q1N2Y2MzFjMmM2ZTliM2YifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3127629f6e8e4ccd9a4ec20670627b11",
+      "statement": "Simplified PIVOT and UNPIVOT can be used as CTE bodies without SELECT or as parenthesized subqueries.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/pivot.md#L234-L261",
+          "version": "repo-lines-v1:sha256:a1b3373b243b0ff09c320ed0f51311100555ea06fd9b1ed3888ce1ba4bed4b79:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJlZWUxZGIyNDNlNzdmNmU5MGNiMTJjYjRmYzc2NDNiMDM5YTJkYzYzMTMxMGVjZjJkYzNmMmI3NDk3YmU5MDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmYTFmYjk5ZDMyZTE3MTlkMDg3ZmI0YjY1YmQ0NTQxMGRkYjBhOWQ4Y2VlOWM0ZjJiZWFhNTZjZjBiYjMwZjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdlOGMzMGIxZmYyZmRlZTI3MzVhMzZiZDIyZTVhNjY5ODhkYTA2M2NiZTJjZjhjYTZhOWQyYmJhOGY3MTA3OGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY0YjE1OGVkZTgxMjgzZjUyMDgyYzI0YTA5M2MyMTMyZDg4MzhlMjRiNzcyZTkyNjg3ZTlhNzQ3ZDk1NTM1YWYifQ"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/statements/unpivot.md#L168-L197",
+          "version": "repo-lines-v1:sha256:b9bf89029e6beaba5a8296dc44abd831b32ee24c26ad03e6f967f9c2c55479c7:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYyNTgzN2E4N2I4M2NlNGQ0NmI1OTc2MDBiNjdjNmIwYTAyMGIwN2QyM2MyMGFlZTZiYWFkOTgyMDU3MDQ4MzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ1ZTJkZjk0YzI1MDU1Nzk3MWY2NWI2NjU3NWEwN2UwZmRkMWZhNjYyNWI1ODE1MmQ5NmFiZWM4ZTBkMjI1NWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY5NjYzNDNmMTE0MjgzZGJmZGYwYTkwOWJiZGFhYWEyZWE3YzAwMDIzMjE1Y2JmN2ZlN2Q5YmI1ZTY1M2UzYmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM2YjZiZjc0YWU5ODg4MzkyNGEzNjk4MjdhYzkwODdlN2RlZTBlZjQ3MzA1MDI4MzEyOTViYTViZTQxNGNmMDEifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:ad4569b54989c93c857484053e53b73a410046065ad49b88978a76f15c7df38f",
+  "claims": [
+    {
+      "id": "claim_a04bd82cdbcf4e44a63ff10b3b8904c1",
+      "statement": "The install script installs the latest stable CLI to ~/.duckdb/cli/latest/duckdb, supports DUCKDB_VERSION for past releases, and since DuckDB 2.0 DUCKDB_INSTALL can install static and shared C/C++ libraries.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/operations_manual/installing_duckdb/install_script.md#L60-L89",
+          "version": "repo-lines-v1:sha256:f66e07f7405ec37b1f4ad8b06cfa8446b6ffb66711dbbbccdae48fa9e05e8b18:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliMTI5YThkZjYyMzVjOTk1OTg0ZDNkN2QxMGRhZTJkYjhkZjM4MGFkODc1ZjgyYTk4MTVmZTE0MTRkNGJmZjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhMzAwMWU3Y2UwMDhhMDM5ZjIwMjg2MzE2YzQxOTUyMGFhZjMyOGJjZDA2ODFlMWVmNWU0YjdkZmEyMTNmYjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_56c4855968e54a6498cc34ef08c94a3b",
+      "statement": "Official Linux binaries require glibc 2.28 or newer, and macOS on Intel (osx_amd64) is only partially supported, with community extensions best-effort since 2.0.0.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/operations_manual/installing_duckdb/requirements.md#L15-L34",
+          "version": "repo-lines-v1:sha256:5a131f82cc63fd3142d010dac0b4f54dbe0a20497d23e01f0c9d349ab31a8c3f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJiYTA2NDNmYmRhYWZhYjdlNjk4YTllN2I5NDNlZjkzMmU5MTdjNTM2Yzk5ODI5YjA4MTU4NGJhOTEzNDQzNmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg2MDllNDlhMzJmZmI1NmM1Mzc3MWEwYTEwODUwODg4NGJlNDRlZDcwODVjYmNkOTJmZTYyOTRhOGEwYTk5NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc3NjA1YmQ5ZWRlZGY4YzZkNWQ3ZTRhYzM3Njc2YTAyZDAwMzFlOTlhOTVlYTE4NmViNTRlNDRiODc2Y2RlMjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ad6e9f7fbe5846b690bc6e8e237318b1",
+      "statement": "DuckDB versions before 2.0.0 cannot read files in the 2.0.0 storage format (storage version 69), while 2.0.0 reads older files and keeps their storage version.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/operations_manual/migration.md#L30-L53",
+          "version": "repo-lines-v1:sha256:d8aeb34e013b673d450f6adff04cf678d4f2a6f8341f3cfe5258434361809b32:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxZTMyODdjZjQyOWZhMDIwYzQ1YTNmZGI5YjIzMzQwNWI4YmY5ZGQ1ZmM0YTY0MTUzZGI5ODgzNDM4OGY3MzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVhZDQ5OWY2YjIyM2VmMTg0M2NiZTM4MjJmNWMwODI0YjVhNTZjMjM1OGU3ODgzNzg5ZmZiYjQyNmNiZGY0ODUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIxYzM5YTRlOWJjNmFiMzQ1NzAyZjNlZDVkZTg0M2UzYTZjODljZTE3ODA2NTY5MDZlN2I0MDE2N2NjMGFlZTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJhYTU2MDZmODg0ZGYxMGYzYmZiYmE3MDQzZjdmZTRhMDU0NDE4ZjcyMzkwMmFlMmE0ZTYxMDgzMTBlNzA5OGEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ba87641798524c62b25f1f2d5a474e0b",
+      "statement": "DuckDB 2.0.0 disables the single-arrow lambda syntax by default; SET lambda_syntax = 'enable_single_arrow' is a temporary bridge removed in 2.1.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/operations_manual/migration.md#L78-L97",
+          "version": "repo-lines-v1:sha256:0992851d683c0f29c022f90fc7e69dc982f0a61003a957c731b4eee2f5340f56:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjczYzkzZGIxNzlmMWQ4ZmFhZWExYjA1YTM5YWVkNzhkOGJlMzc4YTI0M2VlMGUyMTliMjRmZmM5NTM2N2VlYTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlNzJkNTBlMzc1OTRmZWIxNjA5ODJhZTMxMGU2NGMyZmYxMTNkMmQ3NmIwNTMwYjA1MTkwMmJhZWZkOTU0MmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI0ZjYyYzMyOWI3NGUxYmFlY2UzNGZhODViZjc3ODU1YjgzNWFkMzdlYmU3OGI4MmY0NzE2YTc4ZThkYTIwMzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVkMzljODUzNmJkODBkYThlYmI1ZTBmMDIyNTViYTc5MzQ4YjNkYWRmYzk4NWJlYjc5NTdlYTBjYTFjM2Y1NTkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6621f857e22842d49e52ebc7f7d8726c",
+      "statement": "The PEG parser in 2.0.0 changes ~ to partial regex matching, makes factorial bind more tightly, and makes X'' and B'' literals produce BLOB and BITSTRING.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/operations_manual/migration.md#L99-L118",
+          "version": "repo-lines-v1:sha256:7c304f1eebddd313efd7b114c7032f307cf75bfe77b446800715234ce85b394e:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk2MWEwZWU1YTA4YTQzNzEwNWIxZmUxNWRkNmY1OTQxNDNmNTc5MDBjNjRlZDgzZjkyNDk1MGEzNDBmMzUyZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYwYjg2NDZmNTUyNzRmMDYwZTBiNTE1NTJjNjE1ZTY0NmUzZjk0NzEwM2MxNjY5YTc5NzU3N2NiMDAxMjcwN2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJmZTgwMGZlODBhZjg5N2NlNjViYWQxOTk3OWM5MmIzOTc2OWU0OGZkNmE4YjkwZTRhMjc2MGMyYmRmNTU0NDkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_858932d5c11c448cac7d8622a78df68d",
+      "statement": "In 2.0.0 untyped NULL columns keep the NULL type, MERGE INTO with multiple matching source rows errors, and S3 URL parameters are disabled by default.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/operations_manual/migration.md#L178-L197",
+          "version": "repo-lines-v1:sha256:90785fe95b8f448218caf6a86e82a97f52f764d4c2b457ed2f2c797b91bc1d4f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkwMDAzNmJjZWM3YWQ3MjdiOWQzODlmMTQ4YzZhMzVlMjk5ZGJjYzJkOWI1NDhiNDRiYzVhMzdlZjJkOTFjOTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJkMTg1Y2E1YTdlOTI4ZjM4ZmYwMGU4MTI1MmE4ZDk2YTgzYTExYjJmMGUxMjMwZDIzMTA3YjBhZGVjYjAwMTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM0ZGNjMDllZDNlNDVlMDIwYzE4NjY1ZTIyMjI1M2E0YTZmNGJiMjE5MzQ3ODc2YTRlOGJiZjg1NDlhYjU1NTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJiYWU1M2ZkOTc2NmUyMTI2MDI0Yzc3MzUxMGZmMzkzMDBiYzA4YzYxM2NlMTM3Nzg3YWE2NDU1ZjliOTNhZGUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0bbd1f94141849a084221d87ccd37409",
+      "statement": "Built-in limits include 4 GB for BLOB and string sizes, expression depth 1000, and array size 100000; there is no practical database file size limit.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/operations_manual/limits.md#L15-L31",
+          "version": "repo-lines-v1:sha256:2083ebd6d6035b7bd7ac6bfbcea6031b69aec12e1b4010de4f6bc5d810ab5a8d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgyNmI1NTZhNGE4OGYwZjk3YTY4NmU2ZTQwN2Q5YzU2MjRjY2RjZjE4MTY2ZDgxOTViNGFkOTM3OTRhYTFhOTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwNjBhYmJlZTA4YWRkZjUxODcyNTM0NGE0NDM4M2U4ZTkwZDZmMjNkMzllNDE3NzM1NmFhM2I0ZjZmNjNkYTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUyMDVjM2Q5YjBhN2ViNzBhYmI4OWRjMzIzYWFjYmNmZTVkM2M1NTg4ODI0ZmUyYzg5M2U5YmUxYjM3MWZhOGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c01ad7a32b6a4266971d2ecf24d03675",
+      "statement": "DuckDB creates ~/.duckdbrc, ~/.duckdb_history, ~/.duckdb/extensions and ~/.duckdb/stored_secrets globally, and a .wal file and .tmp directory next to the database.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/operations_manual/footprint_of_duckdb/files_created_by_duckdb.md#L14-L35",
+          "version": "repo-lines-v1:sha256:53066e686792ff2abc1c53eea152291b250ef139ab968b97a2391f0c0d444094:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjllNjIzZWQ3ZDg4ZWE4Nzg2MjlkZDZhZDg4ZTNkMzk1MDBhN2YzZTc5MGQxZDg3NDRjMzY2NDFhMzcwN2VhNzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2NGNhMjIzMjRjMWIxYmJkYTM3NWZiN2NjMTFmNGY2YjEwNGFkZDFhMGNlNTMzOGQ1NGIxZTZiODNiZmM1MGMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJmZDJiOTcxM2Q3NmEzMDBjOWQwMTU5MTNhNmMzNDFlYjgzYzEyYjgzMjZmNGFjZTk4MDQ0N2MxOGU0YmQwMmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY0MmU2OGE3OWJiNmU1ZjYzYTFkYjNiOTYyNWY5YzExOGU0NTQ3YjhjYzZiNDhiZGNiZDhhZjZjZDQxMWE4MTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fa18be00117f485b967ab833f4bb10bb",
+      "statement": "The default log level is INFO; the CLI defaults to the non-queryable shell_log_storage while other clients default to memory.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/operations_manual/logging/overview.md#L43-L152",
+          "version": "repo-lines-v1:sha256:4952b3a8fd38ebbd5019e093fd308899a59df70a426a8d65465b8c2141cff0a4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEwLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI3NGUzZGZlY2NmNmEzMWUwNGM2ZGYwYWRkMTI5YWIxMDkwYTk2NDNjMjBjZjU2Y2NjMjQ4YzZiOTMxNWE2ZGYyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MDYwMGZhYjM1NDZiMGIyOWNmN2RmMWM1NjU4NGI2NmMyYWJjODUxZjI3M2YzMzQ4YTdmYmRmYmUxZGExNGRmIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJhYTEwNTYwMzYyZWRjMzI3ODFkYTI0MzVlMTg1M2YwMDk1Nzk0MTA4MWMwMGFmOTdlMjVlNzFjNjJmM2U2MTk0IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJjOGRlZTU1YWYyZmQ0NjhkZGM4YWRjN2FhOGE4ODc2NmU3ZjRlZWVkZGJlZmJlNGIzM2NiNzM1NTkwY2ZmOGZkIn0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

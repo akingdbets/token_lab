@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:5085d6a3e1440183b49c6a9988d54fc60d6c9b0e3ebe8f44c0cef5569b28c47f",
+  "claims": [
+    {
+      "id": "claim_8907df91d84243829cd951c63191efac",
+      "statement": "In the expression API a plain Python value, including a string, is treated as a constant rather than a column reference, and a warning is emitted when the string also names a column.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/expression.md#L58-L75",
+          "version": "repo-lines-v1:sha256:50653af4652e302e5ac7a86725960ccb56bb34639c3749f354aac79f653c759f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZiMWJmM2NmMWYwMzY5NzA2NTdjZDExYmU5M2MxNmQ5YTA3ZTA3NzEzYmQ3NTA4Y2QzNDg4ZTAwMzIwMzdmMGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM3N2QzM2NlYzUwN2VlZmIwNThkN2ZlZDI4NmI1YmY1MTYwYWJiNGVjODM2NDY2ZGE1ZWM2MWNmYjgwZWJhOTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcyOTZkZTRlNzNiNTY3MDI5NDE3NWZhMzExNzM5MWU4MjNiZDFhNzljNWUwZDM2ODZmZWUxOTZiMDRhYmJlMzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY3NzUxOGNhYzI3NmZkZDk5MjM0MTY1YzE5Y2E2MDJhYTI5MjVlNzM1YThmZDY1ODgwNGZjZjE0MTNmZThiMjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e5937651153f44aea1b56db607e96ef2",
+      "statement": "The helpers col, lit, when, fn, star, sql_expr and coalesce are preferred over the older ColumnExpression, ConstantExpression, CaseExpression, FunctionExpression, StarExpression, SQLExpression and CoalesceOperator constructors.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/expression.md#L44-L56",
+          "version": "repo-lines-v1:sha256:61c2641fd097efc18c90c864a9e7b8d3416da178ead4ba72c28181eb50457baf:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI5N2NkOTBmM2Q4ZDQyOTgwZTU5MjQyNjg2YmVjM2E4NDdhMjdjODEyZDhmZTdjNmQwZGM3ZjI0ZDM0Njc5MmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhYzhiYWY3ODI2MjAxMDU5NTU3NGFmNTBiZDkwODJjODYyYjM2NGJmN2NjNDdiMWZjZjZlYTQzZGQ1Y2E3Y2YiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcxYTZhNTJhYzhlMDJhYTU5Y2JhZGNhODQ0YmYwODQwYjQ2MjY0MTc0MDFiYWJiZTg3MGMyMWVlZjU0ZWRlNjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhjYjdjNjg3NzQzNTI4ZDNkMGU4MGZmYTI1Zjg2ODY3YWNjMmM1MGMwNTM2NWEyYWNhZjdmMmFiZGIzYjEyMDEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_15169bc011394f25ace7d3a4a6812764",
+      "statement": "create_function defaults to type='native', NULL-in NULL-out handling, failing queries on Python exceptions, and side_effects=False; type='arrow' passes ChunkedArrays of at most 2048 rows.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/function.md#L263-L273",
+          "version": "repo-lines-v1:sha256:e0cca81fb1a850d913528181e2ad22645eb9480e789190d793b4494c5ae7c9dc:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNkZWJhMDBkMmU3MjA3OTc1OTE4Yjk4ODkzNjczYTMyZDhmYzJhZWI0MDljMGU3NTczMTcxMmExZDIwMDNiMWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM2YTBjNDMzMDIxNzRjYzhhMDU5YzgwNGFiYTRlNDdhZDMxMDAwYWE5MzY0ZGU1N2NhMmZhNzkyMTU1NGZhNzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU0YjI4NDE3N2IwNmZjMDliN2JkZjQ3MjgzNjlmOWJkNzQxYzUyYzBkOTExMTJmZmVlOTgzNWZiZThmYmYyYjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJkNzEyOGMwODhkNTUzNzNhZjE5ZDdjMzU2OTExOGJjZDM2MTAzOWUyNGYxNGExYzg3NGRmOWY0NzFlYTE0YjgifQ"
+        },
+        {
+          "resource": "repo://docs/2.0/clients/python/function.md#L37-L46",
+          "version": "repo-lines-v1:sha256:7d3b071a897db9ef96ef05f5c3a183d4df9ee165fa55f89b0d368d102c1700ae:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNlYjM4ZmMyYWM0N2M1NzdkNzhiYTQ4YWQzNmU2ZmMyNTg0YzBjZjZhYjE5YWJlYmU4M2E3MWE2OThjZjA1ZGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFjNDdiYzk2N2Q1OGU4M2FhODZlZGRmZDU2ZDU1ZjkxZWQ4YzI2OTFhYWEwNzJhZjY3YWRlZmQ4ZjNiODhkNjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI1NTRhNmZiMTM2MDQ4NGMxZWYyMGRlMzM5NGE0MWE3ZTJjYTgwOTE2NWMyMTAxNDkwMmVhMGVlMTdhYjFkY2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU4YzkyZDI1OTAwYjBjMmVjMDMyZGQyY2MzMzFmMTIzYmVjNWRjNWI1NDcwMTkzOGUzMDE3YzliNjRkYTEzOTcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3da0005ca0a24c1aa689c1317134e034",
+      "statement": "Python UDFs require NumPy and need a return type from annotations or return_type, otherwise create_function raises an error.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/function.md#L121-L121",
+          "version": "repo-lines-v1:sha256:21cd4dfca3de123073a05bff4565f0b18706a2d9bfbb8a9a691a46b230534f51:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjFjZDRkZmNhM2RlMTIzMDczYTA1YmZmNDU2NWYwYjE4NzA2YTJkOWJmYmI4YTlhNjkxYTQ2YjIzMDUzNGY1MSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjFjZDRkZmNhM2RlMTIzMDczYTA1YmZmNDU2NWYwYjE4NzA2YTJkOWJmYmI4YTlhNjkxYTQ2YjIzMDUzNGY1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjVkYTEwNmJmYzdiZDY5NDRkNGY2M2UzZDBkN2Y3ZTgzMTM5YjA1MjU3ZDE4MmI3ODYwNjg4NDI3YTk1NjUyOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNWJhYmZiZDU5ZDcxMzBjMjA2MmM3MGJkMjUzMDk1OWFmNmM5NmZkODkzN2M0NzA3OWEzODdjNWQ1ODQ4ZDZiYiJ9"
+        },
+        {
+          "resource": "repo://docs/2.0/clients/python/function.md#L35-L35",
+          "version": "repo-lines-v1:sha256:f140ef79495e8951beb090f6b8385772979f2955cb2cc4ab3f0b27e0aaaf91f4:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjE0MGVmNzk0OTVlODk1MWJlYjA5MGY2YjgzODU3NzI5NzlmMjk1NWNiMmNjNGFiM2YwYjI3ZTBhYWFmOTFmNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjE0MGVmNzk0OTVlODk1MWJlYjA5MGY2YjgzODU3NzI5NzlmMjk1NWNiMmNjNGFiM2YwYjI3ZTBhYWFmOTFmNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMzMyZDljMWVmZWJkZmJlMDc3OGIzZjM1ODRkMDFkYzVjOWQ5M2MwZTA2OTc4MTRkYzVkYjAwZWQ5M2FmZmRhOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZmJmMDlkNWM5ZDJhMjc4NThmNzhiMTlkOGU1OWY2ODU3N2UzNDg5ZWJiY2M4YThiNzUxZjBiMGY5Y2YyZjFjNCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_37654023357849f49750e067b9edd0dd",
+      "statement": "Python int maps to BIGINT in the Types API, list[int] to BIGINT[], dict[str, int] to MAP(VARCHAR, BIGINT) and a dict of types to a STRUCT; enum_type is not implemented.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/types.md#L19-L123",
+          "version": "repo-lines-v1:sha256:122daa626a69b4b6a254f56ce7275b5adfe2c8baad926f27974ecc0679e22335:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA1LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI0NzdlNDVmZDA4NjEzMzAyM2Q3M2ZkYjhiODhhZDQwYzI4YWRiYWY5NDA2OGYxZDMwNTA0ZDBjODIzMWMwMGE3IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI3ZWM1NjhlYWRkY2M0ODQwMjZmMWUzMmFmMjJjNzVmMzg1MzYyY2YyYzVjMWRkOTY4YzA1OTJmNTcxOTU4MzMwIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI0NTJlNTczZTdkNzA5MDk3MTg2MDg0ZTY1MjlkZjU4YTc1YzAzODc2MTk2MTM3ZjNjMTczODMzZjcxYjdiZWYzIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI3MzkxZmNiZjlmOWJiYjA5YmFhYTYxMmE1NDAxMzdmOWI2MGM1MzQxNGIxOGQ4MTMzZjExYWFiMzcwMmJmNGEzIn0"
+        },
+        {
+          "resource": "repo://docs/2.0/clients/python/types.md#L250-L252",
+          "version": "repo-lines-v1:sha256:c05d07c8afffdc7f1b8d003125df9a6638fa38c6d9f934f1f56bd9522125d0c2:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDQzYjI5OWEzMTJlODg3MDhkMzBhZWM3Y2RmYjM3NGVkYWRkNjcxNDA0NDE4NzU3YzkxMWY2MWI1MWQ0YWI0ZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjMxYTA4MWJmYmYzYTU0ZDI3NjA2ZTRiOTcxNTc5YTk1ZjhjYjdmZGNmNmE1NGI0ZjJhYWFhNjdhYjM3OTViYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjc1MDMxZjcyZjI5MDNmZTdmOGI4ZjQyNWYzZjc3MGZjZTBkM2FiOWE2Y2RjNWZlY2MzODJmZDA5NTNiZTI1NyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYWU5MmJmYTVhNzVkMDg0MTM5ZjkwYTJhOTlmNjY5M2FmYzk3ZjU1ZTZiNWZkNTU0NWE1NjcwOWNjNDg5YjlhNiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_cb76d5aeec22476ba2425d4e17bd9aaa",
+      "statement": "The Python appender supports actions insert (default), upsert (INSERT OR REPLACE requiring one primary key or unique constraint), update and delete, and a with block flushes on successful exit.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/appender.md#L11-L84",
+          "version": "repo-lines-v1:sha256:bd2be086c06b8152d52dc8df49522b971b464fa3d670b58444b908aa0505930a:eyJzZWxlY3RlZExpbmVDb3VudCI6NzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgwMzhmMzI5YzIwNDRkNzM3ODdjZjAxMGI0ZWVkN2UxOTMzMDJiOTA5OGYzYTg0Yjc5MDRlMTdmMTM5NzRiMGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwZDdiN2RhNzU1NGI1OWQxNzFkMzc3ZWFiZmNkNWQ5YTNmYjAzZGY1MTM5ZTU2MDlhZjdlZWU2OGQ3NzY0MmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhhYTlkZWJiYTI2N2QzMDA1ZWQxNDAxMWQ5ZDUyYzA0OWVjNjVkNmQ5ZTRhMTY3MWY3NGMxYmNmNjU1MTAwYjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFmYTA1OWI0NzJkMjM4N2MxZGM2NWMwYzA4ZWZjNmMwODhmMDA1NGU5MzNmYzE4ZTAzY2RhZGNkOTY1M2RlOTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_971e1cc36290433d943385633a6e28e5",
+      "statement": "Appender flushes run inside an open transaction or auto-commit, and garbage collection discards buffered rows with a ResourceWarning.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/appender.md#L112-L118",
+          "version": "repo-lines-v1:sha256:912f81d26cf4925a84ef9eb239f7cec371150bc6403358396663bd21e5a6c853:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDAzNzUyYTI1ZGE0NTUzYWNiNTBkODViYzkwNDI1ZTIzMDhmMGFmNjliMWFmZDBiNDY3YWZkNzEyYjY2YmU2OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmE4ZWUzMmIzN2Q0ZTQ5N2UyOGI0MWE5NzViZGQxOGI3YzRmMmNlY2FkYjQ2MWIzMTk3ZWI5YWJjZjZlOWQwOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWYyMTE2N2Q0YWFjYTAyYWZlZGUyYTAyN2ZiMzJkYzIyNWZkYTBjY2IyODEwNWYyNDk5NGQ1ZTg5OGI3YTY2MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjIyZjJmMjM5YjUwOGU2NmMwNjEzNTdhMDE1ZGEzZmM1MzJlZjE3YjUzNDdkOGVjMmZiYTVjMDBlNDIyYzNmZSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

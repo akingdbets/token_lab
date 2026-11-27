@@ -1,0 +1,4 @@
+# Files
+
+- [CSV Auto-Detection and Reading Faulty CSV Files](auto-detection-and-faulty-files.md) - How DuckDB's CSV sniffer detects dialect, column types, header and date formats (sample_size default 20,480 rows), how to inspect it with sniff_csv and override it (types, auto_type_candidates, all_varchar, dateformat), and how to handle broken files with detailed errors, ignore_errors and the store_rejects reject_scans / reject_errors tables.
+- [Reading and Writing CSV Files](reading-and-writing-csv.md) - Import CSV files with read_csv (or a bare 'file.csv' path), COPY ... FROM and CREATE TABLE AS, the full read_csv parameter list with defaults (delim, header, columns, types, nullstr, sample_size, union_by_name, allow_empty, ...), practical import tips, and exporting CSV with COPY ... TO and its CSV write options.

@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:4eea5d8dedffeed3a5a0547e7b532da33f6808d9210a4bca628888ffecd51782",
+  "claims": [
+    {
+      "id": "claim_87549243b4d24394a8966473bcb20f44",
+      "statement": "A CASE expression without ELSE returns NULL when no condition matches, and SWITCH is syntactic sugar taking a MAP of values to results with an optional default.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/expressions/case.md#L51-L113",
+          "version": "repo-lines-v1:sha256:0bae5c56ae447ecf31256b31dabba26d83a6bcdac6b2c6e7a1bcd89ab812f969:eyJzZWxlY3RlZExpbmVDb3VudCI6NjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA3M2M4MmZhMWI4ZjM1MzA3ZWU0ZjJmYTdiZmJhOTBhNWFmMDE4NjRjOWMwMDM2OGYwMjZjMGEzZGU0NDVjYTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI4ZDU1NzViMTBlMmRmYTFlZmMzNzA1MzlkMDMyMmM1MWQxZTBjZWI5NmY5OThmMTdhY2JmY2MzMDhlZjg4MzgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM3NmRiOTVkMDRiOWM1ZDgyNzBiNDFjZDlkNzQ1ZjMzYTQ1MDViMzdlOWM3NDZiNzFmMjdhZDFhMTMzNGVmNGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2f657c1a21ae4855b1b16515f31735dc",
+      "statement": "TRY_CAST never throws and returns NULL when a cast fails, and cast_to_type casts to the type of another expression.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/expressions/cast.md#L62-L92",
+          "version": "repo-lines-v1:sha256:8b4d724bacbb4b7543da6aac286f74857a084fb9d8f9fe1868c5674419f66f02:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI5MzUzNjIyODhiMzg3NTZlOTliOThmOTJhODMzMzhiN2M0NzRjM2Y2N2Q5YmFkZDhlYjgzNjlmNGIzMTJkNzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5NDAzMTlhNjgyODJmMDc3MDA2MGJkZWJhYjE2MWY3MTE4YzdlYWEzNGM1Y2ZmYmIyMDM1ZDMzNjVhOGRkNjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU5NjBlNjQwODgwZDJkZmE1NWJhMGZiNTdjNWQ0ZTFmYzQ0NGQ3MjliMWU4ZDJlMzc3ODRjNGI0ZDlhNzUwZjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg5MDE1ODM5OTk0Nzg1Mzc2NWQyOTBkZmYwYTdiYWJjYTk5NDJhNzkwMGJmMDY1NzQxNDg1NWRmZTE1YWY4NzQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_774898166d9a4904ad3d4ba86bc72e84",
+      "statement": "TRY converts row-level errors into NULL but cannot be used with volatile functions, aggregates or scalar subqueries.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/expressions/try.md#L12-L107",
+          "version": "repo-lines-v1:sha256:d0399a4a33c0d8e218a757ff8cef3bf569d326c0ed4302b1320b3935cc03bcef:eyJzZWxlY3RlZExpbmVDb3VudCI6OTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZjN2Y3MDYwMTQwMmNjYTk1NzZlNDRkODBkNzBkYTkyMjhkMDc3YTg3MjcyMTRjZGNhN2UwYzlhYzhhZGZiMGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFlN2IxOTM5NjQ3OGVlZGRiODFiYjNmMjdmZTI1NjE1NzEyYjVjODc3NTg2YmUxNDVlOGFiZmFiNTNkMDIzZTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQzNzc1M2MyZmEyYzAwOTcwYjNhMjAwMzBhNDA4YTQyZDllZjIwYWY2ZDU4NGFmMzFhNjNhY2VjNDM5ZWFlMmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_80bdc43564a54320b465d13b2941dc21",
+      "statement": "Comparisons with NULL return NULL, IS [NOT] DISTINCT FROM treats NULLs as equal, and combination casting makes 1 = true and 1 = '1.1' true.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/expressions/comparison_operators.md#L13-L47",
+          "version": "repo-lines-v1:sha256:fce5fbbbc1d47873516742fdd4e61d8bc82af855e59bb0339139091157d1fcab:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdiZmNkN2RhZTFmOWIwMzVkMzlhZWFhZmUyNTRhNDA1M2VlMTRiNWYwMDQ2NDIxYTM1ZWFiNzNkOGVhYTZjMmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVlYWYyZTliZDRhZDUwZjdlMDllMmEzZGY5MGI2YjJiNTQyM2I2NzJmNmNmMTg4MGMzZWYzNGJkZjk2Zjc5ZjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYzZDQ3NmY0OWM2YTFlOWFkNDU1YWUyYzdjMDYzYTM5MDE3ZDMyYWM5NjAwOTliMTJkYzlmZTUwY2ZlNWQwNzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU4OTJkNTFiODI5MTFlMWYyZTdhYjY4ZmI2ZmFiOWM1MTlhNzg2MmM0MGIwYTkyMTBiMDc3YTdhM2E1YzkyZjAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_71544c10bb4445489b275a900290b340",
+      "statement": "An explicit collation on any BETWEEN input applies to the entire BETWEEN expression.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/expressions/comparison_operators.md#L66-L78",
+          "version": "repo-lines-v1:sha256:c3684c9e620604c487e2b4d4e272b841712c28b1966ed05789ba264f7bb12082:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNkZDE3ZTRjYTljOTA2N2JjZDk2NDczYTNjNzlhZTJmNjczNWFkOWFjZTlmMTI5Njk2ODAwNTFkODViYWNkODMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk1MmE3YzY0NDdiNzE3Zjc5YzVlN2NiNzY1ZDBmMDdmNjNmZTYxZmMyZDIzYjFjZmQyYjcxOTQ0MDE5ZTIwM2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU2Yjc4MGNkMTQ2YTA5MDNiYjc1ZmQ3MzY3OGE5OTlhZWY1YzBjYzNhYmViMGMwMzZlMmUxNDYxNGE5NmUxYjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_522e5d55ef874e6bb55c37a9df663c8f",
+      "statement": "IN on a tuple returns NULL when the value is absent and the tuple contains NULL, while IN on a list ignores NULLs and IN on a MAP checks keys.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/expressions/in.md#L19-L136",
+          "version": "repo-lines-v1:sha256:d887ccb9dc961ff8e867c2d53200193528424859271306c71cd0a9fffedd6a80:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIyMzQ4NDFmYzcyMjczOGNhNGJhOWU3N2RmNzcxZDdjYzIxMTNkNWUwMmY0MzdiOTJiNjIzMjgzMmVjMzA2Mzc0IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIxMmFmOTY3MzdmZmVmYjliMjM0MzA0MTllMmJhMTlkNTQwZGE4YzRkNmZmZDExZTEwMzA2Zjc5YmUxOWFjZGFiIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlMzMyNmM2YTdhYmM1OWFkMTE0NDYyMDIxMDdmZjM4MjM1ZGYyNzlkNWEwNDBkYjdlOWJjYWRhZmQ4NDQyMzNkIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_e7eed20451464f5d9a4478858669a8c2",
+      "statement": "Scalar subqueries returning multiple rows raise an error unless scalar_subquery_error_on_multiple_rows is false, and NOT EXISTS antijoins are detected automatically.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/expressions/subqueries.md#L16-L173",
+          "version": "repo-lines-v1:sha256:469d17e19d602316c8ad7cf86fe7da8f7ae473c936c54807cfd2156d85e544f8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTU4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIwZWNlMDRiZTQ5MGQxMDc1ZGVkMGVhZjI2YzkwYTUzYjRkNGNmMzE0M2IxYjMzOThjOWZjNzYyNGIyNWRkNGRlIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI1ZWY0OWVkODE4ZTc2MTRmNGRkYmEzM2I3ZTdmNDUzMTM1YjM0NTdhMTBhYWNkYmYyNzRkODU3MDQxMDYxNjliIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI1NWFmNTA2YjU4MzQ3NjBkODhkNzY4YmM4NzIyNjJhNGExNTkxNGZlNDJiMTAzNWM1MWYwYTA3ODQ2ZTc3MTZhIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJmODAzNjc3YjNlYjg5MzhhYjhhNDk0YTYyOTY2YzNiYjUyMmUyZTMyYWI3M2YxYTQ1YTNjYTJmNTVkZDk4NmZiIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_d7aa4b7823d64eb590f30a087c702b5d",
+      "statement": "The default collation is BINARY; NOCASE, NOACCENT and NFC are built in, NOCASE combines with others, and different collations cannot be mixed in one comparison.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/expressions/collations.md#L16-L153",
+          "version": "repo-lines-v1:sha256:c37617c695068acbe66e638e7efac0166fca3d9fb073669a28c64d750c803a70:eyJzZWxlY3RlZExpbmVDb3VudCI6MTM4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI1NjE5NTlhMDQyOWU1ZTAzMDhiOTIxYWE5MWMzYTVhZmQ3MzEwN2FkMzk3NTVjYzllYTg2MmU5MjIxMzRhZGY2IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI1N2IxZjNlZDY5YWJkNGUxYmJmODYyYjMyMjM5N2I2YmU4ZGYzOTAwNzE1YzFmY2MzZGNmZTI3N2NhNTQxMjQ3IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlMzMyNmM2YTdhYmM1OWFkMTE0NDYyMDIxMDdmZjM4MjM1ZGYyNzlkNWEwNDBkYjdlOWJjYWRhZmQ4NDQyMzNkIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlNzVlNzFjNzU0ODQwY2ZmNjliNmI1YWNmNTE3ZWU1NDJmOTU2ZTdkMmI2NmQ0ZTVlNGRjMjc2MTEyNjgzODE4In0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

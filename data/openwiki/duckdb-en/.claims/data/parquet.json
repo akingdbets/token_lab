@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:bf6348ca31d1afbd53599d30fbc0d1799709bf6b26f003cc86cbbf0492c12b92",
+  "claims": [
+    {
+      "id": "claim_7e9f3acabc44486b888aa3bc2eb45a3b",
+      "statement": "read_parquet parameters added in DuckDB 2.0 include allow_empty, int96_as (default timestamp), prefetch_strategy (default auto) and utf8_validation (default strict).",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/parquet/overview.md#L159-L177",
+          "version": "repo-lines-v1:sha256:946da2aa065fe54f77a9e4453efe8f187d63d52006bb6fe03dcc2dabd518e084:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVlYzZiMWM3MWY3MzNjNGU0MGRkOTgwOTM5OGEzZDQ4NGIwNDc5MzliYmZiM2U3ODVlYmIxNmZiNmE1NWE5MmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdhOWUzYTg0OWZhZmVhNWZhZTRiM2JjODQyYjk3MjYzNzdjMzM2MDNjOWVjYzE2ZDc0ZmMyMTJlN2QwNjM4ZTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOWFjN2Q1MTUxZjZmZGQxM2JkYzdhYjJiZmFiNmY1YWU5NzIzODJjZGJlZTE5ODIxZjY4ZmY0MDE3MTdhYTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc5ODE4OTFkY2U5NmM2NTA4NGEzZGFhNWJhNDQ3ZGFlNTU2NzdmZjBhZDg2OTBkOTllZDlhNDdiY2IxMjQwNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4dc5b60988054341aea3f17bdb16558b",
+      "statement": "The schema parameter maps file columns by field-id or column name and cannot be combined with union_by_name.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/parquet/overview.md#L179-L231",
+          "version": "repo-lines-v1:sha256:09241be804dff16fda59d78cfc3cfa96f5d4ea18f64b2ad216b36c745d7ec628:eyJzZWxlY3RlZExpbmVDb3VudCI6NTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAzMjI1MzZiYjJmM2VjYWNkYzEwNWQzYWY2ZGExMTIwMzRkMDYwZGE1YzhiN2VlZjQ2MmYwNjBjN2QwMDA0ZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgwYThlZTA2YjBlN2RiZGY0OTE0NTEwMGE1OTBmZTU2YTA0ODU3MGE2NTExOWMyN2JmMzEyMTYxMjMxODE3OGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYwNGZmY2UzZDAyMjAyN2U5NDRkMTJhNjkwZmM0ZTA1OGI2NjgwNDZmYzM0MzUzMWZlYWQxNjQ4ODY4ZDRjMGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQzNzFiYWFhZjE3MDQ0ODdjMWFlOTZlM2I1MmM3YzgxMjE5NjlkNDcwMGQyOTE1ODY0MGIyMzRkZjEzZDg1NjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7ae522f8a6024920945f111b7776278d",
+      "statement": "As of DuckDB 2.0 the file_row_group_number virtual column exposes each row's file-relative row group, and DuckDB reads and writes the Parquet page index for page-level pruning.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/parquet/overview.md#L233-L254",
+          "version": "repo-lines-v1:sha256:c2054e69931acee52704ba42ea3d51d9b44318b11b1a215bd9f63d6137db47bd:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEwMDdjM2JhZWQ0NWEyZGUwNzBlZmM4NzBjZDBiODA4MzE3MDUzMGM2NTBkYWRlZjZmYjIyNjM3ZGQ0MjEwYzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjMWMxMWQ1YmZkMzdmNGU2NWI4MDNjZTNkZGMzZjhiOGYzYTgyY2MyMjkxYzlmOTUzOWEyY2ZiNGUwNmM4MzMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjczZDYzYmE0OWEyZjE4YmFlNzA5YTRhNzVlMmIyNjMyNDA4MWZkZTg2OTdiMTJkMDQyYjYxYzhlN2E4NzJjMzUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJlMjgwYjc4ZTU2YTZlNzVhMjkxZGNlYmY1YjkwZDU3NDRhODIwZjk2Yzk4ZmNkZjlkYzYwYjk1NDUxNTU2NmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_af54be4fa92047f083f779d9439088c0",
+      "statement": "Parquet writes default to Snappy compression; zstd COMPRESSION_LEVEL defaults to 3, ROW_GROUP_SIZE to 122880, and DATA_PAGE_SIZE_LIMIT (new in 2.0) splits pages below the default 100 MiB cap.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/parquet/overview.md#L291-L406",
+          "version": "repo-lines-v1:sha256:c59140bd2fa5116c6229124b3370d57ad400715747f5c439ac2a13e9cba4ccb4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJiMDFhZjE4YzI4OTg1YmExNTYxNGFiOGU5YTMxZTA5Y2U0YTk3YzQ0YTZhYjQ1N2JhOTkzMDBiNjMxNzVhMWNmIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI3ZWM1NjhlYWRkY2M0ODQwMjZmMWUzMmFmMjJjNzVmMzg1MzYyY2YyYzVjMWRkOTY4YzA1OTJmNTcxOTU4MzMwIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI3MjgzMGExMzdkMDEyYjMzMjNhNGRlYjQyNWY2NzFhMWU3ODcyMzhjZjRjMTAzYjBjNWE2MGVlZDBmNDUzOGMxIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJmOWIzM2JmNDRjZmRhZmM4YTNjYTIzOGZlNTM5YzJjNGRkYTJmZGE5ZmNlNmZmNTc5MjA5ZWRhYTJlYzVjNzBmIn0"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/statements/copy.md#L373-L384",
+          "version": "repo-lines-v1:sha256:42f6428f5db00d0f6fcf00b4a28cc5a7d56d7bb31a4ec4e79949e566d3790165:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdhOTgxNDQ1MmJmNWY5NDQ4NTFhMjJhNjc1YTVkOGRlMmVjNDYyMDI2ZDQ4YWJlNmNmYjk3NTdlNjQ1MGRiN2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzZWQyZGQ1NzExZjBmMWJmMmI5Mzk1NDg3ODk0Y2JhNzFhYzM3MGFiYzE0NmQxMjQ2OWQyMDM3NjMxYmUzOGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZmNDBmZDA2Nzg3YTlmMzJjNzYwMDQ3MGViMDE3ZjFiZDFjNDc2MDljNTNmZDgwYTJmYzUwNTMyMzljZWNjOWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQwOTU1YjdhNGMyNzViMDJjZDBjYTE3YjFhMmQ5OGRmNDMzYmEzNjU4NjFhMWYwYTFhMmUzNzIwZGFiYzg0M2IifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_57ecc0ca0c144348bafef84a5e638390",
+      "statement": "A good rule of thumb is at least as many row groups per file as CPU threads, and sorting on filter columns before writing improves row group pruning.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/parquet/tips.md#L40-L87",
+          "version": "repo-lines-v1:sha256:4f3e24cdba8fcaa008ccd6be911ce0e96da6f5ff032ac5b1ea18424675317677:eyJzZWxlY3RlZExpbmVDb3VudCI6NDgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxMmIxNDY4ZWRlOTJhNjc2Y2ZiNjc5NWE2M2Q3M2U2YTM0MGUzYzEzMTBlOGNhZTQwOTk2NGRiZTFiYWYyMzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVkNzFkOTIxNWQyNzc3MDNiZGE5OWRjMmUwOTZmODdlOWZmYjBmNDg5ZWE1MGEzMmM5MzE3YzFkNDkzYjBmMWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU3ODE1ZWU0YzZkMTMzOGVkYWZjMzdjMjU2YzNmYjhjMzE0M2Y1Y2FlNDgyM2VhYzE0NWRjNTUzODg4MGY3OTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJjODRlNTU1MzJmYmY3M2NlY2IyOGQ1M2UyOGIzYmQwOWY0M2RhMjQ3ZTM2YjMyZWMzMGRkODEwMTdhYTA2YzMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ac4e94f493104a52aea96954c70e0d64",
+      "statement": "PER_THREAD_OUTPUT writes one Parquet file per thread and can significantly improve write performance.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/parquet/tips.md#L29-L38",
+          "version": "repo-lines-v1:sha256:69b2e5fe74a34e42be7a45676d2c9d6b994259474b0608a805917bb482b6febd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkyZTkwMzBkMjMyNTBkM2YyZmUyZTEzZTQzZDhjMTY1MTdiY2Y5YmRhYzIwYjdiNjhjODU3ODNmYWVmMzIyODgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU0YzJmYjEzMjQxNWYzNWI3YzczZmZhNTY2ZjliMDI3ZDYzNWY4ZDc1YzEzNzQ0NGIzNGM4OGViNzExMmY5ZmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIyYTVmZGJhNzJhMWMyZGQxOWI2NmE2ZTlmNTQ2YjcxN2JjY2U5NWYzYzNmMDU2MmQ1OGIwMWNlNmJmOTdiZDgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4d8a1004eb684d718776b4176735f67d",
+      "statement": "parquet_metadata, parquet_schema, parquet_file_metadata, parquet_kv_metadata, parquet_full_metadata and parquet_bloom_probe expose Parquet metadata.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/parquet/metadata.md#L12-L195",
+          "version": "repo-lines-v1:sha256:848c7b2f887c5d50ab2eae519a8c630c06261cdcd5ff85c960c6fda6023c2b2f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTg0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJlYjUzMmFiYjQ4NGY5N2FjNmM4YmY0YWM4YTJhN2M1YjEzNzAyMDA3Zjg2Y2JjNmRlNjRiNzFjNGM3OTJkMjliIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJkMjg5ZjdmMjIzNTVlODM2MmI2YTczMThhNGE4NTUyMDQwMGUyZTkzMTE1OTc0MzcxNDljMjVlNDAxNGQxZTFjIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2MGFkYjM0YTI1MDlhYjYxNWZlYTQ5NWYyNTFhOWZmYTk4MDYxZWM0MDg3YTliYmM0NjMyY2ZjNDI0Yjk3YzNkIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJjZGRmZWFkNTAwNmU2OTQ5ZTYzZWZiMTcyZDVhNGY0Y2YwODRmYmQ3MTcwNzMxMWM5MGQ0NTk1YzllMjI5YzQ3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_bdf6eb59f4ca411d8de3d187eedd3f77",
+      "statement": "Parquet encryption uses keys added with PRAGMA add_parquet_key, encrypts footer and all columns with footer_key, does not support column_keys, and is about 2.5x slower.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/parquet/encryption.md#L12-L77",
+          "version": "repo-lines-v1:sha256:28913522de397ce4743d3e7577b505cc34599c2157573e129bb733a8ca56b77b:eyJzZWxlY3RlZExpbmVDb3VudCI6NjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRhYmZjZjI1OTVmMDQzMGY5ZTZjOTQ1NjI5NzU4OTAwNTYxODI1ZGUwYzAzM2NiZTkwNTljZDgxNjlhZDIyZTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwZjkwNTdmYjc0ZjBhMDc5ODIyYzY0NDg3ZjRjNmViOTkzNmEyYmE4ZjljODZmZDVjNjhkZjBjOTA0Mzg2NGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY5YWZkMzViZjM0ZmI4MmNmODcwZGM4MDUyN2Y0MDZjNDBlZTU1YTM3ZjI3MjBiNjYyNjE1OTgwMzk0NWYzMGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

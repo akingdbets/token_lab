@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:a7a10d23f72975ec3cb1360edfed4080fafeb7be132f35a86c267bc0cb5217c6",
+  "claims": [
+    {
+      "id": "claim_04fa5ba2d3064bfd9ac20b89521fb74b",
+      "statement": "COPY ... FROM appends file data into an existing table; with a column list, columns not listed receive their default values.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/copy.md#L93-L95",
+          "version": "repo-lines-v1:sha256:057a81cb9253901f9ecea5e70196aabd38e1c27cbd6c851e71dfb9684bda702a:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzNkOTZkM2I0M2RiMjcwNDExNDQ1ZDI3YTQ5YmYyYmJkN2IwYjMwNGZkNDY2YzBjN2FkODRiYzFjMzY4MGRlNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjQ4ZTIxNmIyYWVlZWRmZmE1Yjc2YzIxMjE2MzBmNWU3OWM4MzEwYjVmM2NjMWY2MDhkYmJiYWU0OWViOTBlMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNGRkMDZjMjk4YzYxOTFlZWZkZTNkMDBhMTQ2NTU5NTJlNzcyYzA1YWQ0ZmEzMmVjMTJjZjQyYzVmYWUyOTUwNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZmYyYmRlZjhhNjAwNGE5OTgxNGNmNTY3ZGNjZmEwYWI4YWNiM2RmNDliY2M0ZGNiYTI4YWI2YWIxZDdkM2JjOCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_84e503d145a34308a9e578a6a6678ca4",
+      "statement": "COPY ... TO overwrites an existing destination file without error, writing to a temporary file first by default (USE_TMP_FILE) so an interrupted write does not corrupt the previous file.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/copy.md#L177-L177",
+          "version": "repo-lines-v1:sha256:33175f5dac68fcbc9bca298866ceaf1b79f8846b5ae23235e7d66ac5179fd05e:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzMxNzVmNWRhYzY4ZmNiYzliY2EyOTg4NjZjZWFmMWI3OWY4ODQ2YjVhZTIzMjM1ZTdkNjZhYzUxNzlmZDA1ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzMxNzVmNWRhYzY4ZmNiYzliY2EyOTg4NjZjZWFmMWI3OWY4ODQ2YjVhZTIzMjM1ZTdkNjZhYzUxNzlmZDA1ZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMmQ4YTYxNmFmZDVkMzZmMjlmMDJlMGJjZTU4NWRlNGZlYTEyZGNjOGFiMTljNGNiZGJkMTdjYmFmMjRhYzIyZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTU4NDMzOTdkNGJhMWM5NjVlM2IzYjMzNWUyY2U5OWI5YTJkNGY2YWUxMzJmM2VlZDllYjE3OTYzMmM0M2U3ZSJ9"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/statements/copy.md#L297-L297",
+          "version": "repo-lines-v1:sha256:2c460784800fd85b03bc74f51df8a0cd61e001adacc0ed598b2509b68d38f474:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmM0NjA3ODQ4MDBmZDg1YjAzYmM3NGY1MWRmOGEwY2Q2MWUwMDFhZGFjYzBlZDU5OGIyNTA5YjY4ZDM4ZjQ3NCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmM0NjA3ODQ4MDBmZDg1YjAzYmM3NGY1MWRmOGEwY2Q2MWUwMDFhZGFjYzBlZDU5OGIyNTA5YjY4ZDM4ZjQ3NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDE2NmZiMTFmYzIwNDU0YTI3ZGY3ZjRiOTcyNTUxMWRmOThiNmEzYWEwZjg5NjAwNTBjNmMzNzFlMTJlYWZlMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYWZhNTQ4ZjhjYjBjYjBjMDM3MWQ5OTQ0MzkwNzcwZjVkZmQ4NmFlNDY4MjJlMDcyYzY3NTk2Y2U5MzI3NjNiMCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_0056ea74b60c4cef818dd4d2b3c60e7a",
+      "statement": "Since DuckDB 2.0, COPY ... TO can be used as a CTE body returning the number of rows written; COPY ... FROM cannot.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/copy.md#L179-L188",
+          "version": "repo-lines-v1:sha256:1da0276ab97f654a5bfc6acb082059ee511ca2f0c535ab3f7d78817e16eefb3b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBmMzM5MjRlNGRmYTYyODM4NjhhZjhmMzU3MTFjYjQ1ZmE0NDQ5MjA3ZWNjOWI1MzFiNWU1OGRkNTdmMzRiMjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY5OTRlYjdjMjg0Njg5MTAzZjE4MGI2ZWY5ZjgyMzM0NzRlOWRkM2Q0YTBiODc4NzhlN2VkYTE1OGZlNmE5ZDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxNWQzNDMwMjdlNjRhYTUzOGFmNzQxYWJhNzMyZDU4MmIxYTZiMWYzYTRlODJmOGMyMzRlZDc3ZmE4YTRmNTYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_64eb37907f98481b84a0eb2bd72a7c8e",
+      "statement": "The COPY FORMAT option is chosen from the file extension and falls back to CSV when the extension is unknown.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/copy.md#L296-L296",
+          "version": "repo-lines-v1:sha256:c191ed4632a64b5d28148caacdd96cb75d1215d1543568798c65b8037cef1d67:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzE5MWVkNDYzMmE2NGI1ZDI4MTQ4Y2FhY2RkOTZjYjc1ZDEyMTVkMTU0MzU2ODc5OGM2NWI4MDM3Y2VmMWQ2NyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzE5MWVkNDYzMmE2NGI1ZDI4MTQ4Y2FhY2RkOTZjYjc1ZDEyMTVkMTU0MzU2ODc5OGM2NWI4MDM3Y2VmMWQ2NyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzM2OGRlNTYyZWRmOTM1OWE1YmU2ZTNmZTBhNzFlN2ZlMzk0MjgyZTBiMmU2ODI1YTEyN2FkZWExYTk1MzE0OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjc2MWE0ZjExMjE5OWM3ZTE0NDRhODA0ZGJjNTNhNTJkYTQyOTg2ZDFkMDQyZWVjOWM3ZTg2OGM3ZDE5MGMwNiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_da51dea848f5425a9c2bf0adc548e12e",
+      "statement": "The ORDER_BY, PARTITION_PATH and RETURN_COLUMN_TYPES COPY options were added in DuckDB 2.0.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/copy.md#L306-L311",
+          "version": "repo-lines-v1:sha256:e9d14d4af89b1e39ea6e5654ef277600d361b00bf2f21fce0cfc67066b3fc872:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDM5OWY2ODNhNmNmM2IwY2Q1NTY0MTVkOTAzMDBjNTE5NzU0YTQwODFlZjczNzk3MDgzNjRjMDczNmYyNmJmNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzUxZTE4NmMzMjE0NmU5YjAxNTVjZmIyMGIxZDk5YTc4Nzc2ODA4OTVlMDhlNTc1MGM3NWNhODJjOTJjMWI2ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTI4NWU3YzJhYzllOWEyZTgxMWJjZTNiY2FjZmNlMDE4NGRiNzc4MDNiNjRlYWMyYWRmNTNjMzI3ZmU0MTc3ZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDQ0OWExMWE3MGM5ZTgwZDU1MTgyZjA1YTAyNDNmMjRiZmFiYWE3NTNkYjgwZGQ5YWQ1NzZiMTg4YTU4OTc5NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_f34df86573be4653b80da7b79fae016a",
+      "statement": "Parquet writes default to snappy compression, ROW_GROUP_SIZE 122880, PARQUET_VERSION V1 and zstd COMPRESSION_LEVEL 3; TIMESTAMP_IS_ADJUSTED_TO_UTC and WRITE_TIMESTAMP_AS_INT96 are new in 2.0.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/copy.md#L379-L397",
+          "version": "repo-lines-v1:sha256:7f556ea2d3ed3e5130d3f7a43cb3ee664df15dcf767045ad8e70a281f144ce9a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc1YWY4ODdhYTc4YzNlMTY2YTg5YzdkODE3YmVmYzBmZTI1MTE4NWIxYTJlZDI4MmNlMDQ0YzdiM2QzNDZlODQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVlZjM4MGM3M2QxYzc2M2E0NGQwYmZhMjFkNDcwZWMyNzhiZmY5ZTVkMjQ1OTZmOGZiN2FlNTdhMjc5N2QxZGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMzNjhkZTU2MmVkZjkzNTlhNWJlNmUzZmUwYTcxZTdmZTM5NDI4MmUwYjJlNjgyNWExMjdhZGVhMWE5NTMxNDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg4YzA5YzYxYmFhMzhhMDZkYjdlOWJmM2U2MTk4Y2M0MzRiMDIxMWVhMGM4NjA0NzM0NmUwNWJjYTNmY2E3ZjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_79de78a734c64a64a94b4791984bd8b8",
+      "statement": "COPY FROM DATABASE copies schema (constraints, indexes, sequences, macros) and data between attached databases; adding (SCHEMA) copies only the schema.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/copy.md#L324-L346",
+          "version": "repo-lines-v1:sha256:b8aa9e0d82d8bf61893d0b445eab1afd6799605aefc95245fc1ac8b40da1e87e:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNlZjAxMTQ1OTgxMTc2Njc3NDBhOWMyZGY3ZGY1OGJiMzczMmQzMzkwMTk0NmMwNDUzNGRiZTY2Y2M2MDcyYjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcxNTgwYmVkNzYzNDdlZTMxZDVlMmU2ZGI5ZTAwNWJjY2MwN2U4ODExMjViNTJlMzcyNTRjNmM0OTZiMGQxZWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcxZGUyNmZkNzc0MTFjZTUyMzM3Y2M3NmYyZmE2MTY3ZDI2MWZiMmJhYTg0MjMyNmE4YmIyMTVhMmNiMTZhNGUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6594406acf1d4a5592ac4673ed32390d",
+      "statement": "EXPORT DATABASE writes schema.sql, load.sql and per-table data files; IMPORT DATABASE must target an empty database because schema.sql uses plain CREATE statements.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/export.md#L59-L85",
+          "version": "repo-lines-v1:sha256:ee480665c60a747c0da1458db0393b18ac518cf46ff4149089f03aa22973234c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhYjk4NjIxYmJlOGJkOWYxNzhjYjc5MjAzMThkZDhlMWQyYWIxZDhmODcyZjY1MTBiZmNiNjZkZGFjZGVhZjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUzNzVjMWYxYWRkOTgxMGFlYjJlZDQ1N2Y0MDY0YjZmN2FmN2Q0Mzk0MDA3ZWFjNGM3NWJjZTAwYjEzNDdkMGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQxZDkwZjExMjQ3MWJhMzcyMzVjMDlhZmViOWVmZGVkMmIwMjg3MzQ1MGUwYzEyY2RhMzhhNmQ2NzUzNDMyZTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcxZGUyNmZkNzc0MTFjZTUyMzM3Y2M3NmYyZmE2MTY3ZDI2MWZiMmJhYTg0MjMyNmE4YmIyMTVhMmNiMTZhNGUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cfcc445ffb774307a9e28e32401086ea",
+      "statement": "In DuckDB 2.0.0, triggers are neither exported by EXPORT DATABASE nor copied by COPY FROM DATABASE.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/export.md#L73-L73",
+          "version": "repo-lines-v1:sha256:30b07a96c0c4b393910dc2242fe02c7d97eb319495bc0a28a258a1a8bd9ee5bc:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzBiMDdhOTZjMGM0YjM5MzkxMGRjMjI0MmZlMDJjN2Q5N2ViMzE5NDk1YmMwYTI4YTI1OGExYThiZDllZTViYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzBiMDdhOTZjMGM0YjM5MzkxMGRjMjI0MmZlMDJjN2Q5N2ViMzE5NDk1YmMwYTI4YTI1OGExYThiZDllZTViYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTU2MDViZDg5YWZiMTBmMGZhZDdlYzAzNTZkOGNmZmM0OTg4MThhZGU2ZDBmZjEwNGRhM2ZlZjVjNDU4YjM0NyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjZiYWE3MjkxNTdhNTZmZDE5YTgyZDNmNzBkYTEyMDQyMjliNjAxNmJlMjgyYmFiMDA0NzRmMjViNWU0ZTczMiJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

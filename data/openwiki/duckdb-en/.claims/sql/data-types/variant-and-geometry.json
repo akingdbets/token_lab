@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:076fcf2cb05818164fecbfd73d8a5675a28ddd61881552889de675d5d613c43c",
+  "claims": [
+    {
+      "id": "claim_4fc056d2c9534bb2a4403655cde5ffd3",
+      "statement": "VARIANT stores typed binary data with per-value type information, unlike JSON which is stored as text, and sorts object keys.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/variant.md#L11-L44",
+          "version": "repo-lines-v1:sha256:286f62176ae671bef96b86c20c601cad70ddc575158cece3e23cbdf61958b3e5:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRmNjQ4N2NjNDU0NWM1ZGQzZjQ4MGRhYjU5YzA2NmYzMjMxYTUzMmUyYTVmYzkyN2E2MDc3ZmQxMjRjM2M4NDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZlOWMyNDM3OWMzMGNmZDNkZGE4YTM2NmY4YTQ3ZjlmMzU0NTFmNGI5NzJlY2IyYTA1ZDVjMWZhMTY0YzU4ZjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJhYjE1MGEyNGJlZTFjNDIxNjFhYjFlNDVmNTczZWEzNmY1MTNhZWM2NzExMTk3Y2NjOTk2YTg1MGVkZDU4NzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgxMjE5NDJmMDZiOGVjMTczZTkxNzkzMmZmZTBmMGNmMzYyNzA4MjI0N2U5MGJhZWM0MDQ1NDBiZDAwY2NhZTQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_340620a8643f400f9689dd32110d2b11",
+      "statement": "DuckDB 2.0 shreds VARIANT columns in storage for row groups with at least variant_minimum_shredding_size rows (default 30,000), and -1 disables shredding.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/variant.md#L88-L98",
+          "version": "repo-lines-v1:sha256:086cd4a6077fde95f7ba6479cfb1fd81346947e62283cdbfa88a3c7bd895a957:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRkNDczYjlhYmY2ZGRjY2ZjNmI5NDNlNzViNGU3MTM2YTM0Mzc1Zjg1YTk4YmZmOWEzODU4Mzc4YjEwOWJkM2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdlMWRiYWU1ZWI1NTIzYTUxYWM2YjIzZDU1NDJhNDkxZmQ4YmE5NjJjNWNkMzI4N2RmYzY0NWE3MWE5ZjdmMzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlkNjIzZTMzNTU3NjQyNGRkZTAyNzZlZGY1NjE0ZDM1MjhjNTQ3ZGQ2NDI1NmVmNTk1MWE3OWU0MjhlZGM1NzYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8033353ec8694721ab9d4d82cb554455",
+      "statement": "VARIANT columns can be written to Parquet with automatic or explicit SHREDDING, and Snowflake shredded VARIANT Parquet files can be read.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/variant.md#L100-L119",
+          "version": "repo-lines-v1:sha256:29960d4f68d1ba1614e434823d40aa30bbd41e2a90bf83b3f118ba935d8b3920:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxMjRiNTkxMGNlMWFhYzIyN2Q4ZjNmNzY1NDI2YzU0OTI0ZGJjY2ZkMDg3ZDQ4NWU4ODViOWU3ZTRlYzYwMzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI1MDdlZGRiMmE5YTg1YTlkMWE3MGEzMTRhNTg5OTUxNDU4YzhjNTA1MDliMGIxZjNjZDdlYmUyY2ZhMTEyOWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJjNzVjNGQ4ODJjNzViMjcyMzM3NzZiMzk4MmRlZmYzM2I1NDZhYzlmZjVmZGI2NzNmOGJlNGJjMGNiOTg0OWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM4OWI2ZDhjMjNkNTA4NGQwZThlNWJhZDJiYWY3OTQ1OGQ2MTBiYTE5OGNmNGFjZGVjZTFhZjEwYTdmZmU0NzkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9482173df933403c84d1adf12f821661",
+      "statement": "Most variant_* functions were introduced in DuckDB 2.0, while variant_extract, variant_normalize and variant_typeof existed in 1.5; variant_extract uses 1-based list indexes.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/variant.md#L15-L72",
+          "version": "repo-lines-v1:sha256:a9ce1a2deed2477d428ad9ea442a384f906e1a83f4ecd3bc59735387d60e70c3:eyJzZWxlY3RlZExpbmVDb3VudCI6NTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQyZjBjOTFjZmE5Y2Q4M2ZjNTUxYzYwOTcyODU5MTc5NWUzNWNiZTg5ZTA4OTYwYzEzNWNmMjlmYTRlZGMwYmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM2MzIzZWFjZDgxNTczODZhYzhmZGU5NDBjMzNjZThlZmMxYzQzOWI2NzJlOTgyMjM5Yzc1MWUyY2NjYjY2ZjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUwN2NlY2MwOGJlYTJhNDQwZmZhN2E1NjBhZDZhODk4MzAzZTY0NDFmOTY5N2I3ZGJiYjBiOTcwN2M0YjA5MTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRlODFhNmUxM2YzZmEyMzRhYmIyYWQyNjE3YzQ2N2YxMDgyNTVhYWNlMTQ1NWZlNzI1NWM4ZDQ5MTZlOTViMGUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_dc391fbb9d7a40d997fac864db576ad2",
+      "statement": "GEOMETRY became a built-in type in DuckDB 1.5, follows the Simple Features model with seven geometry types, and casts to and from WKT.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/geometry.md#L15-L52",
+          "version": "repo-lines-v1:sha256:9752453d8ee5fbed24db5b65c6f54aa061b301a30bf5d2437250a35a37422edf:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEwMzJlZDk4NmQ1MjUyNmEwZjQ2YWNmMDNmNjU2YjAzMjA5YjY2M2M1ZmU5MWI0YjQzMzNhZTRhZjg3MWVlMjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3NWJjNDdjMTgyNzMwYTgyYTdmMzNhYWRhNDU4NTNhMjM5ZjAzOTViYjVlNjQ2Yjc3Y2Q0MWNhMzFkYWI1MDYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRkMTc4ZDVkMjcwYmQ5MzAzNWIzMDg4NWIyY2FkZTZkMGZkNjdkNThkNTI3YWRiNGE5OWI4MzFiNWVhMGQ1ZGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIyNWE4MzEyZGJiYTUxNjY0ZTk4YWM3YTk1MTBiMWY4N2UxMWZiNzQ4NWM0NjU3ZWMzOTIwMmNkMjM1OTc1NGEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9591a0bdc001439f96f236221422406a",
+      "statement": "Geometry vertex dimensions (Z/M) must be consistent within a geometry.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/geometry.md#L68-L107",
+          "version": "repo-lines-v1:sha256:ae5c7e1c9155c17e86385125178a9ec9695f80944b1357d2371acc1f7ce67ccc:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmZmYzNjE4ODMyZDYzMzdlMWNkZmMwMmRlYTZiNDY2N2Y3N2YxMDY4N2JjOTA5YTc2Y2I0ZjBlN2Q1NjY2MDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBlNTZhZTUzY2JiYzFiY2M5ZGY4MzMyZDFiMGRmOTcwOTBmZDRhNDQzN2UzMTJhYjA5YzdlY2UzMWY3NjFiZjQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlhYjE5ZjQ4ZTMzYmNhN2JmODk0ODlhMGVlNWM2MzUyZDAyOTJmYzgyMTYxY2JkN2FhMWU0YzUyYTQzNTdmMWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM4YWQ2ODlmOTJkMjcxOTY3Nzg4NTdmNTIwYjljNWNjZDMxNDcwNjI2ZTIzYjI0OTI4YjQwYTI1YjllZWIxMjAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_040064c18ca245468a0f98e95a70764a",
+      "statement": "Geometry shredding is controlled by geometry_minimum_shredding_size (default about 30,000 rows; 0 always, -1 never) and is skipped for collections, empty geometries or mixed types.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/geometry.md#L118-L143",
+          "version": "repo-lines-v1:sha256:eb9f47a956d7584c584fcc3038d27fb6a3891e602419e94d51cb067564d98819:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQxY2UzNjZiYmNlOGMxOWIzNmRmYWZjZTBiODI4Mzc1ZWU3MWZlNDZhM2YxYWVlNTVkMTkyZmI1ZWJjYThkZGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg0NjAxZTliN2Q4YTFiMTg1MDZhNTMyZmNkMzY1YTBlZjEzZWI3NmIzYmU5ZWYzNjI1NzMyNzc4ZGEwMjM5MmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI0NGRiNTk4MDBjNjE2NDUyMzQ5NWY4MDU0MjQ1YWJlYjA2NTE2OTlkZmNkM2YzOTAyNjM5MmFlODhlNjdkNjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3438982e47694751b02cab98d24c6af6",
+      "statement": "Only the && operator currently uses geometry bounding-box statistics to skip row groups.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/geometry.md#L219-L241",
+          "version": "repo-lines-v1:sha256:af9f7a413ba6384fcc5e1fe67e560b12f39141bfddf2e6529c05225fd677d80d:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwNDYyY2YzNGNkNWE5YzBkM2Q0YjI5M2UzODlhN2UwZjM1MjU1MjdjODAxOWQ2MWI4Y2M1MjRjOTFlN2UyZGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjExZDg4Zjk3MjIwOTI1ZDA5ZTc0NDU1YjQ4YzhhZDQ1MWQyZjg0YjFmNjAxYTI4ZjU0M2NkZTU1ZTM1MThiZGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIyMDhjMzg2ZjE0NzRkZGIyNGZmZGRjNGNkYmI2MjNjZDYzZmY3MDc4ZjdkZjgzOTI5Yzk1ZmUxNmQ5OTE5YWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE5NDRmYmRjZGUxMTI4NzkxODZkM2NkMTZiYmI2Y2IyMzRiZTYwMmU1YTQxYzgzYzAwZDg5ZGNhNmU3YTIzZGQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0e512a255fa64092ae1ed2eefcb29054",
+      "statement": "GEOMETRY columns can carry a CRS such as GEOMETRY('OGC:CRS84'); unknown CRSs raise errors unless ignore_unknown_crs is set, and ST_Transform in 2.0 requires geometry_always_xy.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/data_types/geometry.md#L243-L381",
+          "version": "repo-lines-v1:sha256:850216e589c1f83caee4578ffd2f12e33597848ef2841eedc2cf9e2e53e25c81:eyJzZWxlY3RlZExpbmVDb3VudCI6MTM5LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIzODMxMWQxYjRlNDQ1OTZjMmM4ODVlOGU4ZGEwNjY4OTEwN2U2NGQ2NjI5ZDc0MGYwYTgzOWU5Y2IwMzQ5ZGM0IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI3ZWM1NjhlYWRkY2M0ODQwMjZmMWUzMmFmMjJjNzVmMzg1MzYyY2YyYzVjMWRkOTY4YzA1OTJmNTcxOTU4MzMwIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIzODgxMDkxZDBmYzc3MzE5NzQxZDZmNTA4ODdiNjc3ODBjNzNjYjFjOTEzYWNmNjRiYzFlMmY4MmQyMjMwM2ExIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIzODliNmQ4YzIzZDUwODRkMGU4ZTViYWQyYmFmNzk0NThkNjEwYmExOThjZjRhY2RlY2UxYWYxMGE3ZmZlNDc5In0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

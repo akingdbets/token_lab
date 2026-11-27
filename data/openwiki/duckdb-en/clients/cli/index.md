@@ -1,0 +1,5 @@
+# Files
+
+- [CLI Dot Commands and Output Formats](dot-commands-and-output-formats.md) - Reference for DuckDB CLI dot commands (.mode, .output, .once, .tables, .schema, .dump, .import, .manual, .history, .timer, .pager and more) and the available output modes such as duckbox, csv, markdown and json.
+- [CLI Interactive Features: Editing, Autocomplete, Highlighting, Friendly CLI, Agent and Safe Mode](interactive-features.md) - How to use the DuckDB CLI interactively — linenoise key bindings, the external editor, Tab autocomplete, syntax and error highlighting colors, dark/light mode, the `_` last-result table, agent mode for AI coding agents (new in 2.0), safe mode, and known CLI issues.
+- [CLI Client: Installation, Usage and Command-Line Arguments](overview-and-arguments.md) - How to install and run the DuckDB 2.0.1 command line client, open in-memory or persistent databases, configure it with ~/.duckdbrc and -init, run it non-interactively, pipe via stdin/stdout, read environment variables with getenv, serve/connect remote databases (new in 2.0), and the full list of command-line arguments.

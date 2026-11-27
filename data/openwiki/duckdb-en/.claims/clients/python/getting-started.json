@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:ff87e9880fb1114595427fab8fef8fe7532a6b5edd0e5db6ed9c7b59b25456c3",
+  "claims": [
+    {
+      "id": "claim_4b4a6edf099140dab755e73487029fbf",
+      "statement": "DuckDB 2.0's Python client requires Python 3.11 or newer and does not support free-threaded CPython; on Python 3.10 pip installs a 1.x release.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/overview.md#L21-L24",
+          "version": "repo-lines-v1:sha256:df8acfa33279e31274a038e8d01b67b50c5e00f8726930ad923796e68473a12a:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmNhOTkxYzQ5ODUyYjM1NGUwYzJiZmM5NWE2MzE2OWJjYjE5NzZlMzQ0ZDAyNzZiYjNiM2NkY2NhNzEwMDEwZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiM2MwYzZlNjJiNGY5MDJlM2EzODIwMGE3ZDNhMjUzMWRlMDMxNDdiYWUyZGNiMTM5NDk2NmI5ODY4NzdmOWFiNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTI2YzNiMzgzOWFkZGMyM2QxMDU1NmMzZTc1MTVhZjZjODc5ZWMyYWY1ZTI3NzEyODNlMWNlM2ZkMjJiZmQ0YiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNmMzMTE5YzA4MGE1NzExOGE0MzZmNTJmOGUzZjNkNzdhYWRkOWU5NmY5ZTc5OWZmMjQ3NDc2ZGUxM2Q4ZjIxYiJ9"
+        },
+        {
+          "resource": "repo://docs/2.0/guides/python/install.md#L13-L15",
+          "version": "repo-lines-v1:sha256:92d73ec03c35ff07ec15cf3f044e983b761163548a4dbb46d642a7e0b3724806:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMGZmOTM2NDk1ZDY0NjdkZmNmNTU5Mjk2MDQwY2NkYjNhZWU3YjQzYzQ1ZWI4YmU0OTk5ZGNkMWYzNTYzOTQwMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzdjMWY1YTE1MzIxMTEwOWE5OTA3OWUxMjhkOGE3OWUxZjQzMWFiOThjMTc5NzRiMWFmOThkMzUxZmQwNzgzZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNmIxYjQ2MWQzZmEzNjUxMTEwN2Y0NmRhZDk0OGFmN2JjYTA2Mzg3NWFlZmQ1ZmM3MTMzNGEwODY3YTkyNWM5OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjZmYTg0ZmY3YThmYjVkMmUyOGEyMWNiODkzMzgyNDk5YTgyYjY3OGMxOGE4MDZkMzg3ZDUwNjg3MTNkMzE5YyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_348969f7b33c4924acd51647c404000e",
+      "statement": "duckdb.sql() runs on a global in-memory database and returns a relation whose read-only query reruns every time it is read.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/overview.md#L30-L40",
+          "version": "repo-lines-v1:sha256:f04b92096f68385d08017673b9e0db35f61f4c6445371cbea6d18adb62c3f4b3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMyZjFjZGY5MjlhOTU4OWE4NDgwNmU0YTcwNzc5OGRhMjEyNWJlOGI1MTY3YzE1MDdhMzc0YmEzZGVkNmQ5OTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI2NWI4NWNkMTc3MWFkY2NhMGI1NDI0YjA2M2M5ZmZjOGZjOTEyNzc2MWNhYzE3YjkzNDQwMTljZTAzMTM0MGYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgwZGNkY2UyN2Q1YTljZmU1MTJkNTU0YTFmM2NhNGU4ZDZiZDQ4NGJjN2FiZmRlMTllNGZjMTljYTQzNzgyZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRhMjAwYzFhZDEyMTQwYjkxOTZhMzU1NTk5YzRiYmE4ODc0NzJmODk3YjhmNDUzYTBmMzk1MTA4MjdjOWNkYjIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d7ff6194f6524221a83cdee06078fbb5",
+      "statement": "A connection runs one call at a time and raises ResourceInUseException instead of waiting; each thread should use its own con.cursor(), which has its own transaction and session settings.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/overview.md#L237-L273",
+          "version": "repo-lines-v1:sha256:07c6074aa2727d91e67f06fff03fac00ba7402c5cf61d4e87d57c503c15d4dc2:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0MGRkZTI0YTZjODc5ZDk0ODQyNTI1YTRmNWM3MDUyMzEwYzgzMDUwMjIxMjk4Y2QyYjQ1OGZiYmVkM2IxMDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRlOTVmYmI2MDQxNGEyMjg1MDZlZDFlYzhjZThhNmVhMDQ3NmEzOGU1MzlmOWE0NDFjNjk2Yjg3OWNhODliZjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlmNDczMGYxYTYwNzdiODQyZGU2ZGIzOWEyNjI5YzY5ZTFjODA3ZjNhZmNmMDBhODZhNzY5Zjc2MjY1MzdkZjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVhODIzOTY2ODJjY2QxZTVhYjg0M2U5OTU5MzY3MzIzMjE3NjZkMWFiYjUzMDIzOWRkMWY1ODhmZTBlNmQwMjAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4bcd8e95ce924453bedb98694c4efea5",
+      "statement": "Each database starts asynchronous I/O threads defaulting to four times the CPU cores, at most 256, configurable via async_threads.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/overview.md#L219-L223",
+          "version": "repo-lines-v1:sha256:a84413dfc0886c233ddf41ef2124ebfd4af89116a607f70931777e4518c517e2:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2Q4YTVkODMxODEyODg4ZDc1NmViZTEzNzRjZDA2ZjA1YTVjMjI4ODc0ZTIwZjczM2JlOWI3ZTQ5ODc0ZThiMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2VjNTY4ZWFkZGNjNDg0MDI2ZjFlMzJhZjIyYzc1ZjM4NTM2MmNmMmM1YzFkZDk2OGMwNTkyZjU3MTk1ODMzMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjQxNTgyMjcyM2U1ZTk0MjNhMTM0YjI5YWYyYTViODMyMTg0YTk0YWEzMTY3NDVlNTNhNDhkNTM2MTkzNGM2OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzYwY2Y5NjgxMTY3Y2M3OGI0MzY5MmI3MmI3YzJmMmIxYjAyNDBlZDNiZWNkZDgwMzFjZTM4MzE4NTVlYjIwNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_84d4adb1aa0c4b9795fd2de9bf76575f",
+      "statement": "Named in-memory databases (:memory:name) share a catalog across connections, while :memory: without a name always creates a separate database; read_only connections never create the file and are required for multi-process access.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/dbapi.md#L22-L99",
+          "version": "repo-lines-v1:sha256:535f47f7e5f47d9fabbb9a970c37f8f96398ed14c2400faf4ae221d3c2c2bc4e:eyJzZWxlY3RlZExpbmVDb3VudCI6NzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUyNjUxMjY3N2QzNTM3YWU0M2Y5ZmE2MWUzOWMwNmI5MmI5MDFlYjU2YmNhM2VlMDI0NDdlODJmNDVlZGJkMjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVlMjI0YWFhZDZmZGE3ODdhOTdiNjI3NmM3YTY0OTg2YjM4NDQwN2E2YTI3MmYyNTI3MWI4ODJmMWVjMGM3OWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM5MDM3YjlhZThkYmZhY2ViZTUwMDY3ZjFlYmI4Mjg4ZDI4NjdjZWIyZjgwNGFlYjFhOWJhZDgyN2MzOWRmZTcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_97d9f2b696bf45fa93d53e4f04640673",
+      "statement": "While an execute() result is open, other queries on the connection raise ResourceInUseException until the result is fully read or ended with complete() or abort().",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/dbapi.md#L187-L211",
+          "version": "repo-lines-v1:sha256:3015622f2ce4ac7152746bd84202a2990dc681b0054a1ebd8ee36715cb177249:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlhMGMwNjE3MjNlNjAwODZlYzEwMTEzOTg3YTcyMzhlOGQ2ZmJmNDAyYzM1N2Q0NGFlZDJkZWI0YWY2ZTNjYTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBmN2Y1YjAyYTIzM2Y3ZjQzMjc4NjRjZWFkOTJkNmMwNmE0ODAxZDcxNzZlMmM0MTI4MzZkZWUwODYxYzdlMGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3NGU4OTcxMjRhODI4ODQ5YjRjMTQ4YWI5N2E1ZmIzZTliZDUzZDE3M2M3NzY3YjYwODc3ZDZmZTRiMDBjODMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9dac7354aca24471a53ccb299ad72c9e",
+      "statement": "In DuckDB 2.0 any failing statement inside a transaction aborts it, after which commit() rolls back.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/dbapi.md#L217-L242",
+          "version": "repo-lines-v1:sha256:130cd7cacea3eae1c57a5528b9ec82e39031740c88a7247b22d2f0ff44d06549:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFjZGY2Y2Y3MjI2NzUyYzk2ODYxMzIyMTNhNmM4NzczMzhhOWU4M2JkODMxOGI1NzU5OThiNjU0MjZkNDAyNDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5Y2IzMjYxZTE4ZGQ0ZjdlZjYzZDUxZGI5MjAyMDQzNmMzMmI4NGNiZWI3YmMyYTIxM2NjOWFiZTI0NjRmYzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://docs/2.0/clients/python/migration.md#L30-L30",
+          "version": "repo-lines-v1:sha256:7fcf0ff71de5405382388c1ace83e88853213e3bf18eee48094648e24e0722fa:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2ZjZjBmZjcxZGU1NDA1MzgyMzg4YzFhY2U4M2U4ODg1MzIxM2UzYmYxOGVlZTQ4MDk0NjQ4ZTI0ZTA3MjJmYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2ZjZjBmZjcxZGU1NDA1MzgyMzg4YzFhY2U4M2U4ODg1MzIxM2UzYmYxOGVlZTQ4MDk0NjQ4ZTI0ZTA3MjJmYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzA3ZjVkMTk4MzgwZGQwOWQ4YWQ5MjY4YThlYzAwNTQzNmVmMDc4MDg1YTk0YjNhM2Y5NDFmMjA1ZDY2ZmExMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzhlMDhmYzczZmM5NWExNjYyMWUxZWY0OTZiMWYzYWE0MWUzZmNjZTMxNGQ2OTMxZDA2YzQ5ZWQ4NDFjZjAwNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7ca0dabb54034fdda2c321cbef779996",
+      "statement": "max_temp_directory_size passed in the connect() config dictionary is ignored and must be set with a SET statement after connecting.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/known_issues.md#L114-L123",
+          "version": "repo-lines-v1:sha256:093ae9f1f0b3ff3c85bc5a565a3217012b362746e96a55d2bd69b56b611b1ce6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMwNTllZTYxMTQ2ODZkM2Y1OWIxMDJiNGZlZmVmOTU0NzI0NzE1OTAzYzQyZTNlYzNhZTc0YmQ4NDQ2Mjg1YWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNlYjY1ZDBhMjE0NGNhZDhlOWFiNTlkNjZjNTg0MWViYjQ1ZDk0NDMyNTZkODY5ZGVkOTIzODg5OThjZDgzYjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYzNjJlNDY5YjllMjkxMDhjMDNkNjVlMzUxODRlNGFiMjQ2OTI4ZmQwMGU1NjE2MDA5MDYxYzUyODM4MzhlYTkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_99595d23eb9747ef9d97226662dc087b",
+      "statement": "In DuckDB 2.0 the default Arrow batch size for relation output changed from 1000000 to 131072 rows.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/clients/python/migration.md#L36-L36",
+          "version": "repo-lines-v1:sha256:23e8060e3caee6cef74e81a355c4d880ff6d0e0b24a5c5cc2ec518d502daf3b5:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjNlODA2MGUzY2FlZTZjZWY3NGU4MWEzNTVjNGQ4ODBmZjZkMGUwYjI0YTVjNWNjMmVjNTE4ZDUwMmRhZjNiNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjNlODA2MGUzY2FlZTZjZWY3NGU4MWEzNTVjNGQ4ODBmZjZkMGUwYjI0YTVjNWNjMmVjNTE4ZDUwMmRhZjNiNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMGE2MTMyNDNlOWNiN2Y5ZWM2ZjA0Y2FiZTFjZGEwOWQxZjJmMDZhMjdlZDRiMTEyMTdkNzBlZWVhZDg5MDk0NyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjIsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODNjOGVmODcyMmY5MzQ4YmE5YzFjMGZjNGRhZTRkYzQwMzE4NDAzMTQwNmYwZjg0NDQ0MjQwMzhjYWJkODEyYSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

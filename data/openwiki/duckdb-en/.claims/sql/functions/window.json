@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:e7aa540c16273db8c3df3022116e53efe3d4d17fc27a59dcd1997be491b2c20e",
+  "claims": [
+    {
+      "id": "claim_18792626d58341c4aec61385569924d9",
+      "statement": "Window functions are blocking operators that buffer their entire input and can be used in SELECT, ORDER BY and QUALIFY clauses.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/window_functions.md#L16-L64",
+          "version": "repo-lines-v1:sha256:771993c7cc8c6c276354f6fb97c7d0a9bf06fc309e0d42f03c76dc5f747654fd:eyJzZWxlY3RlZExpbmVDb3VudCI6NDksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZkMjczZDUxYmMzMDI4OGU3N2RlZDJmMTJmNDMxMjRjNGZkMDJkYTZlZGNmNjA4MGE4MGFmNzhhMzBmYzdkZDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxMDkxOTA2ZjhkZTBlYmNlZTk1OGM2Zjg4NTNmMGVjZDU3OTdiODhjOWVkNmM5N2UzMmNkZmY3M2JhNTI3YjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU4ODk3ZjhjZjY4NzNmMjY4NjJkYWM1YjBiY2I0ZjUyZjY2MDRmMTg3YTBkNWE2NGIyNGE0M2Q4NmNkMzBmNDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg0NTU2MDAyNzA3YjU2ZTMwMDdhNzljMzMyZGY1NDFmOWEyYWM0Y2RhZDZmNTBkOTMyYTQ3OTIwYjNlOTJkNzQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5e51fadd24fe43d590b6dedd78fe1a4d",
+      "statement": "rank produces gaps while dense_rank does not, and lag/lead accept offset, default and IGNORE NULLS arguments.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/window_functions.md#L66-L83",
+          "version": "repo-lines-v1:sha256:2ee2a42fbfd77fc170d51cba9a4676661b22ed94c4bd7a99f5d3b842837cd3c1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYjUzNWM5MjY5NGI4NmJiYzkzNzYyY2ZiOTczNzE5YmM1ZTU4ZWIyZDk1NDEwNDM4YmQ1YTI1MzJhZjlmODEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM4OTlhMzg0Mzk2MTIyMzlkYzIzOWQ2NTM3ZTBlZTk0ZWVmMjEzOGNlNDIxMWZlYTA4ZTExZmI4NDYzZjk4NjQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA0ZjM0YjkyYjgxZjNiMWRiOGZmZDI0MjllYzE4YzJiZTdlZjQxMTM0ZTQ4YjU0N2M4NDNkNTdiZThmN2Y4MTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVjMmVmZDIzZTYzNzc5ZWEzNWRhYjU5MDFjZWJhOWE1ZDg3MmM1MTM2MzZkZTkxYzk0MDM3NjhiNWViYTc3YzQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9578eb779b6f43619011a3d9643a5bfd",
+      "statement": "All aggregates can be used as window functions with DISTINCT and ORDER BY arguments; first and last are shadowed by the general-purpose window functions.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/window_functions.md#L191-L242",
+          "version": "repo-lines-v1:sha256:93becfa078b9c84f1716195e17fb269312d10548557b7f40f1831349ec8d2416:eyJzZWxlY3RlZExpbmVDb3VudCI6NTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjljNzA4ZjNjOWRlMzVmNDM5NzY5ZjA0Y2RjMDU5NjU1YTBjYTk1NjkyNmM3NTE4ZWE4OTExOTJjZWQ3M2VkODYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJiOGVmOTllMWZmODc5Njc5NjJiYmI2YTVkNTRiMGRjNGQ3NWUwYjQzYWU2ZTJhODcwNmQ3ODIzNWVlY2E1YmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA5MTYyNTFlNDgzYzIwNDJmY2I4Y2I5Y2JiYjg1NGQ4NWMyMDUzNWUzZDhiZDQ4NGE5ZjA1OGQyMWIwMDQ4MGEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUxNTJjZjZjMzM1ZGIxZThiZTM1NGE4YWEwNjY0OWVmNTcwODBkMTE2NjZlNTIyNTliYTEwZmU5MDNhMGMxMTcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_87b50845e6984601990d8585f0e8b668",
+      "statement": "Functions accepting IGNORE NULLS respect nulls by default, while aggregate window functions except list ignore nulls.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/window_functions.md#L244-L248",
+          "version": "repo-lines-v1:sha256:1dd1e31463f531d57670d87e09d3f5abd01d247426da10692faf4cc6143c944b:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODNmMWE0Y2E5NTk2Mjg3ODVkZGJhOTZjZWMwYWM4N2Y3YTc0NWU2M2UxNzQwMDM1OTU4YzIyYjM5ZWE1MGRiYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzlmMjVjYTZkZDY0N2MwYjUxZGFiZWQ0M2VmMGRlYmFjMmY1ODgzZTViZGZlOGI3NzFjZjJlY2U1NDVkM2JjMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTdkNzcyZGMyZTVmMGJhYWU0ODI5MTY4NGI3NmJmMGVlMDFhZGUyMzdmMGM5YmNhNDYxMDU2YjE4Y2RiNWE1NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTEzNGVmNjhkZjE4NWIxYTVhZmQyZmIwMjk5OTk0MDBiY2Y1ZGVhMmNhM2ZiZDUyNWE0NTliYzRlMWRkNmQ4MiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c03c5bcf2598497bb298901fc6f2734e",
+      "statement": "The default frame is the whole partition without ORDER BY and RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW with ORDER BY; CURRENT ROW includes peers for RANGE and GROUPS framing but not for ROWS.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/window_functions.md#L345-L356",
+          "version": "repo-lines-v1:sha256:4398fd3eac08d78127221f50151c7a20c61300c10c7d48514b4516da8071291d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjZmVlNzMyMzZjNGNjMmMwN2VhYWNiN2YyNDA0MmU3MzhkOWRhN2E0N2NjNmY2NWJkNWZhNjNkMjM3MjJiMWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYzOWM2MDFmOGFkY2Q2MjM5Mjc0MjhkYjFmMzhiZDIwZTRmODljZTIxNWI4M2JhNDBkYTUyZTQyYTY3NGRjNTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVkMjY2YTcwMTQxYjYyYjViYjk4Mjc0ODgyOTNmMTFlY2FkNjY5YTAwNmQ3Y2JhYWY3NGJmZjdiOGJhYjg2M2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU3NGFlZDUzMjU3Njk4YWMyMzhjMzUyNGEzYjBkNTBhODZlMWY4NDJlNzUxNjllNzUyYzhmYWRlNTA2NDFiNmEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fc8f3c7709bf4f7289d8eb1d60a53abc",
+      "statement": "EXCLUDE supports CURRENT ROW, GROUP, TIES and NO OTHERS (the default) and applies to windowed aggregates and first, last and nth_value.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/window_functions.md#L448-L478",
+          "version": "repo-lines-v1:sha256:8b69ee1020e244ed1189ee970ef3217d98303075cc53f061beff52bbd656a670:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEyYjA3MTI5OTJkNTdlMDU3YjRkNTRiOTUyMjA1ZmU3MGU3MzQyNDEzOGYwZjdhZTZjZWU5NzFjZmFlN2VkMDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIzNDA2NDliNDI1MjRhY2Q2NTZmMTZlNzE4ODI3MzcwZWQxYzVmZjhmY2Q2MTcwYjI4MDZmZjRkYmU1MGI4N2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEzNGU0YTEwNzEzMWE1NTZiOGM1OWE3MDhlMWE3ZThjNTIyZDYwMGY1YmQ0OWE5ZWI3N2E1NDFkYzBlMzI3ZTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE3YTMxNWRjMDE4ZjJhZjczMWIyZWVmYWNlOGJlYTE2MDFlNDJkNTFkZGRlZWI0ZWI3NTAxMWUxNGIxMDdlMDMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_44ac8ff666be43c99cece6c5a1a9f3da",
+      "statement": "The WINDOW clause defines named windows shared by multiple window functions, which also share data layout for better performance.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/window_functions.md#L480-L524",
+          "version": "repo-lines-v1:sha256:9a97f98b04e572fcdf782bd3ef919473e864eb8109a0866ef811a8551398abd3:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxZmY2YzdkNWU3MjIwZWRkYjg3YjI3NzdhZGE4ZDk3YzE5MTVjYTFlOTg5YzcxMzMzOTZiNWEyMGZjMDA2NTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYxNDE4YjZkODM0MWNiNWZkMmUwYjNmNGE4MGNkMTJlMDcxMDUyNThmZTZlNTYwMTM1MTYxMjQyZjM5ODQxMDEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUxZGUxNmNlMDk0YzY1N2FlMDNiNTdlMWExMmU1NDcwMmU5MTdjYjQ4ZDc1MTk2OGFiZWRkN2JjY2QyZjAyMjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI3MGI0YjBlYzFjOWFkM2M2ZTEyZGE1N2QxNjViZWIxNGMzNTdiMjkxMmQ5ZWIxYzY0Yjc5YmExMTY1NGRlNDgifQ"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/window.md#L13-L13",
+          "version": "repo-lines-v1:sha256:122a7f7411248735c29ddf748e98f71cdb94020a3c685fe7c9fd3b22f52e5aac:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTIyYTdmNzQxMTI0ODczNWMyOWRkZjc0OGU5OGY3MWNkYjk0MDIwYTNjNjg1ZmU3YzlmZDNiMjJmNTJlNWFhYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTIyYTdmNzQxMTI0ODczNWMyOWRkZjc0OGU5OGY3MWNkYjk0MDIwYTNjNjg1ZmU3YzlmZDNiMjJmNTJlNWFhYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNGVhYzllZGM3YzkyNjdlZGFjNGFmZGIxZDhlNDdjN2M5YmZmNmE0NDBiZGU4NDYyOTBkNDRhOGFiYzMzNmYxZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOGFmODE3YjQyZDEwNjg2MDIxZmY1NzVjODgwZTFkYTgzNDMwN2FlZjU3NjU3NDhkOGI4ZTEwYTQxNGQwYWYwYiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_9a7fe5bac0cf45baa3d070a76ca02cd4",
+      "statement": "Window functions are evaluated after WHERE and HAVING, so QUALIFY is used to filter their results.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/functions/window_functions.md#L531-L534",
+          "version": "repo-lines-v1:sha256:d8de53839481f40e5683114cd9f132951218db81c19900a763e1bb777a83eb96:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODdmZTBhNTViODYwYWZjYTI1ODdmZDc2NGQ4NmFkNDNhZjA1MGNlODUyMjFlNDdmOWM4OTExMDUxZmRkNDdmOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWYyMDU3MjJkMTgxYjE5NGVhOTc3MDkwNjQxZDMyZjE1NjRmOTRlMDI3OWQzZDAzZTc5MDA2ZmJhMDA5MDcwMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMmI4MGVhZjA2Y2YwNzFiYzhiNjhkMTkxOWRkMThkMWM5ZDEzOTkzMjkzMjUxMjE3MGFhYjdmMWM5NmVlYmZhNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDVkNzc5MjYwZmQ4MTgzM2JlM2M2NTQ4MzMwMmUwNTdiZTkyYmNlODVkYWYzYzVhYjM4MzEyNmE0ZGJiMDRkZSJ9"
+        },
+        {
+          "resource": "repo://docs/2.0/sql/query_syntax/qualify.md#L29-L48",
+          "version": "repo-lines-v1:sha256:e74fbd76a7ac614c594c172c845690a14af6aa95fd19c8c5cc162915403d8bac:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgzNDJmYWQyZWE0NmEyOGVhN2E0MTU5NTA3MzgzODYwNmIzNzdkOTNlMmRiZDNhMDdlM2RhOTBjZjMyZTU3NzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU1NTIyZWYxYzExYTg1MzZjNDdiZTdjZTE3NDQ1MDEwNWM5MTc5NzRlOThjMWY3ZTY1NTAzYzliZTE1MDQzMWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRlODgyYzIwOGQ3NTMwMWUzNjA0MTc5OGNkNjI2ZmE3NmViYmZhOWEyNTNhOTZlMWM5ZDg5ZGQ1ODAzNzJlZDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ2MzAzNTRiZjY5OWVmOGVjY2M4NDY4ZjJhNGMwMDUwOTE4MWZlMTM3MmRlZjM0YTFjYzhmZTM0Njk5YjQ0ODcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:9dca56823658959919e3aa9e3a49c2f3044619c6a6323c41a97c0f9452d273ed",
+  "claims": [
+    {
+      "id": "claim_284c6a13bf794ece9c24e72af87ecf04",
+      "statement": "INSERT ... BY NAME matches SELECT column names to table columns; unknown names raise an error and missing columns receive defaults.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/insert.md#L124-L142",
+          "version": "repo-lines-v1:sha256:19588a52ab66cb0e642010962aecad7aa3c3da2c732b36c213d69249e34dc22c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNhZjMzNzZkZGRhNTk1NDg2YjYzODBmZGQwYjhlNTc4ZWQ2YTQzYjI0ZWNjYzQ3NzhmMmEzYTkxNmIxZWU4ODciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUzZGEzMzBlZmY1MzNlMmVlZGU2MmU3MzhiOWE4ZjNjYjJkYjE3OTZiMzNlYTgzMzAxMzIzZjdhZmJhYmEwN2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFiNTY3MDdkNTcxZTYwOTYyODM3MDg4MTRhMDg4NjU1MWJmOTFjNmE1MGUxNGU2YzAwNjI3ZDQzMWNiMDU4YWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMwZTczNzFkODE5YWExMTEzOGUxZTIwMzYyOGM5ODAzMzNiYWMwNzU2MzkxNGFlZTc4Mzc4NTJhYzM1NmM5ZjIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_84be7a6f5fa44b51a63ebbb9abe21530",
+      "statement": "INSERT OR IGNORE is shorthand for ON CONFLICT DO NOTHING; INSERT OR REPLACE is shorthand for DO UPDATE SET each column = EXCLUDED.column.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/insert.md#L195-L289",
+          "version": "repo-lines-v1:sha256:df5cb4797cfc4bb25a37a91cdcc2a08d906231e2fba3f0a08934f2afb05ab321:eyJzZWxlY3RlZExpbmVDb3VudCI6OTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZmMjJlMTQzZTNmOTFjNDQ4YmIxMDY5NThkZmIwNTU0YWFhMDUxMTg0NDA0Y2M1YTQ4ZGUyMjUyNzZkM2ZmZTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzU2OGVhZGRjYzQ4NDAyNmYxZTMyYWYyMmM3NWYzODUzNjJjZjJjNWMxZGQ5NjhjMDU5MmY1NzE5NTgzMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE0MGFmMjAwZmIxMWUxNTQ2ZDdmOWFhMjQxZmJhZWQxMWVhMTBhYjk0NDRjNDNkYzVkNTE1NTQyYTk4ZmIxNGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ4MzljNTk4NzViMmU3YWNmNmYwNTIyMWIyOTRlYWM1ZmY1OTc4ZTBhNDEwMzdhYWE0ODk5MWM4Y2U5MzBmZTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_93b6004872b24b168dc3825381822c28",
+      "statement": "When one INSERT contains several rows with the same conflicting key, DuckDB applies only one update per key and the winning row is not guaranteed to be the last.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/insert.md#L218-L224",
+          "version": "repo-lines-v1:sha256:ad95ac227d6378e2ef8d83b4996a7c8d77aaef35309cced704e2018360e6c6b2:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjBkZDZmYzgwMTg1MDFmZmNiZDYwMmM5YWJiOTJlNGQ5MmJkNWEwMzY4M2M4MjRjZjQ2NTdhYjQzNWZhNmE5ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjM0ZWQ0YWI1YjJhYzcyYjBkZGE1MzNkMWE1MWZkYjU4OTIxNWQxYmQ3ZTNlYzkxZGQwMDEwZjQ1NWIxNzc4ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDMwYjIyMmNmNmQzNDdlNzMxMGRlNDM4M2ZmZTU5YWMwZDExNTQ2MTNjNDU1NDA1NWVjYmVkY2E2YmFiYzI1MSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMGJkZTBjYzQ4NmRjZGY4MDVmYWY3YzgwOTUzZGE4ZjM0MjUwZjVlMGU2MGM4NzBlNDQ1MmIwMzQyZDYxNWE4MCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_0493511007e04c56b2a708c2890878a7",
+      "statement": "A conflict target defaults to the primary key and is required for DO UPDATE when the table has multiple unique or primary key constraints; PostgreSQL's partial-index predicate on the conflict target is not supported.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/insert.md#L303-L352",
+          "version": "repo-lines-v1:sha256:24c70042b4b553cc2b449cc768ec327bf111799de3c545e0005fd80288e419d4:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYzOGU0MzJjODJiZjlmZWVlMjQ1OWU1MDcyODQ1YWQ3MjE5YTU5YmI4M2I5NTYzYjQ3OGQ5YTJmYjBmN2ZiNTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEyMGNkNzIyMGZhN2MyNmNkYjk5ZTM3NDQ3ZTQ5ZTY5MWFjOGJlMjU2Njk3MjEyNDVhY2ZiYjVmMjgyMmIwYjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYwNzA1YWY5NWE1YjNlZDJmM2Y5YmU4OGI2YTRiNDlmZDllZDMyNzUyMTgwYjQ5NDJjM2EyODk0ZmUzMjg0OGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM5NTUzNjBjNWU3ZmJkMzNlZGY5OWZkZDk1ZWYyODk0OTJlNmJlYjE0NWYxYjdjMDBkOTJmNTYyZDA0Mjc4ZmUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_84be066bedc845debdb512936e076568",
+      "statement": "In UPDATE ... FROM, a target row matching several source rows is updated once with an unspecified source row, while the sub-select form errors on multiple rows.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/update.md#L113-L129",
+          "version": "repo-lines-v1:sha256:6ac3d3333e24959418f32d3aea352a6daae42274cc76465ab403c9e0867baaf8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2NGM1ODU0YzBhNTE2ZmVjZTM1MWJlOGIxZmI4NDZiZTg5MjYyMzc4MjFhMjk1ZTNjODI3MDlmNmNhMzE5ZGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMzM2Q3MGNlZDUyM2UxNjVkNGI4YjNkYTIyZDljMDE4Nzg4OGFiZjk1YWQ1NjJiYzY4OGM1NTQxMTQ2OWIxMmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJmZDQwZmQxNWNhNjMxMDZmZWI4OTA4ZTAzN2I4Y2RjZTZhZjAxZmE2ZGI3ZDk1ZTFiOTZiZWJlMTYxYTc4NjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJmOWM3MzExOTM3ZDdkY2IwYWEyMWViYTI0ZmY5MTQ5OTE3ZDNlN2MzNWM3MTZlMDBmZDQ1YmM1YWYzNGVlYTQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b29126b7a1784064bc1e570635500e24",
+      "statement": "DELETE only marks rows as deleted; space is reclaimed on CHECKPOINT and VACUUM currently does not reclaim space. TRUNCATE is an alias for DELETE FROM without WHERE.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/delete.md#L53-L63",
+          "version": "repo-lines-v1:sha256:f4d76a53f8554dde4a3fd4dcdd353128fe4ceb5e36ee8e73c64457657cc3af60:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQxYzgzNWUwMDIzYzVjNGJmYmM2ZDUxOThlMWQwODY3NDIzYzZjZjQ5ZTIxNDAwZDRmNjM2YWExOTg3NWQzNWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg1YjE2OWQ4ZjlhNGVmYTlmNmNkODY0MjI2MjcwNjBjY2U1YTc4MjU3YTFmYjIyYWY2OTdiMzZhMGNkMTE4MmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzMzI2YzZhN2FiYzU5YWQxMTQ0NjIwMjEwN2ZmMzgyMzVkZjI3OWQ1YTA0MGRiN2U5YmNhZGFmZDg0NDIzM2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8649e0162dd544ecb374fb2aab06ae7b",
+      "statement": "MERGE INTO needs no primary key, supports WHEN MATCHED, WHEN NOT MATCHED [BY TARGET] and WHEN NOT MATCHED BY SOURCE actions, and RETURNING merge_action.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/merge_into.md#L13-L159",
+          "version": "repo-lines-v1:sha256:461adaa97ab1cdf66e5a7394d65c269b26819be7ae04fc18944d0016e8a9eb4f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQ3LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIxMTBjNjA0YmJkNzA5OTAwYzhlZDJmODNjYmNkZDk1MDU3MGZlZmFjNmJmYjg5YjQzZjU4MGM3Y2IxYWY2YzFhIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJlMGYzYzMxMGNiMTJlMDA3YjYxYzU4YjRiZTgyZTU5YzAxZGFmNTQwNmFhZDJjYWNjZDY5OTBiYTAwNDVlZmUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlYjk2Njc5Y2E0YTkxNWU2MzAxNDhhYzc0OTMwNDJiYTkzYWEyYTFjZTg0ODA4YjRhNzc3YTU2NTM3ZDFlNzk5IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI4MjQxZDlkOTViZDBiOTI5NmY5OWJjZWVlYTYxNjM2MGMwZGY4ZWQ0MWFlODc3OTc0OTllYWMzM2Y5YjE3YjdhIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_098848eebc74407d89ae5c5a7f483053",
+      "statement": "A MERGE INTO statement fails if a target row matches more than one source row under a WHEN MATCHED action.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/sql/statements/merge_into.md#L161-L182",
+          "version": "repo-lines-v1:sha256:e760addc7e46f44edc1c72b8ce4984ba5eaa8af6d23c60fc97e1457068ecf593:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2NGM1ODU0YzBhNTE2ZmVjZTM1MWJlOGIxZmI4NDZiZTg5MjYyMzc4MjFhMjk1ZTNjODI3MDlmNmNhMzE5ZGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlMGYwMDkwZTcwZDBiNDZmZTQ3Zjk5NTIzMzY2MGIyOGMyZWUyZjlkNDhkODdmYmYxNWNlNTM4NjI4MTc2NWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY3ZDk1NWIyZjliNmFiMGI0ZGFiMDNmMTUyYmFiMzIyZTE3ZjBlYzE1YmIwYzVkNWM5ZDhlYzYzNjcwNmNhNjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhhZjgxN2I0MmQxMDY4NjAyMWZmNTc1Yzg4MGUxZGE4MzQzMDdhZWY1NzY1NzQ4ZDhiOGUxMGE0MTRkMGFmMGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ae340ffe75f645f08fa661211b4ab2ca",
+      "statement": "Appender rows are cached until flush, constraints are checked at flush time, and a PRIMARY KEY or UNIQUE violation fails the entire append with no rows inserted.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/appender.md#L143-L153",
+          "version": "repo-lines-v1:sha256:d0ba5323666fae1c6153d2cb226343a6a96af7fd560893e1049104534b61b91e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhM2FlYjkzMTMxNjM5MzhmNDNlOGU5MmMzNjc4MzhlZTQ2ZmNlN2ZjZGQzYjhkNTk1ZjU5YTIyYTJiMTRkMjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVjMmJlZWI4YjMwN2I2ZDM4Y2RiNzgxZGZiYzIyNjFjOTRkNjY2YTYyNTFkMWRjN2YyZDVkNjBjYzNiMWU1MjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3NGY3NDAxMGUyNjJlN2E4ODg3ZWE1ZWNiNmU0MmQyMTNhZGQ5Yzk4ODVmZTc0OWExMTkzMjAyMjM2Y2YwY2UifQ"
+        },
+        {
+          "resource": "repo://docs/2.0/data/appender.md#L16-L24",
+          "version": "repo-lines-v1:sha256:70fdc9002fceb9380a46dc5b380b9af39a850d8f9c5926283dfa59987340c22f:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWM3MjI1MTk4NGQwZTU2ZThiOGNlODJjNmNiOWJjYjQ1MjBlNDZiOThjZTBlZTcyNmI3MzNmYTAwMWI4MWY1MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTk0MmFlNjYyMzJmNjVlOWZhN2JmMzZiMTNjYTgxMmVkMDQ0OWU1YzEyYzIyM2RiOGE1ZjE2ZWE1ODg3ZjQ2YSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODk5ODJjNzVjNDM5Y2E4YTNiMDMwNDQzOTA2YTg4ZjVhZjNhNGQ5ZTcwODBkNGI0NWRjMzYwYWU2ZmQ0NTQyZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzk0NDI1NjdkN2Y3NzA3YTQ0YTlmZmFlNzMwODA3NWQ4MzY1M2M0ODA1ZDJhM2UyZjcxMDEyMWFhNTgyMTUxYiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_227796906bce45dbbabe42e0aa629238",
+      "statement": "For clients other than Python, the Appender commits every 204,800 rows by default.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/appender.md#L138-L141",
+          "version": "repo-lines-v1:sha256:850d68cf59d775ec1d48cae26ae9faa6a417e9f09dec22ff391c30211d54aaa1:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMWIxNTVhMzQ5ZmNmYWQyYzM5ZGIxZTg5NjFlY2JhODdiNDU1NGExMWY0NTRhZWY2Y2JiZWMwYWY1NWFlMjZlNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmZhZWZjYzdiZDI3MjZjYTY2MWIyZGQyZmE3NjM3NzkyNGZjNGIwYzA4YjE5NTdlZWRkNGU5NjEwZmU2MDRkMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTM5ZGIxMzkzYjcyMDNmYmFiYjEyOTZiMWRkZDk3ZDYzODEyODc5N2FmNGYxMGY3MmJiNmYwOWJlODgzMDVkNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGY0MGU4NGRjYzJlMzdiOWE0MDQ4MTUyNWRlMjc4ZDA2N2Y4MjA5ZWEyNjgzNzcyZTFlYmRlMDUxODM5NWU4ZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_4611d7b186e44fc29e0636e0ee16311b",
+      "statement": "Row-by-row INSERTs in a loop should be avoided; if necessary, wrap them in BEGIN TRANSACTION and COMMIT to avoid a sync per auto-committed statement.",
+      "evidence": [
+        {
+          "resource": "repo://docs/2.0/data/insert.md#L12-L18",
+          "version": "repo-lines-v1:sha256:7a84d7d1e508c397020489115fab1061effd596e3b08a613d1da7434bf073ba9:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGY1YWI3ZWEyMjFmNGE3ZWY3NjgwZDEwOWJkMzllZTNmNWYxZGRiMDk5NWZlOWM4NWFlNWM4NjA3Njk5MDlkNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDI4MTNjZWQzYmY4OTZlMDllNjA4NzMxZjc3ZjZlMzljNjUxNmU2ZTc3YjQ0OGE2MTgyN2I1ZDI4MTMzM2NiMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjNjMTNkZjZmOTQ0MDE0OWRhOTQzZGY2YTUwMGNkZmM1NjNiYTYwNzJkZTVlZDhiOGU1NmFkMzM1Njc1YmFmNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOGFmODE3YjQyZDEwNjg2MDIxZmY1NzVjODgwZTFkYTgzNDMwN2FlZjU3NjU3NDhkOGI4ZTEwYTQxNGQwYWYwYiJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-27T12:34:27.566Z"
+  }
+}
