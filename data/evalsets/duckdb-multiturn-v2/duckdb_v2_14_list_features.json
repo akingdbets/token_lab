@@ -1,0 +1,1006 @@
+{
+  "schema_version": 2,
+  "scenario_id": "duckdb_v2_14_list_features",
+  "title": "Computing feature vectors from lists",
+  "topic": "Computing feature vectors from lists",
+  "status": "draft",
+  "bundle": [
+    "connect/connecting-and-concurrency.md",
+    "sql/functions/list-array-and-lambda.md",
+    "sql/data-types/nested-types.md",
+    "sql/statements/inspection-and-metadata.md",
+    "sql/functions/struct-map-and-union.md",
+    "sql/functions/overview-numeric-and-utility.md",
+    "sql/functions/aggregate.md",
+    "clients/python/expressions-udfs-and-types.md"
+  ],
+  "generation": {
+    "method": "Session-authored fact cards assembled with a fixed 19-turn scaffold; no independent generation API call",
+    "model": "Codex current session (exact model identifier not recorded)",
+    "prompt": [
+      "mt_scenario_gen_v3_duckdb_session",
+      "b2d745c3f579"
+    ],
+    "created_at": "2026-11-28T12:09:48+00:00",
+    "run_id": "duckdb_v2_session/duckdb_v2_14_list_features",
+    "corpus_manifest_sha256": "1995523b1e9959f27811f9e8e3294ea4af05c52c668867b7b09cc8dbe8eae728",
+    "source_pr": "https://github.com/akingdbets/token_lab/pull/64",
+    "source_pr_head": "eda7e1a19d4189785b81c4a0e2baf27aa8b18689"
+  },
+  "turns": [
+    {
+      "turn": 0,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "We are computing feature vectors from lists. Our database path is list_features_r34.duckdb. Which database path should we use, and if we use an in-memory database, is its data retained when the process ends?",
+      "standalone_question": "For the DuckDB project: We are computing feature vectors from lists. Our database path is list_features_r34.duckdb. Which database path should we use, and if we use an in-memory database, is its data retained when the process ends?",
+      "asks": [
+        "database path",
+        "in-memory persistence"
+      ],
+      "answer": "The database path is list_features_r34.duckdb. No; all in-memory data is lost when the process ends.",
+      "key_facts": [
+        "The database path is list_features_r34.duckdb.",
+        "No; all in-memory data is lost when the process ends."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "list_features_r34.duckdb"
+      ],
+      "evidence_pages": [
+        "connect/connecting-and-concurrency.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 0,
+          "quote": "Our database path is list_features_r34.duckdb.",
+          "fact_idx": 0
+        },
+        {
+          "page": "connect/connecting-and-concurrency.md",
+          "quote": "Nothing is persisted; all data is lost when the process ends.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 1,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our run label is list_features-batch-45. Which run label should we record, and are LIST element indexes 0-based or 1-based?",
+      "standalone_question": "For the DuckDB project: Our run label is list_features-batch-45. Which run label should we record, and are LIST element indexes 0-based or 1-based?",
+      "asks": [
+        "run label",
+        "Are LIST element indexes 0-based or 1-based?"
+      ],
+      "answer": "The run label is list_features-batch-45. LIST indexes are 1-based.",
+      "key_facts": [
+        "The run label is list_features-batch-45.",
+        "LIST indexes are 1-based."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "list_features-batch-45"
+      ],
+      "evidence_pages": [
+        "sql/functions/list-array-and-lambda.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Our run label is list_features-batch-45.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/functions/list-array-and-lambda.md",
+          "quote": "`list[index]` is **1-based**",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 2,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "How do negative LIST indexes address elements?",
+      "standalone_question": "For the DuckDB project: How do negative LIST indexes address elements?",
+      "asks": [
+        "How do negative LIST indexes address elements?"
+      ],
+      "answer": "Negative indexes count from the end.",
+      "key_facts": [
+        "Negative indexes count from the end."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "sql/functions/list-array-and-lambda.md",
+          "quote": "negative indexes count from the end",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1
+    },
+    {
+      "turn": 3,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Are DuckDB ARRAY values fixed-length or variable-length?",
+      "standalone_question": "For the DuckDB project: Are DuckDB ARRAY values fixed-length or variable-length?",
+      "asks": [
+        "Are DuckDB ARRAY values fixed-length or variable-length?"
+      ],
+      "answer": "DuckDB arrays are fixed-length.",
+      "key_facts": [
+        "DuckDB arrays are fixed-length."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [
+        "sql/data-types/nested-types.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "sql/data-types/nested-types.md",
+          "quote": "DuckDB arrays are fixed-length (unlike PostgreSQL's)",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 4,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our database path from list_features_r34.duckdb to list_features_r61.duckdb. Which database path should we use now, and does the in-memory alternative retain data after the process ends?",
+      "standalone_question": "For the DuckDB project: Change our database path from list_features_r34.duckdb to list_features_r61.duckdb. Which database path should we use now, and does the in-memory alternative retain data after the process ends?",
+      "asks": [
+        "updated database path",
+        "in-memory persistence"
+      ],
+      "answer": "The database path is list_features_r61.duckdb. No; all in-memory data is lost when the process ends.",
+      "key_facts": [
+        "The database path is list_features_r61.duckdb.",
+        "No; all in-memory data is lost when the process ends."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "list_features_r61.duckdb"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "Change our database path from list_features_r34.duckdb to list_features_r61.duckdb.",
+          "fact_idx": 0
+        },
+        {
+          "page": "connect/connecting-and-concurrency.md",
+          "quote": "Nothing is persisted; all data is lost when the process ends.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "database path",
+          "from": "list_features_r34.duckdb",
+          "to": "list_features_r61.duckdb"
+        }
+      ],
+      "affects": [
+        13,
+        18
+      ],
+      "source_turn": null,
+      "recall_distance": 4
+    },
+    {
+      "turn": 5,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Which statement computes summary statistics per column?",
+      "standalone_question": "For the DuckDB project: Which statement computes summary statistics per column?",
+      "asks": [
+        "column statistics statement"
+      ],
+      "answer": "SUMMARIZE computes summary statistics per column.",
+      "key_facts": [
+        "SUMMARIZE computes summary statistics per column."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "SUMMARIZE"
+      ],
+      "evidence_pages": [
+        "sql/statements/inspection-and-metadata.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "sql/statements/inspection-and-metadata.md",
+          "quote": "`SUMMARIZE` computes summary statistics per column.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 6,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "Does the non-ANALYZE form of EXPLAIN actually execute the query?",
+      "standalone_question": "For the DuckDB project: Does the non-ANALYZE form of EXPLAIN actually execute the query?",
+      "asks": [
+        "EXPLAIN execution"
+      ],
+      "answer": "EXPLAIN does not run the query.",
+      "key_facts": [
+        "EXPLAIN does not run the query."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "sql/statements/inspection-and-metadata.md",
+          "quote": "EXPLAIN ⟨query⟩;            -- plan with estimated cardinalities; does not run the query",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1
+    },
+    {
+      "turn": 7,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "Within a single writer process, do concurrent appends conflict even on the same table?",
+      "standalone_question": "For the DuckDB project: Within a single writer process, do concurrent appends conflict even on the same table?",
+      "asks": [
+        "concurrent append conflicts"
+      ],
+      "answer": "Appends never conflict, even on the same table.",
+      "key_facts": [
+        "Appends never conflict, even on the same table."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "page": "connect/connecting-and-concurrency.md",
+          "quote": "**Appends never conflict**, even on the same table.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 0,
+      "recall_distance": 7
+    },
+    {
+      "turn": 8,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our output path is exports/list_features_71.parquet. Which output path should we record, and what does map_extract_value return when a key is missing?",
+      "standalone_question": "For the DuckDB project: Our output path is exports/list_features_71.parquet. Which output path should we record, and what does map_extract_value return when a key is missing?",
+      "asks": [
+        "output path",
+        "What does map_extract_value return when a key is missing?"
+      ],
+      "answer": "The output path is exports/list_features_71.parquet. It returns NULL.",
+      "key_facts": [
+        "The output path is exports/list_features_71.parquet.",
+        "It returns NULL."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "exports/list_features_71.parquet",
+        "NULL"
+      ],
+      "evidence_pages": [
+        "sql/functions/struct-map-and-union.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Our output path is exports/list_features_71.parquet.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/functions/struct-map-and-union.md",
+          "quote": "`map[key]` / `map_extract_value(map, key)` | `map([100, 5], ['a', 'b'])[100]` | `a` (`NULL` if missing)",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 9,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which run label did we choose, and how do negative LIST indexes address elements?",
+      "standalone_question": "For the DuckDB project: Which run label did we choose, and how do negative LIST indexes address elements?",
+      "asks": [
+        "chosen run label",
+        "How do negative LIST indexes address elements?"
+      ],
+      "answer": "The run label is list_features-batch-45. Negative indexes count from the end.",
+      "key_facts": [
+        "The run label is list_features-batch-45.",
+        "Negative indexes count from the end."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "list_features-batch-45"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Our run label is list_features-batch-45.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/functions/list-array-and-lambda.md",
+          "quote": "negative indexes count from the end",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 8
+    },
+    {
+      "turn": 10,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What do coalesce and ifnull return when looking through their arguments?",
+      "standalone_question": "For the DuckDB project: What do coalesce and ifnull return when looking through their arguments?",
+      "asks": [
+        "What do coalesce and ifnull return when looking through their arguments?"
+      ],
+      "answer": "They return the first non-NULL value.",
+      "key_facts": [
+        "They return the first non-NULL value."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "NULL"
+      ],
+      "evidence_pages": [
+        "sql/functions/overview-numeric-and-utility.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "sql/functions/overview-numeric-and-utility.md",
+          "quote": "`coalesce(expr, ...)`, `ifnull(expr, other)` | First non-`NULL` value",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 11,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our run label from list_features-batch-45 to list_features-batch-87. Which run label should we record now, and are LIST element indexes 0-based or 1-based?",
+      "standalone_question": "For the DuckDB project: Change our run label from list_features-batch-45 to list_features-batch-87. Which run label should we record now, and are LIST element indexes 0-based or 1-based?",
+      "asks": [
+        "updated run label",
+        "Are LIST element indexes 0-based or 1-based?"
+      ],
+      "answer": "The run label is list_features-batch-87. LIST indexes are 1-based.",
+      "key_facts": [
+        "The run label is list_features-batch-87.",
+        "LIST indexes are 1-based."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "list_features-batch-87"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our run label from list_features-batch-45 to list_features-batch-87.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/functions/list-array-and-lambda.md",
+          "quote": "`list[index]` is **1-based**",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "run label",
+          "from": "list_features-batch-45",
+          "to": "list_features-batch-87"
+        }
+      ],
+      "affects": [
+        17
+      ],
+      "source_turn": null,
+      "recall_distance": 10
+    },
+    {
+      "turn": 12,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What value does any_value(arg) select?",
+      "standalone_question": "For the DuckDB project: What value does any_value(arg) select?",
+      "asks": [
+        "What value does any_value(arg) select?"
+      ],
+      "answer": "It selects the first non-NULL value.",
+      "key_facts": [
+        "It selects the first non-NULL value."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "NULL"
+      ],
+      "evidence_pages": [
+        "sql/functions/aggregate.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "sql/functions/aggregate.md",
+          "quote": "`any_value(arg)` | First non-`NULL` value",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 13,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "For this worker, which database path are we using now; Are DuckDB ARRAY values fixed-length or variable-length; and which statement computes per-column statistics?",
+      "standalone_question": "For the DuckDB project: For this worker, which database path are we using now; Are DuckDB ARRAY values fixed-length or variable-length; and which statement computes per-column statistics?",
+      "asks": [
+        "current database path",
+        "Are DuckDB ARRAY values fixed-length or variable-length?",
+        "column statistics statement"
+      ],
+      "answer": "The database path is list_features_r61.duckdb. DuckDB arrays are fixed-length. SUMMARIZE computes summary statistics per column.",
+      "key_facts": [
+        "The database path is list_features_r61.duckdb.",
+        "DuckDB arrays are fixed-length.",
+        "SUMMARIZE computes summary statistics per column."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "list_features_r61.duckdb",
+        "SUMMARIZE"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        3,
+        5
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "Change our database path from list_features_r34.duckdb to list_features_r61.duckdb.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/data-types/nested-types.md",
+          "quote": "DuckDB arrays are fixed-length (unlike PostgreSQL's)",
+          "fact_idx": 1
+        },
+        {
+          "page": "sql/statements/inspection-and-metadata.md",
+          "quote": "`SUMMARIZE` computes summary statistics per column.",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 10
+    },
+    {
+      "turn": 14,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "When a setting and table share a name, what does SHOW resolve to by default?",
+      "standalone_question": "For the DuckDB project: When a setting and table share a name, what does SHOW resolve to by default?",
+      "asks": [
+        "SHOW name resolution"
+      ],
+      "answer": "SHOW describes the table and emits a deprecation warning.",
+      "key_facts": [
+        "SHOW describes the table and emits a deprecation warning."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "condition",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "SHOW"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "sql/statements/inspection-and-metadata.md",
+          "quote": "If a table and a setting share the name, `SHOW` describes the table (with the deprecation warning).",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 5,
+      "recall_distance": 9
+    },
+    {
+      "turn": 15,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "For the Python appender, when does a with block flush buffered rows?",
+      "standalone_question": "For the DuckDB project: For the Python appender, when does a with block flush buffered rows?",
+      "asks": [
+        "For the Python appender, when does a with block flush buffered rows?"
+      ],
+      "answer": "It flushes on successful exit from the with block.",
+      "key_facts": [
+        "It flushes on successful exit from the with block."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "with"
+      ],
+      "evidence_pages": [
+        "clients/python/expressions-udfs-and-types.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "clients/python/expressions-udfs-and-types.md",
+          "quote": "A `with` block flushes on successful exit:",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 16,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which output path did we choose, and what does map_extract_value return when a key is missing?",
+      "standalone_question": "For the DuckDB project: Which output path did we choose, and what does map_extract_value return when a key is missing?",
+      "asks": [
+        "chosen output path",
+        "What does map_extract_value return when a key is missing?"
+      ],
+      "answer": "The output path is exports/list_features_71.parquet. It returns NULL.",
+      "key_facts": [
+        "The output path is exports/list_features_71.parquet.",
+        "It returns NULL."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "exports/list_features_71.parquet",
+        "NULL"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        8
+      ],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Our output path is exports/list_features_71.parquet.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/functions/struct-map-and-union.md",
+          "quote": "`map[key]` / `map_extract_value(map, key)` | `map([100, 5], ['a', 'b'])[100]` | `a` (`NULL` if missing)",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 8
+    },
+    {
+      "turn": 17,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What is our current run label, and are LIST element indexes 0-based or 1-based?",
+      "standalone_question": "For the DuckDB project: What is our current run label, and are LIST element indexes 0-based or 1-based?",
+      "asks": [
+        "current run label",
+        "Are LIST element indexes 0-based or 1-based?"
+      ],
+      "answer": "The run label is list_features-batch-87. LIST indexes are 1-based.",
+      "key_facts": [
+        "The run label is list_features-batch-87.",
+        "LIST indexes are 1-based."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "list_features-batch-87"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        11
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our run label from list_features-batch-45 to list_features-batch-87.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/functions/list-array-and-lambda.md",
+          "quote": "`list[index]` is **1-based**",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 6
+    },
+    {
+      "turn": 18,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "For the same worker, what is our current database path; What do coalesce and ifnull return when looking through their arguments; and what value does any_value(arg) select?",
+      "standalone_question": "For the DuckDB project: For the same worker, what is our current database path; What do coalesce and ifnull return when looking through their arguments; and what value does any_value(arg) select?",
+      "asks": [
+        "current database path",
+        "What do coalesce and ifnull return when looking through their arguments?",
+        "What value does any_value(arg) select?"
+      ],
+      "answer": "The database path is list_features_r61.duckdb. They return the first non-NULL value. It selects the first non-NULL value.",
+      "key_facts": [
+        "The database path is list_features_r61.duckdb.",
+        "They return the first non-NULL value.",
+        "It selects the first non-NULL value."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "list_features_r61.duckdb",
+        "NULL"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        10,
+        12
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "Change our database path from list_features_r34.duckdb to list_features_r61.duckdb.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/functions/overview-numeric-and-utility.md",
+          "quote": "`coalesce(expr, ...)`, `ifnull(expr, other)` | First non-`NULL` value",
+          "fact_idx": 1
+        },
+        {
+          "page": "sql/functions/aggregate.md",
+          "quote": "`any_value(arg)` | First non-`NULL` value",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 14
+    }
+  ]
+}

@@ -1,0 +1,996 @@
+{
+  "schema_version": 2,
+  "scenario_id": "duckdb_v2_07_cli_reports",
+  "title": "Automating reports from the CLI",
+  "topic": "Automating reports from the CLI",
+  "status": "draft",
+  "bundle": [
+    "connect/connecting-and-concurrency.md",
+    "clients/cli/overview-and-arguments.md",
+    "clients/cli/dot-commands-and-output-formats.md",
+    "sql/statements/inspection-and-metadata.md",
+    "clients/cli/interactive-features.md",
+    "quickstart.md",
+    "sql/statements/copy-and-export.md",
+    "configuration/settings-and-pragmas.md"
+  ],
+  "generation": {
+    "method": "Session-authored fact cards assembled with a fixed 19-turn scaffold; no independent generation API call",
+    "model": "Codex current session (exact model identifier not recorded)",
+    "prompt": [
+      "mt_scenario_gen_v3_duckdb_session",
+      "b2d745c3f579"
+    ],
+    "created_at": "2026-11-28T12:09:48+00:00",
+    "run_id": "duckdb_v2_session/duckdb_v2_07_cli_reports",
+    "corpus_manifest_sha256": "1995523b1e9959f27811f9e8e3294ea4af05c52c668867b7b09cc8dbe8eae728",
+    "source_pr": "https://github.com/akingdbets/token_lab/pull/64",
+    "source_pr_head": "eda7e1a19d4189785b81c4a0e2baf27aa8b18689"
+  },
+  "turns": [
+    {
+      "turn": 0,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "We are automating reports from the cli. Our database path is cli_reports_r27.duckdb. Which database path should we use, and if we use an in-memory database, is its data retained when the process ends?",
+      "standalone_question": "For the DuckDB project: We are automating reports from the cli. Our database path is cli_reports_r27.duckdb. Which database path should we use, and if we use an in-memory database, is its data retained when the process ends?",
+      "asks": [
+        "database path",
+        "in-memory persistence"
+      ],
+      "answer": "The database path is cli_reports_r27.duckdb. No; all in-memory data is lost when the process ends.",
+      "key_facts": [
+        "The database path is cli_reports_r27.duckdb.",
+        "No; all in-memory data is lost when the process ends."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "cli_reports_r27.duckdb"
+      ],
+      "evidence_pages": [
+        "connect/connecting-and-concurrency.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 0,
+          "quote": "Our database path is cli_reports_r27.duckdb.",
+          "fact_idx": 0
+        },
+        {
+          "page": "connect/connecting-and-concurrency.md",
+          "quote": "Nothing is persisted; all data is lost when the process ends.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 1,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our run label is cli_reports-batch-38. Which run label should we record, and which CLI argument skips the default startup file?",
+      "standalone_question": "For the DuckDB project: Our run label is cli_reports-batch-38. Which run label should we record, and which CLI argument skips the default startup file?",
+      "asks": [
+        "run label",
+        "Which CLI argument skips the default startup file?"
+      ],
+      "answer": "The run label is cli_reports-batch-38. Use -no-init.",
+      "key_facts": [
+        "The run label is cli_reports-batch-38.",
+        "Use -no-init."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "cli_reports-batch-38",
+        "-no-init"
+      ],
+      "evidence_pages": [
+        "clients/cli/overview-and-arguments.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Our run label is cli_reports-batch-38.",
+          "fact_idx": 0
+        },
+        {
+          "page": "clients/cli/overview-and-arguments.md",
+          "quote": "`-no-init` to skip it.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 2,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "Which CLI argument selects an alternative startup file?",
+      "standalone_question": "For the DuckDB project: Which CLI argument selects an alternative startup file?",
+      "asks": [
+        "Which CLI argument selects an alternative startup file?"
+      ],
+      "answer": "Use -init FILENAME.",
+      "key_facts": [
+        "Use -init FILENAME."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "-init FILENAME"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "clients/cli/overview-and-arguments.md",
+          "quote": "Use `-init FILENAME` to run a different file instead",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1
+    },
+    {
+      "turn": 3,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Which dot command redirects only the next result rather than all subsequent results?",
+      "standalone_question": "For the DuckDB project: Which dot command redirects only the next result rather than all subsequent results?",
+      "asks": [
+        "Which dot command redirects only the next result rather than all subsequent results?"
+      ],
+      "answer": "Use .once.",
+      "key_facts": [
+        "Use .once."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        ".once"
+      ],
+      "evidence_pages": [
+        "clients/cli/dot-commands-and-output-formats.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "clients/cli/dot-commands-and-output-formats.md",
+          "quote": "`.once` redirects only the next result.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 4,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our database path from cli_reports_r27.duckdb to cli_reports_r54.duckdb. Which database path should we use now, and does the in-memory alternative retain data after the process ends?",
+      "standalone_question": "For the DuckDB project: Change our database path from cli_reports_r27.duckdb to cli_reports_r54.duckdb. Which database path should we use now, and does the in-memory alternative retain data after the process ends?",
+      "asks": [
+        "updated database path",
+        "in-memory persistence"
+      ],
+      "answer": "The database path is cli_reports_r54.duckdb. No; all in-memory data is lost when the process ends.",
+      "key_facts": [
+        "The database path is cli_reports_r54.duckdb.",
+        "No; all in-memory data is lost when the process ends."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "cli_reports_r54.duckdb"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "Change our database path from cli_reports_r27.duckdb to cli_reports_r54.duckdb.",
+          "fact_idx": 0
+        },
+        {
+          "page": "connect/connecting-and-concurrency.md",
+          "quote": "Nothing is persisted; all data is lost when the process ends.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "database path",
+          "from": "cli_reports_r27.duckdb",
+          "to": "cli_reports_r54.duckdb"
+        }
+      ],
+      "affects": [
+        13,
+        18
+      ],
+      "source_turn": null,
+      "recall_distance": 4
+    },
+    {
+      "turn": 5,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Which statement computes summary statistics per column?",
+      "standalone_question": "For the DuckDB project: Which statement computes summary statistics per column?",
+      "asks": [
+        "column statistics statement"
+      ],
+      "answer": "SUMMARIZE computes summary statistics per column.",
+      "key_facts": [
+        "SUMMARIZE computes summary statistics per column."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "SUMMARIZE"
+      ],
+      "evidence_pages": [
+        "sql/statements/inspection-and-metadata.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "sql/statements/inspection-and-metadata.md",
+          "quote": "`SUMMARIZE` computes summary statistics per column.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 6,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "Does the non-ANALYZE form of EXPLAIN actually execute the query?",
+      "standalone_question": "For the DuckDB project: Does the non-ANALYZE form of EXPLAIN actually execute the query?",
+      "asks": [
+        "EXPLAIN execution"
+      ],
+      "answer": "EXPLAIN does not run the query.",
+      "key_facts": [
+        "EXPLAIN does not run the query."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "sql/statements/inspection-and-metadata.md",
+          "quote": "EXPLAIN ⟨query⟩;            -- plan with estimated cardinalities; does not run the query",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1
+    },
+    {
+      "turn": 7,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "Within a single writer process, do concurrent appends conflict even on the same table?",
+      "standalone_question": "For the DuckDB project: Within a single writer process, do concurrent appends conflict even on the same table?",
+      "asks": [
+        "concurrent append conflicts"
+      ],
+      "answer": "Appends never conflict, even on the same table.",
+      "key_facts": [
+        "Appends never conflict, even on the same table."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "page": "connect/connecting-and-concurrency.md",
+          "quote": "**Appends never conflict**, even on the same table.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 0,
+      "recall_distance": 7
+    },
+    {
+      "turn": 8,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our output path is exports/cli_reports_64.parquet. Which output path should we record, and can CLI safe mode be disabled again within the same session?",
+      "standalone_question": "For the DuckDB project: Our output path is exports/cli_reports_64.parquet. Which output path should we record, and can CLI safe mode be disabled again within the same session?",
+      "asks": [
+        "output path",
+        "Can CLI safe mode be disabled again within the same session?"
+      ],
+      "answer": "The output path is exports/cli_reports_64.parquet. No; safe mode cannot be deactivated within the same session.",
+      "key_facts": [
+        "The output path is exports/cli_reports_64.parquet.",
+        "No; safe mode cannot be deactivated within the same session."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "exports/cli_reports_64.parquet"
+      ],
+      "evidence_pages": [
+        "clients/cli/interactive-features.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Our output path is exports/cli_reports_64.parquet.",
+          "fact_idx": 0
+        },
+        {
+          "page": "clients/cli/interactive-features.md",
+          "quote": "Safe mode **cannot be deactivated** within the same session.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 9,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which run label did we choose, and which CLI argument selects an alternative startup file?",
+      "standalone_question": "For the DuckDB project: Which run label did we choose, and which CLI argument selects an alternative startup file?",
+      "asks": [
+        "chosen run label",
+        "Which CLI argument selects an alternative startup file?"
+      ],
+      "answer": "The run label is cli_reports-batch-38. Use -init FILENAME.",
+      "key_facts": [
+        "The run label is cli_reports-batch-38.",
+        "Use -init FILENAME."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "cli_reports-batch-38",
+        "-init FILENAME"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Our run label is cli_reports-batch-38.",
+          "fact_idx": 0
+        },
+        {
+          "page": "clients/cli/overview-and-arguments.md",
+          "quote": "Use `-init FILENAME` to run a different file instead",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 8
+    },
+    {
+      "turn": 10,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "In the Python arithmetic example, what alias is assigned to 6 * 7?",
+      "standalone_question": "For the DuckDB project: In the Python arithmetic example, what alias is assigned to 6 * 7?",
+      "asks": [
+        "In the Python arithmetic example, what alias is assigned to 6 * 7?"
+      ],
+      "answer": "The alias is answer.",
+      "key_facts": [
+        "The alias is answer."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "example"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [
+        "quickstart.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "quickstart.md",
+          "quote": "duckdb.sql(\"SELECT 6 * 7 AS answer\").show()",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 11,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our run label from cli_reports-batch-38 to cli_reports-batch-80. Which run label should we record now, and which CLI argument skips the default startup file?",
+      "standalone_question": "For the DuckDB project: Change our run label from cli_reports-batch-38 to cli_reports-batch-80. Which run label should we record now, and which CLI argument skips the default startup file?",
+      "asks": [
+        "updated run label",
+        "Which CLI argument skips the default startup file?"
+      ],
+      "answer": "The run label is cli_reports-batch-80. Use -no-init.",
+      "key_facts": [
+        "The run label is cli_reports-batch-80.",
+        "Use -no-init."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "cli_reports-batch-80",
+        "-no-init"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our run label from cli_reports-batch-38 to cli_reports-batch-80.",
+          "fact_idx": 0
+        },
+        {
+          "page": "clients/cli/overview-and-arguments.md",
+          "quote": "`-no-init` to skip it.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "run label",
+          "from": "cli_reports-batch-38",
+          "to": "cli_reports-batch-80"
+        }
+      ],
+      "affects": [
+        17
+      ],
+      "source_turn": null,
+      "recall_distance": 10
+    },
+    {
+      "turn": 12,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Does COPY FROM create a target table, or append into an existing one?",
+      "standalone_question": "For the DuckDB project: Does COPY FROM create a target table, or append into an existing one?",
+      "asks": [
+        "Does COPY FROM create a target table, or append into an existing one?"
+      ],
+      "answer": "COPY FROM appends into an existing table.",
+      "key_facts": [
+        "COPY FROM appends into an existing table."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [
+        "sql/statements/copy-and-export.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "sql/statements/copy-and-export.md",
+          "quote": "Imports a file into an **existing** table, **appending** to its data.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 13,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "For this worker, which database path are we using now; Which dot command redirects only the next result rather than all subsequent results; and which statement computes per-column statistics?",
+      "standalone_question": "For the DuckDB project: For this worker, which database path are we using now; Which dot command redirects only the next result rather than all subsequent results; and which statement computes per-column statistics?",
+      "asks": [
+        "current database path",
+        "Which dot command redirects only the next result rather than all subsequent results?",
+        "column statistics statement"
+      ],
+      "answer": "The database path is cli_reports_r54.duckdb. Use .once. SUMMARIZE computes summary statistics per column.",
+      "key_facts": [
+        "The database path is cli_reports_r54.duckdb.",
+        "Use .once.",
+        "SUMMARIZE computes summary statistics per column."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "cli_reports_r54.duckdb",
+        ".once",
+        "SUMMARIZE"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        3,
+        5
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "Change our database path from cli_reports_r27.duckdb to cli_reports_r54.duckdb.",
+          "fact_idx": 0
+        },
+        {
+          "page": "clients/cli/dot-commands-and-output-formats.md",
+          "quote": "`.once` redirects only the next result.",
+          "fact_idx": 1
+        },
+        {
+          "page": "sql/statements/inspection-and-metadata.md",
+          "quote": "`SUMMARIZE` computes summary statistics per column.",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 10
+    },
+    {
+      "turn": 14,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "When a setting and table share a name, what does SHOW resolve to by default?",
+      "standalone_question": "For the DuckDB project: When a setting and table share a name, what does SHOW resolve to by default?",
+      "asks": [
+        "SHOW name resolution"
+      ],
+      "answer": "SHOW describes the table and emits a deprecation warning.",
+      "key_facts": [
+        "SHOW describes the table and emits a deprecation warning."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "condition",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "SHOW"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "sql/statements/inspection-and-metadata.md",
+          "quote": "If a table and a setting share the name, `SHOW` describes the table (with the deprecation warning).",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 5,
+      "recall_distance": 9
+    },
+    {
+      "turn": 15,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What default wall-clock execution limit does max_execution_time impose?",
+      "standalone_question": "For the DuckDB project: What default wall-clock execution limit does max_execution_time impose?",
+      "asks": [
+        "What default wall-clock execution limit does max_execution_time impose?"
+      ],
+      "answer": "The default is 0, meaning no limit.",
+      "key_facts": [
+        "The default is 0, meaning no limit."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [
+        "configuration/settings-and-pragmas.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "configuration/settings-and-pragmas.md",
+          "quote": "`max_execution_time` | `0` (no limit)",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 16,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which output path did we choose, and can CLI safe mode be disabled again within the same session?",
+      "standalone_question": "For the DuckDB project: Which output path did we choose, and can CLI safe mode be disabled again within the same session?",
+      "asks": [
+        "chosen output path",
+        "Can CLI safe mode be disabled again within the same session?"
+      ],
+      "answer": "The output path is exports/cli_reports_64.parquet. No; safe mode cannot be deactivated within the same session.",
+      "key_facts": [
+        "The output path is exports/cli_reports_64.parquet.",
+        "No; safe mode cannot be deactivated within the same session."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "exports/cli_reports_64.parquet"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        8
+      ],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Our output path is exports/cli_reports_64.parquet.",
+          "fact_idx": 0
+        },
+        {
+          "page": "clients/cli/interactive-features.md",
+          "quote": "Safe mode **cannot be deactivated** within the same session.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 8
+    },
+    {
+      "turn": 17,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What is our current run label, and which CLI argument skips the default startup file?",
+      "standalone_question": "For the DuckDB project: What is our current run label, and which CLI argument skips the default startup file?",
+      "asks": [
+        "current run label",
+        "Which CLI argument skips the default startup file?"
+      ],
+      "answer": "The run label is cli_reports-batch-80. Use -no-init.",
+      "key_facts": [
+        "The run label is cli_reports-batch-80.",
+        "Use -no-init."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "cli_reports-batch-80",
+        "-no-init"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        11
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our run label from cli_reports-batch-38 to cli_reports-batch-80.",
+          "fact_idx": 0
+        },
+        {
+          "page": "clients/cli/overview-and-arguments.md",
+          "quote": "`-no-init` to skip it.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 6
+    },
+    {
+      "turn": 18,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "For the same worker, what is our current database path; In the Python arithmetic example, what alias is assigned to 6 * 7; and does COPY FROM create a target table, or append into an existing one?",
+      "standalone_question": "For the DuckDB project: For the same worker, what is our current database path; In the Python arithmetic example, what alias is assigned to 6 * 7; and does COPY FROM create a target table, or append into an existing one?",
+      "asks": [
+        "current database path",
+        "In the Python arithmetic example, what alias is assigned to 6 * 7?",
+        "Does COPY FROM create a target table, or append into an existing one?"
+      ],
+      "answer": "The database path is cli_reports_r54.duckdb. The alias is answer. COPY FROM appends into an existing table.",
+      "key_facts": [
+        "The database path is cli_reports_r54.duckdb.",
+        "The alias is answer.",
+        "COPY FROM appends into an existing table."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "example"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "cli_reports_r54.duckdb"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        10,
+        12
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "Change our database path from cli_reports_r27.duckdb to cli_reports_r54.duckdb.",
+          "fact_idx": 0
+        },
+        {
+          "page": "quickstart.md",
+          "quote": "duckdb.sql(\"SELECT 6 * 7 AS answer\").show()",
+          "fact_idx": 1
+        },
+        {
+          "page": "sql/statements/copy-and-export.md",
+          "quote": "Imports a file into an **existing** table, **appending** to its data.",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 14
+    }
+  ]
+}

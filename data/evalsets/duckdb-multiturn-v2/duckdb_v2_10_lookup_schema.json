@@ -1,0 +1,1006 @@
+{
+  "schema_version": 2,
+  "scenario_id": "duckdb_v2_10_lookup_schema",
+  "title": "Designing indexed lookup and fact tables",
+  "topic": "Designing indexed lookup and fact tables",
+  "status": "draft",
+  "bundle": [
+    "connect/connecting-and-concurrency.md",
+    "performance/schema-indexes-and-joins.md",
+    "sql/statements/create-and-alter-tables.md",
+    "sql/statements/inspection-and-metadata.md",
+    "sql/statements/modifying-data.md",
+    "sql/data-types/overview-and-casting.md",
+    "sql/data-types/numeric-text-and-binary.md",
+    "sql/statements/transactions-and-maintenance.md"
+  ],
+  "generation": {
+    "method": "Session-authored fact cards assembled with a fixed 19-turn scaffold; no independent generation API call",
+    "model": "Codex current session (exact model identifier not recorded)",
+    "prompt": [
+      "mt_scenario_gen_v3_duckdb_session",
+      "b2d745c3f579"
+    ],
+    "created_at": "2026-11-28T12:09:48+00:00",
+    "run_id": "duckdb_v2_session/duckdb_v2_10_lookup_schema",
+    "corpus_manifest_sha256": "1995523b1e9959f27811f9e8e3294ea4af05c52c668867b7b09cc8dbe8eae728",
+    "source_pr": "https://github.com/akingdbets/token_lab/pull/64",
+    "source_pr_head": "eda7e1a19d4189785b81c4a0e2baf27aa8b18689"
+  },
+  "turns": [
+    {
+      "turn": 0,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "We are designing indexed lookup and fact tables. Our database path is lookup_schema_r30.duckdb. Which database path should we use, and if we use an in-memory database, is its data retained when the process ends?",
+      "standalone_question": "For the DuckDB project: We are designing indexed lookup and fact tables. Our database path is lookup_schema_r30.duckdb. Which database path should we use, and if we use an in-memory database, is its data retained when the process ends?",
+      "asks": [
+        "database path",
+        "in-memory persistence"
+      ],
+      "answer": "The database path is lookup_schema_r30.duckdb. No; all in-memory data is lost when the process ends.",
+      "key_facts": [
+        "The database path is lookup_schema_r30.duckdb.",
+        "No; all in-memory data is lost when the process ends."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "lookup_schema_r30.duckdb"
+      ],
+      "evidence_pages": [
+        "connect/connecting-and-concurrency.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 0,
+          "quote": "Our database path is lookup_schema_r30.duckdb.",
+          "fact_idx": 0
+        },
+        {
+          "page": "connect/connecting-and-concurrency.md",
+          "quote": "Nothing is persisted; all data is lost when the process ends.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 1,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our run label is lookup_schema-batch-41. Which run label should we record, and do constraint indexes accelerate joins or aggregations in DuckDB?",
+      "standalone_question": "For the DuckDB project: Our run label is lookup_schema-batch-41. Which run label should we record, and do constraint indexes accelerate joins or aggregations in DuckDB?",
+      "asks": [
+        "run label",
+        "Do constraint indexes accelerate joins or aggregations in DuckDB?"
+      ],
+      "answer": "The run label is lookup_schema-batch-41. No; DuckDB does not use these indexes for joins or aggregations.",
+      "key_facts": [
+        "The run label is lookup_schema-batch-41.",
+        "No; DuckDB does not use these indexes for joins or aggregations."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "lookup_schema-batch-41"
+      ],
+      "evidence_pages": [
+        "performance/schema-indexes-and-joins.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Our run label is lookup_schema-batch-41.",
+          "fact_idx": 0
+        },
+        {
+          "page": "performance/schema-indexes-and-joins.md",
+          "quote": "DuckDB does not use these indexes for joins or aggregations.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 2,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "For which general-purpose data types are zonemaps created automatically?",
+      "standalone_question": "For the DuckDB project: For which general-purpose data types are zonemaps created automatically?",
+      "asks": [
+        "For which general-purpose data types are zonemaps created automatically?"
+      ],
+      "answer": "Zonemaps are created automatically for all general-purpose data types.",
+      "key_facts": [
+        "Zonemaps are created automatically for all general-purpose data types."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "performance/schema-indexes-and-joins.md",
+          "quote": "Zonemaps are created **automatically** for all general-purpose data types",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1
+    },
+    {
+      "turn": 3,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Are ALTER TABLE changes fully undone by rollback?",
+      "standalone_question": "For the DuckDB project: Are ALTER TABLE changes fully undone by rollback?",
+      "asks": [
+        "Are ALTER TABLE changes fully undone by rollback?"
+      ],
+      "answer": "Yes; ALTER TABLE changes are transactional and fully undone by rollback.",
+      "key_facts": [
+        "Yes; ALTER TABLE changes are transactional and fully undone by rollback."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "ALTER TABLE"
+      ],
+      "evidence_pages": [
+        "sql/statements/create-and-alter-tables.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "sql/statements/create-and-alter-tables.md",
+          "quote": "All `ALTER TABLE` changes are transactional: invisible to other transactions until committed and fully undone by rollback.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 4,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our database path from lookup_schema_r30.duckdb to lookup_schema_r57.duckdb. Which database path should we use now, and does the in-memory alternative retain data after the process ends?",
+      "standalone_question": "For the DuckDB project: Change our database path from lookup_schema_r30.duckdb to lookup_schema_r57.duckdb. Which database path should we use now, and does the in-memory alternative retain data after the process ends?",
+      "asks": [
+        "updated database path",
+        "in-memory persistence"
+      ],
+      "answer": "The database path is lookup_schema_r57.duckdb. No; all in-memory data is lost when the process ends.",
+      "key_facts": [
+        "The database path is lookup_schema_r57.duckdb.",
+        "No; all in-memory data is lost when the process ends."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "lookup_schema_r57.duckdb"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "Change our database path from lookup_schema_r30.duckdb to lookup_schema_r57.duckdb.",
+          "fact_idx": 0
+        },
+        {
+          "page": "connect/connecting-and-concurrency.md",
+          "quote": "Nothing is persisted; all data is lost when the process ends.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "database path",
+          "from": "lookup_schema_r30.duckdb",
+          "to": "lookup_schema_r57.duckdb"
+        }
+      ],
+      "affects": [
+        13,
+        18
+      ],
+      "source_turn": null,
+      "recall_distance": 4
+    },
+    {
+      "turn": 5,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Which statement computes summary statistics per column?",
+      "standalone_question": "For the DuckDB project: Which statement computes summary statistics per column?",
+      "asks": [
+        "column statistics statement"
+      ],
+      "answer": "SUMMARIZE computes summary statistics per column.",
+      "key_facts": [
+        "SUMMARIZE computes summary statistics per column."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "SUMMARIZE"
+      ],
+      "evidence_pages": [
+        "sql/statements/inspection-and-metadata.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "sql/statements/inspection-and-metadata.md",
+          "quote": "`SUMMARIZE` computes summary statistics per column.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 6,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "Does the non-ANALYZE form of EXPLAIN actually execute the query?",
+      "standalone_question": "For the DuckDB project: Does the non-ANALYZE form of EXPLAIN actually execute the query?",
+      "asks": [
+        "EXPLAIN execution"
+      ],
+      "answer": "EXPLAIN does not run the query.",
+      "key_facts": [
+        "EXPLAIN does not run the query."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "sql/statements/inspection-and-metadata.md",
+          "quote": "EXPLAIN ⟨query⟩;            -- plan with estimated cardinalities; does not run the query",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1
+    },
+    {
+      "turn": 7,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "Within a single writer process, do concurrent appends conflict even on the same table?",
+      "standalone_question": "For the DuckDB project: Within a single writer process, do concurrent appends conflict even on the same table?",
+      "asks": [
+        "concurrent append conflicts"
+      ],
+      "answer": "Appends never conflict, even on the same table.",
+      "key_facts": [
+        "Appends never conflict, even on the same table."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "page": "connect/connecting-and-concurrency.md",
+          "quote": "**Appends never conflict**, even on the same table.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 0,
+      "recall_distance": 7
+    },
+    {
+      "turn": 8,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our output path is exports/lookup_schema_67.parquet. Which output path should we record, and does MERGE INTO require a primary key to perform an upsert?",
+      "standalone_question": "For the DuckDB project: Our output path is exports/lookup_schema_67.parquet. Which output path should we record, and does MERGE INTO require a primary key to perform an upsert?",
+      "asks": [
+        "output path",
+        "Does MERGE INTO require a primary key to perform an upsert?"
+      ],
+      "answer": "The output path is exports/lookup_schema_67.parquet. No; MERGE INTO can use a custom match condition without a primary key.",
+      "key_facts": [
+        "The output path is exports/lookup_schema_67.parquet.",
+        "No; MERGE INTO can use a custom match condition without a primary key."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "exports/lookup_schema_67.parquet"
+      ],
+      "evidence_pages": [
+        "sql/statements/modifying-data.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Our output path is exports/lookup_schema_67.parquet.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/statements/modifying-data.md",
+          "quote": "needs **no primary key**, using a custom match condition",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 9,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which run label did we choose, and for which general-purpose data types are zonemaps created automatically?",
+      "standalone_question": "For the DuckDB project: Which run label did we choose, and for which general-purpose data types are zonemaps created automatically?",
+      "asks": [
+        "chosen run label",
+        "For which general-purpose data types are zonemaps created automatically?"
+      ],
+      "answer": "The run label is lookup_schema-batch-41. Zonemaps are created automatically for all general-purpose data types.",
+      "key_facts": [
+        "The run label is lookup_schema-batch-41.",
+        "Zonemaps are created automatically for all general-purpose data types."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "lookup_schema-batch-41"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Our run label is lookup_schema-batch-41.",
+          "fact_idx": 0
+        },
+        {
+          "page": "performance/schema-indexes-and-joins.md",
+          "quote": "Zonemaps are created **automatically** for all general-purpose data types",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 8
+    },
+    {
+      "turn": 10,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Is conversion from DOUBLE to INTEGER performed implicitly?",
+      "standalone_question": "For the DuckDB project: Is conversion from DOUBLE to INTEGER performed implicitly?",
+      "asks": [
+        "Is conversion from DOUBLE to INTEGER performed implicitly?"
+      ],
+      "answer": "No; DOUBLE to INTEGER is never implicit.",
+      "key_facts": [
+        "No; DOUBLE to INTEGER is never implicit."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "DOUBLE",
+        "INTEGER"
+      ],
+      "evidence_pages": [
+        "sql/data-types/overview-and-casting.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "sql/data-types/overview-and-casting.md",
+          "quote": "`DOUBLE` → `INTEGER` is never implicit.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 11,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our run label from lookup_schema-batch-41 to lookup_schema-batch-83. Which run label should we record now, and do constraint indexes accelerate joins or aggregations in DuckDB?",
+      "standalone_question": "For the DuckDB project: Change our run label from lookup_schema-batch-41 to lookup_schema-batch-83. Which run label should we record now, and do constraint indexes accelerate joins or aggregations in DuckDB?",
+      "asks": [
+        "updated run label",
+        "Do constraint indexes accelerate joins or aggregations in DuckDB?"
+      ],
+      "answer": "The run label is lookup_schema-batch-83. No; DuckDB does not use these indexes for joins or aggregations.",
+      "key_facts": [
+        "The run label is lookup_schema-batch-83.",
+        "No; DuckDB does not use these indexes for joins or aggregations."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "lookup_schema-batch-83"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our run label from lookup_schema-batch-41 to lookup_schema-batch-83.",
+          "fact_idx": 0
+        },
+        {
+          "page": "performance/schema-indexes-and-joins.md",
+          "quote": "DuckDB does not use these indexes for joins or aggregations.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "run label",
+          "from": "lookup_schema-batch-41",
+          "to": "lookup_schema-batch-83"
+        }
+      ],
+      "affects": [
+        17
+      ],
+      "source_turn": null,
+      "recall_distance": 10
+    },
+    {
+      "turn": 12,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "In DECIMAL(WIDTH, SCALE), what does SCALE count?",
+      "standalone_question": "For the DuckDB project: In DECIMAL(WIDTH, SCALE), what does SCALE count?",
+      "asks": [
+        "In DECIMAL(WIDTH, SCALE), what does SCALE count?"
+      ],
+      "answer": "SCALE counts digits after the decimal point.",
+      "key_facts": [
+        "SCALE counts digits after the decimal point."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "SCALE"
+      ],
+      "evidence_pages": [
+        "sql/data-types/numeric-text-and-binary.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "sql/data-types/numeric-text-and-binary.md",
+          "quote": "`SCALE` digits after the point.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 13,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "For this worker, which database path are we using now; Are ALTER TABLE changes fully undone by rollback; and which statement computes per-column statistics?",
+      "standalone_question": "For the DuckDB project: For this worker, which database path are we using now; Are ALTER TABLE changes fully undone by rollback; and which statement computes per-column statistics?",
+      "asks": [
+        "current database path",
+        "Are ALTER TABLE changes fully undone by rollback?",
+        "column statistics statement"
+      ],
+      "answer": "The database path is lookup_schema_r57.duckdb. Yes; ALTER TABLE changes are transactional and fully undone by rollback. SUMMARIZE computes summary statistics per column.",
+      "key_facts": [
+        "The database path is lookup_schema_r57.duckdb.",
+        "Yes; ALTER TABLE changes are transactional and fully undone by rollback.",
+        "SUMMARIZE computes summary statistics per column."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "lookup_schema_r57.duckdb",
+        "ALTER TABLE",
+        "SUMMARIZE"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        3,
+        5
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "Change our database path from lookup_schema_r30.duckdb to lookup_schema_r57.duckdb.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/statements/create-and-alter-tables.md",
+          "quote": "All `ALTER TABLE` changes are transactional: invisible to other transactions until committed and fully undone by rollback.",
+          "fact_idx": 1
+        },
+        {
+          "page": "sql/statements/inspection-and-metadata.md",
+          "quote": "`SUMMARIZE` computes summary statistics per column.",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 10
+    },
+    {
+      "turn": 14,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "When a setting and table share a name, what does SHOW resolve to by default?",
+      "standalone_question": "For the DuckDB project: When a setting and table share a name, what does SHOW resolve to by default?",
+      "asks": [
+        "SHOW name resolution"
+      ],
+      "answer": "SHOW describes the table and emits a deprecation warning.",
+      "key_facts": [
+        "SHOW describes the table and emits a deprecation warning."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "condition",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "SHOW"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "sql/statements/inspection-and-metadata.md",
+          "quote": "If a table and a setting share the name, `SHOW` describes the table (with the deprecation warning).",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 5,
+      "recall_distance": 9
+    },
+    {
+      "turn": 15,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Does VACUUM reclaim space occupied by deleted rows?",
+      "standalone_question": "For the DuckDB project: Does VACUUM reclaim space occupied by deleted rows?",
+      "asks": [
+        "Does VACUUM reclaim space occupied by deleted rows?"
+      ],
+      "answer": "No; VACUUM does not reclaim space.",
+      "key_facts": [
+        "No; VACUUM does not reclaim space."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "VACUUM"
+      ],
+      "evidence_pages": [
+        "sql/statements/transactions-and-maintenance.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "sql/statements/transactions-and-maintenance.md",
+          "quote": "**`VACUUM` does not reclaim space**",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 16,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which output path did we choose, and does MERGE INTO require a primary key to perform an upsert?",
+      "standalone_question": "For the DuckDB project: Which output path did we choose, and does MERGE INTO require a primary key to perform an upsert?",
+      "asks": [
+        "chosen output path",
+        "Does MERGE INTO require a primary key to perform an upsert?"
+      ],
+      "answer": "The output path is exports/lookup_schema_67.parquet. No; MERGE INTO can use a custom match condition without a primary key.",
+      "key_facts": [
+        "The output path is exports/lookup_schema_67.parquet.",
+        "No; MERGE INTO can use a custom match condition without a primary key."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "exports/lookup_schema_67.parquet"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        8
+      ],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Our output path is exports/lookup_schema_67.parquet.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/statements/modifying-data.md",
+          "quote": "needs **no primary key**, using a custom match condition",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 8
+    },
+    {
+      "turn": 17,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What is our current run label, and do constraint indexes accelerate joins or aggregations in DuckDB?",
+      "standalone_question": "For the DuckDB project: What is our current run label, and do constraint indexes accelerate joins or aggregations in DuckDB?",
+      "asks": [
+        "current run label",
+        "Do constraint indexes accelerate joins or aggregations in DuckDB?"
+      ],
+      "answer": "The run label is lookup_schema-batch-83. No; DuckDB does not use these indexes for joins or aggregations.",
+      "key_facts": [
+        "The run label is lookup_schema-batch-83.",
+        "No; DuckDB does not use these indexes for joins or aggregations."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "lookup_schema-batch-83"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        11
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our run label from lookup_schema-batch-41 to lookup_schema-batch-83.",
+          "fact_idx": 0
+        },
+        {
+          "page": "performance/schema-indexes-and-joins.md",
+          "quote": "DuckDB does not use these indexes for joins or aggregations.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 6
+    },
+    {
+      "turn": 18,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "For the same worker, what is our current database path; Is conversion from DOUBLE to INTEGER performed implicitly; and in DECIMAL(WIDTH, SCALE), what does SCALE count?",
+      "standalone_question": "For the DuckDB project: For the same worker, what is our current database path; Is conversion from DOUBLE to INTEGER performed implicitly; and in DECIMAL(WIDTH, SCALE), what does SCALE count?",
+      "asks": [
+        "current database path",
+        "Is conversion from DOUBLE to INTEGER performed implicitly?",
+        "In DECIMAL(WIDTH, SCALE), what does SCALE count?"
+      ],
+      "answer": "The database path is lookup_schema_r57.duckdb. No; DOUBLE to INTEGER is never implicit. SCALE counts digits after the decimal point.",
+      "key_facts": [
+        "The database path is lookup_schema_r57.duckdb.",
+        "No; DOUBLE to INTEGER is never implicit.",
+        "SCALE counts digits after the decimal point."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "lookup_schema_r57.duckdb",
+        "DOUBLE",
+        "INTEGER",
+        "SCALE"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        10,
+        12
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "Change our database path from lookup_schema_r30.duckdb to lookup_schema_r57.duckdb.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/data-types/overview-and-casting.md",
+          "quote": "`DOUBLE` → `INTEGER` is never implicit.",
+          "fact_idx": 1
+        },
+        {
+          "page": "sql/data-types/numeric-text-and-binary.md",
+          "quote": "`SCALE` digits after the point.",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 14
+    }
+  ]
+}
