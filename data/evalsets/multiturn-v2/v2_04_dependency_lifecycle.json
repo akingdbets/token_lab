@@ -1,0 +1,2510 @@
+{
+ "schema_version": 2,
+ "scenario_id": "v2_04_dependency_lifecycle",
+ "title": "Resource Lifetimes in a Streaming API",
+ "topic": "의존성 수명과 정리",
+ "status": "draft",
+ "bundle": [
+  "dependencies/dependency-injection-basics.md",
+  "dependencies/dependencies-with-yield.md",
+  "dependencies/advanced-dependencies.md",
+  "dependencies/decorator-and-global-dependencies.md",
+  "app-structure/lifespan-events.md",
+  "integrations/background-tasks.md",
+  "integrations/sql-databases.md",
+  "testing/testing-dependencies-events-websockets.md",
+  "errors/handling-errors.md"
+ ],
+ "generation": {
+  "model": "gpt-6.1-sol",
+  "served_model": "gpt-6.1-sol",
+  "prompt": [
+   "mt_scenario_gen_v3",
+   "7e637f26a462"
+  ],
+  "settings": {
+   "model": "gpt-6.1-sol",
+   "temperature": null,
+   "temperature_requested": null,
+   "seed": 42,
+   "reasoning_effort": null,
+   "reasoning_effort_requested": null,
+   "max_tokens": 40000,
+   "max_tokens_param": "max_completion_tokens"
+  },
+  "run_id": "20261128-092937_v2_04_dependency_lifecycle",
+  "attempts": 1,
+  "created_at": "2026-11-28T09:32:49"
+ },
+ "turns": [
+  {
+   "turn": 0,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm building a database-backed streaming API. Our stream route is /vault-feed, and its iterator needs the yielded database session until streaming finishes. Which dependency scope should it use, and when will cleanup run?",
+   "asks": [
+    "Choose the scope for the named streaming route",
+    "Explain when cleanup runs"
+   ],
+   "standalone_question": "For a database-backed streaming API whose route is /vault-feed and whose iterator needs a yielded database session until streaming finishes, which dependency scope should it use, and when will cleanup run?",
+   "answer": "Use request scope for /vault-feed, which is the default for a yield dependency. Its cleanup runs after the response has been sent, allowing the iterator to use the session throughout streaming.",
+   "key_facts": [
+    "The project's streaming route is /vault-feed.",
+    "Request scope, the default for yield dependencies, keeps the resource available during streaming and tears it down after the response is sent."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/vault-feed",
+    "request"
+   ],
+   "evidence_pages": [
+    "dependencies/dependencies-with-yield.md",
+    "dependencies/advanced-dependencies.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our stream route is /vault-feed",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "- `scope=\"request\"` (default): exit code after `yield` runs **after the response has been sent**.",
+     "page": "dependencies/advanced-dependencies.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "This means a `StreamingResponse` can keep using the resource while streaming.",
+     "page": "dependencies/dependencies-with-yield.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Use `scope=\"request\"`. The session remains available while `/vault-feed` is streamed, and dependency cleanup runs after the response has finished streaming.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 1,
+   "turn_type": "new",
+   "type": "code",
+   "question": "For reusable pagination injection, we'll name our Annotated alias SliceDep83. Show its declaration around common_parameters, including that function's sample q, skip, and limit defaults.",
+   "asks": [
+    "Declare the chosen alias with the sample pagination defaults"
+   ],
+   "standalone_question": "Declare an Annotated alias named SliceDep83 around common_parameters, including that function's sample q, skip, and limit defaults.",
+   "answer": "```python\nfrom typing import Annotated\nfrom fastapi import Depends\n\nasync def common_parameters(q: str | None = None, skip: int = 0, limit: int = 100):\n    return {\"q\": q, \"skip\": skip, \"limit\": limit}\n\nSliceDep83 = Annotated[dict, Depends(common_parameters)]\n```",
+   "key_facts": [
+    "The reusable Annotated alias must be named SliceDep83.",
+    "common_parameters defaults q to None, skip to 0, and limit to 100."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "SliceDep83",
+    "common_parameters",
+    "Annotated",
+    "Depends",
+    "None",
+    "100"
+   ],
+   "evidence_pages": [
+    "dependencies/dependency-injection-basics.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "we'll name our Annotated alias SliceDep83.",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "async def common_parameters(q: str | None = None, skip: int = 0, limit: int = 100):",
+     "page": "dependencies/dependency-injection-basics.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "CommonsDep = Annotated[dict, Depends(common_parameters)]",
+     "page": "dependencies/dependency-injection-basics.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nfrom typing import Annotated\nfrom fastapi import Depends\n\ndef common_parameters(q: str | None = None, skip: int = 0, limit: int = 100):\n    return {\"q\": q, \"skip\": skip, \"limit\": limit}\n\nSliceDep83 = Annotated[dict, Depends(common_parameters)]\n```",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 2,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "If two sub-dependencies and the endpoint all need that pagination callable in one request, is it called repeatedly by default? How do I force a fresh call at a dependency declaration?",
+   "asks": [
+    "Explain repeated dependency evaluation within one request",
+    "Show how to force a fresh call"
+   ],
+   "standalone_question": "If two sub-dependencies and an endpoint need the same pagination dependency callable in one request, is it called repeatedly by default, and how can a dependency declaration force a fresh call?",
+   "answer": "By default FastAPI calls the same dependency once per request and reuses its value. Use Depends(common_parameters, use_cache=False) at a declaration that must make a fresh call.",
+   "key_facts": [
+    "The same dependency is called once and its value is reused within the request by default.",
+    "Setting use_cache=False forces a fresh dependency call."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "common_parameters",
+    "use_cache=False"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "If the same dependency is used several times in one request (e.g. by two sub-dependencies and the endpoint), FastAPI calls it **once** and reuses the value for that request.",
+     "page": "dependencies/dependency-injection-basics.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "async def needy_dependency(fresh_value: Annotated[str, Depends(get_value, use_cache=False)]):",
+     "page": "dependencies/dependency-injection-basics.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "No. FastAPI caches the same dependency callable once per request by default. Set `use_cache=False` in `Depends(...)` to force it to be called again.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "By default, FastAPI calls the shared dependency once per request and reuses its result for the sub-dependencies and endpoint. Set `use_cache=False` in a dependency declaration to make that declaration call the dependency again instead of reusing the cached result.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "not_found": false,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 3,
+   "turn_type": "new",
+   "type": "code",
+   "question": "For an application-wide outbound client, our lifespan state key will be relay_client_83. Show how to share an httpx.AsyncClient under that key and read it in an endpoint without a module-level client global.",
+   "asks": [
+    "Share and access the application-wide client through lifespan state"
+   ],
+   "standalone_question": "Show how an application can share an httpx.AsyncClient through lifespan state under relay_client_83 and read it in an endpoint without a module-level client global.",
+   "answer": "```python\nfrom contextlib import asynccontextmanager\nimport httpx\nfrom fastapi import FastAPI, Request\n\n@asynccontextmanager\nasync def lifespan(app: FastAPI):\n    async with httpx.AsyncClient() as client:\n        yield {\"relay_client_83\": client}\n\napp = FastAPI(lifespan=lifespan)\n\n@app.get(\"/\")\nasync def proxy(request: Request):\n    response = await request.state.relay_client_83.get(\"https://example.com\")\n    return {\"status\": response.status_code}\n```\nThe client is shared through lifespan state and released when the lifespan context exits.",
+   "key_facts": [
+    "The project's lifespan state key is relay_client_83.",
+    "A lifespan can yield a dictionary containing the managed client, and endpoints access that client through request.state."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "relay_client_83",
+    "httpx.AsyncClient",
+    "request.state",
+    "lifespan"
+   ],
+   "evidence_pages": [
+    "app-structure/lifespan-events.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "our lifespan state key will be relay_client_83.",
+     "user_turn": 3,
+     "fact_idx": 0
+    },
+    {
+     "quote": "    async with httpx.AsyncClient() as client:\n        yield {\"http_client\": client}",
+     "page": "app-structure/lifespan-events.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "    response = await request.state.http_client.get(\"https://example.com\")",
+     "page": "app-structure/lifespan-events.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nfrom contextlib import asynccontextmanager\n\nimport httpx\nfrom fastapi import FastAPI, Request\n\n\n@asynccontextmanager\nasync def lifespan(app: FastAPI):\n    async with httpx.AsyncClient() as client:\n        yield {\"relay_client_83\": client}\n\n\napp = FastAPI(lifespan=lifespan)\n\n\n@app.get(\"/\")\nasync def endpoint(request: Request):\n    client: httpx.AsyncClient = request.state.relay_client_83\n    response = await client.get(\"https://example.com\")\n    return {\"status\": response.status_code}\n```",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 4,
+   "turn_type": "update",
+   "type": "multi",
+   "question": "Rename our streaming route from /vault-feed to /sealed-feed. The iterator still needs the session while sending chunks; does the renamed route now qualify for function scope?",
+   "asks": [
+    "Apply the route rename",
+    "Decide whether function scope is safe"
+   ],
+   "standalone_question": "Rename a streaming route from /vault-feed to /sealed-feed. If its iterator still needs the yielded session while sending chunks, does the renamed route qualify for function scope?",
+   "answer": "The route is now /sealed-feed. Keep request scope: function scope tears down the session after the path operation returns, before the response is sent, which is too early for this iterator.",
+   "key_facts": [
+    "The stream route is now /sealed-feed rather than /vault-feed.",
+    "Function scope is unsuitable here because it cleans up before the response is sent; the streaming iterator still needs request scope."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/sealed-feed",
+    "function",
+    "request"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "Rename our streaming route from /vault-feed to /sealed-feed.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "- `scope=\"function\"`: exit code runs right after the path operation function returns, **before** the response is sent.",
+     "page": "dependencies/advanced-dependencies.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "This means a `StreamingResponse` can keep using the resource while streaming.",
+     "page": "dependencies/dependencies-with-yield.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Streaming route path",
+     "from": "/vault-feed",
+     "to": "/sealed-feed"
+    }
+   ],
+   "affects": [
+    13,
+    16
+   ],
+   "source_turn": null,
+   "recall_distance": 4,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 0.5,
+    "response": "No. The route name doesn’t matter: because the iterator needs the session while streaming, it must use request scope, not function scope.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 5,
+   "turn_type": "new",
+   "type": "code",
+   "question": "Our header-only gate must use the rejection detail 'Seal missing 83'. Adapt the verify_token sample, retaining its header, accepted token, and rejection status, and attach it to /items/ without adding an unused endpoint argument. Is its return value injected anywhere?",
+   "asks": [
+    "Adapt and attach the header-only gate",
+    "Explain whether its return value is injected"
+   ],
+   "standalone_question": "Adapt the verify_token sample with rejection detail 'Seal missing 83', retaining its header, accepted token, and rejection status. Attach it to /items/ without an unused endpoint argument and explain whether its return value is injected.",
+   "answer": "```python\nfrom typing import Annotated\nfrom fastapi import Depends, FastAPI, Header, HTTPException\n\napp = FastAPI()\n\nasync def verify_token(x_token: Annotated[str, Header()]):\n    if x_token != \"fake-super-secret-token\":\n        raise HTTPException(status_code=400, detail=\"Seal missing 83\")\n\n@app.get(\"/items/\", dependencies=[Depends(verify_token)])\nasync def read_items():\n    return [{\"item\": \"Foo\"}, {\"item\": \"Bar\"}]\n```\nThe header is X-Token. Decorator dependency return values are discarded, not injected into the endpoint.",
+   "key_facts": [
+    "The gate's rejection detail must be Seal missing 83.",
+    "The sample reads X-Token, accepts fake-super-secret-token, and rejects with status 400.",
+    "Using dependencies=[Depends(verify_token)] executes the gate without injecting its return value."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "Seal missing 83",
+    "verify_token",
+    "X-Token",
+    "fake-super-secret-token",
+    "400",
+    "dependencies=[Depends(verify_token)]"
+   ],
+   "evidence_pages": [
+    "dependencies/decorator-and-global-dependencies.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our header-only gate must use the rejection detail 'Seal missing 83'.",
+     "user_turn": 5,
+     "fact_idx": 0
+    },
+    {
+     "quote": "async def verify_token(x_token: Annotated[str, Header()]):",
+     "page": "dependencies/decorator-and-global-dependencies.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "    if x_token != \"fake-super-secret-token\":",
+     "page": "dependencies/decorator-and-global-dependencies.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "        raise HTTPException(status_code=400, detail=\"X-Token header invalid\")",
+     "page": "dependencies/decorator-and-global-dependencies.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "Their return values are discarded (here `verify_key` returns `x_key`, which is ignored).",
+     "page": "dependencies/decorator-and-global-dependencies.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nasync def verify_token(x_token: str = Header()):\n    if x_token != \"fake-super-secret-token\":\n        raise HTTPException(status_code=400, detail=\"Seal missing 83\")\n    return x_token\n\n@app.get(\"/items/\", dependencies=[Depends(verify_token)])\nasync def read_items():\n    return [{\"item\": \"Foo\"}]\n```\n\nThe dependency runs, but its return value is **not injected** into `read_items`; declaring it in the route’s `dependencies` list discards the value.",
+    "fact_results": [
+     true,
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 6,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "If I move that gate to the whole app and also request it as an endpoint parameter, does it run twice by default? Also, what two item names does the app-wide /items/ example return?",
+   "asks": [
+    "Determine whether the global gate runs twice",
+    "Identify the app-wide example's item names"
+   ],
+   "standalone_question": "If the same header gate is declared globally and as an endpoint parameter, does it run twice by default? What two item names does the app-wide /items/ example return?",
+   "answer": "No. Within a request, the same dependency is cached unless use_cache=False, so the global and parameter declarations do not call it twice. The app-wide /items/ example returns Portal Gun and Plumbus.",
+   "key_facts": [
+    "A global dependency reused as a parameter is not called twice by default within the same request.",
+    "The app-wide /items/ example returns Portal Gun and Plumbus."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "negation"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "use_cache=False",
+    "Portal Gun",
+    "Plumbus"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "Within a request, the same dependency is evaluated once and cached (unless `use_cache=False`), so a global `verify_token` used again as a parameter is not called twice.",
+     "page": "dependencies/decorator-and-global-dependencies.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    return [{\"item\": \"Portal Gun\"}, {\"item\": \"Plumbus\"}]",
+     "page": "dependencies/decorator-and-global-dependencies.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "No. FastAPI caches dependencies by default, so the same gate runs only once. The `/items/` example returns **Foo** and **Bar**.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 7,
+   "turn_type": "same_doc_new_topic",
+   "type": "multi",
+   "question": "For a configurable query checker, what fixed substring does FixedContentQueryChecker's sample instance use, and should Depends receive that instance or the class? Which method does FastAPI inspect for request inputs?",
+   "asks": [
+    "Identify the configured substring and dependency object",
+    "Identify the inspected method"
+   ],
+   "standalone_question": "For FixedContentQueryChecker's sample instance, identify its fixed substring, whether Depends receives the instance or class, and the method FastAPI inspects for request inputs.",
+   "answer": "The sample configures checker = FixedContentQueryChecker(\"bar\") and uses Depends(checker), passing the instance. FastAPI inspects __call__ for request inputs and sub-dependencies, not __init__.",
+   "key_facts": [
+    "The sample configures the substring bar and passes the checker instance using Depends(checker).",
+    "FastAPI inspects __call__, not __init__, for request parameters and sub-dependencies."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "bar",
+    "Depends(checker)",
+    "__call__",
+    "__init__"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "checker = FixedContentQueryChecker(\"bar\")",
+     "page": "dependencies/advanced-dependencies.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- Use `Depends(checker)` (the instance), not `Depends(FixedContentQueryChecker)`.",
+     "page": "dependencies/advanced-dependencies.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- FastAPI inspects `__call__`'s signature for request parameters and sub-dependencies (`q` becomes a query parameter), then calls `checker(q=...)` per request.",
+     "page": "dependencies/advanced-dependencies.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "- FastAPI never looks at `__init__`; **you** call it to configure the instance (`\"bar\"`).",
+     "page": "dependencies/advanced-dependencies.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 0,
+   "recall_distance": 7,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "The fixed substring is `\"bar\"`. `Depends` receives the checker **instance**, and FastAPI inspects its `__call__` method for request inputs.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 8,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm adding post-response notifications. What exact task function and message does the basic send-notification endpoint schedule? If our notification also needs a database lookup, may I pass the request's yielded session and ORM object to it?",
+   "asks": [
+    "Identify the scheduled notification function and message",
+    "Determine safe database resource handling in the task"
+   ],
+   "standalone_question": "What exact task function and message does the basic send-notification endpoint schedule, and may a database-using notification task receive the request's yielded session and ORM object?",
+   "answer": "It schedules background_tasks.add_task(write_notification, email, message=\"some notification\"). Do not rely on the request's yielded session or pass its ORM object for task use; pass a simple identifier and open a new session inside the task.",
+   "key_facts": [
+    "The endpoint schedules write_notification with email and message=\"some notification\".",
+    "A background task should receive simple values such as an object ID and open its own session instead of relying on yielded request resources."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "write_notification",
+    "some notification",
+    "ID"
+   ],
+   "evidence_pages": [
+    "integrations/background-tasks.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "    background_tasks.add_task(write_notification, email, message=\"some notification\")",
+     "page": "integrations/background-tasks.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Open a new session inside the task and pass simple values (like an object's ID) as arguments.",
+     "page": "integrations/background-tasks.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 9,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "What name did we choose for our pagination alias, and what are the wrapped function's q, skip, and limit defaults?",
+   "asks": [
+    "Recall the chosen pagination alias",
+    "Recall the wrapped function's defaults"
+   ],
+   "standalone_question": "What pagination alias name did the project choose, and what are its wrapped dependency function's query, offset, and limit defaults?",
+   "answer": "The alias is SliceDep83. Its common_parameters dependency defaults to q=None, skip=0, and limit=100.",
+   "key_facts": [
+    "The chosen pagination alias is SliceDep83.",
+    "The wrapped common_parameters function defaults q to None, skip to 0, and limit to 100."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "SliceDep83",
+    "common_parameters",
+    "None",
+    "100"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "we'll name our Annotated alias SliceDep83.",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "async def common_parameters(q: str | None = None, skip: int = 0, limit: int = 100):",
+     "page": "dependencies/dependency-injection-basics.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 8,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 10,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For dependency replacement in tests, what skip and limit does override_dependency return in the pagination example? If the request sends ?q=foo&skip=100&limit=200, which values survive and why?",
+   "asks": [
+    "Identify the replacement's fixed pagination values",
+    "Explain the result of conflicting query parameters"
+   ],
+   "standalone_question": "In the pagination testing example, what skip and limit does override_dependency return, and what happens when a request sends ?q=foo&skip=100&limit=200?",
+   "answer": "The replacement returns skip=5 and limit=10. The request produces q=\"foo\", skip=5, limit=10: only q is declared by the override, so the URL's skip and limit are ignored.",
+   "key_facts": [
+    "The sample override fixes skip at 5 and limit at 10.",
+    "The override's own signature controls inputs, so q=foo survives while URL skip=100 and limit=200 are ignored."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "override_dependency",
+    "5",
+    "10",
+    "foo"
+   ],
+   "evidence_pages": [
+    "testing/testing-dependencies-events-websockets.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "    return {\"q\": q, \"skip\": 5, \"limit\": 10}",
+     "page": "testing/testing-dependencies-events-websockets.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "here `skip`/`limit` from the URL are ignored because the override doesn't declare them.",
+     "page": "testing/testing-dependencies-events-websockets.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "        \"params\": {\"q\": \"foo\", \"skip\": 5, \"limit\": 10},",
+     "page": "testing/testing-dependencies-events-websockets.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "`override_dependency` returns `skip=5` and `limit=10`. With `?q=foo&skip=100&limit=200`, the override keeps those fixed values; the result uses `q=\"foo\"`, `skip=5`, and `limit=10`.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "`override_dependency` accepts `q` and returns `{\"q\": q, \"skip\": 5, \"limit\": 10}`. Once it’s registered as the override for the pagination dependency, a request to `?q=foo&skip=100&limit=200` returns `{\"q\": \"foo\", \"skip\": 5, \"limit\": 10}`: `q` is passed through, while the override’s fixed `skip` and `limit` replace the request values.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "not_found": false,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 11,
+   "turn_type": "update",
+   "type": "procedure",
+   "question": "Change our lifespan client state key from relay_client_83 to relay_client_94. What endpoint access expression should replace the old one, and how must I create the test client so the lifespan actually initializes it?",
+   "asks": [
+    "Apply the new client state key to endpoint access",
+    "Ensure the test runs lifespan initialization"
+   ],
+   "standalone_question": "After changing the lifespan client state key from relay_client_83 to relay_client_94, what endpoint access expression should replace the old one, and how must the test client be created to run lifespan initialization?",
+   "answer": "Yield the client under \"relay_client_94\" and access it as request.state.relay_client_94. Run requests inside `with TestClient(app) as client:` so startup runs on entering the block and shutdown runs on leaving it; constructing TestClient without the context manager does not run lifespan.",
+   "key_facts": [
+    "The new client state key is relay_client_94, so endpoint access is request.state.relay_client_94.",
+    "TestClient must be used as a context manager to run lifespan; construction without with does not run it."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "relay_client_94",
+    "request.state",
+    "TestClient"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    3,
+    10
+   ],
+   "evidence": [
+    {
+     "quote": "Change our lifespan client state key from relay_client_83 to relay_client_94.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "    response = await request.state.http_client.get(\"https://example.com\")",
+     "page": "app-structure/lifespan-events.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "`TestClient` runs the app's **lifespan** only when used as a **context manager**.",
+     "page": "testing/testing-dependencies-events-websockets.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "A module-level `client = TestClient(app)` used without `with` does **not** run lifespan.",
+     "page": "testing/testing-dependencies-events-websockets.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Lifespan outbound-client state key",
+     "from": "relay_client_83",
+     "to": "relay_client_94"
+    }
+   ],
+   "affects": [
+    13
+   ],
+   "source_turn": null,
+   "recall_distance": 8,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Replace the old access with `request.state.relay_client_94`. Create the test client as a context manager—`with TestClient(app) as client:`—so lifespan initialization runs.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 12,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For the SQLModel-backed endpoints, how many engines versus sessions should the app create, and what exact status and detail does read_hero raise when its lookup misses?",
+   "asks": [
+    "Distinguish engine and session lifetimes",
+    "Identify the missing-hero error"
+   ],
+   "standalone_question": "For SQLModel-backed endpoints, how many engines versus sessions should an app create, and what exact status and detail does read_hero raise for a missing record?",
+   "answer": "Create one engine for the whole app and a new session per request, closing that session afterward through the yield dependency. A failed read_hero lookup raises HTTPException(status_code=404, detail=\"Hero not found\").",
+   "key_facts": [
+    "The engine is app-wide, while the yield dependency supplies one new session per request and closes it afterward.",
+    "A missing hero raises status 404 with detail Hero not found."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "engine",
+    "session",
+    "404",
+    "Hero not found"
+   ],
+   "evidence_pages": [
+    "integrations/sql-databases.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "- **Engine**: holds the database connections. Create **one** for the whole app.",
+     "page": "integrations/sql-databases.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "The `yield` dependency gives **one new session per request** and closes it afterwards",
+     "page": "integrations/sql-databases.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "        raise HTTPException(status_code=404, detail=\"Hero not found\")",
+     "page": "integrations/sql-databases.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "Create one engine for the app and a new session per request. For a missing record, `read_hero` raises HTTP 404 with detail `\"Hero not found\"`.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 13,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "Before wiring notifications into streaming, what is our current stream route, what is our current shared-client state key, and what should a database-using background notification receive and open for itself?",
+   "asks": [
+    "Identify the current stream route",
+    "Identify the current shared-client state key",
+    "Specify background notification database arguments and ownership"
+   ],
+   "standalone_question": "For the streaming API project, identify the currently chosen stream route, the current shared-client lifespan state key, and what a database-using background notification should receive and open for itself.",
+   "answer": "The route is /sealed-feed. The shared-client state key is relay_client_94. Give a background notification a simple identifier such as an object ID, and have it open its own database session rather than reuse the request's yielded session or ORM object.",
+   "key_facts": [
+    "The current stream route is /sealed-feed.",
+    "The current shared-client state key is relay_client_94.",
+    "Database-using background tasks should receive IDs and create their own sessions."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/sealed-feed",
+    "relay_client_94",
+    "ID"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    4,
+    8,
+    11
+   ],
+   "evidence": [
+    {
+     "quote": "Rename our streaming route from /vault-feed to /sealed-feed.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Change our lifespan client state key from relay_client_83 to relay_client_94.",
+     "user_turn": 11,
+     "fact_idx": 1
+    },
+    {
+     "quote": "Open a new session inside the task and pass simple values (like an object's ID) as arguments.",
+     "page": "integrations/background-tasks.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 9,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 14,
+   "turn_type": "same_doc_new_topic",
+   "type": "multi",
+   "question": "If an included router and its parent both have lifespans, which is entered first and cleaned up first? If both yield a state dictionary with the same key, whose value wins?",
+   "asks": [
+    "Determine nested lifespan entry and cleanup order",
+    "Resolve duplicate lifespan state keys"
+   ],
+   "standalone_question": "When a parent and an included router both define lifespans, what are their entry and cleanup orders, and whose value wins when their yielded state dictionaries contain the same key?",
+   "answer": "The parent's lifespan is entered first, then the included router's. Cleanup is reversed, so the router exits first. On duplicate state keys, the parent's value wins.",
+   "key_facts": [
+    "The parent lifespan is entered before the included router's, and teardown runs in reverse order.",
+    "If both lifespan dictionaries contain the same key, the parent's value wins."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "lifespan",
+    "parent"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    3
+   ],
+   "evidence": [
+    {
+     "quote": "- The parent's lifespan is entered first, then the included router's (nested), so teardown runs in reverse order.",
+     "page": "app-structure/lifespan-events.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- If both yield state dictionaries, they are merged into one; on duplicate keys the parent's value wins.",
+     "page": "app-structure/lifespan-events.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 3,
+   "recall_distance": 11,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "The parent lifespan enters first, then the included router’s lifespan. On shutdown, the router exits first, then the parent. If their yielded state dictionaries share a key, the router’s value wins.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 15,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm checking exception responses before adding cleanup logging. For /unicorns/yolo, what status and JSON message does the custom UnicornException handler return? For general HTTP errors, which HTTPException class should I register a handler for so internally generated errors are included?",
+   "asks": [
+    "Identify the custom unicorn error response",
+    "Choose the HTTP exception handler registration class"
+   ],
+   "standalone_question": "For /unicorns/yolo, what status and JSON message does the custom UnicornException handler return, and which HTTPException class should a general handler target to include internally generated HTTP errors?",
+   "answer": "The unicorn handler returns status 418 and {\"message\": \"Oops! yolo did something. There goes a rainbow...\"}. Register the general HTTP handler for starlette.exceptions.HTTPException, commonly imported as StarletteHTTPException, so Starlette-generated errors are caught too.",
+   "key_facts": [
+    "For yolo, the custom handler returns 418 with message Oops! yolo did something. There goes a rainbow....",
+    "Register general HTTP exception handlers for Starlette's HTTPException to include errors raised internally by Starlette."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "418",
+    "yolo",
+    "Oops!",
+    "There goes a rainbow...",
+    "StarletteHTTPException"
+   ],
+   "evidence_pages": [
+    "errors/handling-errors.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "        status_code=418,",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "        content={\"message\": f\"Oops! {exc.name} did something. There goes a rainbow...\"},",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    if name == \"yolo\":\n        raise UnicornException(name=name)",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "**register handlers for Starlette's** (`from starlette.exceptions import HTTPException as StarletteHTTPException`)",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "For `/unicorns/yolo`, it returns **418** with `{\"message\": \"Oops! yolo did something. There goes a rainbow...\"}`. To catch internally generated HTTP errors too, target `starlette.exceptions.HTTPException`.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "For `/unicorns/yolo`, the `UnicornException` handler returns status **418** with `{\"message\": \"Oops! yolo did something. There goes a unicorn!\"}`. To handle HTTP errors generated internally as well, target Starlette’s `HTTPException` class (`starlette.exceptions.HTTPException`), rather than FastAPI’s `HTTPException`.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "not_found": false,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 16,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "What is the streaming route called now, and which scope keeps its session alive until the iterator has finished sending the response?",
+   "asks": [
+    "Recall the current streaming route",
+    "Recall the scope required by its iterator"
+   ],
+   "standalone_question": "What is the project's current streaming route, and which dependency scope keeps its yielded session alive until its iterator has finished sending the response?",
+   "answer": "The route is /sealed-feed. Use request scope, whose cleanup runs after the response is sent, so the iterator can continue using the session while streaming.",
+   "key_facts": [
+    "The renamed streaming route is /sealed-feed.",
+    "Request scope keeps the yielded resource available during streaming and cleans it up after the response is sent."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/sealed-feed",
+    "request"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0,
+    4
+   ],
+   "evidence": [
+    {
+     "quote": "Rename our streaming route from /vault-feed to /sealed-feed.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "- `scope=\"request\"` (default): exit code after `yield` runs **after the response has been sent**.",
+     "page": "dependencies/advanced-dependencies.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "This means a `StreamingResponse` can keep using the resource while streaming.",
+     "page": "dependencies/dependencies-with-yield.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 16,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 17,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "For our header-only gate, what rejection detail did we choose, and which two item names were returned by the app-wide example we discussed?",
+   "asks": [
+    "Recall the gate's chosen rejection detail",
+    "Recall the app-wide example's item names"
+   ],
+   "standalone_question": "What rejection detail did the project choose for its header-only gate, and which two item names were returned by the previously discussed app-wide dependency example?",
+   "answer": "Our gate's rejection detail is \"Seal missing 83\". The app-wide example returns Portal Gun and Plumbus.",
+   "key_facts": [
+    "The chosen rejection detail is Seal missing 83.",
+    "The app-wide example's item names are Portal Gun and Plumbus."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "Seal missing 83",
+    "Portal Gun",
+    "Plumbus"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5,
+    6
+   ],
+   "evidence": [
+    {
+     "quote": "Our header-only gate must use the rejection detail 'Seal missing 83'.",
+     "user_turn": 5,
+     "fact_idx": 0
+    },
+    {
+     "quote": "    return [{\"item\": \"Portal Gun\"}, {\"item\": \"Plumbus\"}]",
+     "page": "dependencies/decorator-and-global-dependencies.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 12,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 18,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the final regression assertions: what skip and limit does the original pagination callable default to, what status and detail does a missing hero produce, and how must a background notification obtain its database session?",
+   "asks": [
+    "Identify the original pagination defaults",
+    "Identify the missing-hero response",
+    "Specify background notification session ownership"
+   ],
+   "standalone_question": "For regression assertions on the previously discussed API, identify the original pagination dependency's skip and limit defaults, the missing-hero error status and detail, and how a background notification must obtain its database session.",
+   "answer": "The original pagination defaults are skip=0 and limit=100, not the testing override's values. A missing hero produces status 404 with detail \"Hero not found\". A background notification must open its own session and receive a simple identifier rather than reuse the request's yielded session or ORM object.",
+   "key_facts": [
+    "The original pagination callable defaults skip to 0 and limit to 100.",
+    "A missing hero produces status 404 with detail Hero not found.",
+    "A background notification must create its own session and receive simple values such as IDs instead of relying on request-yielded resources."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "100",
+    "404",
+    "Hero not found",
+    "ID"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1,
+    8,
+    12
+   ],
+   "evidence": [
+    {
+     "quote": "async def common_parameters(q: str | None = None, skip: int = 0, limit: int = 100):",
+     "page": "dependencies/dependency-injection-basics.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "        raise HTTPException(status_code=404, detail=\"Hero not found\")",
+     "page": "integrations/sql-databases.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "Open a new session inside the task and pass simple values (like an object's ID) as arguments.",
+     "page": "integrations/background-tasks.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 17,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.6666666666666666,
+    "accuracy": 0.6666666666666666,
+    "response": "The defaults are `skip=0` and `limit=100`. A missing hero returns **404** with detail **\"Hero not found\"**. The background notification should open its own database session rather than reuse the request’s session.",
+    "fact_results": [
+     true,
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  }
+ ]
+}

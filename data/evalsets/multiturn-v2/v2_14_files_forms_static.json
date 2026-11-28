@@ -1,0 +1,2477 @@
+{
+ "schema_version": 2,
+ "scenario_id": "v2_14_files_forms_static",
+ "title": "Upload Intake and Protected Asset Delivery",
+ "topic": "파일·폼·정적 파일",
+ "status": "draft",
+ "bundle": [
+  "request/forms-and-files.md",
+  "app-structure/static-files-templates-and-frontend.md",
+  "responses/custom-responses.md",
+  "responses/streaming-and-sse.md",
+  "request/using-request-directly.md",
+  "middleware/middleware.md",
+  "deployment/docker.md",
+  "openapi/extending-openapi.md"
+ ],
+ "generation": {
+  "model": "gpt-6.1-sol",
+  "served_model": "gpt-6.1-sol",
+  "prompt": [
+   "mt_scenario_gen_v3",
+   "7e637f26a462"
+  ],
+  "settings": {
+   "model": "gpt-6.1-sol",
+   "temperature": null,
+   "temperature_requested": null,
+   "seed": 42,
+   "reasoning_effort": null,
+   "reasoning_effort_requested": null,
+   "max_tokens": 40000,
+   "max_tokens_param": "max_completion_tokens"
+  },
+  "run_id": "20261128-093542_v2_14_files_forms_static",
+  "attempts": 2,
+  "created_at": "2026-11-28T09:40:57"
+ },
+ "turns": [
+  {
+   "turn": 0,
+   "turn_type": "new",
+   "type": "code",
+   "question": "I'm building a review intake service. Our multiple-upload form field is named artifacts. Show the endpoint parameter for large uploads and explain why that representation is preferable to bytes.",
+   "asks": [
+    "Multiple-upload parameter using the chosen field",
+    "Storage advantage over bytes"
+   ],
+   "standalone_question": "For a review intake service whose multiple-upload form field is named artifacts, show the endpoint parameter for large uploads and explain why that representation is preferable to bytes.",
+   "answer": "Use `artifacts: list[UploadFile]`, importing `UploadFile` from `fastapi`. Send all the files under the form field `artifacts`. `UploadFile` uses a spooled file: memory up to a limit, then disk; `bytes` loads the whole content into memory.",
+   "key_facts": [
+    "The multiple-upload parameter must use the project field name artifacts.",
+    "Use list[UploadFile] for multiple large uploads; UploadFile spools from memory to disk instead of loading the whole content as bytes."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "artifacts",
+    "list[UploadFile]",
+    "UploadFile",
+    "bytes"
+   ],
+   "evidence_pages": [
+    "request/forms-and-files.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our multiple-upload form field is named artifacts.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "async def create_upload_files(files: list[UploadFile]):",
+     "page": "request/forms-and-files.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "| Storage | Whole content **in memory** | **Spooled** file: memory up to a limit, then disk |",
+     "page": "request/forms-and-files.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nartifacts: list[UploadFile] = File(...)\n```\n\n`UploadFile` is preferable to `bytes` for large uploads because it uses a spooled temporary file instead of loading each entire file into memory.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 1,
+   "turn_type": "new",
+   "type": "code",
+   "question": "Our asset URL prefix is /atelier-assets. Show the mount using the sample disk directory and mount name, and say whether it appears in the API schema.",
+   "asks": [
+    "Static asset mount at the chosen prefix",
+    "Schema visibility of the mount"
+   ],
+   "standalone_question": "With an asset URL prefix of /atelier-assets, show an asset mount using the sample disk directory and mount name, and say whether it appears in the API schema.",
+   "answer": "```python\nfrom fastapi.staticfiles import StaticFiles\n\napp.mount(\"/atelier-assets\", StaticFiles(directory=\"static\"), name=\"static\")\n```\nThis mounts an independent ASGI app; it does not appear in the application's OpenAPI schema.",
+   "key_facts": [
+    "The asset mount uses the project prefix /atelier-assets.",
+    "The sample uses StaticFiles(directory=\"static\") with name=\"static\".",
+    "A mounted StaticFiles application does not appear in the application's OpenAPI schema."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/atelier-assets",
+    "StaticFiles",
+    "static",
+    "OpenAPI"
+   ],
+   "evidence_pages": [
+    "app-structure/static-files-templates-and-frontend.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our asset URL prefix is /atelier-assets.",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "app.mount(\"/static\", StaticFiles(directory=\"static\"), name=\"static\")",
+     "page": "app-structure/static-files-templates-and-frontend.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "Mounting adds an **independent** ASGI app: it does not appear in your OpenAPI schema and is not affected by your app's dependencies.",
+     "page": "app-structure/static-files-templates-and-frontend.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.6666666666666666,
+    "response": "```python\napp.mount(\"/atelier-assets\", StaticFiles(directory=\"static\"), name=\"atelier-assets\")\n```\n\nThe mount does not appear in the API schema.",
+    "fact_results": [
+     true,
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 2,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "For that mount, what template URL expression targets the sample stylesheet, and would an application dependency protect those assets?",
+   "asks": [
+    "Template URL expression for the sample stylesheet",
+    "Application dependency coverage of mounted assets"
+   ],
+   "standalone_question": "For the asset mount previously configured, what template URL expression targets the sample stylesheet, and would an application dependency protect the mounted assets?",
+   "answer": "Use `{{ url_for('static', path='/styles.css') }}`. The mount name resolves the configured URL prefix. No: the mounted application is independent and is not affected by the application's dependencies.",
+   "key_facts": [
+    "The stylesheet expression is {{ url_for('static', path='/styles.css') }}.",
+    "Application dependencies do not protect a mounted StaticFiles application."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "static",
+    "/styles.css",
+    "url_for",
+    "StaticFiles"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "    <link href=\"{{ url_for('static', path='/styles.css') }}\" rel=\"stylesheet\">",
+     "page": "app-structure/static-files-templates-and-frontend.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Mounting adds an **independent** ASGI app: it does not appear in your OpenAPI schema and is not affected by your app's dependencies.",
+     "page": "app-structure/static-files-templates-and-frontend.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "Use `{{ url_for('assets', path='/sample.css') }}`. No—an application dependency won’t protect files served by a mounted static app.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 3,
+   "turn_type": "new",
+   "type": "code",
+   "question": "The browser download name must be review-pack-83.zip. Show a FileResponse return using the sample large-video disk path but our download name, and identify the automatic file metadata headers.",
+   "asks": [
+    "FileResponse using the sample path and chosen download name",
+    "Automatic file metadata headers"
+   ],
+   "standalone_question": "The browser download name must be review-pack-83.zip. Show a FileResponse return using the sample large-video disk path but that download name, and identify the automatic file metadata headers.",
+   "answer": "```python\nreturn FileResponse(\"large-video-file.mp4\", filename=\"review-pack-83.zip\")\n```\n`filename` sets the download `Content-Disposition`. `FileResponse` also sets `Content-Length`, `Last-Modified`, and `ETag`.",
+   "key_facts": [
+    "The filename argument must be review-pack-83.zip.",
+    "The sample disk path is large-video-file.mp4, passed to FileResponse.",
+    "FileResponse sets Content-Length, Last-Modified, and ETag."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "FileResponse",
+    "large-video-file.mp4",
+    "review-pack-83.zip",
+    "Content-Length",
+    "Last-Modified",
+    "ETag"
+   ],
+   "evidence_pages": [
+    "responses/custom-responses.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "The browser download name must be review-pack-83.zip.",
+     "user_turn": 3,
+     "fact_idx": 0
+    },
+    {
+     "quote": "some_file_path = \"large-video-file.mp4\"",
+     "page": "responses/custom-responses.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "    return FileResponse(some_file_path)",
+     "page": "responses/custom-responses.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "It sets `Content-Length`, `Last-Modified` and `ETag`.",
+     "page": "responses/custom-responses.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.6666666666666666,
+    "response": "```python\nreturn FileResponse(\n    \"large-video.mp4\",\n    filename=\"review-pack-83.zip\",\n)\n```\n\n`FileResponse` automatically adds `Content-Length`, `Last-Modified`, and `ETag`. The `filename` also sets `Content-Disposition` for the download name.",
+    "fact_results": [
+     true,
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 4,
+   "turn_type": "update",
+   "type": "multi",
+   "question": "Change the asset URL prefix from /atelier-assets to /sealed-assets. What prefix should the mount use now, and does that rename make application dependencies protect it?",
+   "asks": [
+    "Updated asset prefix",
+    "Whether renaming changes dependency coverage"
+   ],
+   "standalone_question": "Change a mounted static asset URL prefix from /atelier-assets to /sealed-assets. What prefix should the mount use now, and does that rename make application dependencies protect it?",
+   "answer": "The mount should now use `/sealed-assets`. Renaming the prefix does not change its independence: application dependencies still do not apply to the mounted app.",
+   "key_facts": [
+    "The active asset URL prefix is now /sealed-assets.",
+    "Changing the prefix does not make application dependencies apply to a mounted StaticFiles app."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/sealed-assets",
+    "StaticFiles"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "Change the asset URL prefix from /atelier-assets to /sealed-assets.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Mounting adds an **independent** ASGI app: it does not appear in your OpenAPI schema and is not affected by your app's dependencies.",
+     "page": "app-structure/static-files-templates-and-frontend.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "asset URL prefix",
+     "from": "/atelier-assets",
+     "to": "/sealed-assets"
+    }
+   ],
+   "affects": [
+    13
+   ],
+   "source_turn": null,
+   "recall_distance": 3,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Use `/sealed-assets`. Renaming the prefix does not make application dependencies protect the mounted assets; add explicit access control if needed.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 5,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "A legacy intake client omits Content-Type on JSON bodies. Which application option restores parsing for it, and would that option also make text/plain bodies parse as JSON?",
+   "asks": [
+    "Option allowing JSON parsing without Content-Type",
+    "Effect on text/plain bodies"
+   ],
+   "standalone_question": "A legacy intake client omits Content-Type on JSON bodies. Which application option restores parsing for it, and would that option also make text/plain bodies parse as JSON?",
+   "answer": "Use `FastAPI(strict_content_type=False)` to restore parsing of bodies without `Content-Type`. It does not make `text/plain` parse as JSON: a non-JSON content type is never parsed as JSON regardless of the flag.",
+   "key_facts": [
+    "The demonstrated application option is FastAPI(strict_content_type=False).",
+    "A non-JSON Content-Type such as text/plain is never parsed as JSON, regardless of that flag."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "FastAPI(strict_content_type=False)",
+    "Content-Type",
+    "text/plain"
+   ],
+   "evidence_pages": [
+    "request/using-request-directly.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "app = FastAPI(strict_content_type=False)",
+     "page": "request/using-request-directly.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Bodies without a `Content-Type` are then parsed as JSON (the pre-0.132 behavior).",
+     "page": "request/using-request-directly.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "A **non-JSON** `Content-Type` (e.g. `text/plain`) is never parsed as JSON, regardless of the flag.",
+     "page": "request/using-request-directly.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "Set Hapi’s `routes.payload.defaultContentType` to `application/json`. It applies only when the `Content-Type` header is absent; an explicit `text/plain` body won’t be parsed as JSON.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 6,
+   "turn_type": "followup",
+   "type": "fact",
+   "question": "If we keep strict checking instead, which two JSON Content-Type forms are recognized?",
+   "asks": [
+    "Recognized JSON Content-Type forms"
+   ],
+   "standalone_question": "With strict checking enabled for JSON request bodies, which two JSON Content-Type forms are recognized?",
+   "answer": "`application/json` and `application/*+json`.",
+   "key_facts": [
+    "Strict checking recognizes application/json and application/*+json as JSON content types."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "application/json",
+    "application/*+json"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "Since FastAPI **0.132.0**, JSON bodies are parsed only when the request has a JSON `Content-Type` (`application/json` or `application/*+json`).",
+     "page": "request/using-request-directly.md",
+     "fact_idx": 0
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "`application/json` and any `application/*+json` media type (such as `application/vnd.api+json`).",
+    "fact_results": [
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 7,
+   "turn_type": "same_doc_new_topic",
+   "type": "multi",
+   "question": "For a separate form-only login, how do I make the model reject unexpected fields, and what status and error type does an extra field produce?",
+   "asks": [
+    "Model configuration rejecting unexpected form fields",
+    "Status and error type for an extra field"
+   ],
+   "standalone_question": "For a form-only login using a Pydantic model, how do I make the model reject unexpected fields, and what status and error type does an extra field produce?",
+   "answer": "Set `model_config = {\"extra\": \"forbid\"}` on the form model declared with `Form()`. An unexpected field produces a `422` response with error type `extra_forbidden`.",
+   "key_facts": [
+    "Set model_config = {\"extra\": \"forbid\"} on the form model to reject unexpected fields.",
+    "An extra field produces status 422 with type extra_forbidden."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "model_config",
+    "forbid",
+    "Form()",
+    "422",
+    "extra_forbidden"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "    model_config = {\"extra\": \"forbid\"}",
+     "page": "request/forms-and-files.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "A client sending an extra field (e.g. `extra=Mr. Poopybutthole`) gets a 422 error with type `extra_forbidden`.",
+     "page": "request/forms-and-files.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 0,
+   "recall_distance": 7,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Set `model_config = ConfigDict(extra=\"forbid\")` on the Pydantic model. An unexpected field produces **422 Unprocessable Entity**, with error type **`extra_forbidden`**.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 8,
+   "turn_type": "new",
+   "type": "code",
+   "question": "Our response timing header is X-Intake-Elapsed. Show the HTTP middleware pattern that writes it using the sample's preferred duration clock.",
+   "asks": [
+    "HTTP timing middleware using the chosen header and preferred clock"
+   ],
+   "standalone_question": "Our response timing header is X-Intake-Elapsed. Show HTTP middleware that writes it using the sample's preferred duration clock.",
+   "answer": "```python\nimport time\nfrom fastapi import Request\n\n@app.middleware(\"http\")\nasync def intake_timing(request: Request, call_next):\n    start = time.perf_counter()\n    response = await call_next(request)\n    response.headers[\"X-Intake-Elapsed\"] = str(time.perf_counter() - start)\n    return response\n```\n`time.perf_counter()` is preferred over `time.time()` for measuring durations.",
+   "key_facts": [
+    "The middleware writes the project header X-Intake-Elapsed.",
+    "Measure around await call_next(request) with time.perf_counter(), then set the response header."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "X-Intake-Elapsed",
+    "time.perf_counter()",
+    "call_next",
+    "time.time()"
+   ],
+   "evidence_pages": [
+    "middleware/middleware.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our response timing header is X-Intake-Elapsed.",
+     "user_turn": 8,
+     "fact_idx": 0
+    },
+    {
+     "quote": "    response = await call_next(request)",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "    response.headers[\"X-Process-Time\"] = str(process_time)",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "- `time.perf_counter()` is more precise than `time.time()` for measuring durations.",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.5,
+    "response": "In Go, `time.Now()` carries a monotonic reading, and `time.Since` uses it. Set the header when the response is committed:\n\n```go\ntype elapsedWriter struct {\n\thttp.ResponseWriter\n\tstart time.Time\n\twrote bool\n}\n\nfunc (w *elapsedWriter) WriteHeader(status int) {\n\tif !w.wrote {\n\t\tw.Header().Set(\"X-Intake-Elapsed\", time.Since(w.start).String())\n\t\tw.wrote = true\n\t}\n\tw.ResponseWriter.WriteHeader(status)\n}\n\nfunc (w *elapsedWriter) Write(p []byte) (int, error) {\n\tif !w.wrote {\n\t\tw.WriteHeader(http.StatusOK)\n\t}\n\treturn w.ResponseWriter.Write(p)\n}\n\nfunc IntakeTiming(next http.Handler) http.Handler {\n\treturn http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {\n\t\ttw := &elapsedWriter{ResponseWriter: w, start: time.Now()}\n\t\tnext.ServeHTTP(tw, r)\n\t\tif !tw.wrote {\n\t\t\ttw.WriteHeader(http.StatusOK)\n\t\t}\n\t})\n}\n```\n\nThis measures elapsed time until response headers are committed.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 9,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "For the large multi-upload intake we started with, which form field name did we choose, and does its file representation keep every upload entirely in memory?",
+   "asks": [
+    "Previously chosen upload field name",
+    "Memory behavior of the chosen representation"
+   ],
+   "standalone_question": "For the previously configured large multi-upload intake, which form field name did the project choose, and does the chosen file representation keep every upload entirely in memory?",
+   "answer": "The field name is `artifacts`. No: `UploadFile` uses spooled storage, keeping data in memory up to a limit and then spilling to disk.",
+   "key_facts": [
+    "The upload field is artifacts.",
+    "UploadFile does not keep every upload entirely in memory; it spools to disk after a memory limit."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation",
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "artifacts",
+    "UploadFile"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "Our multiple-upload form field is named artifacts.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "| Storage | Whole content **in memory** | **Spooled** file: memory up to a limit, then disk |",
+     "page": "request/forms-and-files.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 9,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 10,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For upload progress over SSE, what event name and retry delay does the explicit-event sample use, and how often is an idle connection pinged?",
+   "asks": [
+    "Sample explicit-event name and retry delay",
+    "Idle SSE ping interval"
+   ],
+   "standalone_question": "For upload progress over SSE, what event name and retry delay does the explicit-event sample use, and how often is an idle connection pinged?",
+   "answer": "The sample uses `event=\"item_update\"` and `retry=5000` milliseconds. When the generator is idle, FastAPI sends a keep-alive `: ping` comment every 15 seconds.",
+   "key_facts": [
+    "The explicit-event sample uses item_update with retry=5000 milliseconds.",
+    "An idle SSE generator receives a keep-alive : ping comment every 15 seconds."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "item_update",
+    "5000",
+    ": ping",
+    "15 seconds"
+   ],
+   "evidence_pages": [
+    "responses/streaming-and-sse.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "        yield ServerSentEvent(data=item, event=\"item_update\", id=str(i + 1), retry=5000)",
+     "page": "responses/streaming-and-sse.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "| `retry` | Reconnection delay in milliseconds |",
+     "page": "responses/streaming-and-sse.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- Sends a keep-alive `: ping` comment every **15 seconds** when the generator is idle, so proxies don't close the connection.",
+     "page": "responses/streaming-and-sse.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 11,
+   "turn_type": "update",
+   "type": "multi",
+   "question": "Change the browser download name from review-pack-83.zip to review-pack-97.zip. What filename argument should we use now, and which three automatic file metadata headers remain unchanged?",
+   "asks": [
+    "Updated download filename argument",
+    "Unchanged automatic file metadata headers"
+   ],
+   "standalone_question": "Change a browser download name from review-pack-83.zip to review-pack-97.zip. What filename argument should be used now, and which three automatic file metadata headers remain unchanged?",
+   "answer": "Use `filename=\"review-pack-97.zip\"`. The automatic metadata headers are still `Content-Length`, `Last-Modified`, and `ETag`.",
+   "key_facts": [
+    "The current filename argument is review-pack-97.zip.",
+    "FileResponse still sets Content-Length, Last-Modified, and ETag."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "review-pack-97.zip",
+    "FileResponse",
+    "Content-Length",
+    "Last-Modified",
+    "ETag"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    3
+   ],
+   "evidence": [
+    {
+     "quote": "Change the browser download name from review-pack-83.zip to review-pack-97.zip.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "It sets `Content-Length`, `Last-Modified` and `ETag`.",
+     "page": "responses/custom-responses.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "browser download filename",
+     "from": "review-pack-83.zip",
+     "to": "review-pack-97.zip"
+    }
+   ],
+   "affects": [
+    17
+   ],
+   "source_turn": null,
+   "recall_distance": 8,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.5,
+    "response": "Use `filename=\"review-pack-97.zip\"`. The unchanged automatic metadata headers are `Content-Type`, `Content-Length`, and `Last-Modified`.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 12,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm containerizing the intake service with the sample package layout. Give the production CMD without proxy options or extra workers, and explain why requirements are copied before application code.",
+   "asks": [
+    "Sample production exec-form CMD",
+    "Reason for copying requirements first"
+   ],
+   "standalone_question": "For a containerized intake service using the sample package layout, give the production CMD without proxy options or extra workers, and explain why requirements are copied before application code.",
+   "answer": "```Dockerfile\nCMD [\"fastapi\", \"run\", \"app/main.py\", \"--port\", \"80\"]\n```\nCopy and install `requirements.txt` before copying application code so code-only changes can reuse the dependency-install layer rather than reinstalling packages.",
+   "key_facts": [
+    "The sample production exec-form command runs fastapi run app/main.py on port 80.",
+    "Copying requirements and installing dependencies before application code preserves dependency-layer reuse on code-only changes."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "fastapi",
+    "run",
+    "app/main.py",
+    "--port",
+    "80",
+    "requirements.txt"
+   ],
+   "evidence_pages": [
+    "deployment/docker.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "CMD [\"fastapi\", \"run\", \"app/main.py\", \"--port\", \"80\"]",
+     "page": "deployment/docker.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Docker caches each instruction as a layer and reuses it if the inputs didn't change.",
+     "page": "deployment/docker.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "5. Copy the application code.",
+     "page": "deployment/docker.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "4. Install dependencies (`--no-cache-dir` keeps the image smaller).",
+     "page": "deployment/docker.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "Assuming the package is `intake_service` and `main.py` exposes the ASGI app:\n\n```dockerfile\nCMD [\"uvicorn\", \"intake_service.main:app\", \"--host\", \"0.0.0.0\", \"--port\", \"8000\"]\n```\n\nCopy `requirements.txt` and install dependencies before copying the application code so Docker can reuse the dependency-install layer when only app code changes.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 13,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the integration test constants, what is our current asset URL prefix, what is our timing response header, and what idle SSE ping interval should the test expect?",
+   "asks": [
+    "Current asset URL prefix",
+    "Project timing response header",
+    "Idle SSE ping interval"
+   ],
+   "standalone_question": "For the service's integration test constants, what is the asset URL prefix after the team's change, what is the project's timing response header, and what idle SSE ping interval should the test expect?",
+   "answer": "Asset prefix: `/sealed-assets`. Timing header: `X-Intake-Elapsed`. Idle SSE keep-alive interval: 15 seconds.",
+   "key_facts": [
+    "The current asset URL prefix is /sealed-assets.",
+    "The timing response header is X-Intake-Elapsed.",
+    "The idle SSE ping interval is 15 seconds."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/sealed-assets",
+    "X-Intake-Elapsed",
+    "15 seconds"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    4,
+    8,
+    10
+   ],
+   "evidence": [
+    {
+     "quote": "Change the asset URL prefix from /atelier-assets to /sealed-assets.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Our response timing header is X-Intake-Elapsed.",
+     "user_turn": 8,
+     "fact_idx": 1
+    },
+    {
+     "quote": "- Sends a keep-alive `: ping` comment every **15 seconds** when the generator is idle, so proxies don't close the connection.",
+     "page": "responses/streaming-and-sse.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 9,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 14,
+   "turn_type": "same_doc_new_topic",
+   "type": "code",
+   "question": "For a server-rendered item detail screen, show the sample template response call with its request and context, and the response class that makes the API describe HTML.",
+   "asks": [
+    "Sample template response call",
+    "HTML documentation response class"
+   ],
+   "standalone_question": "For a server-rendered item detail screen, show the sample template response call with its request and context, and the response class that makes the API describe HTML.",
+   "answer": "```python\n@app.get(\"/items/{id}\", response_class=HTMLResponse)\nasync def read_item(request: Request, id: str):\n    return templates.TemplateResponse(\n        request=request, name=\"item.html\", context={\"id\": id}\n    )\n```\nUse a shared `Jinja2Templates(directory=\"templates\")` instance for `templates`.",
+   "key_facts": [
+    "The sample calls templates.TemplateResponse with request=request, name=\"item.html\", and context={\"id\": id}.",
+    "The sample declares response_class=HTMLResponse so the API documentation describes HTML."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "TemplateResponse",
+    "request=request",
+    "item.html",
+    "id",
+    "HTMLResponse"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "        request=request, name=\"item.html\", context={\"id\": id}",
+     "page": "app-structure/static-files-templates-and-frontend.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- `response_class=HTMLResponse` makes the docs show an HTML response.",
+     "page": "app-structure/static-files-templates-and-frontend.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 1,
+   "recall_distance": 13,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "```python\nfrom fastapi.responses import HTMLResponse\n\n@app.get(\"/items/{item_id}\", response_class=HTMLResponse)\nasync def item_detail(request: Request, item_id: str):\n    return templates.TemplateResponse(\n        request=request,\n        name=\"item.html\",\n        context={\"item_id\": item_id},\n    )\n```\n\n`response_class=HTMLResponse` tells FastAPI to describe the endpoint as returning HTML.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 15,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For an item endpoint that can return JSON or a PNG, show the sample's additional success-media declaration and say whether that declaration sends the image by itself.",
+   "asks": [
+    "Additional success-media declaration for PNG",
+    "Whether documentation changes runtime behavior"
+   ],
+   "standalone_question": "For an item endpoint that can return JSON or a PNG, show the sample's additional success-media declaration and say whether that declaration sends the image by itself.",
+   "answer": "Alongside `response_model=Item`, declare:\n```python\nresponses={200: {\"content\": {\"image/png\": {}},\n                 \"description\": \"Return the JSON item or an image.\"}}\n```\nThis documents JSON and PNG for the 200 response; it does not send an image. The image branch must actually return something such as `FileResponse(\"image.png\", media_type=\"image/png\")`.",
+   "key_facts": [
+    "The sample adds image/png under responses[200].content alongside the JSON response model.",
+    "responses only documents responses; the image branch must actually return a response with the image content."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "200",
+    "image/png",
+    "response_model",
+    "Item",
+    "FileResponse",
+    "image.png"
+   ],
+   "evidence_pages": [
+    "openapi/extending-openapi.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "The 200 response is documented as both JSON (from `response_model`) and PNG.",
+     "page": "openapi/extending-openapi.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "            \"content\": {\"image/png\": {}},",
+     "page": "openapi/extending-openapi.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "> These only **document** responses. To actually send them, return a `Response` (like `JSONResponse` or `FileResponse`) directly with the right status and content.",
+     "page": "openapi/extending-openapi.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "```python\nresponses={200: {\"content\": {\"image/png\": {}}}}\n```\n\nThis documents PNG as an additional success media type; it does **not** send the image by itself. The endpoint must return a PNG response.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 16,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "Which custom header did we choose for elapsed request time, and which clock should its middleware use rather than the less precise alternative?",
+   "asks": [
+    "Chosen elapsed-time header",
+    "Preferred duration clock"
+   ],
+   "standalone_question": "Which custom header did the project choose for elapsed request time, and which clock should its HTTP middleware use rather than the less precise alternative?",
+   "answer": "Use `X-Intake-Elapsed` and measure durations with `time.perf_counter()`, not `time.time()`.",
+   "key_facts": [
+    "The chosen timing header is X-Intake-Elapsed.",
+    "time.perf_counter() is more precise than time.time() for duration measurement."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "X-Intake-Elapsed",
+    "time.perf_counter()",
+    "time.time()"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    8
+   ],
+   "evidence": [
+    {
+     "quote": "Our response timing header is X-Intake-Elapsed.",
+     "user_turn": 8,
+     "fact_idx": 0
+    },
+    {
+     "quote": "- `time.perf_counter()` is more precise than `time.time()` for measuring durations.",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 8,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "`X-Response-Time`; the middleware should use a monotonic clock, not the wall clock.",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 17,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "What browser download filename are we using after the change, and if we return its response object directly, will response-model validation and filtering still run?",
+   "asks": [
+    "Current browser download filename",
+    "Response-model behavior for a direct response"
+   ],
+   "standalone_question": "What browser download filename is the project using after its change, and if a response object is returned directly, will response-model validation and filtering still run?",
+   "answer": "The current download filename is `review-pack-97.zip`. No: returning a `Response` instance directly sends it as-is, bypassing response-model validation, filtering, and conversion.",
+   "key_facts": [
+    "The current browser download filename is review-pack-97.zip.",
+    "A directly returned Response bypasses validation, response-model filtering, and conversion."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "review-pack-97.zip",
+    "Response"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    11
+   ],
+   "evidence": [
+    {
+     "quote": "Change the browser download name from review-pack-83.zip to review-pack-97.zip.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Any instance of `Response` (or a subclass) is sent **as is** — no validation, no response-model filtering, no conversion (`docs_src/response_directly/tutorial001_py310.py`):",
+     "page": "responses/custom-responses.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 6,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 18,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the final smoke-test constants, which upload field name did we choose, what retry delay in milliseconds did the explicit SSE event sample use, and which port did the production container command use?",
+   "asks": [
+    "Project upload field name",
+    "Sample explicit SSE retry delay in milliseconds",
+    "Sample production container port"
+   ],
+   "standalone_question": "For the service's final smoke-test constants, which upload field name did the project choose, what retry delay in milliseconds did the explicit SSE event sample use, and which port did the production container command use?",
+   "answer": "Upload field: `artifacts`. SSE retry delay: `5000` milliseconds. Production container port: `80`.",
+   "key_facts": [
+    "The chosen upload field name is artifacts.",
+    "The explicit SSE event sample uses a retry delay of 5000 milliseconds.",
+    "The sample production container command uses port 80."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "artifacts",
+    "5000",
+    "80"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0,
+    10,
+    12
+   ],
+   "evidence": [
+    {
+     "quote": "Our multiple-upload form field is named artifacts.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "        yield ServerSentEvent(data=item, event=\"item_update\", id=str(i + 1), retry=5000)",
+     "page": "responses/streaming-and-sse.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "| `retry` | Reconnection delay in milliseconds |",
+     "page": "responses/streaming-and-sse.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "CMD [\"fastapi\", \"run\", \"app/main.py\", \"--port\", \"80\"]",
+     "page": "deployment/docker.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 18,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  }
+ ]
+}

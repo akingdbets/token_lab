@@ -1,0 +1,2407 @@
+{
+ "schema_version": 2,
+ "scenario_id": "v2_18_integrations",
+ "title": "GraphQL, Telemetry and Deferred Work",
+ "topic": "외부 연동(GraphQL·관측·백그라운드)",
+ "status": "draft",
+ "bundle": [
+  "integrations/graphql-and-opentelemetry.md",
+  "integrations/background-tasks.md",
+  "app-structure/sub-applications-proxy-and-wsgi.md",
+  "middleware/middleware.md",
+  "app-structure/lifespan-events.md",
+  "integrations/websockets.md",
+  "deployment/deployment-concepts-and-servers.md",
+  "about/features-and-ecosystem.md",
+  "openapi/generating-clients.md"
+ ],
+ "generation": {
+  "model": "gpt-6.1-sol",
+  "served_model": "gpt-6.1-sol",
+  "prompt": [
+   "mt_scenario_gen_v3",
+   "7e637f26a462"
+  ],
+  "settings": {
+   "model": "gpt-6.1-sol",
+   "temperature": null,
+   "temperature_requested": null,
+   "seed": 42,
+   "reasoning_effort": null,
+   "reasoning_effort_requested": null,
+   "max_tokens": 40000,
+   "max_tokens_param": "max_completion_tokens"
+  },
+  "run_id": "20261128-093910_v2_18_integrations",
+  "attempts": 2,
+  "created_at": "2026-11-28T09:44:00"
+ },
+ "turns": [
+  {
+   "turn": 0,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm adding Strawberry alongside our REST endpoints. Our GraphQL prefix will be /query-cedar. Show the router inclusion line using graphql_app, and tell me the name and age returned by the sample user resolver.",
+   "asks": [
+    "Router inclusion using our prefix",
+    "Sample resolver's user values"
+   ],
+   "standalone_question": "For Strawberry alongside REST endpoints, with our GraphQL prefix set to /query-cedar, show the router inclusion line using graphql_app and give the sample user resolver's name and age.",
+   "answer": "Use `app.include_router(graphql_app, prefix=\"/query-cedar\")`. The sample resolver returns `User(name=\"Patrick\", age=100)`.",
+   "key_facts": [
+    "The router inclusion must use the project's /query-cedar prefix.",
+    "The sample user resolver returns Patrick, aged 100."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "app.include_router",
+    "graphql_app",
+    "/query-cedar",
+    "Patrick",
+    "100"
+   ],
+   "evidence_pages": [
+    "integrations/graphql-and-opentelemetry.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our GraphQL prefix will be /query-cedar.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "        return User(name=\"Patrick\", age=100)",
+     "page": "integrations/graphql-and-opentelemetry.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.5,
+    "response": "```python\napp.include_router(graphql_app, prefix=\"/query-cedar\")\n```\n\nExample resolver: `user` returns a user named **Alice**, age **30**.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 1,
+   "turn_type": "new",
+   "type": "code",
+   "question": "For a small deferred notification writer, our output filename is audit-73.log. Show just the open-and-write portion using email_file and content, preserving the basic notification example's file mode.",
+   "asks": [
+    "File-writing snippet with our filename and the example's mode"
+   ],
+   "standalone_question": "Show the open-and-write portion of a small deferred notification writer using email_file and content, with output filename audit-73.log and the basic notification example's file mode.",
+   "answer": "```python\nwith open(\"audit-73.log\", mode=\"w\") as email_file:\n    email_file.write(content)\n```",
+   "key_facts": [
+    "The writer uses audit-73.log as its output filename.",
+    "The basic notification example opens the file with mode=\"w\", not append mode."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "audit-73.log",
+    "email_file",
+    "content",
+    "mode=\"w\""
+   ],
+   "evidence_pages": [
+    "integrations/background-tasks.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "our output filename is audit-73.log.",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "    with open(\"log.txt\", mode=\"w\") as email_file:",
+     "page": "integrations/background-tasks.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nemail_file = open(\"audit-73.log\", \"w\")\nemail_file.write(content)\n```",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "with open(\"audit-73.log\", mode=\"w\") as email_file:\n    content = f\"notification for {email}: {message}\"\n    email_file.write(content)",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "not_found": false,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 2,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "For that deferred writer, if I return a Response directly, when will the injected tasks be attached? What if I already gave that response its own background task?",
+   "asks": [
+    "Condition for attaching collected tasks",
+    "Effect of a response's existing background task"
+   ],
+   "standalone_question": "When an endpoint using injected tasks returns a Response directly, under what condition are the collected tasks attached, and what happens if the response already has its own background task?",
+   "answer": "FastAPI attaches the collected tasks only when `response.background is None`. If the response already has its own background task, the injected collection is not attached; use one mechanism per endpoint.",
+   "key_facts": [
+    "Collected tasks attach to a directly returned response only if response.background is None.",
+    "An existing response background task prevents attachment of the injected tasks; use one mechanism per endpoint."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "Response",
+    "response.background is None",
+    "BackgroundTasks"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "if response.background is None: response.background = ...",
+     "page": "integrations/background-tasks.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "the injected `BackgroundTasks` are not attached — use one mechanism per endpoint.",
+     "page": "integrations/background-tasks.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Collected tasks are attached only if the returned `Response` has no background task. If it already has one, that task is left unchanged, and the collected tasks aren’t attached.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 3,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "Our proxy strips the public prefix /edge/r9 before forwarding. Show the FastAPI constructor setting for that prefix. For the example's /app endpoint, what path still works directly on the server?",
+   "asks": [
+    "Constructor setting for our stripped prefix",
+    "Direct server path for the example endpoint"
+   ],
+   "standalone_question": "A proxy strips /edge/r9 before forwarding. Show the FastAPI constructor setting for that prefix and identify the direct server path for the example's /app endpoint.",
+   "answer": "Use `app = FastAPI(root_path=\"/edge/r9\")`. The server still serves `/app` directly, for example at `http://127.0.0.1:8000/app`; the proxy supplies the public prefix.",
+   "key_facts": [
+    "The project's stripped prefix is configured as root_path=\"/edge/r9\".",
+    "The example remains directly accessible at http://127.0.0.1:8000/app without the public prefix."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "FastAPI",
+    "root_path",
+    "/edge/r9",
+    "http://127.0.0.1:8000/app"
+   ],
+   "evidence_pages": [
+    "app-structure/sub-applications-proxy-and-wsgi.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our proxy strips the public prefix /edge/r9 before forwarding.",
+     "user_turn": 3,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Either way the server still serves the path **without** the prefix (`http://127.0.0.1:8000/app`); adding `/api/v1` is the proxy's job.",
+     "page": "app-structure/sub-applications-proxy-and-wsgi.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\napp = FastAPI(root_path=\"/edge/r9\")\n```\n\nThe direct server path is `/app` (the proxy-facing path is `/edge/r9/app`).",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 4,
+   "turn_type": "update",
+   "type": "multi",
+   "question": "Change the stripped public prefix from /edge/r9 to /edge/r11. What constructor setting should we use now, and does that make the server itself serve the prefixed route?",
+   "asks": [
+    "Updated constructor setting",
+    "Whether the server route gains the prefix"
+   ],
+   "standalone_question": "Change a proxy's stripped public prefix from /edge/r9 to /edge/r11. What FastAPI constructor setting should be used, and does it make the server itself serve the prefixed route?",
+   "answer": "Use `app = FastAPI(root_path=\"/edge/r11\")`. No: the server still serves the route without the prefix; the proxy is responsible for exposing the prefixed public URL.",
+   "key_facts": [
+    "The new root_path is /edge/r11.",
+    "Setting root_path does not add the public prefix to the server's route."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "root_path",
+    "/edge/r11"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    3
+   ],
+   "evidence": [
+    {
+     "quote": "Change the stripped public prefix from /edge/r9 to /edge/r11.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Either way the server still serves the path **without** the prefix (`http://127.0.0.1:8000/app`); adding `/api/v1` is the proxy's job.",
+     "page": "app-structure/sub-applications-proxy-and-wsgi.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Stripped public prefix",
+     "from": "/edge/r9",
+     "to": "/edge/r11"
+    }
+   ],
+   "affects": [
+    13
+   ],
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Use `FastAPI(root_path=\"/edge/r11\")`. No—the proxy strips that prefix; the app still serves its routes without it. `root_path` tells FastAPI about the external prefix, but doesn’t make the server serve prefixed routes itself.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 5,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I want the sample HTTP timing middleware unchanged before adapting it. Which response header does it write, and which clock function does it use?",
+   "asks": [
+    "Sample timing header",
+    "Sample timing clock"
+   ],
+   "standalone_question": "Which response header does the sample HTTP timing middleware write, and which clock function does it use?",
+   "answer": "It writes `X-Process-Time` and measures elapsed time with `time.perf_counter()`.",
+   "key_facts": [
+    "The sample timing header is X-Process-Time.",
+    "The sample measures elapsed time with time.perf_counter()."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "X-Process-Time",
+    "time.perf_counter()"
+   ],
+   "evidence_pages": [
+    "middleware/middleware.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "    response.headers[\"X-Process-Time\"] = str(process_time)",
+     "page": "middleware/middleware.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    start_time = time.perf_counter()",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "It writes the `X-Response-Time` header and uses Go’s `time.Now()` function.",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 6,
+   "turn_type": "followup",
+   "type": "code",
+   "question": "Alongside that timing middleware, set our GZip minimum_size to 1379 bytes. Show the add_middleware call with that threshold and an explicit compresslevel equal to its default.",
+   "asks": [
+    "GZip registration using our threshold and the default compression level"
+   ],
+   "standalone_question": "Show the GZip add_middleware call with minimum_size set to 1379 bytes and an explicit compresslevel equal to its default.",
+   "answer": "```python\napp.add_middleware(GZipMiddleware, minimum_size=1379, compresslevel=9)\n```",
+   "key_facts": [
+    "The project's GZip minimum_size is 1379 bytes.",
+    "The default GZip compresslevel is 9."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "GZipMiddleware",
+    "minimum_size",
+    "1379",
+    "compresslevel",
+    "9"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "set our GZip minimum_size to 1379 bytes.",
+     "user_turn": 6,
+     "fact_idx": 0
+    },
+    {
+     "quote": "- `compresslevel` — 1 (fast, larger) to 9 (slow, smaller); default `9`.",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\napp.add_middleware(GZipMiddleware, minimum_size=1379, compresslevel=9)\n```",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "app.add_middleware(GZipMiddleware, minimum_size=1379, compresslevel=9)",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "not_found": false,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 7,
+   "turn_type": "same_doc_new_topic",
+   "type": "code",
+   "question": "For built-in telemetry, reproduce the configuration example that disables tracing while skipping health checks: what are its two telemetry entries?",
+   "asks": [
+    "Tracing entry in the health-check exclusion example",
+    "Exclusion entry in that example"
+   ],
+   "standalone_question": "What are the two telemetry configuration entries in the built-in telemetry example that disables tracing while skipping health checks?",
+   "answer": "```python\napp = FastAPI(\n    telemetry={\n        \"tracing\": False,\n        \"exclude\": lambda scope: scope[\"path\"] == \"/health\",\n    }\n)\n```",
+   "key_facts": [
+    "The example sets tracing to False.",
+    "Its exclude function skips scopes whose path is /health."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "telemetry",
+    "tracing",
+    "False",
+    "exclude",
+    "/health"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "        \"tracing\": False,",
+     "page": "integrations/graphql-and-opentelemetry.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "        \"exclude\": lambda scope: scope[\"path\"] == \"/health\",",
+     "page": "integrations/graphql-and-opentelemetry.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 0,
+   "recall_distance": 7,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 8,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "We're adding one shared outbound HTTP client through lifespan state. What state attribute does the sample endpoint use to access it, and can requests start before the setup before yield has finished?",
+   "asks": [
+    "Sample HTTP-client state attribute",
+    "Whether requests can precede completion of lifespan setup"
+   ],
+   "standalone_question": "For a shared outbound HTTP client supplied through lifespan state, what state attribute does the sample endpoint use, and can requests start before the setup before yield has finished?",
+   "answer": "The sample endpoint uses `request.state.http_client`. No requests are served until the code before `yield` finishes.",
+   "key_facts": [
+    "The sample accesses the shared client through request.state.http_client.",
+    "The app does not serve requests until the lifespan code before yield finishes."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "request.state.http_client",
+    "yield"
+   ],
+   "evidence_pages": [
+    "app-structure/lifespan-events.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "    response = await request.state.http_client.get(\"https://example.com\")",
+     "page": "app-structure/lifespan-events.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- Everything **before** `yield` runs at startup; the app does not serve requests until it finishes.",
+     "page": "app-structure/lifespan-events.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "The endpoint uses `request.state.http_client`. No—requests are handled only after lifespan setup reaches `yield`.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 9,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "For the deferred notification writer we configured, which output filename are we using, and where does a plain def task execute?",
+   "asks": [
+    "Previously chosen writer filename",
+    "Execution location for a synchronous background task"
+   ],
+   "standalone_question": "What output filename did the project choose for its deferred notification writer, and where does a plain def background task execute?",
+   "answer": "The filename is `audit-73.log`. A plain `def` task runs in a threadpool.",
+   "key_facts": [
+    "The configured writer filename is audit-73.log.",
+    "Plain def background tasks run in a threadpool."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "audit-73.log",
+    "def",
+    "threadpool"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "our output filename is audit-73.log.",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "- The task can be `async def` (awaited) or plain `def` (run in a threadpool).",
+     "page": "integrations/background-tasks.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 8,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "It writes to `log.txt`; a plain `def` background task runs in an external threadpool.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 10,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "We're considering browser WebSocket notifications too. In the authentication example, what are the cookie and query-parameter names, and what exception with which close code is raised when neither credential is present?",
+   "asks": [
+    "Example cookie and query credential names",
+    "Missing-credential exception and close code"
+   ],
+   "standalone_question": "In the browser WebSocket authentication example, what are the cookie and query-parameter credential names, and what exception and close code are used when neither is present?",
+   "answer": "The cookie is `session` and the query parameter is `token`. If both are absent, the dependency raises `WebSocketException(code=status.WS_1008_POLICY_VIOLATION)`, using close code `1008`.",
+   "key_facts": [
+    "The example accepts the session cookie or the token query parameter.",
+    "When neither credential is present, it raises WebSocketException with policy-violation close code 1008."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "session",
+    "token",
+    "WebSocketException",
+    "status.WS_1008_POLICY_VIOLATION",
+    "1008"
+   ],
+   "evidence_pages": [
+    "integrations/websockets.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "    session: Annotated[str | None, Cookie()] = None,\n    token: Annotated[str | None, Query()] = None,",
+     "page": "integrations/websockets.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    if session is None and token is None:\n        raise WebSocketException(code=status.WS_1008_POLICY_VIOLATION)",
+     "page": "integrations/websockets.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "The cookie is named `session` and the query parameter is `token`. If neither is present, the example raises `WebSocketException` with close code `1008` (`WS_1008_POLICY_VIOLATION`).",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 11,
+   "turn_type": "update",
+   "type": "multi",
+   "question": "Change our GraphQL prefix from /query-cedar to /query-larch. Show the revised inclusion line using graphql_app, and confirm whether that router is an APIRouter rather than requiring a mounted independent application.",
+   "asks": [
+    "Updated GraphQL inclusion line",
+    "GraphQLRouter's router type"
+   ],
+   "standalone_question": "Change the project's GraphQL prefix from /query-cedar to /query-larch. Show the revised inclusion line using graphql_app and confirm whether that router is an APIRouter rather than requiring a mounted independent application.",
+   "answer": "Use `app.include_router(graphql_app, prefix=\"/query-larch\")`. `GraphQLRouter` is an `APIRouter`, so it is included like an ordinary router; a separate mounted application is not required.",
+   "key_facts": [
+    "The revised GraphQL inclusion uses /query-larch.",
+    "GraphQLRouter is an APIRouter and can be added with include_router()."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "graphql_app",
+    "/query-larch",
+    "GraphQLRouter",
+    "APIRouter",
+    "include_router()"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "Change our GraphQL prefix from /query-cedar to /query-larch.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "`GraphQLRouter` is an `APIRouter`, so it's added with `include_router()` like any router (and can use FastAPI dependencies for context).",
+     "page": "integrations/graphql-and-opentelemetry.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "GraphQL router prefix",
+     "from": "/query-cedar",
+     "to": "/query-larch"
+    }
+   ],
+   "affects": [
+    16
+   ],
+   "source_turn": null,
+   "recall_distance": 11,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\napp.include_router(graphql_app, prefix=\"/query-larch\")\n```\n\n`graphql_app` is an `APIRouter`, so use `include_router`, not `mount`.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 12,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For deployment, which address and port does fastapi run use by default, and which port does the explicit Uvicorn single-process example use?",
+   "asks": [
+    "Production CLI's default bind address and port",
+    "Explicit Uvicorn example's port"
+   ],
+   "standalone_question": "Which address and port does fastapi run use by default, and which port does the explicit Uvicorn single-process example use?",
+   "answer": "`fastapi run` defaults to `0.0.0.0:8000`. The explicit single-process command uses port `80`: `uvicorn main:app --host 0.0.0.0 --port 80`.",
+   "key_facts": [
+    "fastapi run listens on 0.0.0.0:8000 by default.",
+    "The explicit Uvicorn single-process example uses port 80."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "fastapi run",
+    "0.0.0.0:8000",
+    "uvicorn main:app --host 0.0.0.0 --port 80"
+   ],
+   "evidence_pages": [
+    "deployment/deployment-concepts-and-servers.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "it listens on `0.0.0.0:8000` and has auto-reload **off**",
+     "page": "deployment/deployment-concepts-and-servers.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "uvicorn main:app --host 0.0.0.0 --port 80",
+     "page": "deployment/deployment-concepts-and-servers.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "`fastapi run` defaults to `0.0.0.0:8000`; the explicit single-process Uvicorn example uses port `80`.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 13,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the integration settings review, what is our current stripped public prefix, what GZip minimum threshold did we choose, and which exact path did the telemetry exclusion example skip?",
+   "asks": [
+    "Current stripped public prefix",
+    "Chosen GZip minimum threshold",
+    "Telemetry example's excluded path"
+   ],
+   "standalone_question": "What stripped public prefix is currently configured for the project, what GZip minimum threshold did the project choose, and which exact path did the telemetry exclusion example skip?",
+   "answer": "The current stripped public prefix is `/edge/r11`; the GZip minimum is `1379` bytes; the telemetry example excludes `/health`.",
+   "key_facts": [
+    "The current stripped public prefix is /edge/r11.",
+    "The chosen GZip minimum_size is 1379 bytes.",
+    "The telemetry exclusion example skips /health."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/edge/r11",
+    "minimum_size",
+    "1379",
+    "/health"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    4,
+    6,
+    7
+   ],
+   "evidence": [
+    {
+     "quote": "Change the stripped public prefix from /edge/r9 to /edge/r11.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "set our GZip minimum_size to 1379 bytes.",
+     "user_turn": 6,
+     "fact_idx": 1
+    },
+    {
+     "quote": "        \"exclude\": lambda scope: scope[\"path\"] == \"/health\",",
+     "page": "integrations/graphql-and-opentelemetry.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 9,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 14,
+   "turn_type": "same_doc_new_topic",
+   "type": "procedure",
+   "question": "If a deferred notification needs database access, should it reuse a session supplied by a yield dependency? What should we pass to the task instead?",
+   "asks": [
+    "Whether a task should reuse a yield dependency's session",
+    "What to pass and where to create the session"
+   ],
+   "standalone_question": "Should a background notification task reuse a database session from a yield dependency, and what should be passed to the task instead?",
+   "answer": "Do not rely on the session from a `yield` dependency. Pass simple values such as the object's ID, and open a new session inside the background task.",
+   "key_facts": [
+    "Background tasks should not rely on objects such as DB sessions supplied by yield dependencies.",
+    "Pass simple values such as an object's ID and open a new session inside the task."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "yield",
+    "ID"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "Since FastAPI 0.106.0, don't rely on objects from `yield` dependencies (such as a DB session) inside background tasks.",
+     "page": "integrations/background-tasks.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Open a new session inside the task and pass simple values (like an object's ID) as arguments.",
+     "page": "integrations/background-tasks.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 1,
+   "recall_distance": 13,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "No. The dependency’s session may be closed when the request ends. Pass the needed IDs or data to the task, and have it create its own database session.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 15,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For our typed frontend client, which example command generates TypeScript from the running app into the sample output directory, and does the full-stack starter already include a generated client?",
+   "asks": [
+    "TypeScript generation command from the running app",
+    "Whether the full-stack starter includes a generated client"
+   ],
+   "standalone_question": "Which example command generates a TypeScript client from a running FastAPI app into the sample output directory, and does the full-stack starter already include a generated client?",
+   "answer": "Run `npx @hey-api/openapi-ts -i http://localhost:8000/openapi.json -o src/client`. Yes: the Full Stack FastAPI Template includes a React/TypeScript frontend with a generated client.",
+   "key_facts": [
+    "The example command uses @hey-api/openapi-ts with http://localhost:8000/openapi.json as input and src/client as output.",
+    "The Full Stack FastAPI Template includes a generated frontend client."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "npx @hey-api/openapi-ts -i http://localhost:8000/openapi.json -o src/client",
+    "Full Stack FastAPI Template"
+   ],
+   "evidence_pages": [
+    "about/features-and-ecosystem.md",
+    "openapi/generating-clients.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "npx @hey-api/openapi-ts -i http://localhost:8000/openapi.json -o src/client",
+     "page": "openapi/generating-clients.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "a React/TypeScript frontend with a generated client",
+     "page": "about/features-and-ecosystem.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```bash\nnpx @hey-api/openapi-ts -i http://localhost:8000/openapi.json -o ./src/client\n```\n\nYes—the full-stack starter already includes a generated client.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 16,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "What is our GraphQL prefix now, and what name and age did the sample resolver return before we customized anything?",
+   "asks": [
+    "Current GraphQL prefix",
+    "Original sample resolver's user values"
+   ],
+   "standalone_question": "What GraphQL prefix is currently chosen for the project, and what name and age did the original sample user resolver return?",
+   "answer": "The current prefix is `/query-larch`. The sample resolver returned `Patrick`, aged `100`.",
+   "key_facts": [
+    "The current GraphQL prefix is /query-larch.",
+    "The sample resolver returns Patrick with age 100."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/query-larch",
+    "Patrick",
+    "100"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0,
+    11
+   ],
+   "evidence": [
+    {
+     "quote": "Change our GraphQL prefix from /query-cedar to /query-larch.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "        return User(name=\"Patrick\", age=100)",
+     "page": "integrations/graphql-and-opentelemetry.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 16,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 17,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "What was the timing response header we examined, and which CORS setting must list it so browser JavaScript can read it cross-origin?",
+   "asks": [
+    "Previously examined timing header",
+    "CORS setting needed for browser access"
+   ],
+   "standalone_question": "What response header did the previously examined timing middleware write, and which CORS setting must list it for cross-origin browser JavaScript access?",
+   "answer": "The header was `X-Process-Time`. List it in CORS `expose_headers` so cross-origin browser JavaScript can read it.",
+   "key_facts": [
+    "The timing middleware's response header is X-Process-Time.",
+    "Cross-origin browser access to that custom response header requires listing it in expose_headers."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "X-Process-Time",
+    "expose_headers"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "    response.headers[\"X-Process-Time\"] = str(process_time)",
+     "page": "middleware/middleware.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "For browser JS to read them cross-origin, list them in CORS `expose_headers`",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 12,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "It wrote `X-Response-Time`; list that header in CORS’s `exposedHeaders` setting (`Access-Control-Expose-Headers`).",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 18,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the notification observability review, which output filename did we choose, do deferred task spans inflate HTTP response time, and which two normal WebSocket close codes avoid error logs?",
+   "asks": [
+    "Chosen notification output filename",
+    "Effect of background task spans on HTTP response time",
+    "Normal WebSocket close codes without error logs"
+   ],
+   "standalone_question": "Which output filename did the project choose for deferred notifications, do background task spans inflate HTTP response time, and which two normal WebSocket close codes avoid error logs?",
+   "answer": "The filename is `audit-73.log`. Background task spans remain in the request's trace but run after the HTTP response span ends, so they do not inflate response time. Normal WebSocket closes `1000` and `1001` do not produce error logs.",
+   "key_facts": [
+    "The notification output filename is audit-73.log.",
+    "Background task spans belong to the request trace but run after the HTTP response span ends, so they do not inflate response time.",
+    "Normal WebSocket close codes 1000 and 1001 do not produce error logs."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "audit-73.log",
+    "1000",
+    "1001"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1,
+    7,
+    10
+   ],
+   "evidence": [
+    {
+     "quote": "our output filename is audit-73.log.",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "- Background task spans belong to the request's trace but run after the HTTP response span ends, so they don't inflate response time.",
+     "page": "integrations/graphql-and-opentelemetry.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "normal closes (`1000`, `1001`) don't produce error logs.",
+     "page": "integrations/websockets.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 17,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  }
+ ]
+}

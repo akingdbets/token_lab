@@ -96,8 +96,9 @@
    "recall_distance": 0,
    "closed_book_knowledge": {
     "correct": true,
+    "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "Configure it with `oauth2_scheme = OAuth2PasswordBearer(tokenUrl=\"auth/issue\")` and inject it with `Depends(oauth2_scheme)` in protected routes. This only declares the bearer scheme and token URL; it does **not** create the login endpoint. You must implement `POST /auth/issue` yourself.",
+    "response": "Use `oauth2_scheme = OAuth2PasswordBearer(tokenUrl=\"auth/issue\")`, then inject it with `Depends(oauth2_scheme)` where you need the bearer token. This declares the OAuth2 security scheme for dependency handling and OpenAPI; it does **not** create the `/auth/issue` login endpoint—you must implement that route separately.",
     "fact_results": [
      true,
      true
@@ -121,10 +122,11 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -154,7 +156,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -219,8 +221,9 @@
    "recall_distance": 0,
    "closed_book_knowledge": {
     "correct": true,
+    "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "Use FastAPI’s `APIKeyHeader(name=\"X-Orbit-Key\")`. It extracts the key from the header but does not verify whether it is valid.",
+    "response": "Use FastAPI’s `APIKeyHeader(name=\"X-Orbit-Key\")`. It extracts the header value but does not verify whether the key is valid; validate it separately.",
     "fact_results": [
      true,
      true
@@ -244,10 +247,11 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -277,7 +281,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -351,8 +355,9 @@
    "recall_distance": 1,
    "closed_book_knowledge": {
     "correct": true,
+    "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "```python\nfrom fastapi.security import APIKeyCookie\n\nbrowser_auth = APIKeyCookie(name=\"orbit_session\")\n```\n\nWith `HTTPBearer`, the dependency returns an `HTTPAuthorizationCredentials` object; the token is in `.credentials` (and the scheme, usually `\"Bearer\"`, is in `.scheme`).",
+    "response": "```python\nfrom fastapi.security import APIKeyCookie\n\ncookie_scheme = APIKeyCookie(name=\"orbit_session\")\n```\n\nWith `HTTPBearer`, the dependency returns an `HTTPAuthorizationCredentials` object. The token is in `.credentials` (and `.scheme` is `\"Bearer\"`).",
     "fact_results": [
      true,
      true
@@ -376,10 +381,11 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -409,7 +415,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -480,6 +486,7 @@
    "recall_distance": 0,
    "closed_book_knowledge": {
     "correct": true,
+    "accuracy_main": 1.0,
     "accuracy": 1.0,
     "response": "```python\naccess_token = create_access_token(\n    data={\"sub\": user.username},\n    expires_delta=timedelta(minutes=23),\n)\n```\n\nIf `expires_delta` is omitted, the helper uses **15 minutes**.",
     "fact_results": [
@@ -505,18 +512,19 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
-    "correct": true,
-    "accuracy": 1.0,
-    "response": "`create_access_token(data={\"sub\": user.username}, expires_delta=timedelta(minutes=23))`\n15 minutes",
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
     "fact_results": [
-     true,
-     true
+     false,
+     false
     ],
-    "judge_skipped": null,
-    "not_found": false,
+    "judge_skipped": "not_found",
+    "not_found": true,
     "answer_prompt": [
      "mt_answer_v2",
      "79e1fbab96c5"
@@ -536,9 +544,9 @@
     "judge": "deepseek-flash",
     "judge_prompt": [
      "fact_judge_v3",
-     "5e7fe8303199"
+     null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -616,8 +624,9 @@
    "recall_distance": 1,
    "closed_book_knowledge": {
     "correct": true,
+    "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "Set the signing option to `expiresIn: '41m'`, for example:\n\n```js\njwt.sign(payload, secret, { expiresIn: '41m' })\n```\n\nThe helper adds the `exp` expiration claim.",
+    "response": "```python\naccess_token = create_access_token(\n    data={\"sub\": user.username},\n    expires_delta=timedelta(minutes=41),\n)\n```\n\nThe helper adds the JWT `exp` claim for expiration.",
     "fact_results": [
      true,
      true
@@ -641,10 +650,11 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -674,7 +684,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -760,6 +770,72 @@
    "review": {
     "standalone_same_fact": "예",
     "by": "사용자 검수 (2026-11-28)"
+   },
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.6666666666666666,
+    "accuracy": 0.6666666666666666,
+    "response": "Inject FastAPI’s `Response`, call `response.set_cookie(...)`, then return the ordinary data. This keeps `response_model` filtering. Set the cookie with `httponly=True`, `secure=True`, and an appropriate `samesite` value (typically `\"lax\"`).",
+    "fact_results": [
+     true,
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
    }
   },
   {
@@ -821,8 +897,9 @@
    "recall_distance": 1,
    "closed_book_knowledge": {
     "correct": false,
+    "accuracy_main": 0.5,
     "accuracy": 0.5,
-    "response": "The cookie is named `fakesession` with value `fake-cookie-session-value`, and the message returned is `\"Come back soon!\"`.",
+    "response": "The cookie is `fakesession=fake-cookie-session-value`, and the message returned is “Come back soon!”",
     "fact_results": [
      true,
      false
@@ -846,10 +923,11 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -879,7 +957,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -952,6 +1030,7 @@
    "recall_distance": 6,
    "closed_book_knowledge": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "UNKNOWN",
     "fact_results": [
@@ -977,10 +1056,11 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -1010,7 +1090,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -1094,6 +1174,7 @@
    "recall_distance": 0,
    "closed_book_knowledge": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "UNKNOWN",
     "fact_results": [
@@ -1119,10 +1200,11 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -1152,7 +1234,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -1221,6 +1303,7 @@
    "recall_distance": 6,
    "closed_book_knowledge": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "UNKNOWN",
     "fact_results": [
@@ -1246,10 +1329,11 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -1279,7 +1363,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -1347,12 +1431,13 @@
    "source_turn": null,
    "recall_distance": 0,
    "closed_book_knowledge": {
-    "correct": true,
-    "accuracy": 1.0,
-    "response": "`user_agent` reads the `User-Agent` header by default. The duplicate `X-Token` example declares the header as a list and sends two `X-Token` header lines, so FastAPI collects both values into a list.",
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "`user_agent` reads the `User-Agent` header by default. The duplicate `X-Token` example declares it as a list-valued `Header` parameter, collecting the two header lines—`foo` and `bar`—as `[\"foo\", \"bar\"]`.",
     "fact_results": [
      true,
-     true
+     false
     ],
     "judge_skipped": null,
     "unknown": false,
@@ -1373,10 +1458,11 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -1406,7 +1492,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -1482,8 +1568,9 @@
    "recall_distance": 6,
    "closed_book_knowledge": {
     "correct": true,
+    "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "```ts\ntemporaryResponse.cookies.set(\"orbit_session_v2\", sessionToken, {\n  httpOnly: true,\n  secure: true,\n  sameSite: \"lax\",\n  path: \"/\",\n  // Keep the existing session lifetime.\n});\n```\n\nOnly the browser cookie name changes; leave machine authentication unchanged.",
+    "response": "```js\ntemporaryResponse.cookies.set(\"orbit_session_v2\", sessionToken, {\n  httpOnly: true,\n  secure: true,\n  sameSite: \"lax\",\n  path: \"/\",\n});\n```\n\nOnly the browser cookie name changes; leave machine authentication unchanged.",
     "fact_results": [
      true,
      true
@@ -1507,10 +1594,11 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -1540,7 +1628,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -1613,8 +1701,9 @@
    "recall_distance": 0,
    "closed_book_knowledge": {
     "correct": false,
+    "accuracy_main": 0.5,
     "accuracy": 0.5,
-    "response": "The missing `items` permission returns **403 Forbidden** with detail **\"Not enough permissions.\"** FastAPI **0.122.0** changed built-in missing-credential errors from **403** to **401 Unauthorized**.",
+    "response": "Missing the `items` scope returns **403 Forbidden** with detail **“Not enough permissions.”** In **FastAPI 0.122.0**, built-in missing-credential errors changed from **403** to **401 Unauthorized**.",
     "fact_results": [
      false,
      true
@@ -1638,10 +1727,11 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -1671,7 +1761,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -1760,7 +1850,73 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 9,
-   "review": {}
+   "review": {},
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
   },
   {
    "turn": 14,
@@ -1805,8 +1961,9 @@
    "recall_distance": 9,
    "closed_book_knowledge": {
     "correct": true,
+    "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "It bypasses FastAPI’s `response_model` validation and filtering.",
+    "response": "It bypasses FastAPI’s `response_model` validation and filtering of the response data.",
     "fact_results": [
      true
     ],
@@ -1829,10 +1986,11 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -1861,7 +2019,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -1953,8 +2111,9 @@
    "recall_distance": 0,
    "closed_book_knowledge": {
     "correct": false,
+    "accuracy_main": 0.6666666666666666,
     "accuracy": 0.6666666666666666,
-    "response": "Set `app.dependency_overrides[get_current_user]` to a callable that returns your fixed user. FastAPI skips the original dependency **and its sub-dependencies** for that override.\n\nUse `with TestClient(app) as client:` so startup and shutdown lifespan handlers run. The standard FastAPI lifespan example populates one entry—`ml_models[\"answer_to_everything\"] = fake_answer_to_everything`—then clears the mapping; it does not populate two.",
+    "response": "Use `app.dependency_overrides[get_current_user] = lambda: fixed_user`. FastAPI calls the override instead of the original dependency, so the original dependency tree doesn’t run; dependencies declared by the override can run.\n\nUse `TestClient` as a context manager to trigger lifespan startup and shutdown: `with TestClient(app) as client:`. The lifespan example populates the model entries `\"alexnet\"` and `\"resnet\"`.",
     "fact_results": [
      true,
      true,
@@ -1979,10 +2138,11 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -2013,7 +2173,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -2086,14 +2246,15 @@
    "recall_distance": 15,
    "closed_book_knowledge": {
     "correct": false,
-    "accuracy": 0.5,
-    "response": "The custom header is `X-API-Key`. No—the extractor returns the raw key string, not an `HTTPBearer` credentials object.",
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
     "fact_results": [
      false,
-     true
+     false
     ],
-    "judge_skipped": null,
-    "unknown": false,
+    "judge_skipped": "unknown",
+    "unknown": true,
     "empty": false,
     "model": "gpt-6-luna",
     "settings": {
@@ -2109,12 +2270,13 @@
     "judge": "deepseek-flash",
     "judge_prompt": [
      "fact_judge_v3",
-     "5e7fe8303199"
+     null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -2144,7 +2306,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -2212,6 +2374,7 @@
    "recall_distance": 7,
    "closed_book_knowledge": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "UNKNOWN",
     "fact_results": [
@@ -2237,10 +2400,11 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -2270,7 +2434,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -2369,7 +2533,73 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 18,
-   "review": {}
+   "review": {},
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
   }
  ],
  "edits": [

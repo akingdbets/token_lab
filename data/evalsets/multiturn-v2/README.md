@@ -45,8 +45,26 @@
 
 | 파일 | 내용 |
 |---|---|
-| `v2_01_auth_switch.json` | 묶음 v2_01 (보안·인증), draft |
-| `v2_02_response_design.json` | 묶음 v2_02 (응답 상태·형식), draft |
+| `multiturn-v2\v2_01_auth_switch.json` | 인증 방식 전환(헤더 토큰·쿠키·API 키), 19턴, mt_scenario_gen_v2, 손 수정, draft |
+| `multiturn-v2\v2_02_response_design.json` | 응답 상태·형식 설계, 20턴, mt_scenario_gen_v2, 손 수정, draft |
+| `multiturn-v2\v2_03_input_validation.json` | 요청 입력 검증, 19턴, mt_scenario_gen_v3, draft |
+| `multiturn-v2\v2_04_dependency_lifecycle.json` | 의존성 수명과 정리, 19턴, mt_scenario_gen_v3, draft |
+| `multiturn-v2\v2_05_deployment_setup.json` | 배포 구성(서버·컨테이너·프록시), 19턴, mt_scenario_gen_v3, draft |
+| `multiturn-v2\v2_06_middleware_cors.json` | 미들웨어와 교차 출처, 19턴, mt_scenario_gen_v3, draft |
+| `multiturn-v2\v2_07_streaming_realtime.json` | 스트리밍·실시간, 19턴, mt_scenario_gen_v3, draft |
+| `multiturn-v2\v2_08_model_serialization.json` | 모델 설계와 직렬화, 19턴, mt_scenario_gen_v3, draft |
+| `multiturn-v2\v2_09_openapi_docs.json` | OpenAPI 문서 꾸미기, 19턴, mt_scenario_gen_v3, draft |
+| `multiturn-v2\v2_10_app_structure.json` | 큰 앱 구조와 라우터, 19턴, mt_scenario_gen_v3, draft |
+| `multiturn-v2\v2_11_testing_strategy.json` | 테스트 전략, 19턴, mt_scenario_gen_v3, draft |
+| `multiturn-v2\v2_12_database.json` | 데이터베이스 연동, 19턴, mt_scenario_gen_v3, draft |
+| `multiturn-v2\v2_13_error_consistency.json` | 에러 처리 일관성, 19턴, mt_scenario_gen_v3, draft |
+| `multiturn-v2\v2_14_files_forms_static.json` | 파일·폼·정적 파일, 19턴, mt_scenario_gen_v3, draft |
+| `multiturn-v2\v2_15_settings_env.json` | 설정과 환경 분리, 19턴, mt_scenario_gen_v3, draft |
+| `multiturn-v2\v2_16_scopes_user_model.json` | 권한 범위와 사용자 모델, 19턴, mt_scenario_gen_v3, draft |
+| `multiturn-v2\v2_17_request_internals.json` | 요청 객체와 내부 동작, 19턴, mt_scenario_gen_v3, draft |
+| `multiturn-v2\v2_18_integrations.json` | 외부 연동(GraphQL·관측·백그라운드), 19턴, mt_scenario_gen_v3, draft |
+| `multiturn-v2\v2_19_first_service.json` | 첫 서비스 만들기(입문에서 운영까지), 19턴, mt_scenario_gen_v3, draft |
+| `multiturn-v2\v2_20_client_contract.json` | 클라이언트 생성과 API 계약, 19턴, mt_scenario_gen_v3, draft |
 
 생성 기록(프롬프트·요청 설정·응답 원문): `results/scenario_gen/<run_id>/` (git 제외). 시나리오의 `generation.run_id` 로 찾는다.
 

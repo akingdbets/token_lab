@@ -102,8 +102,9 @@
    "recall_distance": 0,
    "closed_book_knowledge": {
     "correct": true,
+    "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "```python\nfrom fastapi import Response, status\n\n@app.put(\"/artifacts/{artifact_id}\", response_model=ArtifactOut)\ndef upsert_artifact(artifact_id: str, response: Response):\n    record, created = save_artifact(artifact_id)\n    response.status_code = status.HTTP_201_CREATED if created else status.HTTP_200_OK\n    return record\n```",
+    "response": "```python\n@app.put(\"/artifacts/{artifact_id}\", response_model=ArtifactOut)\ndef upsert_artifact(artifact_id: str, response: Response):\n    record, created = save_artifact(artifact_id)\n    response.status_code = 201 if created else 200\n    return record\n```\n\nSetting the injected `Response` status preserves `response_model` filtering.",
     "fact_results": [
      true,
      true
@@ -127,10 +128,11 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -160,7 +162,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -229,6 +231,7 @@
    "recall_distance": 0,
    "closed_book_knowledge": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "UNKNOWN",
     "fact_results": [
@@ -254,10 +257,11 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -287,7 +291,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -353,8 +357,9 @@
    "recall_distance": 1,
    "closed_book_knowledge": {
     "correct": true,
+    "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "Yes. FastAPI copies headers and cookies set on the injected `Response` to the final response, and response-model filtering still runs on the returned database record. Returning a `JSONResponse` directly bypasses that filtering.",
+    "response": "Yes. With FastAPI, returning a database record normally lets the response-model filtering run, and headers/cookies set on the injected `Response` are copied to the final response. Returning a `JSONResponse` directly bypasses that filtering.",
     "fact_results": [
      true,
      true
@@ -378,10 +383,11 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -411,7 +417,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -489,6 +495,7 @@
    "recall_distance": 0,
    "closed_book_knowledge": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "UNKNOWN",
     "fact_results": [
@@ -514,10 +521,11 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -547,7 +555,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -637,6 +645,7 @@
    "recall_distance": 3,
    "closed_book_knowledge": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "```python\nresponse.set_cookie(key=\"ticket\", value=ticket_value, max_age=2460)\n```",
     "fact_results": [
@@ -662,10 +671,11 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -695,7 +705,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -766,8 +776,9 @@
    "recall_distance": 0,
    "closed_book_knowledge": {
     "correct": true,
+    "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "`foo` produces `{\"name\":\"Foo\",\"price\":50.2}`. Yes—baz’s explicitly supplied `tax` of `10.5` survives.",
+    "response": "The `foo` response is `{\"name\":\"Foo\",\"price\":50.2}`. Yes—`baz`’s explicitly supplied `\"tax\":10.5` survives; `exclude_unset` omits only fields that weren’t supplied.",
     "fact_results": [
      true,
      true
@@ -791,10 +802,11 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -824,7 +836,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -893,8 +905,9 @@
    "recall_distance": 1,
    "closed_book_knowledge": {
     "correct": true,
+    "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "No. `response_model_include` and `response_model_exclude` filter the runtime response but don’t reliably narrow the generated OpenAPI schema. Use a dedicated response model that defines the exact public shape so generated clients see it.",
+    "response": "No. `response_model_include` and `response_model_exclude` filter the runtime response but don’t narrow the generated schema. Use a dedicated response model containing exactly the public fields and set it as `response_model`.",
     "fact_results": [
      true,
      true
@@ -918,10 +931,11 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -951,7 +965,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -1005,8 +1019,9 @@
    "recall_distance": 7,
    "closed_book_knowledge": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
-    "response": "FastAPI recognizes `{204, 304}` as status codes that forbid a response body.",
+    "response": "FastAPI treats all status codes below 200, plus 204 and 304, as forbidding a response body.",
     "fact_results": [
      false
     ],
@@ -1029,17 +1044,18 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
-    "response": "NOT FOUND",
+    "response": "{204, 304}",
     "fact_results": [
      false
     ],
-    "judge_skipped": "not_found",
-    "not_found": true,
+    "judge_skipped": null,
+    "not_found": false,
     "answer_prompt": [
      "mt_answer_v2",
      "79e1fbab96c5"
@@ -1059,9 +1075,9 @@
     "judge": "deepseek-flash",
     "judge_prompt": [
      "fact_judge_v3",
-     null
+     "5e7fe8303199"
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -1146,14 +1162,15 @@
    "recall_distance": 0,
    "closed_book_knowledge": {
     "correct": false,
-    "accuracy": 0.0,
-    "response": "UNKNOWN",
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "For `yolo`, the handler returns **418** with `{\"message\":\"Oops! yolo did something. There goes a rainbow...\"}`. A missing required field in the returned artifact is a **server-side response validation error**, not a client validation error.",
     "fact_results": [
-     false,
+     true,
      false
     ],
-    "judge_skipped": "unknown",
-    "unknown": true,
+    "judge_skipped": null,
+    "unknown": false,
     "empty": false,
     "model": "gpt-6-luna",
     "settings": {
@@ -1169,20 +1186,21 @@
     "judge": "deepseek-flash",
     "judge_prompt": [
      "fact_judge_v3",
-     null
+     "5e7fe8303199"
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
-    "accuracy": 0.5,
-    "response": "Register `unicorn_exception_handler` with `@app.exception_handler(UnicornException)`; when the `yolo` route raises `UnicornException`, the handler returns status **418** and JSON `{\"message\": \"Oops! yolo did something. There goes a unicorn!\"}`. A missing required field in data returned against a `response_model` is a response-validation failure, not a client validation error; FastAPI treats it as a server error.",
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
     "fact_results": [
      false,
-     true
+     false
     ],
-    "judge_skipped": null,
-    "not_found": false,
+    "judge_skipped": "not_found",
+    "not_found": true,
     "answer_prompt": [
      "mt_answer_v2",
      "79e1fbab96c5"
@@ -1202,9 +1220,9 @@
     "judge": "deepseek-flash",
     "judge_prompt": [
      "fact_judge_v3",
-     "5e7fe8303199"
+     null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -1286,6 +1304,7 @@
    "recall_distance": 8,
    "closed_book_knowledge": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "UNKNOWN",
     "fact_results": [
@@ -1311,10 +1330,11 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -1344,7 +1364,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -1417,8 +1437,9 @@
    "recall_distance": 0,
    "closed_book_knowledge": {
     "correct": true,
+    "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "Use a form-feed character (`\\f`) in the docstring; FastAPI includes only the text before it in OpenAPI. The create-item example sets `response_description=\"The created item\"`.",
+    "response": "Use a form-feed character (`\\f`) in the docstring to stop the portion included in OpenAPI; notes after it stay out of the generated description. The create-item example sets `response_description=\"The created item\"`.",
     "fact_results": [
      true,
      true
@@ -1442,18 +1463,19 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
-    "accuracy": 0.5,
-    "response": "Put `\\f` in the operation’s docstring before the internal notes; FastAPI keeps the text before it as the OpenAPI description and excludes the text after it. In the create-item example, set `response_description=\"The item was created\"` on the path operation decorator.",
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
     "fact_results": [
-     true,
+     false,
      false
     ],
-    "judge_skipped": null,
-    "not_found": false,
+    "judge_skipped": "not_found",
+    "not_found": true,
     "answer_prompt": [
      "mt_answer_v2",
      "79e1fbab96c5"
@@ -1473,9 +1495,9 @@
     "judge": "deepseek-flash",
     "judge_prompt": [
      "fact_judge_v3",
-     "5e7fe8303199"
+     null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -1558,8 +1580,9 @@
    "recall_distance": 10,
    "closed_book_knowledge": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.5,
-    "response": "```python\nresponse.headers[\"X-Forge-Receipt\"] = stamp_value\nresponse.headers[\"Access-Control-Expose-Headers\"] = \"X-Forge-Receipt\"\n```",
+    "response": "```js\nresponse.headers[\"X-Forge-Receipt\"] = stamp_value;\n```\n\nTo let JavaScript on another origin read it, expose it via CORS:\n\n```http\nAccess-Control-Expose-Headers: X-Forge-Receipt\n```",
     "fact_results": [
      true,
      false
@@ -1583,10 +1606,11 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -1616,7 +1640,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -1691,8 +1715,9 @@
    "recall_distance": 0,
    "closed_book_knowledge": {
     "correct": true,
+    "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "It sends `{\"message\": \"Item not found\"}` and attaches the `Message` model to the 404 response. No—declaring a model in `responses` documents the schema; it doesn’t automatically validate that error body at runtime.",
+    "response": "It sends `{\"message\": \"Item not found\"}` and attaches the `Message` model to the 404 entry. No—`responses` documents the error schema in OpenAPI; it doesn’t automatically validate that body at runtime.",
     "fact_results": [
      true,
      true
@@ -1716,10 +1741,11 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -1749,7 +1775,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -1860,6 +1886,7 @@
    "recall_distance": 13,
    "closed_book_knowledge": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "UNKNOWN",
     "fact_results": [
@@ -1886,10 +1913,11 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -1920,7 +1948,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -1993,14 +2021,15 @@
    "recall_distance": 11,
    "closed_book_knowledge": {
     "correct": false,
-    "accuracy": 0.5,
-    "response": "`RedirectResponse` defaults to **307**. The Pydantic example overrides it with **302** and returns the URL string `\"https://www.example.com\"`.",
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
     "fact_results": [
-     true,
+     false,
      false
     ],
-    "judge_skipped": null,
-    "unknown": false,
+    "judge_skipped": "unknown",
+    "unknown": true,
     "empty": false,
     "model": "gpt-6-luna",
     "settings": {
@@ -2016,12 +2045,13 @@
     "judge": "deepseek-flash",
     "judge_prompt": [
      "fact_judge_v3",
-     "5e7fe8303199"
+     null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -2051,7 +2081,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -2107,7 +2137,69 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
-   "review": {}
+   "review": {},
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "The stored tax of 20.2 is removed; replacement doesn’t preserve fields omitted from the incoming item.",
+    "fact_results": [
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
   },
   {
    "turn": 16,
@@ -2169,7 +2261,71 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
-   "review": {}
+   "review": {},
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "A Pydantic v2 model serialized with `model_dump_json()` and returned in a plain `Response` (`application/json`) can send JSON directly. That bypasses FastAPI’s normal response validation and `jsonable_encoder` path.",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
   },
   {
    "turn": 17,
@@ -2232,6 +2388,7 @@
    "recall_distance": 12,
    "closed_book_knowledge": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "UNKNOWN",
     "fact_results": [
@@ -2257,10 +2414,11 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -2290,7 +2448,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -2363,6 +2521,7 @@
    "recall_distance": 16,
    "closed_book_knowledge": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "UNKNOWN",
     "fact_results": [
@@ -2388,10 +2547,11 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "closed_book_grounded": {
     "correct": false,
+    "accuracy_main": 0.0,
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
@@ -2421,7 +2581,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-005056"
+    "run_id": "20261128-094550"
    },
    "review": {
     "standalone_same_fact": "예",
@@ -2538,7 +2698,73 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 19,
-   "review": {}
+   "review": {},
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
   }
  ],
  "edits": [

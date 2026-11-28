@@ -1,0 +1,2592 @@
+{
+ "schema_version": 2,
+ "scenario_id": "v2_06_middleware_cors",
+ "title": "Browser Diagnostics Across Middleware and Proxies",
+ "topic": "미들웨어와 교차 출처",
+ "status": "draft",
+ "bundle": [
+  "middleware/middleware.md",
+  "middleware/cors.md",
+  "responses/response-headers-and-cookies.md",
+  "request/headers-and-cookies.md",
+  "app-structure/sub-applications-proxy-and-wsgi.md",
+  "errors/handling-errors.md",
+  "internals/request-handling-internals.md",
+  "security/http-basic-and-api-keys.md",
+  "deployment/https-and-cloud.md"
+ ],
+ "generation": {
+  "model": "gpt-6.1-sol",
+  "served_model": "gpt-6.1-sol",
+  "prompt": [
+   "mt_scenario_gen_v3",
+   "7e637f26a462"
+  ],
+  "settings": {
+   "model": "gpt-6.1-sol",
+   "temperature": null,
+   "temperature_requested": null,
+   "seed": 42,
+   "reasoning_effort": null,
+   "reasoning_effort_requested": null,
+   "max_tokens": 40000,
+   "max_tokens_param": "max_completion_tokens"
+  },
+  "run_id": "20261128-092938_v2_06_middleware_cors",
+  "attempts": 2,
+  "created_at": "2026-11-28T09:35:50"
+ },
+ "turns": [
+  {
+   "turn": 0,
+   "turn_type": "new",
+   "type": "code",
+   "question": "I'm building browser-facing request diagnostics. Our elapsed-time response header will be X-Trace-Lag. Show the async HTTP timing middleware using the timing example's clock, and explain where to register CORS relative to it.",
+   "asks": [
+    "Implement the elapsed-time middleware",
+    "Give the CORS registration order"
+   ],
+   "standalone_question": "Show async HTTP timing middleware using X-Trace-Lag as the elapsed-time response header and the timing example's clock, and explain where to register CORS relative to it.",
+   "answer": "```python\nimport time\nfrom fastapi import FastAPI, Request\n\napp = FastAPI()\n\n@app.middleware(\"http\")\nasync def add_elapsed_time(request: Request, call_next):\n    start = time.perf_counter()\n    response = await call_next(request)\n    response.headers[\"X-Trace-Lag\"] = str(time.perf_counter() - start)\n    return response\n\n# Register CORSMiddleware after this middleware.\n```\nThe last middleware added is outermost, so adding CORS last places it outside this timing middleware.",
+   "key_facts": [
+    "The project's elapsed-time response header is X-Trace-Lag.",
+    "The timing example measures around await call_next(request) using time.perf_counter().",
+    "Register CORS last because the last middleware added is outermost."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "X-Trace-Lag",
+    "time.perf_counter()",
+    "call_next",
+    "CORSMiddleware"
+   ],
+   "evidence_pages": [
+    "middleware/middleware.md",
+    "middleware/cors.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our elapsed-time response header will be X-Trace-Lag.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "    start_time = time.perf_counter()",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "    response = await call_next(request)",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "**The last one added is the outermost.**",
+     "page": "middleware/middleware.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nimport time\n\n@app.middleware(\"http\")\nasync def trace_lag(request, call_next):\n    start = time.perf_counter()\n    response = await call_next(request)\n    response.headers[\"X-Trace-Lag\"] = f\"{time.perf_counter() - start:.6f}\"\n    return response\n\n# Add CORS after the timing middleware so it wraps it (and can add CORS\n# headers to its responses). Expose the timing header to browser code.\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"https://example.com\"],\n    expose_headers=[\"X-Trace-Lag\"],\n)\n```\n\nIn FastAPI/Starlette, the last-added middleware is outermost. CORS must expose `X-Trace-Lag` for browser JavaScript to read it.",
+    "fact_results": [
+     true,
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 1,
+   "turn_type": "new",
+   "type": "code",
+   "question": "Our session cookie will be named orbit_session. Show how to set it on an injected response while returning ordinary data, keeping response-model filtering, and make it HTTPS-only and inaccessible to JavaScript.",
+   "asks": [
+    "Set the session cookie without bypassing response-model filtering"
+   ],
+   "standalone_question": "Show how to set a session cookie named orbit_session on an injected response while returning ordinary data, keeping response-model filtering, and make it HTTPS-only and inaccessible to JavaScript.",
+   "answer": "```python\nfrom fastapi import Response\n\n@app.post(\"/session\")\ndef create_session(response: Response):\n    response.set_cookie(\n        key=\"orbit_session\",\n        value=\"issued-session-value\",\n        secure=True,\n        httponly=True,\n    )\n    return {\"message\": \"session created\"}\n```\nThe injected Response is temporary: FastAPI copies its cookie onto the final response and still applies any declared response_model to the returned data.",
+   "key_facts": [
+    "Set the cookie under the project name orbit_session.",
+    "Use secure=True for HTTPS-only delivery and httponly=True to prevent JavaScript access.",
+    "Setting cookies on the injected temporary Response preserves response_model filtering of returned data."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "orbit_session",
+    "secure",
+    "httponly",
+    "Response",
+    "response_model"
+   ],
+   "evidence_pages": [
+    "responses/response-headers-and-cookies.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our session cookie will be named orbit_session.",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "| `secure` | Only send over HTTPS |",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "| `httponly` | Not accessible to JavaScript |",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "Declare a parameter of type `Response`.",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "FastAPI injects a **temporary** response object; you set headers/cookies on it and return your data normally.",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nfrom fastapi import FastAPI, Response\n\napp = FastAPI()\n\n@app.get(\"/login\", response_model=UserOut)\ndef login(response: Response):\n    response.set_cookie(\n        key=\"orbit_session\",\n        value=\"session-token\",\n        secure=True,\n        httponly=True,\n    )\n    return {\"id\": 1, \"name\": \"Orbit\", \"internal_field\": \"filtered out\"}\n```\n\nFastAPI applies `response_model` filtering to the returned data while adding the cookie to the response.",
+    "fact_results": [
+     true,
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 2,
+   "turn_type": "followup",
+   "type": "code",
+   "question": "For that cookie-based browser flow, the frontend origin is https://console.aster-lab.net:5447 and the preflight cache should be 731 seconds. Show a credentialed CORS configuration allowing GET and POST with Content-Type and Authorization request headers, and make our timing header readable by JavaScript.",
+   "asks": [
+    "Configure credentialed CORS and the preflight cache",
+    "Expose the project's timing response header"
+   ],
+   "standalone_question": "For a cookie-based browser flow, show a credentialed CORS configuration for https://console.aster-lab.net:5447 with a 731-second preflight cache, allowing GET and POST with Content-Type and Authorization request headers, and exposing the project's timing response header to JavaScript.",
+   "answer": "```python\nfrom fastapi.middleware.cors import CORSMiddleware\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"https://console.aster-lab.net:5447\"],\n    allow_credentials=True,\n    allow_methods=[\"GET\", \"POST\"],\n    allow_headers=[\"Content-Type\", \"Authorization\"],\n    expose_headers=[\"X-Trace-Lag\"],\n    max_age=731,\n)\n```\nUse explicit origins, methods, and request headers with credentials. expose_headers controls whether cross-origin browser JavaScript can read the custom response header.",
+   "key_facts": [
+    "Configure the project's origin as https://console.aster-lab.net:5447 and max_age as 731 seconds.",
+    "The project timing header to expose is X-Trace-Lag.",
+    "Credentialed CORS uses explicit origins, methods, and request headers, while custom response headers must be listed in expose_headers for cross-origin JavaScript access."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "https://console.aster-lab.net:5447",
+    "731",
+    "X-Trace-Lag",
+    "allow_credentials",
+    "expose_headers",
+    "max_age",
+    "GET",
+    "POST",
+    "Content-Type",
+    "Authorization"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0,
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "the frontend origin is https://console.aster-lab.net:5447 and the preflight cache should be 731 seconds.",
+     "user_turn": 2,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Our elapsed-time response header will be X-Trace-Lag.",
+     "user_turn": 0,
+     "fact_idx": 1
+    },
+    {
+     "quote": "For anything involving login, **list your frontend origins explicitly**.",
+     "page": "middleware/cors.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "the docs state that `allow_origins`, `allow_methods` and `allow_headers` should not be `[\"*\"]` when `allow_credentials=True`.",
+     "page": "middleware/cors.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "- For JavaScript in a browser on **another origin** to read a custom response header, list it in `CORSMiddleware(expose_headers=[...])` ([CORS](../middleware/cors.md)).",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 2,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.6666666666666666,
+    "response": "Assuming the timing response header is `Server-Timing`, return these CORS headers (including on the preflight response):\n\n```http\nAccess-Control-Allow-Origin: https://console.aster-lab.net:5447\nAccess-Control-Allow-Credentials: true\nAccess-Control-Allow-Methods: GET, POST\nAccess-Control-Allow-Headers: Content-Type, Authorization\nAccess-Control-Max-Age: 731\nAccess-Control-Expose-Headers: Server-Timing\nVary: Origin\n```\n\nUse the exact project-specific timing header name in place of `Server-Timing` if it differs.",
+    "fact_results": [
+     true,
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 3,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm checking how diagnostic request headers are parsed. For the duplicate-header example, what declaration collects every X-Token value and what example result comes back for foo and bar? Also, why leave underscore conversion enabled?",
+   "asks": [
+    "Give the duplicate-header declaration and example result",
+    "Explain why underscore conversion should remain enabled"
+   ],
+   "standalone_question": "For the duplicate request-header example, what declaration collects every X-Token value and what example result comes back for foo and bar? Why leave underscore conversion enabled?",
+   "answer": "Use `x_token: Annotated[list[str] | None, Header()] = None`. The example returns `{\"X-Token values\": [\"bar\", \"foo\"]}`. By default, Header converts underscores to hyphens, so x_token reads X-Token; some proxies and servers reject headers containing underscores.",
+   "key_facts": [
+    "The duplicate-header example uses a list-valued Header parameter and returns the example values [\"bar\", \"foo\"].",
+    "Header converts underscores to hyphens by default; some proxies and servers reject underscore-containing headers."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "x_token",
+    "Annotated[list[str] | None, Header()]",
+    "X-Token",
+    "bar",
+    "foo"
+   ],
+   "evidence_pages": [
+    "request/headers-and-cookies.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "async def read_items(x_token: Annotated[list[str] | None, Header()] = None):",
+     "page": "request/headers-and-cookies.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Sending `X-Token: foo` and `X-Token: bar` returns all values in a list, e.g. `{\"X-Token values\": [\"bar\", \"foo\"]}`.",
+     "page": "request/headers-and-cookies.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "By default `Header` converts underscores to hyphens, so `user_agent` reads the `User-Agent` header.",
+     "page": "request/headers-and-cookies.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "Caution: some HTTP proxies and servers reject headers containing underscores.",
+     "page": "request/headers-and-cookies.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "Use `x_token: Annotated[list[str] | None, Header()] = None`. With duplicate `X-Token` headers `foo` and `bar`, the result is `{\"X-Token\": [\"foo\", \"bar\"]}`. Keep underscore conversion enabled so Python’s `x_token` maps to the HTTP header name `X-Token`.",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 4,
+   "turn_type": "update",
+   "type": "code",
+   "question": "Change our preflight cache from 731 seconds to 947 seconds. Show the replacement middleware argument, and tell me whether this controls caching of endpoint response bodies.",
+   "asks": [
+    "Apply the new preflight cache duration",
+    "Distinguish preflight caching from response-body caching"
+   ],
+   "standalone_question": "Change the project's preflight cache from 731 seconds to 947 seconds. Show the replacement middleware argument, and explain whether it controls caching of endpoint response bodies.",
+   "answer": "Use `max_age=947`. This is how long browsers may cache preflight responses; it is not an endpoint response-body cache setting.",
+   "key_facts": [
+    "The project's new preflight cache duration is 947 seconds.",
+    "max_age controls browser caching of preflight responses, not endpoint response bodies."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "947",
+    "max_age"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    2
+   ],
+   "evidence": [
+    {
+     "quote": "Change our preflight cache from 731 seconds to 947 seconds.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "| `max_age` | Seconds browsers may cache preflight responses | `600` |",
+     "page": "middleware/cors.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Project preflight cache duration in seconds",
+     "from": 731,
+     "to": 947
+    }
+   ],
+   "affects": [
+    13
+   ],
+   "source_turn": null,
+   "recall_distance": 2,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Replace the middleware argument with `maxAge: 947`. This sets how long browsers may cache CORS preflight results; it does not cache endpoint response bodies.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 5,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I need to distinguish validation failures in browser diagnostics. What status does the default request-validation handler return, and what status and message prefix does the plain-text override example use instead?",
+   "asks": [
+    "Give the default request-validation status",
+    "Give the plain-text override's status and message prefix"
+   ],
+   "standalone_question": "What status does the default request-validation handler return, and what status and message prefix does the plain-text override example use instead?",
+   "answer": "The default RequestValidationError handler returns 422. The plain-text override example returns 400, with a message starting `Validation errors:`.",
+   "key_facts": [
+    "The default RequestValidationError handler returns 422.",
+    "The plain-text validation override example uses status 400 and starts its message with Validation errors:."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "RequestValidationError",
+    "422",
+    "400",
+    "Validation errors:"
+   ],
+   "evidence_pages": [
+    "errors/handling-errors.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "| `RequestValidationError` | `request_validation_exception_handler` | `422` with `{\"detail\": [...errors...]}` |",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    message = \"Validation errors:\"",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "    return PlainTextResponse(message, status_code=400)",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "The default handler returns **422**. The plain-text override uses **400** and prefixes the message with **“Validation error: ”**.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 6,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "For a recognizable error fixture, what exact custom header/value does the missing-item exception example attach, and what stored item name does its foo entry use?",
+   "asks": [
+    "Give the missing-item exception's custom header and value",
+    "Give the stored name for foo"
+   ],
+   "standalone_question": "What exact custom header/value does the missing-item exception example attach, and what stored item name does its foo entry use?",
+   "answer": "The exception attaches `X-Error: There goes my error`. The stored `foo` item is named `The Foo Wrestlers`.",
+   "key_facts": [
+    "The custom exception-header example uses X-Error with value There goes my error.",
+    "The example's foo item is The Foo Wrestlers."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "X-Error",
+    "There goes my error",
+    "foo",
+    "The Foo Wrestlers"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "    headers={\"X-Error\": \"There goes my error\"},",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "items = {\"foo\": \"The Foo Wrestlers\"}",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "The header is `X-Error: There goes my error`, and the `foo` entry stores `The Foo Wrestlers`.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 7,
+   "turn_type": "same_doc_new_topic",
+   "type": "multi",
+   "question": "Now I'm evaluating compression middleware. What minimum size and compression level does the configured GZip example choose, versus the defaults, and which request header enables compression?",
+   "asks": [
+    "Compare the configured GZip example with its defaults",
+    "Identify the client compression condition"
+   ],
+   "standalone_question": "What minimum size and compression level does the configured GZip example choose, versus the defaults, and which request header enables compression?",
+   "answer": "The example sets `minimum_size=1000` and `compresslevel=5`; the defaults are 500 bytes and level 9. Compression is for clients sending `gzip` in `Accept-Encoding`, and responses below minimum_size are not compressed.",
+   "key_facts": [
+    "The configured GZip example uses minimum_size=1000 and compresslevel=5, while the defaults are 500 and 9.",
+    "GZip compression requires gzip in Accept-Encoding and does not compress responses below minimum_size."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "range"
+     ]
+    }
+   ],
+   "key_entities": [
+    "GZipMiddleware",
+    "minimum_size",
+    "1000",
+    "compresslevel",
+    "5",
+    "500",
+    "9",
+    "gzip",
+    "Accept-Encoding"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "app.add_middleware(GZipMiddleware, minimum_size=1000, compresslevel=5)",
+     "page": "middleware/middleware.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- `minimum_size` — don't compress responses smaller than this many bytes (default `500`).",
+     "page": "middleware/middleware.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- `compresslevel` — 1 (fast, larger) to 9 (slow, smaller); default `9`.",
+     "page": "middleware/middleware.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Compresses responses for clients that send `gzip` in `Accept-Encoding`:",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "- `minimum_size` — don't compress responses smaller than this many bytes (default `500`).",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 0,
+   "recall_distance": 7,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 8,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For a proxy that strips the public prefix, what prefix and direct backend URL does the worked root-path example use? Also, when is trusting every forwarding client with the wildcard safe?",
+   "asks": [
+    "Give the stripped-prefix example's prefix and backend URL",
+    "State the safety condition for wildcard forwarded-header trust"
+   ],
+   "standalone_question": "For a proxy that strips the public prefix, what prefix and direct backend URL does the worked root-path example use? When is trusting every forwarding client with the wildcard safe?",
+   "answer": "The example uses `root_path=\"/api/v1\"`, while the direct backend still serves `http://127.0.0.1:8000/app` without that prefix. `--forwarded-allow-ips=\"*\"` is appropriate only when nothing except the trusted proxy can reach the server.",
+   "key_facts": [
+    "The stripped-prefix example uses /api/v1 and keeps the direct backend URL at http://127.0.0.1:8000/app.",
+    "Wildcard forwarded-header trust is appropriate only when nothing but the proxy can reach the server."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "negation"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "root_path",
+    "/api/v1",
+    "http://127.0.0.1:8000/app",
+    "--forwarded-allow-ips=\"*\""
+   ],
+   "evidence_pages": [
+    "app-structure/sub-applications-proxy-and-wsgi.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "app = FastAPI(root_path=\"/api/v1\")",
+     "page": "app-structure/sub-applications-proxy-and-wsgi.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Either way the server still serves the path **without** the prefix (`http://127.0.0.1:8000/app`); adding `/api/v1` is the proxy's job.",
+     "page": "app-structure/sub-applications-proxy-and-wsgi.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "`\"*\"` trusts every client IP — only appropriate when nothing but the proxy can reach the server.",
+     "page": "app-structure/sub-applications-proxy-and-wsgi.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "The example uses the prefix `/api/v1` and the direct backend URL `http://127.0.0.1:8000`. Trusting all forwarding clients with `*` is safe only when untrusted clients cannot reach the backend directly and traffic must come through trusted proxies.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 9,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "The timing response header is visible in the network inspector but missing from cross-origin JavaScript. Which exact header did we choose, and which CORS option must contain it?",
+   "asks": [
+    "Recall the project's timing header",
+    "Identify the browser response-header exposure option"
+   ],
+   "standalone_question": "The project's timing response header is visible in the network inspector but missing from cross-origin JavaScript. Which exact header did the project choose, and which CORS option must contain it?",
+   "answer": "We chose `X-Trace-Lag`. Add it to `expose_headers`, for example `expose_headers=[\"X-Trace-Lag\"]`; allowing request headers alone does not expose a custom response header to cross-origin JavaScript.",
+   "key_facts": [
+    "The project's timing response header is X-Trace-Lag.",
+    "Cross-origin JavaScript access to a custom response header requires listing it in expose_headers."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "X-Trace-Lag",
+    "expose_headers"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "Our elapsed-time response header will be X-Trace-Lag.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "- Custom headers conventionally use an `X-` prefix. For browser JS to read them cross-origin, list them in CORS `expose_headers` ([CORS](cors.md)).",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 9,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "`Server-Timing`; include it in the CORS `exposedHeaders` option (the `Access-Control-Expose-Headers` response header).",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 10,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm adding an authentication fixture alongside browser diagnostics. Which username and password does the timing-safe Basic comparison example use, and what status plus challenge does an API-key dependency return for missing credentials by default?",
+   "asks": [
+    "Give the Basic comparison example's credentials",
+    "Give the default missing-API-key status and challenge"
+   ],
+   "standalone_question": "Which username and password does the timing-safe Basic comparison example use, and what status plus challenge does an API-key dependency return for missing credentials by default?",
+   "answer": "The Basic example compares against username `stanleyjobson` and password `swordfish`. With default auto_error=True, a missing API key produces `401 Unauthorized` and `WWW-Authenticate: APIKey`.",
+   "key_facts": [
+    "The timing-safe Basic example uses stanleyjobson and swordfish.",
+    "A missing API key with default auto_error=True raises 401 with WWW-Authenticate: APIKey."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "stanleyjobson",
+    "swordfish",
+    "auto_error=True",
+    "401",
+    "WWW-Authenticate",
+    "APIKey"
+   ],
+   "evidence_pages": [
+    "security/http-basic-and-api-keys.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "    correct_username_bytes = b\"stanleyjobson\"",
+     "page": "security/http-basic-and-api-keys.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    correct_password_bytes = b\"swordfish\"",
+     "page": "security/http-basic-and-api-keys.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "With `auto_error=True` (default), missing or malformed credentials make the dependency raise `HTTPException(401, \"Not authenticated\")` with a `WWW-Authenticate` header:",
+     "page": "security/http-basic-and-api-keys.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "- API keys: `APIKey` (not standardized, but included per the HTTP spec's requirement for 401)",
+     "page": "security/http-basic-and-api-keys.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "The timing-safe Basic example uses username `stanley` and password `thegreat`. A missing API key returns **403 Forbidden** by default, with no `WWW-Authenticate` challenge.",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 11,
+   "turn_type": "update",
+   "type": "code",
+   "question": "Rename our session cookie from orbit_session to orbit_session_v2. Show the cookie security dependency configured to read the renamed cookie, and clarify whether extracting it also verifies the session.",
+   "asks": [
+    "Configure the cookie security dependency with the new name",
+    "Distinguish extraction from verification"
+   ],
+   "standalone_question": "Rename the project's session cookie from orbit_session to orbit_session_v2. Show the cookie security dependency configured to read the renamed cookie, and clarify whether extracting it also verifies the session.",
+   "answer": "```python\nfrom fastapi.security import APIKeyCookie\n\nsession_cookie = APIKeyCookie(name=\"orbit_session_v2\")\n```\nThis extracts the cookie value; your code must verify that the session is valid.",
+   "key_facts": [
+    "The session cookie is now named orbit_session_v2.",
+    "APIKeyCookie(name=...) reads a named cookie but does not verify its credentials."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "orbit_session_v2",
+    "APIKeyCookie"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    10
+   ],
+   "evidence": [
+    {
+     "quote": "Rename our session cookie from orbit_session to orbit_session_v2.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "| `APIKeyCookie(name=...)` | the named cookie | `str` |",
+     "page": "security/http-basic-and-api-keys.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "They only **extract** credentials — **verifying** them is your code's job.",
+     "page": "security/http-basic-and-api-keys.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Project session cookie name",
+     "from": "orbit_session",
+     "to": "orbit_session_v2"
+    }
+   ],
+   "affects": [
+    16
+   ],
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nfrom fastapi.security import APIKeyCookie\n\nsession_cookie = APIKeyCookie(name=\"orbit_session_v2\")\n```\n\nThis extracts the renamed cookie; it does **not** verify the session. Session validity must be checked separately.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 12,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "Does adding CORS last through add_middleware guarantee CORS headers on an unhandled 500? Locate user middleware relative to the two error-handling layers, and contrast that with a handled validation error.",
+   "asks": [
+    "Locate user middleware relative to the error-handling layers",
+    "Contrast handled validation responses with unhandled 500 responses"
+   ],
+   "standalone_question": "Does adding CORS last through add_middleware guarantee CORS headers on an unhandled 500? Locate user middleware relative to the two error-handling layers, and contrast that with a handled validation error.",
+   "answer": "No. User middleware, including CORS added with add_middleware, sits inside ServerErrorMiddleware but outside ExceptionMiddleware. A handled validation error becomes a response inside the user stack and passes back through CORS. An unhandled exception reaches the outer ServerErrorMiddleware, which creates the 500 outside that user middleware, so adding CORS last among user middleware does not guarantee headers on that 500.",
+   "key_facts": [
+    "User middleware sits inside ServerErrorMiddleware and outside ExceptionMiddleware.",
+    "Handled validation responses pass through user middleware, but an unhandled 500 generated by ServerErrorMiddleware is not guaranteed CORS headers merely by adding CORS last."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "ServerErrorMiddleware",
+    "ExceptionMiddleware",
+    "500",
+    "422"
+   ],
+   "evidence_pages": [
+    "internals/request-handling-internals.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "ServerErrorMiddleware        ← unhandled exceptions → 500 (your handler for 500/Exception goes here)",
+     "page": "internals/request-handling-internals.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "<your middleware>            ← add_middleware / @app.middleware(\"http\"), last added = outermost",
+     "page": "internals/request-handling-internals.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "ExceptionMiddleware          ← your exception handlers (HTTPException, RequestValidationError, custom…)",
+     "page": "internals/request-handling-internals.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- Exception handlers run **inside** your middleware, so middleware sees the handler's response (e.g. a 422 or 404).",
+     "page": "internals/request-handling-internals.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "- Exceptions not handled by any handler reach `ServerErrorMiddleware` → 500. (`debug=True` shows tracebacks.)",
+     "page": "internals/request-handling-internals.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "No. Starlette’s order is **ServerErrorMiddleware → user middleware (including CORS) → ExceptionMiddleware**. Adding CORS last only affects its order among user middleware; it remains inside the outer server-error layer.\n\nA handled validation error is converted to a response by ExceptionMiddleware, which CORS can decorate. An unhandled exception reaches ServerErrorMiddleware, which creates the 500 response outside CORS, so CORS headers aren’t guaranteed.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 13,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For three browser-test assertions, which timing-header/preflight-cache pair are we using now, which status should a rejected CORS preflight produce, and which status plus challenge should a missing API key produce by default?",
+   "asks": [
+    "Give the current timing-header and preflight-cache pair",
+    "Give the rejected-preflight status",
+    "Give the default missing-API-key status and challenge"
+   ],
+   "standalone_question": "For browser-test assertions, give the project's current timing-header/preflight-cache pair, the status of a rejected CORS preflight, and the default status plus challenge for a missing API key.",
+   "answer": "1. Timing header: `X-Trace-Lag`; preflight cache: `max_age=947` seconds.\n2. Rejected CORS preflight: `400`.\n3. Missing API key by default: `401` with `WWW-Authenticate: APIKey`.",
+   "key_facts": [
+    "The current project pair is X-Trace-Lag and a 947-second preflight cache.",
+    "A rejected CORS preflight receives 400.",
+    "A missing API key defaults to 401 with WWW-Authenticate: APIKey."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable",
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "X-Trace-Lag",
+    "947",
+    "max_age",
+    "400",
+    "401",
+    "WWW-Authenticate",
+    "APIKey"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0,
+    4,
+    10
+   ],
+   "evidence": [
+    {
+     "quote": "Our elapsed-time response header will be X-Trace-Lag.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Change our preflight cache from 731 seconds to 947 seconds.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "The middleware answers them itself with the CORS headers and `200` (allowed) or `400` (not allowed); your endpoints never see them.",
+     "page": "middleware/cors.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "With `auto_error=True` (default), missing or malformed credentials make the dependency raise `HTTPException(401, \"Not authenticated\")` with a `WWW-Authenticate` header:",
+     "page": "security/http-basic-and-api-keys.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "- API keys: `APIKey` (not standardized, but included per the HTTP spec's requirement for 401)",
+     "page": "security/http-basic-and-api-keys.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 13,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 14,
+   "turn_type": "same_doc_new_topic",
+   "type": "multi",
+   "question": "For a fixture that returns JSONResponse directly, what exact custom-header and language-header values does the direct-response example use, and does returning that response still apply response_model filtering?",
+   "asks": [
+    "Give the direct-response example's header names and values",
+    "State whether a directly returned response is model-filtered"
+   ],
+   "standalone_question": "What exact custom-header and language-header values does the direct JSONResponse example use, and does returning that response still apply response_model filtering?",
+   "answer": "The example uses `X-Cat-Dog: alone in the world` and `Content-Language: en-US`. A directly returned response skips response_model validation and filtering.",
+   "key_facts": [
+    "The direct-response example sets X-Cat-Dog to alone in the world and Content-Language to en-US.",
+    "Returning a Response directly skips response_model validation and filtering."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "X-Cat-Dog",
+    "alone in the world",
+    "Content-Language",
+    "en-US",
+    "response_model"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "    headers = {\"X-Cat-Dog\": \"alone in the world\", \"Content-Language\": \"en-US\"}",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Remember: a directly returned response skips `response_model` validation/filtering — make sure the content is what you intend to send ([Custom Responses](custom-responses.md)).",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 1,
+   "recall_distance": 13,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "The headers are `X-Custom-Header: some-value` and `Content-Language: en-US`. Returning `JSONResponse` directly bypasses `response_model` filtering.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 15,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm checking the TLS edge of this browser path. In the typical deployment flow, which port handles the TLS handshake and what protocol reaches the app? Also, which forwarded headers must be trusted for the original scheme, host, and client IP?",
+   "asks": [
+    "Describe the TLS port and proxy-to-app protocol",
+    "Name the forwarded headers and their trust requirement"
+   ],
+   "standalone_question": "In the typical TLS-termination deployment flow, which port handles the TLS handshake and what protocol reaches the app? Which forwarded headers must be trusted for the original scheme, host, and client IP?",
+   "answer": "The TLS termination proxy handles TLS on port 443 and forwards plain HTTP to the app. It supplies `X-Forwarded-Proto`, `X-Forwarded-Host`, and `X-Forwarded-For`; the server must be configured to trust those forwarded headers to recover the original scheme, host, and client IP.",
+   "key_facts": [
+    "The TLS termination proxy handles TLS on port 443 and forwards plain HTTP to the app.",
+    "Recovering the original scheme, host, and client IP requires X-Forwarded-Proto, X-Forwarded-Host, and X-Forwarded-For plus server trust."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "443",
+    "HTTP",
+    "X-Forwarded-Proto",
+    "X-Forwarded-Host",
+    "X-Forwarded-For"
+   ],
+   "evidence_pages": [
+    "deployment/https-and-cloud.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "1. Holds all certificates and listens on port 443.",
+     "page": "deployment/https-and-cloud.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "3. Decrypts the request and forwards **plain HTTP** to your app (e.g. Uvicorn running FastAPI on port 8000).",
+     "page": "deployment/https-and-cloud.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "unless the proxy sends `X-Forwarded-Proto`, `X-Forwarded-Host` and `X-Forwarded-For` **and** the server is told to trust them:",
+     "page": "deployment/https-and-cloud.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "The TLS handshake is handled on port **443**; the app typically receives **plain HTTP**. Trust the proxy’s **`X-Forwarded-Proto`**, **`X-Forwarded-Host`**, and **`X-Forwarded-For`** headers for the original scheme, host, and client IP.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 16,
+   "turn_type": "recall",
+   "type": "code",
+   "question": "I need to repair the session-creation endpoint after the rename. What cookie name should it set now, and which two flags preserve the HTTPS-only and JavaScript-inaccessible requirements?",
+   "asks": [
+    "Recall the current session cookie name",
+    "Apply the cookie protection flags"
+   ],
+   "standalone_question": "What is the project's current session cookie name after its rename, and which two cookie flags preserve the HTTPS-only and JavaScript-inaccessible requirements?",
+   "answer": "```python\nresponse.set_cookie(\n    key=\"orbit_session_v2\",\n    value=\"issued-session-value\",\n    secure=True,\n    httponly=True,\n)\n```",
+   "key_facts": [
+    "The current session cookie name is orbit_session_v2.",
+    "Use secure=True for HTTPS-only delivery and httponly=True to block JavaScript access."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "orbit_session_v2",
+    "secure",
+    "httponly"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1,
+    11
+   ],
+   "evidence": [
+    {
+     "quote": "Rename our session cookie from orbit_session to orbit_session_v2.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "| `secure` | Only send over HTTPS |",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "| `httponly` | Not accessible to JavaScript |",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 15,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 17,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "A teammate wants to remove the frontend port from the allowlist entry. What exact origin did we choose, and would changing only its port still identify the same origin?",
+   "asks": [
+    "Recall the exact frontend origin",
+    "Determine whether a port change preserves origin identity"
+   ],
+   "standalone_question": "What exact frontend origin did the project choose, and would changing only its port still identify the same origin for the allowlist?",
+   "answer": "The chosen origin is `https://console.aster-lab.net:5447`. No: an origin includes protocol, domain, and port, so changing the port makes it a different origin.",
+   "key_facts": [
+    "The selected frontend origin is https://console.aster-lab.net:5447.",
+    "Changing the port changes the origin because origin identity includes protocol, domain, and port."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "https://console.aster-lab.net:5447"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    2
+   ],
+   "evidence": [
+    {
+     "quote": "the frontend origin is https://console.aster-lab.net:5447 and the preflight cache should be 731 seconds.",
+     "user_turn": 2,
+     "fact_idx": 0
+    },
+    {
+     "quote": "An origin is **protocol + domain + port**.",
+     "page": "middleware/cors.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 15,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 18,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the final browser/proxy test, which exact frontend origin belongs in the allowlist, which three trusted forwarded headers restore the external scheme/host/client IP, and which layer creates an unhandled 500 outside our user middleware?",
+   "asks": [
+    "Give the project's frontend origin",
+    "Give the three forwarded headers and trust requirement",
+    "Identify the layer generating unhandled 500 responses"
+   ],
+   "standalone_question": "For a browser/proxy test, give the project's exact frontend allowlist origin, the three trusted forwarded headers that restore the external scheme/host/client IP, and the layer that creates an unhandled 500 outside user middleware.",
+   "answer": "1. Allow `https://console.aster-lab.net:5447`.\n2. Trust the proxy's `X-Forwarded-Proto`, `X-Forwarded-Host`, and `X-Forwarded-For` at the server.\n3. `ServerErrorMiddleware` creates the unhandled 500 response outside the user-middleware stack.",
+   "key_facts": [
+    "The frontend allowlist origin is https://console.aster-lab.net:5447.",
+    "The server must trust X-Forwarded-Proto, X-Forwarded-Host, and X-Forwarded-For to recover the external scheme, host, and client IP.",
+    "ServerErrorMiddleware is outside user middleware and generates unhandled 500 responses."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "https://console.aster-lab.net:5447",
+    "X-Forwarded-Proto",
+    "X-Forwarded-Host",
+    "X-Forwarded-For",
+    "ServerErrorMiddleware",
+    "500"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    2,
+    12,
+    15
+   ],
+   "evidence": [
+    {
+     "quote": "the frontend origin is https://console.aster-lab.net:5447 and the preflight cache should be 731 seconds.",
+     "user_turn": 2,
+     "fact_idx": 0
+    },
+    {
+     "quote": "unless the proxy sends `X-Forwarded-Proto`, `X-Forwarded-Host` and `X-Forwarded-For` **and** the server is told to trust them:",
+     "page": "deployment/https-and-cloud.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "ServerErrorMiddleware        ← unhandled exceptions → 500 (your handler for 500/Exception goes here)",
+     "page": "internals/request-handling-internals.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "<your middleware>            ← add_middleware / @app.middleware(\"http\"), last added = outermost",
+     "page": "internals/request-handling-internals.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 16,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  }
+ ]
+}

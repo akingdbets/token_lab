@@ -1,0 +1,2467 @@
+{
+ "schema_version": 2,
+ "scenario_id": "v2_19_first_service",
+ "title": "A First Service from Local Development to Containers",
+ "topic": "첫 서비스 만들기(입문에서 운영까지)",
+ "status": "draft",
+ "bundle": [
+  "quickstart.md",
+  "getting-started/first-steps.md",
+  "getting-started/development-workflow.md",
+  "getting-started/python-types-and-async.md",
+  "request/path-parameters.md",
+  "request/query-parameters.md",
+  "deployment/docker.md",
+  "about/features-and-ecosystem.md",
+  "testing/testing-basics.md"
+ ],
+ "generation": {
+  "model": "gpt-6.1-sol",
+  "served_model": "gpt-6.1-sol",
+  "prompt": [
+   "mt_scenario_gen_v3",
+   "7e637f26a462"
+  ],
+  "settings": {
+   "model": "gpt-6.1-sol",
+   "temperature": null,
+   "temperature_requested": null,
+   "seed": 42,
+   "reasoning_effort": null,
+   "reasoning_effort_requested": null,
+   "max_tokens": 40000,
+   "max_tokens_param": "max_completion_tokens"
+  },
+  "run_id": "20261128-094005_v2_19_first_service",
+  "attempts": 2,
+  "created_at": "2026-11-28T09:44:58"
+ },
+ "turns": [
+  {
+   "turn": 0,
+   "turn_type": "new",
+   "type": "procedure",
+   "question": "I'm starting my first service with uv. What are the sample project-creation and dependency-install commands, and do I need to create or activate its environment manually?",
+   "asks": [
+    "Sample project setup commands",
+    "Manual environment setup requirement"
+   ],
+   "standalone_question": "For a first FastAPI service managed with uv, what are the sample project-creation and dependency-install commands, and is manual environment creation or activation required?",
+   "answer": "Run:\n```bash\nuv init awesome-project --bare\ncd awesome-project\nuv add \"fastapi[standard]\"\n```\nuv creates the virtual environment automatically; manual creation and activation are unnecessary.",
+   "key_facts": [
+    "The sample initializes awesome-project with --bare and installs \"fastapi[standard]\" using uv add.",
+    "uv creates the virtual environment automatically, without manual creation or activation."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "awesome-project",
+    "--bare",
+    "fastapi[standard]",
+    "uv"
+   ],
+   "evidence_pages": [
+    "getting-started/development-workflow.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "uv init awesome-project --bare\ncd awesome-project\nuv add \"fastapi[standard]\"",
+     "page": "getting-started/development-workflow.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- `uv` creates the virtual environment automatically — no manual creation or activation needed.",
+     "page": "getting-started/development-workflow.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "```bash\nuv init --app myapp\ncd myapp\nuv add \"fastapi[standard]\"\n```\n\nNo manual virtual-environment creation or activation is needed; `uv` manages it for you.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 1,
+   "turn_type": "new",
+   "type": "code",
+   "question": "Our application import target is service.api:app. How do I configure that once, and which plain CLI commands then use it?",
+   "asks": [
+    "Configure the chosen application target",
+    "Commands that use the configured target"
+   ],
+   "standalone_question": "With the application import target service.api:app, how is it configured once, and which plain CLI commands use that configuration?",
+   "answer": "Add this to pyproject.toml:\n```toml\n[tool.fastapi]\nentrypoint = \"service.api:app\"\n```\nThen use `fastapi dev` or `fastapi run` without supplying a file path.",
+   "key_facts": [
+    "The configured entrypoint must be service.api:app.",
+    "The [tool.fastapi] entrypoint setting lets plain fastapi dev and fastapi run locate the application."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "service.api:app",
+    "[tool.fastapi]",
+    "entrypoint",
+    "fastapi dev",
+    "fastapi run"
+   ],
+   "evidence_pages": [
+    "getting-started/first-steps.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our application import target is service.api:app.",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "[tool.fastapi]\nentrypoint = \"main:app\"",
+     "page": "getting-started/first-steps.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "Then plain `fastapi dev` / `fastapi run` work, and so do the FastAPI editor extension and FastAPI Cloud.",
+     "page": "getting-started/first-steps.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Set it once in `pyproject.toml`:\n\n```toml\n[tool.fastapi]\nentrypoint = \"service.api:app\"\n```\n\nThen use `fastapi dev` or `fastapi run` without specifying the app target.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 2,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "For that development command, what are its default listener and reload behavior, and what happens to FASTAPI_ENV if it already has a value?",
+   "asks": [
+    "Development listener and reload defaults",
+    "Effect on an existing environment value"
+   ],
+   "standalone_question": "For the FastAPI development CLI command discussed previously, what are its default listener and reload behavior, and what happens when FASTAPI_ENV already has a value?",
+   "answer": "It listens on `127.0.0.1:8000` and enables auto-reload. It sets `FASTAPI_ENV=development` only if the variable is unset, so an existing value is preserved.",
+   "key_facts": [
+    "The development command listens on 127.0.0.1:8000 and enables auto-reload.",
+    "FASTAPI_ENV is set to development only when it is not already set."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "127.0.0.1:8000",
+    "FASTAPI_ENV",
+    "development"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "- runs Uvicorn with **auto-reload** on file changes;",
+     "page": "getting-started/first-steps.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- listens on `127.0.0.1:8000` (local only);",
+     "page": "getting-started/first-steps.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- sets the `FASTAPI_ENV` environment variable to `development` if not already set.",
+     "page": "getting-started/first-steps.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "`fastapi dev` listens on `127.0.0.1:8000` and enables reload by default. It sets `FASTAPI_ENV` to `development` only if it isn’t already set, so an existing value is preserved.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 3,
+   "turn_type": "new",
+   "type": "code",
+   "question": "Our item ID ceiling is 731. Show the Annotated declaration for an integer item_id that must be positive and no larger than that ceiling, and explain the two bounds.",
+   "asks": [
+    "Constrained item ID declaration",
+    "Meaning of the bound operators"
+   ],
+   "standalone_question": "With an item ID ceiling of 731, how should an integer item_id be declared using Annotated to require a positive value no larger than the ceiling, and what do the bound operators mean?",
+   "answer": "```python\nfrom typing import Annotated\nfrom fastapi import Path\n\nitem_id: Annotated[int, Path(gt=0, le=731)]\n```\n`gt=0` excludes zero; `le=731` includes the upper bound.",
+   "key_facts": [
+    "The project's item ID ceiling is 731 and must be used as the inclusive upper bound.",
+    "Path(gt=0, le=...) expresses a strictly positive value with an inclusive upper bound."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "range"
+     ]
+    }
+   ],
+   "key_entities": [
+    "731",
+    "item_id",
+    "Annotated",
+    "Path",
+    "gt",
+    "le"
+   ],
+   "evidence_pages": [
+    "request/path-parameters.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our item ID ceiling is 731.",
+     "user_turn": 3,
+     "fact_idx": 0
+    },
+    {
+     "quote": "| `gt` | greater than |",
+     "page": "request/path-parameters.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "| `le` | less than or equal |",
+     "page": "request/path-parameters.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.5,
+    "response": "```python\nfrom typing import Annotated\nfrom pydantic import Field\n\nitem_id: Annotated[int, Field(gt=0, le=731)]\n```\n\n`gt` means strictly greater than; `le` means less than or equal to.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 4,
+   "turn_type": "update",
+   "type": "code",
+   "question": "Change our item ID ceiling from 731 to 947, keeping the positive-only rule. What is the revised declaration, and can I give this path parameter a default?",
+   "asks": [
+    "Revised item ID declaration",
+    "Whether a path parameter can have a default"
+   ],
+   "standalone_question": "After changing the item ID ceiling from 731 to 947 while retaining the positive-only rule, what is the revised declaration, and can the path parameter have a default?",
+   "answer": "```python\nitem_id: Annotated[int, Path(gt=0, le=947)]\n```\nNo. A path parameter is always required, and neither Path nor FastAPI permits a default for it.",
+   "key_facts": [
+    "The revised inclusive ceiling is 947, while the positive-only constraint remains.",
+    "Path parameters are always required and cannot have defaults."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "947",
+    "item_id",
+    "Annotated",
+    "Path",
+    "gt",
+    "le"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    3
+   ],
+   "evidence": [
+    {
+     "quote": "Change our item ID ceiling from 731 to 947, keeping the positive-only rule.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "**A path parameter is always required**, because it's part of the path.",
+     "page": "request/path-parameters.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "`Path` asserts that you don't give it a default (`\"Path parameters cannot have a default value\"`), and FastAPI refuses a default for a path parameter too.",
+     "page": "request/path-parameters.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Inclusive item ID ceiling",
+     "from": 731,
+     "to": 947
+    }
+   ],
+   "affects": [
+    17
+   ],
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "`item_id: int = Path(..., gt=0, le=947)`. No—path parameters are required and cannot have a default.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 5,
+   "turn_type": "new",
+   "type": "code",
+   "question": "Our public search key is lookup-key. Show an optional q declaration using that alias and the example's maximum string length.",
+   "asks": [
+    "Optional aliased search declaration with the example length cap"
+   ],
+   "standalone_question": "With the public search key lookup-key, how should optional q be declared with that alias and the example's maximum string length?",
+   "answer": "```python\nfrom typing import Annotated\nfrom fastapi import Query\n\nq: Annotated[str | None, Query(alias=\"lookup-key\", max_length=50)] = None\n```",
+   "key_facts": [
+    "The public query alias is lookup-key, while the Python parameter remains q.",
+    "The optional string example uses max_length=50 and a default of None."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "lookup-key",
+    "q",
+    "Query",
+    "max_length=50",
+    "None"
+   ],
+   "evidence_pages": [
+    "request/query-parameters.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our public search key is lookup-key.",
+     "user_turn": 5,
+     "fact_idx": 0
+    },
+    {
+     "quote": "async def read_items(q: Annotated[str | None, Query(max_length=50)] = None):",
+     "page": "request/query-parameters.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "`q: str | None = Query(default=None, alias=\"lookup-key\", max_length=50)`",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 6,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "For a separate query parameter, does accepting None make it omittable without a default? Show the required-but-nullable declaration with the example's minimum string length.",
+   "asks": [
+    "Whether nullable means omittable",
+    "Required nullable declaration with example minimum length"
+   ],
+   "standalone_question": "Does a query parameter accepting None become omittable without a default, and what is the required-but-nullable declaration using the example's minimum string length?",
+   "answer": "No: the default determines whether it is required. The required-but-nullable example is:\n```python\nq: Annotated[str | None, Query(min_length=3)]\n```\nThere is no default.",
+   "key_facts": [
+    "A nullable query parameter without a default is still required.",
+    "The required-but-nullable example is q: Annotated[str | None, Query(min_length=3)]."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "None",
+    "q",
+    "Annotated",
+    "Query(min_length=3)"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "The **default value** decides whether a query parameter is required:",
+     "page": "request/query-parameters.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- Required but may be `None`: `q: Annotated[str | None, Query(min_length=3)]` — the client must send it, though `None` is a valid value (`tutorial006c`).",
+     "page": "request/query-parameters.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "No. Allowing `None` does not make the parameter omittable; omitting a default makes it required. Declare it as `q: Annotated[str | None, Query(min_length=3)]`.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 7,
+   "turn_type": "same_doc_new_topic",
+   "type": "code",
+   "question": "I want editor breakpoints now. What guarded server-start block does the debugging example use, and will importing the application execute that block?",
+   "asks": [
+    "Debugging server-start block",
+    "Behavior when imported"
+   ],
+   "standalone_question": "What guarded server-start block does the FastAPI debugging example use for editor breakpoints, and does importing the application execute it?",
+   "answer": "With `import uvicorn` and an existing `app`, use:\n```python\nif __name__ == \"__main__\":\n    uvicorn.run(app, host=\"0.0.0.0\", port=8000)\n```\nIt runs when the file is executed directly, not when imported by the CLI or tests.",
+   "key_facts": [
+    "The debugging example calls uvicorn.run(app, host=\"0.0.0.0\", port=8000) under the main guard.",
+    "The guarded block executes only when the file is run directly, not when imported."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "uvicorn.run",
+    "app",
+    "0.0.0.0",
+    "8000",
+    "__main__"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "if __name__ == \"__main__\":\n    uvicorn.run(app, host=\"0.0.0.0\", port=8000)",
+     "page": "getting-started/development-workflow.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "`if __name__ == \"__main__\":` runs only when the file is executed directly (`uv run python myapp.py`), not when it's imported (`from myapp import app`) by the `fastapi` CLI, a test or another module.",
+     "page": "getting-started/development-workflow.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 0,
+   "recall_distance": 7,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "```python\nif __name__ == \"__main__\":\n    uvicorn.run(app, host=\"127.0.0.1\", port=8000)\n```\n\nNo. When imported, `__name__` isn’t `\"__main__\"`, so the server-start block doesn’t run.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 8,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "Before choosing our runtime, which FastAPI version and minimum Python version are we working with, and which automatic input-validation error status comes from the type-driven approach?",
+   "asks": [
+    "FastAPI version and minimum Python version",
+    "Automatic input-validation error status"
+   ],
+   "standalone_question": "Which FastAPI version and minimum Python version are described for this service, and which automatic input-validation error status comes from the type-driven approach?",
+   "answer": "The material targets FastAPI `0.142.2` on Python `3.10+`. Type-driven validation automatically returns `422` for validation errors.",
+   "key_facts": [
+    "The documented FastAPI version is 0.142.2 and Python must be 3.10 or newer.",
+    "Type-driven validation produces automatic 422 errors."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "range"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "0.142.2",
+    "3.10+",
+    "422"
+   ],
+   "evidence_pages": [
+    "quickstart.md",
+    "getting-started/python-types-and-async.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "This wiki documents **FastAPI 0.142.2**",
+     "page": "quickstart.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "FastAPI is a Python (3.10+) framework for building APIs from standard type hints.",
+     "page": "quickstart.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "With one declaration you get: editor completion and type checks; conversion of incoming strings/JSON to Python types; validation with automatic 422 errors; conversion of outputs to JSON; and OpenAPI documentation.",
+     "page": "getting-started/python-types-and-async.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 9,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "What application import target did we configure, and how does the production command differ from development in binding, reload, and environment handling?",
+   "asks": [
+    "Previously chosen application import target",
+    "Production listener, reload, and environment behavior"
+   ],
+   "standalone_question": "What application import target did the project previously configure, and how does the FastAPI production CLI command differ from development in binding, reload, and environment handling?",
+   "answer": "Our entrypoint is `service.api:app`. Production uses `fastapi run`: it listens on `0.0.0.0`, disables reload, and leaves `FASTAPI_ENV` unchanged.",
+   "key_facts": [
+    "The configured application target is service.api:app.",
+    "fastapi run binds to 0.0.0.0 with no reload and leaves FASTAPI_ENV unchanged."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "service.api:app",
+    "fastapi run",
+    "0.0.0.0",
+    "FASTAPI_ENV"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "Our application import target is service.api:app.",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "`fastapi run` is for production: **no reload**, listens on `0.0.0.0` (all interfaces), and leaves `FASTAPI_ENV` unchanged.",
+     "page": "getting-started/first-steps.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 8,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 10,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm adapting the item tests. What exact successful token header does the example send, and what status and detail does its duplicate-item test assert?",
+   "asks": [
+    "Successful example token header",
+    "Duplicate-item status and detail"
+   ],
+   "standalone_question": "In the item-testing example, what exact successful token header is sent, and what status and detail does the duplicate-item test assert?",
+   "answer": "The successful header is `{\"X-Token\": \"coneofsilence\"}`. The duplicate-item test expects status `409` and `{\"detail\": \"Item already exists\"}`.",
+   "key_facts": [
+    "The successful test sends X-Token with the value coneofsilence.",
+    "The duplicate-item test asserts 409 with detail Item already exists."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "X-Token",
+    "coneofsilence",
+    "409",
+    "Item already exists"
+   ],
+   "evidence_pages": [
+    "testing/testing-basics.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "    response = client.get(\"/items/foo\", headers={\"X-Token\": \"coneofsilence\"})",
+     "page": "testing/testing-basics.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    assert response.status_code == 409\n    assert response.json() == {\"detail\": \"Item already exists\"}",
+     "page": "testing/testing-basics.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 11,
+   "turn_type": "update",
+   "type": "multi",
+   "question": "Move our application import target from service.api:app to service.gateway:app. What should the entrypoint setting become, and do the existing async endpoints require async test functions with TestClient?",
+   "asks": [
+    "Updated entrypoint setting",
+    "Test function style for async endpoints"
+   ],
+   "standalone_question": "After moving the application import target from service.api:app to service.gateway:app, what should the entrypoint setting become, and do async endpoints require async test functions when using TestClient?",
+   "answer": "Set `entrypoint = \"service.gateway:app\"` under `[tool.fastapi]`. TestClient tests remain ordinary `def` functions even when the endpoints are `async def`.",
+   "key_facts": [
+    "The entrypoint must now be service.gateway:app.",
+    "TestClient tests use normal def functions even for async def endpoints."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "service.gateway:app",
+    "entrypoint",
+    "[tool.fastapi]",
+    "TestClient",
+    "def",
+    "async def"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1,
+    10
+   ],
+   "evidence": [
+    {
+     "quote": "Move our application import target from service.api:app to service.gateway:app.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "[tool.fastapi]\nentrypoint = \"main:app\"",
+     "page": "getting-started/first-steps.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Test functions are **normal `def`**, even when your endpoints are `async def` — the client runs the app for you.",
+     "page": "testing/testing-basics.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Application import target",
+     "from": "service.api:app",
+     "to": "service.gateway:app"
+    }
+   ],
+   "affects": [
+    13,
+    18
+   ],
+   "source_turn": null,
+   "recall_distance": 10,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Set the entrypoint to `service.gateway:app`. Async endpoints do not require async test functions when using `TestClient`; tests can be synchronous.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 12,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For dependency management, which standard-style extra omits the cloud CLI, and what exact bounded FastAPI requirement is used as the version-pinning example?",
+   "asks": [
+    "Standard extra without the cloud CLI",
+    "Example bounded FastAPI requirement"
+   ],
+   "standalone_question": "Which FastAPI standard-style installation extra omits the cloud CLI, and what exact bounded FastAPI requirement is used as the version-pinning example?",
+   "answer": "Use `standard-no-fastapi-cloud-cli` to omit the cloud CLI. The version-pinning example is `fastapi[standard]>=0.112.0,<0.113.0`.",
+   "key_facts": [
+    "standard-no-fastapi-cloud-cli is the standard-style extra without the cloud CLI.",
+    "The example bounded requirement is fastapi[standard]>=0.112.0,<0.113.0."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "range"
+     ]
+    }
+   ],
+   "key_entities": [
+    "standard-no-fastapi-cloud-cli",
+    "fastapi[standard]>=0.112.0,<0.113.0"
+   ],
+   "evidence_pages": [
+    "about/features-and-ecosystem.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "There is also `standard-no-fastapi-cloud-cli` (same, without the cloud CLI) and `all`.",
+     "page": "about/features-and-ecosystem.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "e.g. `fastapi[standard]>=0.112.0,<0.113.0`, and upgrade deliberately with tests.",
+     "page": "about/features-and-ecosystem.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "The extra is `fastapi[standard-no-fastapi-cloud-cli]`; the bounded requirement example is `fastapi[standard]>=0.115.0,<0.116.0`.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 13,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the next local run, which application import target is current, is a nullable query parameter without a default required, and when does the development command assign its environment marker?",
+   "asks": [
+    "Current application import target",
+    "Requiredness of a nullable query parameter without a default",
+    "Condition for assigning the development environment marker"
+   ],
+   "standalone_question": "For the project's next local FastAPI run, which application import target is current, is a nullable query parameter without a default required, and when does the development command assign its environment marker?",
+   "answer": "The current target is `service.gateway:app`. A nullable query parameter with no default is still required. The development command sets `FASTAPI_ENV` to `development` only if it is unset.",
+   "key_facts": [
+    "The current import target is service.gateway:app.",
+    "A nullable query parameter with no default remains required.",
+    "The development command assigns FASTAPI_ENV=development only if the variable is unset."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "service.gateway:app",
+    "FASTAPI_ENV",
+    "development"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    11,
+    6,
+    2
+   ],
+   "evidence": [
+    {
+     "quote": "Move our application import target from service.api:app to service.gateway:app.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "The **default value** decides whether a query parameter is required:",
+     "page": "request/query-parameters.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "- sets the `FASTAPI_ENV` environment variable to `development` if not already set.",
+     "page": "getting-started/first-steps.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 11,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 14,
+   "turn_type": "same_doc_new_topic",
+   "type": "multi",
+   "question": "I'm wiring schema tooling rather than running the server now. What is the default OpenAPI version, and which schema language describes the data shapes?",
+   "asks": [
+    "Default OpenAPI version",
+    "Schema language for data shapes"
+   ],
+   "standalone_question": "For FastAPI schema tooling, what is the default OpenAPI version, and which schema language describes data shapes?",
+   "answer": "The default OpenAPI version is `3.1.0`. Data shapes use JSON Schema.",
+   "key_facts": [
+    "The default OpenAPI version is 3.1.0.",
+    "Data shapes in the OpenAPI description use JSON Schema."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "3.1.0",
+    "JSON Schema"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "The default OpenAPI version is `3.1.0`.",
+     "page": "getting-started/first-steps.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "**OpenAPI** describes your API's paths, parameters and responses; data shapes (\"schemas\") use **JSON Schema**.",
+     "page": "getting-started/first-steps.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 1,
+   "recall_distance": 13,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "FastAPI defaults to OpenAPI 3.1.0, and JSON Schema describes data shapes.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 15,
+   "turn_type": "new",
+   "type": "code",
+   "question": "I'm containerizing the service behind a TLS termination proxy. What is the package-layout example's exec-form production command with proxy support, and which dependency-copy order preserves build caching?",
+   "asks": [
+    "Example exec-form command behind a TLS proxy",
+    "Cache-friendly dependency copy order"
+   ],
+   "standalone_question": "For a service container behind a TLS termination proxy, what is the package-layout example's exec-form production command with proxy support, and which dependency-copy order preserves build caching?",
+   "answer": "```Dockerfile\nCMD [\"fastapi\", \"run\", \"app/main.py\", \"--proxy-headers\", \"--port\", \"80\"]\n```\nCopy `requirements.txt` first, install dependencies, then copy the application code. Code-only changes can then reuse the dependency-install layer.",
+   "key_facts": [
+    "The package-layout proxy example uses fastapi run app/main.py with --proxy-headers and port 80 in exec-form CMD.",
+    "Copy requirements.txt and install dependencies before copying the application code to preserve dependency-layer caching."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "CMD",
+    "fastapi",
+    "run",
+    "app/main.py",
+    "--proxy-headers",
+    "--port",
+    "80",
+    "requirements.txt"
+   ],
+   "evidence_pages": [
+    "deployment/docker.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "CMD [\"fastapi\", \"run\", \"app/main.py\", \"--proxy-headers\", \"--port\", \"80\"]",
+     "page": "deployment/docker.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "3. Copy **only** `requirements.txt` first.\n4. Install dependencies (`--no-cache-dir` keeps the image smaller).\n5. Copy the application code.",
+     "page": "deployment/docker.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "`CMD [\"uvicorn\", \"your_package.main:app\", \"--host\", \"0.0.0.0\", \"--port\", \"8000\", \"--proxy-headers\", \"--forwarded-allow-ips\", \"*\"]` (restrict trusted proxy IPs instead of `*` where possible).\n\nFor caching, copy dependency manifests first, install dependencies, then copy the application source: `COPY pyproject.toml ...` → install → `COPY . .`.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 16,
+   "turn_type": "recall",
+   "type": "code",
+   "question": "What was our public search key, and what optional q declaration preserves the string-length cap we adopted?",
+   "asks": [
+    "Chosen public search key",
+    "Optional declaration retaining the adopted string-length cap"
+   ],
+   "standalone_question": "What public search key did the project choose, and what optional q declaration preserves the previously adopted string-length cap?",
+   "answer": "The key is `lookup-key`:\n```python\nq: Annotated[str | None, Query(alias=\"lookup-key\", max_length=50)] = None\n```",
+   "key_facts": [
+    "The public search alias is lookup-key.",
+    "The declaration retains max_length=50 and a default of None."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "lookup-key",
+    "q",
+    "Annotated",
+    "Query",
+    "max_length=50",
+    "None"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "Our public search key is lookup-key.",
+     "user_turn": 5,
+     "fact_idx": 0
+    },
+    {
+     "quote": "async def read_items(q: Annotated[str | None, Query(max_length=50)] = None):",
+     "page": "request/query-parameters.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 11,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 17,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "What is our current positive item-ID declaration, and can making it nullable let clients omit that path parameter?",
+   "asks": [
+    "Current positive item ID declaration",
+    "Whether nullable makes a path parameter omittable"
+   ],
+   "standalone_question": "What declaration enforces the project's current positive item-ID range, and can making the path parameter nullable let clients omit it?",
+   "answer": "Use `item_id: Annotated[int, Path(gt=0, le=947)]`. A path parameter is always required because it is part of the path; making its type nullable does not make it omittable.",
+   "key_facts": [
+    "The current declaration enforces positive IDs with an inclusive ceiling of 947.",
+    "Path parameters are always required because they are part of the path."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "item_id",
+    "Annotated",
+    "Path",
+    "947"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    4
+   ],
+   "evidence": [
+    {
+     "quote": "Change our item ID ceiling from 731 to 947, keeping the positive-only rule.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "**A path parameter is always required**, because it's part of the path.",
+     "page": "request/path-parameters.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 13,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "`item_id: int = Path(..., ge=1)` enforces positive IDs. Making it nullable won’t let clients omit it: the URL path segment is still required.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 18,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the release notes, which application import target is current, what exact exec-form command did the package-layout proxy example use, and which successful token header did the item-test example send?",
+   "asks": [
+    "Current application import target",
+    "Exact package-layout proxy example command",
+    "Successful item-test example token header"
+   ],
+   "standalone_question": "For the project's release notes, which application import target is current, what exact exec-form command did the package-layout TLS-proxy container example use, and which successful token header did the item-test example send?",
+   "answer": "Current application target: `service.gateway:app`.\n\nThe container example—not a project-specific application path—used:\n```Dockerfile\nCMD [\"fastapi\", \"run\", \"app/main.py\", \"--proxy-headers\", \"--port\", \"80\"]\n```\nThe successful test header was `{\"X-Token\": \"coneofsilence\"}`.",
+   "key_facts": [
+    "The project's current application target is service.gateway:app.",
+    "The proxy container example uses exec-form CMD with fastapi run, app/main.py, --proxy-headers, and port 80.",
+    "The successful item-test example sends X-Token: coneofsilence."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "service.gateway:app",
+    "CMD",
+    "fastapi",
+    "run",
+    "app/main.py",
+    "--proxy-headers",
+    "--port",
+    "80",
+    "X-Token",
+    "coneofsilence"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    11,
+    15,
+    10
+   ],
+   "evidence": [
+    {
+     "quote": "Move our application import target from service.api:app to service.gateway:app.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "CMD [\"fastapi\", \"run\", \"app/main.py\", \"--proxy-headers\", \"--port\", \"80\"]",
+     "page": "deployment/docker.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "    response = client.get(\"/items/foo\", headers={\"X-Token\": \"coneofsilence\"})",
+     "page": "testing/testing-basics.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 8,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  }
+ ]
+}

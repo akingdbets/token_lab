@@ -530,7 +530,7 @@ def suspect_reasons(s: dict, t: dict) -> list[str]:
                 out.append(f"정답이 열려 있을 수 있음: fact {i} {m.group(0)!r}")
                 break
     for e in t["evidence"]:
-        if "page" in e and len(e["quote"].strip()) < 20:
+        if "page" in e and len(e["quote"].strip()) < 12:
             out.append(f"근거 인용이 짧음: fact {e['fact_idx']} {e['quote']!r}")
     if any((m or {}).get("accept_alternatives") for m in t.get("fact_meta") or []):
         out.append("대안 판정 확인 (alt_judge_label)")

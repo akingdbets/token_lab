@@ -1,0 +1,2489 @@
+{
+ "schema_version": 2,
+ "scenario_id": "v2_10_app_structure",
+ "title": "Growing an Archive API with Shared Routers",
+ "topic": "큰 앱 구조와 라우터",
+ "status": "draft",
+ "bundle": [
+  "app-structure/bigger-applications.md",
+  "app-structure/sub-applications-proxy-and-wsgi.md",
+  "app-structure/path-operation-configuration.md",
+  "dependencies/decorator-and-global-dependencies.md",
+  "app-structure/settings.md",
+  "app-structure/static-files-templates-and-frontend.md",
+  "openapi/metadata-and-docs-ui.md",
+  "testing/testing-basics.md",
+  "quickstart.md"
+ ],
+ "generation": {
+  "model": "gpt-6.1-sol",
+  "served_model": "gpt-6.1-sol",
+  "prompt": [
+   "mt_scenario_gen_v3",
+   "7e637f26a462"
+  ],
+  "settings": {
+   "model": "gpt-6.1-sol",
+   "temperature": null,
+   "temperature_requested": null,
+   "seed": 42,
+   "reasoning_effort": null,
+   "reasoning_effort_requested": null,
+   "max_tokens": 40000,
+   "max_tokens_param": "max_completion_tokens"
+  },
+  "run_id": "20261128-093251_v2_10_app_structure",
+  "attempts": 1,
+  "created_at": "2026-11-28T09:35:41"
+ },
+ "turns": [
+  {
+   "turn": 0,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm splitting our archive API into routers. Use /vault/r7 as the router prefix and relics as its tag. Show that configuration, including the prefix's slash constraints. For comparison, which tags does the sample update_item operation inherit and add?",
+   "asks": [
+    "Configure the chosen router grouping with valid prefix syntax",
+    "Identify the sample update operation's combined tags"
+   ],
+   "standalone_question": "I'm splitting our archive API into routers. Use /vault/r7 as the router prefix and relics as its tag. Show that configuration, including the prefix's slash constraints. For comparison, which tags does the sample update_item operation inherit and add?",
+   "answer": "Use `router = APIRouter(prefix=\"/vault/r7\", tags=[\"relics\"])`. A non-empty prefix must start with `/` and must not end with `/`. In the sample, `update_item` has both `items` and `custom` tags.",
+   "key_facts": [
+    "The project's router configuration uses prefix /vault/r7 and tag relics.",
+    "A non-empty router prefix must start with / and must not end with /.",
+    "The sample update_item operation has both items and custom tags."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "APIRouter",
+    "/vault/r7",
+    "relics",
+    "update_item",
+    "items",
+    "custom"
+   ],
+   "evidence_pages": [
+    "app-structure/bigger-applications.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Use /vault/r7 as the router prefix and relics as its tag.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "- It must start with `/`.",
+     "page": "app-structure/bigger-applications.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "- It must **not** end with `/`, because every route path already starts with `/`.",
+     "page": "app-structure/bigger-applications.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "- All operations get the tag `items`; `update_item` gets both `items` and `custom`.",
+     "page": "app-structure/bigger-applications.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nfrom fastapi import APIRouter\n\nrouter = APIRouter(prefix=\"/vault/r7\", tags=[\"relics\"])\n```\n\nThe prefix must start with `/` and must not end with `/`. In the sample, `update_item` inherits the router’s `items` tag and adds its operation-level `custom` tag, so it has both.",
+    "fact_results": [
+     true,
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 1,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "Before wiring authentication into the routers, what is the execution order from app-wide checks down to function parameter dependencies? Also, what exact token does the verify_token header-check example accept?",
+   "asks": [
+    "Give dependency execution order",
+    "Identify the example's accepted token"
+   ],
+   "standalone_question": "Before wiring authentication into the routers, what is the execution order from app-wide checks down to function parameter dependencies? Also, what exact token does the verify_token header-check example accept?",
+   "answer": "The order is app-level dependencies, then router/include dependencies from outermost to innermost, then decorator dependencies, then function parameter dependencies. The example's `verify_token` accepts `fake-super-secret-token` in `X-Token`.",
+   "key_facts": [
+    "Dependency execution proceeds app → outer-to-inner router/includes → decorator → function parameters.",
+    "The example verify_token accepts fake-super-secret-token."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "verify_token",
+    "fake-super-secret-token"
+   ],
+   "evidence_pages": [
+    "dependencies/decorator-and-global-dependencies.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "1. App-level `FastAPI(dependencies=...)`",
+     "page": "dependencies/decorator-and-global-dependencies.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "2. Router / `include_router(dependencies=...)` (outer includes before inner)",
+     "page": "dependencies/decorator-and-global-dependencies.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "3. Decorator `dependencies=[...]`",
+     "page": "dependencies/decorator-and-global-dependencies.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "4. Parameter dependencies declared in the function signature",
+     "page": "dependencies/decorator-and-global-dependencies.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    if x_token != \"fake-super-secret-token\":",
+     "page": "dependencies/decorator-and-global-dependencies.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "Execution order: app-wide dependencies → router dependencies → route-level dependencies → function parameter dependencies.\n\nThe `verify_token` example accepts `fake-super-secret-token`.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 2,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "Our router-only check will be named verify_archive_pass. Show how to attach it without an unused endpoint argument, and say what happens to its return value. Separately, what exact value does the verify_key example accept?",
+   "asks": [
+    "Attach the chosen check as a side-effect-only router dependency",
+    "Identify the example's accepted key"
+   ],
+   "standalone_question": "Our router-only check will be named verify_archive_pass. Show how to attach it without an unused endpoint argument, and say what happens to its return value. Separately, what exact value does the verify_key example accept?",
+   "answer": "Use `router = APIRouter(dependencies=[Depends(verify_archive_pass)])`. The dependency runs, but its return value is discarded rather than passed to the endpoint. The sample `verify_key` accepts `fake-super-secret-key`.",
+   "key_facts": [
+    "The project's router-only dependency function is verify_archive_pass.",
+    "Router dependencies can be attached with dependencies=[Depends(...)], and their return values are discarded.",
+    "The example verify_key accepts fake-super-secret-key."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "verify_archive_pass",
+    "APIRouter",
+    "Depends",
+    "verify_key",
+    "fake-super-secret-key"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "Our router-only check will be named verify_archive_pass.",
+     "user_turn": 2,
+     "fact_idx": 0
+    },
+    {
+     "quote": "    dependencies=[Depends(get_token_header)],",
+     "page": "dependencies/decorator-and-global-dependencies.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "- Their return values are discarded (here `verify_key` returns `x_key`, which is ignored). This lets you reuse a normal dependency without editor warnings about unused parameters.",
+     "page": "dependencies/decorator-and-global-dependencies.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "    if x_key != \"fake-super-secret-key\":",
+     "page": "dependencies/decorator-and-global-dependencies.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nrouter = APIRouter(dependencies=[Depends(verify_archive_pass)])\n```\n\nBecause it’s attached to the router, `verify_archive_pass` doesn’t need an unused endpoint argument. Its return value is discarded; it runs for its side effects or to raise an error.\n\nThe `verify_key` example accepts `\"fake-super-secret-key\"`.",
+    "fact_results": [
+     true,
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 3,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "The audit API must have separate documentation, so we'll mount it at /auditbox. Assuming its default docs URL, where will its Swagger UI be, and will the main application's dependencies protect its endpoints?",
+   "asks": [
+    "Locate the mounted audit API's default Swagger UI",
+    "Determine whether main-app dependencies protect it"
+   ],
+   "standalone_question": "The audit API must have separate documentation, so we'll mount it at /auditbox. Assuming its default docs URL, where will its Swagger UI be, and will the main application's dependencies protect its endpoints?",
+   "answer": "Mount it with `app.mount(\"/auditbox\", subapi)`. Its default Swagger UI is `/auditbox/docs`, separate from the main app's UI and schema. Main-app dependencies do not apply to the mounted audit API.",
+   "key_facts": [
+    "The project's audit API mount path is /auditbox.",
+    "A mounted FastAPI app has its own docs UI under its mount path, so the audit UI is /auditbox/docs.",
+    "Main-app dependencies do not apply to mounted applications."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/auditbox",
+    "app.mount",
+    "subapi"
+   ],
+   "evidence_pages": [
+    "app-structure/sub-applications-proxy-and-wsgi.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "The audit API must have separate documentation, so we'll mount it at /auditbox.",
+     "user_turn": 3,
+     "fact_idx": 0
+    },
+    {
+     "quote": "- `/docs` shows only `app`'s operations; `/subapi/docs` shows only `subapi`'s, with correct `/subapi` URLs.",
+     "page": "app-structure/sub-applications-proxy-and-wsgi.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "- Lifespan events run only for the main app, not mounted ones ([Lifespan Events](lifespan-events.md)). Main-app dependencies do not apply to the mounted app.",
+     "page": "app-structure/sub-applications-proxy-and-wsgi.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Its Swagger UI will be at **`/auditbox/docs`**. The main application’s dependencies **won’t automatically protect** the mounted audit API’s endpoints; configure protection on the audit app itself.",
+    "fact_results": [
+     true,
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 4,
+   "turn_type": "update",
+   "type": "code",
+   "question": "Change our router prefix from /vault/r7 to /vault/r9. If a second API alias is needed later, can the same router object be included again, rather than rebuilding its operations? Show the inclusion for the new prefix.",
+   "asks": [
+    "Include the router at the revised prefix",
+    "Determine whether one router object supports multiple inclusions"
+   ],
+   "standalone_question": "Change our router prefix from /vault/r7 to /vault/r9. If a second API alias is needed later, can the same router object be included again, rather than rebuilding its operations? Show the inclusion for the new prefix.",
+   "answer": "Yes, the same router can be included multiple times with different prefixes. Move the version prefix out of the router constructor and into the include context, replacing the old prefixed setup rather than stacking both prefixes:\n```python\nrouter = APIRouter(tags=[\"relics\"])\n# Declare the router's operations here.\napp.include_router(router, prefix=\"/vault/r9\")\n```\nA later alias can use another `app.include_router(router, prefix=...)` call.",
+   "key_facts": [
+    "The project's router prefix is now /vault/r9, replacing /vault/r7.",
+    "The same router object can be included multiple times with different prefixes."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "/vault/r7",
+    "/vault/r9",
+    "relics",
+    "APIRouter",
+    "include_router"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "Change our router prefix from /vault/r7 to /vault/r9.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "The same router can be included more than once with different prefixes, for example to expose the same API under `/api/v1` and `/api/latest`:",
+     "page": "app-structure/bigger-applications.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Project router prefix",
+     "from": "/vault/r7",
+     "to": "/vault/r9"
+    }
+   ],
+   "affects": [
+    13,
+    16,
+    18
+   ],
+   "source_turn": null,
+   "recall_distance": 4,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Yes. Define the router without a fixed prefix, then include the same object wherever needed:\n\n```python\nrouter = APIRouter()\n\n# ...define operations on router...\n\napp.include_router(router, prefix=\"/vault/r9\")\n# Later, if needed:\n# app.include_router(router, prefix=\"/vault/alias\")\n```",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 5,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "We're considering generated clients for the split API. What exact explicit operation ID does the sample read_items declaration use, and would an app-wide generate_unique_id_function replace that explicit value?",
+   "asks": [
+    "Identify the sample explicit operation ID",
+    "Determine precedence over the ID generator"
+   ],
+   "standalone_question": "We're considering generated clients for the split API. What exact explicit operation ID does the sample read_items declaration use, and would an app-wide generate_unique_id_function replace that explicit value?",
+   "answer": "The sample uses `operation_id=\"some_specific_id_you_define\"`. An explicit `operation_id` wins over `generate_unique_id_function`, so the app-wide function would not replace it.",
+   "key_facts": [
+    "The sample read_items declaration explicitly uses some_specific_id_you_define, which takes precedence over the ID generator."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "read_items",
+    "operation_id",
+    "some_specific_id_you_define",
+    "generate_unique_id_function"
+   ],
+   "evidence_pages": [
+    "app-structure/path-operation-configuration.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "@app.get(\"/items/\", operation_id=\"some_specific_id_you_define\")",
+     "page": "app-structure/path-operation-configuration.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "An explicit `operation_id` always wins over the function.",
+     "page": "app-structure/path-operation-configuration.md",
+     "fact_idx": 0
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "The sample uses the explicit operation ID `read_items`. No—an app-wide `generate_unique_id_function` supplies IDs only when a route has no explicit `operation_id`.",
+    "fact_results": [
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 6,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "While cleaning up those operation declarations, how can I keep internal docstring notes out of the generated description? Also, what is the default response_description if I don't supply one?",
+   "asks": [
+    "Exclude internal docstring notes from the generated description",
+    "Identify the default response description"
+   ],
+   "standalone_question": "When configuring FastAPI path operations, how can I keep internal docstring notes out of the generated description? Also, what is the default response_description if I don't supply one?",
+   "answer": "Put a form feed (`\\f`) before the internal notes; FastAPI keeps only the docstring text before the first form feed. The default `response_description` is `\"Successful Response\"`.",
+   "key_facts": [
+    "Only docstring text before the first form feed is retained in the OpenAPI description.",
+    "The default response_description is Successful Response."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "\\f",
+    "response_description",
+    "Successful Response"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "FastAPI keeps only the text before the first `\\f` (`route.description.split(\"\\f\")[0]` in `fastapi/routing.py`):",
+     "page": "app-structure/path-operation-configuration.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "`response_description` describes the main response; it defaults to `\"Successful Response\"`.",
+     "page": "app-structure/path-operation-configuration.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Put a form-feed character (`\\f`) in the docstring where the public description should end; FastAPI excludes everything after it from OpenAPI. The default `response_description` is **“Successful Response.”**",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 7,
+   "turn_type": "same_doc_new_topic",
+   "type": "code",
+   "question": "For the package layout we started with, what project configuration lets the development and production CLI commands find the application without a path argument?",
+   "asks": [
+    "Configure CLI application discovery for the package layout"
+   ],
+   "standalone_question": "For the previously discussed multi-module FastAPI package layout, what project configuration lets the development and production CLI commands find the application without a path argument?",
+   "answer": "Put this in `pyproject.toml`:\n```toml\n[tool.fastapi]\nentrypoint = \"app.main:app\"\n```\nThen both `fastapi dev` and `fastapi run` can locate the application without a path argument.",
+   "key_facts": [
+    "The example package uses [tool.fastapi] entrypoint = \"app.main:app\", allowing fastapi dev and fastapi run without a path argument."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "pyproject.toml",
+    "[tool.fastapi]",
+    "app.main:app",
+    "fastapi dev",
+    "fastapi run"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "[tool.fastapi]\nentrypoint = \"app.main:app\"",
+     "page": "app-structure/bigger-applications.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Then `fastapi dev` / `fastapi run` find it without a path argument, and so do the editor extension and FastAPI Cloud.",
+     "page": "app-structure/bigger-applications.md",
+     "fact_idx": 0
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 0,
+   "recall_distance": 7,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Set the FastAPI entrypoint in `pyproject.toml`:\n\n```toml\n[tool.fastapi]\nentrypoint = \"your_package.main:app\"\n```",
+    "fact_results": [
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 8,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm adding typed configuration before moving more modules. In the sample Settings class, what are the defaults for app_name and items_per_user, and which field must be supplied rather than defaulted?",
+   "asks": [
+    "Identify the sample settings defaults",
+    "Identify the required sample setting"
+   ],
+   "standalone_question": "I'm adding typed configuration before moving more modules. In the sample Settings class, what are the defaults for app_name and items_per_user, and which field must be supplied rather than defaulted?",
+   "answer": "`app_name` defaults to `\"Awesome API\"`, and `items_per_user` defaults to `50`. `admin_email` has no default and is required; constructing `Settings()` without it raises a validation error.",
+   "key_facts": [
+    "The sample defaults are app_name=\"Awesome API\" and items_per_user=50.",
+    "The sample admin_email field is required because it has no default."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "Settings",
+    "app_name",
+    "Awesome API",
+    "items_per_user",
+    "50",
+    "admin_email"
+   ],
+   "evidence_pages": [
+    "app-structure/settings.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "    app_name: str = \"Awesome API\"",
+     "page": "app-structure/settings.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    items_per_user: int = 50",
+     "page": "app-structure/settings.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- Defaults apply when the variable is missing; fields without defaults (`admin_email`) are **required** — `Settings()` raises a validation error if they are not set.",
+     "page": "app-structure/settings.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "`app_name` defaults to `\"Awesome API\"`, and `items_per_user` defaults to `50`. `admin_email` must be supplied.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 9,
+   "turn_type": "recall",
+   "type": "code",
+   "question": "What was the function name we chose for the router-only check? Show its dependency wiring again, and remind me whether its returned value reaches the endpoint.",
+   "asks": [
+    "Recall and wire the chosen router-only check",
+    "State whether its return value reaches the endpoint"
+   ],
+   "standalone_question": "What function name did the project choose for its router-only check, how is it attached as a dependency, and does its returned value reach the endpoint?",
+   "answer": "The function is `verify_archive_pass`:\n```python\nrouter = APIRouter(dependencies=[Depends(verify_archive_pass)])\n```\nIts return value is discarded; it is not passed to the endpoint.",
+   "key_facts": [
+    "The chosen router-only check is verify_archive_pass.",
+    "A dependency in the router's dependencies list runs without passing its return value to the endpoint."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "verify_archive_pass",
+    "APIRouter",
+    "Depends"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    2
+   ],
+   "evidence": [
+    {
+     "quote": "Our router-only check will be named verify_archive_pass.",
+     "user_turn": 2,
+     "fact_idx": 0
+    },
+    {
+     "quote": "- Their return values are discarded (here `verify_key` returns `x_key`, which is ignored). This lets you reuse a normal dependency without editor warnings about unused parameters.",
+     "page": "dependencies/decorator-and-global-dependencies.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 7,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 10,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For the archive web UI, what mount path, disk directory, and mount name does the basic static-assets example use? If I need app-wide dependencies to protect built frontend responses, how does app.frontend() differ from that static mount?",
+   "asks": [
+    "Identify the basic static-assets mount configuration",
+    "Compare dependency protection for frontend responses and static mounts"
+   ],
+   "standalone_question": "For the archive web UI, what mount path, disk directory, and mount name does the basic static-assets example use? If I need app-wide dependencies to protect built frontend responses, how does app.frontend() differ from that static mount?",
+   "answer": "The example is `app.mount(\"/static\", StaticFiles(directory=\"static\"), name=\"static\")`. That mounted app is not affected by the main app's dependencies. In contrast, `app.frontend()` responses run inside the normal application, so app, router, and include-time dependencies apply.",
+   "key_facts": [
+    "The static-assets example mounts /static from disk directory static with mount name static.",
+    "Main-app dependencies do not affect a StaticFiles mount, but app.frontend() responses run app, router, and include-time dependencies."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/static",
+    "static",
+    "StaticFiles",
+    "app.frontend()"
+   ],
+   "evidence_pages": [
+    "app-structure/static-files-templates-and-frontend.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "app.mount(\"/static\", StaticFiles(directory=\"static\"), name=\"static\")",
+     "page": "app-structure/static-files-templates-and-frontend.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Mounting adds an **independent** ASGI app: it does not appear in your OpenAPI schema and is not affected by your app's dependencies.",
+     "page": "app-structure/static-files-templates-and-frontend.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "Frontend responses run inside the normal application: HTTP middleware applies, and dependencies from the app, the router and `include_router()` run too",
+     "page": "app-structure/static-files-templates-and-frontend.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "The example mounts `directory=\"archive\"` at `/archive` with the mount name `\"archive\"`:\n\n```python\napp.mount(\"/archive\", StaticFiles(directory=\"archive\"), name=\"archive\")\n```\n\n`app.frontend()` registers the built frontend with the main app, so app-wide dependencies can protect its responses. A `StaticFiles` mount is a separate sub-app and does not run the parent app’s dependencies.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 11,
+   "turn_type": "update",
+   "type": "multi",
+   "question": "Rename the audit API mount from /auditbox to /audit-hub. With its default documentation settings unchanged, where should I open its Swagger UI, and does this rename merge its operations into the main schema?",
+   "asks": [
+    "Locate Swagger UI after the mount rename",
+    "Determine whether the rename merges schemas"
+   ],
+   "standalone_question": "Rename the independently mounted audit API from /auditbox to /audit-hub. With its default documentation settings unchanged, where should I open its Swagger UI, and does this rename merge its operations into the main schema?",
+   "answer": "The mount is now `/audit-hub`, so open `/audit-hub/docs`. Renaming the mount does not merge schemas: the audit app retains its own OpenAPI schema and documentation.",
+   "key_facts": [
+    "The audit API mount path is now /audit-hub rather than /auditbox.",
+    "The mounted app's default UI is under its mount path, giving /audit-hub/docs, and its schema remains independent."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/auditbox",
+    "/audit-hub"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    3
+   ],
+   "evidence": [
+    {
+     "quote": "Rename the audit API mount from /auditbox to /audit-hub.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "A mounted app is **independent**: it has its own path operations, its own OpenAPI schema and its own docs UI.",
+     "page": "app-structure/sub-applications-proxy-and-wsgi.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "- `/docs` shows only `app`'s operations; `/subapi/docs` shows only `subapi`'s, with correct `/subapi` URLs.",
+     "page": "app-structure/sub-applications-proxy-and-wsgi.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Audit API mount path",
+     "from": "/auditbox",
+     "to": "/audit-hub"
+    }
+   ],
+   "affects": [
+    17
+   ],
+   "source_turn": null,
+   "recall_distance": 8,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Open Swagger UI at **`/audit-hub/docs`**. The rename does **not** merge the audit API’s operations into the main schema; it remains separate.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 12,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm writing regression tests for the router move. In the extended item-testing example, what exact X-Token value makes the read succeed, and what status and JSON detail are expected for the bad-token case?",
+   "asks": [
+    "Identify the successful test token",
+    "Identify the bad-token test response"
+   ],
+   "standalone_question": "I'm writing regression tests for the router move. In the extended item-testing example, what exact X-Token value makes the read succeed, and what status and JSON detail are expected for the bad-token case?",
+   "answer": "The successful read sends `X-Token: coneofsilence`. The bad-token test sends `hailhydra` and expects status `400` with `{\"detail\": \"Invalid X-Token header\"}`.",
+   "key_facts": [
+    "The item-testing example's successful X-Token value is coneofsilence.",
+    "The hailhydra bad-token test expects 400 and detail Invalid X-Token header."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "X-Token",
+    "coneofsilence",
+    "hailhydra",
+    "400",
+    "Invalid X-Token header"
+   ],
+   "evidence_pages": [
+    "testing/testing-basics.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "    response = client.get(\"/items/foo\", headers={\"X-Token\": \"coneofsilence\"})",
+     "page": "testing/testing-basics.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    response = client.get(\"/items/foo\", headers={\"X-Token\": \"hailhydra\"})",
+     "page": "testing/testing-basics.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "    assert response.status_code == 400",
+     "page": "testing/testing-basics.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "    assert response.json() == {\"detail\": \"Invalid X-Token header\"}",
+     "page": "testing/testing-basics.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "Use `X-Token: fake-super-secret-token`. A bad token should return **400** with `{\"detail\":\"X-Token header invalid\"}`.",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 13,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the router's current wiring, which version prefix are we using now, which function did we choose for the router-only check, and in what order do app, router/include, decorator, and parameter dependencies execute?",
+   "asks": [
+    "Recall the current router prefix",
+    "Recall the chosen router-only check",
+    "Give dependency execution order"
+   ],
+   "standalone_question": "For the project's current router wiring, which version prefix is selected, which function is selected for the router-only check, and in what order do app, router/include, decorator, and parameter dependencies execute?",
+   "answer": "The current prefix is `/vault/r9`. The router-only check is `verify_archive_pass`. Dependencies execute app first, then outer-to-inner router/includes, then decorator dependencies, then function parameter dependencies.",
+   "key_facts": [
+    "The current router prefix is /vault/r9.",
+    "The chosen router-only dependency is verify_archive_pass.",
+    "Dependencies execute app → outer-to-inner router/includes → decorator → function parameters."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "/vault/r9",
+    "verify_archive_pass"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1,
+    2,
+    4
+   ],
+   "evidence": [
+    {
+     "quote": "Change our router prefix from /vault/r7 to /vault/r9.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Our router-only check will be named verify_archive_pass.",
+     "user_turn": 2,
+     "fact_idx": 1
+    },
+    {
+     "quote": "1. App-level `FastAPI(dependencies=...)`",
+     "page": "dependencies/decorator-and-global-dependencies.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "2. Router / `include_router(dependencies=...)` (outer includes before inner)",
+     "page": "dependencies/decorator-and-global-dependencies.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "3. Decorator `dependencies=[...]`",
+     "page": "dependencies/decorator-and-global-dependencies.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "4. Parameter dependencies declared in the function signature",
+     "page": "dependencies/decorator-and-global-dependencies.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 12,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 14,
+   "turn_type": "same_doc_new_topic",
+   "type": "multi",
+   "question": "One diagnostic endpoint should remain callable but be absent from the schema and both documentation UIs. Which decorator setting does that, and does it disable request handling?",
+   "asks": [
+    "Hide a callable endpoint from generated API documentation",
+    "Determine whether hiding disables the endpoint"
+   ],
+   "standalone_question": "One FastAPI diagnostic endpoint should remain callable but be absent from the schema and both documentation UIs. Which decorator setting does that, and does it disable request handling?",
+   "answer": "Set `include_in_schema=False` on the path operation decorator. The endpoint still handles requests; it is only omitted from OpenAPI and the documentation UIs.",
+   "key_facts": [
+    "include_in_schema=False excludes an endpoint from OpenAPI and documentation without disabling it."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "include_in_schema=False"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "@app.get(\"/items/\", include_in_schema=False)",
+     "page": "app-structure/path-operation-configuration.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "The endpoint still works but does not appear in `/openapi.json` or the docs.",
+     "page": "app-structure/path-operation-configuration.md",
+     "fact_idx": 0
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 5,
+   "recall_distance": 9,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Use `include_in_schema=False`. It hides the endpoint from the schema and documentation UIs, but the endpoint remains callable.",
+    "fact_results": [
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 15,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm labeling the split API's release metadata. Which FastAPI release is this reference material about, and what does the application's version metadata mean and default to if I omit it?",
+   "asks": [
+    "Identify the documented framework release",
+    "Identify the meaning and default of API version metadata"
+   ],
+   "standalone_question": "I'm labeling the split API's release metadata. Which FastAPI release is this reference material about, and what does the application's version metadata mean and default to if I omit it?",
+   "answer": "The material documents FastAPI `0.142.2`. The application's `version` is your API's version, not FastAPI's or OpenAPI's, and defaults to `\"0.1.0\"`.",
+   "key_facts": [
+    "The documented FastAPI framework release is 0.142.2.",
+    "Application version metadata describes your API and defaults to 0.1.0, not the framework or OpenAPI version."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable",
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "0.142.2",
+    "version",
+    "0.1.0"
+   ],
+   "evidence_pages": [
+    "openapi/metadata-and-docs-ui.md",
+    "quickstart.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "This wiki documents **FastAPI 0.142.2** (this repository: `fastapi/`, `docs/en/docs/`, `docs_src/`) for developers **using** FastAPI, from beginners to advanced users.",
+     "page": "quickstart.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "| `version` | `str` | **Your API's** version, default `\"0.1.0\"` (not FastAPI's or OpenAPI's) |",
+     "page": "openapi/metadata-and-docs-ui.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "The reference is for FastAPI **0.115.12**. The application’s `version` metadata is the version of your API—not FastAPI itself—and defaults to **`0.1.0`** if omitted.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 16,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "Before I approve the router diff, what is our current version prefix? Also, which two tags did the sample update operation end up with when router and operation tags were combined?",
+   "asks": [
+    "Recall the current version prefix",
+    "Recall the sample update operation's combined tags"
+   ],
+   "standalone_question": "What is the project's current router version prefix, and which two tags did the previously discussed sample update operation receive from combined router and operation tags?",
+   "answer": "Our current prefix is `/vault/r9`. The sample update operation receives both `items` and `custom`.",
+   "key_facts": [
+    "The current project router prefix is /vault/r9.",
+    "The sample update operation has both items and custom tags."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/vault/r9",
+    "items",
+    "custom"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0,
+    4
+   ],
+   "evidence": [
+    {
+     "quote": "Change our router prefix from /vault/r7 to /vault/r9.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "- All operations get the tag `items`; `update_item` gets both `items` and `custom`.",
+     "page": "app-structure/bigger-applications.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 16,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 17,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "What mount path are we using for the audit API after the rename, and will its operations appear alongside the main API's operations in the main Swagger UI?",
+   "asks": [
+    "Recall the renamed audit mount path",
+    "Determine whether audit operations appear in the main Swagger UI"
+   ],
+   "standalone_question": "What is the project's audit API mount path after its rename, and do its operations appear alongside the main API's operations in the main Swagger UI?",
+   "answer": "The audit API is mounted at `/audit-hub`. No: the main Swagger UI shows only the main app's operations; the mounted audit app has its own schema and UI.",
+   "key_facts": [
+    "The current audit API mount path is /audit-hub.",
+    "Mounted audit operations remain separate from the main app's Swagger UI and schema."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/audit-hub"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    11
+   ],
+   "evidence": [
+    {
+     "quote": "Rename the audit API mount from /auditbox to /audit-hub.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "- `/docs` shows only `app`'s operations; `/subapi/docs` shows only `subapi`'s, with correct `/subapi` URLs.",
+     "page": "app-structure/sub-applications-proxy-and-wsgi.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 6,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 18,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the final wiring review: which router version prefix is current, do app-wide dependencies protect the mounted static-assets app, and does the cached settings provider rebuild settings on every request?",
+   "asks": [
+    "Recall the current router prefix",
+    "Determine dependency protection for mounted static assets",
+    "Determine settings-provider caching across requests"
+   ],
+   "standalone_question": "For the project's final FastAPI wiring review, which router version prefix is current, do app-wide dependencies protect a mounted static-assets app, and does the cached settings provider rebuild settings on every request?",
+   "answer": "The current router prefix is `/vault/r9`. App-wide dependencies do not protect the mounted `StaticFiles` app. With `@lru_cache`, `get_settings()` lazily constructs settings once and returns the same object on later requests rather than rebuilding it each time.",
+   "key_facts": [
+    "The current router version prefix is /vault/r9.",
+    "A mounted StaticFiles app is not affected by the main application's dependencies.",
+    "The lru_cache-backed get_settings provider reuses the same settings object across requests after its first lazy construction."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/vault/r9",
+    "StaticFiles",
+    "lru_cache",
+    "get_settings"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    4,
+    8,
+    10
+   ],
+   "evidence": [
+    {
+     "quote": "Change our router prefix from /vault/r7 to /vault/r9.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Mounting adds an **independent** ASGI app: it does not appear in your OpenAPI schema and is not affected by your app's dependencies.",
+     "page": "app-structure/static-files-templates-and-frontend.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "`functools.lru_cache` makes `get_settings()` return the **same object** after the first call, so settings are built once, lazily, on the first request that needs them.",
+     "page": "app-structure/settings.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 14,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  }
+ ]
+}

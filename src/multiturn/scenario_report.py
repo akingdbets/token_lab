@@ -48,13 +48,21 @@ def analyse(s: dict, corpus, prompt, count) -> dict:
                     d = by_src.setdefault((kind, src), [0, 0])
                     d[0] += 1
                     d[1] += bool(fr[i])
+    from multiturn.scenario_v2 import suspect_reasons, topic_warnings
     warns = []
     grounding = check_grounding_v2(s, corpus, warns)
+    warns += topic_warnings(s)
     return {"id": s["scenario_id"], "title": s["title"], "rep": rep, "ratio": ro, "validate": validate_scenario_v2(s),
             "grounding": grounding, "warnings": warns, "cb": cb, "cb_by_source": by_src,
             "grounded_not_found": sum(1 for t in s["turns"] if _cb(t, "grounded").get("not_found")),
             "knowledge_unknown": sum(1 for t in s["turns"] if _cb(t, "knowledge").get("unknown")),
-            "prompt": (s.get("generation") or {}).get("prompt"), "turn_types": [t["turn_type"] for t in s["turns"]]}
+            "prompt": (s.get("generation") or {}).get("prompt"), "turn_types": [t["turn_type"] for t in s["turns"]],
+            "setup": sum(1 for t in s["turns"] for m in t.get("fact_meta") or [] if "setup" in (m.get("tags") or [])),
+            "n_facts": sum(len(t["key_facts"]) for t in s["turns"]),
+            "grounded_turns": [(t["turn"], t["turn_type"], _cb(t, "grounded").get("accuracy_main"))
+                               for t in s["turns"] if (_cb(t, "grounded").get("accuracy_main") or 0) > 0],
+            "suspects": [(t["turn"], t["turn_type"], suspect_reasons(s, t)) for t in s["turns"] if suspect_reasons(s, t)],
+            "attempts": (s.get("generation") or {}).get("attempts"), "edited": bool(s.get("edits"))}
 
 
 def _pct(a, b):
@@ -63,7 +71,29 @@ def _pct(a, b):
 
 def to_md(results: list[dict]) -> str:
     L = ["# multiturn-v2 샘플 점검", "", "자동 생성: `python src/multiturn/scenario_report.py` (API 호출 없음).", ""]
-    L += ["생성 프롬프트: " + ", ".join(f"{r['id']} `{r['prompt']}`" for r in results), ""]
+    L += ["생성 프롬프트: " + ", ".join(f"{r['id']} `{r['prompt'][0] if r['prompt'] else '?'}`" for r in results), ""]
+    L += ["## 요약", "", "| 시나리오 | 턴 | new/followup/recall/synthesis/update/same_doc | recall 거리 | 마지막 턴 기록 "
+          "| recall·synthesis 중 user | setup 항목 | knowledge 맞힘 | grounded 맞힘 | 생성 시도 | 손 수정 |",
+          "|---|---|---|---|---|---|---|---|---|---|---|"]
+    for r in results:
+        tc, (nu, nt) = r["rep"]["type_counts"], r["rep"]["user_share_recall_synthesis"]
+        n = r["rep"]["turns"]
+        k, g = sum(v[1] for v in r["cb"].values()), sum(v[2] for v in r["cb"].values())
+        L.append(f"| {r['id']} | {n} | {tc['new']}/{tc['followup']}/{tc['recall']}/{tc['synthesis']}/{tc['update']}/"
+                 f"{tc['same_doc_new_topic']} | {', '.join(map(str, r['rep']['recall_distances']))} "
+                 f"| {r['ratio']['final_history']:,} | {_pct(nu, nt)} | {r['setup']}/{r['n_facts']} | {_pct(k, n)} | {_pct(g, n)} "
+                 f"| {r['attempts']} | {'예' if r['edited'] else ''} |")
+    tn = sum(r["rep"]["turns"] for r in results)
+    tk = sum(v[1] for r in results for v in r["cb"].values())
+    tg = sum(v[2] for r in results for v in r["cb"].values())
+    L += [f"| **전체** | {tn} | | | | | {sum(r['setup'] for r in results)}/{sum(r['n_facts'] for r in results)} "
+          f"| **{_pct(tk, tn)}** | **{_pct(tg, tn)}** | | |", ""]
+    L += ["knowledge·grounded 맞힘은 setup 을 뺀 key_fact 가 모두 충족된 턴 (accuracy_main = 1.0).", ""]
+    L += ["## grounded 에서 정답 일부라도 낸 턴 (기억으로 답함)", "", "| 시나리오 | 턴 | 유형 | 정확도 (setup 제외) |", "|---|---|---|---|"]
+    L += [f"| {r['id']} | {k} | {tt} | {a:.2f} |" for r in results for k, tt, a in r["grounded_turns"]] or ["| 없음 | | | |"]
+    L += ["", "## 검수 때 먼저 볼 의심 턴 (자동 점검)", "", "| 시나리오 | 턴 | 유형 | 사유 |", "|---|---|---|---|"]
+    L += [f"| {r['id']} | {k} | {tt} | {'; '.join(rs)} |" for r in results for k, tt, rs in r["suspects"]] or ["| 없음 | | | |"]
+    L += [""]
     L += ["## 턴 유형 분포와 기록", "", "| 시나리오 | 턴 | new | followup | recall | synthesis | update | same_doc | recall 거리 | "
           "3턴 이상 synthesis | 마지막 턴 기록 | 스키마 오류 | 근거 확인 실패 | 경고 |",
           "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"]

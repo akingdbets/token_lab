@@ -1,0 +1,2462 @@
+{
+ "schema_version": 2,
+ "scenario_id": "v2_07_streaming_realtime",
+ "title": "Resumable Progress Streams and Live Connections",
+ "topic": "스트리밍·실시간",
+ "status": "draft",
+ "bundle": [
+  "responses/streaming-and-sse.md",
+  "integrations/websockets.md",
+  "responses/custom-responses.md",
+  "integrations/background-tasks.md",
+  "testing/testing-dependencies-events-websockets.md",
+  "middleware/middleware.md",
+  "internals/request-handling-internals.md",
+  "getting-started/python-types-and-async.md"
+ ],
+ "generation": {
+  "model": "gpt-6.1-sol",
+  "served_model": "gpt-6.1-sol",
+  "prompt": [
+   "mt_scenario_gen_v3",
+   "7e637f26a462"
+  ],
+  "settings": {
+   "model": "gpt-6.1-sol",
+   "temperature": null,
+   "temperature_requested": null,
+   "seed": 42,
+   "reasoning_effort": null,
+   "reasoning_effort_requested": null,
+   "max_tokens": 40000,
+   "max_tokens_param": "max_completion_tokens"
+  },
+  "run_id": "20261128-092938_v2_07_streaming_realtime",
+  "attempts": 1,
+  "created_at": "2026-11-28T09:32:21"
+ },
+ "turns": [
+  {
+   "turn": 0,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm building a progress feed. Our GET route is /pulse-73 and our named event is kiln_tick. Which response class should the generator use for SSE, and what retry delay does the controlled-event example use?",
+   "asks": [
+    "SSE declaration using the project route and event",
+    "Controlled-event example retry delay"
+   ],
+   "standalone_question": "I'm building a progress feed. Our GET route is /pulse-73 and our named event is kiln_tick. Which response class should the generator use for SSE, and what retry delay does the controlled-event example use?",
+   "answer": "Use `@app.get(\"/pulse-73\", response_class=EventSourceResponse)` and yield `ServerSentEvent(..., event=\"kiln_tick\")`. Import both classes from `fastapi.sse`. The controlled-event example uses `retry=5000`, meaning 5,000 milliseconds.",
+   "key_facts": [
+    "The project's GET route is /pulse-73 and its named event is kiln_tick.",
+    "An SSE generator uses response_class=EventSourceResponse.",
+    "The controlled-event example uses retry=5000 milliseconds."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/pulse-73",
+    "kiln_tick",
+    "EventSourceResponse",
+    "ServerSentEvent",
+    "fastapi.sse",
+    "5000"
+   ],
+   "evidence_pages": [
+    "responses/streaming-and-sse.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our GET route is /pulse-73 and our named event is kiln_tick.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "@app.get(\"/items/stream\", response_class=EventSourceResponse)",
+     "page": "responses/streaming-and-sse.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "        yield ServerSentEvent(data=item, event=\"item_update\", id=str(i + 1), retry=5000)",
+     "page": "responses/streaming-and-sse.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "| `retry` | Reconnection delay in milliseconds |",
+     "page": "responses/streaming-and-sse.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 1,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For the bidirectional control connection, our session cookie is kiln_session9. I want the cookie-or-query-token authentication pattern. How should I declare the cookie parameter, and what exception and close code should reject a client with neither credential?",
+   "asks": [
+    "Project cookie parameter declaration",
+    "Missing-credential rejection"
+   ],
+   "standalone_question": "For a bidirectional control connection, our session cookie is kiln_session9. I want the cookie-or-query-token authentication pattern. How should I declare the cookie parameter, and what exception and close code should reject a client with neither credential?",
+   "answer": "Declare `kiln_session9: Annotated[str | None, Cookie()] = None` alongside the optional query token. If both are absent, raise `WebSocketException(code=status.WS_1008_POLICY_VIOLATION)`; the close code is 1008, not an HTTP error status.",
+   "key_facts": [
+    "The cookie parameter must read kiln_session9.",
+    "When neither credential is present, raise WebSocketException with status.WS_1008_POLICY_VIOLATION, code 1008."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "kiln_session9",
+    "Cookie",
+    "WebSocketException",
+    "status.WS_1008_POLICY_VIOLATION",
+    "1008"
+   ],
+   "evidence_pages": [
+    "integrations/websockets.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "our session cookie is kiln_session9.",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "        raise WebSocketException(code=status.WS_1008_POLICY_VIOLATION)",
+     "page": "integrations/websockets.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "If parameters fail validation, FastAPI raises `WebSocketRequestValidationError`, whose default handler closes the connection with code `1008` and the errors as the reason (see [Handling Errors](../errors/handling-errors.md)).",
+     "page": "integrations/websockets.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Declare `cookie: Annotated[str | None, Cookie(alias=\"kiln_session9\")] = None` (and the token as an optional `Query()` parameter). If both are missing, raise `WebSocketException(code=status.WS_1008_POLICY_VIOLATION)`—close code **1008**.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 2,
+   "turn_type": "followup",
+   "type": "fact",
+   "question": "In that authenticated handler's example, what exact text is sent for the optional q parameter, and under what condition?",
+   "asks": [
+    "Optional query parameter message and condition"
+   ],
+   "standalone_question": "In the cookie-or-query-token authenticated WebSocket handler's example, what exact text is sent for the optional q parameter, and under what condition?",
+   "answer": "It sends `f\"Query parameter q is: {q}\"` only when `q is not None`.",
+   "key_facts": [
+    "The handler sends f\"Query parameter q is: {q}\" only when q is not None."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "q",
+    "Query parameter q is: {q}",
+    "q is not None"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "        if q is not None:",
+     "page": "integrations/websockets.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "            await websocket.send_text(f\"Query parameter q is: {q}\")",
+     "page": "integrations/websockets.md",
+     "fact_idx": 0
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "It sends `Query parameter q is: {q}` when `q` is not `None`.",
+    "fact_results": [
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 3,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For downloading a completed recording instead of a live feed, what filename does the FileResponse example use, and which three file metadata headers does that response set?",
+   "asks": [
+    "Example recording filename",
+    "File metadata headers"
+   ],
+   "standalone_question": "For downloading a completed recording instead of a live feed, what filename does the FileResponse example use, and which three file metadata headers does that response set?",
+   "answer": "The example uses `large-video-file.mp4`. `FileResponse` sets `Content-Length`, `Last-Modified`, and `ETag`.",
+   "key_facts": [
+    "The FileResponse example uses large-video-file.mp4.",
+    "FileResponse sets Content-Length, Last-Modified and ETag."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "FileResponse",
+    "large-video-file.mp4",
+    "Content-Length",
+    "Last-Modified",
+    "ETag"
+   ],
+   "evidence_pages": [
+    "responses/custom-responses.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "some_file_path = \"large-video-file.mp4\"",
+     "page": "responses/custom-responses.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "It sets `Content-Length`, `Last-Modified` and `ETag`.",
+     "page": "responses/custom-responses.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "The filename is `recording.mp4`. The response sets `Content-Length`, `Last-Modified`, and `ETag` headers.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 4,
+   "turn_type": "update",
+   "type": "multi",
+   "question": "Change our named progress event from kiln_tick to kiln_delta. What should its event field be now, and which browser listener method receives events with that name?",
+   "asks": [
+    "Updated event field",
+    "Named-event listener method"
+   ],
+   "standalone_question": "Change our named progress event from kiln_tick to kiln_delta. What should its event field be now, and which browser listener method receives events with that name?",
+   "answer": "Yield events with `event=\"kiln_delta\"`. The browser subscribes with `addEventListener(\"kiln_delta\", ...)`.",
+   "key_facts": [
+    "The named progress event is now kiln_delta.",
+    "Named SSE events are received through addEventListener(name, ...)."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "kiln_delta",
+    "event",
+    "addEventListener"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "Change our named progress event from kiln_tick to kiln_delta.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "| `event` | Event type name (client listens with `addEventListener(name, ...)`); single line |",
+     "page": "responses/streaming-and-sse.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Named progress event",
+     "from": "kiln_tick",
+     "to": "kiln_delta"
+    }
+   ],
+   "affects": [
+    9,
+    13,
+    17
+   ],
+   "source_turn": null,
+   "recall_distance": 4,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Set the event field to `kiln_delta`; receive it with `EventSource.addEventListener(\"kiln_delta\", handler)`.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 5,
+   "turn_type": "new",
+   "type": "code",
+   "question": "Our audit log filename is kiln-audit-43.log. Show a small synchronous audit function and an endpoint that schedules it through an injected BackgroundTasks parameter. Where does that synchronous task execute?",
+   "asks": [
+    "Audit task scheduling code using the project filename",
+    "Synchronous task execution context"
+   ],
+   "standalone_question": "Our audit log filename is kiln-audit-43.log. Show a small synchronous audit function and an endpoint that schedules it through an injected BackgroundTasks parameter. Where does that synchronous task execute?",
+   "answer": "```python\nfrom fastapi import BackgroundTasks, FastAPI\n\napp = FastAPI()\n\n\ndef write_audit(message: str):\n    with open(\"kiln-audit-43.log\", mode=\"a\") as log:\n        log.write(message)\n\n\n@app.post(\"/audit\")\nasync def audit(background_tasks: BackgroundTasks):\n    background_tasks.add_task(write_audit, \"completed\\n\")\n    return {\"queued\": True}\n```\nFastAPI injects the task collection. The synchronous task runs in a threadpool in the web process, after the response is sent.",
+   "key_facts": [
+    "The audit task writes to kiln-audit-43.log.",
+    "A plain def background task runs in a threadpool after the response is sent."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "kiln-audit-43.log",
+    "BackgroundTasks",
+    "add_task",
+    "def"
+   ],
+   "evidence_pages": [
+    "integrations/background-tasks.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our audit log filename is kiln-audit-43.log.",
+     "user_turn": 5,
+     "fact_idx": 0
+    },
+    {
+     "quote": "- The task can be `async def` (awaited) or plain `def` (run in a threadpool).",
+     "page": "integrations/background-tasks.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "- Tasks run in the order they were added, in the same process, after the response is sent.",
+     "page": "integrations/background-tasks.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nfrom fastapi import BackgroundTasks, FastAPI\n\napp = FastAPI()\n\ndef write_audit(message: str) -> None:\n    with open(\"kiln-audit-43.log\", \"a\") as log:\n        log.write(message + \"\\n\")\n\n@app.post(\"/audit\")\nasync def audit(background_tasks: BackgroundTasks):\n    background_tasks.add_task(write_audit, \"request received\")\n    return {\"status\": \"accepted\"}\n```\n\nFastAPI runs this synchronous task after sending the response, in a worker thread in the same application process—not in a separate or durable task queue.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 6,
+   "turn_type": "followup",
+   "type": "fact",
+   "question": "If that endpoint returns a response object with its own background already set, will the tasks collected through injection also be attached?",
+   "asks": [
+    "Injected task attachment when a response already has background work"
+   ],
+   "standalone_question": "If a FastAPI endpoint returns a response object with its own background already set, will the tasks collected through an injected background-task parameter also be attached?",
+   "answer": "No. FastAPI attaches the injected collection only if `response.background is None`. A response with its own background does not receive those collected tasks; use one mechanism per endpoint.",
+   "key_facts": [
+    "Collected injected tasks are attached to a directly returned response only if response.background is None."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "response.background is None"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "If you build a Starlette `Response(background=BackgroundTask(...))` yourself, the injected `BackgroundTasks` are not attached — use one mechanism per endpoint.",
+     "page": "integrations/background-tasks.md",
+     "fact_idx": 0
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "No. FastAPI attaches the collected tasks only if the returned response’s `background` is `None`; an existing background is left unchanged.",
+    "fact_results": [
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "No.",
+    "fact_results": [
+     true
+    ],
+    "judge_skipped": null,
+    "not_found": false,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 7,
+   "turn_type": "same_doc_new_topic",
+   "type": "multi",
+   "question": "For a typed JSON Lines export rather than named events, what are the first two sample item names, and what content type and per-item processing does the annotated generator get?",
+   "asks": [
+    "First two sample item names",
+    "Typed JSON Lines content type and processing"
+   ],
+   "standalone_question": "For a typed JSON Lines export rather than named events, what are the first two sample item names, and what content type and per-item processing does the annotated generator get?",
+   "answer": "The first two names are `Plumbus` and `Portal Gun`. The response uses `application/jsonl`. With `AsyncIterable[Item]` or `Iterable[Item]`, FastAPI validates, filters, and serializes each yielded item using Pydantic.",
+   "key_facts": [
+    "The first two sample item names are Plumbus and Portal Gun.",
+    "The JSON Lines response uses application/jsonl.",
+    "An annotated item type enables per-item validation, filtering and serialization."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "Plumbus",
+    "Portal Gun",
+    "application/jsonl",
+    "AsyncIterable[Item]",
+    "Iterable[Item]",
+    "Pydantic"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "    Item(name=\"Plumbus\", description=\"A multi-purpose household device.\"),",
+     "page": "responses/streaming-and-sse.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    Item(name=\"Portal Gun\", description=\"A portal opening device.\"),",
+     "page": "responses/streaming-and-sse.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "The response is a `StreamingResponse` with `media_type=\"application/jsonl\"`; headers set on an injected `Response` parameter are copied to it.",
+     "page": "responses/streaming-and-sse.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "a bad item raises `ResponseValidationError`.",
+     "page": "responses/streaming-and-sse.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 0,
+   "recall_distance": 7,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 8,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm checking compression settings around the feeds. What minimum_size and compresslevel does the GZipMiddleware configuration example set, and what are the defaults if I omit them?",
+   "asks": [
+    "Example compression settings",
+    "Default compression settings"
+   ],
+   "standalone_question": "I'm checking compression settings around the feeds. What minimum_size and compresslevel does the GZipMiddleware configuration example set, and what are the defaults if I omit them?",
+   "answer": "The example sets `minimum_size=1000` and `compresslevel=5`. The defaults are `minimum_size=500` bytes and `compresslevel=9`.",
+   "key_facts": [
+    "The configuration example sets minimum_size=1000 and compresslevel=5.",
+    "The defaults are minimum_size=500 and compresslevel=9."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "GZipMiddleware",
+    "minimum_size",
+    "compresslevel",
+    "1000",
+    "5",
+    "500",
+    "9"
+   ],
+   "evidence_pages": [
+    "middleware/middleware.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "app.add_middleware(GZipMiddleware, minimum_size=1000, compresslevel=5)",
+     "page": "middleware/middleware.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- `minimum_size` — don't compress responses smaller than this many bytes (default `500`).",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "- `compresslevel` — 1 (fast, larger) to 9 (slow, smaller); default `9`.",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "The example sets `minimum_size=1000` and `compresslevel=5`. If omitted, the defaults are `minimum_size=500` and `compresslevel=9`.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 9,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "For the progress feed, which named event are we using now, and what retry delay did the controlled-event example use?",
+   "asks": [
+    "Current named progress event",
+    "Previously discussed example retry delay"
+   ],
+   "standalone_question": "For the project's progress feed, which named event is currently selected, and what retry delay did the previously discussed controlled-event example use?",
+   "answer": "The event name is now `kiln_delta`. The example retry delay is `5000` milliseconds.",
+   "key_facts": [
+    "The current progress event name is kiln_delta.",
+    "The controlled-event example uses retry=5000 milliseconds."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "kiln_delta",
+    "5000"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0,
+    4
+   ],
+   "evidence": [
+    {
+     "quote": "Change our named progress event from kiln_tick to kiln_delta.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "        yield ServerSentEvent(data=item, event=\"item_update\", id=str(i + 1), retry=5000)",
+     "page": "responses/streaming-and-sse.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "| `retry` | Reconnection delay in milliseconds |",
+     "page": "responses/streaming-and-sse.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 9,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 10,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For deterministic feed tests, I'm studying the dependency override example. What skip and limit does the replacement return, and why don't URL values skip=100 and limit=200 change them?",
+   "asks": [
+    "Replacement pagination values",
+    "Reason URL pagination values are ignored"
+   ],
+   "standalone_question": "For deterministic feed tests, I'm studying the dependency override example. What skip and limit does the replacement return, and why don't URL values skip=100 and limit=200 change them?",
+   "answer": "The replacement returns `skip=5` and `limit=10`. Its own signature declares only `q`, so the URL's `skip=100` and `limit=200` are not read or validated by that override.",
+   "key_facts": [
+    "The replacement returns skip=5 and limit=10.",
+    "The override's own signature controls parameter extraction, so undeclared skip and limit URL values are ignored."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "skip",
+    "limit",
+    "5",
+    "10",
+    "q",
+    "100",
+    "200"
+   ],
+   "evidence_pages": [
+    "testing/testing-dependencies-events-websockets.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "    return {\"q\": q, \"skip\": 5, \"limit\": 10}",
+     "page": "testing/testing-dependencies-events-websockets.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- The override's **own signature** defines which request parameters are read and validated: here `skip`/`limit` from the URL are ignored because the override doesn't declare them.",
+     "page": "testing/testing-dependencies-events-websockets.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "The replacement returns `skip=5` and `limit=10`. The dependency override supplies those fixed values instead of running the original dependency, so `skip=100` and `limit=200` in the URL don’t affect them.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 11,
+   "turn_type": "update",
+   "type": "multi",
+   "question": "Rename our control-connection cookie from kiln_session9 to kiln_session12. What should the cookie parameter be now, and can browser WebSocket clients instead set an arbitrary custom authentication header?",
+   "asks": [
+    "Updated cookie parameter",
+    "Browser custom-header support"
+   ],
+   "standalone_question": "Rename our control-connection cookie from kiln_session9 to kiln_session12. What should the cookie parameter be now, and can browser WebSocket clients instead set an arbitrary custom authentication header?",
+   "answer": "Use `kiln_session12: Annotated[str | None, Cookie()] = None`. Browser WebSocket clients cannot set custom headers on the connection; query parameters or cookies are the documented authentication choices.",
+   "key_facts": [
+    "The control-connection cookie is now kiln_session12.",
+    "Browsers cannot set custom headers on WebSocket connections."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "kiln_session12",
+    "Cookie",
+    "WebSocket"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "Rename our control-connection cookie from kiln_session9 to kiln_session12.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "- Browsers can't set custom headers on WebSocket connections, so auth tokens are commonly passed as a query parameter or cookie, as here.",
+     "page": "integrations/websockets.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Control-connection session cookie",
+     "from": "kiln_session9",
+     "to": "kiln_session12"
+    }
+   ],
+   "affects": [
+    16
+   ],
+   "source_turn": null,
+   "recall_distance": 10,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Set the cookie parameter to `kiln_session12`. Browser WebSocket clients cannot set arbitrary custom authentication headers; cookies are sent automatically when applicable.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 12,
+   "turn_type": "new",
+   "type": "procedure",
+   "question": "For a finite streaming response with yield dependencies and background work, what is the order of function-scoped cleanup, sending the body and running background tasks, and request-scoped cleanup?",
+   "asks": [
+    "Response lifecycle ordering"
+   ],
+   "standalone_question": "For a finite streaming response with yield dependencies and background work, what is the order of function-scoped cleanup, sending the body and running background tasks, and request-scoped cleanup?",
+   "answer": "1. Close the function stack, cleaning up `scope=\"function\"` dependencies before sending.\n2. Send the response body, then run the response's background tasks as part of the response call.\n3. Close the request stack, cleaning up default request-scoped dependencies.",
+   "key_facts": [
+    "Function-scoped cleanup precedes sending; background tasks run after the body is sent; request-scoped cleanup follows the response call."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "scope=\"function\"",
+    "request_response()"
+   ],
+   "evidence_pages": [
+    "internals/request-handling-internals.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "1. The function stack closes when the endpoint (and response building) finishes — teardown of `scope=\"function\"` `yield` dependencies.",
+     "page": "internals/request-handling-internals.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "2. `await response(scope, receive, send)` sends the response; Starlette runs the response's background tasks as part of this call, after the body is sent.",
+     "page": "internals/request-handling-internals.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "3. The request stack closes — teardown of request-scoped (default) `yield` dependencies.",
+     "page": "internals/request-handling-internals.md",
+     "fact_idx": 0
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Function-scoped cleanup runs first, before the response is sent. Then the body is sent and background tasks run. Request-scoped cleanup runs last, after the background tasks finish.",
+    "fact_results": [
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 13,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the finite progress-feed implementation, which event name is current, which audit filename did we choose, and do response background tasks run before or after default request-scoped cleanup?",
+   "asks": [
+    "Current event name",
+    "Chosen audit filename",
+    "Background task ordering relative to request cleanup"
+   ],
+   "standalone_question": "For the project's finite progress-feed implementation, which event name is current, which audit filename was chosen, and do response background tasks run before or after default request-scoped cleanup?",
+   "answer": "The event name is `kiln_delta`; the audit filename is `kiln-audit-43.log`. Response background tasks run before default request-scoped cleanup, after the body has been sent.",
+   "key_facts": [
+    "The current event name is kiln_delta.",
+    "The chosen audit filename is kiln-audit-43.log.",
+    "Response background tasks run before default request-scoped cleanup."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "kiln_delta",
+    "kiln-audit-43.log"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    4,
+    5,
+    12
+   ],
+   "evidence": [
+    {
+     "quote": "Change our named progress event from kiln_tick to kiln_delta.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Our audit log filename is kiln-audit-43.log.",
+     "user_turn": 5,
+     "fact_idx": 1
+    },
+    {
+     "quote": "2. `await response(scope, receive, send)` sends the response; Starlette runs the response's background tasks as part of this call, after the body is sent.",
+     "page": "internals/request-handling-internals.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "3. The request stack closes — teardown of request-scoped (default) `yield` dependencies.",
+     "page": "internals/request-handling-internals.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 9,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 14,
+   "turn_type": "same_doc_new_topic",
+   "type": "multi",
+   "question": "For broadcasting control-client departures, what exact departure text does the connection-manager example broadcast, and can its in-memory connection list cover multiple workers?",
+   "asks": [
+    "Example departure broadcast text",
+    "Multi-worker scope of the connection list"
+   ],
+   "standalone_question": "For broadcasting WebSocket control-client departures, what exact departure text does the connection-manager example broadcast, and can its in-memory connection list cover multiple workers?",
+   "answer": "It broadcasts `f\"Client #{client_id} left the chat\"`. No: the in-memory list works only within one running process. Multiple workers or servers need a shared backend.",
+   "key_facts": [
+    "The departure broadcast text is f\"Client #{client_id} left the chat\".",
+    "The in-memory connection list works only within one running process, not across multiple workers."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "Client #{client_id} left the chat",
+    "client_id"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "        await manager.broadcast(f\"Client #{client_id} left the chat\")",
+     "page": "integrations/websockets.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "This in-memory list only works within **one process** while it runs.",
+     "page": "integrations/websockets.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 1,
+   "recall_distance": 13,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "It broadcasts `Client #{client_id} left the chat`. The in-memory connection list is process-local, so it can’t cover multiple workers.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "On `WebSocketDisconnect`, the example removes the socket from `active_connections` and broadcasts `f\"Client #{client_id} left the chat\"`. Because that list is in memory, it works only in a single process—not across multiple workers—so use a single worker for this connection-manager example.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "not_found": false,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 15,
+   "turn_type": "new",
+   "type": "code",
+   "question": "My async stream calls a blocking utility function. Which explicit helper and import does the example use to offload that call, and would merely declaring my utility with def automatically offload it?",
+   "asks": [
+    "Explicit blocking-call offload code",
+    "Automatic offloading of user utility functions"
+   ],
+   "standalone_question": "My async stream calls a blocking utility function. Which explicit helper and import does the example use to offload that call, and would merely declaring my utility with def automatically offload it?",
+   "answer": "```python\nfrom fastapi.concurrency import run_in_threadpool\n\nresult = await run_in_threadpool(blocking_function, arg1, arg2)\n```\nNo. FastAPI automatically chooses execution context for the endpoints and dependencies it calls, not for utility functions you call yourself.",
+   "key_facts": [
+    "The example imports run_in_threadpool from fastapi.concurrency and awaits run_in_threadpool(blocking_function, arg1, arg2).",
+    "Declaring a user-called utility with def does not automatically offload it."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "fastapi.concurrency",
+    "run_in_threadpool",
+    "blocking_function",
+    "arg1",
+    "arg2",
+    "def"
+   ],
+   "evidence_pages": [
+    "getting-started/python-types-and-async.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "from fastapi.concurrency import run_in_threadpool",
+     "page": "getting-started/python-types-and-async.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "result = await run_in_threadpool(blocking_function, arg1, arg2)",
+     "page": "getting-started/python-types-and-async.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- Your **own utility functions** are not affected: FastAPI only decides how to call functions *it* calls (path operations and dependencies).",
+     "page": "getting-started/python-types-and-async.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "The example uses `asyncio.to_thread`: `import asyncio`, then `await asyncio.to_thread(blocking_utility, ...)`. No—declaring the utility with `def` does not offload it; you must explicitly run it in a thread.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 16,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "Before I wire up control-connection authentication, which session cookie name is current, and which exception and close code did we choose for neither cookie nor query token being present?",
+   "asks": [
+    "Current session cookie name",
+    "Missing-credential exception and close code"
+   ],
+   "standalone_question": "For the project's control-connection authentication, which session cookie name is current, and which exception and close code should reject a connection with neither cookie nor query token?",
+   "answer": "Read `kiln_session12`. If neither credential is present, raise `WebSocketException(code=status.WS_1008_POLICY_VIOLATION)`, using close code `1008`.",
+   "key_facts": [
+    "The current session cookie name is kiln_session12.",
+    "Missing both credentials is rejected with WebSocketException and status.WS_1008_POLICY_VIOLATION, code 1008."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "kiln_session12",
+    "WebSocketException",
+    "status.WS_1008_POLICY_VIOLATION",
+    "1008"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1,
+    11
+   ],
+   "evidence": [
+    {
+     "quote": "Rename our control-connection cookie from kiln_session9 to kiln_session12.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "    if session is None and token is None:",
+     "page": "integrations/websockets.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "        raise WebSocketException(code=status.WS_1008_POLICY_VIOLATION)",
+     "page": "integrations/websockets.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 15,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 17,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "For the browser progress feed, what GET path and named event should I use now, and what exact cache-prevention header does its SSE response set automatically?",
+   "asks": [
+    "Current progress path and event",
+    "Automatic cache-prevention header"
+   ],
+   "standalone_question": "For the project's browser progress feed, what GET path and named event are currently selected, and what exact cache-prevention header does its SSE response set automatically?",
+   "answer": "Use GET `/pulse-73` and the named event `kiln_delta`. The SSE response automatically sets `Cache-Control: no-cache`.",
+   "key_facts": [
+    "The project uses GET /pulse-73 and the current named event kiln_delta.",
+    "The SSE response automatically sets Cache-Control: no-cache."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "/pulse-73",
+    "kiln_delta",
+    "Cache-Control: no-cache"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0,
+    4
+   ],
+   "evidence": [
+    {
+     "quote": "Our GET route is /pulse-73 and our named event is kiln_tick.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Change our named progress event from kiln_tick to kiln_delta.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "- Sets `Cache-Control: no-cache` to prevent caching of the stream.",
+     "page": "responses/streaming-and-sse.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 17,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 18,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the finite stream's audit task, which log filename are we using, under exactly what condition are injected tasks attached to a directly returned response, and does default request-scoped teardown occur before or after those response tasks?",
+   "asks": [
+    "Chosen audit filename",
+    "Condition for attaching injected tasks to a returned response",
+    "Request-scoped teardown ordering"
+   ],
+   "standalone_question": "For the project's finite stream audit task, which log filename is selected, under exactly what condition are injected tasks attached to a directly returned response, and does default request-scoped teardown occur before or after those response tasks?",
+   "answer": "The log filename is `kiln-audit-43.log`. Injected tasks attach only if `response.background is None`. Default request-scoped teardown happens after the response's background tasks.",
+   "key_facts": [
+    "The audit filename is kiln-audit-43.log.",
+    "Injected tasks attach to a directly returned response only if response.background is None.",
+    "Default request-scoped teardown happens after the response's background tasks."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "kiln-audit-43.log",
+    "response.background is None"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5,
+    6,
+    12
+   ],
+   "evidence": [
+    {
+     "quote": "Our audit log filename is kiln-audit-43.log.",
+     "user_turn": 5,
+     "fact_idx": 0
+    },
+    {
+     "quote": "If you build a Starlette `Response(background=BackgroundTask(...))` yourself, the injected `BackgroundTasks` are not attached — use one mechanism per endpoint.",
+     "page": "integrations/background-tasks.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "2. `await response(scope, receive, send)` sends the response; Starlette runs the response's background tasks as part of this call, after the body is sent.",
+     "page": "internals/request-handling-internals.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "3. The request stack closes — teardown of request-scoped (default) `yield` dependencies.",
+     "page": "internals/request-handling-internals.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 13,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  }
+ ]
+}

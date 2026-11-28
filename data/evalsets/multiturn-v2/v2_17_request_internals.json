@@ -1,0 +1,2512 @@
+{
+ "schema_version": 2,
+ "scenario_id": "v2_17_request_internals",
+ "title": "Request Inspection and Lifecycle Boundaries",
+ "topic": "요청 객체와 내부 동작",
+ "status": "draft",
+ "bundle": [
+  "request/using-request-directly.md",
+  "internals/request-handling-internals.md",
+  "middleware/middleware.md",
+  "request/headers-and-cookies.md",
+  "responses/response-headers-and-cookies.md",
+  "dependencies/dependency-injection-basics.md",
+  "request/path-parameters.md",
+  "getting-started/python-types-and-async.md"
+ ],
+ "generation": {
+  "model": "gpt-6.1-sol",
+  "served_model": "gpt-6.1-sol",
+  "prompt": [
+   "mt_scenario_gen_v3",
+   "7e637f26a462"
+  ],
+  "settings": {
+   "model": "gpt-6.1-sol",
+   "temperature": null,
+   "temperature_requested": null,
+   "seed": 42,
+   "reasoning_effort": null,
+   "reasoning_effort_requested": null,
+   "max_tokens": 40000,
+   "max_tokens_param": "max_completion_tokens"
+  },
+  "run_id": "20261128-093754_v2_17_request_internals",
+  "attempts": 1,
+  "created_at": "2026-11-28T09:40:40"
+ },
+ "turns": [
+  {
+   "turn": 0,
+   "turn_type": "new",
+   "type": "code",
+   "question": "I'm building an ingestion API. Show a GET /items/{item_id} handler with item_id: str that returns the client host and item_id using Request. Does adding Request change validation of the declared parameter or validate anything I read manually?",
+   "asks": [
+    "Show the client-host handler",
+    "Explain declared versus manually read data validation"
+   ],
+   "standalone_question": "Show a GET /items/{item_id} handler with item_id: str that returns the client host and item_id using Request. Explain whether adding Request changes validation of declared parameters or validates manually read request data.",
+   "answer": "```python\nfrom fastapi import FastAPI, Request\n\napp = FastAPI()\n\n@app.get(\"/items/{item_id}\")\ndef read_root(item_id: str, request: Request):\n    return {\"client_host\": request.client.host, \"item_id\": item_id}\n```\nDeclared parameters such as item_id remain validated and documented. Data read manually from Request is not automatically validated, converted, or documented.",
+   "key_facts": [
+    "The handler obtains the client host with request.client.host.",
+    "The declared item_id remains validated and documented.",
+    "Data read manually from Request is not validated, converted, or documented."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "request.client.host",
+    "item_id",
+    "Request"
+   ],
+   "evidence_pages": [
+    "request/using-request-directly.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "    client_host = request.client.host",
+     "page": "request/using-request-directly.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- Other parameters are still validated and documented (`item_id` here).",
+     "page": "request/using-request-directly.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "- Data you read from `Request` yourself (e.g. `await request.body()`, `await request.json()`, `request.query_params`) is **not** validated, converted or documented.",
+     "page": "request/using-request-directly.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.3333333333333333,
+    "accuracy": 0.3333333333333333,
+    "response": "```python\nfrom fastapi import FastAPI, Request\n\napp = FastAPI()\n\n@app.get(\"/items/{item_id}\")\nasync def read_item(item_id: str, request: Request):\n    return {\n        \"client_host\": request.client.host if request.client else None,\n        \"item_id\": item_id,\n    }\n```\n\nAdding `Request` does not change validation of declared parameters such as `item_id`. Data you read manually from `request` is not automatically validated; validate it yourself if needed.",
+    "fact_results": [
+     true,
+     false,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 1,
+   "turn_type": "new",
+   "type": "code",
+   "question": "Our timing response header will be X-Quartz-Latency. Show HTTP middleware that measures the downstream request and writes the duration into that header.",
+   "asks": [
+    "Implement middleware timing with the chosen response header"
+   ],
+   "standalone_question": "Our timing response header will be X-Quartz-Latency. Show HTTP middleware that measures the downstream request and writes the duration into that header.",
+   "answer": "```python\nimport time\nfrom fastapi import FastAPI, Request\n\napp = FastAPI()\n\n@app.middleware(\"http\")\nasync def add_timing(request: Request, call_next):\n    start = time.perf_counter()\n    response = await call_next(request)\n    response.headers[\"X-Quartz-Latency\"] = str(time.perf_counter() - start)\n    return response\n```",
+   "key_facts": [
+    "The middleware writes the duration into X-Quartz-Latency.",
+    "It measures around await call_next(request), modifies the returned response, and returns it."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "X-Quartz-Latency",
+    "call_next",
+    "response.headers"
+   ],
+   "evidence_pages": [
+    "middleware/middleware.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our timing response header will be X-Quartz-Latency.",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "    response = await call_next(request)",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "You can run code before `call_next` (inspect/modify the request, short-circuit by returning a response yourself) and after it (modify the response).",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nimport time\nfrom starlette.middleware.base import BaseHTTPMiddleware\n\nclass QuartzLatencyMiddleware(BaseHTTPMiddleware):\n    async def dispatch(self, request, call_next):\n        start = time.perf_counter()\n        response = await call_next(request)\n        elapsed_ms = (time.perf_counter() - start) * 1000\n        response.headers[\"X-Quartz-Latency\"] = f\"{elapsed_ms:.2f}ms\"\n        return response\n```",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nimport time\n\nfrom fastapi import FastAPI, Request\n\napp = FastAPI()\n\n\n@app.middleware(\"http\")\nasync def add_latency_header(request: Request, call_next):\n    start_time = time.perf_counter()\n    response = await call_next(request)\n    duration = time.perf_counter() - start_time\n    response.headers[\"X-Quartz-Latency\"] = str(duration)\n    return response\n```",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "not_found": false,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 2,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "For that timing middleware, which clock is preferred over time.time(), and what must be configured so browser JavaScript on another origin can read its custom response header?",
+   "asks": [
+    "Identify the preferred duration clock",
+    "Identify the cross-origin header exposure setting"
+   ],
+   "standalone_question": "For HTTP duration middleware, which clock is preferred over time.time(), and what must be configured so browser JavaScript on another origin can read a custom response header?",
+   "answer": "Use time.perf_counter(), which is more precise for measuring durations. List the custom response header in the CORS expose_headers setting.",
+   "key_facts": [
+    "time.perf_counter() is more precise than time.time() for measuring durations.",
+    "Cross-origin browser access to the custom response header requires listing it in CORS expose_headers."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "time.perf_counter()",
+    "time.time()",
+    "expose_headers"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "- `time.perf_counter()` is more precise than `time.time()` for measuring durations.",
+     "page": "middleware/middleware.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- Custom headers conventionally use an `X-` prefix. For browser JS to read them cross-origin, list them in CORS `expose_headers` ([CORS](cors.md)).",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "Use `time.monotonic()` for duration measurement. Configure CORS to expose the custom header with `Access-Control-Expose-Headers`.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 3,
+   "turn_type": "new",
+   "type": "code",
+   "question": "Our session cookie is ember_session, with max_age=1380 seconds. Show a handler fragment that sets it to a supplied session_value while returning ordinary data, so response_model filtering still happens.",
+   "asks": [
+    "Set the chosen session cookie while preserving response-model filtering"
+   ],
+   "standalone_question": "Our session cookie is ember_session, with max_age=1380 seconds. Show a handler fragment that sets it to a supplied session_value while returning ordinary data, so response_model filtering still happens.",
+   "answer": "```python\nfrom fastapi import Response\n\ndef create_session(response: Response, session_value: str):\n    response.set_cookie(key=\"ember_session\", value=session_value, max_age=1380)\n    return {\"message\": \"session created\"}\n```\nUse the injected temporary Response rather than returning a response instance. FastAPI copies its cookie onto the final response and still filters the returned data through the configured response_model.",
+   "key_facts": [
+    "The cookie is named ember_session and uses max_age=1380.",
+    "Setting the cookie on an injected temporary Response and returning data preserves response_model filtering."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "ember_session",
+    "1380",
+    "Response",
+    "response_model"
+   ],
+   "evidence_pages": [
+    "responses/response-headers-and-cookies.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our session cookie is ember_session, with max_age=1380 seconds.",
+     "user_turn": 3,
+     "fact_idx": 0
+    },
+    {
+     "quote": "FastAPI injects a **temporary** response object; you set headers/cookies on it and return your data normally.",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "Remember: a directly returned response skips `response_model` validation/filtering — make sure the content is what you intend to send ([Custom Responses](custom-responses.md)).",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\n@app.get(\"/endpoint\", response_model=MyData)\ndef handler(response: Response, session_value: str):\n    response.set_cookie(\n        key=\"ember_session\",\n        value=session_value,\n        max_age=1380,\n    )\n    return {\"field\": \"value\"}  # Filtered by MyData\n```",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 4,
+   "turn_type": "update",
+   "type": "code",
+   "question": "Change the session cookie lifetime to max_age=2460 seconds, keeping its name. Show the updated set_cookie call, and confirm whether the injected Response can also be used in a dependency.",
+   "asks": [
+    "Update the existing cookie call",
+    "Confirm Response injection in dependencies"
+   ],
+   "standalone_question": "Change the previously chosen session cookie lifetime to max_age=2460 seconds, keeping its name. Show the updated set_cookie call, and confirm whether the injected Response can also be used in a dependency.",
+   "answer": "```python\nresponse.set_cookie(key=\"ember_session\", value=session_value, max_age=2460)\n```\nYes. A dependency can receive the Response parameter and set or refresh the cookie.",
+   "key_facts": [
+    "The cookie now uses max_age=2460 seconds.",
+    "Its name remains ember_session.",
+    "The Response parameter also works in dependencies."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "2460",
+    "ember_session",
+    "Response",
+    "set_cookie"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    3
+   ],
+   "evidence": [
+    {
+     "quote": "Change the session cookie lifetime to max_age=2460 seconds, keeping its name.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Our session cookie is ember_session, with max_age=1380 seconds.",
+     "user_turn": 3,
+     "fact_idx": 1
+    },
+    {
+     "quote": "The `Response` parameter also works in **dependencies** — e.g. a dependency that refreshes a session cookie for every request.",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Session cookie max_age in seconds",
+     "from": 1380,
+     "to": 2460
+    }
+   ],
+   "affects": [
+    13,
+    16
+   ],
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.6666666666666666,
+    "response": "```python\nresponse.set_cookie(key=\"session\", value=token, max_age=2460)\n```\n\nYes. FastAPI’s injected `Response` can also be used in a dependency.",
+    "fact_results": [
+     true,
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 5,
+   "turn_type": "new",
+   "type": "code",
+   "question": "For incoming duplicate headers, show a parameter declaration that collects repeated X-Token values. If the client sends foo and bar as separate values, what should the returned value contain?",
+   "asks": [
+    "Declare a repeated-header parameter",
+    "Describe the collected values"
+   ],
+   "standalone_question": "Show a parameter declaration that collects repeated X-Token headers. If the client sends foo and bar as separate values, what should the returned value contain?",
+   "answer": "```python\nfrom typing import Annotated\nfrom fastapi import Header\n\nasync def read_items(x_token: Annotated[list[str] | None, Header()] = None):\n    return {\"X-Token values\": x_token}\n```\nThe list contains both values. The illustrated result is [\"bar\", \"foo\"]; do not rely on this as a general ordering guarantee.",
+   "key_facts": [
+    "Declare x_token as a list with Header() to collect repeated X-Token values.",
+    "Both foo and bar are collected; the illustrated list is [\"bar\", \"foo\"]."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "x_token",
+    "Header()",
+    "foo",
+    "bar"
+   ],
+   "evidence_pages": [
+    "request/headers-and-cookies.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "async def read_items(x_token: Annotated[list[str] | None, Header()] = None):",
+     "page": "request/headers-and-cookies.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Sending `X-Token: foo` and `X-Token: bar` returns all values in a list, e.g. `{\"X-Token values\": [\"bar\", \"foo\"]}`.",
+     "page": "request/headers-and-cookies.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "```python\nfrom typing import Annotated\nfrom fastapi import Header\n\nx_token: Annotated[list[str] | None, Header()] = None\n```\n\nFor separate `X-Token: foo` and `X-Token: bar` headers, the value is `[\"foo\", \"bar\"]`.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 6,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "If I group incoming headers into a Header() model instead, which wire header does save_data read, and how does the list field x_tag handle repeated headers?",
+   "asks": [
+    "Identify the wire name for save_data",
+    "Explain repeated values for x_tag"
+   ],
+   "standalone_question": "In a Header() parameter model, which wire header does save_data read, and how does a list field named x_tag handle repeated headers?",
+   "answer": "save_data reads Save-Data through the default underscore-to-hyphen conversion. The x_tag list field collects duplicate header values.",
+   "key_facts": [
+    "The model field save_data maps to Save-Data by default.",
+    "The list field x_tag collects duplicate headers."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "save_data",
+    "Save-Data",
+    "x_tag"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "Underscore conversion applies to the model's fields too (`save_data` ↔ `Save-Data`); disable it with `Header(convert_underscores=False)` (`tutorial003_an_py310.py`).",
+     "page": "request/headers-and-cookies.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "List fields (`x_tag`) collect duplicate headers.",
+     "page": "request/headers-and-cookies.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "`save_data` reads the `save-data` wire header. A list field named `x_tag` maps to `x-tag` and collects repeated `x-tag` headers into a list.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 7,
+   "turn_type": "same_doc_new_topic",
+   "type": "multi",
+   "question": "A legacy sender omits Content-Type when posting a model body. With strict checking, is its JSON parsed, and if I set strict_content_type=False, would that also make text/plain parse as JSON?",
+   "asks": [
+    "Explain omitted Content-Type under strict checking",
+    "Explain the opt-out boundary for text/plain"
+   ],
+   "standalone_question": "For a model body, is JSON parsed when Content-Type is omitted under strict checking, and does strict_content_type=False also make text/plain parse as JSON?",
+   "answer": "Under strict checking, an omitted Content-Type means the body is not parsed as JSON, so a model body fails validation. strict_content_type=False allows JSON parsing when the header is absent, but text/plain is never parsed as JSON regardless of that flag.",
+   "key_facts": [
+    "With strict checking, a body without Content-Type is not parsed as JSON and a model body fails validation.",
+    "strict_content_type=False permits JSON parsing for an absent header, not for a non-JSON type such as text/plain."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "negation"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "Content-Type",
+    "strict_content_type=False",
+    "text/plain"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "A request **without** `Content-Type` is not parsed as JSON, so a model body fails validation.",
+     "page": "request/using-request-directly.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Bodies without a `Content-Type` are then parsed as JSON (the pre-0.132 behavior).",
+     "page": "request/using-request-directly.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "A **non-JSON** `Content-Type` (e.g. `text/plain`) is never parsed as JSON, regardless of the flag.",
+     "page": "request/using-request-directly.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 0,
+   "recall_distance": 7,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "No. With strict checking, an omitted `Content-Type` means the body isn’t parsed as JSON. Setting `strict_content_type=False` allows parsing when the header is absent, but doesn’t make `text/plain` parse as JSON.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 8,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm considering the query_or_cookie_extractor dependency pattern: when q is empty, which cookie parameter supplies the fallback? If the same dependency is shared by two branches in one request, when can its result be reused?",
+   "asks": [
+    "Identify the fallback cookie parameter",
+    "Explain per-request dependency reuse"
+   ],
+   "standalone_question": "In the query_or_cookie_extractor dependency pattern, when q is empty, which cookie parameter supplies the fallback? When can two branches in one request reuse the same dependency result?",
+   "answer": "The fallback cookie parameter is last_query. With caching enabled, the dependency result is reused within the request when the callable, effective security scopes, and dependency scope match. Different security scopes can cause separate evaluations.",
+   "key_facts": [
+    "query_or_cookie_extractor returns last_query when q is falsey.",
+    "Per-request reuse requires a matching callable, security scopes, and dependency scope, with caching enabled."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "query_or_cookie_extractor",
+    "last_query",
+    "q"
+   ],
+   "evidence_pages": [
+    "dependencies/dependency-injection-basics.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "    last_query: Annotated[str | None, Cookie()] = None,",
+     "page": "dependencies/dependency-injection-basics.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    if not q:\n        return last_query",
+     "page": "dependencies/dependency-injection-basics.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "The cache key is the dependency callable together with its effective security scopes and dependency scope, so the same callable with different OAuth2 scopes is evaluated separately.",
+     "page": "dependencies/dependency-injection-basics.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "To force a fresh call every time:",
+     "page": "dependencies/dependency-injection-basics.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "async def needy_dependency(fresh_value: Annotated[str, Depends(get_value, use_cache=False)]):",
+     "page": "dependencies/dependency-injection-basics.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "The fallback is the `last_query` cookie parameter. Two branches can reuse a dependency result when they depend on the same dependency with the same cache key in a request; FastAPI caches it by default. `use_cache=False` disables that reuse.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 9,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "What timing header name did we choose, and which precise clock should its middleware use?",
+   "asks": [
+    "Recall the project timing header",
+    "Recall the preferred timing clock"
+   ],
+   "standalone_question": "What response-header name was chosen for the project's timing middleware, and which precise clock should that middleware use?",
+   "answer": "The header is X-Quartz-Latency. Use time.perf_counter() for duration measurement.",
+   "key_facts": [
+    "The chosen timing header is X-Quartz-Latency.",
+    "The preferred duration clock is time.perf_counter()."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "X-Quartz-Latency",
+    "time.perf_counter()"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "Our timing response header will be X-Quartz-Latency.",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "- `time.perf_counter()` is more precise than `time.time()` for measuring durations.",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 8,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "The header is `Server-Timing`; the middleware should use Python’s monotonic high-resolution clock, `time.perf_counter()`.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 10,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For GET /items/{item_id} with item_id: int, what exact status, error type, and location result from /items/foo? Is /items/4.2 accepted as an integer instead?",
+   "asks": [
+    "Identify the integer-path validation failure",
+    "Determine whether decimal-looking input is accepted"
+   ],
+   "standalone_question": "For GET /items/{item_id} with item_id: int, what exact status, error type, and location result from /items/foo? Is /items/4.2 accepted as an integer?",
+   "answer": "/items/foo produces status 422, error type int_parsing, and loc [\"path\", \"item_id\"]. /items/4.2 is also rejected with that integer-parsing validation error; it is not accepted as an integer.",
+   "key_facts": [
+    "/items/foo yields 422 with type int_parsing and loc [\"path\", \"item_id\"].",
+    "/items/4.2 is also rejected rather than accepted as an integer."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "422",
+    "int_parsing",
+    "path",
+    "item_id",
+    "/items/4.2"
+   ],
+   "evidence_pages": [
+    "request/path-parameters.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "- `GET /items/foo` (or `/items/4.2`) → **422** error with type `int_parsing`, a `loc` of `[\"path\", \"item_id\"]` and a readable message.",
+     "page": "request/path-parameters.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- `GET /items/foo` (or `/items/4.2`) → **422** error with type `int_parsing`, a `loc` of `[\"path\", \"item_id\"]` and a readable message.",
+     "page": "request/path-parameters.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "`/items/foo` returns **422 Unprocessable Entity**, with error type `int_parsing` at `[\"path\", \"item_id\"]`. `/items/4.2` is not accepted as an integer.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 11,
+   "turn_type": "update",
+   "type": "code",
+   "question": "Rename our timing response header to X-Quartz-Elapsed, replacing the previous name. Show the middleware's response-handling tail using an already computed duration.",
+   "asks": [
+    "Update the middleware response-handling tail to the renamed header"
+   ],
+   "standalone_question": "Rename the project's timing response header to X-Quartz-Elapsed, replacing the previous name. Show the middleware's response-handling tail using an already computed duration.",
+   "answer": "After obtaining the downstream response and computing duration:\n```python\nresponse.headers[\"X-Quartz-Elapsed\"] = str(duration)\nreturn response\n```",
+   "key_facts": [
+    "The timing header is now X-Quartz-Elapsed.",
+    "Middleware can modify the returned response after call_next and must return that response."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "X-Quartz-Elapsed",
+    "response.headers",
+    "call_next"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "Rename our timing response header to X-Quartz-Elapsed, replacing the previous name.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "You can run code before `call_next` (inspect/modify the request, short-circuit by returning a response yourself) and after it (modify the response).",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "    return response",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Timing response header name",
+     "from": "X-Quartz-Latency",
+     "to": "X-Quartz-Elapsed"
+    }
+   ],
+   "affects": [
+    13,
+    18
+   ],
+   "source_turn": null,
+   "recall_distance": 10,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nresponse = await call_next(request)\nresponse.headers[\"X-Quartz-Elapsed\"] = str(duration)\nreturn response\n```",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 12,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For a body that is being parsed as JSON, distinguish malformed JSON from another body-parsing failure: what exception or error type and HTTP status does each produce?",
+   "asks": [
+    "Identify the malformed-JSON failure",
+    "Identify another body-parsing failure"
+   ],
+   "standalone_question": "When a request body is being parsed as JSON, what exception or error type and HTTP status result from malformed JSON versus another body-parsing failure?",
+   "answer": "Malformed JSON raises RequestValidationError with type json_invalid and produces 422. Other parsing failures produce HTTPException with status 400 and detail \"There was an error parsing the body\".",
+   "key_facts": [
+    "Invalid JSON produces RequestValidationError with type json_invalid and status 422.",
+    "Other parsing failures produce HTTPException(400, \"There was an error parsing the body\")."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable",
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable",
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "RequestValidationError",
+    "json_invalid",
+    "422",
+    "HTTPException",
+    "400",
+    "There was an error parsing the body"
+   ],
+   "evidence_pages": [
+    "internals/request-handling-internals.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "- Invalid JSON → `RequestValidationError` with type `json_invalid` (→ 422).",
+     "page": "internals/request-handling-internals.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Other parsing failures → `HTTPException(400, \"There was an error parsing the body\")`.",
+     "page": "internals/request-handling-internals.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Malformed JSON becomes a `RequestValidationError` (`json_invalid`) and returns **422 Unprocessable Entity**. Another body-parsing failure becomes an `HTTPException` with status **400 Bad Request** (“There was an error parsing the body”).",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 13,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the integration assertions, what is the session cookie's current lifetime in seconds, what is the current timing header name, and which error type and status should malformed JSON produce when JSON parsing is attempted?",
+   "asks": [
+    "State the current cookie lifetime",
+    "State the current timing header name",
+    "State the malformed-JSON error type and status"
+   ],
+   "standalone_question": "For integration assertions, what is the project's current session-cookie lifetime in seconds, what is its current timing response-header name, and which error type and status should malformed JSON produce when JSON parsing is attempted?",
+   "answer": "The cookie lifetime is 2460 seconds. The timing header is X-Quartz-Elapsed. Malformed JSON produces json_invalid with status 422.",
+   "key_facts": [
+    "The current cookie lifetime is 2460 seconds.",
+    "The current timing header is X-Quartz-Elapsed.",
+    "Malformed JSON produces error type json_invalid and HTTP 422."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable",
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "2460",
+    "X-Quartz-Elapsed",
+    "json_invalid",
+    "422"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    4,
+    11,
+    12
+   ],
+   "evidence": [
+    {
+     "quote": "Change the session cookie lifetime to max_age=2460 seconds, keeping its name.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Rename our timing response header to X-Quartz-Elapsed, replacing the previous name.",
+     "user_turn": 11,
+     "fact_idx": 1
+    },
+    {
+     "quote": "- Invalid JSON → `RequestValidationError` with type `json_invalid` (→ 422).",
+     "page": "internals/request-handling-internals.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 9,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 14,
+   "turn_type": "same_doc_new_topic",
+   "type": "multi",
+   "question": "If I add GZipMiddleware without tuning its options, what are its minimum_size and compresslevel defaults? Is its job to decompress incoming request bodies or compress outgoing responses?",
+   "asks": [
+    "Identify the compression defaults",
+    "Identify the compression direction"
+   ],
+   "standalone_question": "For GZipMiddleware without option overrides, what are the minimum_size and compresslevel defaults, and does it decompress incoming request bodies or compress outgoing responses?",
+   "answer": "minimum_size defaults to 500 bytes and compresslevel to 9. It compresses outgoing responses for clients that send gzip in Accept-Encoding; it is not the incoming-body decompression mechanism.",
+   "key_facts": [
+    "GZipMiddleware defaults are minimum_size=500 and compresslevel=9.",
+    "It compresses responses for clients advertising gzip in Accept-Encoding."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "GZipMiddleware",
+    "minimum_size",
+    "500",
+    "compresslevel",
+    "9",
+    "Accept-Encoding"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "- `minimum_size` — don't compress responses smaller than this many bytes (default `500`).",
+     "page": "middleware/middleware.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- `compresslevel` — 1 (fast, larger) to 9 (slow, smaller); default `9`.",
+     "page": "middleware/middleware.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Compresses responses for clients that send `gzip` in `Accept-Encoding`:",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 1,
+   "recall_distance": 13,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "`minimum_size` defaults to 500 bytes and `compresslevel` to 9. It compresses outgoing responses; it does not decompress incoming request bodies.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 15,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I have an async def endpoint that directly calls a blocking plain def helper. Does FastAPI move that helper to its threadpool automatically? How does that differ from declaring the endpoint itself with plain def?",
+   "asks": [
+    "Determine whether a directly called helper is automatically offloaded",
+    "Contrast a plain def endpoint"
+   ],
+   "standalone_question": "Does FastAPI automatically move a blocking plain def helper directly called by an async def endpoint to its threadpool, and how does that differ from a plain def endpoint?",
+   "answer": "No. FastAPI does not automatically offload your directly called utility functions, so that blocking helper blocks the event loop. A plain def endpoint, by contrast, is run in an external threadpool and awaited.",
+   "key_facts": [
+    "A blocking plain def helper called directly inside async def is not automatically offloaded and blocks the event loop.",
+    "FastAPI runs plain def endpoints in an external threadpool and awaits them."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation",
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "async def",
+    "def",
+    "threadpool"
+   ],
+   "evidence_pages": [
+    "getting-started/python-types-and-async.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "- Your **own utility functions** are not affected: FastAPI only decides how to call functions *it* calls (path operations and dependencies).",
+     "page": "getting-started/python-types-and-async.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Calling a blocking function inside one blocks the whole server process for that time — avoid blocking I/O there.",
+     "page": "getting-started/python-types-and-async.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- Plain `def` path operations are run in an **external threadpool** and awaited (`run_in_threadpool` in `run_endpoint_function`, `fastapi/routing.py`), so blocking calls don't freeze the event loop.",
+     "page": "getting-started/python-types-and-async.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "No. A blocking plain `def` helper called directly from an `async def` endpoint runs on the event loop and can block it. A plain `def` endpoint is run in a threadpool by FastAPI.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 16,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "For the session response test, which cookie name and lifetime are we using now, and should I keep setting it on the injected response if I want model filtering to remain active?",
+   "asks": [
+    "Recall the current cookie name and lifetime",
+    "Confirm the response-model-preserving cookie approach"
+   ],
+   "standalone_question": "For a session response test, what are the project's current cookie name and lifetime, and should the cookie be set on the injected response to preserve model filtering?",
+   "answer": "Use ember_session with max_age=2460 seconds. Yes: set it on the injected temporary Response and return ordinary data so response_model filtering remains active.",
+   "key_facts": [
+    "The session cookie is ember_session with max_age=2460 seconds.",
+    "Setting the cookie on the injected temporary Response while returning data preserves response_model filtering."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "ember_session",
+    "2460",
+    "Response",
+    "response_model"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    4
+   ],
+   "evidence": [
+    {
+     "quote": "Our session cookie is ember_session, with max_age=1380 seconds.",
+     "user_turn": 3,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Change the session cookie lifetime to max_age=2460 seconds, keeping its name.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "FastAPI injects a **temporary** response object; you set headers/cookies on it and return your data normally.",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "Remember: a directly returned response skips `response_model` validation/filtering — make sure the content is what you intend to send ([Custom Responses](custom-responses.md)).",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 12,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 17,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "For the numeric-path failure we checked, remind me of the exact error type and location. Would the decimal-looking path input we checked escape that validation failure?",
+   "asks": [
+    "Recall the integer-path error type and location",
+    "Recall whether the decimal-looking input is accepted"
+   ],
+   "standalone_question": "For the previously discussed integer-typed path parameter, what exact error type and location describe the invalid-input failure, and is the previously discussed decimal-looking input accepted?",
+   "answer": "The error type is int_parsing and the location is [\"path\", \"item_id\"]. No: /items/4.2 is also rejected with a 422 integer-parsing validation error.",
+   "key_facts": [
+    "The integer-path failure has type int_parsing and loc [\"path\", \"item_id\"].",
+    "/items/4.2 is rejected with 422 rather than accepted as an integer."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "int_parsing",
+    "path",
+    "item_id",
+    "/items/4.2",
+    "422"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    10
+   ],
+   "evidence": [
+    {
+     "quote": "- `GET /items/foo` (or `/items/4.2`) → **422** error with type `int_parsing`, a `loc` of `[\"path\", \"item_id\"]` and a readable message.",
+     "page": "request/path-parameters.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- `GET /items/foo` (or `/items/4.2`) → **422** error with type `int_parsing`, a `loc` of `[\"path\", \"item_id\"]` and a readable message.",
+     "page": "request/path-parameters.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 7,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "The error type is `int_parsing`, and the location is `[\"path\", \"<parameter_name>\"]` (for example, `[\"path\", \"item_id\"]`). A decimal-looking value such as `\"1.5\"` is not accepted as an integer.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 18,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the final assertions, which timing header name is current, what are the untouched response-compression threshold and level, and does a blocking helper called directly inside an async endpoint get automatic threadpool execution?",
+   "asks": [
+    "State the current timing header",
+    "State the default response-compression threshold and level",
+    "Determine automatic offloading of the directly called blocking helper"
+   ],
+   "standalone_question": "What is the project's current timing response-header name, what are the default response-compression threshold and level previously discussed, and does a blocking helper called directly inside an async endpoint get automatic threadpool execution?",
+   "answer": "The current header is X-Quartz-Elapsed. The compression defaults are minimum_size=500 bytes and compresslevel=9. No: a directly called blocking helper is not automatically offloaded and blocks the event loop.",
+   "key_facts": [
+    "The current timing header is X-Quartz-Elapsed.",
+    "The untouched compression defaults are minimum_size=500 bytes and compresslevel=9.",
+    "A blocking helper called directly inside an async endpoint is not automatically moved to the threadpool."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation",
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "X-Quartz-Elapsed",
+    "minimum_size",
+    "500",
+    "compresslevel",
+    "9",
+    "threadpool"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    11,
+    14,
+    15
+   ],
+   "evidence": [
+    {
+     "quote": "Rename our timing response header to X-Quartz-Elapsed, replacing the previous name.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "- `minimum_size` — don't compress responses smaller than this many bytes (default `500`).",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "- `compresslevel` — 1 (fast, larger) to 9 (slow, smaller); default `9`.",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "- Your **own utility functions** are not affected: FastAPI only decides how to call functions *it* calls (path operations and dependencies).",
+     "page": "getting-started/python-types-and-async.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "Calling a blocking function inside one blocks the whole server process for that time — avoid blocking I/O there.",
+     "page": "getting-started/python-types-and-async.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 7,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  }
+ ]
+}

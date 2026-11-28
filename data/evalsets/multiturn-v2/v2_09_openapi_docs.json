@@ -1,0 +1,2454 @@
+{
+ "schema_version": 2,
+ "scenario_id": "v2_09_openapi_docs",
+ "title": "Branding an Internal API Explorer",
+ "topic": "OpenAPI 문서 꾸미기",
+ "status": "draft",
+ "bundle": [
+  "openapi/metadata-and-docs-ui.md",
+  "openapi/extending-openapi.md",
+  "openapi/generating-clients.md",
+  "app-structure/path-operation-configuration.md",
+  "request/extra-data-types-and-examples.md",
+  "app-structure/bigger-applications.md",
+  "app-structure/static-files-templates-and-frontend.md",
+  "security/oauth2-scopes.md"
+ ],
+ "generation": {
+  "model": "gpt-6.1-sol",
+  "served_model": "gpt-6.1-sol",
+  "prompt": [
+   "mt_scenario_gen_v3",
+   "7e637f26a462"
+  ],
+  "settings": {
+   "model": "gpt-6.1-sol",
+   "temperature": null,
+   "temperature_requested": null,
+   "seed": 42,
+   "reasoning_effort": null,
+   "reasoning_effort_requested": null,
+   "max_tokens": 40000,
+   "max_tokens_param": "max_completion_tokens"
+  },
+  "run_id": "20261128-093223_v2_09_openapi_docs",
+  "attempts": 2,
+  "created_at": "2026-11-28T09:37:36"
+ },
+ "turns": [
+  {
+   "turn": 0,
+   "turn_type": "new",
+   "type": "code",
+   "question": "I'm branding an internal API explorer. Our title is Copper Finch Relay, our schema URL is /spec/finch-27.json, and our Swagger UI URL is /workbench-27. Show the FastAPI initialization using those choices with ReDoc disabled, and explain whether disabling only ReDoc removes the schema.",
+   "asks": [
+    "Initialize the chosen branding and URLs with ReDoc disabled",
+    "Explain the effect on schema availability"
+   ],
+   "standalone_question": "Initialize FastAPI with title Copper Finch Relay, schema URL /spec/finch-27.json, and Swagger UI URL /workbench-27, with ReDoc disabled. Does disabling only ReDoc remove the schema?",
+   "answer": "```python\nfrom fastapi import FastAPI\n\napp = FastAPI(\n    title=\"Copper Finch Relay\",\n    openapi_url=\"/spec/finch-27.json\",\n    docs_url=\"/workbench-27\",\n    redoc_url=None,\n)\n```\nSetting `redoc_url=None` disables only ReDoc. The schema remains available at the configured schema URL.",
+   "key_facts": [
+    "The initialization uses title Copper Finch Relay, openapi_url /spec/finch-27.json, and docs_url /workbench-27.",
+    "redoc_url=None disables ReDoc only; it does not disable the schema."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "Copper Finch Relay",
+    "/spec/finch-27.json",
+    "/workbench-27",
+    "openapi_url",
+    "docs_url",
+    "redoc_url"
+   ],
+   "evidence_pages": [
+    "openapi/metadata-and-docs-ui.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our title is Copper Finch Relay, our schema URL is /spec/finch-27.json, and our Swagger UI URL is /workbench-27.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "| `redoc_url` | `\"/redoc\"` | disable ReDoc |",
+     "page": "openapi/metadata-and-docs-ui.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\napp = FastAPI(\n    title=\"Copper Finch Relay\",\n    openapi_url=\"/spec/finch-27.json\",\n    docs_url=\"/workbench-27\",\n    redoc_url=None,\n)\n```\n\nNo. Disabling ReDoc only removes its UI; the schema remains available at `/spec/finch-27.json`.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 1,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For our parcel operation, the explicit operation ID should be dispatchParcelQ8. Show the decorator argument for it, and contrast it with the default ID for a function named read_items handling GET /items/.",
+   "asks": [
+    "Set the chosen explicit operation ID",
+    "Give the contrasting default operation ID"
+   ],
+   "standalone_question": "For a parcel operation whose explicit operation ID should be dispatchParcelQ8, show the decorator argument. What default operation ID would a function named read_items handling GET /items/ receive?",
+   "answer": "Use `operation_id=\"dispatchParcelQ8\"` on the parcel operation's decorator. By contrast, the default ID for `read_items` handling `GET /items/` is `read_items_items__get`.",
+   "key_facts": [
+    "The parcel operation's explicit operation_id is dispatchParcelQ8.",
+    "The default ID for the read_items GET /items/ example is read_items_items__get."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "operation_id",
+    "dispatchParcelQ8",
+    "read_items_items__get"
+   ],
+   "evidence_pages": [
+    "app-structure/path-operation-configuration.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "For our parcel operation, the explicit operation ID should be dispatchParcelQ8.",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "plus the lowercased HTTP method (e.g. `read_items_items__get`).",
+     "page": "app-structure/path-operation-configuration.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Use `operation_id=\"dispatchParcelQ8\"`. The default ID is `read_items_items__get`.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 2,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "For that operation's description, I'd rather use a Markdown docstring. How do I keep internal Sphinx parameter notes out of the generated description without removing them from the function?",
+   "asks": [
+    "Separate the public docstring description from internal notes"
+   ],
+   "standalone_question": "When a FastAPI operation uses a Markdown docstring as its description, how can internal Sphinx parameter notes remain in the function but be excluded from the generated description?",
+   "answer": "Leave the decorator's `description` unset so FastAPI uses the docstring. Put a form feed (`\\f`) between the public Markdown and the internal notes: FastAPI includes only the text before the first `\\f`.",
+   "key_facts": [
+    "When description is omitted, FastAPI uses the function's Markdown-capable docstring.",
+    "Only the docstring text before the first \\f is included in the generated description."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "description",
+    "\\f"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "If you omit `description`, FastAPI uses the function's **docstring** (cleaned with `inspect.cleandoc`), which supports Markdown:",
+     "page": "app-structure/path-operation-configuration.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "FastAPI keeps only the text before the first `\\f` (`route.description.split(\"\\f\")[0]` in `fastapi/routing.py`):",
+     "page": "app-structure/path-operation-configuration.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "Place a form-feed character (`\\f`) between the public Markdown description and the internal Sphinx notes. FastAPI truncates the generated description at that character, while the notes remain in the function’s docstring.\n\n```python\ndef operation(item_id: int):\n    \"\"\"Public Markdown description.\n\n    \\f\n    :param item_id: Internal Sphinx note.\n    \"\"\"\n```",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 3,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I also want the ReDoc-specific logo extension in our generated schema. What exact extension location and teal-logo URL does the example use, and how does its custom schema function avoid regeneration on every request?",
+   "asks": [
+    "Identify the logo extension location and example URL",
+    "Explain custom-schema caching"
+   ],
+   "standalone_question": "For a custom FastAPI schema with the ReDoc-specific logo extension, what extension location and teal-logo URL does the example use, and how does the custom schema function avoid regeneration on every request?",
+   "answer": "Set `openapi_schema[\"info\"][\"x-logo\"]` to `{\"url\": \"https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png\"}`. The custom function first returns `app.openapi_schema` if populated; otherwise it calls `get_openapi`, modifies the result, stores it in `app.openapi_schema`, and returns it. Assign the function to `app.openapi`.",
+   "key_facts": [
+    "The example places x-logo under info and uses https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png.",
+    "The custom function returns the cached app.openapi_schema when available and stores the generated modified schema there."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "info",
+    "x-logo",
+    "https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png",
+    "app.openapi_schema",
+    "get_openapi"
+   ],
+   "evidence_pages": [
+    "openapi/extending-openapi.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "openapi_schema[\"info\"][\"x-logo\"] = {",
+     "page": "openapi/extending-openapi.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "\"url\": \"https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png\"",
+     "page": "openapi/extending-openapi.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Caching in `app.openapi_schema` avoids regenerating on every request.",
+     "page": "openapi/extending-openapi.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "app.openapi_schema = openapi_schema",
+     "page": "openapi/extending-openapi.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "The extension is placed at `openapi_schema[\"info\"][\"x-logo\"]`, with the URL `https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png`. The function checks `app.openapi_schema` first and returns the cached schema if it exists, generating and storing it only once.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 4,
+   "turn_type": "update",
+   "type": "multi",
+   "question": "Rename the API from Copper Finch Relay to Copper Finch Dispatch. If I use the custom schema function we just discussed, which title must it generate, and what must happen to an already populated schema cache before that change can appear?",
+   "asks": [
+    "Apply the renamed API title to custom generation",
+    "Explain the populated-cache consequence"
+   ],
+   "standalone_question": "Rename the API from Copper Finch Relay to Copper Finch Dispatch. For a custom OpenAPI function that returns its populated schema cache before generating a schema, which title must it generate, and what must happen to an already populated cache for the rename to appear?",
+   "answer": "The custom generation must use `title=\"Copper Finch Dispatch\"` (for example, by passing the updated `app.title`). An already populated `app.openapi_schema` would be returned unchanged, so clear it, such as with `app.openapi_schema = None`, before requesting regeneration.",
+   "key_facts": [
+    "The generated API title must now be Copper Finch Dispatch.",
+    "An existing cached schema must be invalidated or replaced because the custom function otherwise returns it before regenerating."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "Copper Finch Dispatch",
+    "app.openapi_schema"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0,
+    3
+   ],
+   "evidence": [
+    {
+     "quote": "Rename the API from Copper Finch Relay to Copper Finch Dispatch.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "`FastAPI(...)` parameters fill the OpenAPI `info` section shown at the top of the docs (`docs_src/metadata/tutorial001_py310.py`):",
+     "page": "openapi/metadata-and-docs-ui.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "if app.openapi_schema:\n        return app.openapi_schema",
+     "page": "openapi/extending-openapi.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "API title",
+     "from": "Copper Finch Relay",
+     "to": "Copper Finch Dispatch"
+    }
+   ],
+   "affects": [
+    13
+   ],
+   "source_turn": null,
+   "recall_distance": 4,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Generate the schema with the title **“Copper Finch Dispatch.”** Clear the existing populated schema cache (for example, set it to `None`) so the schema is regenerated with the new title.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 5,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I want selectable request examples in Swagger UI rather than just one model example. Which parameter provides that dropdown, and what name and price does the converted example send?",
+   "asks": [
+    "Identify the selectable-example parameter",
+    "Give the converted example's name and price"
+   ],
+   "standalone_question": "Which request parameter option provides multiple selectable examples in Swagger UI rather than just one model example, and what name and price does the converted example send?",
+   "answer": "Use `openapi_examples`, for example on `Body(...)`, with a dictionary of named examples. The `converted` example sends `{\"name\": \"Bar\", \"price\": \"35.4\"}`; its price is a string that can be converted to a number.",
+   "key_facts": [
+    "openapi_examples provides named examples that Swagger UI displays in a dropdown.",
+    "The converted example sends name Bar and price \"35.4\" as a string."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "openapi_examples",
+    "Body",
+    "converted",
+    "Bar",
+    "35.4"
+   ],
+   "evidence_pages": [
+    "request/extra-data-types-and-examples.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "To show **multiple named examples** in Swagger UI, use `openapi_examples` on `Path()`, `Query()`, `Header()`, `Cookie()`, `Body()`, `Form()` or `File()` (`tutorial005_an_py310.py`):",
+     "page": "request/extra-data-types-and-examples.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "\"name\": \"Bar\",\n                        \"price\": \"35.4\",",
+     "page": "request/extra-data-types-and-examples.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "Use the plural `examples` option. The converted example sends `name: \"Bar\"` and `price: \"35.4\"` (converted to a number).",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Use `Body(openapi_examples={...})` on the request-body parameter to provide multiple selectable examples in Swagger UI. Each entry has a key and example details; the `\"converted\"` entry sends `{\"name\": \"Bar\", \"price\": \"35.4\"}`.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "not_found": false,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 6,
+   "turn_type": "followup",
+   "type": "fact",
+   "question": "For the invalid choice beside that converted example, what exact name and price are sent, and is the example described as accepted or rejected?",
+   "asks": [
+    "Give the invalid example payload",
+    "State its expected acceptance outcome"
+   ],
+   "standalone_question": "For the invalid selectable request example paired with the converted example, what exact name and price are sent, and is that example described as accepted or rejected?",
+   "answer": "It sends `{\"name\": \"Baz\", \"price\": \"thirty five point four\"}` and is described as rejected with an error.",
+   "key_facts": [
+    "The invalid example sends name Baz and price \"thirty five point four\".",
+    "The invalid example is described as rejected with an error."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "Baz",
+    "thirty five point four"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "\"name\": \"Baz\",\n                        \"price\": \"thirty five point four\",",
+     "page": "request/extra-data-types-and-examples.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "\"summary\": \"Invalid data is rejected with an error\",",
+     "page": "request/extra-data-types-and-examples.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 7,
+   "turn_type": "same_doc_new_topic",
+   "type": "code",
+   "question": "The explorer needs a darker code highlight style. Show the Swagger UI setting for the obsidian theme, and tell me whether passing that setting replaces all of FastAPI's Swagger UI defaults.",
+   "asks": [
+    "Configure the obsidian highlight theme",
+    "Explain whether configuration replaces defaults"
+   ],
+   "standalone_question": "How do I configure the obsidian code highlighting theme in FastAPI's Swagger UI, and does passing that setting replace all of FastAPI's Swagger UI defaults?",
+   "answer": "```python\napp = FastAPI(\n    swagger_ui_parameters={\"syntaxHighlight\": {\"theme\": \"obsidian\"}}\n)\n```\nThese options are merged over FastAPI's defaults, not used as a wholesale replacement.",
+   "key_facts": [
+    "The theme setting is swagger_ui_parameters={\"syntaxHighlight\": {\"theme\": \"obsidian\"}}.",
+    "swagger_ui_parameters is merged over FastAPI's Swagger UI defaults."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "swagger_ui_parameters",
+    "syntaxHighlight",
+    "theme",
+    "obsidian"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "app = FastAPI(swagger_ui_parameters={\"syntaxHighlight\": {\"theme\": \"obsidian\"}})",
+     "page": "openapi/metadata-and-docs-ui.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "they're merged over FastAPI's defaults",
+     "page": "openapi/metadata-and-docs-ui.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 0,
+   "recall_distance": 7,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "Pass it through `swagger_ui_parameters`:\n\n```python\nfrom fastapi import FastAPI\n\napp = FastAPI(\n    swagger_ui_parameters={\n        \"syntaxHighlight\": {\"theme\": \"obsidian\"},\n    }\n)\n```\n\nYes. Supplying a custom dictionary replaces FastAPI’s Swagger UI parameter defaults rather than merging with them. To preserve those defaults, include them yourself:\n\n```python\napp = FastAPI(\n    swagger_ui_parameters={\n        \"dom_id\": \"#swagger-ui\",\n        \"layout\": \"BaseLayout\",\n        \"deepLinking\": True,\n        \"showExtensions\": True,\n        \"showCommonExtensions\": True,\n        \"syntaxHighlight\": {\"theme\": \"obsidian\"},\n    }\n)\n```",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "```python\napp = FastAPI(swagger_ui_parameters={\"syntaxHighlight.theme\": \"obsidian\"})\n```\n\n`False`",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "not_found": false,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 8,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For client-friendly operation names, consider the generator that returns the first tag, a hyphen, and the route name. What ID does its create-item example produce, and what constraints keep that strategy safe?",
+   "asks": [
+    "Give the generated create-item example ID",
+    "State the strategy's safety constraints"
+   ],
+   "standalone_question": "For a FastAPI unique-ID generator returning the first tag, a hyphen, and the route name, what ID does the create-item example produce, and what constraints keep that strategy safe?",
+   "answer": "The example ID is `items-create_item`. Every operation needs at least one tag, and function names must be unique within each tag; uniqueness is your responsibility.",
+   "key_facts": [
+    "The example custom generator produces items-create_item.",
+    "Every operation needs at least one tag and a function name unique within that tag."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "items-create_item",
+    "route.tags[0]"
+   ],
+   "evidence_pages": [
+    "openapi/generating-clients.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Now IDs look like `items-create_item`.",
+     "page": "openapi/generating-clients.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "here every operation needs at least one tag (otherwise `route.tags[0]` fails) and function names must be unique per tag.",
+     "page": "openapi/generating-clients.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "It produces `items-create_item`. For this to be safe, every route needs at least one tag, and the resulting tag–route-name combinations must be unique across routes.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 9,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "Which schema URL did we choose for the explorer, and could I set the schema URL to None while keeping the automatically supplied Swagger UI working?",
+   "asks": [
+    "Recall the chosen schema URL",
+    "Explain whether automatic Swagger UI survives a disabled schema"
+   ],
+   "standalone_question": "What schema URL did the project choose for its API explorer, and can the schema URL be set to None while keeping FastAPI's automatically supplied Swagger UI working?",
+   "answer": "We chose `/spec/finch-27.json`. No: `openapi_url=None` disables the schema and both automatic documentation UIs.",
+   "key_facts": [
+    "The chosen schema URL is /spec/finch-27.json.",
+    "openapi_url=None disables both automatic documentation UIs as well as the schema."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/spec/finch-27.json",
+    "openapi_url"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "Our title is Copper Finch Relay, our schema URL is /spec/finch-27.json, and our Swagger UI URL is /workbench-27.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "| `openapi_url` | `\"/openapi.json\"` | disable the schema **and** both docs UIs |",
+     "page": "openapi/metadata-and-docs-ui.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 9,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "The schema URL is `/openapi.json`. No—setting it to `None` disables FastAPI’s OpenAPI schema and its built-in Swagger UI, which depends on that schema.",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 10,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm splitting operations into routers. In the items-router example, which tags and documented extra response codes does update_item end up with after its local settings combine with the router settings?",
+   "asks": [
+    "Give the effective update_item tags",
+    "Give the effective documented extra response codes"
+   ],
+   "standalone_question": "In the items-router example, which tags and documented extra response codes does update_item receive when its local settings combine with the shared router settings?",
+   "answer": "`update_item` gets both `items` and `custom` tags. It documents the router's `404` response plus its local `403` response.",
+   "key_facts": [
+    "update_item gets both items and custom tags.",
+    "update_item documents both 404 and 403 responses."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "update_item",
+    "items",
+    "custom",
+    "404",
+    "403"
+   ],
+   "evidence_pages": [
+    "app-structure/bigger-applications.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "All operations get the tag `items`; `update_item` gets both `items` and `custom`.",
+     "page": "app-structure/bigger-applications.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "All operations document the `404` response; `update_item` additionally documents `403`.",
+     "page": "app-structure/bigger-applications.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 11,
+   "turn_type": "update",
+   "type": "multi",
+   "question": "Move our Swagger UI from /workbench-27 to /console-63, keeping the schema endpoint unchanged. Which constructor option changes, and does this require changing the schema URL option too?",
+   "asks": [
+    "Apply the Swagger UI route change",
+    "Explain whether the schema URL option must change"
+   ],
+   "standalone_question": "Move a project's Swagger UI from /workbench-27 to /console-63 while keeping its schema endpoint unchanged. Which FastAPI constructor option changes, and must the schema URL option also change?",
+   "answer": "Set `docs_url=\"/console-63\"`. There is no need to change `openapi_url`: it independently controls the schema endpoint.",
+   "key_facts": [
+    "The Swagger UI route is now configured with docs_url=\"/console-63\".",
+    "Changing docs_url does not require changing openapi_url."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "docs_url",
+    "/console-63",
+    "openapi_url"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "Move our Swagger UI from /workbench-27 to /console-63, keeping the schema endpoint unchanged.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "| `docs_url` | `\"/docs\"` | disable Swagger UI |",
+     "page": "openapi/metadata-and-docs-ui.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "app = FastAPI(docs_url=\"/documentation\", redoc_url=None)   # tutorial003",
+     "page": "openapi/metadata-and-docs-ui.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Swagger UI URL",
+     "from": "/workbench-27",
+     "to": "/console-63"
+    }
+   ],
+   "affects": [
+    13,
+    16
+   ],
+   "source_turn": null,
+   "recall_distance": 11,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Change `docs_url` to `/console-63`. Keep `openapi_url` unchanged; it does not need to change.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 12,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "The explorer will sit beside a built frontend. With the default automatic fallback, which file wins if both 404.html and index.html exist, and can index.html fallback turn a missing JavaScript asset into a successful HTML response?",
+   "asks": [
+    "Identify automatic fallback priority and status",
+    "Explain missing-JavaScript behavior"
+   ],
+   "standalone_question": "For a built frontend served by FastAPI with automatic fallback, which file wins when both 404.html and index.html exist, and can index.html fallback turn a missing JavaScript asset into a successful HTML response?",
+   "answer": "`404.html` wins under the default `fallback=\"auto\"` behavior and is served with status `404`. No: the `index.html` fallback is for navigation requests; missing JS/CSS/images still receive `404`.",
+   "key_facts": [
+    "Automatic fallback prefers 404.html when present and serves it with status 404.",
+    "index.html fallback does not turn missing JavaScript assets into successful HTML responses."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation",
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "404.html",
+    "index.html",
+    "404",
+    "auto"
+   ],
+   "evidence_pages": [
+    "app-structure/static-files-templates-and-frontend.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "\"auto\" — use `404.html` if that file exists;",
+     "page": "app-structure/static-files-templates-and-frontend.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "\"404.html\" — serve `dist/404.html` with status **404**.",
+     "page": "app-structure/static-files-templates-and-frontend.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Missing JS/CSS/images and `POST`/`PUT` requests still get `404`.",
+     "page": "app-structure/static-files-templates-and-frontend.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "With Starlette’s `StaticFiles(html=True)`, `404.html` wins for a missing path; `index.html` is used for directory requests, not arbitrary missing assets. A separate SPA catch-all can return `index.html` with a success status for a missing JavaScript file unless it excludes asset paths.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 13,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the branded explorer configuration, what API title are we using now, what is the current Swagger UI route, and what exact nested setting selects the dark highlighting theme we discussed?",
+   "asks": [
+    "Give the current API title",
+    "Give the current Swagger UI route",
+    "Give the nested dark-theme setting"
+   ],
+   "standalone_question": "For the project's branded API explorer, what is the current API title after its rename, what is the current Swagger UI route after its move, and what exact nested setting selects the previously discussed dark highlighting theme?",
+   "answer": "The title is `Copper Finch Dispatch`; Swagger UI is at `/console-63`; the theme setting is `swagger_ui_parameters={\"syntaxHighlight\": {\"theme\": \"obsidian\"}}`.",
+   "key_facts": [
+    "The current API title is Copper Finch Dispatch.",
+    "The current Swagger UI route is /console-63.",
+    "The dark-theme setting is swagger_ui_parameters={\"syntaxHighlight\": {\"theme\": \"obsidian\"}}."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "Copper Finch Dispatch",
+    "/console-63",
+    "swagger_ui_parameters",
+    "syntaxHighlight",
+    "obsidian"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    4,
+    7,
+    11
+   ],
+   "evidence": [
+    {
+     "quote": "Rename the API from Copper Finch Relay to Copper Finch Dispatch.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Move our Swagger UI from /workbench-27 to /console-63, keeping the schema endpoint unchanged.",
+     "user_turn": 11,
+     "fact_idx": 1
+    },
+    {
+     "quote": "app = FastAPI(swagger_ui_parameters={\"syntaxHighlight\": {\"theme\": \"obsidian\"}})",
+     "page": "openapi/metadata-and-docs-ui.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 9,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 14,
+   "turn_type": "same_doc_new_topic",
+   "type": "multi",
+   "question": "I need an internal diagnostic operation to stay callable but disappear from the schema and explorer. Which decorator option does that, and does it actually block requests to the operation?",
+   "asks": [
+    "Identify the schema-exclusion option",
+    "Explain whether exclusion blocks requests"
+   ],
+   "standalone_question": "Which FastAPI decorator option keeps an internal diagnostic operation callable while excluding it from the schema and API explorer, and does that option block requests?",
+   "answer": "Use `include_in_schema=False` on its decorator. The endpoint still works; it is omitted from the OpenAPI schema and documentation UI, not access-controlled.",
+   "key_facts": [
+    "include_in_schema=False excludes the operation from the schema and documentation UI.",
+    "The endpoint remains callable despite schema exclusion."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "include_in_schema=False"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "@app.get(\"/items/\", include_in_schema=False)",
+     "page": "app-structure/path-operation-configuration.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "The endpoint still works but does not appear in `/openapi.json` or the docs.",
+     "page": "app-structure/path-operation-configuration.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 1,
+   "recall_distance": 13,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Use `include_in_schema=False`. It hides the operation from the schema and API explorer but does not block requests.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 15,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For an Authorize-dialog demo, use the own-items endpoint example. Which effective scopes reach its central user-checking dependency, and what status and detail does the demo produce when the items permission is missing?",
+   "asks": [
+    "Give the own-items endpoint's effective scopes",
+    "Give the missing-items permission response"
+   ],
+   "standalone_question": "In the OAuth2 own-items endpoint example used for an Authorize-dialog demo, which effective scopes reach the central user-checking dependency, and what status and detail result when the items permission is missing?",
+   "answer": "For `/users/me/items/`, the required scopes accumulate to `[\"items\", \"me\"]`. Without `items`, the demo returns `401` with detail `Not enough permissions`.",
+   "key_facts": [
+    "The own-items endpoint requires both items and me, accumulated as [\"items\", \"me\"].",
+    "Missing items permission produces 401 with detail Not enough permissions."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable",
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/users/me/items/",
+    "items",
+    "me",
+    "401",
+    "Not enough permissions"
+   ],
+   "evidence_pages": [
+    "security/oauth2-scopes.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "| `/users/me/items/` | `items` (path op) + `me` → `[\"items\", \"me\"]` |",
+     "page": "security/oauth2-scopes.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Without `items`, `/users/me/items/` returns `401 Not enough permissions`;",
+     "page": "security/oauth2-scopes.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "The central dependency receives the combined scopes `[\"me\", \"items\"]`. If `items` is missing, it returns **401 Unauthorized** with detail **\"Not enough permissions\"**.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 16,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "Where is our Swagger UI now, and what exact teal-logo URL and schema extension location did we use for the custom branding example?",
+   "asks": [
+    "Recall the current Swagger UI route",
+    "Recall the logo URL and extension location"
+   ],
+   "standalone_question": "What is the project's current Swagger UI route after its move, and what exact teal-logo URL and schema extension location were used for the custom branding example?",
+   "answer": "Swagger UI is at `/console-63`. The logo example uses `https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png` as the `url` in `info[\"x-logo\"]`.",
+   "key_facts": [
+    "The current Swagger UI route is /console-63.",
+    "The branding example puts https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png in the url field of info.x-logo."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/console-63",
+    "https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png",
+    "info",
+    "x-logo"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    3,
+    11
+   ],
+   "evidence": [
+    {
+     "quote": "Move our Swagger UI from /workbench-27 to /console-63, keeping the schema endpoint unchanged.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "openapi_schema[\"info\"][\"x-logo\"] = {",
+     "page": "openapi/extending-openapi.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "\"url\": \"https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png\"",
+     "page": "openapi/extending-openapi.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 13,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 17,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "What explicit operation ID did we choose for the parcel operation, and will installing the first-tag-plus-route-name generator override it?",
+   "asks": [
+    "Recall the parcel operation ID",
+    "Explain explicit-ID precedence over the generator"
+   ],
+   "standalone_question": "What explicit operation ID did the project choose for its parcel operation, and will a first-tag-plus-route-name unique-ID generator override that explicit choice?",
+   "answer": "The parcel operation's ID is `dispatchParcelQ8`. No: an explicit decorator `operation_id` overrides `generate_unique_id_function`, so it stays unchanged.",
+   "key_facts": [
+    "The parcel operation's explicit ID is dispatchParcelQ8.",
+    "An explicit operation_id wins over generate_unique_id_function."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "dispatchParcelQ8",
+    "operation_id",
+    "generate_unique_id_function"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1,
+    8
+   ],
+   "evidence": [
+    {
+     "quote": "For our parcel operation, the explicit operation ID should be dispatchParcelQ8.",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "an explicit `operation_id=` on a decorator overrides it.",
+     "page": "openapi/generating-clients.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 16,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 18,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the explorer handoff demo, which schema endpoint should the client generator fetch, what exact payload does the converted selectable example send, and what status/detail should the own-items permission failure show?",
+   "asks": [
+    "Give the chosen schema endpoint",
+    "Give the converted example payload",
+    "Give the own-items missing-permission status and detail"
+   ],
+   "standalone_question": "For the project's API explorer handoff demo, which chosen schema endpoint should the client generator fetch, what exact payload does the converted selectable request example send, and what status/detail should the own-items permission failure show?",
+   "answer": "Fetch `/spec/finch-27.json`. The converted example sends `{\"name\": \"Bar\", \"price\": \"35.4\"}`. The own-items demo without `items` permission returns `401` with detail `Not enough permissions`.",
+   "key_facts": [
+    "The client generator should fetch the schema at /spec/finch-27.json.",
+    "The converted selectable example sends {\"name\": \"Bar\", \"price\": \"35.4\"}.",
+    "The own-items demo without items permission returns 401 with detail Not enough permissions."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/spec/finch-27.json",
+    "Bar",
+    "35.4",
+    "items",
+    "401",
+    "Not enough permissions"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0,
+    5,
+    15
+   ],
+   "evidence": [
+    {
+     "quote": "Our title is Copper Finch Relay, our schema URL is /spec/finch-27.json, and our Swagger UI URL is /workbench-27.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "\"name\": \"Bar\",\n                        \"price\": \"35.4\",",
+     "page": "request/extra-data-types-and-examples.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "Without `items`, `/users/me/items/` returns `401 Not enough permissions`;",
+     "page": "security/oauth2-scopes.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 18,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  }
+ ]
+}

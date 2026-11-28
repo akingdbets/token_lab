@@ -1,0 +1,2482 @@
+{
+ "schema_version": 2,
+ "scenario_id": "v2_11_testing_strategy",
+ "title": "An Isolated FastAPI Test Suite",
+ "topic": "테스트 전략",
+ "status": "draft",
+ "bundle": [
+  "testing/testing-basics.md",
+  "testing/testing-dependencies-events-websockets.md",
+  "testing/async-tests-and-database-testing.md",
+  "app-structure/settings.md",
+  "dependencies/advanced-dependencies.md",
+  "integrations/sql-databases.md",
+  "app-structure/lifespan-events.md",
+  "integrations/websockets.md",
+  "security/oauth2-jwt.md"
+ ],
+ "generation": {
+  "model": "gpt-6.1-sol",
+  "served_model": "gpt-6.1-sol",
+  "prompt": [
+   "mt_scenario_gen_v3",
+   "7e637f26a462"
+  ],
+  "settings": {
+   "model": "gpt-6.1-sol",
+   "temperature": null,
+   "temperature_requested": null,
+   "seed": 42,
+   "reasoning_effort": null,
+   "reasoning_effort_requested": null,
+   "max_tokens": 40000,
+   "max_tokens_param": "max_completion_tokens"
+  },
+  "run_id": "20261128-093457_v2_11_testing_strategy",
+  "attempts": 2,
+  "created_at": "2026-11-28T09:40:15"
+ },
+ "turns": [
+  {
+   "turn": 0,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm building HTTP tests for our FastAPI service. Our custom header is X-Experiment-Seal and its test value is violet-62. Show a TestClient GET to /items/foo carrying that header. Also, what status and JSON detail does the sample item endpoint return for a bad token?",
+   "asks": [
+    "GET carrying the project's custom header",
+    "Sample bad-token response"
+   ],
+   "standalone_question": "Show a TestClient GET to /items/foo using the custom header X-Experiment-Seal with value violet-62. What status and JSON detail does the sample item endpoint return for a bad token?",
+   "answer": "For your service: `response = client.get(\"/items/foo\", headers={\"X-Experiment-Seal\": \"violet-62\"})`. TestClient accepts request headers through `headers={...}`. The sample's bad-token response is status `400` with `{\"detail\": \"Invalid X-Token header\"}`.",
+   "key_facts": [
+    "The project's request uses X-Experiment-Seal with value violet-62.",
+    "Pass request headers using the headers argument to client.get().",
+    "The sample rejects a bad token with 400 and detail Invalid X-Token header."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "X-Experiment-Seal",
+    "violet-62",
+    "/items/foo",
+    "headers",
+    "400",
+    "Invalid X-Token header"
+   ],
+   "evidence_pages": [
+    "testing/testing-basics.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our custom header is X-Experiment-Seal and its test value is violet-62.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "| Headers | `headers={...}` |",
+     "page": "testing/testing-basics.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "    assert response.status_code == 400",
+     "page": "testing/testing-basics.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "    assert response.json() == {\"detail\": \"Invalid X-Token header\"}",
+     "page": "testing/testing-basics.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 1,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For dependency isolation, suppose common_parameters is replaced by override_dependency from the sample. What params does GET /items/?q=foo&skip=100&limit=200 return, and does the original dependency tree still run?",
+   "asks": [
+    "Overridden parameter result",
+    "Execution of the original dependency tree"
+   ],
+   "standalone_question": "When common_parameters is replaced by override_dependency from the sample, what params does GET /items/?q=foo&skip=100&limit=200 return, and does the original dependency tree still run?",
+   "answer": "The params are `{\"q\": \"foo\", \"skip\": 5, \"limit\": 10}`. The replacement declares only `q`, so the supplied `skip` and `limit` do not change its fixed values. The original dependency and its sub-dependencies do not run.",
+   "key_facts": [
+    "The returned params are q=foo, skip=5, limit=10, ignoring the supplied skip and limit.",
+    "The original dependency and its sub-dependencies do not run when overridden."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable",
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "q",
+    "foo",
+    "skip",
+    "limit",
+    "5",
+    "10"
+   ],
+   "evidence_pages": [
+    "testing/testing-dependencies-events-websockets.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "        \"params\": {\"q\": \"foo\", \"skip\": 5, \"limit\": 10},",
+     "page": "testing/testing-dependencies-events-websockets.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- FastAPI consults `dependency_overrides` while solving dependencies for every request and calls the override instead of the original — the original and its sub-dependencies don't run.",
+     "page": "testing/testing-dependencies-events-websockets.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "It returns `{\"q\": \"foo\", \"skip\": 5, \"limit\": 10}`. No—the original dependency (and its dependency tree) is skipped; the override runs instead.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 2,
+   "turn_type": "followup",
+   "type": "code",
+   "question": "Show the registration for that replacement and a cleanup statement that prevents it leaking into other tests.",
+   "asks": [
+    "Override registration",
+    "Override cleanup"
+   ],
+   "standalone_question": "Show how to register the dependency replacement discussed in the conversation and clean it up so it does not affect other tests.",
+   "answer": "```python\napp.dependency_overrides[common_parameters] = override_dependency\n# Run this test's requests.\napp.dependency_overrides.clear()\n```",
+   "key_facts": [
+    "Register override_dependency under the original common_parameters callable.",
+    "Clear dependency_overrides after the test to isolate later tests."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [
+      "app.dependency_overrides = {}"
+     ],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "app.dependency_overrides",
+    "common_parameters",
+    "override_dependency",
+    "app.dependency_overrides.clear()"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "app.dependency_overrides[common_parameters] = override_dependency",
+     "page": "testing/testing-dependencies-events-websockets.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "app.dependency_overrides.clear()",
+     "page": "testing/testing-dependencies-events-websockets.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [
+    {
+     "quote": "app.dependency_overrides = {}",
+     "page": "testing/testing-dependencies-events-websockets.md",
+     "fact_idx": 1,
+     "alt_idx": 0
+    }
+   ],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "For a FastAPI dependency override, register it for the test and restore the previous value afterward:\n\n```python\nimport pytest\n\n@pytest.fixture\ndef dependency_override(app):\n    key = original_dependency\n    previous = app.dependency_overrides.get(key)\n\n    app.dependency_overrides[key] = replacement_dependency\n    yield\n\n    if previous is None:\n        app.dependency_overrides.pop(key, None)\n    else:\n        app.dependency_overrides[key] = previous\n```\n\nThis removes the override after the test without disturbing other overrides.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 3,
+   "turn_type": "new",
+   "type": "code",
+   "question": "Our settings tests should use admin_email=\"qa-orbit@sample.net\". Show a settings dependency override that supplies it without changing process environment variables.",
+   "asks": [
+    "Settings dependency override using the chosen email"
+   ],
+   "standalone_question": "Show a settings dependency override that supplies admin_email=\"qa-orbit@sample.net\" without changing process environment variables.",
+   "answer": "```python\ndef get_settings_override():\n    return Settings(admin_email=\"qa-orbit@sample.net\")\n\napp.dependency_overrides[get_settings] = get_settings_override\n```\nThis replaces the settings provider for dependency-injected requests.",
+   "key_facts": [
+    "The override constructs Settings with admin_email qa-orbit@sample.net.",
+    "Register the replacement under get_settings in app.dependency_overrides."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "Settings",
+    "admin_email",
+    "qa-orbit@sample.net",
+    "get_settings",
+    "app.dependency_overrides"
+   ],
+   "evidence_pages": [
+    "app-structure/settings.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our settings tests should use admin_email=\"qa-orbit@sample.net\".",
+     "user_turn": 3,
+     "fact_idx": 0
+    },
+    {
+     "quote": "app.dependency_overrides[get_settings] = get_settings_override",
+     "page": "app-structure/settings.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\napp.dependency_overrides[get_settings] = lambda: Settings(\n    admin_email=\"qa-orbit@sample.net\"\n)\n```\n\nThis overrides the settings dependency for the app without changing environment variables.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 4,
+   "turn_type": "update",
+   "type": "multi",
+   "question": "Change our settings-test admin_email to qa-comet@sample.net instead. What should the replacement return now, and will that explicit value win over an environment variable?",
+   "asks": [
+    "Updated settings return value",
+    "Constructor-versus-environment precedence"
+   ],
+   "standalone_question": "Change the settings-test admin_email to qa-comet@sample.net. What should the replacement settings provider return now, and will that explicit value win over an environment variable?",
+   "answer": "Return `Settings(admin_email=\"qa-comet@sample.net\")`. Yes: constructor values take priority over environment variables.",
+   "key_facts": [
+    "The settings override now returns Settings with admin_email qa-comet@sample.net.",
+    "Explicit constructor values take priority over environment variables."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "Settings",
+    "admin_email",
+    "qa-comet@sample.net"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    3
+   ],
+   "evidence": [
+    {
+     "quote": "Change our settings-test admin_email to qa-comet@sample.net instead.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Values passed to the constructor take priority over environment variables.",
+     "page": "app-structure/settings.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "settings-test admin_email",
+     "from": "qa-orbit@sample.net",
+     "to": "qa-comet@sample.net"
+    }
+   ],
+   "affects": [
+    13,
+    17
+   ],
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "It should return `qa-comet@sample.net`. Yes—if that value is supplied explicitly to the settings provider, it takes precedence over an environment variable.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 5,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I want a fresh in-memory SQLModel database for each test, shared across the threads used by that test. What engine configuration does the fixture sample use, and how does it route endpoint sessions to that database?",
+   "asks": [
+    "In-memory test engine configuration",
+    "Routing endpoint sessions to the test database"
+   ],
+   "standalone_question": "For a fresh in-memory SQLModel database per test that is shared across that test's threads, what engine configuration does the fixture sample use, and how are endpoint sessions routed to it?",
+   "answer": "Use `create_engine(\"sqlite://\", connect_args={\"check_same_thread\": False}, poolclass=StaticPool)` in the session fixture, create tables with `SQLModel.metadata.create_all(engine)`, and open a `Session(engine)`. Override `get_session` with a callable returning that fixture session, then clear overrides after the test.",
+   "key_facts": [
+    "The fixture uses sqlite://, check_same_thread=False, and StaticPool for a fresh in-memory database shared across threads.",
+    "Override get_session to return the fixture's test session and clear overrides afterward."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "sqlite://",
+    "check_same_thread",
+    "False",
+    "StaticPool",
+    "get_session",
+    "app.dependency_overrides"
+   ],
+   "evidence_pages": [
+    "testing/async-tests-and-database-testing.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "        \"sqlite://\", connect_args={\"check_same_thread\": False}, poolclass=StaticPool",
+     "page": "testing/async-tests-and-database-testing.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- An in-memory SQLite database (`\"sqlite://\"`) with `StaticPool` gives each test a fresh, fast database shared across threads.",
+     "page": "testing/async-tests-and-database-testing.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    app.dependency_overrides[get_session] = get_session_override",
+     "page": "testing/async-tests-and-database-testing.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "    app.dependency_overrides.clear()",
+     "page": "testing/async-tests-and-database-testing.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "The fixture creates an in-memory SQLite engine with `connect_args={\"check_same_thread\": False}` and `poolclass=StaticPool`, so all threads share the same connection. It overrides the app’s `get_session` dependency to yield sessions from that test’s engine.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 6,
+   "turn_type": "followup",
+   "type": "code",
+   "question": "A separate test must await an async database check after an HTTP request, and the app needs startup resources. Show the async client and lifespan nesting for that test rather than the synchronous client.",
+   "asks": [
+    "Async HTTP test with lifespan and an awaited database check"
+   ],
+   "standalone_question": "Show the async test marker and client/lifespan nesting for a FastAPI test that must await a database check after an HTTP request and requires startup resources.",
+   "answer": "```python\nimport pytest\nfrom asgi_lifespan import LifespanManager\nfrom httpx import ASGITransport, AsyncClient\n\n@pytest.mark.anyio\nasync def test_write():\n    async with LifespanManager(app) as manager:\n        async with AsyncClient(\n            transport=ASGITransport(app=manager.app),\n            base_url=\"http://test\",\n        ) as ac:\n            response = await ac.get(\"/\")\n            assert response.status_code == 200\n            await check_database()  # Your async verification function.\n```\nAsyncClient plus ASGITransport does not run lifespan by itself.",
+   "key_facts": [
+    "Use an async test marked pytest.mark.anyio with AsyncClient and ASGITransport when the test itself must await.",
+    "Wrap the app in LifespanManager because AsyncClient with ASGITransport does not run lifespan."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "pytest.mark.anyio",
+    "AsyncClient",
+    "ASGITransport",
+    "LifespanManager",
+    "manager.app",
+    "http://test"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "@pytest.mark.anyio",
+     "page": "testing/async-tests-and-database-testing.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "        transport=ASGITransport(app=app), base_url=\"http://test\"",
+     "page": "testing/async-tests-and-database-testing.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- **Lifespan events don't run** with `AsyncClient` + `ASGITransport`. If your app relies on `lifespan`/startup, wrap the app with `LifespanManager` from the `asgi-lifespan` package:",
+     "page": "testing/async-tests-and-database-testing.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nimport pytest\nfrom asgi_lifespan import LifespanManager\nfrom httpx import ASGITransport, AsyncClient\n\n@pytest.mark.anyio\nasync def test_request_persists_data():\n    async with LifespanManager(app):  # startup resources are available\n        async with AsyncClient(\n            transport=ASGITransport(app=app),\n            base_url=\"http://test\",\n        ) as client:\n            response = await client.post(\"/items\", json={\"name\": \"example\"})\n\n        assert response.status_code == 201\n        assert await database_check()  # check after the HTTP request\n```",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 7,
+   "turn_type": "same_doc_new_topic",
+   "type": "code",
+   "question": "For request-body serialization, which model method and mode should I use before passing a Pydantic instance to the client's JSON argument?",
+   "asks": [
+    "Pydantic model method for a JSON-ready request body"
+   ],
+   "standalone_question": "Which Pydantic model method and mode should be used before passing a model instance to the test client's JSON argument?",
+   "answer": "Use `model.model_dump(mode=\"json\")`, for example `client.post(\"/items/\", json=model.model_dump(mode=\"json\"))`.",
+   "key_facts": [
+    "Use model.model_dump(mode=\"json\") to convert the Pydantic model before passing it as json."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "model.model_dump(mode=\"json\")"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "To send a Pydantic model as JSON, convert it first with `jsonable_encoder` ([Extra Models and jsonable_encoder](../models/extra-models-and-updates.md)) or `model.model_dump(mode=\"json\")`.",
+     "page": "testing/testing-basics.md",
+     "fact_idx": 0
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 0,
+   "recall_distance": 7,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Use `model_dump(mode=\"json\")`.",
+    "fact_results": [
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": ".model_dump(mode=\"json\")",
+    "fact_results": [
+     true
+    ],
+    "judge_skipped": null,
+    "not_found": false,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 8,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm adding assertions around the hero endpoints. Which response model keeps secret_name out of a create response, and what is the list endpoint's maximum permitted limit?",
+   "asks": [
+    "Hero create response filtering",
+    "Maximum list limit"
+   ],
+   "standalone_question": "Which response model keeps secret_name out of the hero create response, and what maximum limit does the hero list endpoint permit?",
+   "answer": "`response_model=HeroPublic` filters the create response so `secret_name` is omitted. The list endpoint uses `Query(le=100)`, permitting a limit of at most `100`.",
+   "key_facts": [
+    "HeroPublic filters secret_name out of the create response.",
+    "Query(le=100) caps the list endpoint's limit at 100."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "range"
+     ]
+    }
+   ],
+   "key_entities": [
+    "HeroPublic",
+    "secret_name",
+    "Query(le=100)",
+    "100"
+   ],
+   "evidence_pages": [
+    "integrations/sql-databases.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "| `HeroPublic` | data model | Returned to clients: `id` is required (always set after saving), `secret_name` omitted |",
+     "page": "integrations/sql-databases.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "@app.post(\"/heroes/\", response_model=HeroPublic)",
+     "page": "integrations/sql-databases.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "`Query(le=100)` caps the page size.",
+     "page": "integrations/sql-databases.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "`HeroPublic` keeps `secret_name` out of the create response; the list endpoint permits a maximum limit of 100.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 9,
+   "turn_type": "recall",
+   "type": "code",
+   "question": "What header name and value did we choose for our HTTP tests, and how do I pass them on a GET?",
+   "asks": [
+    "Chosen custom header pair",
+    "Passing the header on a GET"
+   ],
+   "standalone_question": "What custom header name and value did the project choose for HTTP tests, and how should they be passed on a test-client GET?",
+   "answer": "We chose `X-Experiment-Seal: violet-62`. Pass it as `client.get(\"/items/foo\", headers={\"X-Experiment-Seal\": \"violet-62\"})`.",
+   "key_facts": [
+    "The chosen header pair is X-Experiment-Seal: violet-62.",
+    "Supply the pair through the GET request's headers argument."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "X-Experiment-Seal",
+    "violet-62",
+    "headers"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "Our custom header is X-Experiment-Seal and its test value is violet-62.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "| Headers | `headers={...}` |",
+     "page": "testing/testing-basics.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 9,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 10,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For a startup-resource test using the fake prediction model, what dictionary key identifies the loaded model, and on which side of yield must loading happen so requests cannot arrive before it finishes?",
+   "asks": [
+    "Fake prediction model's dictionary key",
+    "Loading position relative to yield"
+   ],
+   "standalone_question": "In the fake prediction model lifespan example, what dictionary key identifies the loaded model, and on which side of yield does loading happen so requests cannot arrive before it finishes?",
+   "answer": "The key is `answer_to_everything` in `ml_models`. Load it before `yield`: that code runs at startup, and the app does not serve requests until it finishes.",
+   "key_facts": [
+    "The fake model is stored in ml_models under answer_to_everything.",
+    "Startup loading belongs before yield, and requests wait for that startup code to finish."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "ml_models",
+    "answer_to_everything",
+    "yield"
+   ],
+   "evidence_pages": [
+    "app-structure/lifespan-events.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "    ml_models[\"answer_to_everything\"] = fake_answer_to_everything_ml_model",
+     "page": "app-structure/lifespan-events.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- Everything **before** `yield` runs at startup; the app does not serve requests until it finishes.",
+     "page": "app-structure/lifespan-events.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "The key is `\"model\"`, and loading happens before `yield`.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 11,
+   "turn_type": "update",
+   "type": "code",
+   "question": "Replace our HTTP test header value with amber-93, keeping the header name unchanged. Show the updated GET call.",
+   "asks": [
+    "GET with the updated custom header value"
+   ],
+   "standalone_question": "Replace the project's HTTP test header value with amber-93 while retaining the previously chosen header name. Show the updated test-client GET call.",
+   "answer": "`client.get(\"/items/foo\", headers={\"X-Experiment-Seal\": \"amber-93\"})`",
+   "key_facts": [
+    "The new header value is amber-93.",
+    "The retained header name is X-Experiment-Seal.",
+    "Use the headers argument to pass the updated pair on the GET."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "X-Experiment-Seal",
+    "amber-93",
+    "headers"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "Replace our HTTP test header value with amber-93, keeping the header name unchanged.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Our custom header is X-Experiment-Seal and its test value is violet-62.",
+     "user_turn": 0,
+     "fact_idx": 1
+    },
+    {
+     "quote": "| Headers | `headers={...}` |",
+     "page": "testing/testing-basics.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "HTTP test header value",
+     "from": "violet-62",
+     "to": "amber-93"
+    }
+   ],
+   "affects": [
+    16,
+    18
+   ],
+   "source_turn": null,
+   "recall_distance": 11,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 12,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For cleanup-timing tests, contrast request and function scope for a yield dependency. Also, what happens at route setup if a request-scoped yield dependency depends on a function-scoped sub-dependency?",
+   "asks": [
+    "Yield dependency cleanup timing by scope",
+    "Invalid scope nesting behavior"
+   ],
+   "standalone_question": "How does cleanup timing differ between request and function scope for a yield dependency, and what happens at route setup when a request-scoped yield dependency depends on a function-scoped sub-dependency?",
+   "answer": "With `scope=\"request\"`, cleanup runs after the response is sent; with `scope=\"function\"`, it runs after the path operation returns but before the response is sent. A request-scoped yield dependency cannot depend on a function-scoped sub-dependency: FastAPI raises `DependencyScopeError` at route setup.",
+   "key_facts": [
+    "Request scope cleans up after sending the response, while function scope cleans up before sending it.",
+    "A request-scoped yield dependency depending on a function-scoped sub-dependency causes DependencyScopeError at route setup."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "request",
+    "function",
+    "DependencyScopeError"
+   ],
+   "evidence_pages": [
+    "dependencies/advanced-dependencies.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "- `scope=\"request\"` (default): exit code after `yield` runs **after the response has been sent**.",
+     "page": "dependencies/advanced-dependencies.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- `scope=\"function\"`: exit code runs right after the path operation function returns, **before** the response is sent.",
+     "page": "dependencies/advanced-dependencies.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "FastAPI raises `DependencyScopeError` at route setup, e.g. *`The dependency \"get_session\" has a scope of \"request\", it cannot depend on dependencies with scope \"function\".`*",
+     "page": "dependencies/advanced-dependencies.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "A function-scoped yield dependency is cleaned up after the endpoint returns but before the response is sent. A request-scoped one is cleaned up after the response is sent.\n\nIf a request-scoped yield dependency depends on a function-scoped sub-dependency, FastAPI raises an error during route setup because the parent would outlive its sub-dependency.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 13,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the isolated settings-and-database fixtures, which admin email are we using now, which SQLite URL and pool class did we select, and do explicit settings constructor values or environment variables take priority?",
+   "asks": [
+    "Current settings-test admin email",
+    "Test database URL and pool class",
+    "Settings constructor-versus-environment priority"
+   ],
+   "standalone_question": "For the project's isolated settings-and-database fixtures, what is the currently chosen admin email, what SQLite URL and pool class are used, and do explicit settings constructor values or environment variables take priority?",
+   "answer": "1. Admin email: `qa-comet@sample.net`.\n2. Test database: `sqlite://` with `StaticPool`.\n3. Explicit settings constructor values take priority over environment variables.",
+   "key_facts": [
+    "The current settings-test admin email is qa-comet@sample.net.",
+    "The test database uses sqlite:// with StaticPool.",
+    "Explicit settings constructor values take priority over environment variables."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "qa-comet@sample.net",
+    "sqlite://",
+    "StaticPool"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    3,
+    4,
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "Change our settings-test admin_email to qa-comet@sample.net instead.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "        \"sqlite://\", connect_args={\"check_same_thread\": False}, poolclass=StaticPool",
+     "page": "testing/async-tests-and-database-testing.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "Values passed to the constructor take priority over environment variables.",
+     "page": "app-structure/settings.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 10,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 14,
+   "turn_type": "same_doc_new_topic",
+   "type": "multi",
+   "question": "Now I'm adding WebSocket client tests. What exact JSON does the minimal greeting sample receive, and what exception should a test assert when the server rejects a connection with close code 1008?",
+   "asks": [
+    "Minimal WebSocket greeting payload",
+    "Exception for rejected WebSocket connection"
+   ],
+   "standalone_question": "What exact JSON does the minimal WebSocket greeting test receive, and what exception should a test assert when the server rejects the connection with close code 1008?",
+   "answer": "The greeting is `{\"msg\": \"Hello WebSocket\"}`, read with `receive_json()` inside a `client.websocket_connect(...)` context. For rejection with code `1008`, assert `WebSocketDisconnect` using `pytest.raises`.",
+   "key_facts": [
+    "The minimal greeting test receives {\"msg\": \"Hello WebSocket\"}.",
+    "A connection rejected with code 1008 raises WebSocketDisconnect in TestClient."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "Hello WebSocket",
+    "receive_json()",
+    "1008",
+    "WebSocketDisconnect",
+    "pytest.raises"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "        assert data == {\"msg\": \"Hello WebSocket\"}",
+     "page": "testing/testing-dependencies-events-websockets.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "If the server closes or rejects the connection (e.g. `WebSocketException` with code 1008), the test client raises `WebSocketDisconnect`, which you can assert with `pytest.raises`.",
+     "page": "testing/testing-dependencies-events-websockets.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 1,
+   "recall_distance": 13,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 15,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I need negative authentication tests for both transports. In the cookie-or-token WebSocket sample, what happens if both credentials are absent? In the JWT HTTP flow, what status and challenge header result from an expired token?",
+   "asks": [
+    "WebSocket authentication failure with no credentials",
+    "HTTP JWT expired-token response"
+   ],
+   "standalone_question": "In the cookie-or-token WebSocket sample, what happens if both credentials are absent? In the JWT HTTP flow, what status and challenge header result from an expired token?",
+   "answer": "The WebSocket dependency raises `WebSocketException` with `status.WS_1008_POLICY_VIOLATION` (code `1008`). An expired JWT produces HTTP `401` with `WWW-Authenticate: Bearer`.",
+   "key_facts": [
+    "When both session cookie and query token are absent, the WebSocket sample raises WebSocketException with code 1008.",
+    "An expired JWT produces HTTP 401 with WWW-Authenticate: Bearer."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "WebSocketException",
+    "status.WS_1008_POLICY_VIOLATION",
+    "1008",
+    "401",
+    "WWW-Authenticate",
+    "Bearer"
+   ],
+   "evidence_pages": [
+    "integrations/websockets.md",
+    "security/oauth2-jwt.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "    if session is None and token is None:\n        raise WebSocketException(code=status.WS_1008_POLICY_VIOLATION)",
+     "page": "integrations/websockets.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Any problem — bad signature, expired token, missing `sub`, unknown user — results in the same `401` with `WWW-Authenticate: Bearer`.",
+     "page": "security/oauth2-jwt.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "With neither cookie nor token, the WebSocket is rejected with code **1008** (policy violation). An expired JWT yields **401 Unauthorized** with `WWW-Authenticate: Bearer`.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 16,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "For my next HTTP test, which custom header pair is current after the change, and which request argument sends form data rather than JSON?",
+   "asks": [
+    "Current custom HTTP header pair",
+    "Request argument for form data"
+   ],
+   "standalone_question": "What is the project's current custom HTTP test header pair after its revision, and which test-client request argument sends form data rather than JSON?",
+   "answer": "Use `headers={\"X-Experiment-Seal\": \"amber-93\"}`. Send form fields with `data={...}`, not `json={...}`.",
+   "key_facts": [
+    "The current custom header is X-Experiment-Seal with value amber-93.",
+    "Use data for form data rather than json."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "X-Experiment-Seal",
+    "amber-93",
+    "data",
+    "json"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0,
+    11
+   ],
+   "evidence": [
+    {
+     "quote": "Our custom header is X-Experiment-Seal and its test value is violet-62.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Replace our HTTP test header value with amber-93, keeping the header name unchanged.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "| Form data | `data={...}` |",
+     "page": "testing/testing-basics.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 16,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 17,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "For the settings response assertion, what is our current admin email, and what default items_per_user should remain when neither the environment nor the override supplies it?",
+   "asks": [
+    "Current settings-test admin email",
+    "Default items_per_user"
+   ],
+   "standalone_question": "What is the project's current settings-test admin email, and what is the sample settings class's default items_per_user when neither the environment nor the override supplies it?",
+   "answer": "The current admin email is `qa-comet@sample.net`. The default `items_per_user` is `50`.",
+   "key_facts": [
+    "The current settings-test admin email is qa-comet@sample.net.",
+    "items_per_user defaults to 50 when no value is supplied."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "qa-comet@sample.net",
+    "items_per_user",
+    "50"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    3,
+    4
+   ],
+   "evidence": [
+    {
+     "quote": "Change our settings-test admin_email to qa-comet@sample.net instead.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "    items_per_user: int = 50",
+     "page": "app-structure/settings.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 14,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 18,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "Before I finish these fixtures, which custom HTTP header pair is current, which exception should the WebSocket rejection test catch, and which SQLite URL plus pool class should the isolated database fixture use?",
+   "asks": [
+    "Current custom HTTP header pair",
+    "WebSocket rejection exception",
+    "Isolated database URL and pool class"
+   ],
+   "standalone_question": "What is the project's current custom HTTP test header pair, what exception should its WebSocket rejection test catch, and what SQLite URL and pool class should its isolated database fixture use?",
+   "answer": "1. HTTP header: `X-Experiment-Seal: amber-93`.\n2. WebSocket rejection: catch `WebSocketDisconnect`.\n3. Isolated database: `sqlite://` with `StaticPool`.",
+   "key_facts": [
+    "The current custom HTTP header pair is X-Experiment-Seal: amber-93.",
+    "The WebSocket rejection test should catch WebSocketDisconnect.",
+    "The isolated database fixture uses sqlite:// with StaticPool."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "X-Experiment-Seal",
+    "amber-93",
+    "WebSocketDisconnect",
+    "sqlite://",
+    "StaticPool"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5,
+    11,
+    14
+   ],
+   "evidence": [
+    {
+     "quote": "Our custom header is X-Experiment-Seal and its test value is violet-62.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Replace our HTTP test header value with amber-93, keeping the header name unchanged.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "If the server closes or rejects the connection (e.g. `WebSocketException` with code 1008), the test client raises `WebSocketDisconnect`, which you can assert with `pytest.raises`.",
+     "page": "testing/testing-dependencies-events-websockets.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "        \"sqlite://\", connect_args={\"check_same_thread\": False}, poolclass=StaticPool",
+     "page": "testing/async-tests-and-database-testing.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 13,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  }
+ ]
+}
