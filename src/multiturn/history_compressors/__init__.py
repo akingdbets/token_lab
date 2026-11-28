@@ -84,12 +84,19 @@ def budget_spec(b) -> str:
 
 
 def parse_budget_list(arg: str) -> list:
-    """--history-budget "2000,r=0.5" -> [2000, "r=0.5"]."""
-    out = []
+    """--history-budget "2000,r=0.5" -> [2000, "r=0.5"].
+    "r=0.25,0.5,0.75" 처럼 r= 뒤에 오는 소수(점이 있는 값)는 비율로 읽는다 -> ["r=0.25", "r=0.5", "r=0.75"].
+    점이 없는 정수는 언제나 토큰 예산이다."""
+    out, ratio_mode = [], False
     for x in arg.split(","):
-        if x.strip():
-            v = parse_budget(x)
-            out.append(v if isinstance(v, int) else budget_spec(v))
+        x = x.strip()
+        if not x:
+            continue
+        if ratio_mode and not x.startswith("r=") and re.fullmatch(r"\d*\.\d+", x):
+            x = "r=" + x
+        v = parse_budget(x)
+        ratio_mode = isinstance(v, float)
+        out.append(v if isinstance(v, int) else budget_spec(v))
     return out
 
 _STAGE_RE = re.compile(r"^([a-z_]+)(?:\((.*)\))?$")
