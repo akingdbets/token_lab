@@ -1,0 +1,1404 @@
+{
+  "schema_version": 2,
+  "scenario_id": "kafka_v2_17_interactive_queries",
+  "title": "Serving read-only application state over a custom RPC endpoint",
+  "topic": "Serving read-only application state over a custom RPC endpoint",
+  "status": "final",
+  "bundle": [
+    "concepts/delivery-semantics.md",
+    "streams/state-stores-and-interactive-queries.md",
+    "clients/apis-overview.md",
+    "streams/configuration.md",
+    "streams/serdes-and-datatypes.md",
+    "clients/producer.md",
+    "streams/processor-api.md",
+    "streams/topology-naming-and-description.md"
+  ],
+  "generation": {
+    "model": "gpt-6.1-sol",
+    "method": "Codex session, account plan",
+    "prompt": [
+      "mt_scenario_gen_v3",
+      "40710c69c22d"
+    ],
+    "run_id": "20261128-165733_kafka_18_session",
+    "request_file": "results/scenario_gen/20261128-165733_kafka_18_session/kafka_v2_17_interactive_queries_request.json",
+    "created_at": "2026-11-28T16:57:33",
+    "corpus_manifest_sha256": "a6fb69b10c7c98a2af883313f8938d0bfb1757fae65b8274c183a4c14ef4a735",
+    "context": "Authored in the ongoing Codex conversation with a shared turn structure, explicit page-grounded fact selections, and topic-specific project settings."
+  },
+  "turns": [
+    {
+      "turn": 0,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our project concerns serving read-only application state over a custom RPC endpoint. For the planned deployment, set application.id to ash-query-17. Which value should we use, and which ordering of processing and offset saving gives at-least-once consumption?",
+      "standalone_question": "For this Kafka project, our project concerns serving read-only application state over a custom RPC endpoint. For the planned deployment, set application.id to ash-query-17. Which value should we use, and which ordering of processing and offset saving gives at-least-once consumption?",
+      "asks": [
+        "project application.id",
+        "Which ordering of processing and offset saving gives at-least-once consumption?"
+      ],
+      "answer": "The project application.id is ash-query-17. Read, process, then save the position gives at-least-once consumption.",
+      "key_facts": [
+        "The project application.id is ash-query-17.",
+        "Read, process, then save the position gives at-least-once consumption."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "ash-query-17",
+        "At least once"
+      ],
+      "evidence_pages": [
+        "concepts/delivery-semantics.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 0,
+          "quote": "set application.id to ash-query-17",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/delivery-semantics.md",
+          "quote": "| Read → process → save position | First messages are re-processed by the new owner | **At least once** |",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "현재 설정값과 문서의 처리 순서를 정확히 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182753-325163_kafka_v2_17_interactive_queries",
+        "llm_source_hash": "60ba2862530d18c331bd3bc4f86798c2b2b6371326da5b5f925ad7a120a08697",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 1,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Set our RPC endpoint to ash-query-17:4471. Which project value applies, and may an interactive query modify a store outside the topology?",
+      "standalone_question": "For this Kafka project, set our RPC endpoint to ash-query-17:4471. Which project value applies, and may an interactive query modify a store outside the topology?",
+      "asks": [
+        "project RPC endpoint",
+        "May an interactive query modify a store outside the topology?"
+      ],
+      "answer": "The project RPC endpoint is ash-query-17:4471. No; interactive queries are read-only.",
+      "key_facts": [
+        "The project RPC endpoint is ash-query-17:4471.",
+        "No; interactive queries are read-only."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "ash-query-17:4471",
+        "read-only"
+      ],
+      "evidence_pages": [
+        "streams/state-stores-and-interactive-queries.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Set our RPC endpoint to ash-query-17:4471.",
+          "fact_idx": 0
+        },
+        {
+          "page": "streams/state-stores-and-interactive-queries.md",
+          "quote": "Queries are **read-only** — you can't mutate stores out of band.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "RPC 설정과 IQ의 읽기 전용 제약이 명확하다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182753-325163_kafka_v2_17_interactive_queries",
+        "llm_source_hash": "60ba2862530d18c331bd3bc4f86798c2b2b6371326da5b5f925ad7a120a08697",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 2,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "Do versioned state stores currently support interactive queries?",
+      "standalone_question": "For this Kafka project, do versioned state stores currently support interactive queries?",
+      "asks": [
+        "Do versioned state stores currently support interactive queries?"
+      ],
+      "answer": "Versioned state stores do not support interactive queries yet.",
+      "key_facts": [
+        "Versioned state stores do not support interactive queries yet."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "Versioned"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "streams/state-stores-and-interactive-queries.md",
+          "quote": "**Versioned state stores don't support IQ** yet.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "이전에 첨부한 문서에서 versioned store의 IQ 지원 여부를 확인한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182753-325163_kafka_v2_17_interactive_queries",
+        "llm_source_hash": "60ba2862530d18c331bd3bc4f86798c2b2b6371326da5b5f925ad7a120a08697",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 3,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "For our project, set query store name to ash-accounts-43. Which value should be used, and which artifact contains the Java producer, consumer and Admin clients?",
+      "standalone_question": "For this Kafka project, for our project, set query store name to ash-accounts-43. Which value should be used, and which artifact contains the Java producer, consumer and Admin clients?",
+      "asks": [
+        "project query store name",
+        "Which artifact contains the Java producer, consumer and Admin clients?"
+      ],
+      "answer": "The project query store name is ash-accounts-43. The artifact is kafka-clients.",
+      "key_facts": [
+        "The project query store name is ash-accounts-43.",
+        "The artifact is kafka-clients."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "ash-accounts-43",
+        "kafka-clients"
+      ],
+      "evidence_pages": [
+        "clients/apis-overview.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "set query store name to ash-accounts-43",
+          "user_turn": 3
+        },
+        {
+          "fact_idx": 1,
+          "page": "clients/apis-overview.md",
+          "quote": "Producer, Consumer, Share Consumer and Admin all come from one artifact:\n\n```xml\n<dependency>\n\t<groupId>org.apache.kafka</groupId>\n\t<artifactId>kafka-clients</artifactId>\n\t<version>4.3.1</version>\n</dependency>\n```"
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:35+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182753-325163_kafka_v2_17_interactive_queries",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 4,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Before rollout, change our application.id from ash-query-17 to ash-query-29. What is the revised project value, and which consumer isolation mode still includes non-transactional records alongside committed transactions?",
+      "standalone_question": "For this Kafka project, before rollout, change our application.id from ash-query-17 to ash-query-29. What is the revised project value, and which consumer isolation mode still includes non-transactional records alongside committed transactions?",
+      "asks": [
+        "updated application.id",
+        "Which consumer isolation mode still includes non-transactional records alongside committed transactions?"
+      ],
+      "answer": "The project application.id is ash-query-29. read_committed includes committed transactional and non-transactional records.",
+      "key_facts": [
+        "The project application.id is ash-query-29.",
+        "read_committed includes committed transactional and non-transactional records."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "ash-query-29",
+        "read_committed"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our application.id from ash-query-17 to ash-query-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/delivery-semantics.md",
+          "quote": "`read_committed` returns only committed transactional messages (plus non-transactional ones).",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "application.id",
+          "from": "ash-query-17",
+          "to": "ash-query-29"
+        }
+      ],
+      "affects": [
+        9,
+        13
+      ],
+      "source_turn": null,
+      "recall_distance": 4,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "application.id 변경과 과거 문서의 isolation mode를 올바르게 결합한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182753-325163_kafka_v2_17_interactive_queries",
+        "llm_source_hash": "60ba2862530d18c331bd3bc4f86798c2b2b6371326da5b5f925ad7a120a08697",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 5,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Under exactly-once processing, what is the default commit interval?",
+      "standalone_question": "For this Kafka project, under exactly-once processing, what is the default commit interval?",
+      "asks": [
+        "Under exactly-once processing, what is the default commit interval?"
+      ],
+      "answer": "Under exactly-once processing, the default commit.interval.ms is 100 ms.",
+      "key_facts": [
+        "Under exactly-once processing, the default commit.interval.ms is 100 ms."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "commit.interval.ms",
+        "100"
+      ],
+      "evidence_pages": [
+        "streams/configuration.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "page": "streams/configuration.md",
+          "quote": "`commit.interval.ms` default drops from `30000` to **`100`**."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:35+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182753-325163_kafka_v2_17_interactive_queries",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 6,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "Under exactly-once processing, what producer transaction timeout is the default?",
+      "standalone_question": "For this Kafka project, under exactly-once processing, what producer transaction timeout is the default?",
+      "asks": [
+        "Under exactly-once processing, what producer transaction timeout is the default?"
+      ],
+      "answer": "The producer transaction.timeout.ms default is 10000 ms under exactly-once processing.",
+      "key_facts": [
+        "The producer transaction.timeout.ms default is 10000 ms under exactly-once processing."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "10000"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "streams/configuration.md",
+          "quote": "Producer `transaction.timeout.ms` defaults to **`10000`**",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "이전에 첨부된 Streams 설정 문서의 EOS timeout을 정확히 회수한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182753-325163_kafka_v2_17_interactive_queries",
+        "llm_source_hash": "60ba2862530d18c331bd3bc4f86798c2b2b6371326da5b5f925ad7a120a08697",
+        "needs_recheck": true,
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 7,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "What RPC endpoint is assigned in the remote-query example?",
+      "standalone_question": "In streams/state-stores-and-interactive-queries.md, what RPC endpoint is assigned in the example under Querying the entire application (remote state)?",
+      "asks": [
+        "What RPC endpoint is assigned in the remote-query example?"
+      ],
+      "answer": "The example endpoint is host1:4460.",
+      "key_facts": [
+        "The example endpoint is host1:4460."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example"
+          ]
+        }
+      ],
+      "key_entities": [
+        "host1:4460"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "streams/state-stores-and-interactive-queries.md",
+          "quote": "String rpcEndpoint = \"host1:4460\";",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 1,
+      "recall_distance": 6,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:35+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182753-325163_kafka_v2_17_interactive_queries",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 8,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Use ash-ledger-41 as the project input topic name. Which value should be used, and what are the default key and value Serdes when none are configured?",
+      "standalone_question": "For this Kafka project, use ash-ledger-41 as the project input topic name. Which value should be used, and what are the default key and value Serdes when none are configured?",
+      "asks": [
+        "project input topic name",
+        "What are the default key and value Serdes when none are configured?"
+      ],
+      "answer": "The project input topic name is ash-ledger-41. default.key.serde and default.value.serde both default to null.",
+      "key_facts": [
+        "The project input topic name is ash-ledger-41.",
+        "default.key.serde and default.value.serde both default to null."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "ash-ledger-41",
+        "null"
+      ],
+      "evidence_pages": [
+        "streams/serdes-and-datatypes.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Use ash-ledger-41 as the project input topic name.",
+          "fact_idx": 0
+        },
+        {
+          "page": "streams/serdes-and-datatypes.md",
+          "quote": "`default.key.serde` and `default.value.serde` **default to `null`**",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "입력 topic 설정과 Serde 기본값이 정확하다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182753-325163_kafka_v2_17_interactive_queries",
+        "llm_source_hash": "60ba2862530d18c331bd3bc4f86798c2b2b6371326da5b5f925ad7a120a08697",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 9,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What application.id are we using now, and which consumer isolation mode still includes non-transactional records alongside committed transactions?",
+      "standalone_question": "For this Kafka project, what application.id are we using now, and which consumer isolation mode still includes non-transactional records alongside committed transactions?",
+      "asks": [
+        "current application.id",
+        "Which consumer isolation mode still includes non-transactional records alongside committed transactions?"
+      ],
+      "answer": "The project application.id is ash-query-29. read_committed includes committed transactional and non-transactional records.",
+      "key_facts": [
+        "The project application.id is ash-query-29.",
+        "read_committed includes committed transactional and non-transactional records."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "ash-query-29",
+        "read_committed"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our application.id from ash-query-17 to ash-query-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/delivery-semantics.md",
+          "quote": "`read_committed` returns only committed transactional messages (plus non-transactional ones).",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 5,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    },
+    {
+      "turn": 10,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "For a standalone KafkaProducer, what is the default linger.ms batching delay in milliseconds?",
+      "standalone_question": "For a standalone KafkaProducer, what is the default linger.ms batching delay in milliseconds?",
+      "asks": [
+        "What is the default batching delay in milliseconds?"
+      ],
+      "answer": "The default linger.ms is 5 ms.",
+      "key_facts": [
+        "The default linger.ms is 5 ms."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "linger.ms",
+        "5"
+      ],
+      "evidence_pages": [
+        "clients/producer.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "clients/producer.md",
+          "quote": "`linger.ms`, default `5` ms",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:35+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182753-325163_kafka_v2_17_interactive_queries",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 11,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our RPC endpoint from ash-query-17:4471 to ash-query-29:4483. What value should we use now, and do versioned state stores currently support interactive queries?",
+      "standalone_question": "For this Kafka project, change our RPC endpoint from ash-query-17:4471 to ash-query-29:4483. What value should we use now, and do versioned state stores currently support interactive queries?",
+      "asks": [
+        "updated RPC endpoint",
+        "Do versioned state stores currently support interactive queries?"
+      ],
+      "answer": "The project RPC endpoint is ash-query-29:4483. Versioned state stores do not support interactive queries yet.",
+      "key_facts": [
+        "The project RPC endpoint is ash-query-29:4483.",
+        "Versioned state stores do not support interactive queries yet."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "ash-query-29:4483",
+        "Versioned"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our RPC endpoint from ash-query-17:4471 to ash-query-29:4483.",
+          "fact_idx": 0
+        },
+        {
+          "page": "streams/state-stores-and-interactive-queries.md",
+          "quote": "**Versioned state stores don't support IQ** yet.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "RPC endpoint",
+          "from": "ash-query-17:4471",
+          "to": "ash-query-29:4483"
+        }
+      ],
+      "affects": [
+        17
+      ],
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "엔드포인트 변경을 정확히 반영하며 과거 IQ 문서가 필요하다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182753-325163_kafka_v2_17_interactive_queries",
+        "llm_source_hash": "60ba2862530d18c331bd3bc4f86798c2b2b6371326da5b5f925ad7a120a08697",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 12,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "In the Processor API documentation example with 60 records timestamped 1…60 s and a ten-second schedule, how many STREAM_TIME punctuations occur?",
+      "standalone_question": "In streams/processor-api.md, for the example with 60 records timestamped 1…60 s and a ten-second schedule, how many STREAM_TIME punctuations occur?",
+      "asks": [
+        "In the example with 60 records timestamped 1…60 s and a ten-second schedule, how many STREAM_TIME punctuations occur?"
+      ],
+      "answer": "The example produces six stream-time punctuations.",
+      "key_facts": [
+        "The example produces six stream-time punctuations."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "example",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "6"
+      ],
+      "evidence_pages": [
+        "streams/processor-api.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "page": "streams/processor-api.md",
+          "quote": "| `PunctuationType` | Triggered by | Example: 60 records with timestamps 1…60 s, schedule every 10 s |\n| --- | --- | --- |\n| `STREAM_TIME` | Record timestamps (event time by default) | `punctuate()` runs **6 times**, regardless of how long processing takes. |"
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:35+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182753-325163_kafka_v2_17_interactive_queries",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 13,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which application.id are we using now, what is the default key Serde when none is configured, and for a standalone KafkaProducer, what is the default linger.ms batching delay in milliseconds?",
+      "standalone_question": "For this project, which application.id is currently configured, what is the default key Serde when none is configured, and for a standalone KafkaProducer, what is the default linger.ms batching delay in milliseconds?",
+      "asks": [
+        "current application.id",
+        "What is the default key Serde when none is configured?",
+        "For a standalone KafkaProducer, what is the default linger.ms batching delay in milliseconds?"
+      ],
+      "answer": "The project application.id is ash-query-29. default.key.serde defaults to null. The default linger.ms is 5 ms.",
+      "key_facts": [
+        "The project application.id is ash-query-29.",
+        "default.key.serde defaults to null.",
+        "The default linger.ms is 5 ms."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "user",
+          "tags": []
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "ash-query-29",
+        "null",
+        "linger.ms",
+        "5"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        8,
+        10
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "change our application.id from ash-query-17 to ash-query-29.",
+          "user_turn": 4
+        },
+        {
+          "fact_idx": 1,
+          "page": "streams/serdes-and-datatypes.md",
+          "quote": "`default.key.serde` and `default.value.serde` **default to `null`**"
+        },
+        {
+          "fact_idx": 2,
+          "page": "clients/producer.md",
+          "quote": "`linger.ms`, default `5` ms"
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 9,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:35+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182753-325163_kafka_v2_17_interactive_queries",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 14,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "On a shared host, must state.dir be unique per application or per instance?",
+      "standalone_question": "For this Kafka project, on a shared host, must state.dir be unique per application or per instance?",
+      "asks": [
+        "On a shared host, must state.dir be unique per application or per instance?"
+      ],
+      "answer": "state.dir must be unique per instance on a shared host.",
+      "key_facts": [
+        "state.dir must be unique per instance on a shared host."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "state.dir"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "streams/configuration.md",
+          "quote": "Must be **unique per instance** on a shared host",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 5,
+      "recall_distance": 9,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "충분히 오래된 문서의 사용하지 않은 state 설정 절을 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182753-325163_kafka_v2_17_interactive_queries",
+        "llm_source_hash": "60ba2862530d18c331bd3bc4f86798c2b2b6371326da5b5f925ad7a120a08697",
+        "needs_recheck": true,
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 15,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What name does the explicit aggregate-store example choose?",
+      "standalone_question": "In the Upgrade safety section of streams/topology-naming-and-description.md, what store name does the count(Materialized.as(...)) example choose?",
+      "asks": [
+        "What name does the explicit aggregate-store example choose?"
+      ],
+      "answer": "It uses Purchase_count_store.",
+      "key_facts": [
+        "It uses Purchase_count_store."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example"
+          ]
+        }
+      ],
+      "key_entities": [
+        "Purchase_count_store"
+      ],
+      "evidence_pages": [
+        "streams/topology-naming-and-description.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "streams/topology-naming-and-description.md",
+          "quote": "(stores: [Purchase_count_store])",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:35+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182753-325163_kafka_v2_17_interactive_queries",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 16,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which query store name did we choose, and which artifact contains the Java producer, consumer and Admin clients?",
+      "standalone_question": "For this Kafka project, which query store name did we choose, and which artifact contains the Java producer, consumer and Admin clients?",
+      "asks": [
+        "project query store name",
+        "Which artifact contains the Java producer, consumer and Admin clients?"
+      ],
+      "answer": "The project query store name is ash-accounts-43. The artifact is kafka-clients.",
+      "key_facts": [
+        "The project query store name is ash-accounts-43.",
+        "The artifact is kafka-clients."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "ash-accounts-43",
+        "kafka-clients"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        3
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "set query store name to ash-accounts-43",
+          "user_turn": 3
+        },
+        {
+          "fact_idx": 1,
+          "page": "clients/apis-overview.md",
+          "quote": "Producer, Consumer, Share Consumer and Admin all come from one artifact:\n\n```xml\n<dependency>\n\t<groupId>org.apache.kafka</groupId>\n\t<artifactId>kafka-clients</artifactId>\n\t<version>4.3.1</version>\n</dependency>\n```"
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 13,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:35+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182753-325163_kafka_v2_17_interactive_queries",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 17,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What RPC endpoint are we using now, and may an interactive query modify a store outside the topology?",
+      "standalone_question": "For this Kafka project, what RPC endpoint are we using now, and may an interactive query modify a store outside the topology?",
+      "asks": [
+        "current RPC endpoint",
+        "May an interactive query modify a store outside the topology?"
+      ],
+      "answer": "The project RPC endpoint is ash-query-29:4483. No; interactive queries are read-only.",
+      "key_facts": [
+        "The project RPC endpoint is ash-query-29:4483.",
+        "No; interactive queries are read-only."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "ash-query-29:4483",
+        "read-only"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        11,
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our RPC endpoint from ash-query-17:4471 to ash-query-29:4483.",
+          "fact_idx": 0
+        },
+        {
+          "page": "streams/state-stores-and-interactive-queries.md",
+          "quote": "Queries are **read-only** — you can't mutate stores out of band.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 16,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    },
+    {
+      "turn": 18,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which input topic name did we choose? In the Processor API example with 60 records timestamped 1…60 s and a ten-second schedule, how many STREAM_TIME punctuations occur? Also, what store name does the explicit aggregate-store naming example choose?",
+      "standalone_question": "Which input topic name is configured for this project? In streams/processor-api.md, how many STREAM_TIME punctuations occur in the example with 60 records timestamped 1…60 s and a ten-second schedule? In the Upgrade safety section of streams/topology-naming-and-description.md, what store name does the count(Materialized.as(...)) example choose?",
+      "asks": [
+        "project input topic name",
+        "In the example with 60 records timestamped 1…60 s and a ten-second schedule, how many STREAM_TIME punctuations occur?",
+        "What name does the explicit aggregate-store example choose?"
+      ],
+      "answer": "The project input topic name is ash-ledger-41. The example produces six stream-time punctuations. It uses Purchase_count_store.",
+      "key_facts": [
+        "The project input topic name is ash-ledger-41.",
+        "The example produces six stream-time punctuations.",
+        "It uses Purchase_count_store."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "user",
+          "tags": []
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "example",
+            "confusable"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "example"
+          ]
+        }
+      ],
+      "key_entities": [
+        "ash-ledger-41",
+        "6",
+        "Purchase_count_store"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        8,
+        12,
+        15
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "Use ash-ledger-41 as the project input topic name.",
+          "user_turn": 8
+        },
+        {
+          "fact_idx": 1,
+          "page": "streams/processor-api.md",
+          "quote": "| `PunctuationType` | Triggered by | Example: 60 records with timestamps 1…60 s, schedule every 10 s |\n| --- | --- | --- |\n| `STREAM_TIME` | Record timestamps (event time by default) | `punctuate()` runs **6 times**, regardless of how long processing takes. |"
+        },
+        {
+          "fact_idx": 2,
+          "page": "streams/topology-naming-and-description.md",
+          "quote": "(stores: [Purchase_count_store])"
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:35+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182753-325163_kafka_v2_17_interactive_queries",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    }
+  ],
+  "edits": [
+    {
+      "at": "2026-11-28T12:52:35+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 3,
+      "fields": [
+        "evidence"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_17_interactive_queries_308508e91ba7463ca827f0c793abef3a"
+    },
+    {
+      "at": "2026-11-28T12:52:35+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 5,
+      "fields": [
+        "answer",
+        "key_facts",
+        "key_entities"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_17_interactive_queries_308508e91ba7463ca827f0c793abef3a"
+    },
+    {
+      "at": "2026-11-28T12:52:35+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 7,
+      "fields": [
+        "standalone_question"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_17_interactive_queries_308508e91ba7463ca827f0c793abef3a"
+    },
+    {
+      "at": "2026-11-28T12:52:35+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 10,
+      "fields": [
+        "question",
+        "standalone_question"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_17_interactive_queries_308508e91ba7463ca827f0c793abef3a"
+    },
+    {
+      "at": "2026-11-28T12:52:35+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 12,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks",
+        "evidence"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_17_interactive_queries_308508e91ba7463ca827f0c793abef3a"
+    },
+    {
+      "at": "2026-11-28T12:52:35+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 13,
+      "fields": [
+        "question",
+        "standalone_question"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_17_interactive_queries_308508e91ba7463ca827f0c793abef3a"
+    },
+    {
+      "at": "2026-11-28T12:52:35+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 15,
+      "fields": [
+        "standalone_question"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_17_interactive_queries_308508e91ba7463ca827f0c793abef3a"
+    },
+    {
+      "at": "2026-11-28T12:52:35+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 16,
+      "fields": [
+        "evidence"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_17_interactive_queries_308508e91ba7463ca827f0c793abef3a"
+    },
+    {
+      "at": "2026-11-28T12:52:35+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 18,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks",
+        "evidence"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_17_interactive_queries_308508e91ba7463ca827f0c793abef3a"
+    },
+    {
+      "at": "2026-11-28T14:39:41+00:00",
+      "by": "장우진",
+      "turn": 13,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks",
+        "answer",
+        "key_facts"
+      ],
+      "note": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요."
+    },
+    {
+      "at": "2026-11-28T14:39:41+00:00",
+      "by": "장우진",
+      "turn": 9,
+      "fields": [
+        "depends_on"
+      ],
+      "note": ""
+    }
+  ]
+}

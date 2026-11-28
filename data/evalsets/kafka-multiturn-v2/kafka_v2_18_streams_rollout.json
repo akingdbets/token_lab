@@ -1,0 +1,1363 @@
+{
+  "schema_version": 2,
+  "scenario_id": "kafka_v2_18_streams_rollout",
+  "title": "Scaling stateful workers while preserving stable resource names",
+  "topic": "Scaling stateful workers while preserving stable resource names",
+  "status": "final",
+  "bundle": [
+    "concepts/delivery-semantics.md",
+    "streams/running-and-rebalancing.md",
+    "monitoring/client-metrics.md",
+    "streams/topology-naming-and-description.md",
+    "streams/state-stores-and-interactive-queries.md",
+    "streams/configuration.md",
+    "operations/kraft-cluster-setup.md",
+    "monitoring/broker-and-kraft-metrics.md"
+  ],
+  "generation": {
+    "model": "gpt-6.1-sol",
+    "method": "Codex session, account plan",
+    "prompt": [
+      "mt_scenario_gen_v3",
+      "40710c69c22d"
+    ],
+    "run_id": "20261128-165733_kafka_18_session",
+    "request_file": "results/scenario_gen/20261128-165733_kafka_18_session/kafka_v2_18_streams_rollout_request.json",
+    "created_at": "2026-11-28T16:57:33",
+    "corpus_manifest_sha256": "a6fb69b10c7c98a2af883313f8938d0bfb1757fae65b8274c183a4c14ef4a735",
+    "context": "Authored in the ongoing Codex conversation with a shared turn structure, explicit page-grounded fact selections, and topic-specific project settings."
+  },
+  "turns": [
+    {
+      "turn": 0,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our project concerns scaling stateful workers while preserving stable resource names. For the planned deployment, set application.id to oak-scale-17. Which value should we use, and which ordering of processing and offset saving gives at-least-once consumption?",
+      "standalone_question": "For this Kafka project, our project concerns scaling stateful workers while preserving stable resource names. For the planned deployment, set application.id to oak-scale-17. Which value should we use, and which ordering of processing and offset saving gives at-least-once consumption?",
+      "asks": [
+        "project application.id",
+        "Which ordering of processing and offset saving gives at-least-once consumption?"
+      ],
+      "answer": "The project application.id is oak-scale-17. Read, process, then save the position gives at-least-once consumption.",
+      "key_facts": [
+        "The project application.id is oak-scale-17.",
+        "Read, process, then save the position gives at-least-once consumption."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "oak-scale-17",
+        "At least once"
+      ],
+      "evidence_pages": [
+        "concepts/delivery-semantics.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 0,
+          "quote": "set application.id to oak-scale-17",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/delivery-semantics.md",
+          "quote": "| Read → process → save position | First messages are re-processed by the new owner | **At least once** |",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "현재 턴의 프로젝트 설정과 문서의 처리 순서를 정확히 구분했다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-204637-384738_kafka_v2_18_streams_rollout",
+        "llm_source_hash": "0190eb423baae16214fa9a68817d723e084f17e7eed750a2689a63372503f3ae",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 1,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Set our num.standby.replicas to 1. Which project value applies, and what exception results from setting lifecycle callbacks after start()?",
+      "standalone_question": "For this Kafka project, set our num.standby.replicas to 1. Which project value applies, and what exception results from setting lifecycle callbacks after start()?",
+      "asks": [
+        "project num.standby.replicas",
+        "What exception results from setting lifecycle callbacks after start()?"
+      ],
+      "answer": "The project num.standby.replicas is 1. IllegalStateException is thrown.",
+      "key_facts": [
+        "The project num.standby.replicas is 1.",
+        "IllegalStateException is thrown."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "1",
+        "IllegalStateException"
+      ],
+      "evidence_pages": [
+        "streams/running-and-rebalancing.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Set our num.standby.replicas to 1.",
+          "fact_idx": 0
+        },
+        {
+          "page": "streams/running-and-rebalancing.md",
+          "quote": "All must be set **before `start()`** (afterwards → `IllegalStateException`); the last setter call wins.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "standby 초기값과 콜백 등록 시점의 예외가 근거와 일치한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-204637-384738_kafka_v2_18_streams_rollout",
+        "llm_source_hash": "0190eb423baae16214fa9a68817d723e084f17e7eed750a2689a63372503f3ae",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 2,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "When multiple callback setters are invoked, which setting wins?",
+      "standalone_question": "For this Kafka project, when multiple callback setters are invoked, which setting wins?",
+      "asks": [
+        "When multiple callback setters are invoked, which setting wins?"
+      ],
+      "answer": "The last setter call wins.",
+      "key_facts": [
+        "The last setter call wins."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "setter"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "streams/running-and-rebalancing.md",
+          "quote": "the last setter call wins.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "앞서 첨부한 콜백 절의 추가 사실을 묻는 유효한 후속 질문이다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-204637-384738_kafka_v2_18_streams_rollout",
+        "llm_source_hash": "0190eb423baae16214fa9a68817d723e084f17e7eed750a2689a63372503f3ae",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 3,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "For our project, set aggregate store name to oak-counts-43. Which value should be used, and which metric counts user threads waiting for producer buffer memory?",
+      "standalone_question": "For this Kafka project, for our project, set aggregate store name to oak-counts-43. Which value should be used, and which metric counts user threads waiting for producer buffer memory?",
+      "asks": [
+        "project aggregate store name",
+        "Which metric counts user threads waiting for producer buffer memory?"
+      ],
+      "answer": "The project aggregate store name is oak-counts-43. waiting-threads counts user threads blocked waiting for buffer memory.",
+      "key_facts": [
+        "The project aggregate store name is oak-counts-43.",
+        "waiting-threads counts user threads blocked waiting for buffer memory."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "oak-counts-43",
+        "waiting-threads"
+      ],
+      "evidence_pages": [
+        "monitoring/client-metrics.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 3,
+          "quote": "set aggregate store name to oak-counts-43",
+          "fact_idx": 0
+        },
+        {
+          "page": "monitoring/client-metrics.md",
+          "quote": "| `waiting-threads` | User threads blocked waiting for buffer memory. |",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "명시한 저장소 이름과 producer 버퍼 대기 지표가 정확히 대응한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-204637-384738_kafka_v2_18_streams_rollout",
+        "llm_source_hash": "0190eb423baae16214fa9a68817d723e084f17e7eed750a2689a63372503f3ae",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 4,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Before rollout, change our application.id from oak-scale-17 to oak-scale-29. What is the revised project value, and which consumer isolation mode still includes non-transactional records alongside committed transactions?",
+      "standalone_question": "For this Kafka project, before rollout, change our application.id from oak-scale-17 to oak-scale-29. What is the revised project value, and which consumer isolation mode still includes non-transactional records alongside committed transactions?",
+      "asks": [
+        "updated application.id",
+        "Which consumer isolation mode still includes non-transactional records alongside committed transactions?"
+      ],
+      "answer": "The project application.id is oak-scale-29. read_committed includes committed transactional and non-transactional records.",
+      "key_facts": [
+        "The project application.id is oak-scale-29.",
+        "read_committed includes committed transactional and non-transactional records."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "oak-scale-29",
+        "read_committed"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our application.id from oak-scale-17 to oak-scale-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/delivery-semantics.md",
+          "quote": "`read_committed` returns only committed transactional messages (plus non-transactional ones).",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "application.id",
+          "from": "oak-scale-17",
+          "to": "oak-scale-29"
+        }
+      ],
+      "affects": [
+        9,
+        13
+      ],
+      "source_turn": null,
+      "recall_distance": 4,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "application.id 변경과 이후 영향 범위가 일관된다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-204637-384738_kafka_v2_18_streams_rollout",
+        "llm_source_hash": "0190eb423baae16214fa9a68817d723e084f17e7eed750a2689a63372503f3ae",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 5,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What name does the explicit aggregate-store example choose?",
+      "standalone_question": "For this Kafka project, what name does the explicit aggregate-store example choose?",
+      "asks": [
+        "What name does the explicit aggregate-store example choose?"
+      ],
+      "answer": "It uses Purchase_count_store.",
+      "key_facts": [
+        "It uses Purchase_count_store."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example"
+          ]
+        }
+      ],
+      "key_entities": [
+        "Purchase_count_store"
+      ],
+      "evidence_pages": [
+        "streams/topology-naming-and-description.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "streams/topology-naming-and-description.md",
+          "quote": "(stores: [Purchase_count_store])",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "문서 예제의 이름과 프로젝트 저장소 이름을 구별해 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-204637-384738_kafka_v2_18_streams_rollout",
+        "llm_source_hash": "0190eb423baae16214fa9a68817d723e084f17e7eed750a2689a63372503f3ae",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 6,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "Why can inserting an upstream operator break a rolling redeployment with generated store names?",
+      "standalone_question": "For this Kafka project, why can inserting an upstream operator break a rolling redeployment with generated store names?",
+      "asks": [
+        "Why can inserting an upstream operator break a rolling redeployment with generated store names?"
+      ],
+      "answer": "The generated store and changelog names change, orphaning old state.",
+      "key_facts": [
+        "The generated store and changelog names change, orphaning old state."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "store"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "page": "streams/topology-naming-and-description.md",
+          "quote": "The store and changelog names changed, so you **can't do a rolling redeploy**; the old state is orphaned and you'd need the [reset tool](running-and-rebalancing.md#resetting-an-application) to recompute it."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:37+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-204637-384738_kafka_v2_18_streams_rollout",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 7,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "With ten input partitions, how many useful Streams instances can run?",
+      "standalone_question": "For this Kafka project, with ten input partitions, how many useful Streams instances can run?",
+      "asks": [
+        "With ten input partitions, how many useful Streams instances can run?"
+      ],
+      "answer": "Up to ten instances do useful work; additional instances are idle spares.",
+      "key_facts": [
+        "Up to ten instances do useful work; additional instances are idle spares."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "10"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "streams/running-and-rebalancing.md",
+          "quote": "10 partitions → up to 10 useful instances (more are idle spares).",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 1,
+      "recall_distance": 6,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "충분히 이전에 첨부한 문서의 사용하지 않은 확장성 절을 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-204637-384738_kafka_v2_18_streams_rollout",
+        "llm_source_hash": "0190eb423baae16214fa9a68817d723e084f17e7eed750a2689a63372503f3ae",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 8,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Use oak-worker-41 as the project deployment instance name. Which value should be used, and may an interactive query modify a store outside the topology?",
+      "standalone_question": "For this Kafka project, use oak-worker-41 as the project deployment instance name. Which value should be used, and may an interactive query modify a store outside the topology?",
+      "asks": [
+        "project deployment instance name",
+        "May an interactive query modify a store outside the topology?"
+      ],
+      "answer": "The project deployment instance name is oak-worker-41. No; interactive queries are read-only.",
+      "key_facts": [
+        "The project deployment instance name is oak-worker-41.",
+        "No; interactive queries are read-only."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "oak-worker-41",
+        "read-only"
+      ],
+      "evidence_pages": [
+        "streams/state-stores-and-interactive-queries.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Use oak-worker-41 as the project deployment instance name.",
+          "fact_idx": 0
+        },
+        {
+          "page": "streams/state-stores-and-interactive-queries.md",
+          "quote": "Queries are **read-only** — you can't mutate stores out of band.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "인스턴스 이름의 초기 설정과 IQ의 읽기 전용 제약이 정확하다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-204637-384738_kafka_v2_18_streams_rollout",
+        "llm_source_hash": "0190eb423baae16214fa9a68817d723e084f17e7eed750a2689a63372503f3ae",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 9,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "For the rollout checklist, confirm the application.id after our rename and the consumer isolation mode that includes non-transactional records alongside committed transactions.",
+      "standalone_question": "For the rollout checklist of the project scaling stateful workers while preserving stable resource names, confirm the application.id after the project's rename and the consumer isolation mode that includes non-transactional records alongside committed transactions.",
+      "asks": [
+        "current application.id",
+        "Which consumer isolation mode still includes non-transactional records alongside committed transactions?"
+      ],
+      "answer": "The project application.id is oak-scale-29. read_committed includes committed transactional and non-transactional records.",
+      "key_facts": [
+        "The project application.id is oak-scale-29.",
+        "read_committed includes committed transactional and non-transactional records."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "oak-scale-29",
+        "read_committed"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our application.id from oak-scale-17 to oak-scale-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/delivery-semantics.md",
+          "quote": "`read_committed` returns only committed transactional messages (plus non-transactional ones).",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 9,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:37+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-204637-384738_kafka_v2_18_streams_rollout",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 10,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Under exactly-once processing, what is the default commit interval?",
+      "standalone_question": "For this Kafka project, under exactly-once processing, what is the default commit interval?",
+      "asks": [
+        "Under exactly-once processing, what is the default commit interval?"
+      ],
+      "answer": "Under exactly-once processing, the default commit.interval.ms is 100 ms.",
+      "key_facts": [
+        "Under exactly-once processing, the default commit.interval.ms is 100 ms."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "commit.interval.ms",
+        "100"
+      ],
+      "evidence_pages": [
+        "streams/configuration.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "page": "streams/configuration.md",
+          "quote": "With exactly-once:\n\n- `commit.interval.ms` default drops from `30000` to **`100`**."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:37+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-204637-384738_kafka_v2_18_streams_rollout",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 11,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our num.standby.replicas from 1 to 2. For the revised startup checklist, confirm the new standby value and which callback setting takes effect if initialization invokes the same setter more than once.",
+      "standalone_question": "For a Kafka Streams deployment, change num.standby.replicas from 1 to 2. For the revised startup checklist, confirm the new standby value and which callback setting takes effect if initialization invokes the same setter more than once.",
+      "asks": [
+        "updated num.standby.replicas",
+        "When multiple callback setters are invoked, which setting wins?"
+      ],
+      "answer": "The project num.standby.replicas is 2. The last setter call wins.",
+      "key_facts": [
+        "The project num.standby.replicas is 2.",
+        "The last setter call wins."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "2",
+        "setter"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our num.standby.replicas from 1 to 2.",
+          "fact_idx": 0
+        },
+        {
+          "page": "streams/running-and-rebalancing.md",
+          "quote": "the last setter call wins.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "num.standby.replicas",
+          "from": "1",
+          "to": "2"
+        }
+      ],
+      "affects": [
+        17
+      ],
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:37+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-204637-384738_kafka_v2_18_streams_rollout",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 12,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "With five controllers, how many concurrent failures can the quorum tolerate?",
+      "standalone_question": "For this Kafka project, with five controllers, how many concurrent failures can the quorum tolerate?",
+      "asks": [
+        "With five controllers, how many concurrent failures can the quorum tolerate?"
+      ],
+      "answer": "Five controllers tolerate two failures while retaining a majority.",
+      "key_facts": [
+        "Five controllers tolerate two failures while retaining a majority."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "5",
+        "2"
+      ],
+      "evidence_pages": [
+        "operations/kraft-cluster-setup.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "operations/kraft-cluster-setup.md",
+          "quote": "3 tolerate 1 failure, 5 tolerate 2.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "컨트롤러 다섯 개의 동시 장애 허용 수가 문서와 일치한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-204637-384738_kafka_v2_18_streams_rollout",
+        "llm_source_hash": "0190eb423baae16214fa9a68817d723e084f17e7eed750a2689a63372503f3ae",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 13,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which application.id are we using now, may an interactive query modify a store outside the topology, and under exactly-once processing, what is the default commit interval?",
+      "standalone_question": "For this Kafka project, which application.id are we using now, may an interactive query modify a store outside the topology, and under exactly-once processing, what is the default commit interval?",
+      "asks": [
+        "current application.id",
+        "May an interactive query modify a store outside the topology?",
+        "Under exactly-once processing, what is the default commit interval?"
+      ],
+      "answer": "The project application.id is oak-scale-29. No; interactive queries are read-only. Under exactly-once processing, the default commit.interval.ms is 100 ms.",
+      "key_facts": [
+        "The project application.id is oak-scale-29.",
+        "No; interactive queries are read-only.",
+        "Under exactly-once processing, the default commit.interval.ms is 100 ms."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "user",
+          "tags": []
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "negation"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "oak-scale-29",
+        "read-only",
+        "commit.interval.ms",
+        "100"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        8,
+        10
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "change our application.id from oak-scale-17 to oak-scale-29.",
+          "user_turn": 4
+        },
+        {
+          "fact_idx": 1,
+          "page": "streams/state-stores-and-interactive-queries.md",
+          "quote": "Queries are **read-only** — you can't mutate stores out of band."
+        },
+        {
+          "fact_idx": 2,
+          "page": "streams/configuration.md",
+          "quote": "With exactly-once:\n\n- `commit.interval.ms` default drops from `30000` to **`100`**."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 9,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:37+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-204637-384738_kafka_v2_18_streams_rollout",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 14,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "Is the topology-description broker plugin enabled by default?",
+      "standalone_question": "For this Kafka project, is the topology-description broker plugin enabled by default?",
+      "asks": [
+        "Is the topology-description broker plugin enabled by default?"
+      ],
+      "answer": "No; the topology-description broker plugin is disabled by default.",
+      "key_facts": [
+        "The topology-description broker plugin is disabled by default."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "topology-description broker plugin"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "page": "streams/topology-naming-and-description.md",
+          "quote": "**Disabled by default**: active only when the broker sets `group.streams.topology.description.plugin.class`"
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 5,
+      "recall_distance": 9,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:37+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-204637-384738_kafka_v2_18_streams_rollout",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 15,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What is the fastest suggested way to browse metrics on a running broker?",
+      "standalone_question": "For this Kafka project, what is the fastest suggested way to browse metrics on a running broker?",
+      "asks": [
+        "What is the fastest suggested way to browse metrics on a running broker?"
+      ],
+      "answer": "Attach jconsole to the broker.",
+      "key_facts": [
+        "Attach jconsole to the broker."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "jconsole"
+      ],
+      "evidence_pages": [
+        "monitoring/broker-and-kraft-metrics.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "monitoring/broker-and-kraft-metrics.md",
+          "quote": "The quickest way to browse metrics is `jconsole` attached to a running broker or client.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "문서가 권하는 가장 빠른 metrics 탐색 방법을 정확히 답한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-204637-384738_kafka_v2_18_streams_rollout",
+        "llm_source_hash": "0190eb423baae16214fa9a68817d723e084f17e7eed750a2689a63372503f3ae",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 16,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "For the rollout handoff, confirm the aggregate store name we chose and the metric operators should use to count user threads waiting for producer buffer memory.",
+      "standalone_question": "For the rollout handoff of the project scaling stateful workers while preserving stable resource names, confirm the project's chosen aggregate store name and the metric operators should use to count user threads waiting for producer buffer memory.",
+      "asks": [
+        "project aggregate store name",
+        "Which metric counts user threads waiting for producer buffer memory?"
+      ],
+      "answer": "The project aggregate store name is oak-counts-43. waiting-threads counts user threads blocked waiting for buffer memory.",
+      "key_facts": [
+        "The project aggregate store name is oak-counts-43.",
+        "waiting-threads counts user threads blocked waiting for buffer memory."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "oak-counts-43",
+        "waiting-threads"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        3
+      ],
+      "evidence": [
+        {
+          "user_turn": 3,
+          "quote": "set aggregate store name to oak-counts-43",
+          "fact_idx": 0
+        },
+        {
+          "page": "monitoring/client-metrics.md",
+          "quote": "| `waiting-threads` | User threads blocked waiting for buffer memory. |",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 13,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:37+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-204637-384738_kafka_v2_18_streams_rollout",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 17,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Before restarting with the revised standby configuration, confirm our current num.standby.replicas and the exception a startup check should expect if lifecycle callbacks are registered after start().",
+      "standalone_question": "Before restarting the project scaling stateful workers while preserving stable resource names with its revised standby configuration, confirm its current num.standby.replicas and the exception a startup check should expect if lifecycle callbacks are registered after start().",
+      "asks": [
+        "current num.standby.replicas",
+        "What exception results from setting lifecycle callbacks after start()?"
+      ],
+      "answer": "The project num.standby.replicas is 2. IllegalStateException is thrown.",
+      "key_facts": [
+        "The project num.standby.replicas is 2.",
+        "IllegalStateException is thrown."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "2",
+        "IllegalStateException"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        11,
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our num.standby.replicas from 1 to 2.",
+          "fact_idx": 0
+        },
+        {
+          "page": "streams/running-and-rebalancing.md",
+          "quote": "All must be set **before `start()`** (afterwards → `IllegalStateException`); the last setter call wins.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 16,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:37+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-204637-384738_kafka_v2_18_streams_rollout",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 18,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which deployment instance name did we choose, with five controllers, how many concurrent failures can the quorum tolerate, and what is the fastest suggested way to browse metrics on a running broker?",
+      "standalone_question": "For this Kafka project, which deployment instance name did we choose, with five controllers, how many concurrent failures can the quorum tolerate, and what is the fastest suggested way to browse metrics on a running broker?",
+      "asks": [
+        "project deployment instance name",
+        "With five controllers, how many concurrent failures can the quorum tolerate?",
+        "What is the fastest suggested way to browse metrics on a running broker?"
+      ],
+      "answer": "The project deployment instance name is oak-worker-41. Five controllers tolerate two failures while retaining a majority. Attach jconsole to the broker.",
+      "key_facts": [
+        "The project deployment instance name is oak-worker-41.",
+        "Five controllers tolerate two failures while retaining a majority.",
+        "Attach jconsole to the broker."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "oak-worker-41",
+        "5",
+        "2",
+        "jconsole"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        8,
+        12,
+        15
+      ],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Use oak-worker-41 as the project deployment instance name.",
+          "fact_idx": 0
+        },
+        {
+          "page": "operations/kraft-cluster-setup.md",
+          "quote": "3 tolerate 1 failure, 5 tolerate 2.",
+          "fact_idx": 1
+        },
+        {
+          "page": "monitoring/broker-and-kraft-metrics.md",
+          "quote": "The quickest way to browse metrics is `jconsole` attached to a running broker or client.",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    }
+  ],
+  "edits": [
+    {
+      "at": "2026-11-28T12:52:37+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 6,
+      "fields": [
+        "evidence"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_18_streams_rollout_d5527c33ff45494398c74ad7b988b447"
+    },
+    {
+      "at": "2026-11-28T12:52:37+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 9,
+      "fields": [
+        "question",
+        "standalone_question"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_18_streams_rollout_d5527c33ff45494398c74ad7b988b447"
+    },
+    {
+      "at": "2026-11-28T12:52:37+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 10,
+      "fields": [
+        "answer",
+        "key_facts",
+        "evidence",
+        "key_entities"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_18_streams_rollout_d5527c33ff45494398c74ad7b988b447"
+    },
+    {
+      "at": "2026-11-28T12:52:37+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 11,
+      "fields": [
+        "question",
+        "standalone_question"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_18_streams_rollout_d5527c33ff45494398c74ad7b988b447"
+    },
+    {
+      "at": "2026-11-28T12:52:37+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 13,
+      "fields": [
+        "answer",
+        "key_facts",
+        "evidence",
+        "key_entities"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_18_streams_rollout_d5527c33ff45494398c74ad7b988b447"
+    },
+    {
+      "at": "2026-11-28T12:52:37+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 14,
+      "fields": [
+        "answer",
+        "key_facts",
+        "key_entities"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_18_streams_rollout_d5527c33ff45494398c74ad7b988b447"
+    },
+    {
+      "at": "2026-11-28T12:52:37+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 16,
+      "fields": [
+        "question",
+        "standalone_question"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_18_streams_rollout_d5527c33ff45494398c74ad7b988b447"
+    },
+    {
+      "at": "2026-11-28T12:52:37+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 17,
+      "fields": [
+        "question",
+        "standalone_question"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_18_streams_rollout_d5527c33ff45494398c74ad7b988b447"
+    }
+  ]
+}

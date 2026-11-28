@@ -1,0 +1,1289 @@
+{
+  "schema_version": 2,
+  "scenario_id": "kafka_v2_20_kraft_upgrade",
+  "title": "Planning a bridged ZooKeeper migration and client compatibility checks",
+  "topic": "Planning a bridged ZooKeeper migration and client compatibility checks",
+  "status": "final",
+  "bundle": [
+    "concepts/replication.md",
+    "operations/zookeeper-to-kraft-migration.md",
+    "getting-started/local-quickstart.md",
+    "getting-started/compatibility.md",
+    "operations/kraft-cluster-setup.md",
+    "configuration/broker-configuration.md",
+    "configuration/config-providers-and-system-properties.md",
+    "reference/protocol-and-internals.md"
+  ],
+  "generation": {
+    "model": "gpt-6.1-sol",
+    "method": "Codex session, account plan",
+    "prompt": [
+      "mt_scenario_gen_v3",
+      "40710c69c22d"
+    ],
+    "run_id": "20261128-165733_kafka_18_session",
+    "request_file": "results/scenario_gen/20261128-165733_kafka_18_session/kafka_v2_20_kraft_upgrade_request.json",
+    "created_at": "2026-11-28T16:57:34",
+    "corpus_manifest_sha256": "a6fb69b10c7c98a2af883313f8938d0bfb1757fae65b8274c183a4c14ef4a735",
+    "context": "Authored in the ongoing Codex conversation with a shared turn structure, explicit page-grounded fact selections, and topic-specific project settings."
+  },
+  "turns": [
+    {
+      "turn": 0,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our project concerns planning a bridged ZooKeeper migration and client compatibility checks. For the planned deployment, set migration wave name to pine-wave-17. Which value should we use, and which errors indicate too few in-sync replicas for acks=all?",
+      "standalone_question": "For this Kafka project, our project concerns planning a bridged ZooKeeper migration and client compatibility checks. For the planned deployment, set migration wave name to pine-wave-17. Which value should we use, and which errors indicate too few in-sync replicas for acks=all?",
+      "asks": [
+        "project migration wave name",
+        "Which errors indicate too few in-sync replicas for acks=all?"
+      ],
+      "answer": "The project migration wave name is pine-wave-17. The errors are NotEnoughReplicas and NotEnoughReplicasAfterAppend.",
+      "key_facts": [
+        "The project migration wave name is pine-wave-17.",
+        "The errors are NotEnoughReplicas and NotEnoughReplicasAfterAppend."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "pine-wave-17",
+        "NotEnoughReplicas",
+        "NotEnoughReplicasAfterAppend"
+      ],
+      "evidence_pages": [
+        "concepts/replication.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 0,
+          "quote": "set migration wave name to pine-wave-17",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/replication.md",
+          "quote": "With `acks=all` and an ISR smaller than `min.insync.replicas`, the producer gets `NotEnoughReplicas` or `NotEnoughReplicasAfterAppend`.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "현재 설정값과 문서의 오류 조건을 구분해 묻고 채점한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-205334-747726_kafka_v2_20_kraft_upgrade",
+        "llm_source_hash": "76d71d8bab47c007e89e78233bf5e5af02b247b83aa86786f3b8003927aa735f",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 1,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Set our broker.rack to pine-zone-17. Which project value applies, and what is the last bridge release for migrating an existing ZooKeeper cluster?",
+      "standalone_question": "For this Kafka project, set our broker.rack to pine-zone-17. Which project value applies, and what is the last bridge release for migrating an existing ZooKeeper cluster?",
+      "asks": [
+        "project broker.rack",
+        "What is the last bridge release for migrating an existing ZooKeeper cluster?"
+      ],
+      "answer": "The project broker.rack is pine-zone-17. The last bridge release is Kafka 3.9.",
+      "key_facts": [
+        "The project broker.rack is pine-zone-17.",
+        "The last bridge release is Kafka 3.9."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "pine-zone-17",
+        "3.9"
+      ],
+      "evidence_pages": [
+        "operations/zookeeper-to-kraft-migration.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Set our broker.rack to pine-zone-17.",
+          "fact_idx": 0
+        },
+        {
+          "page": "operations/zookeeper-to-kraft-migration.md",
+          "quote": "the last bridge release is Kafka 3.9.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "broker.rack 초기값과 마지막 bridge release를 정확히 분리한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-205334-747726_kafka_v2_20_kraft_upgrade",
+        "llm_source_hash": "76d71d8bab47c007e89e78233bf5e5af02b247b83aa86786f3b8003927aa735f",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 2,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "Can clients in versions 0.x, 1.x or 2.0 communicate with 4.0 brokers?",
+      "standalone_question": "For this Kafka project, can clients in versions 0.x, 1.x or 2.0 communicate with 4.0 brokers?",
+      "asks": [
+        "Can clients in versions 0.x, 1.x or 2.0 communicate with 4.0 brokers?"
+      ],
+      "answer": "No; those clients cannot communicate with 4.0 brokers.",
+      "key_facts": [
+        "No; those clients cannot communicate with 4.0 brokers."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "0.x",
+        "4.0"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "operations/zookeeper-to-kraft-migration.md",
+          "quote": "Old clients (0.x, 1.x, 2.0) can't talk to 4.0 brokers",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "앞서 첨부된 마이그레이션 문서의 클라이언트 호환성 정보를 사용한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-205334-747726_kafka_v2_20_kraft_upgrade",
+        "llm_source_hash": "76d71d8bab47c007e89e78233bf5e5af02b247b83aa86786f3b8003927aa735f",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 3,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "For our project, set log.dirs to /srv/pine-metadata-43. Which value should be used, and what must be done to log directories before the first node start?",
+      "standalone_question": "For this Kafka project, for our project, set log.dirs to /srv/pine-metadata-43. Which value should be used, and what must be done to log directories before the first node start?",
+      "asks": [
+        "project log.dirs",
+        "What must be done to log directories before the first node start?"
+      ],
+      "answer": "The project log.dirs is /srv/pine-metadata-43. Storage must be formatted before the first start.",
+      "key_facts": [
+        "The project log.dirs is /srv/pine-metadata-43.",
+        "Storage must be formatted before the first start."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "/srv/pine-metadata-43",
+        "log.dirs"
+      ],
+      "evidence_pages": [
+        "getting-started/local-quickstart.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 3,
+          "quote": "set log.dirs to /srv/pine-metadata-43",
+          "fact_idx": 0
+        },
+        {
+          "page": "getting-started/local-quickstart.md",
+          "quote": "**Formatting is required** before the first start; a node with unformatted `log.dirs` will not start.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "사용자 지정 log.dirs와 최초 시작 전 포맷 요구사항을 정확히 다룬다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-205334-747726_kafka_v2_20_kraft_upgrade",
+        "llm_source_hash": "76d71d8bab47c007e89e78233bf5e5af02b247b83aa86786f3b8003927aa735f",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 4,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Before rollout, change our migration wave name from pine-wave-17 to pine-wave-29. What is the revised project value, and does acks=all refer to all assigned replicas or the current in-sync replicas?",
+      "standalone_question": "For this Kafka project, before rollout, change our migration wave name from pine-wave-17 to pine-wave-29. What is the revised project value, and does acks=all refer to all assigned replicas or the current in-sync replicas?",
+      "asks": [
+        "updated migration wave name",
+        "Does acks=all refer to all assigned replicas or the current in-sync replicas?"
+      ],
+      "answer": "The project migration wave name is pine-wave-29. acks=all refers to all current in-sync replicas.",
+      "key_facts": [
+        "The project migration wave name is pine-wave-29.",
+        "acks=all refers to all current in-sync replicas."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "pine-wave-29",
+        "acks=all"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our migration wave name from pine-wave-17 to pine-wave-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/replication.md",
+          "quote": "`acks=all` means all *current* in-sync replicas, not all assigned replicas.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "migration wave name",
+          "from": "pine-wave-17",
+          "to": "pine-wave-29"
+        }
+      ],
+      "affects": [
+        9,
+        13
+      ],
+      "source_turn": null,
+      "recall_distance": 4,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "wave 이름 변경과 기존 복제 문서에 대한 질문이 올바르게 구성되어 있다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-205334-747726_kafka_v2_20_kraft_upgrade",
+        "llm_source_hash": "76d71d8bab47c007e89e78233bf5e5af02b247b83aa86786f3b8003927aa735f",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 5,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Which Scala version is supported?",
+      "standalone_question": "For this Kafka project, which Scala version is supported?",
+      "asks": [
+        "Which Scala version is supported?"
+      ],
+      "answer": "Scala 2.13 is the only supported Scala version.",
+      "key_facts": [
+        "Scala 2.13 is the only supported Scala version."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "2.13"
+      ],
+      "evidence_pages": [
+        "getting-started/compatibility.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "getting-started/compatibility.md",
+          "quote": "Scala 2.13 is the only supported Scala version.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "새 호환성 문서의 Scala 지원 버전을 정확히 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-205334-747726_kafka_v2_20_kraft_upgrade",
+        "llm_source_hash": "76d71d8bab47c007e89e78233bf5e5af02b247b83aa86786f3b8003927aa735f",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 6,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "Which release target is used for clients and Streams?",
+      "standalone_question": "For this Kafka project, which release target is used for clients and Streams?",
+      "asks": [
+        "Which release target is used for clients and Streams?"
+      ],
+      "answer": "The build targets release 11 for clients and Streams.",
+      "key_facts": [
+        "The build targets release 11 for clients and Streams."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "11"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "getting-started/compatibility.md",
+          "quote": "`release 11` for clients and streams",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "앞서 첨부된 호환성 문서에서 clients와 Streams의 빌드 타깃을 회수한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-205334-747726_kafka_v2_20_kraft_upgrade",
+        "llm_source_hash": "76d71d8bab47c007e89e78233bf5e5af02b247b83aa86786f3b8003927aa735f",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 7,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "Which feature level replaces inter.broker.protocol.version for cluster protocol upgrades, and which tool manages it?",
+      "standalone_question": "For this Kafka project, which feature level replaces inter.broker.protocol.version for cluster protocol upgrades, and which tool manages it?",
+      "asks": [
+        "Which feature level replaces inter.broker.protocol.version for cluster protocol upgrades?",
+        "Which tool manages that feature level?"
+      ],
+      "answer": "metadata.version is the cluster feature level managed with kafka-features.sh.",
+      "key_facts": [
+        "metadata.version is the cluster feature level that replaces inter.broker.protocol.version.",
+        "bin/kafka-features.sh manages the cluster feature level."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": []
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "metadata.version"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "page": "operations/zookeeper-to-kraft-migration.md",
+          "quote": "| `inter.broker.protocol.version` | Cluster feature level is `metadata.version`, managed with `bin/kafka-features.sh`. |"
+        },
+        {
+          "fact_idx": 1,
+          "page": "operations/zookeeper-to-kraft-migration.md",
+          "quote": "Cluster feature level is `metadata.version`, managed with `bin/kafka-features.sh`."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 1,
+      "recall_distance": 6,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:37+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-205334-747726_kafka_v2_20_kraft_upgrade",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 8,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Use pine-check-41 as the project migration client.id. Which value should be used, and with five controllers, how many concurrent failures can the quorum tolerate?",
+      "standalone_question": "For this Kafka project, use pine-check-41 as the project migration client.id. Which value should be used, and with five controllers, how many concurrent failures can the quorum tolerate?",
+      "asks": [
+        "project migration client.id",
+        "With five controllers, how many concurrent failures can the quorum tolerate?"
+      ],
+      "answer": "The project migration client.id is pine-check-41. Five controllers tolerate two failures while retaining a majority.",
+      "key_facts": [
+        "The project migration client.id is pine-check-41.",
+        "Five controllers tolerate two failures while retaining a majority."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "pine-check-41",
+        "5",
+        "2"
+      ],
+      "evidence_pages": [
+        "operations/kraft-cluster-setup.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Use pine-check-41 as the project migration client.id.",
+          "fact_idx": 0
+        },
+        {
+          "page": "operations/kraft-cluster-setup.md",
+          "quote": "3 tolerate 1 failure, 5 tolerate 2.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "migration client.id 초기 설정과 컨트롤러 장애 허용 수를 정확히 다룬다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-205334-747726_kafka_v2_20_kraft_upgrade",
+        "llm_source_hash": "76d71d8bab47c007e89e78233bf5e5af02b247b83aa86786f3b8003927aa735f",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 9,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What migration wave name are we using now, and does acks=all refer to all assigned replicas or the current in-sync replicas?",
+      "standalone_question": "For this Kafka project, what migration wave name are we using now, and does acks=all refer to all assigned replicas or the current in-sync replicas?",
+      "asks": [
+        "current migration wave name",
+        "Does acks=all refer to all assigned replicas or the current in-sync replicas?"
+      ],
+      "answer": "The project migration wave name is pine-wave-29. acks=all refers to all current in-sync replicas.",
+      "key_facts": [
+        "The project migration wave name is pine-wave-29.",
+        "acks=all refers to all current in-sync replicas."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "pine-wave-29",
+        "acks=all"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our migration wave name from pine-wave-17 to pine-wave-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/replication.md",
+          "quote": "`acks=all` means all *current* in-sync replicas, not all assigned replicas.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 9,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "변경된 wave 이름과 기존 복제 규칙을 과거 정보에서 회수한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-205334-747726_kafka_v2_20_kraft_upgrade",
+        "llm_source_hash": "76d71d8bab47c007e89e78233bf5e5af02b247b83aa86786f3b8003927aa735f",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 10,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What is the default data-directory fallback?",
+      "standalone_question": "For this Kafka project, what is the default data-directory fallback?",
+      "asks": [
+        "What is the default data-directory fallback?"
+      ],
+      "answer": "The fallback log.dir is /tmp/kafka-logs.",
+      "key_facts": [
+        "The fallback log.dir is /tmp/kafka-logs."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "/tmp/kafka-logs"
+      ],
+      "evidence_pages": [
+        "configuration/broker-configuration.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "configuration/broker-configuration.md",
+          "quote": "`log.dir` = `/tmp/kafka-logs`",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "프로젝트의 사용자 지정 경로와 구별되는 기본 fallback을 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-205334-747726_kafka_v2_20_kraft_upgrade",
+        "llm_source_hash": "76d71d8bab47c007e89e78233bf5e5af02b247b83aa86786f3b8003927aa735f",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 11,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our broker.rack from pine-zone-17 to pine-zone-29. What value should we use now, and can clients in versions 0.x, 1.x or 2.0 communicate with 4.0 brokers?",
+      "standalone_question": "For this Kafka project, change our broker.rack from pine-zone-17 to pine-zone-29. What value should we use now, and can clients in versions 0.x, 1.x or 2.0 communicate with 4.0 brokers?",
+      "asks": [
+        "updated broker.rack",
+        "Can clients in versions 0.x, 1.x or 2.0 communicate with 4.0 brokers?"
+      ],
+      "answer": "The project broker.rack is pine-zone-29. No; those clients cannot communicate with 4.0 brokers.",
+      "key_facts": [
+        "The project broker.rack is pine-zone-29.",
+        "No; those clients cannot communicate with 4.0 brokers."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "pine-zone-29",
+        "0.x",
+        "4.0"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our broker.rack from pine-zone-17 to pine-zone-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "operations/zookeeper-to-kraft-migration.md",
+          "quote": "Old clients (0.x, 1.x, 2.0) can't talk to 4.0 brokers",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "broker.rack",
+          "from": "pine-zone-17",
+          "to": "pine-zone-29"
+        }
+      ],
+      "affects": [
+        17
+      ],
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "broker.rack 변경을 기록하고 이전 문서의 호환성 조건을 재확인한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-205334-747726_kafka_v2_20_kraft_upgrade",
+        "llm_source_hash": "76d71d8bab47c007e89e78233bf5e5af02b247b83aa86786f3b8003927aa735f",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 12,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "How does the directory-backed configuration provider turn files into settings?",
+      "standalone_question": "For this Kafka project, how does the directory-backed configuration provider turn files into settings?",
+      "asks": [
+        "How does the directory-backed configuration provider turn files into settings?"
+      ],
+      "answer": "Each file is a key and its content is the value.",
+      "key_facts": [
+        "Each file is a key and its content is the value."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "file"
+      ],
+      "evidence_pages": [
+        "configuration/config-providers-and-system-properties.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "configuration/config-providers-and-system-properties.md",
+          "quote": "**each file is a key and its content is the value**",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "DirectoryConfigProvider의 파일과 설정값 대응 규칙을 정확히 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-205334-747726_kafka_v2_20_kraft_upgrade",
+        "llm_source_hash": "76d71d8bab47c007e89e78233bf5e5af02b247b83aa86786f3b8003927aa735f",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 13,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which migration wave name are we using now, with five controllers, how many concurrent failures can the quorum tolerate, and what is the default data-directory fallback?",
+      "standalone_question": "For this Kafka project, which migration wave name are we using now, with five controllers, how many concurrent failures can the quorum tolerate, and what is the default data-directory fallback?",
+      "asks": [
+        "current migration wave name",
+        "With five controllers, how many concurrent failures can the quorum tolerate?",
+        "What is the default data-directory fallback?"
+      ],
+      "answer": "The project migration wave name is pine-wave-29. Five controllers tolerate two failures while retaining a majority. The fallback log.dir is /tmp/kafka-logs.",
+      "key_facts": [
+        "The project migration wave name is pine-wave-29.",
+        "Five controllers tolerate two failures while retaining a majority.",
+        "The fallback log.dir is /tmp/kafka-logs."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "pine-wave-29",
+        "5",
+        "2",
+        "/tmp/kafka-logs"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        8,
+        10
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our migration wave name from pine-wave-17 to pine-wave-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "operations/kraft-cluster-setup.md",
+          "quote": "3 tolerate 1 failure, 5 tolerate 2.",
+          "fact_idx": 1
+        },
+        {
+          "page": "configuration/broker-configuration.md",
+          "quote": "`log.dir` = `/tmp/kafka-logs`",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 9,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "최신 wave 이름과 두 문서 사실을 과거 자료에서 모으며 기본 경로와 프로젝트 경로를 혼동하지 않는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-205334-747726_kafka_v2_20_kraft_upgrade",
+        "llm_source_hash": "76d71d8bab47c007e89e78233bf5e5af02b247b83aa86786f3b8003927aa735f",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 14,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "What environment variable supplies heap options to the launcher scripts?",
+      "standalone_question": "For this Kafka project, what environment variable supplies heap options to the launcher scripts?",
+      "asks": [
+        "What environment variable supplies heap options to the launcher scripts?"
+      ],
+      "answer": "The launchers read KAFKA_HEAP_OPTS.",
+      "key_facts": [
+        "The launchers read KAFKA_HEAP_OPTS."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "KAFKA_HEAP_OPTS"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "getting-started/compatibility.md",
+          "quote": "The `bin/*.sh` launchers read the heap size from the `KAFKA_HEAP_OPTS` environment variable",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 5,
+      "recall_distance": 9,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "충분히 이전에 첨부된 호환성 문서의 미사용 JVM 실행 섹션을 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-205334-747726_kafka_v2_20_kraft_upgrade",
+        "llm_source_hash": "76d71d8bab47c007e89e78233bf5e5af02b247b83aa86786f3b8003927aa735f",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 15,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What happens if a request exceeds the broker maximum request size?",
+      "standalone_question": "For this Kafka project, what happens if a request exceeds the broker maximum request size?",
+      "asks": [
+        "What happens if a request exceeds the broker maximum request size?"
+      ],
+      "answer": "The socket is disconnected.",
+      "key_facts": [
+        "The socket is disconnected."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "socket"
+      ],
+      "evidence_pages": [
+        "reference/protocol-and-internals.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "reference/protocol-and-internals.md",
+          "quote": "Requests above the broker's maximum size (`socket.request.max.bytes`, default 100 MiB) cause the **socket to be disconnected**.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "최대 요청 크기 초과 시 동작을 새 프로토콜 문서에서 확인한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-205334-747726_kafka_v2_20_kraft_upgrade",
+        "llm_source_hash": "76d71d8bab47c007e89e78233bf5e5af02b247b83aa86786f3b8003927aa735f",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 16,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which log.dirs did we choose, and what must be done to log directories before the first node start?",
+      "standalone_question": "For this Kafka project, which log.dirs did we choose, and what must be done to log directories before the first node start?",
+      "asks": [
+        "project log.dirs",
+        "What must be done to log directories before the first node start?"
+      ],
+      "answer": "The project log.dirs is /srv/pine-metadata-43. Storage must be formatted before the first start.",
+      "key_facts": [
+        "The project log.dirs is /srv/pine-metadata-43.",
+        "Storage must be formatted before the first start."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "/srv/pine-metadata-43",
+        "log.dirs"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        3
+      ],
+      "evidence": [
+        {
+          "user_turn": 3,
+          "quote": "set log.dirs to /srv/pine-metadata-43",
+          "fact_idx": 0
+        },
+        {
+          "page": "getting-started/local-quickstart.md",
+          "quote": "**Formatting is required** before the first start; a node with unformatted `log.dirs` will not start.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 13,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "선택했던 log.dirs와 최초 시작 전 포맷 요구사항을 정확히 회상한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-205334-747726_kafka_v2_20_kraft_upgrade",
+        "llm_source_hash": "76d71d8bab47c007e89e78233bf5e5af02b247b83aa86786f3b8003927aa735f",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 17,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What broker.rack are we using now, and what is the last bridge release for migrating an existing ZooKeeper cluster?",
+      "standalone_question": "For this Kafka project, what broker.rack are we using now, and what is the last bridge release for migrating an existing ZooKeeper cluster?",
+      "asks": [
+        "current broker.rack",
+        "What is the last bridge release for migrating an existing ZooKeeper cluster?"
+      ],
+      "answer": "The project broker.rack is pine-zone-29. The last bridge release is Kafka 3.9.",
+      "key_facts": [
+        "The project broker.rack is pine-zone-29.",
+        "The last bridge release is Kafka 3.9."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "pine-zone-29",
+        "3.9"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        11,
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our broker.rack from pine-zone-17 to pine-zone-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "operations/zookeeper-to-kraft-migration.md",
+          "quote": "the last bridge release is Kafka 3.9.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 16,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "최신 broker.rack과 마지막 bridge release를 올바른 과거 출처에서 회수한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-205334-747726_kafka_v2_20_kraft_upgrade",
+        "llm_source_hash": "76d71d8bab47c007e89e78233bf5e5af02b247b83aa86786f3b8003927aa735f",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 18,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which migration client.id did we choose, how does the directory-backed configuration provider turn files into settings, and what happens if a request exceeds the broker maximum request size?",
+      "standalone_question": "For this Kafka project, which migration client.id did we choose, how does the directory-backed configuration provider turn files into settings, and what happens if a request exceeds the broker maximum request size?",
+      "asks": [
+        "project migration client.id",
+        "How does the directory-backed configuration provider turn files into settings?",
+        "What happens if a request exceeds the broker maximum request size?"
+      ],
+      "answer": "The project migration client.id is pine-check-41. Each file is a key and its content is the value. The socket is disconnected.",
+      "key_facts": [
+        "The project migration client.id is pine-check-41.",
+        "Each file is a key and its content is the value.",
+        "The socket is disconnected."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "pine-check-41",
+        "file",
+        "socket"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        8,
+        12,
+        15
+      ],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Use pine-check-41 as the project migration client.id.",
+          "fact_idx": 0
+        },
+        {
+          "page": "configuration/config-providers-and-system-properties.md",
+          "quote": "**each file is a key and its content is the value**",
+          "fact_idx": 1
+        },
+        {
+          "page": "reference/protocol-and-internals.md",
+          "quote": "Requests above the broker's maximum size (`socket.request.max.bytes`, default 100 MiB) cause the **socket to be disconnected**.",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    }
+  ],
+  "edits": [
+    {
+      "at": "2026-11-28T12:52:37+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 7,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_20_kraft_upgrade_a73aa7febe6a482e9b9ae91ac005e910"
+    },
+    {
+      "at": "2026-11-28T14:39:41+00:00",
+      "by": "장우진",
+      "turn": 7,
+      "fields": [
+        "asks",
+        "key_facts",
+        "fact_meta",
+        "evidence"
+      ],
+      "note": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요."
+    }
+  ]
+}

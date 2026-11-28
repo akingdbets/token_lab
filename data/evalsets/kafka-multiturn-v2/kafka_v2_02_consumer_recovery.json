@@ -1,0 +1,1406 @@
+{
+  "schema_version": 2,
+  "scenario_id": "kafka_v2_02_consumer_recovery",
+  "title": "Inventory consumer recovery",
+  "topic": "Managing consumer offsets, rebalances, and recovery for an inventory projection",
+  "status": "final",
+  "bundle": [
+    "clients/consumer.md",
+    "clients/consumer-groups-and-rebalance.md",
+    "concepts/topics-partitions-offsets.md",
+    "operations/managing-groups.md",
+    "configuration/topic-and-group-configuration.md",
+    "concepts/storage-and-retention.md",
+    "clients/examples.md",
+    "monitoring/client-metrics.md"
+  ],
+  "generation": {
+    "model": "gpt-6.1-sol",
+    "method": "Codex session, account plan",
+    "prompt": [
+      "mt_scenario_gen_v3",
+      "40710c69c22d"
+    ],
+    "request_file": "results/scenario_gen/20261128-164701_kafka_v2_02_consumer_recovery_session/request.json",
+    "created_at": "2026-11-28T16:46:05",
+    "corpus_manifest_sha256": "a6fb69b10c7c98a2af883313f8938d0bfb1757fae65b8274c183a4c14ef4a735",
+    "run_id": "20261128-164701_kafka_v2_02_consumer_recovery_session",
+    "context": "Generated directly in the ongoing Codex conversation using the prepared prompt and local source pages.",
+    "checks": "results/scenario_gen/20261128-164701_kafka_v2_02_consumer_recovery_session/checks.json"
+  },
+  "turns": [
+    {
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our inventory projection will use group.id=nebula-stock-17. Which group id should we configure, and which internal topic stores committed offsets?",
+      "standalone_question": "Our inventory projection will use group.id=nebula-stock-17. Which group id should we configure, and which internal topic stores committed offsets?",
+      "asks": [
+        "project group id",
+        "offset storage"
+      ],
+      "answer": "Use group.id=nebula-stock-17. Committed offsets are stored in __consumer_offsets.",
+      "key_facts": [
+        "Use group.id=nebula-stock-17.",
+        "Committed offsets are stored in __consumer_offsets."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "nebula-stock-17",
+        "__consumer_offsets"
+      ],
+      "evidence_pages": [
+        "clients/consumer.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 0,
+          "quote": "group.id=nebula-stock-17",
+          "fact_idx": 0
+        },
+        {
+          "page": "clients/consumer.md",
+          "quote": "the coordinator appends the commit to the special **compacted** topic `__consumer_offsets`.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 0,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "현재 프로젝트 설정과 문서 사실이 올바르게 구분된다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174157-162204_kafka_v2_02_consumer_recovery",
+        "llm_source_hash": "47f15318bd89cbd87fc7beef2953e879d2e8adf0686037cc16c359591b965452",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Reserve group.instance.id=nebula-reader-9 for our first worker. What are the default heartbeat intervals for the classic and consumer protocols?",
+      "standalone_question": "Reserve group.instance.id=nebula-reader-9 for our first worker. What are the default heartbeat intervals for the classic and consumer protocols?",
+      "asks": [
+        "classic heartbeat default",
+        "consumer heartbeat default"
+      ],
+      "answer": "The classic client heartbeat.interval.ms defaults to 3000 ms. The consumer protocol broker group.consumer.heartbeat.interval.ms defaults to 5000 ms.",
+      "key_facts": [
+        "The classic client heartbeat.interval.ms defaults to 3000 ms.",
+        "The consumer protocol broker group.consumer.heartbeat.interval.ms defaults to 5000 ms."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "3000",
+        "5000"
+      ],
+      "evidence_pages": [
+        "clients/consumer-groups-and-rebalance.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "page": "clients/consumer-groups-and-rebalance.md",
+          "quote": "Client configs `heartbeat.interval.ms` (default `3000`), `session.timeout.ms` (default `45000`)"
+        },
+        {
+          "fact_idx": 1,
+          "page": "clients/consumer-groups-and-rebalance.md",
+          "quote": "Broker configs `group.consumer.heartbeat.interval.ms` (default `5000`), `group.consumer.session.timeout.ms` (default `45000`)"
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 1,
+      "recall_distance": 0,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T13:10:57+00:00",
+        "memo": "인스턴스 ID 선언은 유지하고 두 프로토콜의 heartbeat 기본값만 질문",
+        "repair_history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/error_repairs/6e10f9ea2fc048a1a49cb5d9978cd531/kafka_v2_02_consumer_recovery",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "If we adopt group.protocol=consumer, can we keep setting the client heartbeat.interval.ms and session.timeout.ms?",
+      "standalone_question": "In Kafka, if group.protocol=consumer is adopted, can the client keep setting heartbeat.interval.ms and session.timeout.ms?",
+      "asks": [
+        "heartbeat.interval.ms usability with consumer protocol",
+        "session.timeout.ms usability with consumer protocol"
+      ],
+      "answer": "No; heartbeat.interval.ms and session.timeout.ms are no longer usable with group.protocol=consumer.",
+      "key_facts": [
+        "heartbeat.interval.ms is no longer usable with group.protocol=consumer.",
+        "session.timeout.ms is no longer usable with group.protocol=consumer."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "negation"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "heartbeat.interval.ms",
+        "session.timeout.ms"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "page": "clients/consumer-groups-and-rebalance.md",
+          "quote": "With `group.protocol=consumer`, these are **no longer usable**:\n\n- `heartbeat.interval.ms`\n- `session.timeout.ms`"
+        },
+        {
+          "fact_idx": 1,
+          "page": "clients/consumer-groups-and-rebalance.md",
+          "quote": "With `group.protocol=consumer`, these are **no longer usable**:\n\n- `heartbeat.interval.ms`\n- `session.timeout.ms`"
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 2,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false,
+        "decision_source": "human_review",
+        "memo": "앞서 첨부한 문서의 프로토콜별 제한을 정확히 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174157-162204_kafka_v2_02_consumer_recovery",
+        "llm_source_hash": "47f15318bd89cbd87fc7beef2953e879d2e8adf0686037cc16c359591b965452",
+        "needs_recheck": false,
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": ""
+      }
+    },
+    {
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Set our inventory topic to 11 partitions. What count should we configure, and what is the ordering guarantee when records share a key?",
+      "standalone_question": "Set our inventory topic to 11 partitions. What count should we configure, and what is the ordering guarantee when records share a key?",
+      "asks": [
+        "project partition count",
+        "same-key ordering"
+      ],
+      "answer": "Configure 11 partitions. Same-key records are read in their write order within their partition.",
+      "key_facts": [
+        "Configure 11 partitions.",
+        "Same-key records are read in their write order within their partition."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "user",
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "11",
+        "partition"
+      ],
+      "evidence_pages": [
+        "concepts/topics-partitions-offsets.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "Set our inventory topic to 11 partitions.",
+          "user_turn": 3
+        },
+        {
+          "fact_idx": 1,
+          "page": "concepts/topics-partitions-offsets.md",
+          "quote": "**Events with the same key are written to the same partition**"
+        },
+        {
+          "fact_idx": 1,
+          "page": "concepts/topics-partitions-offsets.md",
+          "quote": "**any consumer of a topic-partition reads its events in exactly the order they were written**."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 3,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false,
+        "decision_source": "human_review",
+        "memo": "프로젝트 파티션 수와 동일 키 순서 보장이 근거에 부합한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174157-162204_kafka_v2_02_consumer_recovery",
+        "llm_source_hash": "47f15318bd89cbd87fc7beef2953e879d2e8adf0686037cc16c359591b965452",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "needs_recheck": false
+      }
+    },
+    {
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Rename our group from nebula-stock-17 to nebula-stock-29. Which group id should we use now, and which offset-reset setting decides where this fresh group starts when it has no committed offsets?",
+      "standalone_question": "Rename our group from nebula-stock-17 to nebula-stock-29. Which group id should we use now, and which offset-reset setting decides where this fresh group starts when it has no committed offsets?",
+      "asks": [
+        "updated group id",
+        "missing-offset policy"
+      ],
+      "answer": "Use group.id=nebula-stock-29. auto.offset.reset determines where to start when no committed offset exists.",
+      "key_facts": [
+        "Use group.id=nebula-stock-29.",
+        "auto.offset.reset determines where to start when no committed offset exists."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "nebula-stock-29",
+        "auto.offset.reset"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "Rename our group from nebula-stock-17 to nebula-stock-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "clients/consumer.md",
+          "quote": "When no committed offset exists, or it is out of range, `auto.offset.reset` decides where to start.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "Project group.id",
+          "from": "nebula-stock-17",
+          "to": "nebula-stock-29"
+        }
+      ],
+      "affects": [
+        9,
+        18
+      ],
+      "source_turn": null,
+      "turn": 4,
+      "recall_distance": 4,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "그룹 이름 변경과 이후 참조가 일관된다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174157-162204_kafka_v2_02_consumer_recovery",
+        "llm_source_hash": "47f15318bd89cbd87fc7beef2953e879d2e8adf0686037cc16c359591b965452",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Before applying an offset reset, must the consumers be active or inactive, and what happens if we omit an execution-mode option?",
+      "standalone_question": "Before applying an offset reset, must the consumers be active or inactive, and what happens if we omit an execution-mode option?",
+      "asks": [
+        "reset membership requirement",
+        "default reset mode"
+      ],
+      "answer": "Consumers must be inactive for an offset reset. The default --dry-run mode only shows what would be reset.",
+      "key_facts": [
+        "Consumers must be inactive for an offset reset.",
+        "The default --dry-run mode only shows what would be reset."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "inactive",
+        "--dry-run"
+      ],
+      "evidence_pages": [
+        "operations/managing-groups.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "operations/managing-groups.md",
+          "quote": "the consumers must be **inactive**",
+          "fact_idx": 0
+        },
+        {
+          "page": "operations/managing-groups.md",
+          "quote": "| `--dry-run` | Show what would be reset (**default**). |",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 5,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "리셋 전제와 기본 실행 모드가 정확히 대응한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174157-162204_kafka_v2_02_consumer_recovery",
+        "llm_source_hash": "47f15318bd89cbd87fc7beef2953e879d2e8adf0686037cc16c359591b965452",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "If we reset from a CSV file, is a separate --topic or --all-topics scope required?",
+      "standalone_question": "In Kafka, when resetting consumer-group offsets from a CSV file, is a separate --topic or --all-topics scope required?",
+      "asks": [
+        "CSV reset scope exception"
+      ],
+      "answer": "No; --from-file is the exception to the explicit --topic or --all-topics scope requirement.",
+      "key_facts": [
+        "No; --from-file is the exception to the explicit --topic or --all-topics scope requirement."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "--from-file"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "operations/managing-groups.md",
+          "quote": "requires a scope (`--all-topics` or `--topic`, unless using `--from-file`)",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 6,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "CSV 리셋의 범위 예외를 이전 문서에서 회수한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174157-162204_kafka_v2_02_consumer_recovery",
+        "llm_source_hash": "47f15318bd89cbd87fc7beef2953e879d2e8adf0686037cc16c359591b965452",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "If partitions are lost before a graceful revocation, should our rebalance listener commit pending offsets, and which callback handles that case?",
+      "standalone_question": "In Kafka, if partitions are lost before a graceful revocation, should a rebalance listener commit pending offsets, and which callback handles that case?",
+      "asks": [
+        "lost-partition callback",
+        "lost-partition commit policy"
+      ],
+      "answer": "onPartitionsLost handles this case; do not commit because other consumers likely own the partitions.",
+      "key_facts": [
+        "onPartitionsLost handles partitions lost before graceful revocation.",
+        "Do not commit pending offsets for lost partitions because other consumers likely own them."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": []
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "onPartitionsLost"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "page": "clients/consumer.md",
+          "quote": "| `onPartitionsLost(Collection<TopicPartition>)` | Partitions were reassigned before being revoked gracefully; do **not** commit (others likely own them), but clean up. |"
+        },
+        {
+          "fact_idx": 1,
+          "page": "clients/consumer.md",
+          "quote": "| `onPartitionsLost(Collection<TopicPartition>)` | Partitions were reassigned before being revoked gracefully; do **not** commit (others likely own them), but clean up. |"
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 0,
+      "turn": 7,
+      "recall_distance": 7,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:27+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174157-162204_kafka_v2_02_consumer_recovery",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn_type": "new",
+      "type": "multi",
+      "question": "For our inventory topic, choose retention.ms=97200000. What is our project value, and what is the documented default when a topic has no time-retention override?",
+      "standalone_question": "For our inventory topic, choose retention.ms=97200000. What is our project value, and what is the documented default when a topic has no time-retention override?",
+      "asks": [
+        "project retention",
+        "default retention"
+      ],
+      "answer": "The project retention.ms is 97200000. The default retention.ms is 604800000 milliseconds, or seven days.",
+      "key_facts": [
+        "The project retention.ms is 97200000.",
+        "The default retention.ms is 604800000 milliseconds, or seven days."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "97200000",
+        "604800000"
+      ],
+      "evidence_pages": [
+        "configuration/topic-and-group-configuration.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "choose retention.ms=97200000",
+          "fact_idx": 0
+        },
+        {
+          "page": "configuration/topic-and-group-configuration.md",
+          "quote": "| `retention.ms` | `604800000` (7 days) | `log.retention.ms` |",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 8,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "프로젝트 보존 시간과 문서 기본값을 구분한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174157-162204_kafka_v2_02_consumer_recovery",
+        "llm_source_hash": "47f15318bd89cbd87fc7beef2953e879d2e8adf0686037cc16c359591b965452",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which consumer group id are we using now, and which internal topic keeps its offset commits?",
+      "standalone_question": "In this Kafka inventory project, which consumer group id is the latest one chosen by the team, and which internal topic keeps its offset commits?",
+      "asks": [
+        "current group id",
+        "offset storage"
+      ],
+      "answer": "The current group.id is nebula-stock-29. Offset commits are stored in __consumer_offsets.",
+      "key_facts": [
+        "The current group.id is nebula-stock-29.",
+        "Offset commits are stored in __consumer_offsets."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "nebula-stock-29",
+        "__consumer_offsets"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "Rename our group from nebula-stock-17 to nebula-stock-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "clients/consumer.md",
+          "quote": "the coordinator appends the commit to the special **compacted** topic `__consumer_offsets`.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 9,
+      "recall_distance": 9,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "변경된 그룹과 이전 문서의 저장 토픽을 회수한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174157-162204_kafka_v2_02_consumer_recovery",
+        "llm_source_hash": "47f15318bd89cbd87fc7beef2953e879d2e8adf0686037cc16c359591b965452",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn_type": "new",
+      "type": "multi",
+      "question": "For disk retention, is retention.bytes a per-partition or whole-topic limit, and does the active segment get deleted as soon as retention.ms expires?",
+      "standalone_question": "For disk retention, is retention.bytes a per-partition or whole-topic limit, and does the active segment get deleted as soon as retention.ms expires?",
+      "asks": [
+        "size-retention scope",
+        "active-segment lifetime"
+      ],
+      "answer": "retention.bytes limits each partition. The active segment is not deleted and can outlive retention.ms until it rolls.",
+      "key_facts": [
+        "retention.bytes limits each partition.",
+        "The active segment is not deleted and can outlive retention.ms until it rolls."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "retention.bytes",
+        "retention.ms"
+      ],
+      "evidence_pages": [
+        "concepts/storage-and-retention.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "page": "concepts/storage-and-retention.md",
+          "quote": "the oldest segments are deleted until the **partition** is within the limit"
+        },
+        {
+          "fact_idx": 1,
+          "page": "concepts/storage-and-retention.md",
+          "quote": "The active segment is not deleted, so data in a slow-to-roll segment can outlive `retention.ms` until the segment rolls."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 10,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false,
+        "decision_source": "human_review",
+        "memo": "용량 보존 범위와 활성 세그먼트 예외가 정확하다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174157-162204_kafka_v2_02_consumer_recovery",
+        "llm_source_hash": "47f15318bd89cbd87fc7beef2953e879d2e8adf0686037cc16c359591b965452",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "needs_recheck": false
+      }
+    },
+    {
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our retention.ms from 97200000 to 183600000. Which value applies now, and which broker property supplies the default for that topic setting?",
+      "standalone_question": "Change our retention.ms from 97200000 to 183600000. Which value applies now, and which broker property supplies the default for that topic setting?",
+      "asks": [
+        "updated retention",
+        "broker default property"
+      ],
+      "answer": "The project retention.ms is now 183600000. The broker default property is log.retention.ms.",
+      "key_facts": [
+        "The project retention.ms is now 183600000.",
+        "The broker default property is log.retention.ms."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "183600000",
+        "log.retention.ms"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        8
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our retention.ms from 97200000 to 183600000.",
+          "fact_idx": 0
+        },
+        {
+          "page": "configuration/topic-and-group-configuration.md",
+          "quote": "| `retention.ms` | `604800000` (7 days) | `log.retention.ms` |",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "Project retention.ms",
+          "from": 97200000,
+          "to": 183600000
+        }
+      ],
+      "affects": [
+        13,
+        17
+      ],
+      "source_turn": null,
+      "turn": 11,
+      "recall_distance": 3,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "보존 시간 업데이트와 후속 사용이 일관된다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174157-162204_kafka_v2_02_consumer_recovery",
+        "llm_source_hash": "47f15318bd89cbd87fc7beef2953e879d2e8adf0686037cc16c359591b965452",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn_type": "new",
+      "type": "multi",
+      "question": "In the transactional processing loop, if the last processed record has offset 317, which offset should be committed and through which producer API?",
+      "standalone_question": "In the transactional processing loop, if the last processed record has offset 317, which offset should be committed and through which producer API?",
+      "asks": [
+        "next-offset commit",
+        "transactional commit API"
+      ],
+      "answer": "Commit offset 318, the last processed offset plus one. Use sendOffsetsToTransaction with consumer.groupMetadata().",
+      "key_facts": [
+        "Commit offset 318, the last processed offset plus one.",
+        "Use sendOffsetsToTransaction with consumer.groupMetadata()."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "offset + 1",
+        "sendOffsetsToTransaction",
+        "consumer.groupMetadata()"
+      ],
+      "evidence_pages": [
+        "clients/examples.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "clients/examples.md",
+          "quote": "offsetsToCommit.put(partition, new OffsetAndMetadata(offset + 1));",
+          "fact_idx": 0
+        },
+        {
+          "page": "clients/examples.md",
+          "quote": "producer.sendOffsetsToTransaction(offsetsToCommit, consumer.groupMetadata());",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 12,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "오프셋 계산과 트랜잭션 API가 제공 예제에 근거한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174157-162204_kafka_v2_02_consumer_recovery",
+        "llm_source_hash": "47f15318bd89cbd87fc7beef2953e879d2e8adf0686037cc16c359591b965452",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "What time-retention value are we using now, must consumers be running during an offset reset, and is the byte-retention limit applied per partition or across the entire topic?",
+      "standalone_question": "In this Kafka inventory project, what is the latest time-retention value chosen by the team, must consumers be running during an offset reset, and is the byte-retention limit applied per partition or across the entire topic?",
+      "asks": [
+        "current project retention",
+        "reset membership state",
+        "size-retention scope"
+      ],
+      "answer": "The project retention.ms is 183600000. Consumers must be inactive during an offset reset. retention.bytes applies per partition.",
+      "key_facts": [
+        "The project retention.ms is 183600000.",
+        "Consumers must be inactive during an offset reset.",
+        "retention.bytes applies per partition."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "183600000",
+        "inactive",
+        "partition"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        11,
+        5,
+        10
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our retention.ms from 97200000 to 183600000.",
+          "fact_idx": 0
+        },
+        {
+          "page": "operations/managing-groups.md",
+          "quote": "the consumers must be **inactive**",
+          "fact_idx": 1
+        },
+        {
+          "page": "concepts/storage-and-retention.md",
+          "quote": "the oldest segments are deleted until the **partition** is within the limit",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 13,
+      "recall_distance": 8,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "세 이력 출처를 실제 채점 사실에 결합한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174157-162204_kafka_v2_02_consumer_recovery",
+        "llm_source_hash": "47f15318bd89cbd87fc7beef2953e879d2e8adf0686037cc16c359591b965452",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "For that worker's reserved membership identifier, what happens if another instance uses the same identifier?",
+      "standalone_question": "In Kafka, what happens if two different instances use the same group.instance.id for static membership?",
+      "asks": [
+        "duplicate static member fencing"
+      ],
+      "answer": "The duplicate instance is fenced with FencedInstanceIdException.",
+      "key_facts": [
+        "The duplicate instance is fenced with FencedInstanceIdException."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "FencedInstanceIdException"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "clients/consumer-groups-and-rebalance.md",
+          "quote": "Duplicate ids are fenced with `org.apache.kafka.common.errors.FencedInstanceIdException`.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 1,
+      "turn": 14,
+      "recall_distance": 13,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:27+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174157-162204_kafka_v2_02_consumer_recovery",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn_type": "new",
+      "type": "fact",
+      "question": "For our processing-stall alert, which maximum poll-gap metric should be compared with max.poll.interval.ms?",
+      "standalone_question": "For our processing-stall alert, which maximum poll-gap metric should be compared with max.poll.interval.ms?",
+      "asks": [
+        "maximum poll-gap metric"
+      ],
+      "answer": "Compare time-between-poll-max with max.poll.interval.ms.",
+      "key_facts": [
+        "Compare time-between-poll-max with max.poll.interval.ms."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "time-between-poll-max"
+      ],
+      "evidence_pages": [
+        "monitoring/client-metrics.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "monitoring/client-metrics.md",
+          "quote": "`time-between-poll-max` vs `max.poll.interval.ms`",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 15,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "폴링 지연 경보 지표가 문서에 직접 근거한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174157-162204_kafka_v2_02_consumer_recovery",
+        "llm_source_hash": "47f15318bd89cbd87fc7beef2953e879d2e8adf0686037cc16c359591b965452",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "How many partitions did we choose for inventory, and can we reduce that count in place later?",
+      "standalone_question": "In this Kafka inventory project, how many partitions did the team choose, and can that count be reduced in place later?",
+      "asks": [
+        "project partition count",
+        "partition reduction"
+      ],
+      "answer": "We chose 11 partitions. Kafka does not support reducing the number of partitions.",
+      "key_facts": [
+        "We chose 11 partitions.",
+        "Kafka does not support reducing the number of partitions."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "11",
+        "partitions"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        3
+      ],
+      "evidence": [
+        {
+          "user_turn": 3,
+          "quote": "Set our inventory topic to 11 partitions.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/topics-partitions-offsets.md",
+          "quote": "Kafka does not support reducing the number of partitions.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 16,
+      "recall_distance": 13,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "이전 파티션 수와 축소 제한을 적절히 회수한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174157-162204_kafka_v2_02_consumer_recovery",
+        "llm_source_hash": "47f15318bd89cbd87fc7beef2953e879d2e8adf0686037cc16c359591b965452",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What time-retention value are we using now, and can an active segment outlive that configured time?",
+      "standalone_question": "In this Kafka inventory project, what is the latest time-retention value chosen by the team, and can an active segment outlive that configured time?",
+      "asks": [
+        "current retention",
+        "active-segment exception"
+      ],
+      "answer": "The current retention.ms is 183600000. Yes; the active segment can outlive retention.ms until it rolls.",
+      "key_facts": [
+        "The current retention.ms is 183600000.",
+        "Yes; the active segment can outlive retention.ms until it rolls."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "183600000",
+        "retention.ms"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        11,
+        10
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our retention.ms from 97200000 to 183600000.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/storage-and-retention.md",
+          "quote": "The active segment is not deleted, so data in a slow-to-roll segment can outlive `retention.ms` until the segment rolls.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 17,
+      "recall_distance": 7,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "최신 보존 시간과 활성 세그먼트 예외를 일관되게 회수한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174157-162204_kafka_v2_02_consumer_recovery",
+        "llm_source_hash": "47f15318bd89cbd87fc7beef2953e879d2e8adf0686037cc16c359591b965452",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which group id are we using now, which offset value must the transactional loop commit relative to its last processed record, and which maximum poll-gap metric should our processing-stall alert inspect?",
+      "standalone_question": "In this Kafka inventory project, which group id is the latest one chosen by the team, which offset value must the transactional loop commit relative to its last processed record, and which maximum poll-gap metric should the processing-stall alert inspect?",
+      "asks": [
+        "current group id",
+        "commit-offset rule",
+        "poll-gap metric"
+      ],
+      "answer": "The group.id is nebula-stock-29. Commit the last processed record offset plus one. Inspect time-between-poll-max.",
+      "key_facts": [
+        "The group.id is nebula-stock-29.",
+        "Commit the last processed record offset plus one.",
+        "Inspect time-between-poll-max."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "nebula-stock-29",
+        "offset + 1",
+        "time-between-poll-max"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        12,
+        15
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "Rename our group from nebula-stock-17 to nebula-stock-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "clients/examples.md",
+          "quote": "offsetsToCommit.put(partition, new OffsetAndMetadata(offset + 1));",
+          "fact_idx": 1
+        },
+        {
+          "page": "monitoring/client-metrics.md",
+          "quote": "`time-between-poll-max` vs `max.poll.interval.ms`",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 18,
+      "recall_distance": 14,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "최신 그룹과 트랜잭션 규칙 및 경보 지표를 이력에서 결합한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174157-162204_kafka_v2_02_consumer_recovery",
+        "llm_source_hash": "47f15318bd89cbd87fc7beef2953e879d2e8adf0686037cc16c359591b965452",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    }
+  ],
+  "edits": [
+    {
+      "at": "2026-11-28T12:52:27+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 7,
+      "fields": [
+        "asks",
+        "key_facts",
+        "fact_meta",
+        "evidence"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_02_consumer_recovery_3f21de4615c64d6492702da097f19ab8"
+    },
+    {
+      "at": "2026-11-28T12:52:27+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 14,
+      "fields": [
+        "standalone_question"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_02_consumer_recovery_3f21de4615c64d6492702da097f19ab8"
+    },
+    {
+      "at": "2026-11-28T13:10:57+00:00",
+      "by": "Codex session",
+      "turn": 1,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks",
+        "answer",
+        "key_facts",
+        "fact_meta",
+        "key_entities",
+        "evidence"
+      ],
+      "note": "인스턴스 ID 선언은 유지하고 두 프로토콜의 heartbeat 기본값만 질문",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/error_repairs/6e10f9ea2fc048a1a49cb5d9978cd531/kafka_v2_02_consumer_recovery"
+    },
+    {
+      "at": "2026-11-28T14:39:41+00:00",
+      "by": "장우진",
+      "turn": 2,
+      "fields": [
+        "asks",
+        "key_facts",
+        "fact_meta",
+        "evidence"
+      ],
+      "note": "앞서 첨부한 문서의 프로토콜별 제한을 정확히 묻는다."
+    },
+    {
+      "at": "2026-11-28T14:39:41+00:00",
+      "by": "장우진",
+      "turn": 3,
+      "fields": [
+        "answer",
+        "key_facts"
+      ],
+      "note": "프로젝트 파티션 수와 동일 키 순서 보장이 근거에 부합한다."
+    },
+    {
+      "at": "2026-11-28T14:39:41+00:00",
+      "by": "장우진",
+      "turn": 10,
+      "fields": [
+        "answer",
+        "key_facts",
+        "evidence"
+      ],
+      "note": "용량 보존 범위와 활성 세그먼트 예외가 정확하다."
+    }
+  ]
+}

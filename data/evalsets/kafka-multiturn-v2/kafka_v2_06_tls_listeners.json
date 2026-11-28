@@ -1,0 +1,1246 @@
+{
+  "schema_version": 2,
+  "scenario_id": "kafka_v2_06_tls_listeners",
+  "title": "Separating secure client and controller endpoints",
+  "topic": "Separating secure client and controller endpoints",
+  "status": "final",
+  "bundle": [
+    "concepts/topics-partitions-offsets.md",
+    "security/listeners-and-security-overview.md",
+    "getting-started/docker.md",
+    "security/ssl-encryption-and-authentication.md",
+    "configuration/config-providers-and-system-properties.md",
+    "configuration/client-configuration.md",
+    "security/authorization-and-acls.md",
+    "monitoring/broker-and-kraft-metrics.md"
+  ],
+  "generation": {
+    "model": "gpt-6.1-sol",
+    "method": "Codex session, account plan",
+    "prompt": [
+      "mt_scenario_gen_v3",
+      "40710c69c22d"
+    ],
+    "run_id": "20261128-165733_kafka_18_session",
+    "request_file": "results/scenario_gen/20261128-165733_kafka_18_session/kafka_v2_06_tls_listeners_request.json",
+    "created_at": "2026-11-28T16:57:33",
+    "corpus_manifest_sha256": "a6fb69b10c7c98a2af883313f8938d0bfb1757fae65b8274c183a4c14ef4a735",
+    "context": "Authored in the ongoing Codex conversation with a shared turn structure, explicit page-grounded fact selections, and topic-specific project settings."
+  },
+  "turns": [
+    {
+      "turn": 0,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our project concerns separating secure client and controller endpoints. For the planned deployment, set client listener alias to EDGE_ASTER_17. Which value should we use, and can the partition count be reduced after creation?",
+      "standalone_question": "For this Kafka project, our project concerns separating secure client and controller endpoints. For the planned deployment, set client listener alias to EDGE_ASTER_17. Which value should we use, and can the partition count be reduced after creation?",
+      "asks": [
+        "project client listener alias",
+        "Can the partition count be reduced after creation?"
+      ],
+      "answer": "The project client listener alias is EDGE_ASTER_17. Kafka does not support reducing the number of partitions.",
+      "key_facts": [
+        "The project client listener alias is EDGE_ASTER_17.",
+        "Kafka does not support reducing the number of partitions."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "EDGE_ASTER_17",
+        "partitions"
+      ],
+      "evidence_pages": [
+        "concepts/topics-partitions-offsets.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 0,
+          "quote": "set client listener alias to EDGE_ASTER_17",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/topics-partitions-offsets.md",
+          "quote": "Kafka does not support reducing the number of partitions.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    },
+    {
+      "turn": 1,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Set our client port to 9197. Which project value applies, and which property tells clients where to connect after metadata discovery?",
+      "standalone_question": "For this Kafka project, set our client port to 9197. Which project value applies, and which property tells clients where to connect after metadata discovery?",
+      "asks": [
+        "project client port",
+        "Which property tells clients where to connect after metadata discovery?"
+      ],
+      "answer": "The project client port is 9197. advertised.listeners supplies the advertised client endpoints.",
+      "key_facts": [
+        "The project client port is 9197.",
+        "advertised.listeners supplies the advertised client endpoints."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "9197",
+        "advertised.listeners"
+      ],
+      "evidence_pages": [
+        "security/listeners-and-security-overview.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Set our client port to 9197.",
+          "fact_idx": 0
+        },
+        {
+          "page": "security/listeners-and-security-overview.md",
+          "quote": "`advertised.listeners` — what the broker tells clients to connect to after the first metadata fetch",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "클라이언트 포트 설정과 광고 주소 속성 확인이 일관된다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175334-027549_kafka_v2_06_tls_listeners",
+        "llm_source_hash": "943b71c6273e3492d9bea60ac7fb0055ece77b2a34fe93448eb7339ec332e68e",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 2,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "Which property maps listener names to security protocols?",
+      "standalone_question": "For this Kafka project, which property maps listener names to security protocols?",
+      "asks": [
+        "Which property maps listener names to security protocols?"
+      ],
+      "answer": "listener.security.protocol.map maps names to protocols.",
+      "key_facts": [
+        "listener.security.protocol.map maps names to protocols."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "listener.security.protocol.map"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "security/listeners-and-security-overview.md",
+          "quote": "`listener.security.protocol.map` — maps each listener name to a protocol",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "이전에 첨부된 리스너 문서의 다른 속성을 확인한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175334-027549_kafka_v2_06_tls_listeners",
+        "llm_source_hash": "943b71c6273e3492d9bea60ac7fb0055ece77b2a34fe93448eb7339ec332e68e",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 3,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "For our project, set keystore path to /etc/aster/edge-keystore.p12. Which value should be used, and which port do the default single-node Kafka containers listen on?",
+      "standalone_question": "For this Kafka project, for our project, set keystore path to /etc/aster/edge-keystore.p12. Which value should be used, and which port do the default single-node Kafka containers listen on?",
+      "asks": [
+        "project keystore path",
+        "Which port do the default single-node Kafka containers listen on?"
+      ],
+      "answer": "The project keystore path is /etc/aster/edge-keystore.p12. The default containers listen on port 9092.",
+      "key_facts": [
+        "The project keystore path is /etc/aster/edge-keystore.p12.",
+        "The default containers listen on port 9092."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "/etc/aster/edge-keystore.p12",
+        "9092"
+      ],
+      "evidence_pages": [
+        "getting-started/docker.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 3,
+          "quote": "set keystore path to /etc/aster/edge-keystore.p12",
+          "fact_idx": 0
+        },
+        {
+          "page": "getting-started/docker.md",
+          "quote": "listening on port **9092**",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "프로젝트 keystore 경로와 기본 컨테이너 포트를 구별한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175334-027549_kafka_v2_06_tls_listeners",
+        "llm_source_hash": "943b71c6273e3492d9bea60ac7fb0055ece77b2a34fe93448eb7339ec332e68e",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 4,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Before rollout, change our client listener alias from EDGE_ASTER_17 to EDGE_ASTER_29. What is the revised project value, and after a partition-count increase, is existing data redistributed?",
+      "standalone_question": "For this Kafka project, before rollout, change our client listener alias from EDGE_ASTER_17 to EDGE_ASTER_29. What is the revised project value, and after a partition-count increase, is existing data redistributed?",
+      "asks": [
+        "updated client listener alias",
+        "After a partition-count increase, is existing data redistributed?"
+      ],
+      "answer": "The project client listener alias is EDGE_ASTER_29. Existing data is not redistributed.",
+      "key_facts": [
+        "The project client listener alias is EDGE_ASTER_29.",
+        "Existing data is not redistributed."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "EDGE_ASTER_29",
+        "partitions"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our client listener alias from EDGE_ASTER_17 to EDGE_ASTER_29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/topics-partitions-offsets.md",
+          "quote": "existing data is not redistributed",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "client listener alias",
+          "from": "EDGE_ASTER_17",
+          "to": "EDGE_ASTER_29"
+        }
+      ],
+      "affects": [
+        9,
+        13
+      ],
+      "source_turn": null,
+      "recall_distance": 4,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    },
+    {
+      "turn": 5,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What algorithm value enables hostname verification by default?",
+      "standalone_question": "For this Kafka project, what algorithm value enables hostname verification by default?",
+      "asks": [
+        "What algorithm value enables hostname verification by default?"
+      ],
+      "answer": "ssl.endpoint.identification.algorithm defaults to https.",
+      "key_facts": [
+        "ssl.endpoint.identification.algorithm defaults to https."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "https"
+      ],
+      "evidence_pages": [
+        "security/ssl-encryption-and-authentication.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "security/ssl-encryption-and-authentication.md",
+          "quote": "`ssl.endpoint.identification.algorithm=https`",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "기본 hostname verification 알고리즘 값을 정확히 묻고 답한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175334-027549_kafka_v2_06_tls_listeners",
+        "llm_source_hash": "943b71c6273e3492d9bea60ac7fb0055ece77b2a34fe93448eb7339ec332e68e",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 6,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "Where must subject alternative names appear for hostname verification?",
+      "standalone_question": "For this Kafka project, where must subject alternative names appear for hostname verification?",
+      "asks": [
+        "Where must subject alternative names appear for hostname verification?"
+      ],
+      "answer": "SANs must be in the signed certificate.",
+      "key_facts": [
+        "SANs must be in the signed certificate."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "SANs"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "security/ssl-encryption-and-authentication.md",
+          "quote": "SANs must be in the **signed certificate**",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "이전 TLS 문서에서 SAN이 포함되어야 할 위치를 확인한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175334-027549_kafka_v2_06_tls_listeners",
+        "llm_source_hash": "943b71c6273e3492d9bea60ac7fb0055ece77b2a34fe93448eb7339ec332e68e",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 7,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "Can the controller listener have the same name as the inter-broker listener?",
+      "standalone_question": "For this Kafka project, can the controller listener have the same name as the inter-broker listener?",
+      "asks": [
+        "Can the controller listener have the same name as the inter-broker listener?"
+      ],
+      "answer": "No; controller.listener.names cannot be the same as the inter-broker listener.",
+      "key_facts": [
+        "No; controller.listener.names cannot be the same as the inter-broker listener."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "controller.listener.names"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "security/listeners-and-security-overview.md",
+          "quote": "`controller.listener.names` — the listener(s) controllers use. It **cannot be the same** as the inter-broker listener.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 1,
+      "recall_distance": 6,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "충분히 이전에 첨부된 문서의 미사용 controller 절을 질문한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175334-027549_kafka_v2_06_tls_listeners",
+        "llm_source_hash": "943b71c6273e3492d9bea60ac7fb0055ece77b2a34fe93448eb7339ec332e68e",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 8,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Use /etc/aster/edge-truststore.p12 as the project truststore path. Which value should be used, and how does the directory-backed configuration provider turn files into settings?",
+      "standalone_question": "For this Kafka project, use /etc/aster/edge-truststore.p12 as the project truststore path. Which value should be used, and how does the directory-backed configuration provider turn files into settings?",
+      "asks": [
+        "project truststore path",
+        "How does the directory-backed configuration provider turn files into settings?"
+      ],
+      "answer": "The project truststore path is /etc/aster/edge-truststore.p12. Each file is a key and its content is the value.",
+      "key_facts": [
+        "The project truststore path is /etc/aster/edge-truststore.p12.",
+        "Each file is a key and its content is the value."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "/etc/aster/edge-truststore.p12",
+        "file"
+      ],
+      "evidence_pages": [
+        "configuration/config-providers-and-system-properties.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Use /etc/aster/edge-truststore.p12 as the project truststore path.",
+          "fact_idx": 0
+        },
+        {
+          "page": "configuration/config-providers-and-system-properties.md",
+          "quote": "**each file is a key and its content is the value**",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "truststore 경로와 디렉터리 기반 설정 공급자의 동작을 확인한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175334-027549_kafka_v2_06_tls_listeners",
+        "llm_source_hash": "943b71c6273e3492d9bea60ac7fb0055ece77b2a34fe93448eb7339ec332e68e",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 9,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What client listener alias are we using now, and after a partition-count increase, is existing data redistributed?",
+      "standalone_question": "For this Kafka project, what client listener alias are we using now, and after a partition-count increase, is existing data redistributed?",
+      "asks": [
+        "current client listener alias",
+        "After a partition-count increase, is existing data redistributed?"
+      ],
+      "answer": "The project client listener alias is EDGE_ASTER_29. Existing data is not redistributed.",
+      "key_facts": [
+        "The project client listener alias is EDGE_ASTER_29.",
+        "Existing data is not redistributed."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "EDGE_ASTER_29",
+        "partitions"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our client listener alias from EDGE_ASTER_17 to EDGE_ASTER_29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/topics-partitions-offsets.md",
+          "quote": "existing data is not redistributed",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 5,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    },
+    {
+      "turn": 10,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What is the consumer default max.poll.records?",
+      "standalone_question": "For this Kafka project, what is the consumer default max.poll.records?",
+      "asks": [
+        "What is the consumer default max.poll.records?"
+      ],
+      "answer": "The default max.poll.records is 500.",
+      "key_facts": [
+        "The default max.poll.records is 500."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "500"
+      ],
+      "evidence_pages": [
+        "configuration/client-configuration.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "configuration/client-configuration.md",
+          "quote": "| `max.poll.records` | `500` |",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    },
+    {
+      "turn": 11,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our client port from 9197 to 9297. What value should we use now, and which property maps listener names to security protocols?",
+      "standalone_question": "For this Kafka project, change our client port from 9197 to 9297. What value should we use now, and which property maps listener names to security protocols?",
+      "asks": [
+        "updated client port",
+        "Which property maps listener names to security protocols?"
+      ],
+      "answer": "The project client port is 9297. listener.security.protocol.map maps names to protocols.",
+      "key_facts": [
+        "The project client port is 9297.",
+        "listener.security.protocol.map maps names to protocols."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "9297",
+        "listener.security.protocol.map"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our client port from 9197 to 9297.",
+          "fact_idx": 0
+        },
+        {
+          "page": "security/listeners-and-security-overview.md",
+          "quote": "`listener.security.protocol.map` — maps each listener name to a protocol",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "client port",
+          "from": "9197",
+          "to": "9297"
+        }
+      ],
+      "affects": [
+        17
+      ],
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "포트 변경과 기존 리스너 매핑 속성의 재확인이 일관된다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175334-027549_kafka_v2_06_tls_listeners",
+        "llm_source_hash": "943b71c6273e3492d9bea60ac7fb0055ece77b2a34fe93448eb7339ec332e68e",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 12,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Who can access a resource when no ACL matches under the default policy?",
+      "standalone_question": "For this Kafka project, who can access a resource when no ACL matches under the default policy?",
+      "asks": [
+        "Who can access a resource when no ACL matches under the default policy?"
+      ],
+      "answer": "Only super users can access a resource with no matching ACL.",
+      "key_facts": [
+        "Only super users can access a resource with no matching ACL."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "super users"
+      ],
+      "evidence_pages": [
+        "security/authorization-and-acls.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "security/authorization-and-acls.md",
+          "quote": "If **no ACL matches** a resource, access is **restricted to super users**.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "authorizer의 기본 ACL 정책 문맥에서 질문과 답이 일치한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175334-027549_kafka_v2_06_tls_listeners",
+        "llm_source_hash": "943b71c6273e3492d9bea60ac7fb0055ece77b2a34fe93448eb7339ec332e68e",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 13,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which client listener alias are we using now, how does the directory-backed configuration provider turn files into settings, and what is the consumer default max.poll.records?",
+      "standalone_question": "For this Kafka project, which client listener alias are we using now, how does the directory-backed configuration provider turn files into settings, and what is the consumer default max.poll.records?",
+      "asks": [
+        "current client listener alias",
+        "How does the directory-backed configuration provider turn files into settings?",
+        "What is the consumer default max.poll.records?"
+      ],
+      "answer": "The project client listener alias is EDGE_ASTER_29. Each file is a key and its content is the value. The default max.poll.records is 500.",
+      "key_facts": [
+        "The project client listener alias is EDGE_ASTER_29.",
+        "Each file is a key and its content is the value.",
+        "The default max.poll.records is 500."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "EDGE_ASTER_29",
+        "file",
+        "500"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        8,
+        10
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our client listener alias from EDGE_ASTER_17 to EDGE_ASTER_29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "configuration/config-providers-and-system-properties.md",
+          "quote": "**each file is a key and its content is the value**",
+          "fact_idx": 1
+        },
+        {
+          "page": "configuration/client-configuration.md",
+          "quote": "| `max.poll.records` | `500` |",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 9,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    },
+    {
+      "turn": 14,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "Are keystore and truststore passwords used with PEM configuration?",
+      "standalone_question": "For this Kafka project, are keystore and truststore passwords used with PEM configuration?",
+      "asks": [
+        "Are keystore and truststore passwords used with PEM configuration?"
+      ],
+      "answer": "ssl.keystore.password and ssl.truststore.password are not used with PEM.",
+      "key_facts": [
+        "ssl.keystore.password and ssl.truststore.password are not used with PEM."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "PEM"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "security/ssl-encryption-and-authentication.md",
+          "quote": "`ssl.keystore.password` and `ssl.truststore.password` are **not used** with PEM.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 5,
+      "recall_distance": 9,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "오래전에 첨부된 TLS 문서의 미사용 PEM 절을 확인한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175334-027549_kafka_v2_06_tls_listeners",
+        "llm_source_hash": "943b71c6273e3492d9bea60ac7fb0055ece77b2a34fe93448eb7339ec332e68e",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 15,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What is the fastest suggested way to browse metrics on a running broker?",
+      "standalone_question": "For this Kafka project, what is the fastest suggested way to browse metrics on a running broker?",
+      "asks": [
+        "What is the fastest suggested way to browse metrics on a running broker?"
+      ],
+      "answer": "Attach jconsole to the broker.",
+      "key_facts": [
+        "Attach jconsole to the broker."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "jconsole"
+      ],
+      "evidence_pages": [
+        "monitoring/broker-and-kraft-metrics.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "monitoring/broker-and-kraft-metrics.md",
+          "quote": "The quickest way to browse metrics is `jconsole` attached to a running broker or client.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "문서가 제안하는 빠른 broker 메트릭 탐색 방법을 정확히 답한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175334-027549_kafka_v2_06_tls_listeners",
+        "llm_source_hash": "943b71c6273e3492d9bea60ac7fb0055ece77b2a34fe93448eb7339ec332e68e",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 16,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which keystore path did we choose, and which port do the default single-node Kafka containers listen on?",
+      "standalone_question": "For this Kafka project, which keystore path did we choose, and which port do the default single-node Kafka containers listen on?",
+      "asks": [
+        "project keystore path",
+        "Which port do the default single-node Kafka containers listen on?"
+      ],
+      "answer": "The project keystore path is /etc/aster/edge-keystore.p12. The default containers listen on port 9092.",
+      "key_facts": [
+        "The project keystore path is /etc/aster/edge-keystore.p12.",
+        "The default containers listen on port 9092."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "/etc/aster/edge-keystore.p12",
+        "9092"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        3
+      ],
+      "evidence": [
+        {
+          "user_turn": 3,
+          "quote": "set keystore path to /etc/aster/edge-keystore.p12",
+          "fact_idx": 0
+        },
+        {
+          "page": "getting-started/docker.md",
+          "quote": "listening on port **9092**",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 13,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "선택한 keystore 경로와 컨테이너 기본 포트를 과거 정보에서 회상한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175334-027549_kafka_v2_06_tls_listeners",
+        "llm_source_hash": "943b71c6273e3492d9bea60ac7fb0055ece77b2a34fe93448eb7339ec332e68e",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 17,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What client port are we using now, and which property tells clients where to connect after metadata discovery?",
+      "standalone_question": "For this Kafka project, what client port are we using now, and which property tells clients where to connect after metadata discovery?",
+      "asks": [
+        "current client port",
+        "Which property tells clients where to connect after metadata discovery?"
+      ],
+      "answer": "The project client port is 9297. advertised.listeners supplies the advertised client endpoints.",
+      "key_facts": [
+        "The project client port is 9297.",
+        "advertised.listeners supplies the advertised client endpoints."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "9297",
+        "advertised.listeners"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        11,
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our client port from 9197 to 9297.",
+          "fact_idx": 0
+        },
+        {
+          "page": "security/listeners-and-security-overview.md",
+          "quote": "`advertised.listeners` — what the broker tells clients to connect to after the first metadata fetch",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 16,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "갱신한 클라이언트 포트와 광고 주소 속성을 정확히 회상한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175334-027549_kafka_v2_06_tls_listeners",
+        "llm_source_hash": "943b71c6273e3492d9bea60ac7fb0055ece77b2a34fe93448eb7339ec332e68e",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 18,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which truststore path did we choose, who can access a resource when no ACL matches under the default policy, and what is the fastest suggested way to browse metrics on a running broker?",
+      "standalone_question": "For this Kafka project, which truststore path did we choose, who can access a resource when no ACL matches under the default policy, and what is the fastest suggested way to browse metrics on a running broker?",
+      "asks": [
+        "project truststore path",
+        "Who can access a resource when no ACL matches under the default policy?",
+        "What is the fastest suggested way to browse metrics on a running broker?"
+      ],
+      "answer": "The project truststore path is /etc/aster/edge-truststore.p12. Only super users can access a resource with no matching ACL. Attach jconsole to the broker.",
+      "key_facts": [
+        "The project truststore path is /etc/aster/edge-truststore.p12.",
+        "Only super users can access a resource with no matching ACL.",
+        "Attach jconsole to the broker."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "/etc/aster/edge-truststore.p12",
+        "super users",
+        "jconsole"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        8,
+        12,
+        15
+      ],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Use /etc/aster/edge-truststore.p12 as the project truststore path.",
+          "fact_idx": 0
+        },
+        {
+          "page": "security/authorization-and-acls.md",
+          "quote": "If **no ACL matches** a resource, access is **restricted to super users**.",
+          "fact_idx": 1
+        },
+        {
+          "page": "monitoring/broker-and-kraft-metrics.md",
+          "quote": "The quickest way to browse metrics is `jconsole` attached to a running broker or client.",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "과거 truststore 경로, ACL 기본 정책, 모니터링 도구를 일관되게 모아 답한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175334-027549_kafka_v2_06_tls_listeners",
+        "llm_source_hash": "943b71c6273e3492d9bea60ac7fb0055ece77b2a34fe93448eb7339ec332e68e",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    }
+  ],
+  "edits": [
+    {
+      "at": "2026-11-28T14:39:41+00:00",
+      "by": "장우진",
+      "turn": 9,
+      "fields": [
+        "depends_on"
+      ],
+      "note": ""
+    }
+  ]
+}

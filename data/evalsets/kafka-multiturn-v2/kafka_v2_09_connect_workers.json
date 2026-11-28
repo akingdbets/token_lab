@@ -1,0 +1,1328 @@
+{
+  "schema_version": 2,
+  "scenario_id": "kafka_v2_09_connect_workers",
+  "title": "Deploying a distributed file-ingestion Connect service",
+  "topic": "Deploying a distributed file-ingestion Connect service",
+  "status": "final",
+  "bundle": [
+    "concepts/topics-partitions-offsets.md",
+    "connect/overview-and-running.md",
+    "getting-started/introduction.md",
+    "connect/rest-api-and-operations.md",
+    "configuration/config-providers-and-system-properties.md",
+    "configuration/client-configuration.md",
+    "connect/transformations-and-predicates.md",
+    "operations/managing-groups.md"
+  ],
+  "generation": {
+    "model": "gpt-6.1-sol",
+    "method": "Codex session, account plan",
+    "prompt": [
+      "mt_scenario_gen_v3",
+      "40710c69c22d"
+    ],
+    "run_id": "20261128-165733_kafka_18_session",
+    "request_file": "results/scenario_gen/20261128-165733_kafka_18_session/kafka_v2_09_connect_workers_request.json",
+    "created_at": "2026-11-28T16:57:33",
+    "corpus_manifest_sha256": "a6fb69b10c7c98a2af883313f8938d0bfb1757fae65b8274c183a4c14ef4a735",
+    "context": "Authored in the ongoing Codex conversation with a shared turn structure, explicit page-grounded fact selections, and topic-specific project settings."
+  },
+  "turns": [
+    {
+      "turn": 0,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our project concerns deploying a distributed file-ingestion Connect service. For the planned deployment, set connector name to juniper-source-17. Which value should we use, and can the partition count be reduced after creation?",
+      "standalone_question": "For this Kafka project, our project concerns deploying a distributed file-ingestion Connect service. For the planned deployment, set connector name to juniper-source-17. Which value should we use, and can the partition count be reduced after creation?",
+      "asks": [
+        "project connector name",
+        "Can the partition count be reduced after creation?"
+      ],
+      "answer": "The project connector name is juniper-source-17. Kafka does not support reducing the number of partitions.",
+      "key_facts": [
+        "The project connector name is juniper-source-17.",
+        "Kafka does not support reducing the number of partitions."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "juniper-source-17",
+        "partitions"
+      ],
+      "evidence_pages": [
+        "concepts/topics-partitions-offsets.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 0,
+          "quote": "set connector name to juniper-source-17",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/topics-partitions-offsets.md",
+          "quote": "Kafka does not support reducing the number of partitions.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "현재 지정한 이름과 문서의 파티션 축소 제한을 정확히 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180219-474721_kafka_v2_09_connect_workers",
+        "llm_source_hash": "8622fecf59c7a400b79b2f6d62b6146f16ce1b134e4a1e01af8823e653a112a2",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 1,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Set our tasks.max to 3. Which project value applies, and how many partitions must the distributed worker configuration topic have?",
+      "standalone_question": "For this Kafka project, set our tasks.max to 3. Which project value applies, and how many partitions must the distributed worker configuration topic have?",
+      "asks": [
+        "project tasks.max",
+        "How many partitions must the distributed worker configuration topic have?"
+      ],
+      "answer": "The project tasks.max is 3. config.storage.topic must have one partition.",
+      "key_facts": [
+        "The project tasks.max is 3.",
+        "config.storage.topic must have one partition."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "3",
+        "config.storage.topic"
+      ],
+      "evidence_pages": [
+        "connect/overview-and-running.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Set our tasks.max to 3.",
+          "fact_idx": 0
+        },
+        {
+          "page": "connect/overview-and-running.md",
+          "quote": "| `config.storage.topic` | Connector/task configs — **single partition**, replicated, compacted. |",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "tasks.max 설정과 구성 토픽의 단일 파티션 조건이 적절하다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180219-474721_kafka_v2_09_connect_workers",
+        "llm_source_hash": "8622fecf59c7a400b79b2f6d62b6146f16ce1b134e4a1e01af8823e653a112a2",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 2,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "How many partitions are used by default for the automatically created source-offset topic?",
+      "standalone_question": "For this Kafka project, how many partitions are used by default for the automatically created source-offset topic?",
+      "asks": [
+        "How many partitions are used by default for the automatically created source-offset topic?"
+      ],
+      "answer": "offset.storage.partitions defaults to 25.",
+      "key_facts": [
+        "offset.storage.partitions defaults to 25."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "25"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "connect/overview-and-running.md",
+          "quote": "`offset.storage.partitions=25`",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "이전 첨부 문서에서 소스 오프셋 토픽의 기본 파티션 수를 회수한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180219-474721_kafka_v2_09_connect_workers",
+        "llm_source_hash": "8622fecf59c7a400b79b2f6d62b6146f16ce1b134e4a1e01af8823e653a112a2",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 3,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "For our project, set Connect group.id to juniper-workers-43. Which value should be used, and what key illustrates an event in the payment example?",
+      "standalone_question": "For our project, set Connect group.id to juniper-workers-43. Which value should be used, and what key illustrates an event in the payment example?",
+      "asks": [
+        "project Connect group.id",
+        "What key illustrates an event in the payment example?"
+      ],
+      "answer": "The project Connect group.id is juniper-workers-43. The example key is Alice.",
+      "key_facts": [
+        "The project Connect group.id is juniper-workers-43.",
+        "The example key is Alice."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "user",
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "example"
+          ]
+        }
+      ],
+      "key_entities": [
+        "juniper-workers-43",
+        "Alice"
+      ],
+      "evidence_pages": [
+        "getting-started/introduction.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "set Connect group.id to juniper-workers-43",
+          "user_turn": 3
+        },
+        {
+          "fact_idx": 1,
+          "page": "getting-started/introduction.md",
+          "quote": "E.g. key `\"Alice\"`, value `\"Made a payment of $200 to Bob\"`."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T13:10:57+00:00",
+        "memo": "프로젝트 값과 예시 key만 질문하여 독립 질문 2개 유지",
+        "repair_history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/error_repairs/6e10f9ea2fc048a1a49cb5d9978cd531/kafka_v2_09_connect_workers",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 4,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Before rollout, change our connector name from juniper-source-17 to juniper-source-29. What is the revised project value, and after a partition-count increase, is existing data redistributed?",
+      "standalone_question": "For this Kafka project, before rollout, change our connector name from juniper-source-17 to juniper-source-29. What is the revised project value, and after a partition-count increase, is existing data redistributed?",
+      "asks": [
+        "updated connector name",
+        "After a partition-count increase, is existing data redistributed?"
+      ],
+      "answer": "The project connector name is juniper-source-29. Existing data is not redistributed.",
+      "key_facts": [
+        "The project connector name is juniper-source-29.",
+        "Existing data is not redistributed."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "juniper-source-29",
+        "partitions"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our connector name from juniper-source-17 to juniper-source-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/topics-partitions-offsets.md",
+          "quote": "existing data is not redistributed",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "connector name",
+          "from": "juniper-source-17",
+          "to": "juniper-source-29"
+        }
+      ],
+      "affects": [
+        9,
+        13
+      ],
+      "source_turn": null,
+      "recall_distance": 4,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "이름 변경과 기존 데이터 미재분배가 정확하며 후속 영향도 일치한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180219-474721_kafka_v2_09_connect_workers",
+        "llm_source_hash": "8622fecf59c7a400b79b2f6d62b6146f16ce1b134e4a1e01af8823e653a112a2",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 5,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Which endpoint stops a connector and frees its task resources?",
+      "standalone_question": "For this Kafka project, which endpoint stops a connector and frees its task resources?",
+      "asks": [
+        "Which endpoint stops a connector and frees its task resources?"
+      ],
+      "answer": "PUT /connectors/{name}/stop stops the connector and shuts down tasks.",
+      "key_facts": [
+        "PUT /connectors/{name}/stop stops the connector and shuts down tasks."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "/stop"
+      ],
+      "evidence_pages": [
+        "connect/rest-api-and-operations.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "connect/rest-api-and-operations.md",
+          "quote": "| `PUT /connectors/{name}/stop` | Stop and shut down tasks, freeing resources (since 3.5.0). Required before modifying offsets. |",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "리소스를 해제하는 stop 엔드포인트를 올바르게 식별한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180219-474721_kafka_v2_09_connect_workers",
+        "llm_source_hash": "8622fecf59c7a400b79b2f6d62b6146f16ce1b134e4a1e01af8823e653a112a2",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 6,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "Which endpoint pauses tasks while leaving resources allocated?",
+      "standalone_question": "For this Kafka project, which endpoint pauses tasks while leaving resources allocated?",
+      "asks": [
+        "Which endpoint pauses tasks while leaving resources allocated?"
+      ],
+      "answer": "PUT /connectors/{name}/pause pauses the connector while resources stay allocated.",
+      "key_facts": [
+        "PUT /connectors/{name}/pause pauses the connector while resources stay allocated."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "/pause"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "connect/rest-api-and-operations.md",
+          "quote": "| `PUT /connectors/{name}/pause` | Pause connector and tasks; resources stay allocated (fast resume). |",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "stop과 구별되는 pause 동작을 이전 문서에서 확인한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180219-474721_kafka_v2_09_connect_workers",
+        "llm_source_hash": "8622fecf59c7a400b79b2f6d62b6146f16ce1b134e4a1e01af8823e653a112a2",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 7,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "Is the FileStream plugin JAR automatically on the worker plugin path?",
+      "standalone_question": "For this Kafka project, is the FileStream plugin JAR automatically on the worker plugin path?",
+      "asks": [
+        "Is the FileStream plugin JAR automatically on the worker plugin path?"
+      ],
+      "answer": "No; the FileStream JAR must be added to CLASSPATH or plugin.path.",
+      "key_facts": [
+        "No; the FileStream JAR must be added to CLASSPATH or plugin.path."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "plugin.path"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "connect/overview-and-running.md",
+          "quote": "are **not** on the worker's `CLASSPATH` or `plugin.path` by default — add them first.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 1,
+      "recall_distance": 6,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "충분히 이전에 첨부된 페이지의 미사용 FileStream 설치 항목을 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180219-474721_kafka_v2_09_connect_workers",
+        "llm_source_hash": "8622fecf59c7a400b79b2f6d62b6146f16ce1b134e4a1e01af8823e653a112a2",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 8,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Use /srv/juniper/events-41.txt as the project source file path. Which value should be used, and how does the directory-backed configuration provider turn files into settings?",
+      "standalone_question": "For this Kafka project, use /srv/juniper/events-41.txt as the project source file path. Which value should be used, and how does the directory-backed configuration provider turn files into settings?",
+      "asks": [
+        "project source file path",
+        "How does the directory-backed configuration provider turn files into settings?"
+      ],
+      "answer": "The project source file path is /srv/juniper/events-41.txt. Each file is a key and its content is the value.",
+      "key_facts": [
+        "The project source file path is /srv/juniper/events-41.txt.",
+        "Each file is a key and its content is the value."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "/srv/juniper/events-41.txt",
+        "file"
+      ],
+      "evidence_pages": [
+        "configuration/config-providers-and-system-properties.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Use /srv/juniper/events-41.txt as the project source file path.",
+          "fact_idx": 0
+        },
+        {
+          "page": "configuration/config-providers-and-system-properties.md",
+          "quote": "**each file is a key and its content is the value**",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "소스 파일 경로와 디렉터리 기반 제공자의 매핑 규칙이 근거에 맞는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180219-474721_kafka_v2_09_connect_workers",
+        "llm_source_hash": "8622fecf59c7a400b79b2f6d62b6146f16ce1b134e4a1e01af8823e653a112a2",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 9,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What connector name are we using now, and after a partition-count increase, is existing data redistributed?",
+      "standalone_question": "For this Kafka project, what connector name are we using now, and after a partition-count increase, is existing data redistributed?",
+      "asks": [
+        "current connector name",
+        "After a partition-count increase, is existing data redistributed?"
+      ],
+      "answer": "The project connector name is juniper-source-29. Existing data is not redistributed.",
+      "key_facts": [
+        "The project connector name is juniper-source-29.",
+        "Existing data is not redistributed."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "juniper-source-29",
+        "partitions"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our connector name from juniper-source-17 to juniper-source-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/topics-partitions-offsets.md",
+          "quote": "existing data is not redistributed",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 9,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "변경된 커넥터 이름과 이전 문서 사실을 회수한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180219-474721_kafka_v2_09_connect_workers",
+        "llm_source_hash": "8622fecf59c7a400b79b2f6d62b6146f16ce1b134e4a1e01af8823e653a112a2",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 10,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What is the consumer default max.poll.records?",
+      "standalone_question": "For this Kafka project, what is the consumer default max.poll.records?",
+      "asks": [
+        "What is the consumer default max.poll.records?"
+      ],
+      "answer": "The default max.poll.records is 500.",
+      "key_facts": [
+        "The default max.poll.records is 500."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "500"
+      ],
+      "evidence_pages": [
+        "configuration/client-configuration.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "configuration/client-configuration.md",
+          "quote": "| `max.poll.records` | `500` |",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "consumer의 max.poll.records 기본값을 정확히 묻고 답한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180219-474721_kafka_v2_09_connect_workers",
+        "llm_source_hash": "8622fecf59c7a400b79b2f6d62b6146f16ce1b134e4a1e01af8823e653a112a2",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 11,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our tasks.max from 3 to 5. What value should we use now, and how many partitions are used by default for the automatically created source-offset topic?",
+      "standalone_question": "For this Kafka project, change our tasks.max from 3 to 5. What value should we use now, and how many partitions are used by default for the automatically created source-offset topic?",
+      "asks": [
+        "updated tasks.max",
+        "How many partitions are used by default for the automatically created source-offset topic?"
+      ],
+      "answer": "The project tasks.max is 5. offset.storage.partitions defaults to 25.",
+      "key_facts": [
+        "The project tasks.max is 5.",
+        "offset.storage.partitions defaults to 25."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "5",
+        "25"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our tasks.max from 3 to 5.",
+          "fact_idx": 0
+        },
+        {
+          "page": "connect/overview-and-running.md",
+          "quote": "`offset.storage.partitions=25`",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "tasks.max",
+          "from": "3",
+          "to": "5"
+        }
+      ],
+      "affects": [
+        17
+      ],
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "tasks.max 변경과 오프셋 토픽 기본값의 출처 및 후속 전파가 맞는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180219-474721_kafka_v2_09_connect_workers",
+        "llm_source_hash": "8622fecf59c7a400b79b2f6d62b6146f16ce1b134e4a1e01af8823e653a112a2",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 12,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What static field and value does the InsertSource example add?",
+      "standalone_question": "For this Kafka project, what static field and value does the InsertSource example add?",
+      "asks": [
+        "What static field and value does the InsertSource example add?"
+      ],
+      "answer": "The example adds data_source=test-file-source.",
+      "key_facts": [
+        "The example adds data_source=test-file-source."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example"
+          ]
+        }
+      ],
+      "key_entities": [
+        "data_source=test-file-source"
+      ],
+      "evidence_pages": [
+        "connect/transformations-and-predicates.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "connect/transformations-and-predicates.md",
+          "quote": "`InsertSource` (**InsertField**) adds `data_source=test-file-source`.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "InsertSource 예시의 정적 필드 할당을 정확히 회수한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180219-474721_kafka_v2_09_connect_workers",
+        "llm_source_hash": "8622fecf59c7a400b79b2f6d62b6146f16ce1b134e4a1e01af8823e653a112a2",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 13,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which connector name are we using now, how does the directory-backed configuration provider turn files into settings, and what is the consumer default max.poll.records?",
+      "standalone_question": "For this Kafka project, which connector name are we using now, how does the directory-backed configuration provider turn files into settings, and what is the consumer default max.poll.records?",
+      "asks": [
+        "current connector name",
+        "How does the directory-backed configuration provider turn files into settings?",
+        "What is the consumer default max.poll.records?"
+      ],
+      "answer": "The project connector name is juniper-source-29. Each file is a key and its content is the value. The default max.poll.records is 500.",
+      "key_facts": [
+        "The project connector name is juniper-source-29.",
+        "Each file is a key and its content is the value.",
+        "The default max.poll.records is 500."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "juniper-source-29",
+        "file",
+        "500"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        8,
+        10
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our connector name from juniper-source-17 to juniper-source-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "configuration/config-providers-and-system-properties.md",
+          "quote": "**each file is a key and its content is the value**",
+          "fact_idx": 1
+        },
+        {
+          "page": "configuration/client-configuration.md",
+          "quote": "| `max.poll.records` | `500` |",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 9,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    },
+    {
+      "turn": 14,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "Which endpoint changes connector offsets, and what state must the connector be in?",
+      "standalone_question": "For this Kafka project, which endpoint changes connector offsets, and what state must the connector be in?",
+      "asks": [
+        "Which endpoint changes connector offsets?",
+        "What state must the connector be in when changing its offsets?"
+      ],
+      "answer": "PATCH /connectors/{name}/offsets changes offsets and requires a stopped connector.",
+      "key_facts": [
+        "PATCH /connectors/{name}/offsets changes connector offsets.",
+        "The connector must be stopped before its offsets are changed."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": []
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "/offsets"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "page": "connect/rest-api-and-operations.md",
+          "quote": "| `PATCH /connectors/{name}/offsets` | Alter offsets — connector must be **stopped**. |"
+        },
+        {
+          "fact_idx": 1,
+          "page": "connect/rest-api-and-operations.md",
+          "quote": "| `PATCH /connectors/{name}/offsets` | Alter offsets — connector must be **stopped**. |"
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 5,
+      "recall_distance": 9,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:29+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180219-474721_kafka_v2_09_connect_workers",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 15,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Must consumers be inactive when resetting their offsets?",
+      "standalone_question": "For this Kafka project, must consumers be inactive when resetting their offsets?",
+      "asks": [
+        "Must consumers be inactive when resetting their offsets?"
+      ],
+      "answer": "Consumers must be inactive during an offset reset.",
+      "key_facts": [
+        "Consumers must be inactive during an offset reset."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "inactive"
+      ],
+      "evidence_pages": [
+        "operations/managing-groups.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "operations/managing-groups.md",
+          "quote": "the consumers must be **inactive**",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "consumer 오프셋 재설정의 비활성 조건이 문서에 부합한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180219-474721_kafka_v2_09_connect_workers",
+        "llm_source_hash": "8622fecf59c7a400b79b2f6d62b6146f16ce1b134e4a1e01af8823e653a112a2",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 16,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which Connect group.id did we choose, and what key illustrates an event in the payment example?",
+      "standalone_question": "For this Kafka project, which Connect group.id did we choose, and what key illustrates an event in the payment example?",
+      "asks": [
+        "project Connect group.id",
+        "What key illustrates an event in the payment example?"
+      ],
+      "answer": "The project Connect group.id is juniper-workers-43. The example key is Alice.",
+      "key_facts": [
+        "The project Connect group.id is juniper-workers-43.",
+        "The example key is Alice."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "user",
+          "tags": []
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "example"
+          ]
+        }
+      ],
+      "key_entities": [
+        "juniper-workers-43",
+        "Alice"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        3
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "set Connect group.id to juniper-workers-43",
+          "user_turn": 3
+        },
+        {
+          "fact_idx": 1,
+          "page": "getting-started/introduction.md",
+          "quote": "E.g. key `\"Alice\"`, value `\"Made a payment of $200 to Bob\"`."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 13,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T13:10:57+00:00",
+        "memo": "프로젝트 값과 예시 key만 질문하여 독립 질문 2개 유지",
+        "repair_history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/error_repairs/6e10f9ea2fc048a1a49cb5d9978cd531/kafka_v2_09_connect_workers",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 17,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What tasks.max are we using now, and how many partitions must the distributed worker configuration topic have?",
+      "standalone_question": "For this Kafka project, what tasks.max are we using now, and how many partitions must the distributed worker configuration topic have?",
+      "asks": [
+        "current tasks.max",
+        "How many partitions must the distributed worker configuration topic have?"
+      ],
+      "answer": "The project tasks.max is 5. config.storage.topic must have one partition.",
+      "key_facts": [
+        "The project tasks.max is 5.",
+        "config.storage.topic must have one partition."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "5",
+        "config.storage.topic"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        11,
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our tasks.max from 3 to 5.",
+          "fact_idx": 0
+        },
+        {
+          "page": "connect/overview-and-running.md",
+          "quote": "| `config.storage.topic` | Connector/task configs — **single partition**, replicated, compacted. |",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 16,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "최신 tasks.max와 구성 토픽의 단일 파티션 조건을 일관되게 회수한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180219-474721_kafka_v2_09_connect_workers",
+        "llm_source_hash": "8622fecf59c7a400b79b2f6d62b6146f16ce1b134e4a1e01af8823e653a112a2",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 18,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which source file path did we choose, what static value does the InsertSource example add, and must consumers be inactive when resetting their offsets?",
+      "standalone_question": "For this Kafka project, which source file path did we choose, what static value does the InsertSource example add, and must consumers be inactive when resetting their offsets?",
+      "asks": [
+        "project source file path",
+        "What static value does the InsertSource example add?",
+        "Must consumers be inactive when resetting their offsets?"
+      ],
+      "answer": "The project source file path is /srv/juniper/events-41.txt. The InsertSource example adds the static value test-file-source. Consumers must be inactive during an offset reset.",
+      "key_facts": [
+        "The project source file path is /srv/juniper/events-41.txt.",
+        "The InsertSource example adds the static value test-file-source.",
+        "Consumers must be inactive during an offset reset."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "user",
+          "tags": []
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "example"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "/srv/juniper/events-41.txt",
+        "test-file-source",
+        "inactive"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        8,
+        12,
+        15
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "Use /srv/juniper/events-41.txt as the project source file path.",
+          "user_turn": 8
+        },
+        {
+          "fact_idx": 1,
+          "page": "connect/transformations-and-predicates.md",
+          "quote": "transforms.InsertSource.static.value=test-file-source"
+        },
+        {
+          "fact_idx": 2,
+          "page": "operations/managing-groups.md",
+          "quote": "the consumers must be **inactive**"
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    }
+  ],
+  "edits": [
+    {
+      "at": "2026-11-28T12:52:29+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 14,
+      "fields": [
+        "asks",
+        "key_facts",
+        "fact_meta",
+        "evidence"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_09_connect_workers_be873576a16747cd8e69f8bc0eb530db"
+    },
+    {
+      "at": "2026-11-28T13:10:57+00:00",
+      "by": "Codex session",
+      "turn": 3,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks",
+        "answer",
+        "key_facts",
+        "key_entities"
+      ],
+      "note": "프로젝트 값과 예시 key만 질문하여 독립 질문 2개 유지",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/error_repairs/6e10f9ea2fc048a1a49cb5d9978cd531/kafka_v2_09_connect_workers"
+    },
+    {
+      "at": "2026-11-28T13:10:57+00:00",
+      "by": "Codex session",
+      "turn": 16,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks",
+        "answer",
+        "key_facts",
+        "key_entities"
+      ],
+      "note": "프로젝트 값과 예시 key만 질문하여 독립 질문 2개 유지",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/error_repairs/6e10f9ea2fc048a1a49cb5d9978cd531/kafka_v2_09_connect_workers"
+    },
+    {
+      "at": "2026-11-28T14:39:41+00:00",
+      "by": "장우진",
+      "turn": 18,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks",
+        "answer",
+        "key_facts",
+        "key_entities",
+        "evidence"
+      ],
+      "note": ""
+    }
+  ]
+}

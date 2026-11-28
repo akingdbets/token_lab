@@ -1,0 +1,1298 @@
+{
+  "schema_version": 2,
+  "scenario_id": "kafka_v2_04_retention_rollover",
+  "title": "Designing retention and segment rollover for an audit topic",
+  "topic": "Designing retention and segment rollover for an audit topic",
+  "status": "final",
+  "bundle": [
+    "concepts/topics-partitions-offsets.md",
+    "concepts/storage-and-retention.md",
+    "operations/topic-and-cluster-administration.md",
+    "configuration/topic-and-group-configuration.md",
+    "concepts/log-compaction.md",
+    "configuration/broker-configuration.md",
+    "operations/tiered-storage.md",
+    "clients/consumer.md"
+  ],
+  "generation": {
+    "model": "gpt-6.1-sol",
+    "method": "Codex session, account plan",
+    "prompt": [
+      "mt_scenario_gen_v3",
+      "40710c69c22d"
+    ],
+    "run_id": "20261128-165733_kafka_18_session",
+    "request_file": "results/scenario_gen/20261128-165733_kafka_18_session/kafka_v2_04_retention_rollover_request.json",
+    "created_at": "2026-11-28T16:57:33",
+    "corpus_manifest_sha256": "a6fb69b10c7c98a2af883313f8938d0bfb1757fae65b8274c183a4c14ef4a735",
+    "context": "Authored in the ongoing Codex conversation with a shared turn structure, explicit page-grounded fact selections, and topic-specific project settings."
+  },
+  "turns": [
+    {
+      "turn": 0,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our project concerns designing retention and segment rollover for an audit topic. For the planned deployment, set audit topic name to audit-cobalt-17. Which value should we use, and can the partition count be reduced after creation?",
+      "standalone_question": "For this Kafka project, our project concerns designing retention and segment rollover for an audit topic. For the planned deployment, set audit topic name to audit-cobalt-17. Which value should we use, and can the partition count be reduced after creation?",
+      "asks": [
+        "project audit topic name",
+        "Can the partition count be reduced after creation?"
+      ],
+      "answer": "The project audit topic name is audit-cobalt-17. Kafka does not support reducing the number of partitions.",
+      "key_facts": [
+        "The project audit topic name is audit-cobalt-17.",
+        "Kafka does not support reducing the number of partitions."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "audit-cobalt-17",
+        "partitions"
+      ],
+      "evidence_pages": [
+        "concepts/topics-partitions-offsets.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 0,
+          "quote": "set audit topic name to audit-cobalt-17",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/topics-partitions-offsets.md",
+          "quote": "Kafka does not support reducing the number of partitions.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "项目名称和分区限制均有依据。",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174707-838808_kafka_v2_04_retention_rollover",
+        "llm_source_hash": "687eaa43aa763a6ba6ba145772b9c0f62919ac53b71884cd51058fd690cfcb9c",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 1,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Set our retention.ms to 133200000. Which project value applies, and what makes a segment old enough for time-based deletion?",
+      "standalone_question": "For this Kafka project, set our retention.ms to 133200000. Which project value applies, and what makes a segment old enough for time-based deletion?",
+      "asks": [
+        "project retention.ms",
+        "What makes a segment old enough for time-based deletion?"
+      ],
+      "answer": "The project retention.ms is 133200000. For time-based deletion, segment age is determined using its largest record timestamp; the segment becomes eligible when that age exceeds retention.ms.",
+      "key_facts": [
+        "The project retention.ms is 133200000.",
+        "For time-based deletion, segment age is determined using its largest record timestamp; the segment becomes eligible when that age exceeds retention.ms."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "user",
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "133200000",
+        "retention.ms"
+      ],
+      "evidence_pages": [
+        "concepts/storage-and-retention.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "Set our retention.ms to 133200000.",
+          "user_turn": 1
+        },
+        {
+          "fact_idx": 1,
+          "page": "concepts/storage-and-retention.md",
+          "quote": "a segment's age is the **largest record timestamp** in it; it becomes deletable when that exceeds `retention.ms`."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:27+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174707-838808_kafka_v2_04_retention_rollover",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 2,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "Can the active segment survive longer than the retention time?",
+      "standalone_question": "For this Kafka project, can the active segment survive longer than the retention time?",
+      "asks": [
+        "Can the active segment survive longer than the retention time?"
+      ],
+      "answer": "The active segment can outlive retention.ms until it rolls.",
+      "key_facts": [
+        "The active segment can outlive retention.ms until it rolls."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "retention.ms"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "concepts/storage-and-retention.md",
+          "quote": "The active segment is not deleted, so data in a slow-to-roll segment can outlive `retention.ms` until the segment rolls.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "正确使用此前页面回答活动段的保留例外。",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174707-838808_kafka_v2_04_retention_rollover",
+        "llm_source_hash": "687eaa43aa763a6ba6ba145772b9c0f62919ac53b71884cd51058fd690cfcb9c",
+        "needs_recheck": true,
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 3,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "For our project, set segment.bytes to 70254592. Which value should be used, and what limits the number of consumers doing useful work in a conventional consumer group?",
+      "standalone_question": "For this Kafka project, for our project, set segment.bytes to 70254592. Which value should be used, and what limits the number of consumers doing useful work in a conventional consumer group?",
+      "asks": [
+        "project segment.bytes",
+        "What limits the number of consumers doing useful work in a conventional consumer group?"
+      ],
+      "answer": "The project segment.bytes is 70254592. Partition count caps consumer parallelism.",
+      "key_facts": [
+        "The project segment.bytes is 70254592.",
+        "Partition count caps consumer parallelism."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "user",
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "70254592",
+        "Partition count"
+      ],
+      "evidence_pages": [
+        "operations/topic-and-cluster-administration.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "set segment.bytes to 70254592",
+          "user_turn": 3
+        },
+        {
+          "fact_idx": 1,
+          "page": "operations/topic-and-cluster-administration.md",
+          "quote": "**Partition count**: how many logs the topic is sharded into. Each partition must fit on one server (20 partitions → at most 20 servers handle the data and load, excluding replicas), and it caps consumer parallelism."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:27+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174707-838808_kafka_v2_04_retention_rollover",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 4,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Before rollout, change our audit topic name from audit-cobalt-17 to audit-cobalt-29. What is the revised project value, and after a partition-count increase, is existing data redistributed?",
+      "standalone_question": "For this Kafka project, before rollout, change our audit topic name from audit-cobalt-17 to audit-cobalt-29. What is the revised project value, and after a partition-count increase, is existing data redistributed?",
+      "asks": [
+        "updated audit topic name",
+        "After a partition-count increase, is existing data redistributed?"
+      ],
+      "answer": "The project audit topic name is audit-cobalt-29. Existing data is not redistributed.",
+      "key_facts": [
+        "The project audit topic name is audit-cobalt-29.",
+        "Existing data is not redistributed."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "audit-cobalt-29",
+        "partitions"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our audit topic name from audit-cobalt-17 to audit-cobalt-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/topics-partitions-offsets.md",
+          "quote": "existing data is not redistributed",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "audit topic name",
+          "from": "audit-cobalt-17",
+          "to": "audit-cobalt-29"
+        }
+      ],
+      "affects": [
+        9,
+        13
+      ],
+      "source_turn": null,
+      "recall_distance": 4,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "名称更新与历史页面事实一致。",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174707-838808_kafka_v2_04_retention_rollover",
+        "llm_source_hash": "687eaa43aa763a6ba6ba145772b9c0f62919ac53b71884cd51058fd690cfcb9c",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 5,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What is the default topic time-retention value?",
+      "standalone_question": "For this Kafka project, what is the default topic time-retention value?",
+      "asks": [
+        "What is the default topic time-retention value?"
+      ],
+      "answer": "The default retention.ms is 604800000 milliseconds, or seven days.",
+      "key_facts": [
+        "The default retention.ms is 604800000 milliseconds, or seven days."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "604800000"
+      ],
+      "evidence_pages": [
+        "configuration/topic-and-group-configuration.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "configuration/topic-and-group-configuration.md",
+          "quote": "| `retention.ms` | `604800000` (7 days) | `log.retention.ms` |",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "正确区分默认值与项目覆盖值。",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174707-838808_kafka_v2_04_retention_rollover",
+        "llm_source_hash": "687eaa43aa763a6ba6ba145772b9c0f62919ac53b71884cd51058fd690cfcb9c",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 6,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "When does the server default apply instead of a topic override?",
+      "standalone_question": "For this Kafka project, when does the server default apply instead of a topic override?",
+      "asks": [
+        "When does the server default apply instead of a topic override?"
+      ],
+      "answer": "The server default applies to topics without an explicit override.",
+      "key_facts": [
+        "The server default applies to topics without an explicit override."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "override"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "configuration/topic-and-group-configuration.md",
+          "quote": "The server default only applies to topics without an explicit override.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "覆盖规则追问准确。",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174707-838808_kafka_v2_04_retention_rollover",
+        "llm_source_hash": "687eaa43aa763a6ba6ba145772b9c0f62919ac53b71884cd51058fd690cfcb9c",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 7,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "What magic value identifies the record-batch format?",
+      "standalone_question": "For this Kafka project, what magic value identifies the record-batch format?",
+      "asks": [
+        "What magic value identifies the record-batch format?"
+      ],
+      "answer": "Record batches use magic value 2.",
+      "key_facts": [
+        "Record batches use magic value 2."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "2"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "concepts/storage-and-retention.md",
+          "quote": "Records are always written in **record batches** (magic value 2).",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 1,
+      "recall_distance": 6,
+      "review": {
+        "needs_recheck": false,
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 8,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Use cobalt-audit-archive as the project archive prefix. Which value should be used, and does cleaning a log change the offsets of surviving records?",
+      "standalone_question": "For this Kafka project, use cobalt-audit-archive as the project archive prefix. Which value should be used, and does cleaning a log change the offsets of surviving records?",
+      "asks": [
+        "project archive prefix",
+        "Does cleaning a log change the offsets of surviving records?"
+      ],
+      "answer": "The project archive prefix is cobalt-audit-archive. Surviving messages keep their original offsets.",
+      "key_facts": [
+        "The project archive prefix is cobalt-audit-archive.",
+        "Surviving messages keep their original offsets."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "cobalt-audit-archive",
+        "offsets"
+      ],
+      "evidence_pages": [
+        "concepts/log-compaction.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Use cobalt-audit-archive as the project archive prefix.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/log-compaction.md",
+          "quote": "Messages keep their **original offsets** — offsets never change.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "归档前缀设置及压缩后的offset保证有依据。",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174707-838808_kafka_v2_04_retention_rollover",
+        "llm_source_hash": "687eaa43aa763a6ba6ba145772b9c0f62919ac53b71884cd51058fd690cfcb9c",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 9,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What audit topic name are we using now, and after a partition-count increase, is existing data redistributed?",
+      "standalone_question": "For this Kafka project, what audit topic name are we using now, and after a partition-count increase, is existing data redistributed?",
+      "asks": [
+        "current audit topic name",
+        "After a partition-count increase, is existing data redistributed?"
+      ],
+      "answer": "The project audit topic name is audit-cobalt-29. Existing data is not redistributed.",
+      "key_facts": [
+        "The project audit topic name is audit-cobalt-29.",
+        "Existing data is not redistributed."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "audit-cobalt-29",
+        "partitions"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our audit topic name from audit-cobalt-17 to audit-cobalt-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/topics-partitions-offsets.md",
+          "quote": "existing data is not redistributed",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 9,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "回忆使用更新后的名称，依赖可对应评分事实。",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174707-838808_kafka_v2_04_retention_rollover",
+        "llm_source_hash": "687eaa43aa763a6ba6ba145772b9c0f62919ac53b71884cd51058fd690cfcb9c",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 10,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What is the default data-directory fallback?",
+      "standalone_question": "For this Kafka project, what is the default data-directory fallback?",
+      "asks": [
+        "What is the default data-directory fallback?"
+      ],
+      "answer": "The fallback log.dir is /tmp/kafka-logs.",
+      "key_facts": [
+        "The fallback log.dir is /tmp/kafka-logs."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "/tmp/kafka-logs"
+      ],
+      "evidence_pages": [
+        "configuration/broker-configuration.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "configuration/broker-configuration.md",
+          "quote": "`log.dir` = `/tmp/kafka-logs`",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "默认数据目录回退值准确。",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174707-838808_kafka_v2_04_retention_rollover",
+        "llm_source_hash": "687eaa43aa763a6ba6ba145772b9c0f62919ac53b71884cd51058fd690cfcb9c",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 11,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our retention.ms from 133200000 to 219600000. What value should we use now, and can the active segment survive longer than the retention time?",
+      "standalone_question": "For this Kafka project, change our retention.ms from 133200000 to 219600000. What value should we use now, and can the active segment survive longer than the retention time?",
+      "asks": [
+        "updated retention.ms",
+        "Can the active segment survive longer than the retention time?"
+      ],
+      "answer": "The project retention.ms is 219600000. The active segment can outlive retention.ms until it rolls.",
+      "key_facts": [
+        "The project retention.ms is 219600000.",
+        "The active segment can outlive retention.ms until it rolls."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "219600000",
+        "retention.ms"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our retention.ms from 133200000 to 219600000.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/storage-and-retention.md",
+          "quote": "The active segment is not deleted, so data in a slow-to-roll segment can outlive `retention.ms` until the segment rolls.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "retention.ms",
+          "from": "133200000",
+          "to": "219600000"
+        }
+      ],
+      "affects": [
+        17
+      ],
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "保留时间更新和活动段例外一致。",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174707-838808_kafka_v2_04_retention_rollover",
+        "llm_source_hash": "687eaa43aa763a6ba6ba145772b9c0f62919ac53b71884cd51058fd690cfcb9c",
+        "needs_recheck": true,
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 12,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Does Kafka ship a production RemoteStorageManager implementation?",
+      "standalone_question": "For this Kafka project, does Kafka ship a production RemoteStorageManager implementation?",
+      "asks": [
+        "Does Kafka ship a production RemoteStorageManager implementation?"
+      ],
+      "answer": "Kafka ships no production RemoteStorageManager implementation.",
+      "key_facts": [
+        "Kafka ships no production RemoteStorageManager implementation."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "RemoteStorageManager"
+      ],
+      "evidence_pages": [
+        "operations/tiered-storage.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "operations/tiered-storage.md",
+          "quote": "`RemoteStorageManager` implementation — manages the lifecycle of remote segments and indexes. Kafka ships **no** production implementation.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "生产RemoteStorageManager实现的供应情况有直接依据。",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174707-838808_kafka_v2_04_retention_rollover",
+        "llm_source_hash": "687eaa43aa763a6ba6ba145772b9c0f62919ac53b71884cd51058fd690cfcb9c",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 13,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which audit topic name are we using now, does cleaning a log change the offsets of surviving records, and what is the default data-directory fallback?",
+      "standalone_question": "For this Kafka project, which audit topic name are we using now, does cleaning a log change the offsets of surviving records, and what is the default data-directory fallback?",
+      "asks": [
+        "current audit topic name",
+        "Does cleaning a log change the offsets of surviving records?",
+        "What is the default data-directory fallback?"
+      ],
+      "answer": "The project audit topic name is audit-cobalt-29. Surviving messages keep their original offsets. The fallback log.dir is /tmp/kafka-logs.",
+      "key_facts": [
+        "The project audit topic name is audit-cobalt-29.",
+        "Surviving messages keep their original offsets.",
+        "The fallback log.dir is /tmp/kafka-logs."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "audit-cobalt-29",
+        "offsets",
+        "/tmp/kafka-logs"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        8,
+        10
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our audit topic name from audit-cobalt-17 to audit-cobalt-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/log-compaction.md",
+          "quote": "Messages keep their **original offsets** — offsets never change.",
+          "fact_idx": 1
+        },
+        {
+          "page": "configuration/broker-configuration.md",
+          "quote": "`log.dir` = `/tmp/kafka-logs`",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 9,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    },
+    {
+      "turn": 14,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "What is the default tombstone delete-retention time?",
+      "standalone_question": "For this Kafka project, what is the default tombstone delete-retention time?",
+      "asks": [
+        "What is the default tombstone delete-retention time?"
+      ],
+      "answer": "delete.retention.ms defaults to 86400000 milliseconds, or one day.",
+      "key_facts": [
+        "delete.retention.ms defaults to 86400000 milliseconds, or one day."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "86400000"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "configuration/topic-and-group-configuration.md",
+          "quote": "| `delete.retention.ms` | `86400000` (1 day) | `log.cleaner.delete.retention.ms` |",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 5,
+      "recall_distance": 9,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "满足旧页面新章节条件，默认值有支持。",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174707-838808_kafka_v2_04_retention_rollover",
+        "llm_source_hash": "687eaa43aa763a6ba6ba145772b9c0f62919ac53b71884cd51058fd690cfcb9c",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 15,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Which internal topic stores group offset commits?",
+      "standalone_question": "For this Kafka project, which internal topic stores group offset commits?",
+      "asks": [
+        "Which internal topic stores group offset commits?"
+      ],
+      "answer": "Group offset commits are stored in __consumer_offsets.",
+      "key_facts": [
+        "Group offset commits are stored in __consumer_offsets."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "__consumer_offsets"
+      ],
+      "evidence_pages": [
+        "clients/consumer.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "clients/consumer.md",
+          "quote": "the coordinator appends the commit to the special **compacted** topic `__consumer_offsets`.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "offset提交存储主题有明确依据。",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174707-838808_kafka_v2_04_retention_rollover",
+        "llm_source_hash": "687eaa43aa763a6ba6ba145772b9c0f62919ac53b71884cd51058fd690cfcb9c",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 16,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which segment.bytes did we choose, and what limits the number of consumers doing useful work in a conventional consumer group?",
+      "standalone_question": "For this Kafka project, which segment.bytes did we choose, and what limits the number of consumers doing useful work in a conventional consumer group?",
+      "asks": [
+        "project segment.bytes",
+        "What limits the number of consumers doing useful work in a conventional consumer group?"
+      ],
+      "answer": "The project segment.bytes is 70254592. Partition count caps consumer parallelism.",
+      "key_facts": [
+        "The project segment.bytes is 70254592.",
+        "Partition count caps consumer parallelism."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "user",
+          "tags": []
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "70254592",
+        "Partition count"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        3
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "set segment.bytes to 70254592",
+          "user_turn": 3
+        },
+        {
+          "fact_idx": 1,
+          "page": "operations/topic-and-cluster-administration.md",
+          "quote": "**Partition count**: how many logs the topic is sharded into. Each partition must fit on one server (20 partitions → at most 20 servers handle the data and load, excluding replicas), and it caps consumer parallelism."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 13,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:27+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174707-838808_kafka_v2_04_retention_rollover",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 17,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What retention.ms are we using now, and what makes a segment old enough for time-based deletion?",
+      "standalone_question": "For this Kafka project, what retention.ms are we using now, and what makes a segment old enough for time-based deletion?",
+      "asks": [
+        "current retention.ms",
+        "What makes a segment old enough for time-based deletion?"
+      ],
+      "answer": "The project retention.ms is 219600000. For time-based deletion, segment age is determined using its largest record timestamp; the segment becomes eligible when that age exceeds retention.ms.",
+      "key_facts": [
+        "The project retention.ms is 219600000.",
+        "For time-based deletion, segment age is determined using its largest record timestamp; the segment becomes eligible when that age exceeds retention.ms."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "user",
+          "tags": []
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "219600000",
+        "retention.ms"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        11,
+        1
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "Change our retention.ms from 133200000 to 219600000.",
+          "user_turn": 11
+        },
+        {
+          "fact_idx": 1,
+          "page": "concepts/storage-and-retention.md",
+          "quote": "a segment's age is the **largest record timestamp** in it; it becomes deletable when that exceeds `retention.ms`."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 16,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:27+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174707-838808_kafka_v2_04_retention_rollover",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 18,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which archive prefix did we choose, does Kafka ship a production RemoteStorageManager implementation, and which internal topic stores group offset commits?",
+      "standalone_question": "For this Kafka project, which archive prefix did we choose, does Kafka ship a production RemoteStorageManager implementation, and which internal topic stores group offset commits?",
+      "asks": [
+        "project archive prefix",
+        "Does Kafka ship a production RemoteStorageManager implementation?",
+        "Which internal topic stores group offset commits?"
+      ],
+      "answer": "The project archive prefix is cobalt-audit-archive. Kafka ships no production RemoteStorageManager implementation. Group offset commits are stored in __consumer_offsets.",
+      "key_facts": [
+        "The project archive prefix is cobalt-audit-archive.",
+        "Kafka ships no production RemoteStorageManager implementation.",
+        "Group offset commits are stored in __consumer_offsets."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "cobalt-audit-archive",
+        "RemoteStorageManager",
+        "__consumer_offsets"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        8,
+        12,
+        15
+      ],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Use cobalt-audit-archive as the project archive prefix.",
+          "fact_idx": 0
+        },
+        {
+          "page": "operations/tiered-storage.md",
+          "quote": "`RemoteStorageManager` implementation — manages the lifecycle of remote segments and indexes. Kafka ships **no** production implementation.",
+          "fact_idx": 1
+        },
+        {
+          "page": "clients/consumer.md",
+          "quote": "the coordinator appends the commit to the special **compacted** topic `__consumer_offsets`.",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    }
+  ],
+  "edits": [
+    {
+      "at": "2026-11-28T12:52:27+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 1,
+      "fields": [
+        "answer",
+        "key_facts"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_04_retention_rollover_8cd9a36a326842f1bf9b1257c3a86ea1"
+    },
+    {
+      "at": "2026-11-28T12:52:27+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 3,
+      "fields": [
+        "evidence"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_04_retention_rollover_8cd9a36a326842f1bf9b1257c3a86ea1"
+    },
+    {
+      "at": "2026-11-28T12:52:27+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 16,
+      "fields": [
+        "evidence"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_04_retention_rollover_8cd9a36a326842f1bf9b1257c3a86ea1"
+    },
+    {
+      "at": "2026-11-28T12:52:27+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 17,
+      "fields": [
+        "answer",
+        "key_facts"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_04_retention_rollover_8cd9a36a326842f1bf9b1257c3a86ea1"
+    }
+  ]
+}

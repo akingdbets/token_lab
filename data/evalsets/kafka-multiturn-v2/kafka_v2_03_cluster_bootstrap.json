@@ -1,0 +1,1242 @@
+{
+  "schema_version": 2,
+  "scenario_id": "kafka_v2_03_cluster_bootstrap",
+  "title": "Provisioning a dedicated KRaft cluster",
+  "topic": "Provisioning a dedicated KRaft cluster",
+  "status": "final",
+  "bundle": [
+    "concepts/replication.md",
+    "operations/kraft-cluster-setup.md",
+    "getting-started/local-quickstart.md",
+    "configuration/broker-configuration.md",
+    "security/listeners-and-security-overview.md",
+    "getting-started/docker.md",
+    "operations/hardware-os-and-deployment.md",
+    "monitoring/broker-and-kraft-metrics.md"
+  ],
+  "generation": {
+    "model": "gpt-6.1-sol",
+    "method": "Codex session, account plan",
+    "prompt": [
+      "mt_scenario_gen_v3",
+      "40710c69c22d"
+    ],
+    "run_id": "20261128-165733_kafka_18_session",
+    "request_file": "results/scenario_gen/20261128-165733_kafka_18_session/kafka_v2_03_cluster_bootstrap_request.json",
+    "created_at": "2026-11-28T16:57:33",
+    "corpus_manifest_sha256": "a6fb69b10c7c98a2af883313f8938d0bfb1757fae65b8274c183a4c14ef4a735",
+    "context": "Authored in the ongoing Codex conversation with a shared turn structure, explicit page-grounded fact selections, and topic-specific project settings."
+  },
+  "turns": [
+    {
+      "turn": 0,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our project concerns provisioning a dedicated KRaft cluster. For the planned deployment, set broker.rack to aurora-zone-17. Which value should we use, and which errors indicate too few in-sync replicas for acks=all?",
+      "standalone_question": "For this Kafka project, our project concerns provisioning a dedicated KRaft cluster. For the planned deployment, set broker.rack to aurora-zone-17. Which value should we use, and which errors indicate too few in-sync replicas for acks=all?",
+      "asks": [
+        "project broker.rack",
+        "Which errors indicate too few in-sync replicas for acks=all?"
+      ],
+      "answer": "The project broker.rack is aurora-zone-17. The errors are NotEnoughReplicas and NotEnoughReplicasAfterAppend.",
+      "key_facts": [
+        "The project broker.rack is aurora-zone-17.",
+        "The errors are NotEnoughReplicas and NotEnoughReplicasAfterAppend."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "aurora-zone-17",
+        "NotEnoughReplicas",
+        "NotEnoughReplicasAfterAppend"
+      ],
+      "evidence_pages": [
+        "concepts/replication.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 0,
+          "quote": "set broker.rack to aurora-zone-17",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/replication.md",
+          "quote": "With `acks=all` and an ISR smaller than `min.insync.replicas`, the producer gets `NotEnoughReplicas` or `NotEnoughReplicasAfterAppend`.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "현재 설정값과 문서의 오류 조건을 정확히 구분한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174440-125788_kafka_v2_03_cluster_bootstrap",
+        "llm_source_hash": "e807d7612dd7d4d5a4cdceb501fb3a836701a4c7710be0a537dd9a8896e37b25",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 1,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Set our node.id to 17. Which project value applies, and with five controllers, how many concurrent failures can the quorum tolerate?",
+      "standalone_question": "For this Kafka project, set our node.id to 17. Which project value applies, and with five controllers, how many concurrent failures can the quorum tolerate?",
+      "asks": [
+        "project node.id",
+        "With five controllers, how many concurrent failures can the quorum tolerate?"
+      ],
+      "answer": "The project node.id is 17. Five controllers tolerate two failures while retaining a majority.",
+      "key_facts": [
+        "The project node.id is 17.",
+        "Five controllers tolerate two failures while retaining a majority."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "17",
+        "5",
+        "2"
+      ],
+      "evidence_pages": [
+        "operations/kraft-cluster-setup.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Set our node.id to 17.",
+          "fact_idx": 0
+        },
+        {
+          "page": "operations/kraft-cluster-setup.md",
+          "quote": "3 tolerate 1 failure, 5 tolerate 2.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "node.id 설정과 컨트롤러 장애 허용 수가 근거에 부합한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174440-125788_kafka_v2_03_cluster_bootstrap",
+        "llm_source_hash": "e807d7612dd7d4d5a4cdceb501fb3a836701a4c7710be0a537dd9a8896e37b25",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 2,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "Which bootstrap property must every broker and controller set?",
+      "standalone_question": "For this Kafka project, which bootstrap property must every broker and controller set?",
+      "asks": [
+        "Which bootstrap property must every broker and controller set?"
+      ],
+      "answer": "Every broker and controller sets controller.quorum.bootstrap.servers.",
+      "key_facts": [
+        "Every broker and controller sets controller.quorum.bootstrap.servers."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "controller.quorum.bootstrap.servers"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "operations/kraft-cluster-setup.md",
+          "quote": "**Every broker and controller** sets `controller.quorum.bootstrap.servers`",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "앞서 첨부된 KRaft 문서의 부트스트랩 속성을 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174440-125788_kafka_v2_03_cluster_bootstrap",
+        "llm_source_hash": "e807d7612dd7d4d5a4cdceb501fb3a836701a4c7710be0a537dd9a8896e37b25",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 3,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "For our project, set log.dirs to /srv/aurora-logs-17. Which value should be used, and what must be done to log directories before the first node start?",
+      "standalone_question": "For this Kafka project, for our project, set log.dirs to /srv/aurora-logs-17. Which value should be used, and what must be done to log directories before the first node start?",
+      "asks": [
+        "project log.dirs",
+        "What must be done to log directories before the first node start?"
+      ],
+      "answer": "The project log.dirs is /srv/aurora-logs-17. Storage must be formatted before the first start.",
+      "key_facts": [
+        "The project log.dirs is /srv/aurora-logs-17.",
+        "Storage must be formatted before the first start."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "/srv/aurora-logs-17",
+        "log.dirs"
+      ],
+      "evidence_pages": [
+        "getting-started/local-quickstart.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 3,
+          "quote": "set log.dirs to /srv/aurora-logs-17",
+          "fact_idx": 0
+        },
+        {
+          "page": "getting-started/local-quickstart.md",
+          "quote": "**Formatting is required** before the first start; a node with unformatted `log.dirs` will not start.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "데이터 경로와 최초 시작 전 포맷 요구를 정확히 답한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174440-125788_kafka_v2_03_cluster_bootstrap",
+        "llm_source_hash": "e807d7612dd7d4d5a4cdceb501fb3a836701a4c7710be0a537dd9a8896e37b25",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 4,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Before rollout, change our broker.rack from aurora-zone-17 to aurora-zone-29. What is the revised project value, and does acks=all refer to all assigned replicas or the current in-sync replicas?",
+      "standalone_question": "For this Kafka project, before rollout, change our broker.rack from aurora-zone-17 to aurora-zone-29. What is the revised project value, and does acks=all refer to all assigned replicas or the current in-sync replicas?",
+      "asks": [
+        "updated broker.rack",
+        "Does acks=all refer to all assigned replicas or the current in-sync replicas?"
+      ],
+      "answer": "The project broker.rack is aurora-zone-29. acks=all refers to all current in-sync replicas.",
+      "key_facts": [
+        "The project broker.rack is aurora-zone-29.",
+        "acks=all refers to all current in-sync replicas."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "aurora-zone-29",
+        "acks=all"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our broker.rack from aurora-zone-17 to aurora-zone-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/replication.md",
+          "quote": "`acks=all` means all *current* in-sync replicas, not all assigned replicas.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "broker.rack",
+          "from": "aurora-zone-17",
+          "to": "aurora-zone-29"
+        }
+      ],
+      "affects": [
+        9,
+        13
+      ],
+      "source_turn": null,
+      "recall_distance": 4,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "rack 변경과 과거 문서의 acks=all 의미를 정확히 처리한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174440-125788_kafka_v2_03_cluster_bootstrap",
+        "llm_source_hash": "e807d7612dd7d4d5a4cdceb501fb3a836701a4c7710be0a537dd9a8896e37b25",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 5,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Which property identifies a KRaft server instead of the deprecated broker.id?",
+      "standalone_question": "For this Kafka project, which property identifies a KRaft server instead of the deprecated broker.id?",
+      "asks": [
+        "Which property identifies a KRaft server instead of the deprecated broker.id?"
+      ],
+      "answer": "Use node.id.",
+      "key_facts": [
+        "Use node.id."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "node.id"
+      ],
+      "evidence_pages": [
+        "configuration/broker-configuration.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "configuration/broker-configuration.md",
+          "quote": "use `node.id`.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "폐기 예정 속성의 대체 식별 속성을 정확히 묻고 답한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174440-125788_kafka_v2_03_cluster_bootstrap",
+        "llm_source_hash": "e807d7612dd7d4d5a4cdceb501fb3a836701a4c7710be0a537dd9a8896e37b25",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 6,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "What is the default data-directory fallback?",
+      "standalone_question": "For this Kafka project, what is the default data-directory fallback?",
+      "asks": [
+        "What is the default data-directory fallback?"
+      ],
+      "answer": "The fallback log.dir is /tmp/kafka-logs.",
+      "key_facts": [
+        "The fallback log.dir is /tmp/kafka-logs."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "/tmp/kafka-logs"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "configuration/broker-configuration.md",
+          "quote": "`log.dir` = `/tmp/kafka-logs`",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "프로젝트 경로와 구별되는 기본 fallback을 정확히 답한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174440-125788_kafka_v2_03_cluster_bootstrap",
+        "llm_source_hash": "e807d7612dd7d4d5a4cdceb501fb3a836701a4c7710be0a537dd9a8896e37b25",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 7,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "Is combined broker/controller mode recommended for critical deployments?",
+      "standalone_question": "For this Kafka project, is combined broker/controller mode recommended for critical deployments?",
+      "asks": [
+        "Is combined broker/controller mode recommended for critical deployments?"
+      ],
+      "answer": "Combined mode is not recommended for critical deployments.",
+      "key_facts": [
+        "Combined mode is not recommended for critical deployments."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "Combined"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "operations/kraft-cluster-setup.md",
+          "quote": "**Combined mode is not recommended for critical deployments.**",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 1,
+      "recall_distance": 6,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "충분히 오래된 문서의 미사용 역할 구성 절을 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174440-125788_kafka_v2_03_cluster_bootstrap",
+        "llm_source_hash": "e807d7612dd7d4d5a4cdceb501fb3a836701a4c7710be0a537dd9a8896e37b25",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 8,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Use CONTROL_AURORA as the project controller listener name. Which value should be used, and which property tells clients where to connect after metadata discovery?",
+      "standalone_question": "For this Kafka project, use CONTROL_AURORA as the project controller listener name. Which value should be used, and which property tells clients where to connect after metadata discovery?",
+      "asks": [
+        "project controller listener name",
+        "Which property tells clients where to connect after metadata discovery?"
+      ],
+      "answer": "The project controller listener name is CONTROL_AURORA. advertised.listeners supplies the advertised client endpoints.",
+      "key_facts": [
+        "The project controller listener name is CONTROL_AURORA.",
+        "advertised.listeners supplies the advertised client endpoints."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "CONTROL_AURORA",
+        "advertised.listeners"
+      ],
+      "evidence_pages": [
+        "security/listeners-and-security-overview.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Use CONTROL_AURORA as the project controller listener name.",
+          "fact_idx": 0
+        },
+        {
+          "page": "security/listeners-and-security-overview.md",
+          "quote": "`advertised.listeners` — what the broker tells clients to connect to after the first metadata fetch",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "컨트롤러 리스너 이름과 클라이언트 광고 속성을 구별한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174440-125788_kafka_v2_03_cluster_bootstrap",
+        "llm_source_hash": "e807d7612dd7d4d5a4cdceb501fb3a836701a4c7710be0a537dd9a8896e37b25",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 9,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What broker.rack are we using now, and does acks=all refer to all assigned replicas or the current in-sync replicas?",
+      "standalone_question": "For this Kafka project, what broker.rack are we using now, and does acks=all refer to all assigned replicas or the current in-sync replicas?",
+      "asks": [
+        "current broker.rack",
+        "Does acks=all refer to all assigned replicas or the current in-sync replicas?"
+      ],
+      "answer": "The project broker.rack is aurora-zone-29. acks=all refers to all current in-sync replicas.",
+      "key_facts": [
+        "The project broker.rack is aurora-zone-29.",
+        "acks=all refers to all current in-sync replicas."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "aurora-zone-29",
+        "acks=all"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our broker.rack from aurora-zone-17 to aurora-zone-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/replication.md",
+          "quote": "`acks=all` means all *current* in-sync replicas, not all assigned replicas.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 9,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "변경된 rack과 과거 복제 문서 내용을 회상한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174440-125788_kafka_v2_03_cluster_bootstrap",
+        "llm_source_hash": "e807d7612dd7d4d5a4cdceb501fb3a836701a4c7710be0a537dd9a8896e37b25",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 10,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Which port do the default single-node Kafka containers listen on?",
+      "standalone_question": "For this Kafka project, which port do the default single-node Kafka containers listen on?",
+      "asks": [
+        "Which port do the default single-node Kafka containers listen on?"
+      ],
+      "answer": "The default containers listen on port 9092.",
+      "key_facts": [
+        "The default containers listen on port 9092."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "9092"
+      ],
+      "evidence_pages": [
+        "getting-started/docker.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "getting-started/docker.md",
+          "quote": "listening on port **9092**",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "기본 단일 노드 컨테이너의 포트를 정확히 답한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174440-125788_kafka_v2_03_cluster_bootstrap",
+        "llm_source_hash": "e807d7612dd7d4d5a4cdceb501fb3a836701a4c7710be0a537dd9a8896e37b25",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 11,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our node.id from 17 to 29. What value should we use now, and which bootstrap property must every broker and controller set?",
+      "standalone_question": "For this Kafka project, change our node.id from 17 to 29. What value should we use now, and which bootstrap property must every broker and controller set?",
+      "asks": [
+        "updated node.id",
+        "Which bootstrap property must every broker and controller set?"
+      ],
+      "answer": "The project node.id is 29. Every broker and controller sets controller.quorum.bootstrap.servers.",
+      "key_facts": [
+        "The project node.id is 29.",
+        "Every broker and controller sets controller.quorum.bootstrap.servers."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "29",
+        "controller.quorum.bootstrap.servers"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our node.id from 17 to 29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "operations/kraft-cluster-setup.md",
+          "quote": "**Every broker and controller** sets `controller.quorum.bootstrap.servers`",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "node.id",
+          "from": "17",
+          "to": "29"
+        }
+      ],
+      "affects": [
+        17
+      ],
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "node.id 변경과 과거 KRaft 설정 사실이 일관된다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174440-125788_kafka_v2_03_cluster_bootstrap",
+        "llm_source_hash": "e807d7612dd7d4d5a4cdceb501fb3a836701a4c7710be0a537dd9a8896e37b25",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 12,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "How many map areas does the deployment example need for 50000 partitions with one segment each?",
+      "standalone_question": "For this Kafka project, how many map areas does the deployment example need for 50000 partitions with one segment each?",
+      "asks": [
+        "How many map areas does the deployment example need for 50000 partitions with one segment each?"
+      ],
+      "answer": "It needs 100000 map areas for the index and timeindex files.",
+      "key_facts": [
+        "It needs 100000 map areas for the index and timeindex files."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "100000"
+      ],
+      "evidence_pages": [
+        "operations/hardware-os-and-deployment.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "operations/hardware-os-and-deployment.md",
+          "quote": "50000 partitions on one broker → 100000 map areas",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "세그먼트 하나라는 조건에서 문서 예시의 map 영역 수를 답한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174440-125788_kafka_v2_03_cluster_bootstrap",
+        "llm_source_hash": "e807d7612dd7d4d5a4cdceb501fb3a836701a4c7710be0a537dd9a8896e37b25",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 13,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which broker.rack are we using now, which property tells clients where to connect after metadata discovery, and which port do the default single-node Kafka containers listen on?",
+      "standalone_question": "For this Kafka project, which broker.rack are we using now, which property tells clients where to connect after metadata discovery, and which port do the default single-node Kafka containers listen on?",
+      "asks": [
+        "current broker.rack",
+        "Which property tells clients where to connect after metadata discovery?",
+        "Which port do the default single-node Kafka containers listen on?"
+      ],
+      "answer": "The project broker.rack is aurora-zone-29. advertised.listeners supplies the advertised client endpoints. The default containers listen on port 9092.",
+      "key_facts": [
+        "The project broker.rack is aurora-zone-29.",
+        "advertised.listeners supplies the advertised client endpoints.",
+        "The default containers listen on port 9092."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "aurora-zone-29",
+        "advertised.listeners",
+        "9092"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        8,
+        10
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our broker.rack from aurora-zone-17 to aurora-zone-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "security/listeners-and-security-overview.md",
+          "quote": "`advertised.listeners` — what the broker tells clients to connect to after the first metadata fetch",
+          "fact_idx": 1
+        },
+        {
+          "page": "getting-started/docker.md",
+          "quote": "listening on port **9092**",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 9,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "최신 rack과 두 연결 관련 사실을 과거 자료에서 종합한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174440-125788_kafka_v2_03_cluster_bootstrap",
+        "llm_source_hash": "e807d7612dd7d4d5a4cdceb501fb3a836701a4c7710be0a537dd9a8896e37b25",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 14,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "What node id does the split-role broker properties example use?",
+      "standalone_question": "For this Kafka project, what node id does the split-role broker properties example use?",
+      "asks": [
+        "What node id does the split-role broker properties example use?"
+      ],
+      "answer": "The broker-only example uses node.id=2.",
+      "key_facts": [
+        "The broker-only example uses node.id=2."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "node.id=2"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "configuration/broker-configuration.md",
+          "quote": "`config/broker.properties` (broker-only, `node.id=2`",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 5,
+      "recall_distance": 9,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "오래전에 첨부한 문서의 미사용 샘플 설정 절을 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174440-125788_kafka_v2_03_cluster_bootstrap",
+        "llm_source_hash": "e807d7612dd7d4d5a4cdceb501fb3a836701a4c7710be0a537dd9a8896e37b25",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 15,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What is the fastest suggested way to browse metrics on a running broker?",
+      "standalone_question": "For this Kafka project, what is the fastest suggested way to browse metrics on a running broker?",
+      "asks": [
+        "What is the fastest suggested way to browse metrics on a running broker?"
+      ],
+      "answer": "Attach jconsole to the broker.",
+      "key_facts": [
+        "Attach jconsole to the broker."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "jconsole"
+      ],
+      "evidence_pages": [
+        "monitoring/broker-and-kraft-metrics.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "monitoring/broker-and-kraft-metrics.md",
+          "quote": "The quickest way to browse metrics is `jconsole` attached to a running broker or client.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "문서가 권하는 빠른 메트릭 조회 방법을 정확히 답한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174440-125788_kafka_v2_03_cluster_bootstrap",
+        "llm_source_hash": "e807d7612dd7d4d5a4cdceb501fb3a836701a4c7710be0a537dd9a8896e37b25",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 16,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which log.dirs did we choose, and what must be done to log directories before the first node start?",
+      "standalone_question": "For this Kafka project, which log.dirs did we choose, and what must be done to log directories before the first node start?",
+      "asks": [
+        "project log.dirs",
+        "What must be done to log directories before the first node start?"
+      ],
+      "answer": "The project log.dirs is /srv/aurora-logs-17. Storage must be formatted before the first start.",
+      "key_facts": [
+        "The project log.dirs is /srv/aurora-logs-17.",
+        "Storage must be formatted before the first start."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "/srv/aurora-logs-17",
+        "log.dirs"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        3
+      ],
+      "evidence": [
+        {
+          "user_turn": 3,
+          "quote": "set log.dirs to /srv/aurora-logs-17",
+          "fact_idx": 0
+        },
+        {
+          "page": "getting-started/local-quickstart.md",
+          "quote": "**Formatting is required** before the first start; a node with unformatted `log.dirs` will not start.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 13,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "기존 데이터 경로와 최초 포맷 요구를 회상한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174440-125788_kafka_v2_03_cluster_bootstrap",
+        "llm_source_hash": "e807d7612dd7d4d5a4cdceb501fb3a836701a4c7710be0a537dd9a8896e37b25",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 17,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What node.id are we using now, and with five controllers, how many concurrent failures can the quorum tolerate?",
+      "standalone_question": "For this Kafka project, what node.id are we using now, and with five controllers, how many concurrent failures can the quorum tolerate?",
+      "asks": [
+        "current node.id",
+        "With five controllers, how many concurrent failures can the quorum tolerate?"
+      ],
+      "answer": "The project node.id is 29. Five controllers tolerate two failures while retaining a majority.",
+      "key_facts": [
+        "The project node.id is 29.",
+        "Five controllers tolerate two failures while retaining a majority."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "29",
+        "5",
+        "2"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        11,
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our node.id from 17 to 29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "operations/kraft-cluster-setup.md",
+          "quote": "3 tolerate 1 failure, 5 tolerate 2.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 16,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "수정된 node.id와 컨트롤러 장애 허용 수를 정확히 회상한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174440-125788_kafka_v2_03_cluster_bootstrap",
+        "llm_source_hash": "e807d7612dd7d4d5a4cdceb501fb3a836701a4c7710be0a537dd9a8896e37b25",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 18,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which controller listener name did we choose, how many map areas does the deployment example need for 50000 partitions with one segment each, and what is the fastest suggested way to browse metrics on a running broker?",
+      "standalone_question": "For this Kafka project, which controller listener name did we choose, how many map areas does the deployment example need for 50000 partitions with one segment each, and what is the fastest suggested way to browse metrics on a running broker?",
+      "asks": [
+        "project controller listener name",
+        "How many map areas does the deployment example need for 50000 partitions with one segment each?",
+        "What is the fastest suggested way to browse metrics on a running broker?"
+      ],
+      "answer": "The project controller listener name is CONTROL_AURORA. It needs 100000 map areas for the index and timeindex files. Attach jconsole to the broker.",
+      "key_facts": [
+        "The project controller listener name is CONTROL_AURORA.",
+        "It needs 100000 map areas for the index and timeindex files.",
+        "Attach jconsole to the broker."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example",
+            "confusable"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "CONTROL_AURORA",
+        "100000",
+        "jconsole"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        8,
+        12,
+        15
+      ],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Use CONTROL_AURORA as the project controller listener name.",
+          "fact_idx": 0
+        },
+        {
+          "page": "operations/hardware-os-and-deployment.md",
+          "quote": "50000 partitions on one broker → 100000 map areas",
+          "fact_idx": 1
+        },
+        {
+          "page": "monitoring/broker-and-kraft-metrics.md",
+          "quote": "The quickest way to browse metrics is `jconsole` attached to a running broker or client.",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    }
+  ]
+}

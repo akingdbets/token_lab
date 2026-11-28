@@ -1,0 +1,1400 @@
+{
+  "schema_version": 2,
+  "scenario_id": "kafka_v2_16_processor_callbacks",
+  "title": "Implementing and testing a punctuated stateful processor",
+  "topic": "Implementing and testing a punctuated stateful processor",
+  "status": "final",
+  "bundle": [
+    "concepts/delivery-semantics.md",
+    "streams/processor-api.md",
+    "clients/examples.md",
+    "streams/testing.md",
+    "streams/core-concepts-and-architecture.md",
+    "streams/configuration.md",
+    "streams/serdes-and-datatypes.md",
+    "streams/state-stores-and-interactive-queries.md"
+  ],
+  "generation": {
+    "model": "gpt-6.1-sol",
+    "method": "Codex session, account plan",
+    "prompt": [
+      "mt_scenario_gen_v3",
+      "40710c69c22d"
+    ],
+    "run_id": "20261128-165733_kafka_18_session",
+    "request_file": "results/scenario_gen/20261128-165733_kafka_18_session/kafka_v2_16_processor_callbacks_request.json",
+    "created_at": "2026-11-28T16:57:33",
+    "corpus_manifest_sha256": "a6fb69b10c7c98a2af883313f8938d0bfb1757fae65b8274c183a4c14ef4a735",
+    "context": "Authored in the ongoing Codex conversation with a shared turn structure, explicit page-grounded fact selections, and topic-specific project settings."
+  },
+  "turns": [
+    {
+      "turn": 0,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our project concerns implementing and testing a punctuated stateful processor. For the planned deployment, set application.id to elm-process-17. Which value should we use, and which ordering of processing and offset saving gives at-least-once consumption?",
+      "standalone_question": "For this Kafka project, our project concerns implementing and testing a punctuated stateful processor. For the planned deployment, set application.id to elm-process-17. Which value should we use, and which ordering of processing and offset saving gives at-least-once consumption?",
+      "asks": [
+        "project application.id",
+        "Which ordering of processing and offset saving gives at-least-once consumption?"
+      ],
+      "answer": "The project application.id is elm-process-17. Read, process, then save the position gives at-least-once consumption.",
+      "key_facts": [
+        "The project application.id is elm-process-17.",
+        "Read, process, then save the position gives at-least-once consumption."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "elm-process-17",
+        "At least once"
+      ],
+      "evidence_pages": [
+        "concepts/delivery-semantics.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 0,
+          "quote": "set application.id to elm-process-17",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/delivery-semantics.md",
+          "quote": "| Read → process → save position | First messages are re-processed by the new owner | **At least once** |",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "설정값과 문서 사실이 구분되며 질문과 답변이 일치한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182506-610457_kafka_v2_16_processor_callbacks",
+        "llm_source_hash": "e206ba43fb3ec9ebfb09ac88846868fd6195a184c12eb39e302b26ec82465a96",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 1,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Set our commit.interval.ms to 157. Which project value applies, and for 60 records timestamped one second apart and a ten-second schedule, how many stream-time punctuations occur?",
+      "standalone_question": "For this Kafka project, set our commit.interval.ms to 157. Which project value applies, and for 60 records timestamped one second apart and a ten-second schedule, how many stream-time punctuations occur?",
+      "asks": [
+        "project commit.interval.ms",
+        "For 60 records timestamped one second apart and a ten-second schedule, how many stream-time punctuations occur?"
+      ],
+      "answer": "The project commit.interval.ms is 157. The example produces six stream-time punctuations.",
+      "key_facts": [
+        "The project commit.interval.ms is 157.",
+        "The example produces six stream-time punctuations."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "157",
+        "6"
+      ],
+      "evidence_pages": [
+        "streams/processor-api.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Set our commit.interval.ms to 157.",
+          "fact_idx": 0
+        },
+        {
+          "page": "streams/processor-api.md",
+          "quote": "`punctuate()` runs **6 times**, regardless of how long processing takes.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    },
+    {
+      "turn": 2,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "In that example, how many wall-clock callbacks occur if processing finishes in five seconds?",
+      "standalone_question": "In the Streams Processor API example with 60 records timestamped 1…60 s and callbacks scheduled every 10 seconds, how many wall-clock callbacks occur if processing finishes in five seconds?",
+      "asks": [
+        "In that example, how many wall-clock callbacks occur if processing finishes in five seconds?"
+      ],
+      "answer": "The example produces zero wall-clock callbacks in five seconds.",
+      "key_facts": [
+        "The example produces zero wall-clock callbacks in five seconds."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "0"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "streams/processor-api.md",
+          "quote": "processed in 5 s → **0** calls.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:34+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182506-610457_kafka_v2_16_processor_callbacks",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 3,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "For our project, set processor node name to elm-aggregate-43. Which value should be used, and what are the three example arguments for the exactly-once demo?",
+      "standalone_question": "For this Kafka project, for our project, set processor node name to elm-aggregate-43. Which value should be used, and what are the three example arguments for the exactly-once demo?",
+      "asks": [
+        "project processor node name",
+        "What are the three example arguments for the exactly-once demo?"
+      ],
+      "answer": "The project processor node name is elm-aggregate-43. The example arguments are 6 partitions, 3 instances and 10000 records.",
+      "key_facts": [
+        "The project processor node name is elm-aggregate-43.",
+        "The example arguments are 6 partitions, 3 instances and 10000 records."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "elm-aggregate-43",
+        "6",
+        "3",
+        "10000"
+      ],
+      "evidence_pages": [
+        "clients/examples.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 3,
+          "quote": "set processor node name to elm-aggregate-43",
+          "fact_idx": 0
+        },
+        {
+          "page": "clients/examples.md",
+          "quote": "Arguments (all required): `partitions`, `instances`, `records` — e.g. `6 3 10000`.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "프로세서 이름과 데모 인자가 근거에 부합한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182506-610457_kafka_v2_16_processor_callbacks",
+        "llm_source_hash": "e206ba43fb3ec9ebfb09ac88846868fd6195a184c12eb39e302b26ec82465a96",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 4,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Before rollout, change our application.id from elm-process-17 to elm-process-29. What is the revised project value, and which consumer isolation mode still includes non-transactional records alongside committed transactions?",
+      "standalone_question": "For this Kafka project, before rollout, change our application.id from elm-process-17 to elm-process-29. What is the revised project value, and which consumer isolation mode still includes non-transactional records alongside committed transactions?",
+      "asks": [
+        "updated application.id",
+        "Which consumer isolation mode still includes non-transactional records alongside committed transactions?"
+      ],
+      "answer": "The project application.id is elm-process-29. read_committed includes committed transactional and non-transactional records.",
+      "key_facts": [
+        "The project application.id is elm-process-29.",
+        "read_committed includes committed transactional and non-transactional records."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "elm-process-29",
+        "read_committed"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our application.id from elm-process-17 to elm-process-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/delivery-semantics.md",
+          "quote": "`read_committed` returns only committed transactional messages (plus non-transactional ones).",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "application.id",
+          "from": "elm-process-17",
+          "to": "elm-process-29"
+        }
+      ],
+      "affects": [
+        9,
+        13
+      ],
+      "source_turn": null,
+      "recall_distance": 4,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "application.id 변경과 문서 회상이 일관된다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182506-610457_kafka_v2_16_processor_callbacks",
+        "llm_source_hash": "e206ba43fb3ec9ebfb09ac88846868fd6195a184c12eb39e302b26ec82465a96",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 5,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What triggers event-time punctuation in the test driver?",
+      "standalone_question": "For this Kafka project, what triggers event-time punctuation in the test driver?",
+      "asks": [
+        "What triggers event-time punctuation in the test driver?"
+      ],
+      "answer": "Event-time punctuations fire automatically from timestamps of piped records.",
+      "key_facts": [
+        "Event-time punctuations fire automatically from timestamps of piped records."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "pipeInput"
+      ],
+      "evidence_pages": [
+        "streams/testing.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "streams/testing.md",
+          "quote": "**Event-time (stream-time) punctuations** fire automatically based on the timestamps of piped records (`pipeInput(key, value, Instant)`).",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "테스트 드라이버의 event-time 트리거를 정확히 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182506-610457_kafka_v2_16_processor_callbacks",
+        "llm_source_hash": "e206ba43fb3ec9ebfb09ac88846868fd6195a184c12eb39e302b26ec82465a96",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 6,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "How does the test example advance its mocked wall clock?",
+      "standalone_question": "In the Punctuations and time section of streams/testing.md, how does the TopologyTestDriver example advance its mocked wall clock?",
+      "asks": [
+        "How does the test example advance its mocked wall clock?"
+      ],
+      "answer": "It calls testDriver.advanceWallClockTime(Duration.ofSeconds(20)).",
+      "key_facts": [
+        "It calls testDriver.advanceWallClockTime(Duration.ofSeconds(20))."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "20"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "streams/testing.md",
+          "quote": "testDriver.advanceWallClockTime(Duration.ofSeconds(20));",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:34+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182506-610457_kafka_v2_16_processor_callbacks",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 7,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "What happens to fault tolerance and standby replicas when changelogging is disabled?",
+      "standalone_question": "For this Kafka project, what happens to fault tolerance and standby replicas when changelogging is disabled?",
+      "asks": [
+        "What happens to fault tolerance and standby replicas when changelogging is disabled?"
+      ],
+      "answer": "Disabling changelogging removes fault tolerance and standby replicas.",
+      "key_facts": [
+        "Disabling changelogging removes fault tolerance and standby replicas."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "standby"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "streams/processor-api.md",
+          "quote": "// disable changelogging: no fault tolerance, no standby replicas",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 1,
+      "recall_distance": 6,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "오래전에 첨부된 문서의 미사용 changelog 절을 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182506-610457_kafka_v2_16_processor_callbacks",
+        "llm_source_hash": "e206ba43fb3ec9ebfb09ac88846868fd6195a184c12eb39e302b26ec82465a96",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 8,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Use elm-totals-41 as the project state store name. Which value should be used, and when does stream time advance?",
+      "standalone_question": "For this Kafka project, use elm-totals-41 as the project state store name. Which value should be used, and when does stream time advance?",
+      "asks": [
+        "project state store name",
+        "When does stream time advance?"
+      ],
+      "answer": "The project state store name is elm-totals-41. Stream time advances only when new records arrive.",
+      "key_facts": [
+        "The project state store name is elm-totals-41.",
+        "Stream time advances only when new records arrive."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "elm-totals-41",
+        "Stream time"
+      ],
+      "evidence_pages": [
+        "streams/core-concepts-and-architecture.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Use elm-totals-41 as the project state store name.",
+          "fact_idx": 0
+        },
+        {
+          "page": "streams/core-concepts-and-architecture.md",
+          "quote": "**Stream time** is data-driven: it only advances when new records arrive",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "저장소 이름 설정과 stream time 설명이 근거에 부합한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182506-610457_kafka_v2_16_processor_callbacks",
+        "llm_source_hash": "e206ba43fb3ec9ebfb09ac88846868fd6195a184c12eb39e302b26ec82465a96",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 9,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What application.id are we using now, and which consumer isolation mode still includes non-transactional records alongside committed transactions?",
+      "standalone_question": "For this Kafka project, what application.id are we using now, and which consumer isolation mode still includes non-transactional records alongside committed transactions?",
+      "asks": [
+        "current application.id",
+        "Which consumer isolation mode still includes non-transactional records alongside committed transactions?"
+      ],
+      "answer": "The project application.id is elm-process-29. read_committed includes committed transactional and non-transactional records.",
+      "key_facts": [
+        "The project application.id is elm-process-29.",
+        "read_committed includes committed transactional and non-transactional records."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "elm-process-29",
+        "read_committed"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our application.id from elm-process-17 to elm-process-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/delivery-semantics.md",
+          "quote": "`read_committed` returns only committed transactional messages (plus non-transactional ones).",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 5,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:34+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182506-610457_kafka_v2_16_processor_callbacks",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 10,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "How does the default commit.interval.ms change when exactly-once processing is enabled, in milliseconds?",
+      "standalone_question": "How does the Kafka Streams default commit.interval.ms change when exactly-once processing is enabled, in milliseconds?",
+      "asks": [
+        "What is the default commit.interval.ms before exactly-once processing is enabled, in milliseconds?",
+        "What is the default commit.interval.ms with exactly-once processing enabled, in milliseconds?"
+      ],
+      "answer": "The default commit.interval.ms drops from 30000 to 100 ms.",
+      "key_facts": [
+        "Before exactly-once processing is enabled, the default commit.interval.ms is 30000 ms.",
+        "With exactly-once processing enabled, the default commit.interval.ms is 100 ms."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "30000",
+        "100"
+      ],
+      "evidence_pages": [
+        "streams/configuration.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "page": "streams/configuration.md",
+          "quote": "`commit.interval.ms` default drops from `30000` to **`100`**."
+        },
+        {
+          "fact_idx": 1,
+          "page": "streams/configuration.md",
+          "quote": "`commit.interval.ms` default drops from `30000` to **`100`**."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:34+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182506-610457_kafka_v2_16_processor_callbacks",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 11,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our commit.interval.ms from 157 to 199. What value should we use now, and in that example, how many wall-clock callbacks occur if processing finishes in five seconds?",
+      "standalone_question": "Change our project commit.interval.ms from 157 to 199. What value should we use now, and in the Streams Processor API example with 60 records timestamped 1…60 s and callbacks scheduled every 10 seconds, how many wall-clock callbacks occur if processing finishes in five seconds?",
+      "asks": [
+        "updated commit.interval.ms",
+        "In that example, how many wall-clock callbacks occur if processing finishes in five seconds?"
+      ],
+      "answer": "The project commit.interval.ms is 199. The example produces zero wall-clock callbacks in five seconds.",
+      "key_facts": [
+        "The project commit.interval.ms is 199.",
+        "The example produces zero wall-clock callbacks in five seconds."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "199",
+        "0"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our commit.interval.ms from 157 to 199.",
+          "fact_idx": 0
+        },
+        {
+          "page": "streams/processor-api.md",
+          "quote": "processed in 5 s → **0** calls.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "commit.interval.ms",
+          "from": "157",
+          "to": "199"
+        }
+      ],
+      "affects": [
+        17
+      ],
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:34+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182506-610457_kafka_v2_16_processor_callbacks",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 12,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What are the default key and value Serdes when none are configured?",
+      "standalone_question": "For this Kafka project, what are the default key and value Serdes when none are configured?",
+      "asks": [
+        "What are the default key and value Serdes when none are configured?"
+      ],
+      "answer": "default.key.serde and default.value.serde both default to null.",
+      "key_facts": [
+        "default.key.serde and default.value.serde both default to null."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "null"
+      ],
+      "evidence_pages": [
+        "streams/serdes-and-datatypes.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "streams/serdes-and-datatypes.md",
+          "quote": "`default.key.serde` and `default.value.serde` **default to `null`**",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "두 기본 Serde 설정의 null 값을 정확히 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182506-610457_kafka_v2_16_processor_callbacks",
+        "llm_source_hash": "e206ba43fb3ec9ebfb09ac88846868fd6195a184c12eb39e302b26ec82465a96",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 13,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which application.id are we using now, when does stream time advance, and what is the default commit.interval.ms with exactly-once processing enabled, in milliseconds?",
+      "standalone_question": "For this Kafka project, which application.id are we using now, when does stream time advance, and what is the default commit.interval.ms with exactly-once processing enabled, in milliseconds?",
+      "asks": [
+        "current application.id",
+        "When does stream time advance?",
+        "What is the default commit.interval.ms with exactly-once processing enabled, in milliseconds?"
+      ],
+      "answer": "The project application.id is elm-process-29. Stream time advances only when new records arrive. With exactly-once processing enabled, the default commit.interval.ms is 100 ms.",
+      "key_facts": [
+        "The project application.id is elm-process-29.",
+        "Stream time advances only when new records arrive.",
+        "With exactly-once processing enabled, the default commit.interval.ms is 100 ms."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "user",
+          "tags": []
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "elm-process-29",
+        "Stream time",
+        "100"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        8,
+        10
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "change our application.id from elm-process-17 to elm-process-29.",
+          "user_turn": 4
+        },
+        {
+          "fact_idx": 1,
+          "page": "streams/core-concepts-and-architecture.md",
+          "quote": "**Stream time** is data-driven: it only advances when new records arrive"
+        },
+        {
+          "fact_idx": 2,
+          "page": "streams/configuration.md",
+          "quote": "`commit.interval.ms` default drops from `30000` to **`100`**."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 9,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:34+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182506-610457_kafka_v2_16_processor_callbacks",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 14,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "Which API accesses the example key-value store for test assertions?",
+      "standalone_question": "In the State stores section under TopologyTestDriver in streams/testing.md, which API call accesses the example key-value store for test assertions?",
+      "asks": [
+        "Which API accesses the example key-value store for test assertions?"
+      ],
+      "answer": "Use testDriver.getKeyValueStore(\"store-name\").",
+      "key_facts": [
+        "Use testDriver.getKeyValueStore(\"store-name\")."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example"
+          ]
+        }
+      ],
+      "key_entities": [
+        "store-name"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "streams/testing.md",
+          "quote": "KeyValueStore store = testDriver.getKeyValueStore(\"store-name\");",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 5,
+      "recall_distance": 9,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:34+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182506-610457_kafka_v2_16_processor_callbacks",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 15,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "May an interactive query modify a store outside the topology?",
+      "standalone_question": "For this Kafka project, may an interactive query modify a store outside the topology?",
+      "asks": [
+        "May an interactive query modify a store outside the topology?"
+      ],
+      "answer": "No; interactive queries are read-only.",
+      "key_facts": [
+        "No; interactive queries are read-only."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "read-only"
+      ],
+      "evidence_pages": [
+        "streams/state-stores-and-interactive-queries.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "streams/state-stores-and-interactive-queries.md",
+          "quote": "Queries are **read-only** — you can't mutate stores out of band.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "IQ의 읽기 전용 제약을 정확히 확인한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182506-610457_kafka_v2_16_processor_callbacks",
+        "llm_source_hash": "e206ba43fb3ec9ebfb09ac88846868fd6195a184c12eb39e302b26ec82465a96",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 16,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which processor node name did we choose, and what are the three example arguments for the exactly-once demo?",
+      "standalone_question": "For this Kafka project, which processor node name did we choose, and what are the three example arguments for the exactly-once demo?",
+      "asks": [
+        "project processor node name",
+        "What are the three example arguments for the exactly-once demo?"
+      ],
+      "answer": "The project processor node name is elm-aggregate-43. The example arguments are 6 partitions, 3 instances and 10000 records.",
+      "key_facts": [
+        "The project processor node name is elm-aggregate-43.",
+        "The example arguments are 6 partitions, 3 instances and 10000 records."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "elm-aggregate-43",
+        "6",
+        "3",
+        "10000"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        3
+      ],
+      "evidence": [
+        {
+          "user_turn": 3,
+          "quote": "set processor node name to elm-aggregate-43",
+          "fact_idx": 0
+        },
+        {
+          "page": "clients/examples.md",
+          "quote": "Arguments (all required): `partitions`, `instances`, `records` — e.g. `6 3 10000`.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 13,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "이전에 정한 이름과 문서 인자를 실제로 회상해야 한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182506-610457_kafka_v2_16_processor_callbacks",
+        "llm_source_hash": "e206ba43fb3ec9ebfb09ac88846868fd6195a184c12eb39e302b26ec82465a96",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 17,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What commit.interval.ms are we using now, and for 60 records timestamped one second apart and a ten-second schedule, how many stream-time punctuations occur?",
+      "standalone_question": "For this Kafka project, what commit.interval.ms are we using now, and for 60 records timestamped one second apart and a ten-second schedule, how many stream-time punctuations occur?",
+      "asks": [
+        "current commit.interval.ms",
+        "For 60 records timestamped one second apart and a ten-second schedule, how many stream-time punctuations occur?"
+      ],
+      "answer": "The project commit.interval.ms is 199. The example produces six stream-time punctuations.",
+      "key_facts": [
+        "The project commit.interval.ms is 199.",
+        "The example produces six stream-time punctuations."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "199",
+        "6"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        11,
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our commit.interval.ms from 157 to 199.",
+          "fact_idx": 0
+        },
+        {
+          "page": "streams/processor-api.md",
+          "quote": "`punctuate()` runs **6 times**, regardless of how long processing takes.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 16,
+      "review": {
+        "needs_recheck": false,
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 18,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which state store name did we choose, what are the default key and value Serdes when none are configured, and may an interactive query modify a store outside the topology?",
+      "standalone_question": "For this Kafka project, which state store name did we choose, what are the default key and value Serdes when none are configured, and may an interactive query modify a store outside the topology?",
+      "asks": [
+        "project state store name",
+        "What are the default key and value Serdes when none are configured?",
+        "May an interactive query modify a store outside the topology?"
+      ],
+      "answer": "The project state store name is elm-totals-41. default.key.serde and default.value.serde both default to null. No; interactive queries are read-only.",
+      "key_facts": [
+        "The project state store name is elm-totals-41.",
+        "default.key.serde and default.value.serde both default to null.",
+        "No; interactive queries are read-only."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "elm-totals-41",
+        "null",
+        "read-only"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        8,
+        12,
+        15
+      ],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Use elm-totals-41 as the project state store name.",
+          "fact_idx": 0
+        },
+        {
+          "page": "streams/serdes-and-datatypes.md",
+          "quote": "`default.key.serde` and `default.value.serde` **default to `null`**",
+          "fact_idx": 1
+        },
+        {
+          "page": "streams/state-stores-and-interactive-queries.md",
+          "quote": "Queries are **read-only** — you can't mutate stores out of band.",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "세 과거 정보가 각각 채점 사실에 기여하는 종합 질문이다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-182506-610457_kafka_v2_16_processor_callbacks",
+        "llm_source_hash": "e206ba43fb3ec9ebfb09ac88846868fd6195a184c12eb39e302b26ec82465a96",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    }
+  ],
+  "edits": [
+    {
+      "at": "2026-11-28T12:52:34+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 2,
+      "fields": [
+        "standalone_question"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_16_processor_callbacks_aac9bdff03114e5eab6c1d960231e55f"
+    },
+    {
+      "at": "2026-11-28T12:52:34+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 6,
+      "fields": [
+        "standalone_question"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_16_processor_callbacks_aac9bdff03114e5eab6c1d960231e55f"
+    },
+    {
+      "at": "2026-11-28T12:52:34+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 9,
+      "fields": [
+        "depends_on"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_16_processor_callbacks_aac9bdff03114e5eab6c1d960231e55f"
+    },
+    {
+      "at": "2026-11-28T12:52:34+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 10,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_16_processor_callbacks_aac9bdff03114e5eab6c1d960231e55f"
+    },
+    {
+      "at": "2026-11-28T12:52:34+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 11,
+      "fields": [
+        "standalone_question"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_16_processor_callbacks_aac9bdff03114e5eab6c1d960231e55f"
+    },
+    {
+      "at": "2026-11-28T12:52:34+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 13,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_16_processor_callbacks_aac9bdff03114e5eab6c1d960231e55f"
+    },
+    {
+      "at": "2026-11-28T12:52:34+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 14,
+      "fields": [
+        "standalone_question"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_16_processor_callbacks_aac9bdff03114e5eab6c1d960231e55f"
+    },
+    {
+      "at": "2026-11-28T14:39:41+00:00",
+      "by": "장우진",
+      "turn": 10,
+      "fields": [
+        "asks",
+        "key_facts",
+        "fact_meta",
+        "evidence"
+      ],
+      "note": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요."
+    },
+    {
+      "at": "2026-11-28T14:39:41+00:00",
+      "by": "장우진",
+      "turn": 13,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks",
+        "answer",
+        "key_facts",
+        "key_entities"
+      ],
+      "note": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요."
+    }
+  ]
+}
