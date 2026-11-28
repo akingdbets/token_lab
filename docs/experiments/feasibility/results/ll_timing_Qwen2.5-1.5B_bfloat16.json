@@ -1,0 +1,65 @@
+{
+ "model": "Qwen/Qwen2.5-1.5B",
+ "dtype": "bfloat16",
+ "load_seconds": 5.5,
+ "rss_before_gb": 0.3,
+ "rss_after_load_gb": 3.31,
+ "threads": 8,
+ "rows": [
+  {
+   "model": "Qwen/Qwen2.5-1.5B",
+   "scenario": "v2_01_auth_switch",
+   "turn": 11,
+   "turn_type": "update",
+   "ratio": 0.5,
+   "hist_tokens": 11406,
+   "comp_tokens": 4823,
+   "seconds": 349.64,
+   "peak_rss_gb": 9.13,
+   "target": 4027,
+   "contexts": 25,
+   "origin_tokens_model": 9601,
+   "compressed_tokens_model": 2982,
+   "checks": [
+    {
+     "quote": "For session/auth cookies, set `httponly=True`, `secure=True`",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.308
+    }
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-1.5B",
+   "scenario": "v2_02_response_design",
+   "turn": 17,
+   "turn_type": "recall",
+   "ratio": 0.5,
+   "hist_tokens": 20615,
+   "comp_tokens": 8798,
+   "seconds": 916.2,
+   "peak_rss_gb": 13.32,
+   "target": 8649,
+   "contexts": 40,
+   "origin_tokens_model": 18348,
+   "compressed_tokens_model": 6538,
+   "checks": [
+    {
+     "quote": "Rename our custom response header from X-Forge-Stamp to X-Fo",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "For `\"foo\": {\"name\": \"Foo\", \"price\": 50.2}` the response is ",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.429
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,652 @@
+{
+ "model": "Qwen/Qwen2.5-0.5B",
+ "dtype": "bfloat16",
+ "load_seconds": 4.3,
+ "rss_before_gb": 0.3,
+ "rss_after_load_gb": 1.35,
+ "threads": 8,
+ "rows": [
+  {
+   "model": "Qwen/Qwen2.5-0.5B",
+   "scenario": "v2_01_auth_switch",
+   "turn": 9,
+   "turn_type": "recall",
+   "ratio": 0.25,
+   "hist_tokens": 9528,
+   "comp_tokens": 1864,
+   "seconds": 54.31,
+   "peak_rss_gb": 3.62,
+   "target": 1080,
+   "contexts": 20,
+   "origin_tokens_model": 8180,
+   "compressed_tokens_model": 503,
+   "checks": [
+    {
+     "quote": "Actually, change our access-token lifetime from 23 to 41 min",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "        expire = datetime.now(timezone.utc) + timedelta(minu",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.125
+    }
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-0.5B",
+   "scenario": "v2_01_auth_switch",
+   "turn": 9,
+   "turn_type": "recall",
+   "ratio": 0.5,
+   "hist_tokens": 9528,
+   "comp_tokens": 4235,
+   "seconds": 106.57,
+   "peak_rss_gb": 6.1,
+   "target": 3562,
+   "contexts": 20,
+   "origin_tokens_model": 8180,
+   "compressed_tokens_model": 2866,
+   "checks": [
+    {
+     "quote": "Actually, change our access-token lifetime from 23 to 41 min",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 1.0
+    },
+    {
+     "quote": "        expire = datetime.now(timezone.utc) + timedelta(minu",
+     "src": "doc",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    }
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-0.5B",
+   "scenario": "v2_01_auth_switch",
+   "turn": 9,
+   "turn_type": "recall",
+   "ratio": 0.75,
+   "hist_tokens": 9528,
+   "comp_tokens": 6286,
+   "seconds": 183.83,
+   "peak_rss_gb": 7.9,
+   "target": 6043,
+   "contexts": 20,
+   "origin_tokens_model": 8180,
+   "compressed_tokens_model": 4913,
+   "checks": [
+    {
+     "quote": "Actually, change our access-token lifetime from 23 to 41 min",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.909
+    },
+    {
+     "quote": "        expire = datetime.now(timezone.utc) + timedelta(minu",
+     "src": "doc",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    }
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-0.5B",
+   "scenario": "v2_01_auth_switch",
+   "turn": 16,
+   "turn_type": "recall",
+   "ratio": 0.25,
+   "hist_tokens": 18006,
+   "comp_tokens": 4424,
+   "seconds": 124.61,
+   "peak_rss_gb": 8.09,
+   "target": 2502,
+   "contexts": 38,
+   "origin_tokens_model": 15866,
+   "compressed_tokens_model": 2292,
+   "checks": [
+    {
+     "quote": "Machine clients will send their API key in X-Orbit-Key.",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.636
+    },
+    {
+     "quote": "| `APIKeyHeader(name=...)` | the named header | `str` |",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.833
+    },
+    {
+     "quote": "| `HTTPBearer` | `Authorization: Bearer <token>` | `HTTPAuth",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.571
+    }
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-0.5B",
+   "scenario": "v2_01_auth_switch",
+   "turn": 16,
+   "turn_type": "recall",
+   "ratio": 0.5,
+   "hist_tokens": 18006,
+   "comp_tokens": 7717,
+   "seconds": 268.7,
+   "peak_rss_gb": 12.22,
+   "target": 7237,
+   "contexts": 38,
+   "origin_tokens_model": 15866,
+   "compressed_tokens_model": 5566,
+   "checks": [
+    {
+     "quote": "Machine clients will send their API key in X-Orbit-Key.",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "| `APIKeyHeader(name=...)` | the named header | `str` |",
+     "src": "doc",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "| `HTTPBearer` | `Authorization: Bearer <token>` | `HTTPAuth",
+     "src": "doc",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    }
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-0.5B",
+   "scenario": "v2_01_auth_switch",
+   "turn": 16,
+   "turn_type": "recall",
+   "ratio": 0.75,
+   "hist_tokens": 18006,
+   "comp_tokens": 11390,
+   "seconds": 503.02,
+   "peak_rss_gb": 12.02,
+   "target": 11972,
+   "contexts": 38,
+   "origin_tokens_model": 15866,
+   "compressed_tokens_model": 9224,
+   "checks": [
+    {
+     "quote": "Machine clients will send their API key in X-Orbit-Key.",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "| `APIKeyHeader(name=...)` | the named header | `str` |",
+     "src": "doc",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "| `HTTPBearer` | `Authorization: Bearer <token>` | `HTTPAuth",
+     "src": "doc",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    }
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-0.5B",
+   "scenario": "v2_01_auth_switch",
+   "turn": 17,
+   "turn_type": "recall",
+   "ratio": 0.25,
+   "hist_tokens": 18101,
+   "comp_tokens": 3523,
+   "seconds": 152.99,
+   "peak_rss_gb": 6.3,
+   "target": 4662,
+   "contexts": 41,
+   "origin_tokens_model": 17964,
+   "compressed_tokens_model": 3406,
+   "checks": [
+    {
+     "quote": "Rename our browser authentication cookie from orbit_session ",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.077
+    },
+    {
+     "quote": "**\"Try it out\" in the docs UI can't send cookies** — test wi",
+     "src": "doc",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    }
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-0.5B",
+   "scenario": "v2_01_auth_switch",
+   "turn": 17,
+   "turn_type": "recall",
+   "ratio": 0.5,
+   "hist_tokens": 18101,
+   "comp_tokens": 8254,
+   "seconds": 336.84,
+   "peak_rss_gb": 13.43,
+   "target": 9421,
+   "contexts": 41,
+   "origin_tokens_model": 17964,
+   "compressed_tokens_model": 8098,
+   "checks": [
+    {
+     "quote": "Rename our browser authentication cookie from orbit_session ",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.615
+    },
+    {
+     "quote": "**\"Try it out\" in the docs UI can't send cookies** — test wi",
+     "src": "doc",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    }
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-0.5B",
+   "scenario": "v2_01_auth_switch",
+   "turn": 17,
+   "turn_type": "recall",
+   "ratio": 0.75,
+   "hist_tokens": 18101,
+   "comp_tokens": 12418,
+   "seconds": 798.04,
+   "peak_rss_gb": 12.57,
+   "target": 14180,
+   "contexts": 41,
+   "origin_tokens_model": 17964,
+   "compressed_tokens_model": 12237,
+   "checks": [
+    {
+     "quote": "Rename our browser authentication cookie from orbit_session ",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "**\"Try it out\" in the docs UI can't send cookies** — test wi",
+     "src": "doc",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    }
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-0.5B",
+   "scenario": "v2_02_response_design",
+   "turn": 9,
+   "turn_type": "recall",
+   "ratio": 0.25,
+   "hist_tokens": 10608,
+   "comp_tokens": 2781,
+   "seconds": 44.26,
+   "peak_rss_gb": 3.96,
+   "target": 264,
+   "contexts": 20,
+   "origin_tokens_model": 8207,
+   "compressed_tokens_model": 387,
+   "checks": [
+    {
+     "quote": "the custom header is X-Forge-Stamp, the cookie is forge_tick",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "Change the cookie lifetime from 1380 to 2460 seconds; keep i",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.308
+    },
+    {
+     "quote": "FastAPI injects a **temporary** response object; you set hea",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.176
+    },
+    {
+     "quote": "Remember: a directly returned response skips `response_model",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.042
+    }
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-0.5B",
+   "scenario": "v2_02_response_design",
+   "turn": 9,
+   "turn_type": "recall",
+   "ratio": 0.5,
+   "hist_tokens": 10608,
+   "comp_tokens": 4600,
+   "seconds": 81.12,
+   "peak_rss_gb": 4.55,
+   "target": 3091,
+   "contexts": 20,
+   "origin_tokens_model": 8207,
+   "compressed_tokens_model": 2192,
+   "checks": [
+    {
+     "quote": "the custom header is X-Forge-Stamp, the cookie is forge_tick",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "Change the cookie lifetime from 1380 to 2460 seconds; keep i",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "FastAPI injects a **temporary** response object; you set hea",
+     "src": "doc",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "Remember: a directly returned response skips `response_model",
+     "src": "doc",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    }
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-0.5B",
+   "scenario": "v2_02_response_design",
+   "turn": 9,
+   "turn_type": "recall",
+   "ratio": 0.75,
+   "hist_tokens": 10608,
+   "comp_tokens": 6729,
+   "seconds": 217.96,
+   "peak_rss_gb": 11.59,
+   "target": 5918,
+   "contexts": 20,
+   "origin_tokens_model": 8207,
+   "compressed_tokens_model": 4298,
+   "checks": [
+    {
+     "quote": "the custom header is X-Forge-Stamp, the cookie is forge_tick",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "Change the cookie lifetime from 1380 to 2460 seconds; keep i",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.308
+    },
+    {
+     "quote": "FastAPI injects a **temporary** response object; you set hea",
+     "src": "doc",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "Remember: a directly returned response skips `response_model",
+     "src": "doc",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    }
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-0.5B",
+   "scenario": "v2_02_response_design",
+   "turn": 17,
+   "turn_type": "recall",
+   "ratio": 0.25,
+   "hist_tokens": 20615,
+   "comp_tokens": 4623,
+   "seconds": 128.48,
+   "peak_rss_gb": 6.24,
+   "target": 3203,
+   "contexts": 40,
+   "origin_tokens_model": 18348,
+   "compressed_tokens_model": 2416,
+   "checks": [
+    {
+     "quote": "Rename our custom response header from X-Forge-Stamp to X-Fo",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "For `\"foo\": {\"name\": \"Foo\", \"price\": 50.2}` the response is ",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.381
+    }
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-0.5B",
+   "scenario": "v2_02_response_design",
+   "turn": 17,
+   "turn_type": "recall",
+   "ratio": 0.5,
+   "hist_tokens": 20615,
+   "comp_tokens": 9541,
+   "seconds": 425.52,
+   "peak_rss_gb": 12.65,
+   "target": 8649,
+   "contexts": 40,
+   "origin_tokens_model": 18348,
+   "compressed_tokens_model": 7292,
+   "checks": [
+    {
+     "quote": "Rename our custom response header from X-Forge-Stamp to X-Fo",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "For `\"foo\": {\"name\": \"Foo\", \"price\": 50.2}` the response is ",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.81
+    }
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-0.5B",
+   "scenario": "v2_02_response_design",
+   "turn": 17,
+   "turn_type": "recall",
+   "ratio": 0.75,
+   "hist_tokens": 20615,
+   "comp_tokens": 13331,
+   "seconds": 738.69,
+   "peak_rss_gb": 13.62,
+   "target": 14095,
+   "contexts": 40,
+   "origin_tokens_model": 18348,
+   "compressed_tokens_model": 11056,
+   "checks": [
+    {
+     "quote": "Rename our custom response header from X-Forge-Stamp to X-Fo",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.769
+    },
+    {
+     "quote": "For `\"foo\": {\"name\": \"Foo\", \"price\": 50.2}` the response is ",
+     "src": "doc",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    }
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-0.5B",
+   "scenario": "v2_02_response_design",
+   "turn": 18,
+   "turn_type": "recall",
+   "ratio": 0.25,
+   "hist_tokens": 20694,
+   "comp_tokens": 4465,
+   "seconds": 212.24,
+   "peak_rss_gb": 6.96,
+   "target": 5385,
+   "contexts": 43,
+   "origin_tokens_model": 20521,
+   "compressed_tokens_model": 4350,
+   "checks": [
+    {
+     "quote": "the cookie is forge_ticket",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "Change the cookie lifetime from 1380 to 2460 seconds; keep i",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.308
+    },
+    {
+     "quote": "Remember: a directly returned response skips `response_model",
+     "src": "doc",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    }
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-0.5B",
+   "scenario": "v2_02_response_design",
+   "turn": 18,
+   "turn_type": "recall",
+   "ratio": 0.5,
+   "hist_tokens": 20694,
+   "comp_tokens": 9598,
+   "seconds": 473.82,
+   "peak_rss_gb": 12.18,
+   "target": 10851,
+   "contexts": 43,
+   "origin_tokens_model": 20521,
+   "compressed_tokens_model": 9459,
+   "checks": [
+    {
+     "quote": "the cookie is forge_ticket",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "Change the cookie lifetime from 1380 to 2460 seconds; keep i",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.308
+    },
+    {
+     "quote": "Remember: a directly returned response skips `response_model",
+     "src": "doc",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    }
+   ]
+  },
+  {
+   "model": "Qwen/Qwen2.5-0.5B",
+   "scenario": "v2_02_response_design",
+   "turn": 18,
+   "turn_type": "recall",
+   "ratio": 0.75,
+   "hist_tokens": 20694,
+   "comp_tokens": 13383,
+   "seconds": 964.15,
+   "peak_rss_gb": 14.2,
+   "target": 16317,
+   "contexts": 43,
+   "origin_tokens_model": 20521,
+   "compressed_tokens_model": 13195,
+   "checks": [
+    {
+     "quote": "the cookie is forge_ticket",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "Change the cookie lifetime from 1380 to 2460 seconds; keep i",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.308
+    },
+    {
+     "quote": "Remember: a directly returned response skips `response_model",
+     "src": "doc",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    }
+   ]
+  }
+ ]
+}

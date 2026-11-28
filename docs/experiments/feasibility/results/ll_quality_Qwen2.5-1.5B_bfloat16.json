@@ -1,0 +1,41 @@
+{
+ "model": "Qwen/Qwen2.5-1.5B",
+ "dtype": "bfloat16",
+ "load_seconds": 6.4,
+ "rss_before_gb": 0.3,
+ "rss_after_load_gb": 3.35,
+ "threads": 8,
+ "rows": [
+  {
+   "model": "Qwen/Qwen2.5-1.5B",
+   "scenario": "v2_01_auth_switch",
+   "turn": 9,
+   "turn_type": "recall",
+   "ratio": 0.5,
+   "hist_tokens": 9528,
+   "comp_tokens": 4376,
+   "seconds": 2999.92,
+   "peak_rss_gb": 7.53,
+   "target": 3562,
+   "contexts": 20,
+   "origin_tokens_model": 8180,
+   "compressed_tokens_model": 3005,
+   "checks": [
+    {
+     "quote": "Actually, change our access-token lifetime from 23 to 41 min",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.909
+    },
+    {
+     "quote": "        expire = datetime.now(timezone.utc) + timedelta(minu",
+     "src": "doc",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    }
+   ]
+  }
+ ]
+}
