@@ -102,6 +102,30 @@ from multiturn.trajectory import (
 )
 
 REFERENCE_ROOT = CFG.results_dir / "multiturn" / "references"
+JUDGE_V2, JUDGE_V3 = "fact_judge_v2", "fact_judge_v3"
+
+
+def judge_version_for(scenario: dict | None) -> str:
+    """multiturn-v2 (schema_version 2) 시나리오는 fact_judge_v3, 그 밖(v1)은 fact_judge_v2."""
+    return JUDGE_V3 if scenario is not None and scenario.get("schema_version") == 2 else JUDGE_V2
+
+
+def judge_kwargs(scenario: dict | None, turn: dict) -> dict:
+    """grade_fn 에 더 넘길 인자. v1 은 빈 dict (예전 호출 그대로)."""
+    if judge_version_for(scenario) != JUDGE_V3:
+        return {}
+    meta = turn.get("fact_meta") or [{} for _ in turn["key_facts"]]
+    return {"judge_version": JUDGE_V3,
+            "alternatives": [list((m or {}).get("accept_alternatives") or []) for m in meta]}
+
+
+def judge_versions_of(scenarios: list[dict]) -> dict:
+    """채점 버전별 시나리오 수 (summary 기록용)."""
+    out: dict = {}
+    for s in scenarios:
+        v = judge_version_for(s)
+        out[v] = out.get(v, 0) + 1
+    return out
 COST_MODES = ("none", "cache")
 RETRY_STATUS = {429, 500, 502, 503, 504}
 # 답변 모델 -> history_tokens_* / input_tokens_est 를 셀 토크나이저 (TOKENIZER). 정확히 일치하는 키, 없으면 가장 긴 접두사
@@ -403,9 +427,12 @@ class Replay:
         tmp.replace(path)
         return steps
 
-    def grade(self, turn: dict, response: str):
+    def grade(self, turn: dict, response: str, scenario: dict | None = None):
+        """채점. multiturn-v2 (schema_version 2) 시나리오는 fact_judge_v3 와 key_fact 별 accept_alternatives 로 채점한다.
+        v1 시나리오는 예전과 똑같이 부른다 (채점 버전 인자를 넘기지 않아 v2 판정)."""
+        extra = judge_kwargs(scenario, turn)
         return with_backoff(lambda: self.grade_fn(turn["question"], turn["answer"], turn["key_facts"], response,
-                                                  self.judge, mode=self.cfg.judge_mode), self.cfg, self.sleep)
+                                                  self.judge, mode=self.cfg.judge_mode, **extra), self.cfg, self.sleep)
 
     def build_references(self) -> tuple[dict, dict, list[str]]:
         refs, grades, warnings = {}, {}, []
@@ -424,15 +451,18 @@ class Replay:
                 if step.finish_reason == "length":
                     warnings.append(f"{sid} 턴 {step.turn}: 기준 궤적 답변이 출력 한도에 걸렸습니다 (finish_reason=length)")
                 prev = saved.get(sid, {}).get(str(step.turn))
+                jv = judge_version_for(s)
                 if (prev is not None and prev.get("response") == step.response_content
-                        and (not setup_indices(t) or "answer_accuracy_all" in prev)):
+                        and (not setup_indices(t) or "answer_accuracy_all" in prev)
+                        and prev.get("judge_version", JUDGE_V2) == jv):
                     grades[sid][str(step.turn)] = prev
                     continue
-                g = self.grade(t, step.response_content)
+                g = self.grade(t, step.response_content, s)
                 sg = split_grade(t, g)       # answer_accuracy 는 setup 항목을 뺀 주 정확도 (depends_on_reference_ok 에 쓴다)
                 grades[sid][str(step.turn)] = {"answer_accuracy": sg["answer_accuracy"], "response": step.response_content,
                                                **({"answer_accuracy_all": sg["answer_accuracy_all"],
-                                                   "setup_accuracy": sg["setup_accuracy"]} if setup_indices(t) else {})}
+                                                   "setup_accuracy": sg["setup_accuracy"]} if setup_indices(t) else {}),
+                                               **({"judge_version": jv} if jv != JUDGE_V2 else {})}
         for w in warnings:
             print(f"  [경고] {w}", flush=True)
         self.out_dir.mkdir(parents=True, exist_ok=True)
@@ -516,7 +546,7 @@ class Replay:
         compress_cost = compress_cost_of(results)
         res, hit = with_backoff(lambda: self.answer.chat(messages, sample_idx=sample_idx), self.cfg, self.sleep)
         response = res.text.strip()
-        g = self.grade(t, response)
+        g = self.grade(t, response, scenario)
         cost = compute_cost(res).to_dict()
         judge_cost = None
         if g.judge_prompt_tokens or g.judge_completion_tokens:
@@ -556,7 +586,8 @@ class Replay:
             "summary_effort": summary_effort_of(comp_name),
             "response": response, "empty_response": not response, "not_found": is_not_found_answer(response),
             **split_grade(t, g),      # answer_accuracy 등은 setup 항목을 뺀 주 정확도, setup_accuracy 는 따로
-            "judge_mode": g.judge_mode, "judge_skipped": g.judge_skipped, "judge_failed": list(g.judge_failed),
+            "judge_mode": g.judge_mode, "judge_version": judge_version_for(scenario),
+            "judge_skipped": g.judge_skipped, "judge_failed": list(g.judge_failed),
             "judge_prompt_tokens": g.judge_prompt_tokens, "judge_completion_tokens": g.judge_completion_tokens,
             "entity_retention": entity_retention_in_history(t["key_entities"], raw_past, comp_past),
             "prompt_hash": step.prompt_hash, "model": res.model,
@@ -738,7 +769,8 @@ class Replay:
             "concurrency_values": sorted({sg["concurrency"] for sg in segments}),
             "answer_sampling": self.answer.llm.sampling_info(),
             "answer_backend": {"backend": self.answer.llm.backend, "base_url": self.answer.llm.base_url},
-            "judge": {"model": self.judge.model, "mode": self.cfg.judge_mode},
+            "judge": {"model": self.judge.model, "mode": self.cfg.judge_mode,
+                      "versions": judge_versions_of(self.scenarios)},
             "prompt": {"version": self.prompt.version, "sha256": self.prompt.sha256},
             "scenarios": {s["scenario_id"]: {"hash": scenario_hash(s), "status": s["status"], "turns": len(s["turns"])}
                           for s in self.scenarios},
@@ -1106,6 +1138,17 @@ def overflow_block(all_pairs, cfg: ReplayConfig) -> dict | None:
             "cost_reduction_pct_sim": _pct_reduction(_usd_sim(bs, "usd_read"), _usd_sim(cs, "usd_read"))}
 
 
+def judge_version_counts(rows: list[dict]) -> dict:
+    """trial 행의 채점 버전별 수. 한 run 에 버전이 섞이면 짝지은 비교가 같은 채점 기준이 아니다."""
+    out: dict = {}
+    for r in rows:
+        if r.get("summary_failed"):
+            continue
+        v = r.get("judge_version") or "unrecorded"
+        out[v] = out.get(v, 0) + 1
+    return out
+
+
 def summarize_replay(rows: list[dict], cfg: ReplayConfig, ref_warnings: list[str] | None = None,
                      n_scenarios: int | None = None, presummary_build: dict | None = None) -> dict:
     n_scen = n_scenarios or len({r["scenario_id"] for r in rows})
@@ -1129,6 +1172,7 @@ def summarize_replay(rows: list[dict], cfg: ReplayConfig, ref_warnings: list[str
             SIM_INTERPRETATION_NOTE,
         ] if cfg.cost_mode == "cache" else []),
         "cost_mode": cfg.cost_mode,
+        **({"judge_versions": judge_version_counts(rows)} if any("judge_version" in r for r in rows) else {}),
         "reference_health": {"warnings": ref_warnings or [], "n_warnings": len(ref_warnings or [])},
         "n_trials": len(rows),
         "answer_health": {c: answer_health([r for r in rows if r["compressor"] == c and not r.get("summary_failed")])
