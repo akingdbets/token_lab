@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:774c326c56f73246dd82cb6ee12d92b1c9d0ebaa455cde77876ef77ddccb9bf7",
+  "claims": [
+    {
+      "id": "claim_76fd4427b5bb47dfa2b4874ce9f1d810",
+      "statement": "A transformation chain is configured with transforms (ordered aliases), transforms.$alias.type and transformation-specific transforms.$alias.* properties.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/user-guide.md#L106-L116",
+          "version": "repo-lines-v1:sha256:1b4c58435c2cd795d8053393177def7b6b17623f05636d6194a05424816a73aa:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg2ZTI2OGE4Mzk1ZDU1ZDhlMWEzMTBjMzkyN2NhOGVmYmVmZjJkOWJkMTY5NmIxZWU4MWFiOWYxYzE3YzkwNDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkyM2YyYTU4MWJhODVhODE5NDBiNWMyOTg4NWY3ZTlkNDMwY2FkZTEwNGEwMTYwZjBhNGM5ZTJjMjAxMWRiZjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNlNzhhMGExMDI0ODRhOGQ1NTViYmU2YmY2OGNkYjE5OGFkYTQ4Yzk4Yzg2NDg3N2RlZDFjYTFiZmMyNTAyZDMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_413f3c5879314ad195055b04f06e10b3",
+      "statement": "The file source example uses HoistField$Value to wrap each line under field line and InsertField$Value to add data_source=test-file-source, producing JSON maps with schemaless converters.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/user-guide.md#L118-L168",
+          "version": "repo-lines-v1:sha256:3e274011e3027df21edbf497bcdc29a341292c749c04dde358b3491cc2b1db2c:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNmZTUwM2E1ZTNhNjg2ZDdlMmE1MDdjYzJmNThmODhiNjlmNWJjZjU3NTNkMTZmY2I3MzQyNGFhNThhNDUwY2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM3ODNjNjA5MTY4YmFjMDQ0Njk4ZGRjN2RiYzZiZWI5YTM2ZTg4ZmM2MDJmYmIzZjM0NzZmZDMyNDc5NTU3MDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjViYWVkMjgwNzA4MGU4ZGQzYTgzNzEwZDJjMTZmMTQ5NTBjMjkwNmI5NDRhZTUxNWJjOTZkMTgzNjQ3YjY1NjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f48c763762534dce922f642cd3948cd1",
+      "statement": "Kafka Connect ships transformations including Cast, DropHeaders, ExtractField, Filter, Flatten, HeaderFrom, HoistField, InsertField, InsertHeader, MaskField, RegexRouter, ReplaceField, SetSchemaMetadata, TimestampConverter, TimestampRouter and ValueToKey.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/user-guide.md#L170-L191",
+          "version": "repo-lines-v1:sha256:4bd7281995ffe07ba1d4eee4ca0710162c0122a4fa113001bb2b5c22aadda34e:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcwMTgzZWVjYTQyN2VkYTFjM2M1ZTRkYmM1Y2QzMmE1MDYwY2QxZDRlOTBlYWY2NWU1MTg2MGEzZjE5OTNlMDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyNmQxYmVmZGIzNTRhMjdlNzE3YzJiNzk2NTBiOTg5OTY1OTY5MTMyZTYxMTBlMzRiYWUyYTJjYjY3ZjdlZjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ5MWRkZTZlNzFkY2Q1NDU1OGY4NzFmYjczYzBkODA4ODc1NDE4ZmI1MDJiMDJkMDI5NTY4YWZhMTQ3ZTYyNzIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fb91dca440154b60822bf4f391e53aee",
+      "statement": "Every transformation has implicit predicate and negate properties, and predicates are declared via predicates and predicates.$alias.type.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/user-guide.md#L197-L210",
+          "version": "repo-lines-v1:sha256:4619a530f1d9c622d88f9dd92edcb3467322abe9c612ff21ca466b541078da70:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0ZjgyMzI1ODk5MWI0YjI2N2JhOTRkZjgzZGI2YWNhZDhmMGFlNjcwOGRiNTUwYjQ0NjQ1YTZlNTE2YjYzNGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY3MTAwMzcyZTQ2MTFlZWM2NmZlYzY3N2FmMmEyNTY1MTQ4Yjc2OTJkMmE5YjI3NjBjYjNkOWIxY2NlZjg0Y2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVhMzE2MThmNmViOTQ5YjY5MTkxM2Q3NWZlNzM2YmI0MzdlNzNlZDFhYTQ4OGY0MTY4OTU4NzlmNGU0ZTRiYTMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_40a4392d64cc4714af86c2383748d91d",
+      "statement": "Built-in predicates are TopicNameMatches (Java regex pattern on topic), HasHeaderKey and RecordIsTombstone.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/user-guide.md#L249-L257",
+          "version": "repo-lines-v1:sha256:764065e246b2f17f3ff8ac28edf070d359b76d084e7e69b4b6872cf4a751f4f0:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWYwMmFlZTFlNTg1NTNiOTliMDhiYzY0MDc4ZTgyNzhiMmM3MmEyY2VhZDA1MjY3NWJjODY0NDliNjg0NmY5NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTI1ZWQ1ZDRiOTE4NTQ2NGRmMjBiMGViYWY0NjY1NjJkNDMyNWE5MDk5N2UzMzcyZjE2YzRmNjU5OWJmMzFkMiJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

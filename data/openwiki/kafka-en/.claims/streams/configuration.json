@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:464c7a2bdb9d18ec2c87298c8bfb3aae44ae9d68279d17cb7ee52baa1f9b8996",
+  "claims": [
+    {
+      "id": "claim_1e6c23a74f504cdab22601f01b139faf",
+      "statement": "application.id is required, must be shared by all instances, and serves as client.id prefix, consumer group.id, state directory subdirectory and internal topic prefix.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/config-streams.md#L158-L176",
+          "version": "repo-lines-v1:sha256:d4290e284377aee8f39b68d5526048ddeada83e3422d4f647ea544ccd5a79544:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxMmMxYTRhYjNiODcyNzVhYTNiYWY3ZjZlMWJkZjE0ZDAwYzExMDhjODhkMDRjYTc2Yzc3ZGY4NzQ0NTlkZDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBmYjcwZDhjOTcxZTk3Y2YzZTEwOTJjMTZiMGM5YjhhNTZkYWQyNTlhMGJkM2M0NDA5ODE0YmJjNmRkOTI4N2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU5YzM2ZDZkNWNiODlkM2QzMTEwYzNiZmNhYjI1M2RkMTM1Y2JhZGM4MGZkMGNhNWFkODg4NGUzYjUzOTIxM2UiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFiNzE5NWRhZmU0MGVkNjIwMjc0M2YzY2RjZGU4YTM1YzQxMDdjNGYyNTZlNWFhYzdlZWI5NjllZjg4ODYzMWIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1f03f889f8b4480ea770687cba9c26cd",
+      "statement": "For resiliency the docs recommend acks=all, replication factor 3, min.insync.replicas=2 and num.standby.replicas=1 instead of the defaults.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/config-streams.md#L178-L302",
+          "version": "repo-lines-v1:sha256:5d0f974c182fc3913040a2a355735967206e8abb952b47e291ee295bd95317b4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTI1LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJhMGIyMjBlZDllOWE1YTU2MjBlNGJhMDQ0ODZlYTVlOGNlYmM1NDBhMjg4OGNjNjdjNDJmYjQzNGI5YWYwODgxIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI4ZWQ5OTZjNWNiY2I4MDBjODlhODQzNWJjODVmNDBhZmEzMmZkMmJiOTQ2OTI4Y2ZkNDgzZjc3YWQ4YjA5OTI0IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIwMTUzNDQyZDRkNGNjNzA5Zjg5Y2Y0ZTkzYWYyOGUzMTMxMTRmOGUyNWUzNDQ2MmI4OGZhM2Q3Yjc1ZGRmYjkyIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIyZGQ3ZDhkYjUxZWI4ZWIyYjdmNmYzYjcwNWQxZGU2MjJmZDJlOWRlMTZkYzJlZWI3MmFkMTQ2OTdiN2ExZTNmIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_8a0a0f8d85074944ba5c19cb443c618f",
+      "statement": "processing.guarantee defaults to at_least_once; exactly_once_v2 needs brokers 2.5+, lowers commit.interval.ms to 100ms, enables read_committed consumers and idempotent producers, sets transaction.timeout.ms to 10000 and needs at least three brokers by default.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/config-streams.md#L1636-L1643",
+          "version": "repo-lines-v1:sha256:bdba8acf87d832ad55d17f489898e2e3542505fd8c929b0d9486b246b8da3c6e:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTM1Njk5OTkxNTYzOTVkZGQ3NjdmNDhhOTY5ZGUwOWViMzgzMjZmYmQwYmQzYThkNWZkNzAzN2NkZDE1NTcxYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZGQ5MjM1M2UzOTQ4MDMwZDAxOTlhOGYwOGI5MzdhN2VhN2MzMmZhOWIwNWI0Yjc1ZWM3ZjE1Zjg2ODYzMzQ0YSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTQ2ODdiNDVhNGIyYTc5ZTk3MTk0ZDhlNTliZDY4NDNhOGFlNzdlZjA4YTkyZmUyZmY2NjI0MzVkMzZjNjViOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzZkZDlkMGViZWMwMzhlNDdmMWM5NGNiYmMyOGE3NGQwYTBhNzk3YmY2YzU3MzFlNDUyMjM3ZmU0MjgxYjUwZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_8cdf8b07a47b4f5ab34c6d9f74e515b1",
+      "statement": "Topology optimizations require both setting topology.optimization and passing the same Properties to StreamsBuilder.build(Properties).",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/config-streams.md#L1716-L1742",
+          "version": "repo-lines-v1:sha256:0cafe1569f4cf3217933cebdd75f3030d45f715899a6bf98b85e940ac5f6c378:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgyZTIwMDcwMjc0Yjk2MWZhNDE3NmQ0NGY2ODlmOWU4YTEzMzhiZTdkYTQ2NmRkNDc0YmYwOGQzMWVhOTY1NjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY3NWFlMGEyMDQyNDRjZmNlMTcwMzg3ODViY2IyNTFiNGMxY2QxZWNlNWUwNTI0NjMyNTA3YTI5NWExNjg4MDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUyMGY4NDc3ZjAzMjMzMDJmM2VkYThkODhiOGZkN2Y0MDg2YTg0OTA0NGVjMWU5YzI5ZWUxN2QzNDBlNzk5NTYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_27efbbe5e8ba436b8a9559a404c61a3d",
+      "statement": "Embedded client configs can be scoped with consumer., producer., admin., main.consumer., restore.consumer., global.consumer. and topic. prefixes or the StreamsConfig prefix helper methods.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/config-streams.md#L1748-L1810",
+          "version": "repo-lines-v1:sha256:4022889cb85094a2a7aea3ba2180a2bd5616bb20862a0a7fa7779b4f92b6a6f7:eyJzZWxlY3RlZExpbmVDb3VudCI6NjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxNmYxNTk2MjAxODUwZmQ0YTYzNjgwYjI3ZjYwM2NiNjRlNjcxNzYxNTliZTNkOGVkNzhhNDQwM2ZkYjE3MDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM1MWVlYTA2ZjFkZjA4ZDRmM2ZjZTI5OWQwNWNiNzk2YjFjNGEwNDg1ZTc4OTE3ODM1YjZlMTRkOTg4MzY1YTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNiZjA0MTdlYTc5ZWRiZDhjZTVmZDcxZTEzZDk5ZjQ3NWY2NmJiMzNlNzEzMGVhNTI5MTIyMTZlNDBiYzFjZjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU0MWJjOWI0Y2NhZDUzODljY2ExYTliMDBkNDFlMzYxNDg0NGFlYTJlMTgyNzg4MDdiZTUzNTRmYzhlM2YyNGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2e0ba0bfdbe84cad9fd6ab32d2b19719",
+      "statement": "For Streams, group.instance.id is set per KafkaStreams instance with the thread index appended, and with group.protocol=streams requires Kafka 4.4+ clients and brokers.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/config-streams.md#L1812-L1814",
+          "version": "repo-lines-v1:sha256:d3dcf6ff360b79a9f17f8669b12b03f9c7a52e003c0015c9776e2335ac285450:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmM2Nzk4MTYxMjJlODY2OGY0ZThhNGMzMWJjZmJlZWI4MWU0Zjc0NDYyNzEzZjIwNWJjMmFlZDg5NDUwMzc2ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDk4MjNkOWI0MzkwMzBlOGQ3Mzk4OTE5ZjQ3MzJjODE3MjE1ZmY2ODI5NWNlYWMxNDZiOGFjZjAwZjAwNzBiMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzM0OGMxMjdiODhiMmQxMThhOGE0YjEwMDEzMjA0NWMxNDAzNzhjMDAyMzBmNmQxZmJmMDJhYzQwZWUxOWZhZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNWUzNTJiMGE3ZTVhMmNkMjBkMjc5NGZjNjVlNjQ3NzdhODVkZGEwNTljZjE0ZmM1ZjMzODkyOTQ2MDIyZGY5YSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_ae441930d5a746ed8ca7140041e1a533",
+      "statement": "Streams changes client defaults to auto.offset.reset=earliest, linger.ms=100 and max.poll.records=1000, and forces allow.auto.create.topics=false, group.id=application.id and enable.auto.commit=false.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/config-streams.md#L1816-L2117",
+          "version": "repo-lines-v1:sha256:6f3b8e622676c119f52a9fe8b192128340cd045e322eae7474ccc0c173e03a5d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIzZDZmNzJlNzcyNjIzMjUzOWZiYWMwZDRlZjUwYjdiNjkwYjNmNGFiN2VlMGFlMDNkNzc2M2E4MzNjOWI2ZDg5IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJjYjgwMTQxOGQwMjJmZWI3NmY2M2E0NmUzMTNmZDRmOGI1Njk4ZDQ5ZmMxZGJkMjcyMjkzYjBhOTljODBlNjk1IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIxNDY2YTM2ZDNmMDQxMmM3OTVjMmM1NDBkZDdjYjk5YzU1ZTVkNTJhY2Y5NTAwZmQyOGNjOTZmZjM5YWJmMmY0IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_9564f50592404480a7a32c9a36ee2ce0",
+      "statement": "Streams config defaults include num.stream.threads=1, num.standby.replicas=0, state.dir=${java.io.tmpdir}, statestore.cache.max.bytes=10485760, commit.interval.ms=30000 and default.timestamp.extractor=FailOnInvalidTimestamp.",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/streams_config.html",
+          "version": "repo-file-v1:sha256:7839a62fcb931e1c19b043ee279d734d14db009e9df40ff62895eb7eb7b8efe0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

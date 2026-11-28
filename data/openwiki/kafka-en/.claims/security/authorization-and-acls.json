@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:f659cf69544495f23a08c71af54685380bd3c414c8826b8fdb2e53de94f92bab",
+  "claims": [
+    {
+      "id": "claim_b79b4a3f751f4812b6bff4defa7a4b64",
+      "statement": "KRaft clusters enable authorization with authorizer.class.name=org.apache.kafka.metadata.authorizer.StandardAuthorizer on all nodes, storing ACLs in the cluster metadata log.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/authorization-and-acls.md#L27-L35",
+          "version": "repo-lines-v1:sha256:8d8a2792c45993020256d2ded42b08ed861acdad9a97d9e4f2f17868e42b0b5d:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmFjYjIyMTMwZjE1NjUyMjM5YjJhM2QyMjdmYWZiM2I3ZTFlNTE1ODEyY2ZkZjgxNTRiMmQ1ODA3NTg1NDk4ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjFjODgyMjYzNGNkMzRkODNmNTUxMWFlYzZlMmUxZDE2Mzc1ZjQ5ZTY3ZWI5Mjc4M2ExNmU0MjRiOWU0YmFmYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjFiMDcwNThjYTIwZDBhY2RkMjk1N2E3OGY4ZjZmYzc5NzdlODk0MGU1Y2Q1N2FhNWY3NjczMDdjMWY0OWM0NyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_540f892a7a094cb8a5889aa028ece198",
+      "statement": "Resources without matching ACLs are accessible only to super users unless allow.everyone.if.no.acl.found=true, which only affects resources with no ACLs and is recommended mainly for development; super.users uses semicolons as delimiter.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/authorization-and-acls.md#L37-L57",
+          "version": "repo-lines-v1:sha256:05d56fec070665ea6bfbe65aee6f11f6b4f37d721ac630e062bfda15657d5e62:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU4ODc5ZWVjZTI2ZTAwZDBmYjg5OWJiZGNkNTg5MmI1ODZkNTJmMzM4MmNjMTFmYzIyM2MxNzg2NjA2OTg5NjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc0Y2ZjZjcyZjVkMzY1YTdhZGE1MDI1MWIyMDhlOTA5MjA0NWYwZjRiNzk3ODI5NTdjMzQ2NTJjY2FlNDIyMTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIxMWQ2MGNhNTZkZTQ1MWUyYjc5MDMwN2UyNGE1MjEzMWU5N2EzMWY1YmFiNzQyMDMyMGFkMTJkNDM2NzI4NzMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2e6f6b1394c94a7b8244ef0c7e66f1d6",
+      "statement": "Brokers forward admin requests to the controller in Envelope requests, authorized first with the broker principal and then the forwarded client principal, so custom principal builders must implement KafkaPrincipalSerde.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/authorization-and-acls.md#L59-L62",
+          "version": "repo-lines-v1:sha256:38248c9be2cb1d9c55475952cff1a9b987f652e1fa630b169f652012cdd64a3d:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWQ5ZDI4N2U2NjQ2OGJiZDNiNTM4MTUwNzc3YWFhY2I1OTliMTcyZTY1NjkzMzdlODQ2OTEwZDgwZmIxMDc4MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWI0YmI1OGRjOGYzMGY5ZTM5NDgyYjE0NzVlODk3NjA2OTJiMjdiNjA1OTc5NjQ3OWNmOTc0YWEyOGJmZDA0NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMGFiN2VlYWJjNTMzNzViNTM0MGUxN2NhZmI1YmUwNGYzZDE3N2E1MzAyNzZjODM1N2Q2NWM1ZDAwMzcwOWU4YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTdlZGFjOGZiOTBkYjY0YjRmZjA3M2M4MDIyNmYzMTQ2OTAwODY1NDE2NDRkOTI5MWI0ZjJjNTg0YzRhZmExMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_aadfc97fc3a04e3e9d9151f933560320",
+      "statement": "ssl.principal.mapping.rules map X.500 distinguished names to short names with first-match-wins RULE entries supporting /L and /U, and sasl.kerberos.principal.to.local.rules follow krb5.conf auth_to_local syntax.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/authorization-and-acls.md#L64-L107",
+          "version": "repo-lines-v1:sha256:7ad5991a878e7a5b2c84aaf66d6b9a2557521a7625be24767c60fe1c86579649:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ3ODgyMThkMmQ5ZTk4YWE2ODYzYWFmZjMyMzAzNDY1ZWRjNmYwYmIyNTVhYjUzNGE5OTk4NGRhYjVjOGUwNjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAzZGQwZmQ0YmZhZDJlMWVkY2Y1YTJjZGZkZDZiZDFiMjBhYjAyY2MwNmU4ODA3MTMyY2U1N2M2ODZhNTQxZjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM5YWMwMWU0MmNlMDBjN2ViMDA1ODMxNWRhNzhkNWZhZWU2ODQwYjdlYWMzOWY2NmM2N2RjOTYyMjAyY2Y5YmEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_93906f9d090a475bac3613413283813b",
+      "statement": "kafka-acls.sh --resource-pattern-type defaults to literal, accepts prefixed for adds and any/match filters for list/remove, --allow-host/--deny-host accept only IP addresses, --producer grants Write/Describe/Create on topics and --consumer grants Read/Describe on topics plus Read on the group.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/authorization-and-acls.md#L109-L545",
+          "version": "repo-lines-v1:sha256:b77c3c45939ac62c71baacdac78ff15e36fcf71568ec5eb7de0d412ff2604c13:eyJzZWxlY3RlZExpbmVDb3VudCI6NDM3LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJhZjRiODI0OTQyNzFkNWE0MzI4YzI2M2JmOWM2MTlhYTc5ZTIyYzc1NDI2N2M2ZWMzZGI3YTk4YmRlN2E5NzFiIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJkZjUzMWNlNmExNWYzYzgyNWQ1Mjk0YjhlODNmYzQ2ZDgzZjgxYjU2MzQ3YWQ4YzRjNzE5YjhhMjllODk0MmViIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI4N2VjMzg4ZDk3Y2NjYzVlN2FjZWUzZTdhY2QxNTMyOTIyYTRjMDE0MGM0MjczMmI1MjAzOTU4NjYyNzAyNzYyIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI5MDk4OWNhZWE1OGYyMzk4ODVmMWY5NDc5YmY3NDczZTE2YWNlMjI2ZjRjMGRmMGMyNGEyZjU1MzA4NTlmMTY0In0"
+        },
+        {
+          "resource": "repo://docs/security/authorization-and-acls.md#L547-L623",
+          "version": "repo-lines-v1:sha256:1aaab3920e0bde5b6d7229a5167f5a94888ba4931423a8a59c0c58b73ee54469:eyJzZWxlY3RlZExpbmVDb3VudCI6NzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgzOGExYzY2ZmJjZjg1M2VhNWVjNWQyODIzMjU0ZGU4MmM5ODFjMTE4NWU4NGJhYmVhYTQzYmVmYWYwZmY2NDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImViMTlhNjFlODVhNTdlNzJkMDMyODU1MTUwOTIzYjNlYzNmZmFlZjljZGQxNTQzZTU1OTJhNzI4OWZjY2ViMzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU1MDI2MmEyZWU0OTVmMWQ4NzE4MTdiODRjOTQ4N2M1ZjQwNjQwMTE5Mjk5ZGU0OGY3YmM1MGE1M2NiZjJiNTYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7553363cd46e41a48ece415964d77608",
+      "statement": "Authorization failures return TOPIC_AUTHORIZATION_FAILED (29), GROUP_AUTHORIZATION_FAILED (30), CLUSTER_AUTHORIZATION_FAILED (31) or TRANSACTIONAL_ID_AUTHORIZATION_FAILED (53) depending on the resource.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/authorization-and-acls.md#L649-L660",
+          "version": "repo-lines-v1:sha256:3509e95b43c4f41fc29d99078aa665c597c47091568a67a4d0b4c3e8f1af7120:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEwZmUxM2FmNjZhZTFiNmUyMGUzNGM3MmFhMmI5OGRiNzEyZWRjMGMzMjY2MTAyYmU3ZWJhYWNmZmUxYWJiMDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZjOGE4OTIyNTZkOWE5MzEyMWU2MjZjMGI4YjcyZDA1NTc5MTcxOTJlMTVhMTdkM2I4YzQ3OWE1MGU2NGRmNGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_665f7fb46a8048e892bb4ed5f06518c3",
+      "statement": "Idempotent produce requires IdempotentWrite on Cluster, transactional produce requires Write on TransactionalId, offset commits need Read on both Group and Topic, and SHARE_FETCH needs Read on Group and Topic.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/authorization-and-acls.md",
+          "version": "repo-file-v1:sha256:80da5bb4748a913000faa0631998bd88c1454fa9e9500d59a205655b47158960"
+        },
+        {
+          "resource": "repo://docs/security/authorization-and-acls.md#L662-L940",
+          "version": "repo-lines-v1:sha256:fe383fee58acbfe0022362eb59e834588b05fed769ba95cd78c23f328ed3c38d:eyJzZWxlY3RlZExpbmVDb3VudCI6Mjc5LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIwY2FmMTZhN2IyNjBiNDYyYzQwNzI2YjcyZGIwYWFmNDI2NWJlOTY5ZmEwYmJiMjcyZGYwM2Q3ODUzNzRlYWMzIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIwY2M0MzVjMTYwMzllYjc4ZTExOWFhNjQ0ZDY0MGUzNzRhMjA0OGMyYjkyYWU2MDJiODEyM2IwMTk2MzRjMzg4IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIzNTg1YjBmOGNiNTA1ZTlkZTZlZmM4ZWM2NmFhODk0NzYyMzc0ODFlZGE1MmQwZWU5ZmMyOGE3ODI0MTNkYjBiIn0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

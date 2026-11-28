@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:17a215a2e6be427d63b1d6ad87ad41dfe45f64e4b2d49b3cdb45fee2a210521e",
+  "claims": [
+    {
+      "id": "claim_8653fa0ba6c9495ab16c2456b8d99141",
+      "statement": "Memory needs can be estimated as write_throughput*30 to buffer 30 seconds, and disk throughput is generally the performance bottleneck.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/hardware-and-os.md#L27-L31",
+          "version": "repo-lines-v1:sha256:d9c04cfbfe4b569ef2b2e55a2bdf667d8f5b8d1bbe0fa7e3d7245fa9a273b69c:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjg5NDM5Yzk1Mjc1N2JlYTI0MjFhMDMwNTdjN2JmYzQ0N2FiZjc4N2ZiNjMwYTA4OGI1MWZmMDNiZmQ2YmE0MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjFjODgyMjYzNGNkMzRkODNmNTUxMWFlYzZlMmUxZDE2Mzc1ZjQ5ZTY3ZWI5Mjc4M2ExNmU0MjRiOWU0YmFmYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzdjYWMyZjY0MTMyMzRkY2IwZmQ5NThhODY0MTM1NTg5YTIzMWYxZTY4MmUxOGRkYjA3NjdkNTlhMjBmMDczNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_a462177b2e8e4842a60f8134f4e13ef6",
+      "statement": "Brokers should allow at least 100000 file descriptors, and each log segment consumes 2 memory map areas so many partitions can exhaust a default vm.max_map_count around 65535 and crash with OutOfMemoryError (Map failed).",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/hardware-and-os.md#L35-L46",
+          "version": "repo-lines-v1:sha256:a3390159415e9d4d2a8f68edc678291ea1aaf4944043887d9f2b20dbb97093ab:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZkNDEyOTdiMjc0ZWNlNDJkY2NiYWU5OGQxNGE4MWI3MzAzZjU3ODgzOTA5MTIzMDQ0NzdiMGRlZmY0YWIxMjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc3Y2FjMmY2NDEzMjM0ZGNiMGZkOTU4YTg2NDEzNTU4OWEyMzFmMWU2ODJlMThkZGIwNzY3ZDU5YTIwZjA3MzUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgwZGYwODYyMjgzNzJlY2E4NWY0NGI5NDJjYWJlYjdmNzVmOTEyMWQxYjY2Mjk1ZTk4OWZmODJlZTJiYjRjODgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fa87c340828b407e87818aa91b31064f",
+      "statement": "With multiple data directories partitions are assigned round-robin and each partition lives entirely in one directory, while RAID typically costs write throughput and its rebuilds effectively disable the server.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/hardware-and-os.md#L48-L56",
+          "version": "repo-lines-v1:sha256:12b79bfc816fe0c39b484a132c02b389587e337cd8b95de79fc6f35c54666f83:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTQ0ZmZiMWE5NjY2MmQ2OWQ1YjgwOTZiZjI5NGIyMzEwNjAxZGQxOTc3MDZmMzA3ZWVhYzM4NjZjOTkwMmIwOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTE2Y2E2MDkzZTc2NTk3NDNkODA1ODI2Y2RlNGEwZGE5ZDg4YTc5ZjE3NjM2Y2FiMDA3YjRmN2VmNDZlNWE0NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTUxMjdjOGJlODI0OGFjMTIwYjMxNjBjYjlhNTM1MjcyODU0MTk2YmM4NTk0ZjczNjQ3NWEyZmM1NDljOGMxMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDM1MThlZTQzZDI2OWNlMTMyMjNjMjlkYzRhNDcwMDNhYWYxYTM2Y2Q0OWQ2ZDk3NjNmNGZiZmZkYWQ2YTUxMCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_84f3bb2e55e448c3a72323527c94c888",
+      "statement": "Kafka recommends default flush settings that disable application fsync because durability comes from replication, and unflushed segments are CRC-checked with indexes rebuilt during crash recovery.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/hardware-and-os.md#L58-L70",
+          "version": "repo-lines-v1:sha256:d4f0a955c3bb35c6597195b7059a769863cd1890a6cf2aba07c17dc4b5af8446:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUyZWU5YjlkZjg4NzA0YmVjMzU2OGU1ODcyYWM4MTg5M2E3MTQyYjUzMzUyNGRlMGE1ZWFhZTUxNTczMjA5OTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhZDk4ZWMyZmVmZGNhYzc0Y2Q3YWUzYjg2MGRmMzQ2YTQ2M2M0NDk5YjE2MDFjNDY3YmY3YzdmZDZiNGI0NjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUwYzU4ZDJjODI4YjZmMjAyYTZlZmI4ZjMyZWU3NThmNDJlMzdiNGI4NmI4MDIyMDc4NDE2MGQ0YmRjYjVhMTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUzOWY4MjdkZmFhMDZkNDlhYjVjYTFlMmY5NjliMzQyYjM2MDFkOWJiMWRhYzQ5MWNjM2JiYjViMDFkNzM5ZGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_234d0a23a2e24b6bb0da7bbeb22e4ec6",
+      "statement": "XFS showed better Kafka performance than EXT4 (about 160ms vs 250ms+ request local time), noatime is recommended for data directories, and EXT4 performance mount options are unsafe under failures.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/hardware-and-os.md#L93-L127",
+          "version": "repo-lines-v1:sha256:3aff7af2f32e5cc66f3a190da8a1be933c8dfb9544e2959a57bbe929dea268e9:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA1N2FiNjkyNTc0OGUwMGNiZWI0MTc3Yzg2NTAzZDhjNDZiNDNlMGFhZDM4ZDMyOTdmNjVlZTliYjVkZmE4ZjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVmNTMwMWE0MzVlYmUyMTUwMTdkMzE4MTlkY2I4OTljOTZjZjU3MjE3Yzk0YWZkZDNjYjljMDgyMTEyNDViNTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVkNGIwMzdjYWQzMzNkODViZDU2ODQ0OGE0NGJiMDlhOGFiMjE0ZDI5YjIzMWFiZTg5ZDczMWRjYzNmNTA2ODcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_56a566f3c6db48e6a276e4d2b7e4f63a",
+      "statement": "When replacing a lost KRaft controller metadata disk, the new controller must not be formatted until a majority of controllers have the committed data as shown by kafka-metadata-quorum.sh describe --replication, and --ignore-formatted is only for combined-mode nodes that lost only the metadata directory.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/hardware-and-os.md#L128-L154",
+          "version": "repo-lines-v1:sha256:b207feb8ecffaf07c84731186e3c569d7b05f2ff19e3a9401bbf5a6eab82b4f4:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQwN2Y3OTI5YWEwMDJjNzgwZTM4ZDRlNDQzNzFjMWE3ODZjYThhNzYxZWFiYTQ2ODgwYzA0N2M4YjZiZmVjNzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFkMmM0MzE5NmQ5MGRmODc0ZWY1ODgxMThjOTZkYmI2ODRmYTZhN2IxOGE3M2RjNDQxN2RkYjI3YzQ0MDBlZjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

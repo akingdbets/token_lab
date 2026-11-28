@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:e0506e7e42daee475921bd08308a75dcf22ac1e26192f0b78f482d12eab7cc0f",
+  "claims": [
+    {
+      "id": "claim_8da423f6f371428b834af9070bc6adb6",
+      "statement": "A message is committed once all ISR replicas have applied it and is not lost while one replicating broker remains alive.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L191-L191",
+          "version": "repo-lines-v1:sha256:b10663274cc5d160686fa6b7ae286ce522fc9376216a21c4b4acdc22e1627b19:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjEwNjYzMjc0Y2M1ZDE2MDY4NmZhNmI3YWUyODZjZTUyMmZjOTM3NjIxNmEyMWM0YjRhY2RjMjJlMTYyN2IxOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjEwNjYzMjc0Y2M1ZDE2MDY4NmZhNmI3YWUyODZjZTUyMmZjOTM3NjIxNmEyMWM0YjRhY2RjMjJlMTYyN2IxOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiN2YyYTdlZTNkNDkxN2IyM2I1N2Y2YWY0NjMxNmIyNzYzM2E1MjY2M2M1M2Y0Yzc0YTYyZTkyNTU5YjcxNzc3MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzdiYjg4ZDU2N2NlM2YxNDhjMDI3OTg0N2I2MTUyYWY3ZTkzYTA1ZTZmYWM4YjE5YWRjNDQ4NDE1MzI4MmQxYiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_05ccd8f6be6e47e7a7f669c6bcccbb8f",
+      "statement": "Since 0.11.0.0 the idempotent producer prevents duplicates on resend via a broker-assigned producer ID and per-message sequence numbers, and transactions allow atomic writes across partitions.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L193-L193",
+          "version": "repo-lines-v1:sha256:be8f87f3c4f6d60a07f045afd0aaf26d0ae0cdfbeb1312255b2ce7c332a72695:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmU4Zjg3ZjNjNGY2ZDYwYTA3ZjA0NWFmZDBhYWYyNmQwYWUwY2RmYmViMTMxMjI1NWIyY2U3YzMzMmE3MjY5NSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmU4Zjg3ZjNjNGY2ZDYwYTA3ZjA0NWFmZDBhYWYyNmQwYWUwY2RmYmViMTMxMjI1NWIyY2U3YzMzMmE3MjY5NSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjYyMWE2YmExYmI3OTk5NTcxMTFmN2Q1ZGNiNWUzMzJiMmVlNTRhMzU5MzY4YWM5NWY1NzhhOTU0NTcwYTJkNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODc0ZTRlNGI4MGE2MzZlYjA5ZTA0Mjg5MTQwN2RmMTBlZDc2YzkyMzIxZjA5YjA1Yzk0NDA5NTRlNThiNzU1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_af8db0683b384b9caeddb5106b707538",
+      "statement": "Saving the consumer position before processing yields at-most-once semantics while processing before saving yields at-least-once semantics.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L197-L200",
+          "version": "repo-lines-v1:sha256:969bcc0b2123ef7c004cce286549e14ed2e6b8bdc4d429452a5650bb4564f66a:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTI5MzIxOTgwNjYzNTdkM2M3Y2I4ZDQ4ZTE1ZjJjYWFiMzc5MjRmNzA1ZWNkMGNiMTU4N2U4NjZiMWY0OThhNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmZhNjA3Zjk3NjFlNGMwYTJmMTJkZTBjMmY0Y2E4NDA4NDFlOTUxZmMwZGY3NTEzOGYxMDk1MDRiYTMzOWJmNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODc0ZTRlNGI4MGE2MzZlYjA5ZTA0Mjg5MTQwN2RmMTBlZDc2YzkyMzIxZjA5YjA1Yzk0NDA5NTRlNThiNzU1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjM2ZTQ4Yzk3Njc4MTI1MTllYWUyZDVlYzc3NTVhMTllYTBhN2Y2NzFiMGE3MWQ2MTM0YTRkMmRlOGI3MjhkMCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_fc79fbde19284eff9b27ba9a824ac4e9",
+      "statement": "For Kafka-to-Kafka processing, the consumer offset can be written in the same transaction as output records; read_uncommitted (default) exposes aborted transactional messages while read_committed returns only committed ones.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L203-L203",
+          "version": "repo-lines-v1:sha256:51138134d8ace62321dce3d2d8c0946df4bfa84be2ef4c8ace4ab1034253f333:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTExMzgxMzRkOGFjZTYyMzIxZGNlM2QyZDhjMDk0NmRmNGJmYTg0YmUyZWY0YzhhY2U0YWIxMDM0MjUzZjMzMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTExMzgxMzRkOGFjZTYyMzIxZGNlM2QyZDhjMDk0NmRmNGJmYTg0YmUyZWY0YzhhY2U0YWIxMDM0MjUzZjMzMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTkzNGM3YmJkYjhmOTJhMWQ1OGZjYzI3MjBkODVjMjEyMjlkMTIwYWRlNzFjZGRkNjkzNDMxMDdjZmFkY2E0OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzk4NDBmMDkxNjc1NTZkZTgzY2FjMDY1NzFjMzdhMTUwZGE5NTJjNmU5MDczODlhNTgzNmVlZTY3NDBiODFhZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_961dee160bf74b0ba5ed37605cf32ad1",
+      "statement": "Kafka guarantees at-least-once delivery by default, and at-most-once can be achieved by disabling producer retries and committing offsets before processing.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L207-L207",
+          "version": "repo-lines-v1:sha256:b0685e6fd599f6b8890687722c0a81bc50864554934e781ed5d13f5b59e6baad:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjA2ODVlNmZkNTk5ZjZiODg5MDY4NzcyMmMwYTgxYmM1MDg2NDU1NDkzNGU3ODFlZDVkMTNmNWI1OWU2YmFhZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjA2ODVlNmZkNTk5ZjZiODg5MDY4NzcyMmMwYTgxYmM1MDg2NDU1NDkzNGU3ODFlZDVkMTNmNWI1OWU2YmFhZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMzk4NDBmMDkxNjc1NTZkZTgzY2FjMDY1NzFjMzdhMTUwZGE5NTJjNmU5MDczODlhNTgzNmVlZTY3NDBiODFhZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzlkN2YyZDg4ODc0YjBhZDQ5OTFkYzg5YmQyZDQzMjEwZTFmZDExMjRjNzFhMzcxODBiMTBmMzdkMjM0NTk0OCJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:9ce09118fcaff59ac6efe9a0c233e4bd8d343e7e25d171952a48e8728ddc1f9c",
+  "claims": [
+    {
+      "id": "claim_c429df9b318d4cb98655571be95edcd5",
+      "statement": "Each partition has one leader and zero or more followers that pull from the leader; all writes go to the leader and follower logs are identical in offsets and order.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L285-L287",
+          "version": "repo-lines-v1:sha256:1e2b4710cc0118848f0d4c6c4d3115145a8e5d0ccddc8316059e3a3169b1cfaf:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjg1NzdjNjg3OTE1OWMzNGFiNzIwNzZjZDhkODRiZGI5NmEzNjA5OTdiMDg5ZWU2Yzk3MmFkMDhhMzQ4NGRiMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOWFjNjhhZjIzZjMyNzE0MjljNDI3ZWRjYjAzNzYzZDA1OGE2NjFlMTVmNGRlZTY3ZGU3MzgyMTI2MTVmZWUzOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjJmNDU4ZjY5MmZhZDFhNmE0MTc0OTk4ZTMzYTc2MGI1NTk4YzA5OTFjOTMyZjJmOWQxNzdiNzIwMDRiMWQ5OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjk0MzIxYjI3NzBhZjFmNDMxZTlhMGIwZWJiZTFiMWM2MjYyODZkYzZlNjA1Yzg2MTg1ZmY3OTFjMzczMjJjMSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_efc877ef8fd14634abcc4fdd22972491",
+      "statement": "A replica is in sync when it keeps an active KRaft controller session (heartbeats within broker.session.timeout.ms) and does not lag beyond replica.lag.time.max.ms; otherwise it is removed from the ISR.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L289-L299",
+          "version": "repo-lines-v1:sha256:2063925db65912c15a7d2ccc1423310bc950e6b0c866b4e8b261c2703d636fbe:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2ZGQwNDc4NDM2MjdmNzQyOGE0ZWQ4YmMxODVkMWI5M2Y5NjY2ZWY1OWM3YjMyZjkzNzRjYWNlNDNiZDFiYmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk0ZTE1YjkwYmEwOWYwNjgzNDM5Zjk5MGNjYTkwZjNlYjcxNzAyNTJiNGI2YzljNWUwNjlkZDk2YmExMjdiZWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU5OWExZjczZmMwNTc4NTRhNGUwNjQ2MzI5MjgyMjk0YmQxZTU4ODBiODA1ZmU5Y2QyNmU4MWE1NDk2Y2IyNzgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8bc06d4d65bf496d960cf928e9164832",
+      "statement": "Messages become visible to consumers only after replication to all in-sync replicas and while the ISR size is at least min.insync.replicas; with acks=all and too small an ISR the producer gets NotEnoughReplicas or NotEnoughReplicasAfterAppend.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L303-L308",
+          "version": "repo-lines-v1:sha256:6c2ba51362976b7e3ef284793b14ed6aea09925cb2e959684fd1641859fbd0e1:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTk5YTFmNzNmYzA1Nzg1NGE0ZTA2NDYzMjkyODIyOTRiZDFlNTg4MGI4MDVmZTljZDI2ZTgxYTU0OTZjYjI3OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODg2MDcyZjQ1NThlZmU4ZWI5ZmMzM2E4NzNlZWY0NTRlMzMwOTE0YTdiY2UwZjczMTRjZGU1YzA0ZDZjZDY5MSJ9"
+        },
+        {
+          "resource": "repo://docs/generated/kafka_config.html#L520-L530",
+          "version": "repo-lines-v1:sha256:c8c079838f673c9bbccabdf8991c3177ec2a0aa6f8a5bcc3d50ace7864e11aa7:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0MWQwYWE0NWMyMDE5NTExMTBiNjM2MzRmYTQ2MzU1NzYwYjNmOTdkZjMxNjJjNWNjOTdiYzgwY2UwNzdjYWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYmJhYTQwMzk5YTlkZGE1M2ViNjUyMTdlOTkyZGFiNTcyMzdmM2E1NWY0YzNmMjllZmM2MWJlODhmZjlmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk0ZTRlYzhiOTVlNWE2ZWRiMDQ1Y2RiZjc1YzY2M2I2MmNmMmY4ZjViNzg0MTEwNGFhODkwNzYxMzhiMjk3YzIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_29c34fc7f53a4eedbbb30c9e7fbb7f4b",
+      "statement": "Kafka elects leaders only from the ISR, commits a write only when all ISR members have it, and with f+1 replicas tolerates f failures without losing committed messages.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L329-L329",
+          "version": "repo-lines-v1:sha256:131b03e7626b2f40da879c11fd9ed662c2858aca0de6ae7a949b068b8013adfb:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTMxYjAzZTc2MjZiMmY0MGRhODc5YzExZmQ5ZWQ2NjJjMjg1OGFjYTBkZTZhZTdhOTQ5YjA2OGI4MDEzYWRmYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTMxYjAzZTc2MjZiMmY0MGRhODc5YzExZmQ5ZWQ2NjJjMjg1OGFjYTBkZTZhZTdhOTQ5YjA2OGI4MDEzYWRmYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWEyZjVjNmZhYTE3YzkxZjNkZTRhOGRiNmFhNDViNTg4ODVkYmJjNDMyYmNjNjhkYjg1MGUwZjk4YjYyOWIwOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjAxYTVhZjg3MjEyNGI5MDAxOGQ3OTdiNmFhNTBlMTRiYTVhYmZlZDdjMTRiOGQ0YmEwM2U5MzY0YmNiM2IxMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_110bb99d2a2145098e4f41cd2a8602f3",
+      "statement": "Since 0.11.0.0 Kafka waits for an ISR replica rather than electing an out-of-sync replica; unclean.leader.election.enable (default false) changes this, and in KRaft dynamic enabling waits for the periodic election thread unless kafka-leader-election.sh is run.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L337-L347",
+          "version": "repo-lines-v1:sha256:1b5fe22f08fa9cbf74f93ed85775e48f78bb5e39194459156f751f33292834b3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxZDBiYmVmNDlhNWM5OTQ2NjQ3YjE0ZDFkYzRmMzNjMWNmYTAxZGUzN2JmYTQ3MTk4YjYwNzMxYmUyMDliODQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzMWI4NDZjM2E5M2IzZGVhODZjN2VkM2ZjNjVkMTFmN2Y0ODEyNzhkZDNmYWJhOGYzOTYwYTE4NzMxZDI5OGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhlZmIzYTg5ODZlZWI3YmRhMGZkYzk4ZWMzYTRkYTIwOWEwYTBjZTY0MjI1YTNmMGM5MWRlMDIwZDE5ODM1MjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA4MTNhNGNhMzlhNGVjNmIxZjc2NDA3M2U5MmY1YjY4ZGNkZGY5YWJiMGY3Mjg1NWFlNGQ5YzZlNDM4NWU5M2MifQ"
+        },
+        {
+          "resource": "repo://docs/generated/kafka_config.html#L993-L1002",
+          "version": "repo-lines-v1:sha256:35d5258565d58da36d309cd1af26ca5acf412d8f9d1db3710ddcac0e898eea4f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0NGY3MjU4ZDc0MzBlMTY4YTUyM2E3MGUyYjdkYzg0NzMwNGZjMDVhMDA4ZWNjY2YxMWYyYzdlZWNlNDMxNDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiOWZjMGYxY2NmOWUyZWQ2MjMyMzczZjAwOTFlZTAxNGFmNDJmNjg2MzEzMzZhNmE0ZGQ5NDdmNDIwMTE0NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhlZjAwYmU1MjhiNjU4ZGMyZmI3YzFiODM4ZjYwZmVjODJhYWJhMThlNjI4OTRiZTJlYmJjZTlhMjlkMDdiYzgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_56824f97f7c94041ad420a11da9b4809",
+      "statement": "acks=all only waits for the current ISR, so disabling unclean leader election and setting min.insync.replicas are the two ways to prefer durability over availability.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L351-L357",
+          "version": "repo-lines-v1:sha256:d5f347fc6a7c312639383b5246fcd491a7610da6aafc934c8f21ef34a3fe7f28:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODBiYjhiNDY1M2Y4NjM4MTEwNDgzMGIzYWJhNGMyYTViNjlkZmY1MGIzNDU3YTkyMzE4MjEwYTIxMDNkZWJmNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDgxM2E0Y2EzOWE0ZWM2YjFmNzY0MDczZTkyZjViNjhkY2RkZjlhYmIwZjcyODU1YWU0ZDljNmU0Mzg1ZTkzYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTc4ZTQxNGZlNDAxYjBlNjZhN2QxNTc0NGI3OTMzNWFhMjUxZTZlOWZjZGZhZjQ1Mzg3ZjhmNzExYjIzNDQ1NiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_8a64c3c7d7694b48ac57c2bd9577aeed",
+      "statement": "Eligible Leader Replicas (KIP-966) is available from 4.0, enabled by default on new clusters from 4.1, toggled with eligible.leader.replicas.version, and leader election prefers ISR, then unfenced ELR members, then the last known leader.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/eligible-leader-replicas.md#L29-L43",
+          "version": "repo-lines-v1:sha256:1ab7136d2238ad620bdc7144cd45a417c97c612ac0bb5986266bc4e8eef6cd22:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxMzNiYjY0ZDViYjk4NzRlYmY5N2NiZDZiYWM2Mjc0OTU2ZGUyNzNmZDE4Y2Y2OTdmZjBlMDcwMjhkOTI2OTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJiNDI5NmE4YjA3MmNkYzZiOWJmOTBjZmM3NTQ0YTJlNGQ5ZjRlOWVhZTQyYzQyZWM4MDBlNTc4ZjI5Y2Q1ZTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljMzVmMmYwNDAyNTQ3NjExMDg0MzQyZjYxNjAyYTEwYmY1YTgyMzVhYWM1NGUxZTRhOGU4MDRlZDMxZmZjYmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc1Njc2MmZhNTQ5YzUyYjg5YzQ2ZTJlOTE1NjY3ZDExY2U3YWNjZjkyOTkzMmZmYWU1YWVjYTU1YzgxYjk4NTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1b638dce5e0842b480c61bfb989ed679",
+      "statement": "With ELR enabled, min.insync.replicas must be managed at cluster level, broker-level values are removed and disallowed, and updating the cluster or topic value clears ELR state.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/eligible-leader-replicas.md#L45-L58",
+          "version": "repo-lines-v1:sha256:55ee317620322b7e6362ceb32edb7809e41b880cf8b368649a8593d6c109ab82:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdiZTFhMDZhNzVlYjZhNDQ3ZTg3ZTgwY2I3ZGNiZDA3YzY4YjZhZTNjZmI0Njg4OTYyZDMzNzc5YTdiNWIwZWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg4MzBjZjk4MWExYTMxOTkyYzUzYzY0Y2VhMTc0ODAwZDlkNGU1Y2M0Zjc0MzNjZDk5ZTA5YzFiMjg3OTg3OTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

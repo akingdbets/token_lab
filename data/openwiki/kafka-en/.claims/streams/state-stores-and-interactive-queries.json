@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:2d030748231f36c3df2ad8f38546ab81acb2463848df302d3956eec903c37e25",
+  "claims": [
+    {
+      "id": "claim_8627acafdc354c52a6455ab709761e05",
+      "statement": "Kafka Streams natively supports querying local stores, making instances discoverable and discovering instances, but communicating with instances over the network requires a user-provided RPC layer.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/interactive-queries.md#L27-L124",
+          "version": "repo-lines-v1:sha256:b47f7f22d186d2d8a357432af7552757ead2c6d62bb0cdcea3eac25e528a9e0f:eyJzZWxlY3RlZExpbmVDb3VudCI6OTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRmNTMxY2U2YTE1ZjNjODI1ZDUyOTRiOGU4M2ZjNDZkODNmODFiNTYzNDdhZDhjNGM3MTliOGEyOWU4OTQyZWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIxYzg4MjI2MzRjZDM0ZDgzZjU1MTFhZWM2ZTJlMWQxNjM3NWY0OWU2N2ViOTI3ODNhMTZlNDI0YjllNGJhZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJkMmQ0ZGJmZTZmODgzNWYzNzViNmE4YWViMGQ2NTkxY2IxYmM4MGQ0ZTA1OTdmZjE2Mzc4NjRkMzMyZDQzODIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1bff7da6718c4a3f8a0c63080206e758",
+      "statement": "KafkaStreams#store with StoreQueryParameters.fromNameAndType and QueryableStoreTypes returns read-only local stores across all local partitions, and versioned state stores are not supported for interactive queries.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/interactive-queries.md#L126-L156",
+          "version": "repo-lines-v1:sha256:4171f8608e493d505845b426c8f4dc6abaa1a2815fb0f5b3db0be298ab9b2047:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4NjkxODU1ZmU4MGY1Y2RlNDJlYTEzYWE1ZjVhYWYzMjkxNzc1Mjk3MWU3ZWYxYTZhZjZmZjg4YjAzNDVjNjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY5MGU0ZjNiMWRiNjY5YTc3ZGY4ZDNhNjIxYTkyMTllZGExZDliODQ3NDdhMjEyYjE4ZDc0NDgyMmU2ZGM4MTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM4ZjkwMmM5NGE5YTA5MGQxYmQwYzY2ODhjMTE0OWNiMzg5MWNhMTAzNWY5NjU5ODhkOGQxNWE4NmQ0MzFlMzgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1c1e4c72ce2641e5aa86b47ab0712e1b",
+      "statement": "IQv2 header-aware query types from KIP-1356 such as TimestampedKeyWithHeadersQuery return ReadOnlyRecord results including headers via KafkaStreams#query and StateQueryRequest.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/interactive-queries.md#L312-L340",
+          "version": "repo-lines-v1:sha256:6269d9becee4fcd06a272abb762b86738a8a199b67f1875e180eb50d20f26452:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVkNzM3MjRjOWFkYjNlOGFlYWRiNWYwYWE3ZjZjZmI3NzM2NTU1MzUzMWIzNjRmNTU3YWI5N2E3YTgxM2I5YzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzYWQ4ZTg1MzQ5ZmUxMTgxOTg4NTk3NmVmOTZjYmUzZjZmNjVjMjg4YjI5MDcxM2FjYWRiZGY5YTkyODAzODgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA0YjlhMGIxNmI5OTEwYmFhNWQwYTRkY2FmZjhhNjBjNDI5NjMzYmYyYWUzY2JhY2M4MjAyOTA3NTgwZDEwY2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhiMzgxN2FiOTU2MTg4ODU3OGEwYjdmNmJlMWMyMTNlYWJiY2JmOTVmNTAxZDhkYjk2Y2U4MjU3MjZmZmE3NDQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4ba265e980a14c83824d379666ded38e",
+      "statement": "Remote querying requires setting a unique application.server host:port per instance; allMetadata, allMetadataForStore and metadataForKey return StreamsMetadata and find nothing for instances without application.server.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/interactive-queries.md#L609-L740",
+          "version": "repo-lines-v1:sha256:8cb0bfa2533f68ed41b04dc3aff44287643fa2d92a2a31f2ff6fcb3de4512a54:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJmMzgzYTI5OThlZDFkNDQ3Mzk1NzNhOTA0N2MyYTY4OTg2MThiMzg2YTEwNmRlNzNmOWQ2ZDllZTMxZTc0OGYwIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIwMWJhNDcxOWM4MGI2ZmU5MTFiMDkxYTdjMDUxMjRiNjRlZWVjZTk2NGUwOWMwNThlZjhmOTgwNWRhY2E1NDZiIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI5ZTJjNWM4MjNiZjU1OTFhZjkwZGI5MTdmOThiZjZiN2QyMjM5NDBlOWFkOWM2NjMyNGY4NGY4ZTBjYjBmZTk4IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_7b31e5067dd747f3a5eb845ae562402a",
+      "statement": "DSL record caches compact output of source and aggregation KTables before writing to stores and forwarding, are split evenly across threads, and flush at the earlier of commit.interval.ms or cache pressure.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/memory-mgmt.md#L36-L107",
+          "version": "repo-lines-v1:sha256:5f3a7dc6a6ec4976942d50ecc50bad05c12e50852c9b83e66a5d9102b570fc80:eyJzZWxlY3RlZExpbmVDb3VudCI6NzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmNDM2YTY1NWNmNDU3YmU5Zjc4NmUyZWQxNGUxMjdiNzcwMzBhODNmMjdhMWM2OWYwMTc4NzEwMTIxMDc1ZDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNmNTJjZDkxZDU3MTIxNTdjMDg3OTBiZmQ3YzVkNTQ5OTVmY2JlNTRiMDFmOTEyOWI4ODMzZjdmZTViNWNhNDAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRiMzNmMTg1OTg4OTU1ZTAxMmVlYzhkZjI4OGMzODllZDE1ZWNiMzAzODg0YmVjZTJiMjdjYWFjZGRhMTY5NjIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6fe86d240d1e47809d5bae31600eac2e",
+      "statement": "In the Processor API the record cache only affects writes to state stores, not forwarded records, and record caches are not supported for versioned stores.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/memory-mgmt.md#L109-L127",
+          "version": "repo-lines-v1:sha256:ceea945f1261d4a29d63a54f93e7db65fbea61429c54e2d9b773cbc40d58b282:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4MzYyYzE4ZjVkMzk1NTc4MDcxZDVjZGM4ZTNiMWNlNzM3YjJhNDI3ZjUxM2E3ZGFlOWY5N2RmNTViNWQxOTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAzZjU4ZTc4ZWIxNTYyYmRhMWM0YjEzOTI1NTQ3NGM1ZWM1MjY5OTQ5OThiNzQwNjk2NTE1ZjUzMjkzZjcxMTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIwNjJlYTYxOWYwNDQ5NTlmM2VjNTQzOTc4MWI2Yzk2YjhhY2FlNDNmZDVlMGI2YWJlMmY3ODc0MTcyYWMwODkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEzNzdiODI5M2UxNmJmZjAyNWY0MDdjZjg4ZDcxOTI4YWIwMGM5MDlmOTI0ODMwZDY5NTAwYTBiZTRhNmQ0ZGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f766532b674e4753a4a50bf6721b9e20",
+      "statement": "Since 4.3 (KIP-1035) changelog offsets are stored inside RocksDB with the WAL disabled, so offsets become durable only on memtable flush, making low-traffic stores benefit from smaller write buffers and clean shutdowns.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/memory-mgmt.md#L133-L153",
+          "version": "repo-lines-v1:sha256:ab12f315448fc620e5d1b1be2db763ebdf658693cfcda642bf46c328f83a2c7c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ0ZWEwYjg3ZjYxYzI1OGI1Y2NkNWNjNTRiYmI0YTM4YjkyNDFkOTRmNTJkOTYxYWE3MGVhNWNkNmNlNzU4MjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5ZTBiMGRmYTRlY2JkYzMxNDk3N2I3NTMzNzJmMTQ0NzgxZjMyNzk5NjdkYWIyYzFhZGZkNDE5OWY1NzVlYjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFmNzcyOWIyZTExMjcyOGE4OTA3MGM2MTIyMTI0YTExOTRiYzZmZTgxOTNiYzc2ZDE0MzRlZTMxYzkyODZlMzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgxZGE2YzIwZWIxZTViNTM4YzkyNzMyMjYzODJhOGIwNjQyNzM2OTI5Zjg4YTRhNzY3YmM4NDE3MDA2OTQxZDIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1504d66c550f4b9b953b5abba8e78850",
+      "statement": "For slow restores the docs recommend raising write_buffer_size above the 16MB default to 32-64MB, using jemalloc via LD_PRELOAD, and bounding total off-heap memory with a shared LRUCache and WriteBufferManager in a RocksDBConfigSetter.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/memory-mgmt.md#L155-L213",
+          "version": "repo-lines-v1:sha256:19d6b3e54409bbd920c120444803cde9e9b793c63ef93508b0f552b426615b58:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ0ZTczMDc1NDNiMWE4ZDU0NTcxODFjNDY2YmVjMjhlYzRhOWUxNzk0YzA4ODY3ZTRhZDM3NWU0N2YzMmQ0M2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE5MWU2ODFmZTUzZDNkMjI2MDhiNmUxMTdmZmVjMWNlMjY4MTk1Mjg1NTM2NDU0MzNkOTFiMjdlYThhNmQ4ZTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM2ZDBkOWNlZWZiN2VmMjFlOTJiZjMzYzU4YmQwOTZmOTQ2ODRlZTA1M2E0ZDg1Njc1NzkyYjg5ODZlZDkyMjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFiYmU2MjllZmMxOTk5MzZjOTRhZDY1MzIzNjA3ZWFhYzE0YmQ4YTk1NTVlNWQ1Y2E1MTg5ZjdlY2EyNTg5MDIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_097477a84b1d45a3b4467576eb07f782",
+      "statement": "Store iterators must be closed explicitly or memory grows until OOM.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/memory-mgmt.md#L215-L236",
+          "version": "repo-lines-v1:sha256:2ebe37750d27fbc07b138b8fab362b077893577c20d231e4d57d16e0624303ce:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBkYWJhYWRhMGFiZmNlNGFhMjY2NTExYjFjYTJkMTg1YjJmYTMxYmQwMmYzY2Q0ZjgyMjQ1Y2RkOGUzMDdmOGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQwNDgzMzUxMzkwMDM1YmFlODJiOWQyYTZiMzUyODBjZDBlMDE4NDBkNjY0NjFmZDhkYmMxYmFkODhlMTk2NGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

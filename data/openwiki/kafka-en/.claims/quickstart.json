@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:21b70b1e0248be3a663ea962652216a8feb1915928743636baca0c49c3879984",
+  "claims": [
+    {
+      "id": "claim_38e1e78b9e9a428ab45b250fb1af7b2c",
+      "statement": "The repository's documentation index is titled AK 4.3.X and describes Apache Kafka documentation for version 4.3.x.",
+      "evidence": [
+        {
+          "resource": "repo://docs/_index.md#L1-L9",
+          "version": "repo-lines-v1:sha256:3dce724540b9d5bd5aa4afaaf54cc5eb0df22b14ce6e95a501d1125e4afcbc5c:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjUyZDcxMTEwM2Q1MGE0Mzc4MzBjNmZiY2QwNGZiNGJhYjQ5YTBmODJmNmQyNmQxYzc5MWM2ZTg0ODhkZDA5MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjUyZDcxMTEwM2Q1MGE0Mzc4MzBjNmZiY2QwNGZiNGJhYjQ5YTBmODJmNmQyNmQxYzc5MWM2ZTg0ODhkZDA5MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTQ2ZTg5MTdhMTEyMjEwMzUyZjVjOWU2ZWQ4MzM5MWZjOWEwZDM5NjgyMTM5NmQ5NmRhYjdhZTg4MDRlZjg0NyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7690872092044715b1fcbe5656116dbe",
+      "statement": "Kafka is built and tested with Java 17 and 25, with javac release 11 for clients and streams and 17 for other modules, Scala 2.13 is the only supported Scala version, and ./gradlew jar builds the JARs.",
+      "evidence": [
+        {
+          "resource": "repo://README.md#L13-L27",
+          "version": "repo-lines-v1:sha256:01dd6bcf828847f3aaedbced335a1fd3e75ba9d338c334ad8aac1adae5e6d354:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA5ZDM4ZjdkODFkYWNiZjgzYzk2ZDU0NDIzN2I1NjI1YWY1NjJmNjM1NTY0YzM5YTk5NWU5ZTcxOWZhZjEzNmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQxNTczNjJkYTI2NTg2Y2MxYjk3ZmM0OTAwYTAzMzJkNTVhZGQ1YzhiMDI5MGRmOTY5ODY3ZDg2YjUyOWRjMTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f8b0e57599404f9698e0a8b02c8a9935",
+      "statement": "The streams-group topology description plugin documented in this repository is a Kafka 4.4 feature (KIP-1331).",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/topology-description-plugin.md#L27-L38",
+          "version": "repo-lines-v1:sha256:a70073305fda1f48c3dff15d18a1439c0808876930a60573961d2b62fb7b4ad0:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwZDQzMTZkNDM1Nzg2NTZiNjBlYmIxZmY0NzU2YTk2ZWFkOTI1Yjg1NmM1MDNlNmUyMTc4ZDZiOTFhZWNkMDkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIxYzg4MjI2MzRjZDM0ZDgzZjU1MTFhZWM2ZTJlMWQxNjM3NWY0OWU2N2ViOTI3ODNhMTZlNDI0YjllNGJhZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjllYzY4YWU2OGUwMmY4MGM2YjNlYTg4ZDJlYzMwNGNmNGU4Y2I0ZGE4YmJhODFhMzJjYjc1YTdhNGU0ZTY2M2QifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:c716c54fe6dbf086abf5bfb2879dbf013d9eb3427c6c91c150b8d6e6d1b6cbe0",
+  "claims": [
+    {
+      "id": "claim_22b52891be8341c8afbaae22713e6bd4",
+      "statement": "Kafka Streams is a client library for applications whose input and output are stored in Kafka, requiring no separate processing cluster and offering exactly-once semantics.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/introduction.md#L29-L80",
+          "version": "repo-lines-v1:sha256:be7e344e5039b8117c64494505dd10bf940eb8e9319e87ff06dbc404e94f8345:eyJzZWxlY3RlZExpbmVDb3VudCI6NTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgyYTE5NTk1MGQ3NDg1ZTBiN2YyMDllM2U5MTk3ZTFmMDA4ZjE0ODI4MjYyODBkOWUyZDRlMzkxZDYwNDdlNjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYwOTk2ZTZmMTQyNGU2NDQyYWMxYWQ0ZDI0NDY1M2ZmN2E3NWE0OWI4ZGM5NjkwYmZmNzg1ODk4NDY1MjVjOGIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljMzVmMmYwNDAyNTQ3NjExMDg0MzQyZjYxNjAyYTEwYmY1YTgyMzVhYWM1NGUxZTRhOGU4MDRlZDMxZmZjYmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUyYTUzMTgzNWY4YzdjZWM4MWM4ZjM0NjQxNTVlMjI0MWRiMDM1NTMyZjc5NDAyMWIzYTFiMDUxOWViZDE0MDkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8f3106b34c874bae946c8c7ff22b3aae",
+      "statement": "The Hello Kafka Streams WordCountApplication reads TextLinesTopic, counts words into the counts-store state store, and writes to WordsWithCountsTopic with String and Long Serdes.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/introduction.md#L88-L172",
+          "version": "repo-lines-v1:sha256:6dbd5da517baa0395f3e39232bb7dad935ddcc62213179c9fb62b6d5af5ff7de:eyJzZWxlY3RlZExpbmVDb3VudCI6ODUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdkZWFkZDAzOGQ2MDQ0MjUyYTFiNjU5MTc3OWJiYjFjZWUzNWZkZTkyNzI0NjE2YzUxOGJhYmZlM2Q2ZjdjMWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgzMzQ3NDc3YjZiZDg2ZTgzYzZkYjIwN2VmZTVlOTE2MjExMjVjNDBmNmQxMmQ1ZWYzZTcxZjcyZDRhZjkxMWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_627820df14b848f3bcd50fd489ee4033",
+      "statement": "The WordCountDemo quickstart creates streams-plaintext-input and a compacted streams-wordcount-output topic and runs via kafka-run-class.sh org.apache.kafka.streams.examples.wordcount.WordCountDemo.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/quickstart.md#L92-L135",
+          "version": "repo-lines-v1:sha256:5cccfa1c30d3afd5bf3282fff550561b072ec50065e41e25a790982a5602cae2:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjNzJiYjE1ZTBmNWY1OWNhN2MxZjc2OWMxMWI4NjgzOWQ1MjQ4OTg1ZmY0Njc2Y2U2ZGRmODU3YTY5NDE5ZTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzYWQ4ZTg1MzQ5ZmUxMTgxOTg4NTk3NmVmOTZjYmUzZjZmNjVjMjg4YjI5MDcxM2FjYWRiZGY5YTkyODAzODgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ0MDBmNzk4ZDA4YWZmMDVjNjE0NDZmYjU1YmI3Mjc0YmYxYTY1ZjRlZWYyYTFiMjZhZWM3MzVlMGMwMzNkYmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA0ZjQzODNkMzE0MDBiZTIxOTVlZjMwYmMyYzhmYzk0MWNlMTg4NWZiNmUxODVhNTAxMmQ3ZDVhYWU5OTg0MzkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6ef306d85000499c9e4911736bf0ad23",
+      "statement": "The demo can optionally use group.protocol=streams (KIP-1071), which moves task assignment to the broker and eliminates stop-the-world rebalances.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/quickstart.md#L124-L153",
+          "version": "repo-lines-v1:sha256:a6c5f0e57f4bee820fa60165eb514b2bea21cf761aa358130af5e8956a9b20ab:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJiYmExYTRiMmYzMGI2YjIyYTYwM2Q4NTRmZjc1ZTY3NWUxOTI1NDQ0YjRkNTQ4Y2M5ZTk5NDcyYzE0ZjY1NTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNlMTU2OWJmMzFjOTE3OGJjZDIzOWU3Y2NmMmNkNTQ0OTE1NzFhMmJiYWRiOTFjOTMwZGQ1ZTUwMWUzODJmNWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU0ZjNjOTEwZWEzNjQ0YWM3ZWVlN2U4Njg4M2Q0Njc3NjdmY2Y2MTMwZDBhZWQ3YWFlNzk4YmJhOGRkZTVkNjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFmNGFlNzAyMmZjNzlmMDJiOTVkMzk2NWU5OTFlYmMyMDJlZTgzYmViNzI2MWM4NWRmNDMyYWEwMmQ4Y2FmZTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c84130d83185408e9a86b63f157e3a66",
+      "statement": "The WordCount output is a continuous stream of per-word count updates reflecting the KTable-changelog duality.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/quickstart.md#L155-L252",
+          "version": "repo-lines-v1:sha256:1ce441a5f7f2aada296cb2007884f55c573c565f39d54b51a89d23c2968fc25b:eyJzZWxlY3RlZExpbmVDb3VudCI6OTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM4ZDMyOWEwYzQ3NGIwM2M1YmI5NzI0MDFmOGVmZTNlNGIxYjJjNWFmMjhjZGE2M2ExMTE5YjI1YjEzYzkzZDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVjYTkwY2VlZDBkZGE2MmRhMjc2OTk0ODcxZjAyNWY5OTZlYzYzMTUxY2RlOTZmOTI0ZmI3ZmMxY2MwZmRlNWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY5NjU4YzQ3NWM3M2VkZWQ2MjkwNDRlY2E3NDdmNzE1MzI3ZGFkMGI3ZDAwOTQxZThiMTI5Y2YxOTg0MmNjYTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjM4OGJiZWQ2Nzk2OTI2ZTVhY2U3ODlmNmZhZTYzYTg4YThiMGMyZmViMDUxMDRlODYxYmUzMzE3MjA4ZTAifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

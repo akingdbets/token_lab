@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:03ab0cc7943a4bbdcfa23bd4dbde282a9a7d0153cc58dab7f2eec171b9241173",
+  "claims": [
+    {
+      "id": "claim_3e93adc7f61041f590f8ec8100a6e5d3",
+      "statement": "Tiered storage (KIP-405) adds a remote tier such as HDFS or S3 for completed log segments alongside the local disk tier.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/tiered-storage.md#L29-L33",
+          "version": "repo-lines-v1:sha256:7ad5e8c5f4c04cffecdbee0b6c717e163de6571c4635f12a7295bc04a431134e:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzJjNGRmMDMwMmY4ZjkzMDQ2MWZmMTMxY2E2MjNiZWZlM2JlMDliNjk2ODA0MzkzODFkNmEyOWFlNzAyOTllMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiY2UyM2FlNzUyMzBhOWZkMmNlMmZiZGY4ODNiY2IzMWEyMWYyNWMxMjU1ZWZjMTY0MDMxM2UyNjAzMTNmNmZjMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWMzNWYyZjA0MDI1NDc2MTEwODQzNDJmNjE2MDJhMTBiZjVhODIzNWFhYzU0ZTFlNGE4ZTgwNGVkMzFmZmNiZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTdkN2FmMzgwYzBkNmU2OGI3ZjRhOWFlYzVjMzA5M2QzMTc5YWQ2M2RkZDNiZDJiYTE1M2JlNmEwMTBlNjI2MyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7a64d95294064294815da27d57a1d207",
+      "statement": "Tiered storage is disabled by default and enabled with remote.log.storage.system.enable; Kafka ships no RemoteStorageManager so remote.log.storage.manager.class.name must be configured, and the default topic-based RemoteLogMetadataManager requires remote.log.metadata.manager.listener.name.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/tiered-storage.md#L37-L43",
+          "version": "repo-lines-v1:sha256:79dd71372a600b92485f3504f3560e63ad199ec137ce0d380f865b044a49bcad:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmRiODkyOGIyMzYzMGZjMjRjNTNmOTE3OTA4N2ZiZDQyNzkyZTMzZDI2MjljY2JkZmE3ZmQ5ZmQ0ZmM0ZTIxMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTg4NWZmMTIxMGY5NTc3OWMwODVlYjU2ZTdjY2QxZTE1ZWE1YjRlN2NjZDRiOWYzMzU0ZDY2NmYwNzA0ZTM0NSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTdkN2FmMzgwYzBkNmU2OGI3ZjRhOWFlYzVjMzA5M2QzMTc5YWQ2M2RkZDNiZDJiYTE1M2JlNmEwMTBlNjI2MyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjNmYWViNzdlNTYxY2JmY2Q0MjE4NGU0YjJmODVlODlkMDdiYjBmMWVlZTAxYjY2ZDhiNzk2OTEzODQ1MTAwMiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c4f8be602e4a4c9293bc250d8c539f0c",
+      "statement": "Topics opt in with remote.storage.enable, and local.retention.ms/bytes bound local data before deletion, falling back to retention.ms/bytes when unset.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/tiered-storage.md#L45-L56",
+          "version": "repo-lines-v1:sha256:480f264a88ae84cd3065cd50310c793ba0c45922611edc420b20d780b8210e19:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdjYmVkMDdkY2YzNGI4N2ZlMmRlYjczZjVmMTFkODUwNWJkZmNjNGQyZTI4ZTRlMmNkYzI3OGMwOTBlNjlmZGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2NDljZTIzZjk2YWFiMmUzYzE0YWZiMjMwNmM3NjEwYzg1YzhiNmE3ZjY4NjkxMzllOGM1MjRjYmMxMGUyNWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFmZmRmYzFlNDIxNThmZGJhYTljNzcxNTUxOWIxYzMxOWExY2Y3NmU4ODU1YThmOTYzZWY0YmJhNzZhNjgzMjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZmYjUxZTdjOThlMDRhMjE2YTdjYTRmOGE0MWM1ZDdhYjVkOTk5MzI4NTM4MGRkNjQ0ZDgyNTIzYTAwZWExMTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b310e67e480a45cebaa20dd395c9aafd",
+      "statement": "The quick start uses LocalTieredStorage from the storage test jar with rsm.config.dir and sets rlmm.config.remote.log.metadata.topic.replication.factor and min.isr to 1 for single-broker clusters, and local segments are deleted only after upload.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/tiered-storage.md#L58-L139",
+          "version": "repo-lines-v1:sha256:64a9fe9e73c55b761b1959dba1033ed1fd7514af6910f83170a820a28be8b729:eyJzZWxlY3RlZExpbmVDb3VudCI6ODIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVlYTc1NTJiZjQ0ZTA0OWIwMzRjNzQ1ZjVlMjRjZDRjZTk0N2Q4ZWJjZTY5MjA4YTA4ZDMyZGQ2M2FlYzdmZjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRkOTk0MGE5M2QzZTZjNzE2MTdhZWI5MzJjOGZjZmNiYTY2Yjk3NWQyNDk0YmI3ZDRkNDc3M2ZjZTMxZTcxOTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU5MGUzODRlZTQyYzQxMDNkMDZlZWNhMGI2YmFhMjZlYjdhZTkwODFjYTU4YzFhMDIyOGQ2ODlkM2YxMTY5MWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJkYzYwNjQ2YTE1ZmQ3NjcyYTdjZDllN2JiMmNiMmU1MGRkOTYyODFiOTIzMDkyNTEzOWFiZGIxMDAyNmVkZTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_087d9d5ca068495c85613fd121fb52ef",
+      "statement": "Setting remote.log.copy.disable=true makes remote logs read-only and requires local retention to equal total retention or -2, while remote.storage.enable=false with remote.log.delete.on.disable=true deletes remote logs; disabling cluster-wide requires deleting tiered topics first.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/tiered-storage.md#L141-L168",
+          "version": "repo-lines-v1:sha256:67ec1791106d77fe5938898b0d78425a21ef5f10b76497549ba7582027d8fc3c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA4ZDI4YTVmOTZkMWI0ZGI4NmYwMjU1Zjg2OTdmNDJmMDk1ODg4NzhhMjgxYjFkZDE4OGI4NWFjMzNjNWYyZjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYwMjA0M2E3ZTdiYzlmMmIyOWFjZjViMDQzN2YzZjM4ZGYyMjM3MmYxNDI1MzZmZGY4ZWMxMmRiYWZiOTU3NDMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFhMjY2YTZkZjg3NzVkMzZlNzQzYjYzYjhiYTgzZWFhZTg5OGNjMjBhZjk3OTg0ZmNlMGVmOTI1NzkxM2U3ZDMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5fe6b6a0e6a2404cbbdbaf99f24318eb",
+      "statement": "Tiered storage does not support compacted topics, requires clients 3.0+ for admin actions, and does not support segments lacking producer snapshots from topics created before 2.8.0.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/tiered-storage.md#L170-L181",
+          "version": "repo-lines-v1:sha256:8b5b20f9acdbf3ddbbc51a3034a66a2648660a99d37abec2fdc361b5a3485700:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0MzI2NmZiMmJjYWJjN2VhYTUwNTExYzg4YjJhZDg0NjkzNzFkYWUzOTJhZTc1M2RiYTZjYjA1MzdiNWIyNzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4ZDNhMDUxMjYzMGEyNzFlZWRmNWJhMjEwODE1N2ZhZjYxMTdjMWQ3MGEyNGY0YWRkODAxMTRmYzdhOTNiZTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRiYjU0M2U0ODNmOTlmYjBiMTA2Zjg2ZGJlYmRhOTNkMjlmZmIyZWIyMWI3NjI0MTJmNDgyMTQxYzNjYmJkMDYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3e2c1b3a807d42669fe36dce837efc51",
+      "statement": "TopicBasedRemoteLogMetadataManager configs use the remote.log.metadata.manager.impl.prefix, and its admin, producer and consumer clients can be configured via remote.log.metadata.common.client., admin., producer. and consumer. prefixes.",
+      "evidence": [
+        {
+          "resource": "repo://docs/configuration/tiered-storage-configs.md#L29-L54",
+          "version": "repo-lines-v1:sha256:f0991066e583d9eea2a07391d22b8c7dc339e1c9cba63352de23aed9f6b26467:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJlMDlkODFjNjg4NGU4NDUzYjUzMjA1YTQyMDY3ZWE3NDlkZjcxZTZkNGVkYjU2MGNmOGY5YmVkYjBlNjY3N2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJkZWNmOWM0YmZlNDNlYjA0NTMzMThiOThkNTYxZWQ0Y2NlOWIzN2MxMWQ5MTBlYjRiMWJlOWY2OGNmNzgzNjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljMzVmMmYwNDAyNTQ3NjExMDg0MzQyZjYxNjAyYTEwYmY1YTgyMzVhYWM1NGUxZTRhOGU4MDRlZDMxZmZjYmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:42597e7ee45001a2b82fa335e57db1f810d5f5acf9ed7cf87cb02af478e4fc9a",
+  "claims": [
+    {
+      "id": "claim_138905b12b784e0bb19be4a7e93fc032",
+      "statement": "The JVM-based apache/kafka Docker image is available on Docker Hub from version 3.7.0 and runs with default configs on port 9092 via docker run -p 9092:9092 apache/kafka:<version>.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/docker.md#L29-L49",
+          "version": "repo-lines-v1:sha256:2b155ec67f65666040741e6ab147d47c95d8bb22ae41cc3633897dcda5e637a1:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMzOWExMjBmNjA0NWUxNGRiNDg0NGQ2ZjgyNDZiN2ZiYTMwZDdlM2Q2N2U2MDhlNGIxNzQxOTAxOTBjYzE4ZjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljMzVmMmYwNDAyNTQ3NjExMDg0MzQyZjYxNjAyYTEwYmY1YTgyMzVhYWM1NGUxZTRhOGU4MDRlZDMxZmZjYmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEwMWNjMzgyNzlmZjM0MjM0M2IwYjFlYmYzNzQ2ZGNlYjIwZGRjZGNhYjU1YzYwYzlmYTc1ODcwMWM5YTU2YjIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_32ee87924e3f4592bd0fa21f8710c5e3",
+      "statement": "The GraalVM-based apache/kafka-native image is available from 3.8.0 and is experimental, intended only for local development and testing and not recommended for production.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/docker.md#L51-L72",
+          "version": "repo-lines-v1:sha256:7c51e40f5b3afaa8f7eebc4042c1ab94317191a57ddc9fd0c744b1eb89166e43:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0ZjhmNmRhOTkzZDY0NDlmMzg3ZWVjYTkxYzAyMTcyNGY3NjUyZmE1NGU2NTI2Mjg4M2Y4NGMyMjk3MzQ0OWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg2ZTg4NzFhZDg2YmVjNDZkMzE4NTBmODg0NWI2M2RiODExNDA3ZDA4ZjhmNjU3MzRjOTllYTA3NTZkMDBjM2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ3MTQxNTg0NTMxMGVkZDcyYjYxYzYzYThjNzczMzU1M2E1OGZlOTlmNzFlZTk0YjY4N2I0ZDQxMzFlNjc0N2IifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_631f01fa5be94797893923e26b6a6f6e",
+      "statement": "The quickstart offers the JVM and GraalVM native Docker images as alternatives to running Kafka from downloaded files.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/quickstart.md#L38-L93",
+          "version": "repo-lines-v1:sha256:f3b2b800e5bb9e779922f459de62e12054ac606d477f6a6bfe5192a30716617c:eyJzZWxlY3RlZExpbmVDb3VudCI6NTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYxZGJiYWEwM2I1NTkwMDgwMDY4MzUxZDNiYzA4MzZmZGFmMWNiZDdiNTMzYzI1MWQ2M2ZlZjllZjU0NWRiZDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU1Y2VkN2FhN2U2ODc2ODBiM2ZiMWUzMGVhZmRmOTUwODZjZjVlN2IzZGI3ODQxMTY3OGZhNTQ2ZjEzYmY2N2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE1N2RkMDc5M2M4MmYzODA3YjNkZTM1NjQyYTlhMTJlZjgwY2EwYTRhNTE4ZjVjOTJkY2VhMDdmNDhkZTk4YWQifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

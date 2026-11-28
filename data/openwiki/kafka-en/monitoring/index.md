@@ -1,0 +1,4 @@
+# Files
+
+- [Monitoring Brokers, KRaft and the Group Coordinator](broker-and-kraft-metrics.md) - How Kafka exposes server metrics over JMX and how to secure remote JMX, the broker MBeans to graph and alert on (throughput, request latency breakdown, under-replicated/under-min-ISR partitions, idle ratios, quotas, log size), group and share coordinator metrics, tiered storage metrics, and KRaft quorum, controller and broker metadata metrics with their normal values.
+- [Monitoring Producers, Consumers, Connect and Streams](client-metrics.md) - Client-side Kafka metrics and their MBeans — common and per-broker network metrics, producer buffer and transaction timing, consumer poll and new-protocol queue metrics, consumer group coordinator metrics, share consumer metrics, Connect worker metrics, and the Kafka Streams 4-level metric hierarchy (client, thread, task, processor node, state store, RocksDB, record cache) with recording levels.

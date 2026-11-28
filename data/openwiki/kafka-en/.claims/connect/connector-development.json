@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:eadf3fdd9690c2df95a889d950100bbe2cd5f2c986dc7952e3dfff1edbf4e3bb",
+  "claims": [
+    {
+      "id": "claim_7125d97370b54d26a36307f5cd4945dc",
+      "statement": "Connectors do not copy data themselves; they split a job into SourceTask or SinkTask instances distributed to workers, and records carry source partitions and offsets that the framework commits periodically.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/connector-development-guide.md#L33-L45",
+          "version": "repo-lines-v1:sha256:9c2f1457ba4f618b5f852e13e03ee256fe9fe5d87e54992629880850c6954997:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ3ODNhZjdkNjRlOTQ0M2U0YjhmNmUxYzk2ZjhlOThjYjY1OTM0NzU3MTMxODAxZDZjNDhlNTA4YmIyMzMzMGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjljYThlZjE5YTRhNjRiYmYxMGU3MGIzMjFhYzVhZjE3YWRmZGE0NTRmNjQ3YmM3ZTBmZTNlMzlhMmI4MGIxMDUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY2M2EzNTc0YmNhNTk0ODVmZDZiYWQxMTJlZGU1YzRkZGZjYjgyYWVmZTI2MDdiZjQyOWRjMzMzZWNhMmNlMTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA1MzMzMGYxNzhlMjdmOWUzNjllMWUyMjU2ZDhiMGI3NDI0OTgxODZlYzNlMzNkMGZmMWRhMzlhZDdmY2I0ZmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fa9556c26286450490af3de1f5b2e413",
+      "statement": "SourceTasks run on a dedicated thread, so stop() must be synchronized, and poll() returns SourceRecords built from a source partition, source offset, topic and schema/value.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/connector-development-guide.md#L122-L183",
+          "version": "repo-lines-v1:sha256:371a8f42289ab65db24df4f8dabe4cdcfe4b3ff6135e77f845a93f7df6a050fd:eyJzZWxlY3RlZExpbmVDb3VudCI6NjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzMGFiZDZlNDZkOTliNjBkODRhZGUyYzkwM2IyZjU5NzI0YWJjMWZjMzBhZDY2ODlkNzc2NTk0Yzc2YzA3YjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY3NjUxMTUyMDczYjNiMjI4ZmY0MDYwNTMwMmQyNzI0NDUxZDVmYjc5MGQwMTE3MWNmOWEwZjJhZDFkZDI2ODgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk0NzIyNjhkNDdiYTUxNTgyMTY4ZmQ1MzIxMGYyYWMzZTk5MDE5M2M2ZTM4MDllMmIzMTI2MTEwZDU2ZmQ0YzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJjN2M3MGU2NGY0MjM2NzU3MjgwZWQ5ZWUwYTk5YTIxZGMwMDRhZjRhZmY1ZWYwYmZkMWZmMDEwMmRiY2U0YWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2614ee23762d47a4a074caaa9d833c78",
+      "statement": "SinkTask.put() may buffer records, while flush() is called during offset commit and must push outstanding data and block until acknowledged.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/connector-development-guide.md#L187-L206",
+          "version": "repo-lines-v1:sha256:d745d9e4dc52704d45aa84bdb937f52b75c3134b662fcde2e6e229836332d909:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFhMjNjNjM0YjBkNzFmODQ4MWQ3ZDQ4YTMxNWVjZGQ1MjRhMzgxYjdmOGEzZWE3NmE3NTc1Mzg2MWNjNGUyZWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0MDM4ZmVhNzc0ZmZhMTNkZjMyMzQwYjM1YmVmMzE1NDJlZDNlOTJjM2ExOTgzOTY3NzJlZjQyMzA1YzkzYTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJjN2M3MGU2NGY0MjM2NzU3MjgwZWQ5ZWUwYTk5YTIxZGMwMDRhZjRhZmY1ZWYwYmZkMWZmMDEwMmRiY2U0YWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEyODc1MWMwYTJlYzI1YjJkYzdkYmJhN2Y2OTY5NTcyZDMwYzM5NmFmZThkZTViZGQ1NzZlN2Y4YTQ2ZDE3YjYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f9de8fac3de040a0bb11623811b9ca91",
+      "statement": "Sink tasks obtain an ErrantRecordReporter from context.errantRecordReporter(), which may be null when no DLQ is configured or on runtimes earlier than 2.6.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/connector-development-guide.md#L208-L243",
+          "version": "repo-lines-v1:sha256:3f9b704a2bbc57c41c934cf1ce4afb469cf9c35780d9c64ab7b3d071e4a8deda:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYyOWI3MGE2YWZiNGU2YWVlZGRiYjQ0Mzg4MjBkMTM1ZGE4ODJkMjMzYjZhODllZGE1YWVjMmVjMTFlOThlY2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ0M2UxNjA1ZTU5MmRiZjUzM2M2MjAyODNiN2Q5NGVjZThiMGRjY2Q3NzgzMzhjNmM0ZDQ1OGIwMzI0NjAxZmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQzZjRmOTkwMmZjOTQ5MTJkNzU5ZWQ2MDkwN2E3NGEzZjBkMzcxZjMzZTIxZmI2OGE5NzgxN2FhNjUyYTg1OTcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cf7243f47efa49d7aeb3cfcca7fe5b0d",
+      "statement": "Since 3.3.0 (KIP-618) Connect supports exactly-once source connectors; by default each poll() batch is one transaction, and transaction.boundary=connector gives tasks a TransactionContext, which is null otherwise.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/connector-development-guide.md#L263-L322",
+          "version": "repo-lines-v1:sha256:97b920b97e8d684342b3a6d513a748fb0f5d0f7b1288bfca2d191ea4309d4878:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVhZDIxMjA4ODQwNGExYTliNjg3NDRkMjg1Y2U0ZGNkYzk1NzdkMmI1YTc5YTQ0Y2IxODc3MDAyYmU1MTdkZjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZlOGM0NDA5ZTExNTlkNTJjNjQxNmQ5NTVkZjQyZjc2ZjA3NGEwZjM1MmNmMDRmY2NmYTZjZDBiODBmMzZkMjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY5NGFkNzE1NjNjZGNjZWZiMGFmOTBmYzY2ZWU5MDA5Y2U4OTViZmEyMGY3NjU1NjEwYWQ4Y2VmMzMwZjI2YTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8ec69ca5bfdf4998afe4ff42c586870a",
+      "statement": "When exactly.once.support=required the framework calls exactlyOnceSupport(), and canDefineTransactionBoundaries() is consulted for connector-defined transaction boundaries.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/connector-development-guide.md#L324-L366",
+          "version": "repo-lines-v1:sha256:0aeef15eea74db1a8afc255a44f924b85490729b610c4ed8908764c62f58c036:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIzYjE3MzMyMDQwMjMwMTk0MTI1N2UyMGE0Nzk0NjkzMmFjYjY2MDMwYzYzMjU4MmVmODMwNTlmOTI3YzRiNDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE4YzNjNzc0MTAzMDQ3YjY2NDBhZWM0ZTI3YjVmMzUwOWNjYmYzM2UyNGU0MjQ2NTlmZDA0ZDM2MzRmNmNlMzMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg4MDkxOGFjNjQzMDcwNDAzMDA0MzI3OGFiYjE2NzAwMWM2ODM0M2ZjNWEzYWRmN2Y4MmI2MTY5NTI5Yjg0YWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIyMTg2NjM4M2JiMjM0OGFmMmQ5ZGM4MDlmYmQzMmMwNmZhYzQ5OWU4OGQ4ZmFmNzU4MDU3OWZkMjcwNzUxNDUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bef3628660f84518824e06fec7750ee0",
+      "statement": "Source connectors trigger task reconfiguration via context.requestTaskReconfiguration() when the set of input streams changes.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/connector-development-guide.md#L368-L383",
+          "version": "repo-lines-v1:sha256:ed4a0a8f58291f3b216b71e5290d199912ad65354fdf1bdd619d25f4e40866b7:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1YmM4NWFjMmY3NTJkMjA0NTI2YmRmYmNlZWMxODIzZWRhNWVjMDM4MDlhNjZhNmQzM2U2MzBhODc0Y2ZiOTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg3OTNjOTA4NDMyYTNjNzQ0NDQzOTAzOWU5NzQ2MWNiYWRmZDNiN2ZlY2Y2YTFkMzUxMTIwZjc4ZDU4ZmUwYjQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYwZjczNmQ4YjQzZTU5NTcxYWY5NzVhMGYyNGQxNTMwNDc1M2I2ZTZmNWQzZDM0MWFlMDJkZDY5NTYzMDdiYjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ2NTdhNmQ1ODQ4ZTE4NTBhYWY0YTA1MmE4ZTk5OTcxOGYzYjNjYzEyMDQxYTQwZjYyYTFhMmQ4ZTU4NWU0MzAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_51c59035531d40b5bf2cdf8c9c4a143d",
+      "statement": "service_load plugin discovery requires META-INF/services manifests for each plugin supertype such as SinkConnector, SourceConnector, Converter, Transformation, Predicate and ConfigProvider.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/user-guide.md#L489-L514",
+          "version": "repo-lines-v1:sha256:a16fee584d4ed15d9d7e0d19c422341a1c0f1e97450da077d1ba524a11b50808:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNkZDdkNWRjNDk1NGY4ZmMyYzc5OWI0OWI2MGFiYTRkYzMzNDBiYTQ1NzQwOWVhOGViZmE2ZGI5NWM5M2M2MGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI4MGMwNTMyYWVmMWVmMmUyMWVhYmM5ZjAzYmE1MTc1MmQwOTNmMjdjNGY3ZDU4N2I4NDcxOWZmMmIwOWJlNDYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNmMGI1OWRhOTgyYWY5NTg3Y2I0NTA1ZTg3NzczYTk0NWMyYTEzOTdjYzBiMDgyODhkMmYwZWUyYTk3YThiOGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ5OGYwNDQ0YWNjODk3YTFiNTFlNzQ1ZTE2OGRlMjM3MGE2NjM3OWEzNjdjYWM0MzdkMmVhMmY2MTUwNjVjYjMifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

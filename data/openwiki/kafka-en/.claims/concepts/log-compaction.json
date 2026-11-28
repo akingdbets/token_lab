@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:6eb5bea46164dc7f9601930b04f3a5b808f7fd82af3995ed2f5b29c295afb2d7",
+  "claims": [
+    {
+      "id": "claim_3b50c124d49a4d1a89fc66917ff808dc",
+      "statement": "Log compaction retains at least the last known value for each key within a topic partition and is configured per topic.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L368-L368",
+          "version": "repo-lines-v1:sha256:bb10ce8833c7b8eccc051afcb79f2c91ab61b81f508bf49a8536640e2cd6de7b:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmIxMGNlODgzM2M3YjhlY2NjMDUxYWZjYjc5ZjJjOTFhYjYxYjgxZjUwOGJmNDlhODUzNjY0MGUyY2Q2ZGU3YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmIxMGNlODgzM2M3YjhlY2NjMDUxYWZjYjc5ZjJjOTFhYjYxYjgxZjUwOGJmNDlhODUzNjY0MGUyY2Q2ZGU3YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZmZiZjE2YTNjZjY2NmE1MWFkMzQ1ZmIwMWIzYzBlOTJiNzY1NDU4YWI0ODJmNzk1ZTg5MjNmN2QzOWNhZDk2NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjU3ZjdjZTliYzNlM2JiZGRjN2I0NmI3YWJkMWQ4NmUzZmQ5NzVjZjZkMzMxYzQ5YjFlZWJkMTA4M2E0MjgyNCJ9"
+        },
+        {
+          "resource": "repo://docs/design/design.md#L397-L397",
+          "version": "repo-lines-v1:sha256:3a374e861b0086ca77f41db70d99a7ecf96373c78000a2494382b196fd90b68e:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2EzNzRlODYxYjAwODZjYTc3ZjQxZGI3MGQ5OWE3ZWNmOTYzNzNjNzgwMDBhMjQ5NDM4MmIxOTZmZDkwYjY4ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiM2EzNzRlODYxYjAwODZjYTc3ZjQxZGI3MGQ5OWE3ZWNmOTYzNzNjNzgwMDBhMjQ5NDM4MmIxOTZmZDkwYjY4ZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjhiNzRmYjQxNzUzODRjOTZlMDg3ZTc4MjVlN2VjZjBkNDllYTIzMDliNDg4ZjlhOGFmZGE5YmE1YTExZjUxYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDI4NjMyNjE0NzE5ZWMxNWRiYTZiZTc4OGFjMjc2YjhmYTMwNWYyODFkN2E2ZjZhZjc3NjExNjM2NjgwYmU0ZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_eae03707baac4bdebcd8b3e490101f12",
+      "statement": "Compacted messages keep their original offsets, and a record with a key and null payload is a tombstone that is itself removed after the delete retention point.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L403-L411",
+          "version": "repo-lines-v1:sha256:c06aa46cb3d8934432377dfb49ac3c4d79df204efdefe24d4f559d9c10301b9d:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWMyMmY2ZjljNTczMGMwY2ZjNjcyMzI4OGJiY2VlMTJjZDU4MzcwYjQ0ZDZlZTYzMTVlYzY5ZDU3NGMwYWYwNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTkxOTdiZWE4N2ZjZjg1MGRhNTRlNDEzMjljODZjOTJhYzExODYwYWMxYmM4YzU0YzYxNDZjNzk5ZmUxYzgxYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjljNjU0OGZhNzY1NGI3YTgxNDUxNDlmZDdhYjA4MjQ5NjYxNmFlODg5OTk3MWI5OTIzY2M1NTI4MDEyNmZiMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYmZlODYzODNhNGUwZmM1YWU3YzhhYjJkYTkyNDEzYTkwYjUzZTFhOTJlMjZmNTkwOTBjMmE0ZTNkODliOTFjNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_8902c26e9f0144a5af62e373ec185104",
+      "statement": "Compaction never reorders messages or changes offsets, and consumers starting from the beginning see all tombstones only if they reach the head within delete.retention.ms (default 24 hours).",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L417-L424",
+          "version": "repo-lines-v1:sha256:3458e63019d4f750dc51ad250d4b0e6e6d079b5572f83630832d7070d56a7e51:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2M5NGYyYWEwMDRlNTQ5NDJkZWMzMGE2MTk3ODM0MTI1MmY4MjQwMWE2ODQwYjYyMjdkYTQwYTAzY2Q2MzYzMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDk4NWRiYTIyZDUxNTZmYWYzMmUxZTVkM2JmZjJkYjYzY2Y0ZjI3NTQ0ZWJlOTI3MzQ4MWQ3MjExMWY3ZmJiYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGM5MTlmNWJhYWIyNTk0MDFiMWQxZDMyNzkwNDJhNDU5NTJmMGZmZDU2NWE3ZWZlN2MwODFmM2I5MjliYjYxOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzNjNDIwZmViNzkyNjViODY5MDJiM2I3MmJhNTM5YTVmNGFlMjEwYzE0MDkxMzFkOGY2NTVhOThkNjM0OTdmMSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_187c774d562e48d3bc1c83f9feed87dc",
+      "statement": "The log cleaner picks the log with the highest head-to-tail ratio, builds a 24-byte-per-entry key summary, and recopies the log swapping in clean segments so only one extra segment of disk is needed.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L427-L434",
+          "version": "repo-lines-v1:sha256:e48e971b7dd8f4747b0bb7323642eed9f77886ce2884ed6774ae8e95944eb084:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMWQ4OWNiMzBmMDE4OWMzN2I2OGUyMTBhOWUyYTc5Yjk3YjRkZWRkZmZmYzA0NWE0NWU2MmMwODNlMzEwNzQ4OSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzI0ZWRkYzhlYjkyOGI3NGFkZDVjNzAxOWQyNTc2ODY5YmUzYzExMTdmN2ZiMDBjMjRmMmE0NGUxNjdkZmFkMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDVjOTQyYzhiMjM3ZDg3NDExYTI3OGY5ZTA1YTQ4OTJkMzBjYmNhODIwNDcwMDNmZmRlOWYyMTExNWRhYzljNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjg0YTk0NTlhZmNkMjFhZDVlYjE5MGQxZGJjNmU0YjExOTA3MGQyMzMxNzdjZjkyNzNhMGMwNDRkNDY3NDk5OSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_038a43eb171d474496884a5a2b2a6cf2",
+      "statement": "The active segment is never compacted; for compacted topics it rolls at segment.bytes or at the smaller of segment.ms and max.compaction.lag.ms, and max.compaction.lag.ms also makes rolled records eligible regardless of min.cleanable.dirty.ratio.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L451-L459",
+          "version": "repo-lines-v1:sha256:5e7afd286a1be3dbd0fb2ce694c7a44a1b2709dcc61bb734cd3357bf2a39e6a2:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTRhYzIxYmNiNTZjYjU5ZjA0OTk0Y2Q1ZWJkMmMzNzgzY2RlMjIwMDQxMTI2OTNhZDkxN2FmY2QxNjE1MmY3NyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDY3NDg3Y2RjYjQ3ZTc3M2I5ZmY0MmVjNjIzYzMwZGRhNGVmYzljOTdhMzhmMGYyNTIxYzMyNTVkY2Q3ZTlkOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWExNDJhMmZkNzY0MDY2N2NmMjI1ZTY4NmM3N2NjYTg0MDRlOGUxMTdkOTgxZTJiMjZjNjZjM2YyZGQ3YjBhNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDU0YWVlMzUzZDgzYzQxZjM0MWE1OTYzMTQ1ZGJiZDkzMzU1YTA1ZmEyMjQ4NGNlY2JiMzZkZGM2YTExNDQzZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7628a6281c3c4bde84e4f86f0ba0c2c6",
+      "statement": "cleanup.policy defaults to delete, accepts compact, both, or an empty list meaning infinite retention, and delete.retention.ms defaults to 86400000.",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/topic_config.html#L3-L12",
+          "version": "repo-lines-v1:sha256:eb890a444794ae63a6e73221721b8a5edffd6edc33c77d2290aa127a26cf4a39:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc5MzRiNDEzYzcxNDdjNTI0YjRmZDUyZGVmNjFlMDBjODA5MDlhZTk1ZTE5MzA3N2Y2MzJmMzA0MWE5ZWQwNzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiOWZjMGYxY2NmOWUyZWQ2MjMyMzczZjAwOTFlZTAxNGFmNDJmNjg2MzEzMzZhNmE0ZGQ5NDdmNDIwMTE0NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjoyLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMwNTk5NGExNGYwODUzMzE2ZTk3MDVlZWMxMWFjYjVhZGExOGY1N2RhYzAwN2ZiOThiNjQzMzdjMDJjYjk3NTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFkM2NiZDEwYTUxYjJmZTQ5YjBiNzViNmU5ZWEzZGRkNjY4YzFhMmY1OGU5OWU3M2E0ZmVhZjQyODFlZGEwMjQifQ"
+        },
+        {
+          "resource": "repo://docs/generated/topic_config.html#L58-L67",
+          "version": "repo-lines-v1:sha256:e0f7318dcec255389daa73d3d301872a139240900d007939028054aedf504e41:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM3MjBiZGY5Y2EyZWRlNmNkNDlmMDk3YTNlNWRjMzhhNzMyNjM2MmUxNmVlYTM4MGQwNzVlYWUyODQ1MjllMzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiOWZjMGYxY2NmOWUyZWQ2MjMyMzczZjAwOTFlZTAxNGFmNDJmNjg2MzEzMzZhNmE0ZGQ5NDdmNDIwMTE0NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM2ZDJmMjE1MjNhMzcxYWMxZjlmYTllNDU4M2EzNDlmOTA3MTBiYzdkNTIxN2FjYTBiYmJjNzliZDI2OTIxNmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d860bcb64e724245995bdfce484cd81d",
+      "statement": "log.cleaner.enable is deprecated for removal in Kafka 5.0, and cleaner thread, I/O and buffer configs can be updated dynamically at cluster-default level.",
+      "evidence": [
+        {
+          "resource": "repo://docs/configuration/broker-configs.md#L147-L158",
+          "version": "repo-lines-v1:sha256:7d955345dedc70953ca7eb01688cec20035125e143fc94e142d524bed01d6a73:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgzMmQzMTIzMjdmMjRkNDM4ODRhZjUzZmI4NTFlNWIwYWEzYWQyNWUwOTYyYzVkMzdkYjdlMGRlODYyODlmYzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZmY2UwMGFkZDFiNGNmN2Q4ZGQxYmNlMTU2NTIwMGY4MTBjM2Q4MzllODZmMTk1NDZhYzRiNGUyMmJhMTY3OTEifQ"
+        },
+        {
+          "resource": "repo://docs/generated/kafka_config.html#L1939-L1948",
+          "version": "repo-lines-v1:sha256:0d2b5fd5a9cf9a624608db68d0fea2084ab8b47781968f54cf2ccd8cd616f10c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA0ZDk1NGIyZDdlMDU1MTdiNzRhYTA4YjNiNGNiMDM1ZWY3NjViZGVkYWE5MmNhMDgyYWRkNGE3YzMyNzk4MDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiOWZjMGYxY2NmOWUyZWQ2MjMyMzczZjAwOTFlZTAxNGFmNDJmNjg2MzEzMzZhNmE0ZGQ5NDdmNDIwMTE0NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFlMGYyMGY4Y2U5Yjk3N2I1MTJiZjUzM2JiYmU3NDNiMmJkM2IzZjJlYzJjYzFhYzQ3ODY4MzYyZDFhOWY5YjYifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:c850efaaabb59305707954c1b8c17e933475aeaf096449125f8b6f28312cd6ec",
+  "claims": [
+    {
+      "id": "claim_2c073e2a948840f997f32987af7dd35c",
+      "statement": "KafkaStreams listeners must be set before start() or an IllegalStateException is thrown, and the uncaught exception handler returns REPLACE_THREAD, SHUTDOWN_CLIENT or best-effort SHUTDOWN_APPLICATION and must be thread-safe.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/running-app.md#L47-L86",
+          "version": "repo-lines-v1:sha256:fe06e7240e90959a95c9c1c97e429c06d4c79ba453f9ade16eb1889aa46a629e:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjZjZjZGYzNmE2NGEwMDMxOGQzMTc1MDZkNjM5ODVmZDQwYTcwMDc5OTAwYWRkNGZjM2VhZDM1MmIzMDhjY2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRkOTc5Mzc4YWYyMTI2ZjY0YjNmZjk3N2IxNzZmMjU5ZmM1YWY4MzdiN2JiMzdmNWMwNGU3ZjliNjZlNTM1Y2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhkY2RmZTIxYTY2YmExZWQ1NTUyMGI2MzE5ZWNkNzYxZGQ5NDhhZDNmOWM3YmU4ZjgxNzUwNzZjNGZlZmFkMWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA1NTViZjU5Y2RiYmFmNmExZTk1YzE4MWIxNTE5NDdlZjYwZDQ4YTc5YzE0OWQwODViNjg1YWM1NjcyMjViMDMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d8c120c0edff44049821f5c99ff48dc0",
+      "statement": "Migrated tasks restore state fully before processing, and since 2.6 warmup replicas restore in the background so active stateful tasks are assigned only to instances within acceptable.recovery.lag when possible.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/running-app.md#L185-L198",
+          "version": "repo-lines-v1:sha256:f149a274588177b1c10dc6924a2c3bf1eac6db6186e1936f403554f8d9b12c58:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmNmFmY2FhNzQ1OGQzZjIwZWEyNDE5MWY0MGE0YWQ1N2FmMDdmMTVkNjFkMGU2ZGFlNWI3OWU4YjMxYmY2NGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3N2QxYTY0OTkwZGZlM2YzMjdiODc4MTg5ZWJmZTM1ZWVmMWY3NTY2NWYzNzFjMzYxYmVkMDRjYzhiODQ1ZWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdlZGU3NTcyNTIwMzY3NjUzZmExM2JiOTI1NDQ2OTIyNmI2NmU4MzVmM2Q2YjIxZGNhYjM1YmUwMGU0YmY5NjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE3MTk0ODI2ZTFlMjkwNDIxNDM3YmZlZDM0ODUyOGY5YTI0ZGFjMjlmNzZkNjY4ZTlhMTFiYmY2NWQ2NTY2OWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6ff2faa49e7944afb8c0331e48a7242d",
+      "statement": "A crashed Streams application enters the unrecoverable PENDING_ERROR state before ERROR, requiring a restart.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/running-app.md#L213-L218",
+          "version": "repo-lines-v1:sha256:b66d7f29b912253e7218661356104feb4d29600e6f4269bd3c8672a30a472621:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTQ2N2ZjNDk1OTgxOGFlNzhmYTE3NjkyNzIyMDFmZWMxZWE2YzFmMjhlN2E0MjM2YWQ1MGE2MTBkZTEyM2Q2MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMWU0ZTNmZWZiZTM3NjczMmY4OGM3ZGQ5NzBlMDQxY2NlMGZkOWQ1ZGYyZDY3Y2Q2M2RhY2JhNDczZDgwYjAwOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNmEzY2Y1MTkyMzU0ZjcxNjE1YWM1MTAzNGIzZTk3YzIwZWRhOTk2NDNmY2FmNWJiZTZkNDFhZDU5YmQxMjE2NyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNmEzY2Y1MTkyMzU0ZjcxNjE1YWM1MTAzNGIzZTk3YzIwZWRhOTk2NDNmY2FmNWJiZTZkNDFhZDU5YmQxMjE2NyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_26f8cce4106046e492f98381d350a75e",
+      "statement": "Internal repartition topics use cleanup.policy delete with infinite retention, key-value changelogs use compact, windowed changelogs use delete,compact with retention plus 24 hours, and versioned changelogs set min.compaction.lag.ms to history retention plus 24 hours.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/manage-topics.md#L53-L72",
+          "version": "repo-lines-v1:sha256:4a0dc586eb3476835c95031dfbf94cb8cb56a16b0a5f9509736c795a63bbcaef:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2YzI5NmI4MWQ4ZDY2YmVlMjY0ODZkNmJiN2NmNzNjMzEzNThjZmNjYzUxMmZhOThhYWVjZWFkNDBlOGJiYjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjliN2JmM2M3NWE4Yzk1YTIzZTkxNzNmN2JiN2RiNTU5N2E2MmJiNTVmOGRlMjY0ZGZjOGYyZDczZmEwN2I3OTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a8e99a74779e40168bd9ae21bd71432e",
+      "statement": "The classic application reset tool resets input topic offsets and deletes internal topics but does not reset output topics or local state, which must be cleaned with KafkaStreams#cleanUp() or by deleting the state directory.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/app-reset-tool.md#L27-L143",
+          "version": "repo-lines-v1:sha256:cf409943f565e34083b291911ff013b7726a84c132ec6f45be1ac2a938f9ed0f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE3LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIwMWJhNDcxOWM4MGI2ZmU5MTFiMDkxYTdjMDUxMjRiNjRlZWVjZTk2NGUwOWMwNThlZjhmOTgwNWRhY2E1NDZiIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIwMWJhNDcxOWM4MGI2ZmU5MTFiMDkxYTdjMDUxMjRiNjRlZWVjZTk2NGUwOWMwNThlZjhmOTgwNWRhY2E1NDZiIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIyMWM4ODIyNjM0Y2QzNGQ4M2Y1NTExYWVjNmUyZTFkMTYzNzVmNDllNjdlYjkyNzgzYTE2ZTQyNGI5ZTRiYWZiIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_fe4a79abd4ee4793965259115d80d0a5",
+      "statement": "With group.protocol=streams, applications need Read on their group, Describe on topology topics, and Create on Cluster or internal topics only when auto-creating internal topics; prefixed ACLs on the application.id are recommended.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/security.md#L49-L164",
+          "version": "repo-lines-v1:sha256:c3beade2a7cb3c6169e6fd99889120a7811c50c96f48af1c48dcd7b3274701bd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI1MmRkZGYxZDcyOGY0ZjNhMDYyMTIxNGU0ZWM0MWNhNTMwODAzNTk0MTljNWZiMTE3MmE0MTUwM2ZhNjFjODc3IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI2MjBhNTM3OTVlZmIxNDQxM2Q0N2E1N2MwNDgwMjE0YjIzNDQ5MGJmOWU5MTQwMTM2OTA2ZjcxYjA1YzRiMjg5IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIyY2U0OTRmMjFiZjQ0YThkMmVjNjdhZDRmM2JjYzE0ZDUyNWVkN2MxYzgyNmJkZDNkZWQ2ZmVjYjM2MzQyYzA4IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI3MjFlNTkxZjEyMTQyOWQ4M2ViNTE5ZWMxMTc5YWZlY2IzNGQwNDFlMjJkYjg5NTAxYjc4MWUzZjUzMjg3MTU4In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_9a23f4abc39140c2b9681376d5b9b0aa",
+      "statement": "The KIP-1071 streams rebalance protocol is enabled by default on new 4.2 clusters, toggled with the streams.version feature, requires 4.2+ brokers and clients, and computes assignments on the broker using the default sticky assignor.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/streams-rebalance-protocol.md#L30-L107",
+          "version": "repo-lines-v1:sha256:686f69579960bdb8b5f9d965ce27f1a7a184045d440a36fb46e48cad528c3af7:eyJzZWxlY3RlZExpbmVDb3VudCI6NzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg3NWRjZTBlOTk3MDc1MjVmZDdjYjA2Yjg2OTFmZjVkNzgzZWY4ZTExNWViZDQ3MTY0ODg1ZWRiMmU0MGM5MDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZlNDFmMzY5NWU4Y2Y2MjFmOWIyYzYwMDQyNWFlYmY5OWIwOGVmNmM4NWU3MjA4YTNkN2Q2YzYxNjIxNGE5OTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ4ODA0NDMxNzUyMzAwNWVlY2M1MjBkYzA2OTVlMDcyNzAxOTJkN2IwYjhmZTFjZTZiZmVmYWMxOGNjZDZiYzUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_227dd3e2091a4f5590e129e20a27816e",
+      "statement": "The streams protocol ignores client configs such as num.standby.replicas, acceptable.recovery.lag, task.assignor.class, session.timeout.ms and heartbeat.interval.ms, and does not support online migration, regex subscriptions or warmup tasks.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/streams-rebalance-protocol.md#L58-L173",
+          "version": "repo-lines-v1:sha256:cfc747d7d5660f80dbe33f51fa178a566c43533646ae144ed798dcfb3a5a921f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJlNWY0MzlhZGE0Mzc5YjIxZDgzNTgzYzAxY2NkZjllMzUyNjRmNmEyMzI3ZTRkMGM2ZjhmMGIwMzBiMTdmM2JiIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJjYjAyYjFjOTZmMzRjZDZlMmQ1ZjMzYTk3M2FlYmE1OGE5NDRjMzUyNjQ0Yzg0ZDA2NWM4Mzk1NGRjMmQzYmNmIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIxYmNhNzQyZjAxNzI1MWRhOTFlNjUzZjkxM2ZlNzllYzhiZTdkNDdjMzZiMWQ5NDQ5ZTQzMzI4ZTQxZjk0Mjc4IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI3MzUxMWQwYTBiYjAyZTU1NjNhOWE2MzhlY2MyZThkMTU2OTBhMjRjOGNlMWRhNjk1YTQxNWE0MTdiZmYxMzU3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_dfe1fceceb5e449395e5e0fe90e39e35",
+      "statement": "Streams groups enter NOT_READY with empty assignments when required source or internal topics are missing or misconfigured, and only offline migration preserving committed offsets is supported, with 4.2.0 classic-to-streams migration discouraged due to KAFKA-20254.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/streams-rebalance-protocol.md#L195-L270",
+          "version": "repo-lines-v1:sha256:119758f7fac1dbf384fab8648adc639555c2337eee6dd018515e63db7a37013a:eyJzZWxlY3RlZExpbmVDb3VudCI6NzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzNzZiZDFlM2Q4ZWU0NjQxZTMwMjE0ZjRlZDBkMjg4NTA0OWFiZGE0ZTkzODM3YzA3MTY2Yjk4ZWE2Yzc3NzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYxZWE0ZmIxZGE4MTRiOWVjOWQ2ODcxYjQyMjhkYWNkY2Y5NDZiNzgwNTRiMDIyZWRhMDk5NjU3MmM2NGE4MDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE2Nzk2ZDIyM2EzMzIzMjRkNmUyMjcyNDM1ODlmMTIwM2Q2ZjI4YmQyNDU1NzgzYTI3YmQyMjA1Y2I3MzkyYzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7eeb2c6896bd4d859b1d6e72c30e29f5",
+      "statement": "kafka-streams-groups.sh lists, describes (state, members, offsets, topology), resets or deletes offsets, and deletes streams groups, with --topology requiring 4.4+ brokers and a configured topology description plugin.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/kafka-streams-group-sh.md",
+          "version": "repo-file-v1:sha256:9b94096a05fc3c985a11e2c945593980679eeec60c679ffc4da14fff28aca928"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

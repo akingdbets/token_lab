@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:ff31a08088827b3c98fde80cdec23aa3105ffeaae260e1254c748eed68a1d9bf",
+  "claims": [
+    {
+      "id": "claim_7aeafc556ea740c9ad744ca5084d6228",
+      "statement": "Kafka supports SSL or SASL authentication (GSSAPI since 0.9.0.0, PLAIN since 0.10.0.0, SCRAM since 0.10.2.0, OAUTHBEARER since 2.0), SSL encryption with some performance cost, and pluggable authorization, with security being optional.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/security-overview.md#L27-L43",
+          "version": "repo-lines-v1:sha256:4186193e2471221e63d9995379af8d032d8437bbfc731bc88ffd775785eba4f4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNkNzdlMzFhM2U3NDQ3NzY2NmIzYmM1MmMxMzkzODkwNmZiMTM0ZDhmYTVmNjAyY2NkYjBiNWI4ZTBkMjdkZTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIxYzg4MjI2MzRjZDM0ZDgzZjU1MTFhZWM2ZTJlMWQxNjM3NWY0OWU2N2ViOTI3ODNhMTZlNDI0YjllNGJhZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2e1228a555374492ad3bafcf814afdff",
+      "statement": "Listeners are declared as {LISTENER_NAME}://{hostname}:{port} and mapped to PLAINTEXT, SSL, SASL_PLAINTEXT or SASL_SSL via listener.security.protocol.map, and the inter-broker listener falls back to security.inter.broker.protocol (default PLAINTEXT) if inter.broker.listener.name is unset.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/listener-configuration.md#L29-L65",
+          "version": "repo-lines-v1:sha256:2c7979afaf265f64239f2ae5bd24f7a93b7959cee119a3203cb245fd6235a89a:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI3MDQyYmRmZTIxZTJiYmJiMzM3YzM5NDU5ZTVjMjg1YmZhZDhiYzgyZTEyZjM1YmE4Mzk5YTExZjEwZTkyYjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljMzVmMmYwNDAyNTQ3NjExMDg0MzQyZjYxNjAyYTEwYmY1YTgyMzVhYWM1NGUxZTRhOGU4MDRlZDMxZmZjYmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEzOTY5YjM0MjU3Y2Y3YTZjMDhmNzFiZDhlZTUzY2IxM2VhMDY5MTUzNjI1NGU5MzIyYWZhYzFkZTE3NGY1NDAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_eec94cbe132848e48defd801a6ded35d",
+      "statement": "In KRaft the controller listener from controller.listener.names cannot equal the inter-broker listener, brokers must still define its security settings, and with multiple controller listeners the first is used for outbound requests.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/listener-configuration.md#L67-L100",
+          "version": "repo-lines-v1:sha256:9887d7c9baa3bd155cf7def8d307c84990f1055bea57bd38e1487db482aab04c:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NmQ0YjQwMTUxY2E4NDcwNWIzM2NkMjlkN2IxYjhiYmQ5MjJmYzVmY2IxNjgwOGNhNDZlN2I5NGMwYTMyODQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhlNjk5Njc0YmU5MWJlYzQzYjIzMzZlYWJmODQzNTE3YzJhMjQ1NzEzMmZkM2Q5NjM0OTNkZTRjMmQ4ZDdmNGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIxMTA0MzFhZGQ1MjdkOGZlNjA4MTljNzk1NTUzZTRmOTZiYjFiZWFlMWMxMDBkMzgyNThmYmVkZmIwMWZmNjIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a2b607be2d2644a6b422f52009ba2211",
+      "statement": "A fresh Kafka cluster accepts unauthenticated PLAINTEXT connections with no authorization, Kafka assumes trusted operators and brokers, and does not encrypt data at rest.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/security-model.md#L29-L38",
+          "version": "repo-lines-v1:sha256:8adfd5b47c619a561781cd8134f6e8b40609e4e898c47985d6067b2b7d46a7e5:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYzNTk2NjY2Y2RlZmUwMjgwYzhhYWZiODcwYzNhZDRkMzUyZDJkMmE5NTM1ZDczZGU1YmQ0MzI4YzMzYjQ0M2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkZDA3ZTRkOWE0ZDMyOTFlNzc1ZGZjNzMyMzdlYTNhNGJmMjE4MWFiNWFhMGZhYTU4MTNhYWU2OTEzNTJmMGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljMzVmMmYwNDAyNTQ3NjExMDg0MzQyZjYxNjAyYTEwYmY1YTgyMzVhYWM1NGUxZTRhOGU4MDRlZDMxZmZjYmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAxZTg2ODU4NmVkNzIxMTJjYzU1MmFkOWI1MDc0NTEyYWFkOTZkODM3MWI5YWNmODEyZTI5M2M2ZjlhYmY4YTYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ffd8bbc55a954dc4ae55a5be85a76924",
+      "statement": "Without a configured authorizer all authenticated principals have full access, while with an authorizer and no matching ACLs access is denied except for super.users.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/security-model.md#L82-L94",
+          "version": "repo-lines-v1:sha256:e9fbede7db02a7fff1f8a7d3b9b49448df183c461868802e20270866928c5f8d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgyNDMwMjVkZDg5ZWU0MjgwNmY2NTFmZDMxMjBjMzhiYmYwMTcwZjY5YjMyY2QyM2Q4Njc1Mjg5ZDRiOWIzMWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxZTIwNTEwZTg1YzYzNmY1YWFhMGNlOWNhYzM5NWVjYTFkOTc5NzljNGIzODYzNjE5OGY4OTVlM2JhNjRiMWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgzYmRjNmVlM2Y0YWIyNDZhNjQ4YzlkZmM0OTlhNGI0NDhjNjk1MmJmNjcyOTgxNDZmOTA5OGU3NDllZDA1YmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJkM2MzZjU4ZjAyZjRkZjVjYjc1YWY5NjJjYjg2ZjgwZGNjMzJlNmE4NmUxMGUwOTM3OWU1M2I0ZTM2NTIwNDIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d09731cc89b045658b1cddb0736ba935",
+      "statement": "Authorizer decisions are logged to kafka.authorizer.logger, with INFO recording denials and DEBUG also recording allowed requests.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/security-model.md#L115-L119",
+          "version": "repo-lines-v1:sha256:141fd542e242e8692a85ab8faa91188888620245c5a08c18f217d43baec67791:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2RkOTlhMTYyNWJjZDczOTIwYjE4NTE2ZmIzOWM0YTI0MzBlZTUyNGZmM2ZjMTU0NTBmMTA3NTM3NWQxNzI2MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWUwYWYzZmViZjRkMGRiNjgyNGRiMmZmNzZhNTJmMTIwMzE5YmVkNTE3MmRlYWZjODhiM2I2MTE5OGIxMDQ4MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWY4ZTRmNjk0Zjc3ODViZWUyNmFlNTdlMjAwOGE5N2FkNjE1YzA0NDFjNmU5M2NjZDUwZjZhNDA0MGVmNGQ3OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTA2NGNmNDBlMzMzNzE4MmQ1ZjU2YWQ1MmUwMjIxNzdjZDk3ZWM3YmViNDk3NjM0ZmUyOTdlNTVlNWFlMjk5MSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_420780bc3d5449198a518d1a35496733",
+      "statement": "The Connect REST API is unauthenticated by default with no per-connector authorization, all connectors share the worker principal, and BasicAuthSecurityRestExtension's PropertyFileLoginModule is not for production.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/security-model-connect.md#L31-L67",
+          "version": "repo-lines-v1:sha256:f02f95aab28f86fc98ba46e42973de4df921e47e63c6ed6d1d993e970681387f:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYzNTk2NjY2Y2RlZmUwMjgwYzhhYWZiODcwYzNhZDRkMzUyZDJkMmE5NTM1ZDczZGU1YmQ0MzI4YzMzYjQ0M2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhZWRlMTY1YWUxMjcwNjg3ZTMxZGRkMGQ0NzBiMmM5ZDQwNzViMjBhOWI3NmIxOTcwZmU1OGYwOWZjNjUxNDYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk2ZDNiYjcyZWMzZDFiN2FhODFjNDZmYjg2Mzk4NTkyY2YwZWM2MGJmM2ZiM2QxN2FhMzUyY2I0ODE3M2Y4ZDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJkM2MzZjU4ZjAyZjRkZjVjYjc1YWY5NjJjYjg2ZjgwZGNjMzJlNmE4NmUxMGUwOTM3OWU1M2I0ZTM2NTIwNDIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1c511ca3bd5b41968344fc047031f8c5",
+      "statement": "A Kafka Streams application authenticates as a single principal needing ACLs on source topics, internal <application.id>-* topics and the <application.id> group.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/security-model-streams.md#L31-L35",
+          "version": "repo-lines-v1:sha256:573236ed7207e149bd27050fd72df65c2132590d25d59da9c2fd04567ecaf5ff:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjM1OTY2NjZjZGVmZTAyODBjOGFhZmI4NzBjM2FkNGQzNTJkMmQyYTk1MzVkNzNkZTViZDQzMjhjMzNiNDQzYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWY3OWViYjRlMTNhNDVjZjU2MThkODhkZWZiZDcwMWQ0MzhkNmVjNGU5MTZkODQyYmJmYmRkMDI2OTBiMGQzYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODg4ZWVhMWNkMmE5OGU3ZjBmOTJiZDA3YTFkODNhOTE1MjE2ZjUzZmFmMzA4M2ViNWQ4NjY4NjE1ZjcxZmYwNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjVkOTBiZDNkMzQyYmNlN2Q4OTYzMmQzNjA0ODc4MGVmZTA1ODM3MmNkZmVhZmM4OWE0Y2EwMmJmY2JlODE3MiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_d4850ab849f6439bb92ec6f16ac77589",
+      "statement": "Security can be added to a running cluster through incremental bounces that open secured ports, move clients, switch inter-broker protocol, and finally close PLAINTEXT, with client and broker protocols changed in separate bounces.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/incorporating-security-features-in-a-running-cluster.md#L27-L98",
+          "version": "repo-lines-v1:sha256:b3dc4dccb1c3a09c002090727b0ac5c2c94f28d7009acad76d66f3cd27e4dce8:eyJzZWxlY3RlZExpbmVDb3VudCI6NzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIxYzg4MjI2MzRjZDM0ZDgzZjU1MTFhZWM2ZTJlMWQxNjM3NWY0OWU2N2ViOTI3ODNhMTZlNDI0YjllNGJhZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

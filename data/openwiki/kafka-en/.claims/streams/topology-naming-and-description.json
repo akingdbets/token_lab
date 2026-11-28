@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:bbce741622742459f821a09d01904d6adcc45fc04e5be6b4db050e6e8be1a884",
+  "claims": [
+    {
+      "id": "claim_d866ec1c908948e889132cbe706eef6e",
+      "statement": "DSL operators get generated names with a global sequence number, so adding an operator upstream of a stateful operator renames its state store and changelog topic and prevents rolling redeployment.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/dsl-topology-naming.md#L95-L180",
+          "version": "repo-lines-v1:sha256:2885e9a45259855d78c5e264b5c4febceebfba29ddf20036f1bdf8ab9d9d290f:eyJzZWxlY3RlZExpbmVDb3VudCI6ODYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2NjNjMzZkYWJiMGMzZGI5YjFiMWMzODM5NzZhOTZhZDhiZTYzY2Q5OGY0NzM2OTY2NmU3MmQ0NDU0YzYyMmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIzZmZhNTA5ZWYzZTZiMDliMmQ2Yzc4OTY2ZDgyNDEzN2U4MDc0ZWIyOGI3ODY1ZTE1ZmMzNDBjY2YwMWY3MmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQwZjg4YmMyOGJkY2U0MjNhY2ZiNGI0ODM5Zjk0MTY5ZDMxNTgwYmE3ZTI0MDlmZTQxOTdmZmY0MjBkNTk4N2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEyZGQ0NWYzNTRhMTA3OGE2NWM5MWE1Y2VmOWZiNDZmMGM0MmNlOWYyMzUzYjg0ZGI2NWI3OTk3MTQ5N2E4NDMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b00639376ea0402fa3f7232883285fbd",
+      "statement": "Named, Consumed.as and Produced.as name processors for readable Topology#describe() output.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/dsl-topology-naming.md#L39-L93",
+          "version": "repo-lines-v1:sha256:32f361cb771145ed7f39c045bc8d3f189b4444dd74440be6514b51b87193b6a9:eyJzZWxlY3RlZExpbmVDb3VudCI6NTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZkMDU0OGI4ZmQ4NjllZGVkOWJhMzljN2I0MTVhYmQ4ZTgwMWRhOTYyOWE3NjliNTYxMDEwOTBiZmM1MmM0M2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxZWUzZDBmYTFiMzQ4ZmFmMTA5ZmVmZjQ2MGRmYmMzZTE4OGNjN2Y3NWQxZDEzNjFkYzIyZjYzYWI0ZDA2NDUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIwNWU0YWI3YWE0NDg5NTg4ZmFlY2U3M2MyOWRkZTU0ZmI3YmUwMWU1MGNkNzg4ODlkMTlmODQ3Mzk1OGY2YTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUwYmU1Zjc2YzUxN2Q4ZGUwNzU5MTI0MjkwNDEwMDNkOTIyMjIzOTg1N2RhZTdkYWJhODFlMTg5ZmMxNjY5NDMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_198b42222f7e467f8dd671d05106ceb5",
+      "statement": "Repartition topics are named with Grouped, StreamJoined and Joined, state stores with Materialized or StreamJoined, and stateless operations with Named, and ensure.explicit.internal.resource.naming prevents startup when internal resources use generated names.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/dsl-topology-naming.md#L182-L269",
+          "version": "repo-lines-v1:sha256:2bb4adcdeaca3936bd60de88b8d0fdd291a5879bd70c31176c46bfc749ea9b1e:eyJzZWxlY3RlZExpbmVDb3VudCI6ODgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU0MmVkZTcxYzFhYjBmYTEyNzc3Y2M0NDY2Mzk5Y2VhYjkyMjkyMDJjNjY1ZjljOTQ5YjNjNzlkMDEwODMwZTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg1NGRjOWM1NTFlMmExN2UxYzY2NmMzYjMzODQ2ZGQ0ZjRkMjc5ZTZmZDRlZjFkMzJlYWU2ZGZmYmNhNDc4NDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_747382b2da1848da8f76f5f70cb098ad",
+      "statement": "Since Kafka 4.4 (KIP-1331) brokers with group.streams.topology.description.plugin.class set solicit topology descriptions from streams group clients via heartbeats, versioned by topology epoch, and clients can opt out with topology.description.push.enabled=false.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/topology-description-plugin.md#L27-L66",
+          "version": "repo-lines-v1:sha256:d667a955021d21f59044151e466dd7b53829ff4b5c3aa941201ecd388ae406e8:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIxYzg4MjI2MzRjZDM0ZDgzZjU1MTFhZWM2ZTJlMWQxNjM3NWY0OWU2N2ViOTI3ODNhMTZlNDI0YjllNGJhZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUyZDQ0YzY4ODE5MGMzNGE0YTEwMWY0MzgxZDBhZmY5NDAzZTc0ODU2MmRkMzM0N2M3OTQ0NWJlZWFjNmU5ZTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c4c7d33de4c84506abe86da6b2ca7a04",
+      "statement": "Permanent plugin failures stop solicitation until the topology epoch advances while transient failures trigger a per-group backoff from 30 seconds to 1 hour, and clients receive STREAMS_TOPOLOGY_DESCRIPTION_UPDATE_FAILED without retrying themselves.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/topology-description-plugin.md#L40-L53",
+          "version": "repo-lines-v1:sha256:bec2650855a634fee2e87ef5b3952cd8dac1fec9ee8a6835da7b379053b964f3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI1MTQzOTgxZDllN2ZkMThlMTk4ZTBlZDExNWRiYjVhYTg0ZjM1NGViOTVkYjU3ZGI4ZmU0MDE0Nzg5MzFiZDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI3NjEwYTk0YjMwM2IzZTQ1ODZmOTFkMDMyYjQwZjg3NmQzMTRkNWYzNzQ5YzI2NzVlMzliODlhYmIwNzkxMjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNlODAwMzViMjg5YTJiYmVjNDQwYTlmZWY3NTUyNDIxYzMyMWY2ZDlmNTZhODdmYmE2YjdlODg5NWQxZGJiZjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNlMjFhNGI4NTc2MmMwMTRjZGFjNmU5ZmQ3ZDIzYWY5MjQzZmJjYTk3YTdhNDc3MzQ2NjhiNzI5OGQ1N2I3ZjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_992a6a5770614387b5236dd30cca880e",
+      "statement": "StreamsGroupTopologyDescriptionPlugin implementations must be thread-safe, idempotent and complete futures asynchronously, and the shipped InMemoryTopologyDescriptionPlugin is not suitable for production.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/topology-description-plugin.md#L55-L89",
+          "version": "repo-lines-v1:sha256:a62f20524602d4541607cf4a986f6bf140618d646b1d64e0ad2c1b262c9561cc:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlMGYwNTMyMjc5YTFhOWE4YWQ3MjgxZGY3OWFjN2M4Yjk1ZmVkZGMzOWNjM2JjMTg1NTk1ZjFjZTUxNjFhNTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM4ZTBjYmE0ZDRkNTYyOWFiMTA0MjczOGJkZDBmZThlMTc5NjA1ZGM2YjE3OGNlNDg3ZDFhZTM3MzZhMWUxYzkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZjYWNkYmE2OWExNGY1YWRiY2RkOTU3ZGU3OTZjNzU5MzhiYTVjYWY4M2U2NTU5MWExZWU2ZDdiODJmZGQxMmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE3NDdjY2FiY2NiNTdhOTA3MGQ5ZDBjOTExYjE2MWU3MDY1ZGVkMWI0NWZiZjA1OWIyMTlhZTI1MjBhMDA0NGQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4c38abaa24674248b8b131abd0031461",
+      "statement": "Topology descriptions are read with Admin#describeStreamsGroups and includeTopologyDescription(true) or kafka-streams-groups.sh --describe --topology, with statuses NOT_REQUESTED, NOT_STORED, ERROR and AVAILABLE.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/topology-description-plugin.md#L91-L145",
+          "version": "repo-lines-v1:sha256:fb315ab67609c5b04f8963a2694969c1b77c0ac990bb0966e41adf5183b8210f:eyJzZWxlY3RlZExpbmVDb3VudCI6NTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjYjEyM2VlNjE2OTFmMDYwY2Q3YjliN2Y2NjNmNDZjMGY0ODE2ZmE2ODk4ZThjNTUzMWZjNjY2MTM0YmU0ZGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMyMGFlMTEzYjVjYjQxN2JiNTM4M2JkZGYxZDcyM2U5ODEwMWU0YmYxMzVjZDI3YzFiZTc3OTViZTJlNGFkNmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQyZjI2NTc5ZDIyYWQ0YWI4ZDc4OGY2MWIyN2E4ZDEwZmRjZWFiZjIzNWU4Nzg3MDE4ZjliNzdkNGE5Y2EwYjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY5ODRjOWY0ZjMwNTk3NzRmYzFjMjk0MmE2ZjBkMmNiYmQ2YWRlNWEwZjgyYjI1NzdhOWQ4MDY3MWUzMGIzNTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_061e9977d52e4df98bdd511c70162919",
+      "statement": "Failure of the plugin's deleteTopology makes DeleteGroups return GROUP_DELETION_FAILED, and removing the plugin or downgrading leaves stored entries for manual cleanup.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/topology-description-plugin.md#L147-L157",
+          "version": "repo-lines-v1:sha256:fc11f0c7c757184a0b43cef7e39ace2f2144d6a6d9fbeec1bd2fa03ad32d4120:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxODMxMmFjYmQ4OWEwNjNjMzIyM2VhMjZhNWY0ZjIzMzIzMTViNjAzODRhMDQ5MTUxZmMxY2MzZjgyYzdjZTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdjYTgyZmE5NjU0MWQwZTBkODUyMzRmZTExYjEzMjFiMTFkMDdlMTY5NmExMjliNTJhYzI2ODYxM2M0NmI2YmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU2MjU4YzIyMjE5NzFhMjBjZGZkZmYyMThkOTllMTg4ZmFlNTA1NDUwZWE5ZGU3ZmI1NzYxZjAwYzMwZWZhMTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY2ZTBiMDZkZGI0ZGJhYjQ3MWQ5ZThkZWQwZmYzMGU2OTM4NTMyZDczNDkyZTQxOGMyNTZkMGViZTkwMzhjYjQifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

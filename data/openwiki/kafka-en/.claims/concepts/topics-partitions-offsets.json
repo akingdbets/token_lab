@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:eae7470bb516ae390b8428b0dfd04d5fc631fce8e07de5c3bb30c873c3814d9c",
+  "claims": [
+    {
+      "id": "claim_c589e39a9457493f9caab78db78722ac",
+      "statement": "An event (record or message) has a key, value, timestamp and optional headers, and producers and consumers are fully decoupled.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/introduction.md#L69-L79",
+          "version": "repo-lines-v1:sha256:e6b8980f1b564cf725524ea89030ce0cc845bdba73ea0fa469fd969710f091bb:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxOTIzOGY0NjZjOTlhNDYzODhiNGQ0OGIyMTdiOTBlNGQ3YjI5YzljYzMzYWJhMzBkZThjMmUwMGEzYWNjZGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI0YzViOGFkYWI3ZGY4OGE3MjY0YmJmODM3NjI4NGM3NGEyOGM2NDBlODU4YzAxMmYxOGE5NTM5YWIxMzZlMzgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcwMTlkYzYxMjUzMzk1YThiMzM5ZWZjMzU5MTQxNzAwMDM2NTZlZTY0ZGFjMDYyYTQ1YjliOGJmOTZhMDRhNmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMxM2MzNzdmOTEyYjdiMTIzZjYxYTg4ZmY4ZDY2OGYyNTZmNjJhMmY2MDllZGExY2RhZTkzZmEzODRhYTNlNzgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a3bbdae4c9f94339b628baba46fb36e6",
+      "statement": "Topics are multi-producer and multi-subscriber, and events are not deleted after consumption but retained per a per-topic setting.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/introduction.md#L81-L81",
+          "version": "repo-lines-v1:sha256:7c87b4231581a08976ab5a7f3d0dfde5bb2fe13bd90f3ac25e87b3130648d343:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2M4N2I0MjMxNTgxYTA4OTc2YWI1YTdmM2QwZGZkZTViYjJmZTEzYmQ5MGYzYWMyNWU4N2IzMTMwNjQ4ZDM0MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2M4N2I0MjMxNTgxYTA4OTc2YWI1YTdmM2QwZGZkZTViYjJmZTEzYmQ5MGYzYWMyNWU4N2IzMTMwNjQ4ZDM0MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTk1ZGQyNDExOGRkZTc4MmYzZWY2OTBlZmJhZGNlZGQzYjFjODNhMmY2YWEwOGZhY2ZkYTNiOTQzNThmMmIzNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNWMzNGUzZjExYjhhMzZhYmIxNTVlYzlmMGFlMjM2Y2RkMDc4YWQ2YmU3ZmQ2MzNjYTQ5ZWZlZjkyNGJhNDE1MSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_01b6e7362e2a4a128cfd7231b06c98a5",
+      "statement": "Events with the same key go to the same partition, and consumers of a topic-partition read its events in exactly the order written.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/introduction.md#L83-L83",
+          "version": "repo-lines-v1:sha256:c09d43e30f8bd64cda3e59d8ec72c0e98709ef0080ca67af30edb2552cfc8f70:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzA5ZDQzZTMwZjhiZDY0Y2RhM2U1OWQ4ZWM3MmMwZTk4NzA5ZWYwMDgwY2E2N2FmMzBlZGIyNTUyY2ZjOGY3MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzA5ZDQzZTMwZjhiZDY0Y2RhM2U1OWQ4ZWM3MmMwZTk4NzA5ZWYwMDgwY2E2N2FmMzBlZGIyNTUyY2ZjOGY3MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMzEzYzM3N2Y5MTJiN2IxMjNmNjFhODhmZjhkNjY4ZjI1NmY2MmEyZjYwOWVkYTFjZGFlOTNmYTM4NGFhM2U3OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDdlNGYwNjI4OTQ1YzI4NDJhN2ZiNGUxYTE5Y2JkYjI3MWQ3ZDBhYmE1MTM2NTQxMTE5NmMwYmFhYTQ1ODBmNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_613568509a1d4d06805130b1afeed503",
+      "statement": "Topic names cannot exceed 249 characters because each partition folder is named topic-partitionId and limited to 255 characters.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/basic-kafka-operations.md#L45-L45",
+          "version": "repo-lines-v1:sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzhjZGMzMDJjODk2NTQwZjg1MzcxZGY2NGY3N2E3YWQzYjI1YmJjZTM3YTViOThiMGZkOWFjOTcyMWM4YjIyZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODUwM2U5NmIyNzM2M2Q5YWUyM2ExNjdiYzAyMWNjMjYxNzMxNTMzMTk4ZTY2MGE2MTU5ODFmMWExYThjNDY5ZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_ccd115adfcb44b83a08647f66af4fbe9",
+      "statement": "Kafka cannot reduce a topic's partition count, and increasing it changes key-to-partition mapping and can cause consumers with auto.offset.reset=latest to miss records, for which by_duration is recommended.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/basic-kafka-operations.md#L50-L79",
+          "version": "repo-lines-v1:sha256:d1c1c48ad61f64371b7f7bd6d4a7c7970240d53b084c3c47478f613b3d574caa:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNkNWRhOGI4ZDIyOGUwYjg3MGExMjhkYjQ1MjdmZjdlY2Y1MzhjODVlNTQ5OTg1OTllMmVmMzQyMzBkMjUzNWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhjMzM3MzA2MTA5OTY4NDQyOTcyNTZiMjYyZDRlMDIzZWRiMWQ4NmY1YjU2ZTQyNzQ3ZmRiYjlhMmE5YmJjZTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEwYjIxYzQyNDY5NWMxM2IzNTEzODEwMWNiMzNlMDE4ZDU1MmFkMmUxZmNhYTRjYTllYzQ0ZDM3YjJiNmIzOGEifQ"
+        },
+        {
+          "resource": "repo://docs/operations/basic-kafka-operations.md#L98-L98",
+          "version": "repo-lines-v1:sha256:244dc1ae6836c8c5681a5128f438e32ee7d1a732c433f3bcf97afe7cce747cb0:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjQ0ZGMxYWU2ODM2YzhjNTY4MWE1MTI4ZjQzOGUzMmVlN2QxYTczMmM0MzNmM2JjZjk3YWZlN2NjZTc0N2NiMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjQ0ZGMxYWU2ODM2YzhjNTY4MWE1MTI4ZjQzOGUzMmVlN2QxYTczMmM0MzNmM2JjZjk3YWZlN2NjZTc0N2NiMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMGFhYTRlMGU5ZDZmZTZkYmQ1N2M5MDM0OGFlNjM5NDQ5N2YyNTJhYThlOTI0ZWU5OGVhYzU2OGE5YjYwZDNlNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYWFkMDZiNDBhNDBlZmRkMWQ2MDg0ODU5OTQ0MjA5ZTAxNThiNzJmOWI3NWE1YzdkYjk3MDI4YjBiNDk2NjdlNiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_8e1096b1b9244e3692971936a1b52bab",
+      "statement": "Users must never manually increase partitions of internal topics __consumer_offsets, __transaction_state, __share_group_state or __cluster_metadata.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/basic-kafka-operations.md#L80-L80",
+          "version": "repo-lines-v1:sha256:ee3167ffb4e15a9e62eefeac53730f5d179bf27a47376b7e1b93cd06c3d94820:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWUzMTY3ZmZiNGUxNWE5ZTYyZWVmZWFjNTM3MzBmNWQxNzliZjI3YTQ3Mzc2YjdlMWI5M2NkMDZjM2Q5NDgyMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWUzMTY3ZmZiNGUxNWE5ZTYyZWVmZWFjNTM3MzBmNWQxNzliZjI3YTQ3Mzc2YjdlMWI5M2NkMDZjM2Q5NDgyMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmMxZGZkMzExMTdiNGFjYjA2YTdkYzRjOWJhMzg1MDExZWU3NGU5NTA1YWY0MzBhOTBlNWMzNGE0ZjY0NjRjYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTkyZWYzOWRiNTgzM2Q5YzM0YmNjYmEzN2M1MWRlOGFiN2YwNzY5ZDk3OGIyNDliY2QyYWZjNDgxNDk2MWJjOCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_0090bfe3bd124a3cb9ef8238cf05ef89",
+      "statement": "Brokers auto-create topics by default (auto.create.topics.enable=true) using num.partitions, which defaults to 1.",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/kafka_config.html",
+          "version": "repo-file-v1:sha256:8c128d4daf2f63c6f5b4791019ef9bce78dc19abdd876c01b8d7106cd899cd29"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:f6d2b2cc4a61642d5c607e045f2c413f02c183e28d04cb046a01a89ecb4af5a1",
+  "claims": [
+    {
+      "id": "claim_0cb7295581524023ba5ea199182b8368",
+      "statement": "Kafka writes all data immediately to the filesystem log (the OS page cache) without necessarily flushing to disk, relying on the page cache instead of an in-process cache.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L47-L64",
+          "version": "repo-lines-v1:sha256:f6b138039f0950825a1fef2eaad1dcf9abfcaa2e86210bbf9b61d76547d0ea71:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFhMzk5OWQ3ODdjMDIwYzY3MTk0YjVmNmY0MGZlYjQ5NzQxYmFmMmEzYWI3OGVjOTk2MDE5ZGZmZDYxYjg2M2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIxMTBmMzkwODVhYWI2NjcyZjJiNWU2ZGMzMzc2NTcyOGQ2YWY4MmUzNmY0Zjg0MDM1MjliMjcxOTM0YjBhMTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg2M2Y4NzRkYmUxYjQ3ZDA5MTA3MzFmZGNjNWI5N2UzMTU4ODhmNjczNDhjNmVlOWU1YjE4ZjgxMWJhZWVlYWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBkOTg3NjM4M2FmOTk2OWQxYjRlY2M4Yjg5ZDc5MGU1MzkyYzEyNDEzOTkyY2M5YTY5MDFjOTljMmQ4MjU4NDIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c2d479792d2c41aaaa1c4655d962d3f1",
+      "statement": "Kafka serves log data with sendfile zero-copy from page cache, but sendfile is not used when SSL is enabled because TLS runs in user space.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L94-L109",
+          "version": "repo-lines-v1:sha256:4af5a5fdb07126171a4706b2107091cc5379ce3b961ddcebd01536b99fefe21d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU0MjYwMWY2MDJjZmU1Y2FmNGM0ODE4NjRmYmQ4MjBhNDI3OGMzMGQ2MDY5YmFmNDBkOGMxYjQ0NjdmYWFjMzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA0OGEwYWNmODIyZmQ5ZGY0MWViZjIzNWZiYWJmYjg3NTk1NTcyNzhlOTBkZTE0NWUyMmQxYTIxNzJmYzNmNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE0YTlmMjkyMDZiMmEzZTFiZjg1OGYwOTgzYmM0ODE4OTg1NmJkMjcxZGE5NjQ3ODc3ZTU1MTEwYTJlNTliYmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhmZGNmMjBlNDc0OTE0MzgxZDQ1YTI1MDI5ODAxY2Q4YjFjN2FkNDYwMTdkNzQ4MGYzYzhiYWVkMTY2NzY2NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7b1ddeaaf292461eaa9c8377f875ed31",
+      "statement": "Each partition is a directory of segment files named after the offset of their first message, and appends always go to the last segment, which rolls at a configured size.",
+      "evidence": [
+        {
+          "resource": "repo://docs/implementation/log.md#L29-L39",
+          "version": "repo-lines-v1:sha256:52aa68ff3beec228d6aad313eb7dcf8ffe17bd36457f3e4515de7f22a3b62128:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEyNjgyMDkwYTgzNWEyMDhiOTJmZDMxNzMyOGNhMjI1MmRlOGQ3MTM3MTcxMGQ3OWQ1NDAwN2ExNWRjM2EwODQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA5NmVlZTc0ZTE3ZDkzOTExMmYyZDkyNjg5ZGQ4NzkyMjBkZjBlOTc0MmU1OGMxNGM5ZTUwYmE3OWMzZTU5ZWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljMzVmMmYwNDAyNTQ3NjExMDg0MzQyZjYxNjAyYTEwYmY1YTgyMzVhYWM1NGUxZTRhOGU4MDRlZDMxZmZjYmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEyNmNmMGIzYTZlNDRiYzRmZTE1NmYzMDk2NzIxZDc3MWY0MmUyNjdkZWJiYTNmMjZlNTA2YjI5NWRjMWUzMTkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_20ebc13da0df4f0cbaf0abe6de55cb48",
+      "statement": "Retention deletes whole segments by time (using the largest record timestamp in the segment) and optionally by partition size, deleting a segment eligible under either policy; size-based retention is disabled by default.",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/topic_config.html#L333-L343",
+          "version": "repo-lines-v1:sha256:5c97c0034cf830c41f09e29d61d60f22b595677087f2a9f31af407a575517d0f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ2NDc4MGE5YWY3ZTM0YjRjMGUxMWM3ZWNiMzU4YzllOTIyYzk3NzliMWM1ZDU1Mzk3ZDJhYzg1M2RmNDVmNWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYmJhYTQwMzk5YTlkZGE1M2ViNjUyMTdlOTkyZGFiNTcyMzdmM2E1NWY0YzNmMjllZmM2MWJlODhmZjlmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFiZTQ0MmVjZDI4OTc2NDFiZGEyNjUyZTEyNWI5YjVlOGIwNjg0MDkxNjBlODgwNjIzMzhhNjYwYmZhZDMwNjMifQ"
+        },
+        {
+          "resource": "repo://docs/implementation/log.md#L70-L72",
+          "version": "repo-lines-v1:sha256:63e984b4e6089c8faab4ea00bb1a990ae3b8a9053a01baf378fbb067168d2ee6:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDVmZjlkMjQ4NDBkZTIwNTBlNzk5MDI4OThmYjIzNzVmZjc5NjRmYjNkMmFmMTI0ZTY1OWYzZmE4ODQ1Zjg1OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDAyOGMxOWExNGRkMGEwMjcxMThjNmJhMmEzNWVjOTA2NDE3NmUxYzI1YTQyNjJhZjkyOTk1NTIyMjgyODczMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTM2ZTZkNTAwZWIyZjBhM2Y3NDgyMDE3YzYzYTVhYTNhOTFjYjIyZmFhNzE4NGQzNDM4ZGE5ZGU3MGQxYmEzOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMmM5N2RiODhlMjJiZmJkMzg5YjE4ZDM3MWI4NjY2MzJhZWY4NTg5M2ZkNGQ4MmRiZjBmNWMwMGM5MTEyMTBlOSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_1e80afdc941e4f8d8d5839c33a559a73",
+      "statement": "On startup the newest segment is validated by size/offset and CRC32, and the log is truncated to the last valid offset when corruption is found.",
+      "evidence": [
+        {
+          "resource": "repo://docs/implementation/log.md#L74-L78",
+          "version": "repo-lines-v1:sha256:59822da1022f95d0a51659193ee8a9b12816f82486c3037e7102093e1de3b907:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZGJkMTZlMzdjNjM3NDk4ZDk0MGI0ZTVhMGQyODA1YWE0OTEwZGY1M2I0YWVjMTFmZmVhOGM5MTBkZDYwYzg3MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDhjYWRkNGNkMWY2YTlmNDNmZmY2YTM4YTE0ZWJmMTFhZmY4OTc4ODY5N2E3MDZlMDc3YmRjNjM1MWEyYjRmYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWU4ODE3MGQwMTg4ZmJkNGRiNDdiZTA1NmUyZjg3NzE4N2ZkYjUyMGNlNzRlMDZlY2M4N2EyMTM4ODQ4YTlmYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_744327b1155b4356a3af670da49140f1",
+      "statement": "Topic defaults include retention.ms=604800000, retention.bytes=-1, segment.bytes=1073741824, compression.type=producer, and flush.messages is effectively infinite with Kafka recommending replication over forced fsync.",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/topic_config.html#L344-L353",
+          "version": "repo-lines-v1:sha256:77c9196229ead378e663c6c08d118d7e6226277946173a133189467cf6292583:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFiYThiZGQ4MDIwYWQ4YTk1NmE2MThmYTQ3NjljN2RkNzExODI5YzI4MmYwOWFiYzcyNmIyMmFhODZkZDJjNDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiOWZjMGYxY2NmOWUyZWQ2MjMyMzczZjAwOTFlZTAxNGFmNDJmNjg2MzEzMzZhNmE0ZGQ5NDdmNDIwMTE0NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZlYjAyZjAzNDdkMjc4ZTIxZTY1NmM5MTA2MDIxZmM3MDRiYjkwOTM4N2UwMTZjMzMwMTUzY2NkYWU5MTY3ODAifQ"
+        },
+        {
+          "resource": "repo://docs/generated/topic_config.html#L36-L45",
+          "version": "repo-lines-v1:sha256:2fbbf9aedca21c2740865e227ea09ae677c918d063827ad0579b658a4ccb2e5b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNhZGRkOTMwNjUyYWJhZGRkOTA5YjBiNDEyYzE0NTdmMmZhNjcxMmMzOTMwYTQ3M2ZiYWNhOGZmMzQzOGMyN2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiOWZjMGYxY2NmOWUyZWQ2MjMyMzczZjAwOTFlZTAxNGFmNDJmNjg2MzEzMzZhNmE0ZGQ5NDdmNDIwMTE0NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU1YzU2Y2ZhYzI2MTUxMGYyOTcxNWFmMTNmZDYzZjIxMTdmMDMzNDMzZmJmMjEyYWQwODdjZDQyN2VjMjQ4ZDQifQ"
+        },
+        {
+          "resource": "repo://docs/generated/topic_config.html#L91-L100",
+          "version": "repo-lines-v1:sha256:49706d3fedf0644fd52af2ea71fd176852c8d8019a7190aae8ae23bb9aa80f97:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwMzQyNmJkODFkZTk4YzVhN2YzM2RhNWQ3MTc1ZmVhNzYyYmY4YTQ0MmU1YjIwZGEwZmM1ZjA1ODYyNGNhNTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiOWZjMGYxY2NmOWUyZWQ2MjMyMzczZjAwOTFlZTAxNGFmNDJmNjg2MzEzMzZhNmE0ZGQ5NDdmNDIwMTE0NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE4ZWY5ZDZiNThlMjhkNDEyZGU2ZWZiMzAwNWM5NDNmZTljMzRhMTNkYWMwMjlhOTBmNGFiNmVjNjA5NTEzNjMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c99e0f834f2c4f6d98209e4db4886af5",
+      "statement": "Record batches use magic value 2 with attribute bits for compression codec, timestamp type, transactional, control batch and delete horizon, and the CRC-32C covers bytes from attributes to the end of the batch.",
+      "evidence": [
+        {
+          "resource": "repo://docs/implementation/message-format.md#L31-L66",
+          "version": "repo-lines-v1:sha256:50305f7675e0d544a37a9e76aad5677534284723780019c6b9453e80108bced7:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEwNDkwYTk4NTM3ZGU3Yjc1MDVmNjgxMzE5NDhkMWQ2ZjIwN2UzYzk3NzA1NjBjMWQzODc3YjYyNzU1MTc1YWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhlYTdkZTc3ZTFkMWU5YWEwY2NjOTg5MDY3MmJkMjhmOTRmNTY3NjI4ODUyMTY1ODFlNGY0NmQwODhmYTVmNjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFiMmY5OWNmNDhlNjQwMDg5ZWZjZjUzZmRhZmVkODJjNjEzYTMxYjg4OTZlMzRjYzk3YTNjNTQ0NzM1YzA0ZTYifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

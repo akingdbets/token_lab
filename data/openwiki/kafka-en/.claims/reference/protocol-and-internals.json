@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:a0fdcbed18da11643a90526939717acf9083672be4b8c7c3a0604c2ac7ead3b6",
+  "claims": [
+    {
+      "id": "claim_7390c39bffdc44e59274136c10345f91",
+      "statement": "Kafka uses a size-delimited binary request/response protocol over TCP, processes requests on a connection in order with a single in-flight request per connection, and disconnects sockets whose requests exceed the configured maximum size.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/protocol.md#L37-L47",
+          "version": "repo-lines-v1:sha256:062ef77f6ac4934983095ba140b4cd16a3bb87923272c6f06c28faa8ddbbe1a5:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE4ZDY4YTkzMTZlYTI3ZGQ5MzMzMjEzNmNiYjVhZTZkOTgyM2I4ZmFjZjFiYThjZWRiOWY3YWUxODVlN2UyNzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzOTUzYzU2MzhiMjcwYzkxZTlkMzhmZTQ0N2JkYjkyNjQ5MjIyN2YxMjA0OWM0NTRlYjVmOThiNTRkMTdhOGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY3ODIxODg3ZTUwMGVmZGEzNjU4NWU1ZjM0YzY3MWJjMzIxN2RiOWJlNDg4ZWEzNTUyOWU3NWRiZmY5ZTI5ZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhlNDBkMWEwN2Y3N2QxMWUzNDM0MmM5MmNkMmZkZjAyNDU3NGY2NDZlZGMyZDg0MjM4MWI0MDJmMTJhM2RiZGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c4951bc31591486b83a3b1331f9ba979",
+      "statement": "Produce and fetch requests must go to the partition leader or receive NotLeaderForPartition, and clients bootstrap by fetching metadata from any broker and refresh it on errors.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/protocol.md#L49-L67",
+          "version": "repo-lines-v1:sha256:4f62587072a6324f24b7b80789488714c83892e56b53279a461f2072467b10a6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjllOWJlMDJmNjlmNjc3MjZlNzVjMGZmMWI5YjhiODA5YzA3OTI4ZWQyYzVjNjY2NjgzMmJmNWE5OTVkNzc0MzAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU2OTY3YzY5OWJmZWEwYjc5YjQzYWYyMWMxMWM0ODQ3YTM2OTkzZDgzYmMwNjhmY2UwZGExOWNjZjU3MmE0YzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIwMmQyZmJjYmQ3YmRmNWVkODAzNWY3MWVlZjU1ZTgwYTA2Y2M5NDUzZmUxN2M5ZDJlZTIxMDVlYjgwNTRiMmUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9233c1d34f044419843ad268a26f8ccd",
+      "statement": "Kafka has a bidirectional compatibility policy using API key and API version per request, with clients choosing the highest common version and tagged fields (KIP-482) allowing schema evolution without version bumps.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/protocol.md#L92-L104",
+          "version": "repo-lines-v1:sha256:632a034b95e5af7d513e45cb5d7d50422b397e677c4bc540cabb3ff987ad7581:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3YzEwYjUzMmU3MzYyZWQwMmUwNmNhNTZhOThlNjJmMTkyNGQ4MGIxOTg4NGE4ZDMyMmEyMDVjYmE4MGI4MjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhMjUxZTQzOTlmMjBhOWU3MjZhZDJhYTA1NmY0ODZkMjk3NmYwNzgyNzVjZGYzZDQyNmY3NDFhNzFmZTlhNWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk1MjY4NjE1YmNjMWJiMjAyYzUwZDljOGJjNDYxODM0MGMwOTMwNjBiNGMyNjg4MTNjZTU2N2RmYTllYjQxY2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI5ZjMzNTgyY2Y3MGIyMTQxYzMzNDUyOGIxOWY5OWVjNTc2YTZjNmI4ZTI5M2FkN2M0MzA4YmY3YzMyOGYzNDYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_18b54164ac71484fbd9365a58405f5bc",
+      "statement": "Brokers answer ApiVersionsRequest regardless of authentication state, respond with a v0 UNSUPPORTED_VERSION response when the client's ApiVersions version is too new (brokers 2.4.0+), and version information is only valid per connection.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/protocol.md#L106-L118",
+          "version": "repo-lines-v1:sha256:7d58e61439f0ec9a503cda35061eac573cdcb0fcd5a41d66f651f574d5b47ba7:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZhMTk5MmFiNzM2MTBlNGFiZDliMGExMDQ1NDRmYWQ3ZjY4ZTNiMmU4NjI5NzY5OWIxNWJjNWUxN2JiNGNhMTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdkNmU5MWVhMTY3ZTM5ZjJlYWRkODdkNmI4MzhjOGNlMTQwMGU3ODZhMWE4N2Y1OWEwZTU4ZDg2OWI2MmJmNWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNmNTM4YmMyMjdiNjMxN2FjODhjYjRmNjNmMGM2ZjRmZWQwMjQ0NmQ3NWRmYTkxZGVjZDY2ZWNlMzAzOGFiZjQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bcd585582ef9474480201353dc509433",
+      "statement": "SASL authentication uses SaslHandshakeRequest followed by raw tokens (v0) or SaslAuthenticate-wrapped tokens (v1), and the connection is closed on unsupported mechanisms or failed authentication.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/protocol.md#L120-L131",
+          "version": "repo-lines-v1:sha256:8300b143f34b7c3b37ed07654574332d97e9b00d375c485c48d713ead4528f52:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjllNmM4NjllZjM2Nzk0ZTUzYTk2MThlOTlkNTcyZjViMWNjNWVlNWFkODFjYWFhMGU0YmM0OWQ5NmNhZTA4NGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliNWMyZTMwZTBmN2UxZWQxYjU4NDE0NGVlYjkzNWE5ZWUwNmY5ZWU4N2E0YjA5ODg1OWEzNTdmYzU4MDNlNWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNjOGE4MGY4Nzc1YzA0N2E1ZDI1MDE0NjU5NjM4ZmZmMDczMDI1YzJkNGEyOTM4YzBmYzkwMjAyNDdhYThhYjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e47a0fb184ab44e589e74ed8232f426e",
+      "statement": "Flexible message versions use compact encodings with unsigned varint lengths and a trailing tagged-fields section.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/protocol.md#L135-L141",
+          "version": "repo-lines-v1:sha256:110b6d8e4e34dbe8493de718be9470605b435ce2f61e5b22e03688538d952de8:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2ZjNmUzMWQwZDcyMTc2Njc1ZGJhNmU2MjljYWRhZmI3OGRlMDk4ODA3OTlkZThmZGRkYmFlZDkxOGI2NmE1NSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTNhZjg5NDllZTNkZTk5Nzc0YWRiN2VjNjViYjA4Mzc1NGQ3YWZlMWY0YzVhMzZhYzUxZmY5NDFhYTBhZjEwMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiY2M4YTgwZjg3NzVjMDQ3YTVkMjUwMTQ2NTk2MzhmZmYwNzMwMjVjMmQ0YTI5MzhjMGZjOTAyMDI0N2FhOGFiOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDExMDkzZDA4MDk0N2Y2ZDRjN2UwYmU1OWJkNDc1ZGI4MzIzY2YxM2Q4MjZiOWMyYThjZTkxNDdjMjFlODMyZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_78e151cc6e174a7887dce3cc8decb6ce",
+      "statement": "The broker network layer is an NIO server with one acceptor thread and N processor threads, and sendfile is implemented via the TransferableRecords writeTo method.",
+      "evidence": [
+        {
+          "resource": "repo://docs/implementation/network-layer.md",
+          "version": "repo-file-v1:sha256:d46b34a114547e0cdce7b34de4696eaabc3935555f259c95a78fedd34dd2c96b"
+        }
+      ]
+    },
+    {
+      "id": "claim_7084abf8391944aa918d7c18016a92f3",
+      "statement": "Control records of type 0 (ABORT) and 1 (COMMIT) mark transaction outcomes, types 2-6 are used internally by KRaft, and control records are never returned to applications.",
+      "evidence": [
+        {
+          "resource": "repo://docs/implementation/message-format.md#L73-L131",
+          "version": "repo-lines-v1:sha256:b69e775ca0293bc4957009a98b6a8395328979ed68294eaf1a22d98aa8ece8f5:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVkMjE3MmYxODI4NDNkZGQ2YTc1OTY4YjNiNDJjNmMxM2YxZjc1M2ZhNTg5ZDAwN2M0Y2MzN2JhNTRlNGZhNjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBhM2EyZGNjMGNjYTQ0MjJjZWY5NTc3ZTE2OTZiYTQyNjFlN2FjMTI1NGEwN2FkMGFhYmU3NmVlNDM0MTFmYjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM4NjQ1NTAwNjY2Mzk5Y2NlYmVlMGRkMDA4NTBhY2E3NThhNTRiZWE5NTNiMGJmMmRmOWJkYTQwNjgzZTcyZTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM0YjhhZTVlOWQ4Y2I3NjQ1NWVlYjk3NzNlNzE0NDJjZjhiNWEwOGU0NmZjZWNiMjBjOWNmYTE3MGViOWIyZmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ab0641dee4aa431bb72654c7e4fce972",
+      "statement": "Third-party clients are recommended to use URL-safe base64-encoded UUIDs without hyphens as group member IDs, though the protocol does not reject other formats.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/protocol.md#L221-L235",
+          "version": "repo-lines-v1:sha256:4f535ee8bce91162630a874d81fa0eba1a9b112b17585ef4e5e39e1f1340f983:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY0Y2M5OTEwZmM0MzE2ODY3YmQzYjFkNjE5MWFkYTMyM2E3YTJhM2MyZjVjNTQ4MDIwYTVjOTIzNWE2ZGRlZWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJkZTM2YmY3NTg3ZmJiNTYxYjNhMjRmZTAxZTA3NWJjZDhkMTI3NjY3ZDhiNWEwYWQwNjFlZmJiNmQ1ZTljZWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI0OGIzOWIxOTg2MGI5NDE4OWJlNTFhZjI4NWQxNDIzZDhjNTFjYzc2NzBiZGI3ZGZkNzk3YjRmMGZjMjg3YzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}
