@@ -1,0 +1,2683 @@
+{
+ "schema_version": 2,
+ "scenario_id": "v2_12_database",
+ "title": "A Private Hero Registry",
+ "topic": "데이터베이스 연동",
+ "status": "final",
+ "bundle": [
+  "integrations/sql-databases.md",
+  "dependencies/dependencies-with-yield.md",
+  "models/extra-models-and-updates.md",
+  "testing/async-tests-and-database-testing.md",
+  "app-structure/lifespan-events.md",
+  "models/response-model.md",
+  "request/query-parameters.md",
+  "app-structure/settings.md",
+  "getting-started/python-types-and-async.md"
+ ],
+ "generation": {
+  "model": "gpt-6.1-sol",
+  "served_model": "gpt-6.1-sol",
+  "prompt": [
+   "mt_scenario_gen_v3",
+   "7e637f26a462"
+  ],
+  "settings": {
+   "model": "gpt-6.1-sol",
+   "temperature": null,
+   "temperature_requested": null,
+   "seed": 42,
+   "reasoning_effort": null,
+   "reasoning_effort_requested": null,
+   "max_tokens": 40000,
+   "max_tokens_param": "max_completion_tokens"
+  },
+  "run_id": "20261128-093500_v2_12_database",
+  "attempts": 1,
+  "created_at": "2026-11-28T09:37:51"
+ },
+ "turns": [
+  {
+   "turn": 0,
+   "turn_type": "new",
+   "type": "code",
+   "question": "I'm building a private hero registry with synchronous SQLModel. Our SQLite filename is basalt-ledger.db, and our chosen default list size is 37. Show the engine and per-request session setup, including SQLite's thread option.",
+   "asks": [
+    "Engine and per-request session setup"
+   ],
+   "standalone_question": "For a private hero registry using synchronous SQLModel, with SQLite filename basalt-ledger.db and chosen default list size 37, show the engine and per-request session setup, including SQLite's thread option.",
+   "answer": "```python\nfrom typing import Annotated\nfrom fastapi import Depends\nfrom sqlmodel import Session, create_engine\n\nengine = create_engine(\n    \"sqlite:///basalt-ledger.db\",\n    connect_args={\"check_same_thread\": False},\n)\n\ndef get_session():\n    with Session(engine) as session:\n        yield session\n\nSessionDep = Annotated[Session, Depends(get_session)]\n```\nCreate one engine for the app, but a new session for each request; the context manager closes that session afterwards.",
+   "key_facts": [
+    "The project's SQLite filename is basalt-ledger.db.",
+    "Create one engine for the app from a sqlite:///<file name> URL, with check_same_thread=False for this SQLite setup.",
+    "get_session yields a new Session per request and closes it afterwards."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "basalt-ledger.db",
+    "check_same_thread",
+    "False",
+    "Session",
+    "get_session",
+    "SessionDep"
+   ],
+   "evidence_pages": [
+    "integrations/sql-databases.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our SQLite filename is basalt-ledger.db",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "- **Engine**: holds the database connections. Create **one** for the whole app.",
+     "page": "integrations/sql-databases.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "connect_args = {\"check_same_thread\": False}",
+     "page": "integrations/sql-databases.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "The `yield` dependency gives **one new session per request** and closes it afterwards",
+     "page": "integrations/sql-databases.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "sqlite_url = f\"sqlite:///{sqlite_file_name}\"",
+     "page": "integrations/sql-databases.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "review": {
+    "target": []
+   },
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nfrom sqlmodel import Session, create_engine\n\nsqlite_url = \"sqlite:///basalt-ledger.db\"\nengine = create_engine(\n    sqlite_url,\n    connect_args={\"check_same_thread\": False},\n)\n\nDEFAULT_LIST_SIZE = 37\n\ndef get_session():\n    with Session(engine) as session:\n        yield session\n```",
+    "fact_results": [
+     true,
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-103340"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-103340"
+   }
+  },
+  {
+   "turn": 1,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For a yielded database session, when does default cleanup happen relative to sending the response, and what changes if I select function scope?",
+   "asks": [
+    "Default cleanup timing",
+    "Function-scope cleanup timing"
+   ],
+   "standalone_question": "For a yielded database session, when does default cleanup happen relative to sending the response, and what changes if function scope is selected?",
+   "answer": "The default is request scope: cleanup runs after the response is sent, allowing streaming to keep using the session. With Depends(get_session, scope=\"function\"), cleanup runs immediately after the path operation returns, before the response is sent.",
+   "key_facts": [
+    "The default request scope tears down after the response is sent.",
+    "Function scope tears down after the path operation returns but before the response is sent."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "request",
+    "function",
+    "scope"
+   ],
+   "evidence_pages": [
+    "dependencies/dependencies-with-yield.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "- `\"request\"` (default for `yield` dependencies): setup before the path operation, teardown **after the response is sent**.",
+     "page": "dependencies/dependencies-with-yield.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- `\"function\"`: teardown right after the path operation function returns, **before** the response is sent.",
+     "page": "dependencies/dependencies-with-yield.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "By default, a yielded session is cleaned up after the response is sent. With `scope=\"function\"`, cleanup happens after the endpoint returns but before the response is sent.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "With a yielded database session, the default `Depends` scope is `\"request\"`, so cleanup runs after the response is sent. Set `scope=\"function\"` in `Depends` to run cleanup after the path operation finishes but before the response is sent.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "not_found": false,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "changed_round2": true,
+    "flags": [
+     "grounded_memory"
+    ],
+    "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
+    "target": [
+     "c: grounded 에서 기억으로 답함 (정확도 1.00)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 2,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "Suppose my yield dependency catches InternalError and only prints a message. What will the client and logs show, and what is the minimal fix?",
+   "asks": [
+    "Effect of swallowing InternalError",
+    "Minimal exception-handling fix"
+   ],
+   "standalone_question": "If a yield dependency catches InternalError and only prints a message, what will the client and logs show, and what is the minimal fix?",
+   "answer": "The client still receives 500 Internal Server Error, but the logs lack the real InternalError traceback. Add a bare raise in the except block so FastAPI can see the original exception.",
+   "key_facts": [
+    "Swallowing InternalError still produces a client 500 but hides the real error from the server logs.",
+    "A bare raise preserves the exception so the logs include its traceback."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "negation"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "InternalError",
+    "500 Internal Server Error",
+    "raise"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "The client still gets a `500 Internal Server Error`, but the server logs **nothing** about the real error.",
+     "page": "dependencies/dependencies-with-yield.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Re-raise with a bare `raise` (`tutorial008d_an_py310.py`):",
+     "page": "dependencies/dependencies-with-yield.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "Now the 500 is accompanied by the `InternalError` traceback in the logs.",
+     "page": "dependencies/dependencies-with-yield.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "The client gets a generic **500 Internal Server Error**; the exception is swallowed, so there’s no traceback—only the message printed by the dependency. Re-raise it with `raise` so FastAPI can handle and log it.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 3,
+   "turn_type": "new",
+   "type": "code",
+   "question": "I already have create_db_and_tables(). Show how to run it before serving requests using lifespan. If I keep a startup event handler too, will that handler still run?",
+   "asks": [
+    "Table initialization through lifespan",
+    "Interaction with startup event handlers"
+   ],
+   "standalone_question": "Given create_db_and_tables(), show how to run it before serving requests using lifespan, and explain whether a retained startup event handler will still run.",
+   "answer": "```python\nfrom contextlib import asynccontextmanager\nfrom fastapi import FastAPI\n\n@asynccontextmanager\nasync def lifespan(app: FastAPI):\n    create_db_and_tables()\n    yield\n\napp = FastAPI(lifespan=lifespan)\n```\nInitialization before yield finishes before requests are served. Providing lifespan replaces the default event mechanism, so the app's startup event handlers will not run.",
+   "key_facts": [
+    "Put initialization before yield in an asynccontextmanager supplied through FastAPI(lifespan=lifespan).",
+    "Providing lifespan means the app's startup/shutdown event handlers are not called."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation",
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "asynccontextmanager",
+    "yield",
+    "FastAPI(lifespan=lifespan)"
+   ],
+   "evidence_pages": [
+    "app-structure/lifespan-events.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "- Everything **before** `yield` runs at startup; the app does not serve requests until it finishes.",
+     "page": "app-structure/lifespan-events.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "app = FastAPI(lifespan=lifespan)",
+     "page": "app-structure/lifespan-events.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "When you provide `lifespan`, that default is replaced, so the event handlers of that app are no longer called.",
+     "page": "app-structure/lifespan-events.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nfrom contextlib import asynccontextmanager\nfrom fastapi import FastAPI\n\n@asynccontextmanager\nasync def lifespan(app: FastAPI):\n    create_db_and_tables()  # runs before requests are served\n    yield\n\napp = FastAPI(lifespan=lifespan)\n```\n\nWhen you provide a lifespan handler, existing `@app.on_event(\"startup\")` handlers will **not** run. Move their startup work into the lifespan handler.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 4,
+   "turn_type": "update",
+   "type": "code",
+   "question": "Change our SQLite filename from basalt-ledger.db to basalt-rehearsal.db. What engine declaration should replace the current one while preserving the SQLite thread option?",
+   "asks": [
+    "Updated engine declaration"
+   ],
+   "standalone_question": "Change the project's SQLite filename from basalt-ledger.db to basalt-rehearsal.db and show the replacement engine declaration preserving the SQLite thread option.",
+   "answer": "```python\nengine = create_engine(\n    \"sqlite:///basalt-rehearsal.db\",\n    connect_args={\"check_same_thread\": False},\n)\n```",
+   "key_facts": [
+    "The project's SQLite filename is now basalt-rehearsal.db.",
+    "The SQLite connection option remains check_same_thread=False.",
+    "The engine URL has the form sqlite:///<file name>."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "basalt-rehearsal.db",
+    "check_same_thread",
+    "False",
+    "create_engine"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "Change our SQLite filename from basalt-ledger.db to basalt-rehearsal.db.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "connect_args = {\"check_same_thread\": False}",
+     "page": "integrations/sql-databases.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "sqlite_url = f\"sqlite:///{sqlite_file_name}\"",
+     "page": "integrations/sql-databases.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "SQLite filename",
+     "from": "basalt-ledger.db",
+     "to": "basalt-rehearsal.db"
+    }
+   ],
+   "affects": [
+    9,
+    18
+   ],
+   "source_turn": null,
+   "recall_distance": 4,
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   },
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nengine = create_engine(\n    \"sqlite:///basalt-rehearsal.db\",\n    connect_args={\"check_same_thread\": False},\n)\n```",
+    "fact_results": [
+     true,
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-103340"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-103340"
+   }
+  },
+  {
+   "turn": 5,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "Can response_model=HeroPublic keep secret_name out even when I return a Hero object? Would returning a JSONResponse directly preserve that filtering?",
+   "asks": [
+    "Filtering a returned database object",
+    "Filtering a directly returned response"
+   ],
+   "standalone_question": "Can response_model=HeroPublic keep secret_name out when returning a Hero object, and would directly returning a JSONResponse preserve that filtering?",
+   "answer": "Yes: the declared response model filters ordinary returned data to HeroPublic's fields, keeping secret_name out. No: a directly returned JSONResponse is a Response instance and is sent as-is, without response-model validation or filtering.",
+   "key_facts": [
+    "response_model filters a returned database object to the declared public fields.",
+    "Returning a Response instance directly bypasses validation and filtering."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation",
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "response_model",
+    "HeroPublic",
+    "secret_name",
+    "JSONResponse",
+    "Response"
+   ],
+   "evidence_pages": [
+    "models/response-model.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "- **filter** the output to the declared fields (crucial for security, e.g. hiding passwords);",
+     "page": "models/response-model.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "When you return something that isn't literally the declared type — a dict, or a database object — the annotation would upset your editor/type checker.",
+     "page": "models/response-model.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Any returned `Response` instance is sent as-is, without validation or filtering.",
+     "page": "models/response-model.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Yes. FastAPI uses `response_model=HeroPublic` to filter fields such as `secret_name` when you return a `Hero` object. Returning a `JSONResponse` directly bypasses that filtering, so you must remove the secret yourself.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 6,
+   "turn_type": "followup",
+   "type": "code",
+   "question": "Our collection route is /vault-heroes/. Show just the POST decorator that applies the public model we discussed, and explain why response_model_exclude={\"secret_name\"} on the full table model is a worse contract.",
+   "asks": [
+    "Public POST decorator at the project route",
+    "Separate model versus field exclusion"
+   ],
+   "standalone_question": "With collection route /vault-heroes/, show the POST decorator using the previously selected public response model, and explain why response_model_exclude={\"secret_name\"} on the full table model is a worse contract.",
+   "answer": "```python\n@app.post(\"/vault-heroes/\", response_model=HeroPublic)\n```\nPrefer the separate public model: include/exclude options leave the full model in OpenAPI, whereas a separate model documents exactly the fields returned.",
+   "key_facts": [
+    "The POST collection route is /vault-heroes/.",
+    "A separate response model documents the actual output shape; include/exclude still exposes the full model schema in OpenAPI."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/vault-heroes/",
+    "HeroPublic",
+    "response_model",
+    "OpenAPI"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "Our collection route is /vault-heroes/.",
+     "user_turn": 6,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Prefer separate models over include/exclude: with include/exclude, the OpenAPI schema still shows the **full** model, while separate classes document exactly what is returned.",
+     "page": "models/response-model.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.5,
+    "response": "```python\n@app.post(\"/vault-heroes/\", response_model=HeroPublic)\n```\n\n`HeroPublic` makes the response contract explicitly allowlisted. Using the full table model with `response_model_exclude={\"secret_name\"}` is a denylist: new sensitive fields could be exposed unless added to the exclusions, and the documented schema may not accurately reflect the filtered response.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 7,
+   "turn_type": "same_doc_new_topic",
+   "type": "multi",
+   "question": "For the hero model split, which class actually defines the table, and why is its id nullable while the public model's id is required?",
+   "asks": [
+    "Table class",
+    "Different id annotations"
+   ],
+   "standalone_question": "In the hero model split, which class defines the database table, and why is its id nullable while the public model's id is required?",
+   "answer": "Hero is the table model because it has table=True. Its id is int | None with default None so an object can exist before the database assigns its primary key. HeroPublic requires id: int because saved records have an assigned ID.",
+   "key_facts": [
+    "Hero, declared with table=True, is the database table model.",
+    "Hero.id permits None before saving, while HeroPublic.id is a required int after saving."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "Hero",
+    "table=True",
+    "HeroPublic",
+    "int | None",
+    "id: int"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "class Hero(HeroBase, table=True):",
+     "page": "integrations/sql-databases.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "| `HeroPublic` | data model | Returned to clients: `id` is required (always set after saving), `secret_name` omitted |",
+     "page": "integrations/sql-databases.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "`Field(primary_key=True)` marks the primary key (typed `int | None` so you can create objects before the DB assigns the id)",
+     "page": "integrations/sql-databases.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 0,
+   "recall_distance": 7,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "`HeroEntity` defines the database table. Its ID can be nullable because a new, unsaved hero has no database-generated ID yet; the public `Hero` model requires an ID because it represents a persisted hero.",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 8,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm checking replacement versus partial updates. If stored tax is 20.2 but the replacement model defaults tax to 10.5, what happens when PUT omits tax? Which dump option prevents omitted fields from overwriting stored values in PATCH?",
+   "asks": [
+    "Omitted tax in replacement",
+    "Dump option for partial updates"
+   ],
+   "standalone_question": "If stored tax is 20.2 and the replacement model defaults tax to 10.5, what happens when PUT omits tax, and which dump option prevents omitted fields from overwriting stored values in PATCH?",
+   "answer": "The replacement resets tax to 10.5. For PATCH, use model_dump(exclude_unset=True) so the update dictionary contains only fields the client actually sent.",
+   "key_facts": [
+    "PUT replacement resets omitted tax from 20.2 to the model default 10.5.",
+    "model_dump(exclude_unset=True) includes only fields actually sent by the client."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable",
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "20.2",
+    "10.5",
+    "PUT",
+    "PATCH",
+    "model_dump(exclude_unset=True)"
+   ],
+   "evidence_pages": [
+    "models/extra-models-and-updates.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "resets `tax` to the model default `10.5`, because the omitted field takes its default.",
+     "page": "models/extra-models-and-updates.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Use `model_dump(exclude_unset=True)` to get only fields the client **actually sent**",
+     "page": "models/extra-models-and-updates.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "For PUT, the replacement model applies its default, so the stored tax becomes 10.5. For PATCH, use `model_dump(exclude_unset=True)` so omitted fields aren’t included.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 9,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "What SQLite URL should this service use now? Also remind me of the engine count and thread option we chose for the synchronous session setup.",
+   "asks": [
+    "Current SQLite URL",
+    "Engine count and SQLite thread option"
+   ],
+   "standalone_question": "For the project's current synchronous SQLite session setup, what database URL should be used, and what engine count and SQLite thread option were selected?",
+   "answer": "Use sqlite:///basalt-rehearsal.db. Keep one engine for the whole app and connect_args={\"check_same_thread\": False}; do not create an engine per request.",
+   "key_facts": [
+    "The current database URL uses basalt-rehearsal.db, not the original filename.",
+    "There is one engine for the entire app.",
+    "The SQLite engine uses check_same_thread=False."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "basalt-rehearsal.db",
+    "check_same_thread",
+    "False"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0,
+    4
+   ],
+   "evidence": [
+    {
+     "quote": "Change our SQLite filename from basalt-ledger.db to basalt-rehearsal.db.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "- **Engine**: holds the database connections. Create **one** for the whole app.",
+     "page": "integrations/sql-databases.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "connect_args = {\"check_same_thread\": False}",
+     "page": "integrations/sql-databases.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 9,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 10,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "Our settings app_name should be Basalt Registry. If I retain items_per_user unchanged from the settings example, what value does it have? Show a lazy cached settings provider with our app name.",
+   "asks": [
+    "Unchanged items_per_user default",
+    "Lazy cached project settings provider"
+   ],
+   "standalone_question": "Set settings app_name to Basalt Registry, state the unchanged items_per_user value from the settings example, and show a lazy cached settings provider with that app name.",
+   "answer": "items_per_user stays 50.\n```python\nfrom functools import lru_cache\nfrom pydantic_settings import BaseSettings\n\nclass Settings(BaseSettings):\n    app_name: str = \"Basalt Registry\"\n    items_per_user: int = 50\n\n@lru_cache\ndef get_settings():\n    return Settings()\n```\nThe first call constructs settings; later calls reuse the same object.",
+   "key_facts": [
+    "The project's app_name default is Basalt Registry.",
+    "The unchanged items_per_user default is 50.",
+    "lru_cache makes get_settings construct settings lazily and reuse the same object across calls."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "app_name",
+    "Basalt Registry",
+    "items_per_user",
+    "50",
+    "lru_cache",
+    "get_settings"
+   ],
+   "evidence_pages": [
+    "app-structure/settings.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our settings app_name should be Basalt Registry.",
+     "user_turn": 10,
+     "fact_idx": 0
+    },
+    {
+     "quote": "    items_per_user: int = 50",
+     "page": "app-structure/settings.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "`functools.lru_cache` makes `get_settings()` return the **same object** after the first call",
+     "page": "app-structure/settings.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "so settings are built once, lazily, on the first request that needs them.",
+     "page": "app-structure/settings.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "The unchanged `items_per_user` value is **50**.\n\n```python\nfrom functools import lru_cache\nfrom pydantic_settings import BaseSettings\n\nclass Settings(BaseSettings):\n    app_name: str = \"Basalt Registry\"\n    items_per_user: int = 50\n\n@lru_cache\ndef get_settings() -> Settings:\n    return Settings()\n```",
+    "fact_results": [
+     true,
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 11,
+   "turn_type": "update",
+   "type": "code",
+   "question": "Change our default list size from 37 to 61, but keep the existing SQLModel list example's maximum. What should the limit parameter declaration be?",
+   "asks": [
+    "Updated limit declaration with retained maximum"
+   ],
+   "standalone_question": "Change the project's default list size from 37 to 61 while retaining the SQLModel list example's maximum, and show the limit parameter declaration.",
+   "answer": "```python\nlimit: Annotated[int, Query(le=100)] = 61\n```\nThe default becomes 61; the maximum remains 100.",
+   "key_facts": [
+    "The default limit is now 61.",
+    "The retained maximum is 100, enforced with Query(le=100)."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "range",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "61",
+    "Query(le=100)",
+    "Annotated"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "Change our default list size from 37 to 61",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "`Query(le=100)` caps the page size.",
+     "page": "integrations/sql-databases.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Default list size",
+     "from": 37,
+     "to": 61
+    }
+   ],
+   "affects": [
+    13
+   ],
+   "source_turn": null,
+   "recall_distance": 11,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nlimit: int = Query(default=61, le=100)\n```",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 12,
+   "turn_type": "new",
+   "type": "procedure",
+   "question": "How should I isolate database-backed tests with an in-memory SQLite session override? For async HTTP tests, what extra wrapper makes application startup run?",
+   "asks": [
+    "Isolated in-memory database session override",
+    "Startup wrapper for async HTTP tests"
+   ],
+   "standalone_question": "How should database-backed tests use an isolated in-memory SQLite session override, and what extra wrapper runs application startup in async HTTP tests?",
+   "answer": "Create a test engine with \"sqlite://\", check_same_thread=False, and poolclass=StaticPool; create tables and yield a Session from a fixture. Override get_session through app.dependency_overrides, then clear the overrides during teardown. For AsyncClient with ASGITransport, wrap the application in LifespanManager and transport manager.app; the client/transport alone does not run lifespan.",
+   "key_facts": [
+    "The test engine uses sqlite:// with StaticPool and check_same_thread=False for a fresh in-memory database shared across threads.",
+    "Override get_session using app.dependency_overrides and clear overrides after the test.",
+    "AsyncClient plus ASGITransport does not run lifespan automatically; use LifespanManager."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation",
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "sqlite://",
+    "StaticPool",
+    "check_same_thread",
+    "get_session",
+    "app.dependency_overrides",
+    "LifespanManager",
+    "ASGITransport"
+   ],
+   "evidence_pages": [
+    "testing/async-tests-and-database-testing.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "        \"sqlite://\", connect_args={\"check_same_thread\": False}, poolclass=StaticPool",
+     "page": "testing/async-tests-and-database-testing.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "An in-memory SQLite database (`\"sqlite://\"`) with `StaticPool` gives each test a fresh, fast database shared across threads.",
+     "page": "testing/async-tests-and-database-testing.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    app.dependency_overrides[get_session] = get_session_override",
+     "page": "testing/async-tests-and-database-testing.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "    app.dependency_overrides.clear()",
+     "page": "testing/async-tests-and-database-testing.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "**Lifespan events don't run** with `AsyncClient` + `ASGITransport`.",
+     "page": "testing/async-tests-and-database-testing.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "  async with LifespanManager(app) as manager:",
+     "page": "testing/async-tests-and-database-testing.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.3333333333333333,
+    "accuracy": 0.3333333333333333,
+    "response": "Create a separate in-memory SQLite engine for tests, typically with `StaticPool`, create the test schema, and override the app’s database-session dependency to yield a session from that engine and close it afterward. For async HTTP tests, wrap the app in `LifespanManager` so startup and shutdown run.",
+    "fact_results": [
+     false,
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 13,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "Before I wire the fixtures, which default list size are we using now, which pool class shares the in-memory test database across threads, and will retained startup event handlers run when lifespan is supplied?",
+   "asks": [
+    "Current default list size",
+    "In-memory test pool class",
+    "Startup event behavior with explicit lifespan"
+   ],
+   "standalone_question": "For this project's fixtures, state the current default list size, the pool class that shares an in-memory test database across threads, and whether retained startup event handlers run when lifespan is supplied.",
+   "answer": "The default list size is 61. Use StaticPool for the shared in-memory test database. No: supplying lifespan replaces the default event mechanism, so the app's retained startup event handlers do not run.",
+   "key_facts": [
+    "The current default list size is 61.",
+    "StaticPool shares the in-memory test database across threads.",
+    "Startup event handlers do not run when the app is given lifespan."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation",
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "61",
+    "StaticPool",
+    "lifespan"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    3,
+    11,
+    12
+   ],
+   "evidence": [
+    {
+     "quote": "Change our default list size from 37 to 61",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "An in-memory SQLite database (`\"sqlite://\"`) with `StaticPool` gives each test a fresh, fast database shared across threads.",
+     "page": "testing/async-tests-and-database-testing.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "When you provide `lifespan`, that default is replaced, so the event handlers of that app are no longer called.",
+     "page": "app-structure/lifespan-events.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 10,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 14,
+   "turn_type": "same_doc_new_topic",
+   "type": "multi",
+   "question": "I want a background task to process a saved hero after the response. Should I pass it the yielded session and ORM object, or use a different resource boundary?",
+   "asks": [
+    "Database resource boundary for background work"
+   ],
+   "standalone_question": "For a background task processing a saved hero after the response, should the task receive the request's yielded session and ORM object, or use a different resource boundary?",
+   "answer": "Pass the hero's ID, not the ORM object, and create a fresh database session inside the task. Do not rely on the request's yielded session for background work.",
+   "key_facts": [
+    "Background tasks should create fresh resources and receive IDs rather than ORM objects instead of relying on a yielded request session."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation",
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "IDs",
+    "ORM"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "Don't rely on a yielded resource (e.g. a DB session) inside a background task; create a fresh resource in the task and pass IDs instead of ORM objects.",
+     "page": "dependencies/dependencies-with-yield.md",
+     "fact_idx": 0
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 1,
+   "recall_distance": 13,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Use a separate resource boundary: pass the hero’s ID, then have the task open its own session and reload the hero. Don’t pass the request’s session or ORM object.",
+    "fact_results": [
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 15,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For the database list endpoint, what does an int annotation do to an incoming query value, and should a blocking database call live in plain def or directly inside async def?",
+   "asks": [
+    "Typed query conversion and validation",
+    "Endpoint style for blocking database calls"
+   ],
+   "standalone_question": "For a database list endpoint, what does an int annotation do to an incoming query value, and should a blocking database call live in plain def or directly inside async def?",
+   "answer": "Query values arrive as strings and are converted and validated using the annotation; invalid input receives an automatic 422 validation error. Use plain def for blocking database calls: FastAPI runs the endpoint in a threadpool. Calling blocking I/O directly inside async def blocks the event loop.",
+   "key_facts": [
+    "An int query annotation converts and validates incoming strings, with automatic 422 errors for invalid input.",
+    "Plain def endpoints run in a threadpool, whereas blocking calls directly inside async def block the event loop."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "int",
+    "422",
+    "def",
+    "async def"
+   ],
+   "evidence_pages": [
+    "request/query-parameters.md",
+    "getting-started/python-types-and-async.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Values arrive as strings and are converted and validated according to the type.",
+     "page": "request/query-parameters.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "validation with automatic 422 errors",
+     "page": "getting-started/python-types-and-async.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Plain `def` path operations are run in an **external threadpool** and awaited",
+     "page": "getting-started/python-types-and-async.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "Calling a blocking function inside one blocks the whole server process for that time — avoid blocking I/O there.",
+     "page": "getting-started/python-types-and-async.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "An `int` annotation converts the query value to an integer (or returns a validation error if it’s invalid). Put a blocking database call in plain `def`; calling it directly inside `async def` blocks the event loop.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "c: 한 턴 한 주제 경고"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 16,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "What app name and unchanged per-user item count did we settle on for settings? Is the settings instance rebuilt for every request with the provider we chose?",
+   "asks": [
+    "Project settings name and per-user count",
+    "Settings provider object reuse"
+   ],
+   "standalone_question": "What app name and unchanged per-user item count were selected for the project's settings, and does the chosen settings provider rebuild its instance for every request?",
+   "answer": "The app name is Basalt Registry and items_per_user is 50. No: the lru_cache-backed get_settings provider constructs settings lazily on the first call and reuses the same object on later calls.",
+   "key_facts": [
+    "The selected app name is Basalt Registry.",
+    "The unchanged items_per_user default is 50.",
+    "The cached settings provider reuses the same object rather than rebuilding it per request."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "Basalt Registry",
+    "items_per_user",
+    "50",
+    "lru_cache",
+    "get_settings"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    10
+   ],
+   "evidence": [
+    {
+     "quote": "Our settings app_name should be Basalt Registry.",
+     "user_turn": 10,
+     "fact_idx": 0
+    },
+    {
+     "quote": "    items_per_user: int = 50",
+     "page": "app-structure/settings.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "`functools.lru_cache` makes `get_settings()` return the **same object** after the first call",
+     "page": "app-structure/settings.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 6,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 17,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "With our partial-update dump technique, is an explicitly sent null dropped like an omitted field? Also, does the copy-with-updates step revalidate the update data?",
+   "asks": [
+    "Explicit null versus omitted fields in partial updates",
+    "Validation during copy with updates"
+   ],
+   "standalone_question": "With the previously selected partial-update dump technique, is an explicitly sent null dropped like an omitted field, and does the copy-with-updates step revalidate update data?",
+   "answer": "No. model_dump(exclude_unset=True) omits fields the client did not send, not fields explicitly sent as null; an explicitly supplied null remains in the update data if the input model accepts it. model_copy(update=...) does not revalidate the update data, so validate beforehand if needed.",
+   "key_facts": [
+    "exclude_unset removes omitted fields, not explicitly supplied null values accepted by the input model.",
+    "model_copy(update=...) does not revalidate update data."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "negation"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "model_dump(exclude_unset=True)",
+    "model_copy(update=...)"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    8
+   ],
+   "evidence": [
+    {
+     "quote": "Use `model_dump(exclude_unset=True)` to get only fields the client **actually sent**",
+     "page": "models/extra-models-and-updates.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "`model_copy(update=...)` does **not** re-validate the update data; validate before if needed.",
+     "page": "models/extra-models-and-updates.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 9,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "No. An explicitly sent `null` is retained; only omitted fields are excluded. The copy-with-updates step does not revalidate the update data.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Use `exclude_unset=True` when dumping the incoming model: it omits fields the client left out, but keeps a field explicitly sent as `null`. Pass that partial data to `copy(update=...)`; the update is applied without revalidating it.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "not_found": false,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "flags": [
+     "grounded_memory"
+    ],
+    "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
+    "target": [
+     "c: grounded 에서 기억으로 답함 (정확도 1.00); recall·synthesis 인데 knowledge 로 맞힘"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 18,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the final integration test, what collection route should I POST to, what SQLite filename is the service configured to use now, and which wrapper runs lifespan around the async HTTP client?",
+   "asks": [
+    "Project collection route",
+    "Current service SQLite filename",
+    "Async test lifespan wrapper"
+   ],
+   "standalone_question": "For this project's final integration test, state the collection route to POST to, the service's current configured SQLite filename, and the wrapper that runs lifespan around the async HTTP client.",
+   "answer": "POST to /vault-heroes/. The service's current configured SQLite filename is basalt-rehearsal.db, although isolated endpoint tests should override its session with the test database. Use LifespanManager around the application for the async HTTP test.",
+   "key_facts": [
+    "The collection POST route is /vault-heroes/.",
+    "The service's current configured SQLite filename is basalt-rehearsal.db.",
+    "LifespanManager runs lifespan for async HTTP tests using AsyncClient and ASGITransport."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/vault-heroes/",
+    "basalt-rehearsal.db",
+    "LifespanManager",
+    "AsyncClient",
+    "ASGITransport"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    4,
+    6,
+    12
+   ],
+   "evidence": [
+    {
+     "quote": "Our collection route is /vault-heroes/.",
+     "user_turn": 6,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Change our SQLite filename from basalt-ledger.db to basalt-rehearsal.db.",
+     "user_turn": 4,
+     "fact_idx": 1
+    },
+    {
+     "quote": "  async with LifespanManager(app) as manager:",
+     "page": "testing/async-tests-and-database-testing.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "**Lifespan events don't run** with `AsyncClient` + `ASGITransport`.",
+     "page": "testing/async-tests-and-database-testing.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 14,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  }
+ ],
+ "edits": [
+  {
+   "date": "2026-11-28",
+   "by": "검수 2차 결정 반영 (손 수정)",
+   "items": [
+    "턴 1: 인용문 2개를 원문 글자 그대로 (백틱 포함)"
+   ]
+  },
+  {
+   "date": "2026-11-28",
+   "by": "검수 결과 반영 (손 수정)",
+   "items": [
+    "턴 0: setup [0] 분리: 'The configured SQLite URL is sqlite:///basalt-ledger.db.' → setup \"The project's SQLite filename is basalt-ledger.db.\", 기존 doc 항목 [1] 에 합침 → 'Create one engine for the app from a sqlite:///<file name> URL, with check_same_thread=False for this SQLite setup.'",
+    "턴 4: setup [0] 분리: 'The replacement engine uses sqlite:///basalt-rehearsal.db.' → setup \"The project's SQLite filename is now basalt-rehearsal.db.\", 새 doc 항목 [2] 'The engine URL has the form sqlite:///<file name>.'"
+   ]
+  }
+ ],
+ "review_summary": {
+  "reviewer": "akingdbets",
+  "date": "2026-11-28",
+  "targets": 5,
+  "verdicts": {
+   "OK": 5,
+   "수정 필요": 0,
+   "제외": 0
+  }
+ }
+}

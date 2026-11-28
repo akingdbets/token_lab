@@ -19,6 +19,7 @@ import json
 import re
 import warnings
 from dataclasses import dataclass, field
+from pathlib import Path
 
 
 # ============================================================
@@ -322,6 +323,40 @@ FACT_JUDGE_PROMPT_HASH = hashlib.sha256(
     ).encode("utf-8")
 ).hexdigest()[:12]
 
+# fact_judge_v3 (src/prompts/fact_judge_v3.md)
+#   per_fact 판정에 key_fact 의 accept_alternatives (문서상 정당한 다른 답)를 더한다.
+#   대안이 없는 fact 는 v2 의 FACT_JUDGE_SINGLE_PROMPT 와 글자 그대로 같은 프롬프트다. batch 는 지원하지 않는다.
+FACT_JUDGE_V3_VERSION = "fact_judge_v3"
+JUDGE_VERSIONS = (FACT_JUDGE_PROMPT_VERSION, FACT_JUDGE_V3_VERSION)
+
+
+def _load_v3_block() -> str:
+    text = (Path(__file__).resolve().parent / "prompts" / "fact_judge_v3.md").read_text(encoding="utf-8")
+    text = text.replace("\r\n", "\n")
+    return text.split("## alternatives_block", 1)[1].strip("\n")
+
+
+FACT_JUDGE_V3_ALT_BLOCK = _load_v3_block()
+FACT_JUDGE_V3_PROMPT_HASH = hashlib.sha256(
+    "\n---\n".join((FACT_JUDGE_SINGLE_PROMPT, FACT_JUDGE_V3_ALT_BLOCK)).encode("utf-8")
+).hexdigest()[:12]
+
+
+def single_fact_prompt(question: str, reference_answer: str, fact: str, candidate_answer: str,
+                       alternatives: list[str] | None = None) -> str:
+    """per_fact 판정 프롬프트. alternatives 가 비면 v2 FACT_JUDGE_SINGLE_PROMPT 그대로 (v3 도 같은 글자)."""
+    prompt = FACT_JUDGE_SINGLE_PROMPT.format(question=question, reference_answer=reference_answer,
+                                             candidate_answer=candidate_answer, fact=fact)
+    alts = [a.strip() for a in (alternatives or []) if str(a).strip()]
+    if not alts:
+        return prompt
+    block = FACT_JUDGE_V3_ALT_BLOCK.format(alternatives="\n".join(f"- {a}" for a in alts))
+    anchor = f"Fact:\n{fact}\n"
+    if prompt.count(anchor) != 1:
+        raise ValueError("fact 블록 위치를 찾지 못했습니다 (fact 문장에 'Fact:' 줄이 겹침)")
+    return prompt.replace(anchor, anchor + "\n" + block + "\n", 1)
+
+
 JUDGE_MODES = ("batch", "per_fact")
 
 # 답변 전체가 NOT FOUND 인지 (대소문자·앞뒤 공백·마침표 무시). 이 경우 judge 를 부르지 않는다
@@ -512,17 +547,12 @@ def _judge_single_fact(
     fact: str,
     candidate_answer: str,
     judge_llm,
+    alternatives: list[str] | None = None,
 ):
-    """fact 하나만 YES/NO 로 판정. (satisfied, 못 읽은 사유, LLMResult) 반환. 못 읽으면 satisfied=None."""
+    """fact 하나만 YES/NO 로 판정. (satisfied, 못 읽은 사유, LLMResult) 반환. 못 읽으면 satisfied=None.
+    alternatives 는 fact_judge_v3 에서만 넘긴다 (비면 v2 와 같은 프롬프트)."""
 
-    res = judge_llm.ask(
-        FACT_JUDGE_SINGLE_PROMPT.format(
-            question=question,
-            reference_answer=reference_answer,
-            candidate_answer=candidate_answer,
-            fact=fact,
-        )
-    )
+    res = judge_llm.ask(single_fact_prompt(question, reference_answer, fact, candidate_answer, alternatives))
 
     ok, error = parse_yes_no(res)
     return ok, error, res
@@ -535,6 +565,8 @@ def grade_answer_accuracy(
     candidate_answer: str,
     judge_llm,
     mode: str = "batch",
+    judge_version: str = FACT_JUDGE_PROMPT_VERSION,
+    alternatives: list[list[str]] | None = None,
 ) -> AnswerAccuracyResult:
     """
     key_facts를 기준으로 Candidate Answer의 답변 정확도를 계산한다.
@@ -557,6 +589,15 @@ def grade_answer_accuracy(
 
     if mode not in JUDGE_MODES:
         raise ValueError(f"알 수 없는 judge mode: {mode} ({JUDGE_MODES})")
+    if judge_version not in JUDGE_VERSIONS:
+        raise ValueError(f"알 수 없는 채점 버전: {judge_version} ({JUDGE_VERSIONS})")
+    if judge_version == FACT_JUDGE_V3_VERSION and mode != "per_fact":
+        raise ValueError("fact_judge_v3 는 per_fact 모드만 지원합니다")
+    if alternatives is not None and judge_version != FACT_JUDGE_V3_VERSION:
+        raise ValueError("accept_alternatives 는 fact_judge_v3 에서만 채점에 씁니다 (v2 는 대안을 받지 않음)")
+    if alternatives is not None and len(alternatives) != len(key_facts):
+        raise ValueError(f"alternatives 길이({len(alternatives)})가 key_facts 길이({len(key_facts)})와 다릅니다")
+    alt_by_fact = {str(f).strip(): list(a or []) for f, a in zip(key_facts, alternatives or [[]] * len(key_facts))}
 
     key_facts = [
         str(fact).strip()
@@ -668,6 +709,7 @@ def grade_answer_accuracy(
         for i, fact in enumerate(key_facts):
             ok, error, res = _judge_single_fact(
                 question, reference_answer, fact, candidate_answer, judge_llm,
+                alternatives=alt_by_fact.get(fact) if judge_version == FACT_JUDGE_V3_VERSION else None,
             )
             _use(res)
             raws.append(f"[{i}] {res.text.strip()}")
@@ -699,6 +741,9 @@ def grade_answer_accuracy(
         judge_cached_tokens=_sum_usage_field(responses, "cached_tokens"),
         judge_cache_write_tokens=_sum_usage_field(responses, "cache_write_tokens"),
         judge_mode=judge_mode,
+        judge_prompt_version=judge_version,
+        judge_prompt_hash=(FACT_JUDGE_V3_PROMPT_HASH if judge_version == FACT_JUDGE_V3_VERSION
+                           else FACT_JUDGE_PROMPT_HASH),
         judge_retries=retries,
         judge_missing_before_fix=missing_before,
         judge_calls=calls,

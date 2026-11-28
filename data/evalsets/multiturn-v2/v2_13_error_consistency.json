@@ -1,0 +1,2569 @@
+{
+ "schema_version": 2,
+ "scenario_id": "v2_13_error_consistency",
+ "title": "Consistent Error Envelopes Without Losing Semantics",
+ "topic": "에러 처리 일관성",
+ "status": "final",
+ "bundle": [
+  "errors/handling-errors.md",
+  "responses/status-codes.md",
+  "request/request-body.md",
+  "dependencies/dependencies-with-yield.md",
+  "middleware/middleware.md",
+  "internals/request-handling-internals.md",
+  "security/oauth2-password-flow.md",
+  "responses/custom-responses.md",
+  "openapi/extending-openapi.md"
+ ],
+ "generation": {
+  "model": "gpt-6.1-sol",
+  "served_model": "gpt-6.1-sol",
+  "prompt": [
+   "mt_scenario_gen_v3",
+   "7e637f26a462"
+  ],
+  "settings": {
+   "model": "gpt-6.1-sol",
+   "temperature": null,
+   "temperature_requested": null,
+   "seed": 42,
+   "reasoning_effort": null,
+   "reasoning_effort_requested": null,
+   "max_tokens": 40000,
+   "max_tokens_param": "max_completion_tokens"
+  },
+  "run_id": "20261128-093504_v2_13_error_consistency",
+  "attempts": 2,
+  "created_at": "2026-11-28T09:40:03"
+ },
+ "turns": [
+  {
+   "turn": 0,
+   "turn_type": "new",
+   "type": "code",
+   "question": "I'm building an inventory API. Our error envelope key will be \"fault\", and request-validation failures should use status 409. Show handlers that apply this envelope to HTTP errors, including unknown routes, and to request-validation errors.",
+   "asks": [
+    "Implement enveloped HTTP errors including unknown routes",
+    "Implement enveloped request-validation errors with the chosen status"
+   ],
+   "standalone_question": "For an inventory API whose error envelope key is \"fault\" and whose request-validation failures use status 409, show handlers for HTTP errors including unknown routes and for request-validation errors.",
+   "answer": "```python\nfrom fastapi import FastAPI\nfrom fastapi.encoders import jsonable_encoder\nfrom fastapi.exceptions import RequestValidationError\nfrom fastapi.responses import JSONResponse\nfrom starlette.exceptions import HTTPException as StarletteHTTPException\n\napp = FastAPI()\n\n@app.exception_handler(StarletteHTTPException)\nasync def handle_http(request, exc):\n    return JSONResponse(\n        status_code=exc.status_code,\n        content={\"fault\": exc.detail},\n        headers=exc.headers,\n    )\n\n@app.exception_handler(RequestValidationError)\nasync def handle_validation(request, exc):\n    return JSONResponse(\n        status_code=409,\n        content=jsonable_encoder({\"fault\": exc.errors()}),\n    )\n```\nRegistering the HTTP handler for Starlette's exception also covers internally raised routing errors. For HTTP statuses that forbid a body, return an empty response instead of the JSON envelope.",
+   "key_facts": [
+    "Both handlers use the project envelope key fault.",
+    "The request-validation handler returns status 409.",
+    "Register the HTTP handler for StarletteHTTPException to catch internal routing errors, and register RequestValidationError separately."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "fault",
+    "409",
+    "StarletteHTTPException",
+    "RequestValidationError"
+   ],
+   "evidence_pages": [
+    "errors/handling-errors.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our error envelope key will be \"fault\"",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "request-validation failures should use status 409.",
+     "user_turn": 0,
+     "fact_idx": 1
+    },
+    {
+     "quote": "Raise FastAPI's in your code, but **register handlers for Starlette's**",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "@app.exception_handler(RequestValidationError)",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nfrom fastapi import FastAPI, Request\nfrom fastapi.exceptions import RequestValidationError\nfrom starlette.exceptions import HTTPException as StarletteHTTPException\nfrom fastapi.responses import JSONResponse\n\napp = FastAPI()\n\n@app.exception_handler(StarletteHTTPException)\nasync def http_error_handler(request: Request, exc: StarletteHTTPException):\n    # Also handles unknown routes (404).\n    return JSONResponse(\n        status_code=exc.status_code,\n        content={\"fault\": {\"message\": exc.detail}},\n        headers=exc.headers,\n    )\n\n@app.exception_handler(RequestValidationError)\nasync def validation_error_handler(request: Request, exc: RequestValidationError):\n    return JSONResponse(\n        status_code=409,\n        content={\"fault\": {\"message\": \"Request validation failed\",\n                           \"details\": exc.errors()}},\n    )\n```",
+    "fact_results": [
+     true,
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 1,
+   "turn_type": "new",
+   "type": "code",
+   "question": "For inventory creation, the single model body must be wrapped under \"parcel\". How should I declare the parameter so a bare model object is not the expected request shape?",
+   "asks": [
+    "Declare a single model body with the chosen wrapper"
+   ],
+   "standalone_question": "How should a FastAPI endpoint declare a single model body wrapped under \"parcel\", rather than expecting a bare model object?",
+   "answer": "```python\nfrom typing import Annotated\nfrom fastapi import Body\nfrom pydantic import BaseModel\n\nclass Item(BaseModel):\n    name: str\n    price: float\n\n@app.post(\"/inventory/\")\nasync def create_inventory(parcel: Annotated[Item, Body(embed=True)]):\n    return parcel\n```\nThe expected JSON is `{\"parcel\": {\"name\": \"Widget\", \"price\": 12.5}}`. A single model normally occupies the whole body; `embed=True` requires the parameter-name wrapper.",
+   "key_facts": [
+    "The project's body wrapper key is parcel.",
+    "Body(embed=True) requires a wrapper for a single model instead of the default bare-model body.",
+    "With Body(embed=True) the wrapper key is the parameter's name."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "parcel",
+    "Body(embed=True)"
+   ],
+   "evidence_pages": [
+    "request/request-body.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "the single model body must be wrapped under \"parcel\".",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "By default a **single** model parameter means the body *is* the model. To require a key wrapping it, use `embed=True`",
+     "page": "request/request-body.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "Expected body: `{\"item\": {\"name\": \"Foo\", \"price\": 42.0, ...}}` instead of `{\"name\": \"Foo\", ...}`.",
+     "page": "request/request-body.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "async def update_item(item_id: int, item: Annotated[Item, Body(embed=True)]):",
+     "page": "request/request-body.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "review": {
+    "target": []
+   },
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Use `Body(embed=True)` on a parameter named `parcel`:\n\n```python\nfrom fastapi import Body\n\n@app.post(\"/parcels\")\nasync def create_parcel(parcel: Parcel = Body(embed=True)):\n    ...\n```\n\nThis expects a JSON body shaped like `{\"parcel\": {...}}`.",
+    "fact_results": [
+     true,
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-103340"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-103340"
+   }
+  },
+  {
+   "turn": 2,
+   "turn_type": "followup",
+   "type": "code",
+   "question": "For that model's price field, show the positive-price declaration with the description \"The price must be greater than zero\", including where the field helper comes from.",
+   "asks": [
+    "Declare the positive price field and its helper import"
+   ],
+   "standalone_question": "For a request model's price field, show a positive-price declaration with the description \"The price must be greater than zero\", including the field-helper import.",
+   "answer": "```python\nfrom pydantic import Field\n\nprice: float = Field(gt=0, description=\"The price must be greater than zero\")\n```\nPlace the field declaration inside the model. `Field` comes from `pydantic`, not `fastapi`.",
+   "key_facts": [
+    "Use Field(gt=0, description=\"The price must be greater than zero\") on the float price field.",
+    "Import Field from pydantic, not fastapi."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "price",
+    "Field",
+    "gt=0",
+    "pydantic",
+    "fastapi"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "price: float = Field(gt=0, description=\"The price must be greater than zero\")",
+     "page": "request/request-body.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "`Field` is imported from `pydantic`, not `fastapi`.",
+     "page": "request/request-body.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nfrom pydantic import Field\n\nprice: float = Field(gt=0, description=\"The price must be greater than zero\")\n```",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 3,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm adding the simple OAuth2 password login flow. What status and error detail does its login example use for a wrong username or password, and what status and challenge does a protected endpoint use when the bearer header is missing?",
+   "asks": [
+    "Identify the wrong-login status and detail",
+    "Identify the missing-bearer status and challenge"
+   ],
+   "standalone_question": "In the simple OAuth2 password login flow, what status and error detail does the login example use for a wrong username or password, and what status and challenge does a protected endpoint use when the bearer header is missing?",
+   "answer": "The login example returns `400` with detail `Incorrect username or password`. A protected endpoint with a missing bearer header returns `401` with `WWW-Authenticate: Bearer` and detail `Not authenticated`. These are different failure cases, not statuses to flatten into one value.",
+   "key_facts": [
+    "Wrong login credentials in the example produce 400 with Incorrect username or password.",
+    "A missing bearer header produces 401 with WWW-Authenticate: Bearer."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable",
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "400",
+    "Incorrect username or password",
+    "401",
+    "WWW-Authenticate",
+    "Bearer"
+   ],
+   "evidence_pages": [
+    "security/oauth2-password-flow.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "raise HTTPException(status_code=400, detail=\"Incorrect username or password\")",
+     "page": "security/oauth2-password-flow.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Missing header or non-bearer scheme → **401** `{\"detail\": \"Not authenticated\"}` with `WWW-Authenticate: Bearer`",
+     "page": "security/oauth2-password-flow.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "The login example returns **400** with detail **“Incorrect username or password.”** A protected endpoint with no bearer header returns **401** with the **`WWW-Authenticate: Bearer`** challenge.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 4,
+   "turn_type": "update",
+   "type": "code",
+   "question": "Change our request-validation status from 409 to 400; keep the envelope key unchanged. Show just the revised validation handler, retaining the structured error list.",
+   "asks": [
+    "Revise the validation handler's status without losing structured errors"
+   ],
+   "standalone_question": "Change the project's request-validation status from 409 to 400 while preserving its previously chosen envelope key. Show the revised validation handler with the structured error list.",
+   "answer": "```python\n@app.exception_handler(RequestValidationError)\nasync def handle_validation(request, exc):\n    return JSONResponse(\n        status_code=400,\n        content=jsonable_encoder({\"fault\": exc.errors()}),\n    )\n```\n`exc.errors()` provides the structured list; the custom handler determines the client-facing status.",
+   "key_facts": [
+    "Request-validation errors now return 400 instead of 409.",
+    "The envelope key remains fault.",
+    "Use exc.errors() to retain the structured validation-error list."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup",
+      "confusable"
+     ]
+    },
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "400",
+    "409",
+    "fault",
+    "RequestValidationError",
+    "exc.errors()"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "Change our request-validation status from 409 to 400",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Our error envelope key will be \"fault\"",
+     "user_turn": 0,
+     "fact_idx": 1
+    },
+    {
+     "quote": "`exc.errors()` returns the list of errors (`loc`, `msg`, `type`, …) and `exc.body` holds the received body.",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Request-validation response status",
+     "from": "409",
+     "to": "400"
+    }
+   ],
+   "affects": [
+    9,
+    18
+   ],
+   "source_turn": null,
+   "recall_distance": 4,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 5,
+   "turn_type": "new",
+   "type": "code",
+   "question": "Our response trace header will be \"X-Fault-Trace\". Show middleware that sets it to a supplied trace_id after downstream processing, and explain whether it sees responses produced by the error handlers.",
+   "asks": [
+    "Set the chosen trace header after downstream processing",
+    "Explain visibility of exception-handler responses"
+   ],
+   "standalone_question": "Show FastAPI middleware that sets the response header \"X-Fault-Trace\" to a supplied trace_id after downstream processing, and explain whether the middleware sees exception-handler responses.",
+   "answer": "```python\n@app.middleware(\"http\")\nasync def add_trace(request, call_next):\n    trace_id = request.state.trace_id  # supplied by the application's trace setup\n    response = await call_next(request)\n    response.headers[\"X-Fault-Trace\"] = trace_id\n    return response\n```\nUser middleware is outside the exception handlers, so it sees their responses, including handled routing and validation failures. This does not guarantee the same post-processing for an unhandled exception: the server-error middleware is outside user middleware.",
+   "key_facts": [
+    "The response trace header is X-Fault-Trace.",
+    "After call_next, user middleware can modify responses produced by the inner exception handlers."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "X-Fault-Trace",
+    "trace_id",
+    "call_next"
+   ],
+   "evidence_pages": [
+    "middleware/middleware.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our response trace header will be \"X-Fault-Trace\".",
+     "user_turn": 5,
+     "fact_idx": 0
+    },
+    {
+     "quote": "You can run code before `call_next` (inspect/modify the request, short-circuit by returning a response yourself) and after it (modify the response).",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "Your middleware sits **outside** FastAPI's exception handlers, so it sees the responses they produce (404, 422, your custom handlers)",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nfrom fastapi import FastAPI\n\napp = FastAPI()\n\ndef install_fault_trace(app: FastAPI, trace_id: str) -> None:\n    @app.middleware(\"http\")\n    async def add_fault_trace(request, call_next):\n        response = await call_next(request)\n        response.headers[\"X-Fault-Trace\"] = trace_id\n        return response\n\ninstall_fault_trace(app, trace_id=\"trace-123\")\n```\n\nThe middleware sees responses produced by registered exception handlers, such as handlers for `HTTPException`. It generally does **not** see the 500 response created for an unhandled exception: that response is generated by outer server-error middleware after this middleware has unwound.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 6,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "For a separate duration measurement alongside that middleware, what clock and response header does the timing example use?",
+   "asks": [
+    "Identify the timing example's clock and header"
+   ],
+   "standalone_question": "For a duration-measuring FastAPI HTTP middleware, what clock and response header does the timing example use?",
+   "answer": "It measures elapsed time with `time.perf_counter()` and writes the duration as a string to `X-Process-Time`. That is the timing header, separate from the project's trace header.",
+   "key_facts": [
+    "The timing example uses time.perf_counter() and X-Process-Time."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "time.perf_counter()",
+    "X-Process-Time"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "start_time = time.perf_counter()",
+     "page": "middleware/middleware.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "response.headers[\"X-Process-Time\"] = str(process_time)",
+     "page": "middleware/middleware.md",
+     "fact_idx": 0
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "It uses `time.perf_counter()` and sets the `X-Process-Time` response header.",
+    "fact_results": [
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 7,
+   "turn_type": "same_doc_new_topic",
+   "type": "code",
+   "question": "For a separate stock app that only needs HTTP-error logging, show the logging-and-delegation pattern that retains the default response instead of constructing our envelope.",
+   "asks": [
+    "Log HTTP errors and delegate to the default handler"
+   ],
+   "standalone_question": "For a separate FastAPI app that needs only HTTP-error logging and default error responses, show a custom handler that logs and delegates rather than constructing a custom envelope.",
+   "answer": "```python\nfrom fastapi.exception_handlers import http_exception_handler\nfrom starlette.exceptions import HTTPException as StarletteHTTPException\n\n@app.exception_handler(StarletteHTTPException)\nasync def custom_http_exception_handler(request, exc):\n    print(f\"OMG! An HTTP error!: {repr(exc)}\")\n    return await http_exception_handler(request, exc)\n```\nThe delegated handler retains FastAPI's default HTTP-error response behavior.",
+   "key_facts": [
+    "The logging pattern awaits and returns http_exception_handler(request, exc) after logging."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "http_exception_handler",
+    "StarletteHTTPException"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "print(f\"OMG! An HTTP error!: {repr(exc)}\")",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "return await http_exception_handler(request, exc)",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 0
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 0,
+   "recall_distance": 7,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nimport logging\n\nfrom fastapi import FastAPI, Request\nfrom fastapi.exception_handlers import http_exception_handler\nfrom starlette.exceptions import HTTPException as StarletteHTTPException\n\nlogger = logging.getLogger(__name__)\napp = FastAPI()\n\n@app.exception_handler(StarletteHTTPException)\nasync def log_http_error(request: Request, exc: StarletteHTTPException):\n    logger.warning(\"HTTP %s on %s: %s\", exc.status_code, request.url.path, exc.detail)\n    return await http_exception_handler(request, exc)\n```\n\nThis logs HTTP errors and delegates response creation to FastAPI’s default handler.",
+    "fact_results": [
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 8,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For a get-or-create success path, I want to retain response-model processing while changing the status when an item is created. What mechanism supports that, and what initial text is stored under foo in the task example?",
+   "asks": [
+    "Change success status while retaining response-model processing",
+    "Identify the task example's initial foo value"
+   ],
+   "standalone_question": "For a get-or-create success path, how can the status change while retaining model-based output processing, and what initial text is stored under foo in the task example?",
+   "answer": "Inject a `Response` parameter, set `response.status_code` when creation occurs, and return ordinary data. The return value still goes through the response model. In the task example, `foo` initially contains `Listen to the Bar Fighters`.",
+   "key_facts": [
+    "Setting response.status_code on an injected Response preserves response-model serialization of the ordinary return value.",
+    "The task example initializes foo to Listen to the Bar Fighters."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "Response",
+    "response.status_code",
+    "foo",
+    "Listen to the Bar Fighters"
+   ],
+   "evidence_pages": [
+    "responses/status-codes.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "To keep using your response model *and* change the status dynamically, declare a `Response` parameter and set `response.status_code`",
+     "page": "responses/status-codes.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "tasks = {\"foo\": \"Listen to the Bar Fighters\"}",
+     "page": "responses/status-codes.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 9,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "For our inventory validation failures, which envelope key and status are currently in force, and which exception method supplies the structured errors?",
+   "asks": [
+    "Recall the current validation envelope and status",
+    "Identify the structured-error accessor"
+   ],
+   "standalone_question": "For the inventory API's request-validation handler, what envelope key and status has the team currently selected, and which exception method supplies the structured errors?",
+   "answer": "Use the `fault` envelope key and status `400`. Populate the envelope with `exc.errors()`.",
+   "key_facts": [
+    "The current envelope key is fault.",
+    "The current request-validation status is 400.",
+    "exc.errors() supplies the structured validation-error list."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "fault",
+    "400",
+    "exc.errors()"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0,
+    4
+   ],
+   "evidence": [
+    {
+     "quote": "Our error envelope key will be \"fault\"",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Change our request-validation status from 409 to 400",
+     "user_turn": 4,
+     "fact_idx": 1
+    },
+    {
+     "quote": "`exc.errors()` returns the list of errors (`loc`, `msg`, `type`, …) and `exc.body` holds the received body.",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 9,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.3333333333333333,
+    "accuracy": 0.3333333333333333,
+    "response": "The selected envelope key is `errors`, with HTTP status `422`; the structured errors come from the exception’s `errors()` method.",
+    "fact_results": [
+     false,
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 10,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "A resource dependency catches InternalError around its yield and only prints a message. What client/server symptom does that produce, and what is the minimal correction?",
+   "asks": [
+    "Identify the swallowed-exception symptom",
+    "Correct the exception handling"
+   ],
+   "standalone_question": "If a FastAPI resource dependency catches InternalError around yield and only prints a message, what client/server symptom results, and what is the minimal correction?",
+   "answer": "The client still gets `500 Internal Server Error`, but the real `InternalError` is missing from the server logs. Add a bare `raise` in the `except InternalError` block so the original exception propagates and its traceback can be logged.",
+   "key_facts": [
+    "Swallowing InternalError in the yield dependency leaves a 500 response without logging the real error.",
+    "A bare raise re-raises the original error and restores its traceback in the logs."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "InternalError",
+    "500 Internal Server Error",
+    "raise"
+   ],
+   "evidence_pages": [
+    "dependencies/dependencies-with-yield.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "The client still gets a `500 Internal Server Error`, but the server logs **nothing** about the real error.",
+     "page": "dependencies/dependencies-with-yield.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Re-raise with a bare `raise`",
+     "page": "dependencies/dependencies-with-yield.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "Now the 500 is accompanied by the `InternalError` traceback in the logs.",
+     "page": "dependencies/dependencies-with-yield.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "The dependency swallows the `InternalError`, so the client may get a normal success response even though the operation failed; the server only prints the message. Re-raise it after logging (`raise`), or let it propagate uncaught.",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 11,
+   "turn_type": "update",
+   "type": "code",
+   "question": "Rename our error envelope key from \"fault\" to \"problem\" for both handlers. For ordinary HTTP errors that allow a body, show the revised response construction while preserving the exception's status and headers.",
+   "asks": [
+    "Apply the new envelope key",
+    "Preserve HTTP exception status and headers"
+   ],
+   "standalone_question": "Rename the API's error envelope key from \"fault\" to \"problem\" for both error handlers. For ordinary HTTP errors that allow a body, show response construction that preserves the exception's status and headers.",
+   "answer": "```python\nreturn JSONResponse(\n    status_code=exc.status_code,\n    content={\"problem\": exc.detail},\n    headers=exc.headers,\n)\n```\nUse `problem` in the validation handler too. Keep `exc.status_code` and `exc.headers` rather than replacing every HTTP failure with the validation status or dropping authentication challenges.",
+   "key_facts": [
+    "Both error handlers now use problem instead of fault.",
+    "The HTTP error response preserves exc.status_code and exc.headers."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "problem",
+    "fault",
+    "exc.status_code",
+    "exc.headers"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "Rename our error envelope key from \"fault\" to \"problem\" for both handlers.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "`{\"detail\": exc.detail}` with `exc.status_code` and `exc.headers`; no body for statuses that forbid one (e.g. 204, 304)",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Error envelope key",
+     "from": "fault",
+     "to": "problem"
+    }
+   ],
+   "affects": [
+    13,
+    18
+   ],
+   "source_turn": null,
+   "recall_distance": 11,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "For example, in FastAPI/Starlette, change the envelope key in both handlers. Preserve the HTTP exception’s status and headers:\n\n```python\n@app.exception_handler(HTTPException)\nasync def http_error_handler(request, exc):\n    return JSONResponse(\n        status_code=exc.status_code,\n        headers=exc.headers,\n        content={\"problem\": exc.detail},\n    )\n\n@app.exception_handler(Exception)\nasync def unexpected_error_handler(request, exc):\n    return JSONResponse(\n        status_code=500,\n        content={\"problem\": \"Internal Server Error\"},\n    )\n```",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 12,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "If an endpoint returns a JSONResponse directly, will the response model still filter its fields? Also, what conversion does the timestamped-item example perform before constructing that response?",
+   "asks": [
+    "Determine whether direct responses receive response-model filtering",
+    "Identify the timestamped-item conversion"
+   ],
+   "standalone_question": "When a FastAPI endpoint returns JSONResponse directly, does response-model filtering still apply, and what conversion does the timestamped-item example perform before constructing that response?",
+   "answer": "No. A directly returned `Response` is sent as-is, without response-model filtering or automatic conversion. The example calls `jsonable_encoder(item)` before `JSONResponse`; this converts the `datetime` timestamp into a string so the content is JSON-compatible.",
+   "key_facts": [
+    "A directly returned Response bypasses validation, response-model filtering, and conversion.",
+    "The timestamped-item example uses jsonable_encoder to turn datetime into a string before JSONResponse."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "Response",
+    "JSONResponse",
+    "jsonable_encoder",
+    "datetime"
+   ],
+   "evidence_pages": [
+    "responses/custom-responses.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Any instance of `Response` (or a subclass) is sent **as is** — no validation, no response-model filtering, no conversion",
+     "page": "responses/custom-responses.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "here `jsonable_encoder` turns the `datetime` into a string first.",
+     "page": "responses/custom-responses.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "No. Returning `JSONResponse` directly bypasses FastAPI’s response-model filtering. The timestamped-item example uses `jsonable_encoder` first, converting the timestamp (`datetime`) to a JSON-compatible ISO-formatted string.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 13,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the protected inventory endpoint, which error envelope key are we using now, which status and challenge must a missing bearer header retain, and does returning the error JSONResponse directly get response-model filtering?",
+   "asks": [
+    "Recall the current error envelope key",
+    "Retain the missing-bearer status and challenge",
+    "Determine direct-response filtering"
+   ],
+   "standalone_question": "For the protected inventory API, what is the team's current error envelope key, what status and challenge apply to a missing bearer header, and does a directly returned error JSONResponse receive response-model filtering?",
+   "answer": "Use `problem`. A missing bearer header must retain status `401` and `WWW-Authenticate: Bearer`. A directly returned `JSONResponse` does not receive response-model filtering, so the handler must construct the intended content itself.",
+   "key_facts": [
+    "The current error envelope key is problem.",
+    "A missing bearer header produces 401 with WWW-Authenticate: Bearer.",
+    "A directly returned JSONResponse bypasses response-model filtering."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "problem",
+    "401",
+    "WWW-Authenticate",
+    "Bearer",
+    "JSONResponse"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    3,
+    11,
+    12
+   ],
+   "evidence": [
+    {
+     "quote": "Rename our error envelope key from \"fault\" to \"problem\" for both handlers.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Missing header or non-bearer scheme → **401** `{\"detail\": \"Not authenticated\"}` with `WWW-Authenticate: Bearer`",
+     "page": "security/oauth2-password-flow.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "Any instance of `Response` (or a subclass) is sent **as is** — no validation, no response-model filtering, no conversion",
+     "page": "responses/custom-responses.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 10,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 14,
+   "turn_type": "same_doc_new_topic",
+   "type": "multi",
+   "question": "A separate legacy service still needs the older 403 behavior from HTTPBearer. Which method should its subclass override, and does that method raise the exception itself?",
+   "asks": [
+    "Identify the legacy-authentication override method",
+    "Determine whether the method returns or raises"
+   ],
+   "standalone_question": "To restore older 403 authentication failures in a separate service using HTTPBearer, which subclass method should be overridden, and should that method raise the exception itself?",
+   "answer": "Override `make_not_authenticated_error`. Return an `HTTPException(status_code=403, detail=\"Not authenticated\")` from that method; the security class raises it. This is a local compatibility choice, not a change to the inventory API's bearer behavior.",
+   "key_facts": [
+    "Override make_not_authenticated_error to return a 403 HTTPException with detail Not authenticated.",
+    "The override returns the exception; the security class raises it."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "make_not_authenticated_error",
+    "HTTPException",
+    "403",
+    "Not authenticated"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "To restore 403 for clients that depend on it, override `make_not_authenticated_error`",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "status_code=status.HTTP_403_FORBIDDEN, detail=\"Not authenticated\"",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "The method **returns** the exception; the security class raises it.",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 0,
+   "recall_distance": 14,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "Override `HTTPBearer.__call__`. Yes—raise `HTTPException(status_code=403, ...)` yourself when authentication should fail.",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 15,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm checking whether our published parsing-error responses match runtime behavior. Before any custom handler, what exception, error type, and default status result from invalid JSON, and does adding a responses entry change that runtime behavior?",
+   "asks": [
+    "Identify invalid-JSON exception classification and default status",
+    "Determine whether response metadata changes runtime behavior"
+   ],
+   "standalone_question": "Before custom exception handling in FastAPI, what exception, error type, and default status result from invalid JSON, and does adding a responses entry to a path operation change that runtime behavior?",
+   "answer": "Invalid JSON raises `RequestValidationError` with error type `json_invalid`, defaulting to `422`. A `responses` entry only documents responses; it does not change parsing, exception handling, or the response actually sent. Runtime customization must be implemented separately.",
+   "key_facts": [
+    "Invalid JSON becomes RequestValidationError with type json_invalid and default status 422.",
+    "responses metadata only documents responses and does not implement runtime behavior."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "RequestValidationError",
+    "json_invalid",
+    "422",
+    "responses"
+   ],
+   "evidence_pages": [
+    "internals/request-handling-internals.md",
+    "openapi/extending-openapi.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Invalid JSON → `RequestValidationError` with type `json_invalid` (→ 422).",
+     "page": "internals/request-handling-internals.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "These only **document** responses.",
+     "page": "openapi/extending-openapi.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "FastAPI wraps invalid JSON in a `RequestValidationError` (underlying `JSONDecodeError`), with error type `json_invalid`; the default response is **422**. Adding a `responses` entry documents the operation but does not change runtime behavior.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "c: 한 턴 한 주제 경고"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 16,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "A client is still sending a bare model object to inventory creation. Which wrapper did we require, and what declaration makes a single model require that wrapper?",
+   "asks": [
+    "Recall the inventory body wrapper",
+    "Identify the declaration that enforces a single-model wrapper"
+   ],
+   "standalone_question": "For the inventory creation endpoint, what request-body wrapper did the team require, and what FastAPI declaration makes a single model require that wrapper rather than a bare model body?",
+   "answer": "The wrapper is `parcel`. Declare the model parameter as `parcel: Annotated[Item, Body(embed=True)]`; the parameter name supplies the wrapper key.",
+   "key_facts": [
+    "The required inventory body wrapper is parcel.",
+    "Body(embed=True) makes a single model require its parameter-name wrapper."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "parcel",
+    "Body(embed=True)"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "the single model body must be wrapped under \"parcel\".",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "By default a **single** model parameter means the body *is* the model. To require a key wrapping it, use `embed=True`",
+     "page": "request/request-body.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 15,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "The required wrapper was `{\"inventory\": {...}}`. Declare the model parameter with `Body(..., embed=True)`—for example, `inventory: Inventory = Body(..., embed=True)`—to require that wrapper.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 17,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "What was the minimal fix for our resource dependency's print-only exception catch, and what diagnostic information does it restore?",
+   "asks": [
+    "Recall the swallowed-exception fix and restored diagnostic"
+   ],
+   "standalone_question": "For a FastAPI yield resource dependency that catches an internal exception and only prints a message, what minimal fix restores the original exception's diagnostic information?",
+   "answer": "Add a bare `raise` inside the exception handler. It re-raises the original exception so its traceback appears in the server logs, rather than leaving only an unexplained client-side 500.",
+   "key_facts": [
+    "A bare raise prevents swallowing the error and restores the original InternalError traceback in the logs."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "raise",
+    "InternalError"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    10
+   ],
+   "evidence": [
+    {
+     "quote": "Re-raise with a bare `raise`",
+     "page": "dependencies/dependencies-with-yield.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Now the 500 is accompanied by the `InternalError` traceback in the logs.",
+     "page": "dependencies/dependencies-with-yield.md",
+     "fact_idx": 0
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 7,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Add a bare `raise` after printing. It re-raises the original exception with its traceback intact.",
+    "fact_results": [
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "c: recall·synthesis 인데 knowledge 로 맞힘"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 18,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the final error contract, which envelope key is current, which status do our request-validation failures use, and what default status should a response-model mismatch retain instead of being treated as bad client input?",
+   "asks": [
+    "Recall the current error envelope key",
+    "Recall the current request-validation status",
+    "Distinguish the default response-model mismatch status"
+   ],
+   "standalone_question": "For the inventory API's final error contract, what envelope key and request-validation status has the team selected, and what default status applies to a response-model mismatch rather than bad client input?",
+   "answer": "The envelope key is `problem`, and request-validation failures use `400`. A response-model mismatch raises `ResponseValidationError` and defaults to `500 Internal Server Error`: it is a server bug, not a request-validation failure to relabel as a client error.",
+   "key_facts": [
+    "The current envelope key is problem.",
+    "The current request-validation status is 400.",
+    "A response-model mismatch raises ResponseValidationError and defaults to 500, not a client-validation status."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "problem",
+    "400",
+    "ResponseValidationError",
+    "500 Internal Server Error"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0,
+    4,
+    11
+   ],
+   "evidence": [
+    {
+     "quote": "Rename our error envelope key from \"fault\" to \"problem\" for both handlers.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Change our request-validation status from 409 to 400",
+     "user_turn": 4,
+     "fact_idx": 1
+    },
+    {
+     "quote": "If your endpoint returns data that does not match its `response_model` / return type, FastAPI raises `ResponseValidationError`.",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "There's no default handler, so the client gets a **500 Internal Server Error** and the error is logged.",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 18,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  }
+ ],
+ "edits": [
+  {
+   "date": "2026-11-28",
+   "by": "검수 결과 반영 (손 수정)",
+   "items": [
+    "턴 1: setup [0] 분리: 'The body wrapper and parameter name are parcel.' → setup \"The project's body wrapper key is parcel.\", 새 doc 항목 [2] \"With Body(embed=True) the wrapper key is the parameter's name.\""
+   ]
+  }
+ ],
+ "review_summary": {
+  "reviewer": "akingdbets",
+  "date": "2026-11-28",
+  "targets": 4,
+  "verdicts": {
+   "OK": 4,
+   "수정 필요": 0,
+   "제외": 0
+  }
+ }
+}

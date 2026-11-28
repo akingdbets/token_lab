@@ -1,0 +1,2649 @@
+{
+ "schema_version": 2,
+ "scenario_id": "v2_03_input_validation",
+ "title": "Validating a Catalog Intake API",
+ "topic": "요청 입력 검증",
+ "status": "final",
+ "bundle": [
+  "request/query-parameters.md",
+  "request/path-parameters.md",
+  "request/request-body.md",
+  "request/forms-and-files.md",
+  "request/headers-and-cookies.md",
+  "request/extra-data-types-and-examples.md",
+  "errors/handling-errors.md",
+  "models/dataclasses-and-pydantic-versions.md"
+ ],
+ "generation": {
+  "model": "gpt-6.1-sol",
+  "served_model": "gpt-6.1-sol",
+  "prompt": [
+   "mt_scenario_gen_v3",
+   "7e637f26a462"
+  ],
+  "settings": {
+   "model": "gpt-6.1-sol",
+   "temperature": null,
+   "temperature_requested": null,
+   "seed": 42,
+   "reasoning_effort": null,
+   "reasoning_effort_requested": null,
+   "max_tokens": 40000,
+   "max_tokens_param": "max_completion_tokens"
+  },
+  "run_id": "20261128-092937_v2_03_input_validation",
+  "attempts": 2,
+  "created_at": "2026-11-28T09:35:02"
+ },
+ "turns": [
+  {
+   "turn": 0,
+   "turn_type": "new",
+   "type": "code",
+   "question": "I'm building a catalog intake API. Our search query alias is catalog-needle, and its maximum length is 43 characters. Show an Annotated declaration for an optional Python parameter named q using those settings.",
+   "asks": [
+    "Declare the optional search parameter with the project alias and length cap"
+   ],
+   "standalone_question": "Show an Annotated declaration for an optional Python parameter named q whose query alias is catalog-needle and whose maximum length is 43 characters.",
+   "answer": "q: Annotated[str | None, Query(alias=\"catalog-needle\", max_length=43)] = None\n\nImport Annotated from typing and Query from fastapi.",
+   "key_facts": [
+    "The project query alias is catalog-needle and its maximum length is 43.",
+    "Use Query inside Annotated, with a normal Python default of None to make the parameter optional."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "q",
+    "catalog-needle",
+    "43",
+    "Annotated",
+    "Query",
+    "None"
+   ],
+   "evidence_pages": [
+    "request/query-parameters.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our search query alias is catalog-needle, and its maximum length is 43 characters.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "async def read_items(q: Annotated[str | None, Query(max_length=50)] = None):",
+     "page": "request/query-parameters.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "- `alias=\"item-query\"` — the URL uses `?item-query=...` (not a valid Python name) while your variable is `q` (`tutorial009`).",
+     "page": "request/query-parameters.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nq: Annotated[str | None, Query(alias=\"catalog-needle\", max_length=43)] = None\n```",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 1,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "Catalog item IDs must be positive integers with an inclusive ceiling of 730. Show the item_id Path declaration, and tell me the status, error type, and location when an integer path parameter receives foo.",
+   "asks": [
+    "Declare the bounded item ID",
+    "Identify the integer parsing failure"
+   ],
+   "standalone_question": "Show an item_id Path declaration for positive integers with an inclusive ceiling of 730, and give the status, error type, and location when that integer path parameter receives foo.",
+   "answer": "item_id: Annotated[int, Path(gt=0, le=730)]\n\nFor foo, validation returns 422 with type int_parsing and loc [\"path\", \"item_id\"].",
+   "key_facts": [
+    "The item ID ceiling is inclusive at 730.",
+    "Path(gt=0, le=730) enforces a positive value and an inclusive upper bound.",
+    "An integer item_id receiving foo produces 422, int_parsing, and [\"path\", \"item_id\"]."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "range"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "item_id",
+    "730",
+    "Path",
+    "gt",
+    "le",
+    "foo",
+    "422",
+    "int_parsing",
+    "path"
+   ],
+   "evidence_pages": [
+    "request/path-parameters.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Catalog item IDs must be positive integers with an inclusive ceiling of 730.",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "| `gt` | greater than |",
+     "page": "request/path-parameters.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "| `le` | less than or equal |",
+     "page": "request/path-parameters.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "- `GET /items/foo` (or `/items/4.2`) → **422** error with type `int_parsing`, a `loc` of `[\"path\", \"item_id\"]` and a readable message.",
+     "page": "request/path-parameters.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nfrom typing import Annotated\nfrom fastapi import Path\n\nitem_id: Annotated[int, Path(ge=1, le=730)]\n```\n\nIf `item_id` is `foo`, FastAPI returns **422**, with error type **`int_parsing`** and location **`[\"path\", \"item_id\"]`**.",
+    "fact_results": [
+     true,
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 2,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "Before adding more catalog routes, I want to understand route matching. In the /users/me and /users/{user_id} example, which declaration must come first, and what happens if I register the same path and method twice?",
+   "asks": [
+    "Order the fixed and parameterized example routes",
+    "Explain duplicate route registration"
+   ],
+   "standalone_question": "For /users/me and /users/{user_id}, which declaration must come first, and what happens if the same path and method are registered twice?",
+   "answer": "Declare /users/me before /users/{user_id}; matching follows declaration order, so otherwise me is captured as user_id. If the same path and method are defined twice, only the first definition is used.",
+   "key_facts": [
+    "The fixed /users/me route must precede /users/{user_id} to avoid capturing me as user_id.",
+    "Only the first definition is used when the same path and method are registered twice."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/users/me",
+    "/users/{user_id}",
+    "me",
+    "user_id"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "Otherwise `/users/me` would match `/users/{user_id}` with `user_id=\"me\"`.",
+     "page": "request/path-parameters.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Likewise, if you redefine the same path and method (`tutorial003b_py310.py`), only the first definition is used.",
+     "page": "request/path-parameters.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Declare `/users/me` before `/users/{user_id}` so the fixed path isn’t matched as a user ID. If the same path and method are registered twice, the first matching declaration handles requests; the second is effectively unreachable.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 3,
+   "turn_type": "new",
+   "type": "code",
+   "question": "For the JSON intake model, reproduce the Item field declarations that make description optional with a 300-character cap and require price to be greater than zero. Where does Field come from?",
+   "asks": [
+    "Declare the validated description and price fields",
+    "Identify the Field import"
+   ],
+   "standalone_question": "For the JSON intake model, reproduce the Item field declarations that make description optional with a 300-character cap and require price to be greater than zero. Where does Field come from?",
+   "answer": "from pydantic import BaseModel, Field\n\nclass Item(BaseModel):\n    description: str | None = Field(default=None, max_length=300)\n    price: float = Field(gt=0)\n\nField comes from pydantic, not fastapi.",
+   "key_facts": [
+    "The Item example uses a description default of None with max_length=300 and a required float price with gt=0.",
+    "Field is imported from pydantic, not fastapi."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "range"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "Item",
+    "description",
+    "None",
+    "max_length",
+    "300",
+    "price",
+    "gt",
+    "Field",
+    "pydantic",
+    "fastapi"
+   ],
+   "evidence_pages": [
+    "request/request-body.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "    description: str | None = Field(\n        default=None, title=\"The description of the item\", max_length=300\n    )",
+     "page": "request/request-body.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    price: float = Field(gt=0, description=\"The price must be greater than zero\")",
+     "page": "request/request-body.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "`Field` is imported from `pydantic`, not `fastapi`.",
+     "page": "request/request-body.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nfrom pydantic import Field\n\ndescription: str | None = Field(default=None, max_length=300)\nprice: float = Field(..., gt=0)\n```\n\n`Field` comes from `pydantic`.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 4,
+   "turn_type": "update",
+   "type": "code",
+   "question": "Change the inclusive catalog item ID ceiling from 730 to 941, keeping IDs positive integers. What is the revised item_id declaration?",
+   "asks": [
+    "Revise the bounded item ID declaration"
+   ],
+   "standalone_question": "Change the inclusive catalog item ID ceiling from 730 to 941 while keeping IDs positive integers; what is the revised item_id declaration?",
+   "answer": "item_id: Annotated[int, Path(gt=0, le=941)]",
+   "key_facts": [
+    "The inclusive item ID ceiling is now 941.",
+    "Keep gt=0 for positivity and use le for the inclusive ceiling."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "range"
+     ]
+    }
+   ],
+   "key_entities": [
+    "item_id",
+    "941",
+    "Path",
+    "gt",
+    "le"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "Change the inclusive catalog item ID ceiling from 730 to 941, keeping IDs positive integers.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "| `gt` | greater than |",
+     "page": "request/path-parameters.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "| `le` | less than or equal |",
+     "page": "request/path-parameters.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Inclusive catalog item ID ceiling",
+     "from": 730,
+     "to": 941
+    }
+   ],
+   "affects": [
+    17,
+    18
+   ],
+   "source_turn": null,
+   "recall_distance": 3,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "`item_id: integer, minimum 1, maximum 941`",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "item_id: Annotated[int, Path(gt=0, le=941)]",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "not_found": false,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "flags": [
+     "grounded_memory"
+    ],
+    "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
+    "target": [
+     "c: grounded 에서 기억으로 답함 (정확도 1.00)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 5,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm separating malformed requests from application failures. What default response does RequestValidationError produce, and what happens when an endpoint's returned data fails its response model?",
+   "asks": [
+    "Identify the default request validation response",
+    "Distinguish response validation failure"
+   ],
+   "standalone_question": "What default response does RequestValidationError produce, and what happens when an endpoint's returned data fails its response model?",
+   "answer": "RequestValidationError produces HTTP 422 with {\"detail\": [...errors...]}. Invalid returned data raises ResponseValidationError; without a custom handler the client gets 500 Internal Server Error and the error is logged.",
+   "key_facts": [
+    "RequestValidationError defaults to 422 with errors under detail.",
+    "ResponseValidationError is a server bug and results in 500 by default, not a client validation response."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable",
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "RequestValidationError",
+    "422",
+    "detail",
+    "ResponseValidationError",
+    "500"
+   ],
+   "evidence_pages": [
+    "errors/handling-errors.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "| `RequestValidationError` | `request_validation_exception_handler` | `422` with `{\"detail\": [...errors...]}` |",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "There's no default handler, so the client gets a **500 Internal Server Error** and the error is logged.",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "`RequestValidationError` defaults to a **422 Unprocessable Entity** response with validation details. If returned data fails the response model, FastAPI raises a response validation error and returns a **500 Internal Server Error**.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 6,
+   "turn_type": "followup",
+   "type": "code",
+   "question": "For those malformed requests, show a handler that prints a diagnostic and then preserves FastAPI's default validation response rather than replacing its status or body.",
+   "asks": [
+    "Log and delegate request validation failures"
+   ],
+   "standalone_question": "Show a handler for malformed request validation that prints a diagnostic and then preserves FastAPI's default validation response rather than replacing its status or body.",
+   "answer": "from fastapi.exceptions import RequestValidationError\nfrom fastapi.exception_handlers import request_validation_exception_handler\n\n@app.exception_handler(RequestValidationError)\nasync def validation_exception_handler(request, exc):\n    print(f\"OMG! The client sent invalid data!: {exc}\")\n    return await request_validation_exception_handler(request, exc)",
+   "key_facts": [
+    "Register a RequestValidationError handler and await request_validation_exception_handler(request, exc) after logging."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "RequestValidationError",
+    "request_validation_exception_handler"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "@app.exception_handler(RequestValidationError)",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    print(f\"OMG! The client sent invalid data!: {exc}\")",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    return await request_validation_exception_handler(request, exc)",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 0
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nfrom fastapi import FastAPI, Request\nfrom fastapi.exceptions import RequestValidationError\nfrom fastapi.exception_handlers import request_validation_exception_handler\n\napp = FastAPI()\n\n@app.exception_handler(RequestValidationError)\nasync def log_validation_error(request: Request, exc: RequestValidationError):\n    print(f\"Malformed request: {exc}\")\n    return await request_validation_exception_handler(request, exc)\n```",
+    "fact_results": [
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 7,
+   "turn_type": "same_doc_new_topic",
+   "type": "multi",
+   "question": "I also need grouped search filters. In the FilterParams example, what are the limit and offset defaults and bounds, and how would an undeclared tool parameter be rejected?",
+   "asks": [
+    "Identify the grouped filter defaults and numeric bounds",
+    "Reject an undeclared query parameter"
+   ],
+   "standalone_question": "For the FilterParams query model example, what are the limit and offset defaults and bounds, and how can an undeclared tool query parameter be rejected?",
+   "answer": "limit defaults to 100 and must satisfy 0 < limit <= 100; offset defaults to 0 and must be >= 0. Add model_config = {\"extra\": \"forbid\"}; an undeclared tool parameter then produces 422 with type extra_forbidden.",
+   "key_facts": [
+    "FilterParams uses limit=100 with gt=0 and le=100, and offset=0 with ge=0.",
+    "Setting extra to forbid rejects undeclared query parameters with 422 extra_forbidden."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "range"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "FilterParams",
+    "limit",
+    "offset",
+    "100",
+    "0",
+    "model_config",
+    "extra",
+    "forbid",
+    "422",
+    "extra_forbidden",
+    "tool"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "    limit: int = Field(100, gt=0, le=100)",
+     "page": "request/query-parameters.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    offset: int = Field(0, ge=0)",
+     "page": "request/query-parameters.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Forbid unknown parameters with `model_config = {\"extra\": \"forbid\"}` (`tutorial002_an_py310.py`): `?tool=plumbus` then returns a 422 `extra_forbidden` error.",
+     "page": "request/query-parameters.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 0,
+   "recall_distance": 7,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "`limit` defaults to 100 and must be greater than 0 and at most 100. `offset` defaults to 0 and must be at least 0. To reject undeclared query parameters, set `model_config = {\"extra\": \"forbid\"}` on `FilterParams`.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "`limit` defaults to `100` and must be greater than `0` and at most `100`; `offset` defaults to `0` and must be at least `0`. To reject undeclared query parameters, set `model_config = {\"extra\": \"forbid\"}` on `FilterParams`.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "not_found": false,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "flags": [
+     "grounded_memory"
+    ],
+    "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 0.50). 제외하지 않고 표시 유지",
+    "target": [
+     "c: grounded 에서 기억으로 답함 (정확도 0.50)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 8,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "Our shard header is X-Archive-Shard; keep its Python parameter required and name it x_archive_shard. Show that declaration. Also, what declaration collects both values in the duplicate X-Token example?",
+   "asks": [
+    "Declare the required project header",
+    "Collect duplicate example header values"
+   ],
+   "standalone_question": "Declare a required x_archive_shard parameter for the X-Archive-Shard header, and show the declaration that collects both values in the duplicate X-Token example.",
+   "answer": "x_archive_shard: Annotated[str, Header()]\n\nHeader converts underscores to hyphens automatically. For duplicate tokens:\n\nx_token: Annotated[list[str] | None, Header()] = None\n\nX-Token: foo and X-Token: bar are collected into a list, for example [\"bar\", \"foo\"].",
+   "key_facts": [
+    "The project requires the X-Archive-Shard header, represented by x_archive_shard without a default.",
+    "Header automatically converts underscores to hyphens.",
+    "The duplicate X-Token example uses a list annotation and collects foo and bar."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "X-Archive-Shard",
+    "x_archive_shard",
+    "Header",
+    "x_token",
+    "X-Token",
+    "foo",
+    "bar"
+   ],
+   "evidence_pages": [
+    "request/headers-and-cookies.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our shard header is X-Archive-Shard; keep its Python parameter required and name it x_archive_shard.",
+     "user_turn": 8,
+     "fact_idx": 0
+    },
+    {
+     "quote": "By default `Header` converts underscores to hyphens, so `user_agent` reads the `User-Agent` header.",
+     "page": "request/headers-and-cookies.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "async def read_items(x_token: Annotated[list[str] | None, Header()] = None):",
+     "page": "request/headers-and-cookies.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "Sending `X-Token: foo` and `X-Token: bar` returns all values in a list, e.g. `{\"X-Token values\": [\"bar\", \"foo\"]}`.",
+     "page": "request/headers-and-cookies.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nx_archive_shard: Annotated[str, Header()]  # Required; maps to X-Archive-Shard\n```\n\nTo collect repeated `X-Token` headers:\n\n```python\nx_token: Annotated[list[str] | None, Header()] = None\n```",
+    "fact_results": [
+     true,
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 9,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "What external alias did we choose for the catalog search parameter, and would merely allowing None in its type make it optional if I removed its default?",
+   "asks": [
+    "Recall the search alias",
+    "Distinguish nullable from optional query input"
+   ],
+   "standalone_question": "What external alias did the team choose for the catalog search parameter, and does allowing None in its type make it optional when it has no default?",
+   "answer": "The alias is catalog-needle. No: without a default the query parameter is required, even if its type allows None.",
+   "key_facts": [
+    "The catalog search alias is catalog-needle.",
+    "A nullable query parameter without a default is still required."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation",
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "catalog-needle",
+    "None"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "Our search query alias is catalog-needle, and its maximum length is 43 characters.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "- Required but may be `None`: `q: Annotated[str | None, Query(min_length=3)]` — the client must send it, though `None` is a valid value (`tutorial006c`).",
+     "page": "request/query-parameters.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 9,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 10,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "The intake service will accept large image uploads. Which file representation avoids keeping the whole content in memory, and what exact message does the optional UploadFile example return when no file is sent?",
+   "asks": [
+    "Choose the large-upload representation",
+    "Identify the optional upload example message"
+   ],
+   "standalone_question": "For large image uploads, which file representation avoids keeping the whole content in memory, and what exact message does the optional UploadFile example return when no file is sent?",
+   "answer": "Use UploadFile: it uses a spooled file, staying in memory up to a limit and then moving to disk. The optional UploadFile example returns {\"message\": \"No upload file sent\"} when no file is supplied.",
+   "key_facts": [
+    "UploadFile uses spooled storage rather than storing the entire upload in memory like bytes plus File().",
+    "The optional UploadFile example returns the message No upload file sent."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "UploadFile",
+    "bytes",
+    "File",
+    "No upload file sent"
+   ],
+   "evidence_pages": [
+    "request/forms-and-files.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "| Storage | Whole content **in memory** | **Spooled** file: memory up to a limit, then disk |",
+     "page": "request/forms-and-files.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "        return {\"message\": \"No upload file sent\"}",
+     "page": "request/forms-and-files.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "Use `UploadFile`; it uses a spooled file, so large content needn’t stay entirely in memory. With no file, the example returns `\"No file sent\"`.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 11,
+   "turn_type": "update",
+   "type": "code",
+   "question": "Change the catalog search maximum length from 43 to 61 characters, leaving its alias and optional behavior unchanged. Show the revised q declaration.",
+   "asks": [
+    "Revise the search length cap while preserving the existing contract"
+   ],
+   "standalone_question": "Change the catalog search maximum length from 43 to 61 characters, retaining the team's existing alias and optional behavior; show the revised q declaration.",
+   "answer": "q: Annotated[str | None, Query(alias=\"catalog-needle\", max_length=61)] = None",
+   "key_facts": [
+    "The search maximum length is now 61.",
+    "The unchanged external alias is catalog-needle.",
+    "Query(max_length=...) applies the cap, while the default None preserves optional behavior."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "q",
+    "catalog-needle",
+    "61",
+    "Query",
+    "max_length",
+    "None"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "Change the catalog search maximum length from 43 to 61 characters, leaving its alias and optional behavior unchanged.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Our search query alias is catalog-needle, and its maximum length is 43 characters.",
+     "user_turn": 0,
+     "fact_idx": 1
+    },
+    {
+     "quote": "async def read_items(q: Annotated[str | None, Query(max_length=50)] = None):",
+     "page": "request/query-parameters.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Catalog search maximum length",
+     "from": 43,
+     "to": 61
+    }
+   ],
+   "affects": [
+    13
+   ],
+   "source_turn": null,
+   "recall_distance": 11,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.6666666666666666,
+    "response": "```python\nq: str | None = Query(default=None, alias=\"<existing alias>\", max_length=61)\n```\n\nKeep the alias value from the current declaration unchanged.",
+    "fact_results": [
+     true,
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 12,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I want selectable request examples for the intake endpoint in Swagger UI. Which option supplies multiple named examples, and what are the three example keys and the converted example's price value?",
+   "asks": [
+    "Choose the selectable named-example mechanism",
+    "Identify the example keys and converted price"
+   ],
+   "standalone_question": "Which option supplies multiple named request examples selectable in Swagger UI, and what are the three example keys and the converted example's price value?",
+   "answer": "Use openapi_examples on Body() for endpoint-specific selectable examples. The example keys are normal, converted, and invalid; converted supplies price as the string \"35.4\".",
+   "key_facts": [
+    "openapi_examples provides multiple named examples in a Swagger UI dropdown.",
+    "The example keys are normal, converted, and invalid, and converted uses the string price \"35.4\"."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "openapi_examples",
+    "Body",
+    "normal",
+    "converted",
+    "invalid",
+    "35.4"
+   ],
+   "evidence_pages": [
+    "request/extra-data-types-and-examples.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "These go into the OpenAPI operation's media-type `examples`, not the JSON Schema, and Swagger UI shows them in a dropdown.",
+     "page": "request/extra-data-types-and-examples.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "            openapi_examples={",
+     "page": "request/extra-data-types-and-examples.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "                \"normal\": {",
+     "page": "request/extra-data-types-and-examples.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "                \"converted\": {",
+     "page": "request/extra-data-types-and-examples.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "                \"invalid\": {",
+     "page": "request/extra-data-types-and-examples.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "                        \"price\": \"35.4\",",
+     "page": "request/extra-data-types-and-examples.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Use `openapi_examples`. The three keys are `normal`, `converted`, and `invalid`; the converted example’s `price` is `\"35.4\"` (a string).",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "c: 근거 인용이 짧음: fact 1 '                \"normal\": {'"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 13,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the search contract test, which external alias and length cap are current, what default status and JSON key report invalid request data, and what default status reports invalid returned data?",
+   "asks": [
+    "Identify the current search alias and cap",
+    "Identify the default request validation status and JSON key",
+    "Identify the default response validation status"
+   ],
+   "standalone_question": "For the catalog search contract test, which team-selected external alias and length cap are current, what default status and JSON key report invalid request data, and what default status reports invalid returned data?",
+   "answer": "Search uses catalog-needle with a maximum length of 61. Invalid request data defaults to 422 with errors under detail. Invalid returned data defaults to 500.",
+   "key_facts": [
+    "The current search alias is catalog-needle and the maximum length is 61.",
+    "Request validation defaults to 422 with errors under detail.",
+    "Response validation defaults to 500."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "catalog-needle",
+    "61",
+    "422",
+    "detail",
+    "500"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0,
+    11,
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "Our search query alias is catalog-needle, and its maximum length is 43 characters.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Change the catalog search maximum length from 43 to 61 characters, leaving its alias and optional behavior unchanged.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "| `RequestValidationError` | `request_validation_exception_handler` | `422` with `{\"detail\": [...errors...]}` |",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "There's no default handler, so the client gets a **500 Internal Server Error** and the error is logged.",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 13,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 14,
+   "turn_type": "same_doc_new_topic",
+   "type": "multi",
+   "question": "For a separate index-weight intake endpoint, can weights: dict[int, float] accept a JSON object even though JSON keys are strings, and what types reach the function?",
+   "asks": [
+    "Explain acceptance and conversion of the typed dictionary body"
+   ],
+   "standalone_question": "Can a request body declared as weights: dict[int, float] accept a JSON object with string keys, and what key and value types reach the function?",
+   "answer": "Yes. JSON object keys are strings, but Pydantic converts them to int for this declaration and validates the values as float.",
+   "key_facts": [
+    "For weights: dict[int, float], Pydantic converts JSON string keys to int and validates values as float."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "weights",
+    "dict[int, float]",
+    "int",
+    "float"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    3
+   ],
+   "evidence": [
+    {
+     "quote": "async def create_index_weights(weights: dict[int, float]):",
+     "page": "request/request-body.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "JSON object keys are always strings; Pydantic converts them to `int` here and validates the values as `float`.",
+     "page": "request/request-body.md",
+     "fact_idx": 0
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 3,
+   "recall_distance": 11,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Yes. JSON object keys are strings, but validation converts numeric string keys to `int` and values to `float`. The function receives, for example, `{1: 2.0}`. Non-numeric keys fail validation.",
+    "fact_results": [
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 15,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "Our generated client sees Item-Input and Item-Output for the Item example with description defaulting to None. Why does description differ in requiredness, and how can I temporarily generate only one schema?",
+   "asks": [
+    "Explain separate input and output requiredness",
+    "Disable separate schemas"
+   ],
+   "standalone_question": "Why does description differ in requiredness between Item-Input and Item-Output when the Item example defaults it to None, and how can only one schema be generated temporarily?",
+   "answer": "On input, description is not required because it has a default. On output it is always present, possibly null, so it is marked required. Use app = FastAPI(separate_input_output_schemas=False) to generate a single Item schema.",
+   "key_facts": [
+    "In the Item example, description is optional on input but required in the output schema because output always contains it, possibly null.",
+    "FastAPI(separate_input_output_schemas=False) disables the separate schemas."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "Item",
+    "Item-Input",
+    "Item-Output",
+    "description",
+    "null",
+    "FastAPI",
+    "separate_input_output_schemas=False"
+   ],
+   "evidence_pages": [
+    "models/dataclasses-and-pydantic-versions.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "- As **input**, `description` is **not required** (it has a default).",
+     "page": "models/dataclasses-and-pydantic-versions.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- As **output**, `description` is **always present** in the JSON (possibly `null`), so it's marked **required**.",
+     "page": "models/dataclasses-and-pydantic-versions.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "app = FastAPI(separate_input_output_schemas=False)",
+     "page": "models/dataclasses-and-pydantic-versions.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "FastAPI generates separate input and output schemas: `description = None` is optional when sending an item, but is included (possibly as `null`) when returning one, so the output schema marks it required.\n\nTo temporarily generate a single schema, set `FastAPI(separate_input_output_schemas=False)`.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 16,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "What required shard-header declaration did we settle on, and which header does the user_agent example read with default conversion?",
+   "asks": [
+    "Recall the project shard-header declaration",
+    "Identify the default conversion example's external header"
+   ],
+   "standalone_question": "What declaration represents the team's required shard header, and which external header does a user_agent parameter read with default Header conversion?",
+   "answer": "The project declaration is x_archive_shard: Annotated[str, Header()], reading X-Archive-Shard. The user_agent example reads User-Agent.",
+   "key_facts": [
+    "The required shard header is X-Archive-Shard and its Python parameter is x_archive_shard.",
+    "With default Header conversion, user_agent reads User-Agent."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "X-Archive-Shard",
+    "x_archive_shard",
+    "Header",
+    "user_agent",
+    "User-Agent"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    8
+   ],
+   "evidence": [
+    {
+     "quote": "Our shard header is X-Archive-Shard; keep its Python parameter required and name it x_archive_shard.",
+     "user_turn": 8,
+     "fact_idx": 0
+    },
+    {
+     "quote": "By default `Header` converts underscores to hyphens, so `user_agent` reads the `User-Agent` header.",
+     "page": "request/headers-and-cookies.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 8,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "Declare it as `shard: str = Header(...)` to make it required. A `user_agent` parameter with default `Header()` reads the external `User-Agent` header.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 17,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "What is the current inclusive item ID ceiling, and can I make that path parameter optional by giving Path a default?",
+   "asks": [
+    "Recall the revised item ID ceiling",
+    "Determine whether a path default can make it optional"
+   ],
+   "standalone_question": "What inclusive item ID ceiling is currently selected for the catalog API, and can that path parameter be made optional by giving Path a default?",
+   "answer": "The current inclusive ceiling is 941. No: path parameters are always required, and Path rejects a default value.",
+   "key_facts": [
+    "The current inclusive item ID ceiling is 941.",
+    "Path parameters are always required and cannot have a default value."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "941",
+    "Path"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1,
+    4
+   ],
+   "evidence": [
+    {
+     "quote": "Change the inclusive catalog item ID ceiling from 730 to 941, keeping IDs positive integers.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "**A path parameter is always required**, because it's part of the path.",
+     "page": "request/path-parameters.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "`Path` asserts that you don't give it a default (`\"Path parameters cannot have a default value\"`), and FastAPI refuses a default for a path parameter too.",
+     "page": "request/path-parameters.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 16,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 18,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the final intake tests, what is our current inclusive item ID ceiling, can a file-upload operation also receive ordinary JSON Body parameters, and what status and JSON body does the missing-item HTTPException example send?",
+   "asks": [
+    "Identify the current item ID ceiling",
+    "Determine whether uploads and ordinary JSON body parameters can be mixed",
+    "Identify the missing-item example response"
+   ],
+   "standalone_question": "For catalog intake tests, what inclusive item ID ceiling is currently selected, can a file-upload operation also receive ordinary JSON Body parameters, and what status and JSON body does the missing-item HTTPException example send?",
+   "answer": "The inclusive item ID ceiling is 941. A file-upload operation cannot also receive ordinary JSON Body parameters: its body is multipart/form-data, not application/json. The missing-item example sends 404 with {\"detail\": \"Item not found\"}.",
+   "key_facts": [
+    "The current inclusive item ID ceiling is 941.",
+    "Form/File parameters cannot be mixed with ordinary JSON Body parameters in one operation because the request is multipart/form-data rather than application/json.",
+    "The missing-item HTTPException example returns 404 and {\"detail\": \"Item not found\"}."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation",
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "941",
+    "Form",
+    "File",
+    "Body",
+    "multipart/form-data",
+    "application/json",
+    "404",
+    "detail",
+    "Item not found"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    4,
+    10,
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "Change the inclusive catalog item ID ceiling from 730 to 941, keeping IDs positive integers.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "**You can't mix** `Form`/`File` parameters with JSON `Body` parameters in one operation: the request body is `multipart/form-data`, not `application/json`.",
+     "page": "request/forms-and-files.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "- The client receives status `404` and the JSON body `{\"detail\": \"Item not found\"}`.",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 14,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  }
+ ],
+ "review_summary": {
+  "reviewer": "akingdbets",
+  "date": "2026-11-28",
+  "targets": 5,
+  "verdicts": {
+   "OK": 5,
+   "수정 필요": 0,
+   "제외": 0
+  }
+ }
+}

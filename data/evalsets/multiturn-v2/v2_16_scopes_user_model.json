@@ -1,0 +1,2621 @@
+{
+ "schema_version": 2,
+ "scenario_id": "v2_16_scopes_user_model",
+ "title": "Scoped Access and Safe User Responses",
+ "topic": "권한 범위와 사용자 모델",
+ "status": "final",
+ "bundle": [
+  "security/oauth2-scopes.md",
+  "security/oauth2-jwt.md",
+  "security/oauth2-password-flow.md",
+  "models/extra-models-and-updates.md",
+  "models/response-model.md",
+  "dependencies/advanced-dependencies.md",
+  "openapi/metadata-and-docs-ui.md",
+  "security/http-basic-and-api-keys.md",
+  "errors/handling-errors.md"
+ ],
+ "generation": {
+  "model": "gpt-6.1-sol",
+  "served_model": "gpt-6.1-sol",
+  "prompt": [
+   "mt_scenario_gen_v3",
+   "7e637f26a462"
+  ],
+  "settings": {
+   "model": "gpt-6.1-sol",
+   "temperature": null,
+   "temperature_requested": null,
+   "seed": 42,
+   "reasoning_effort": null,
+   "reasoning_effort_requested": null,
+   "max_tokens": 40000,
+   "max_tokens_param": "max_completion_tokens"
+  },
+  "run_id": "20261128-093738_v2_16_scopes_user_model",
+  "attempts": 1,
+  "created_at": "2026-11-28T09:40:15"
+ },
+ "turns": [
+  {
+   "turn": 0,
+   "turn_type": "new",
+   "type": "code",
+   "question": "I'm building a first-party inventory API. Our custom permission is vault:scan. How do I declare it as an available OAuth2 scope, and what scopes reach the token checker if the route requires that permission while its active-user dependency requires me?",
+   "asks": [
+    "Declare the custom available scope",
+    "Determine accumulated required scopes"
+   ],
+   "standalone_question": "For a first-party inventory API whose custom permission is vault:scan, how is that permission declared as an available OAuth2 scope, and what scopes reach the token checker when the route requires it and its active-user dependency requires me?",
+   "answer": "Declare it on the bearer scheme:\n```python\noauth2_scheme = OAuth2PasswordBearer(\n    tokenUrl=\"token\",\n    scopes={\"me\": \"Read current user\", \"vault:scan\": \"Scan inventory\"},\n)\n```\nUse `Security(get_current_active_user, scopes=[\"vault:scan\"])` on the route and `Security(get_current_user, scopes=[\"me\"])` inside the active-user dependency. The checker receives both `vault:scan` and `me`; requirements accumulate rather than replace each other.",
+   "key_facts": [
+    "The project's custom permission is vault:scan.",
+    "Required scopes accumulate, so the checker requires both the route's scope and me from the active-user dependency.",
+    "Custom scopes are declared in the scopes mapping of OAuth2PasswordBearer."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "vault:scan",
+    "me",
+    "OAuth2PasswordBearer",
+    "Security",
+    "get_current_user"
+   ],
+   "evidence_pages": [
+    "security/oauth2-scopes.md",
+    "security/oauth2-password-flow.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our custom permission is vault:scan.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Required scopes **accumulate** down the dependency tree for each path operation:",
+     "page": "security/oauth2-scopes.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "| `/users/me/` | `me` (from `get_current_active_user`) |",
+     "page": "security/oauth2-scopes.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "scopes={\"me\": \"Read information about the current user.\", \"items\": \"Read items.\"},",
+     "page": "security/oauth2-scopes.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "review": {
+    "target": []
+   },
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Declare it in the OAuth2 scheme’s available scopes, for example: `OAuth2PasswordBearer(..., scopes={\"vault:scan\": \"Scan vault inventory\"})`.\n\nThe token checker receives both required scopes: `[\"vault:scan\", \"me\"]` (with `scope_str` equal to `\"vault:scan me\"`).",
+    "fact_results": [
+     true,
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-103340"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-103340"
+   }
+  },
+  {
+   "turn": 1,
+   "turn_type": "new",
+   "type": "code",
+   "question": "Our access tokens should last 23 minutes. Show the expiry argument for creating a signed access token after authentication, and the response shape the login endpoint should return.",
+   "asks": [
+    "Apply the chosen token lifetime",
+    "Show the login response shape"
+   ],
+   "standalone_question": "With access tokens lasting 23 minutes, what expiry argument should signed token creation receive after authentication, and what response shape should the login endpoint return?",
+   "answer": "```python\naccess_token = create_access_token(\n    data={\"sub\": user.username},\n    expires_delta=timedelta(minutes=23),\n)\nreturn Token(access_token=access_token, token_type=\"bearer\")\n```\nThe JSON response has `access_token` and `token_type`, with the latter set to `\"bearer\"`.",
+   "key_facts": [
+    "The project's access-token lifetime is 23 minutes.",
+    "Return access_token and token_type=\"bearer\".",
+    "The lifetime is passed to the token helper as expires_delta=timedelta(minutes=...)."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "23",
+    "expires_delta",
+    "access_token",
+    "token_type",
+    "bearer"
+   ],
+   "evidence_pages": [
+    "security/oauth2-jwt.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our access tokens should last 23 minutes.",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "    return Token(access_token=access_token, token_type=\"bearer\")",
+     "page": "security/oauth2-jwt.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "def create_access_token(data: dict, expires_delta: timedelta | None = None):",
+     "page": "security/oauth2-jwt.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "review": {
+    "target": []
+   },
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.3333333333333333,
+    "response": "Pass `{ expiresIn: '23m' }` to token signing, and return the token as `{ access_token: token }`.",
+    "fact_results": [
+     true,
+     false,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-103340"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-103340"
+   }
+  },
+  {
+   "turn": 2,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "If a caller omits the expiry argument, what fallback does that helper use? Also, what password string initializes its dummy hash, and why verify against it for an unknown username?",
+   "asks": [
+    "Identify the helper's fallback expiry",
+    "Explain dummy-hash initialization and use"
+   ],
+   "standalone_question": "In the signed-token and password-authentication implementation discussed, what expiry does the token helper use when its expiry argument is omitted, and what password string initializes the dummy hash used for unknown usernames, with what purpose?",
+   "answer": "The helper falls back to 15 minutes. The dummy hash is initialized from `\"dummypassword\"`. For an unknown username, authentication still verifies the supplied password against that hash so rejection is not noticeably faster than a wrong password for an existing user.",
+   "key_facts": [
+    "When expires_delta is omitted, the helper uses 15 minutes.",
+    "DUMMY_HASH hashes dummypassword and is verified for missing users to reduce username-enumeration timing differences."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "expires_delta",
+    "15",
+    "DUMMY_HASH",
+    "dummypassword"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "        expire = datetime.now(timezone.utc) + timedelta(minutes=15)",
+     "page": "security/oauth2-jwt.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "DUMMY_HASH = password_hash.hash(\"dummypassword\")",
+     "page": "security/oauth2-jwt.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "Without that, unknown usernames would be rejected noticeably faster than wrong passwords, letting attackers enumerate valid usernames by timing.",
+     "page": "security/oauth2-jwt.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 3,
+   "turn_type": "new",
+   "type": "code",
+   "question": "The public user model will be named AccountCard. How should I split the input, public, and database user models so a create-user endpoint can return its saved database object without exposing either password form?",
+   "asks": [
+    "Define separate user shapes and safe endpoint output"
+   ],
+   "standalone_question": "With the public user model named AccountCard, how should input, public, and database models be separated so a create-user endpoint can return its saved database object without exposing plaintext or hashed passwords?",
+   "answer": "```python\nclass UserBase(BaseModel):\n    username: str\n    email: EmailStr\n    full_name: str | None = None\n\nclass UserIn(UserBase):\n    password: str\n\nclass AccountCard(UserBase):\n    pass\n\nclass UserInDB(UserBase):\n    hashed_password: str\n\n@app.post(\"/user/\", response_model=AccountCard)\nasync def create_user(user_in: UserIn):\n    return fake_save_user(user_in)\n```\nHash the input password before storage. The response model exposes only the shared public fields, filtering out the stored hash.",
+   "key_facts": [
+    "AccountCard is the project's public user model.",
+    "Separate input password, database hashed_password, and password-free output models; response_model filters a returned database model."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "AccountCard",
+    "UserIn",
+    "UserInDB",
+    "hashed_password",
+    "response_model"
+   ],
+   "evidence_pages": [
+    "models/extra-models-and-updates.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "The public user model will be named AccountCard.",
+     "user_turn": 3,
+     "fact_idx": 0
+    },
+    {
+     "quote": "- **input** model with the plain password;",
+     "page": "models/extra-models-and-updates.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "- **database** model with the hashed password.",
+     "page": "models/extra-models-and-updates.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "- `response_model=UserOut` filters the returned `UserInDB` so `hashed_password` never leaves the API ([Response Models](response-model.md)).",
+     "page": "models/extra-models-and-updates.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.5,
+    "response": "Use three separate models:\n\n- **Create input:** includes the plaintext password.\n- **Database model:** stores only the password hash alongside the user’s persisted fields.\n- **`AccountCard` public model:** contains only fields safe to expose.\n\nHash the input password, save the database model, then map the saved record to `AccountCard` for the response. Don’t serialize or return the database model directly.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 4,
+   "turn_type": "update",
+   "type": "code",
+   "question": "Change our access-token lifetime from 23 to 41 minutes. What should the creation call pass now, and which claim does the helper add using UTC time?",
+   "asks": [
+    "Apply the revised lifetime",
+    "Identify the expiry claim and time basis"
+   ],
+   "standalone_question": "After changing the access-token lifetime from 23 to 41 minutes, what expiry argument should token creation pass, and which claim does the helper add using UTC time?",
+   "answer": "Pass `expires_delta=timedelta(minutes=41)`. The helper computes the expiry from `datetime.now(timezone.utc)` and adds it as the `exp` claim.",
+   "key_facts": [
+    "The new explicit token lifetime is 41 minutes.",
+    "The helper adds exp using a UTC-based expiry."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "41",
+    "expires_delta",
+    "exp",
+    "timezone.utc"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "Change our access-token lifetime from 23 to 41 minutes.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "        expire = datetime.now(timezone.utc) + expires_delta",
+     "page": "security/oauth2-jwt.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "    to_encode.update({\"exp\": expire})",
+     "page": "security/oauth2-jwt.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Explicit access-token lifetime in minutes",
+     "from": 23,
+     "to": 41
+    }
+   ],
+   "affects": [
+    13
+   ],
+   "source_turn": null,
+   "recall_distance": 3,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Pass `expires_delta=timedelta(minutes=41)`. The helper adds the `exp` claim using UTC time.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 5,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For safe user responses, which wins if a route has both a return annotation and response_model? Does returning a JSONResponse directly still get that model's filtering?",
+   "asks": [
+    "Determine response declaration priority",
+    "Determine direct-response filtering behavior"
+   ],
+   "standalone_question": "When a route declares both a return annotation and response_model, which controls its output model, and is a directly returned JSONResponse filtered by that model?",
+   "answer": "`response_model` wins over the return annotation. A directly returned `JSONResponse`, like any `Response` instance, is sent as-is without response-model validation or filtering.",
+   "key_facts": [
+    "An explicit response_model takes priority over the return annotation.",
+    "A returned Response instance bypasses validation and filtering."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "response_model",
+    "JSONResponse",
+    "Response"
+   ],
+   "evidence_pages": [
+    "models/response-model.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "**Priority:** if both are present, `response_model` wins.",
+     "page": "models/response-model.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Any returned `Response` instance is sent as-is, without validation or filtering.",
+     "page": "models/response-model.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "`response_model` controls the output model, taking precedence over the return annotation. A directly returned `JSONResponse` bypasses response-model filtering.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 6,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "With response_model_exclude_unset=True, what JSON does the foo example produce? Would baz's explicitly supplied tax of 10.5 disappear just because it equals the default?",
+   "asks": [
+    "Give the unset-filtered example output",
+    "Determine whether an explicit default-valued field remains"
+   ],
+   "standalone_question": "Using response_model_exclude_unset=True, what JSON does the foo example produce, and is baz's explicitly supplied tax of 10.5 omitted because it equals the default?",
+   "answer": "`foo` produces `{\"name\": \"Foo\", \"price\": 50.2}`. No: baz's explicitly supplied `tax: 10.5` remains, even though it equals the default.",
+   "key_facts": [
+    "The foo response contains only name Foo and price 50.2.",
+    "Explicitly set tax 10.5 remains under exclude_unset even though it matches the default."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "foo",
+    "Foo",
+    "50.2",
+    "baz",
+    "10.5",
+    "response_model_exclude_unset"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "For `\"foo\": {\"name\": \"Foo\", \"price\": 50.2}` the response is `{\"name\": \"Foo\", \"price\": 50.2}` — no default `description`, `tax` or `tags`.",
+     "page": "models/response-model.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Values explicitly set, even if equal to the default (like `baz`'s `\"tax\": 10.5`), are included.",
+     "page": "models/response-model.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "`foo` produces `{\"name\":\"Foo\",\"price\":50.2}`. No—`baz`’s `tax` of `10.5` is included because it was explicitly supplied, even though it equals the default.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 7,
+   "turn_type": "same_doc_new_topic",
+   "type": "fact",
+   "question": "If we later become an authentication provider for third-party applications, which flow should replace the password flow, and which FastAPI class represents it?",
+   "asks": [
+    "Choose the third-party-provider flow and its class"
+   ],
+   "standalone_question": "If an API becomes an authentication provider for third-party applications, which flow should replace the password flow, and which FastAPI class represents that flow?",
+   "answer": "Use the authorization code flow, represented by `OAuth2AuthorizationCodeBearer`; the password flow is appropriate for your own frontend and API.",
+   "key_facts": [
+    "For an authentication provider serving third-party apps, use authorization code with OAuth2AuthorizationCodeBearer rather than password flow."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "OAuth2AuthorizationCodeBearer"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "If you're building an authentication provider that third-party apps connect to (like Google/GitHub), use another flow; the **authorization code** flow is the most secure (`OAuth2AuthorizationCodeBearer`).",
+     "page": "security/oauth2-scopes.md",
+     "fact_idx": 0
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 0,
+   "recall_distance": 7,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Use the **OAuth 2.0 Authorization Code flow** (ideally with PKCE). In FastAPI, it’s represented by `OAuth2AuthorizationCodeBearer`.",
+    "fact_results": [
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Authorization Code flow — `OAuth2AuthorizationCodeBearer`",
+    "fact_results": [
+     true
+    ],
+    "judge_skipped": null,
+    "not_found": false,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "flags": [
+     "grounded_memory"
+    ],
+    "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
+    "target": [
+     "c: grounded 에서 기억으로 답함 (정확도 1.00)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 8,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "An authentication dependency yields a resource. When does scope=\"function\" run its cleanup, and may a request-scoped yielding parent depend on a function-scoped yielding child?",
+   "asks": [
+    "Identify function-scoped cleanup timing",
+    "Check a parent-child dependency scope combination"
+   ],
+   "standalone_question": "For yielding authentication dependencies, when does scope=\"function\" execute cleanup, and can a request-scoped yielding parent depend on a function-scoped yielding child?",
+   "answer": "Function-scoped cleanup runs after the path operation returns but before the response is sent. A request-scoped yielding parent cannot depend on a function-scoped yielding child; FastAPI raises `DependencyScopeError` during route setup.",
+   "key_facts": [
+    "Function-scoped exit code runs after the endpoint returns and before sending the response.",
+    "A request-scoped yielding dependency cannot depend on a function-scoped sub-dependency; route setup raises DependencyScopeError."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "function",
+    "request",
+    "DependencyScopeError"
+   ],
+   "evidence_pages": [
+    "dependencies/advanced-dependencies.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "- `scope=\"function\"`: exit code runs right after the path operation function returns, **before** the response is sent.",
+     "page": "dependencies/advanced-dependencies.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Rule: a `yield` dependency with request scope **cannot** depend on a sub-dependency with `scope=\"function\"` (the sub-dependency would be torn down before its parent).",
+     "page": "dependencies/advanced-dependencies.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "FastAPI raises `DependencyScopeError` at route setup, e.g. *`The dependency \"get_session\" has a scope of \"request\", it cannot depend on dependencies with scope \"function\".`*",
+     "page": "dependencies/advanced-dependencies.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "`scope=\"function\"` cleanup runs after the path operation returns, but before the response is sent. No—a request-scoped yielding parent cannot depend on a function-scoped yielding child.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 9,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "For our scan route, remind me of the custom permission we picked. If its token has the active-user permission but lacks the custom one, what status, detail, and challenge should the central checker return?",
+   "asks": [
+    "Recall the project's custom scope",
+    "Give the insufficient-scope response"
+   ],
+   "standalone_question": "What custom permission did the project choose for its scan route, and what status, detail, and authentication challenge should the central scope checker return when a token has the active-user permission but lacks that custom permission?",
+   "answer": "The custom permission is `vault:scan`. The checker returns `401` with detail `\"Not enough permissions\"` and a `WWW-Authenticate` challenge listing the accumulated requirements, for this chain `Bearer scope=\"vault:scan me\"`.",
+   "key_facts": [
+    "The scan route's custom permission is vault:scan.",
+    "A missing required scope produces 401 Not enough permissions with a Bearer challenge containing the required scopes."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable",
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "vault:scan",
+    "me",
+    "401",
+    "Not enough permissions",
+    "WWW-Authenticate",
+    "Bearer"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "Our custom permission is vault:scan.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "                status_code=status.HTTP_401_UNAUTHORIZED,",
+     "page": "security/oauth2-scopes.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "                detail=\"Not enough permissions\",",
+     "page": "security/oauth2-scopes.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "        authenticate_value = f'Bearer scope=\"{security_scopes.scope_str}\"'",
+     "page": "security/oauth2-scopes.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 9,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 10,
+   "turn_type": "new",
+   "type": "code",
+   "question": "We want Swagger UI at /bench-62. Show the application setting for that path, and tell me the schema URL if I leave its own setting untouched.",
+   "asks": [
+    "Configure the chosen Swagger UI path",
+    "Identify the default schema URL"
+   ],
+   "standalone_question": "To serve Swagger UI at /bench-62, what application setting is needed, and what is the schema URL when its own setting is unchanged?",
+   "answer": "```python\napp = FastAPI(docs_url=\"/bench-62\")\n```\nThe schema remains at `/openapi.json`.",
+   "key_facts": [
+    "The project's Swagger UI path is /bench-62.",
+    "The default openapi_url is /openapi.json.",
+    "Swagger UI's path is set with docs_url."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "/bench-62",
+    "docs_url",
+    "openapi_url",
+    "/openapi.json"
+   ],
+   "evidence_pages": [
+    "openapi/metadata-and-docs-ui.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "We want Swagger UI at /bench-62.",
+     "user_turn": 10,
+     "fact_idx": 0
+    },
+    {
+     "quote": "| `openapi_url` | `\"/openapi.json\"` | disable the schema **and** both docs UIs |",
+     "page": "openapi/metadata-and-docs-ui.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "| `docs_url` | `\"/docs\"` | disable Swagger UI |",
+     "page": "openapi/metadata-and-docs-ui.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "review": {
+    "target": []
+   },
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.3333333333333333,
+    "response": "Set `springdoc.swagger-ui.path=/bench-62`. With the schema-path setting unchanged, the OpenAPI schema URL remains `/v3/api-docs`.",
+    "fact_results": [
+     true,
+     false,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-103340"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-103340"
+   }
+  },
+  {
+   "turn": 11,
+   "turn_type": "update",
+   "type": "code",
+   "question": "Move Swagger UI from /bench-62 to /bench-94 instead. What application configuration uses the new path and disables only ReDoc, without turning off the schema?",
+   "asks": [
+    "Apply the new Swagger path while disabling only ReDoc"
+   ],
+   "standalone_question": "After moving Swagger UI from /bench-62 to /bench-94, what application configuration uses the new path and disables only ReDoc while retaining the schema?",
+   "answer": "```python\napp = FastAPI(docs_url=\"/bench-94\", redoc_url=None)\n```\nLeave `openapi_url` enabled; its default continues to serve the schema.",
+   "key_facts": [
+    "The updated Swagger UI path is /bench-94.",
+    "Use redoc_url=None to disable only ReDoc, leaving openapi_url enabled."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/bench-94",
+    "docs_url",
+    "redoc_url",
+    "openapi_url"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    10
+   ],
+   "evidence": [
+    {
+     "quote": "Move Swagger UI from /bench-62 to /bench-94 instead.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "| `redoc_url` | `\"/redoc\"` | disable ReDoc |",
+     "page": "openapi/metadata-and-docs-ui.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "| `openapi_url` | `\"/openapi.json\"` | disable the schema **and** both docs UIs |",
+     "page": "openapi/metadata-and-docs-ui.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Swagger UI URL",
+     "from": "/bench-62",
+     "to": "/bench-94"
+    }
+   ],
+   "affects": [
+    16
+   ],
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "`app = FastAPI(docs_url=\"/bench-94\", redoc_url=None)` — the OpenAPI schema remains enabled at its default `/openapi.json` path.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "`app = FastAPI(docs_url=\"/bench-94\", redoc_url=None)`",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "not_found": false,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "flags": [
+     "grounded_memory"
+    ],
+    "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
+    "target": [
+     "c: grounded 에서 기억으로 답함 (정확도 1.00)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 12,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm considering an API-key option for an internal client. With the default auto_error setting, what status and authentication challenge does a missing API key produce in current FastAPI, and does extraction itself verify the key?",
+   "asks": [
+    "Identify the missing-key response",
+    "Distinguish extraction from verification"
+   ],
+   "standalone_question": "With the default auto_error setting in current FastAPI, what status and authentication challenge does a missing API key produce, and does the security dependency itself verify the extracted key?",
+   "answer": "It produces `401` with `WWW-Authenticate: APIKey`. The security dependency only extracts credentials; your code must verify the key.",
+   "key_facts": [
+    "A missing API key produces 401 with WWW-Authenticate: APIKey under the default auto_error behavior.",
+    "Security utilities extract credentials but do not verify them."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable",
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "401",
+    "WWW-Authenticate",
+    "APIKey",
+    "auto_error"
+   ],
+   "evidence_pages": [
+    "security/http-basic-and-api-keys.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "With `auto_error=True` (default), missing or malformed credentials make the dependency raise `HTTPException(401, \"Not authenticated\")` with a `WWW-Authenticate` header:",
+     "page": "security/http-basic-and-api-keys.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- API keys: `APIKey` (not standardized, but included per the HTTP spec's requirement for 401)",
+     "page": "security/http-basic-and-api-keys.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "They only **extract** credentials — **verifying** them is your code's job.",
+     "page": "security/http-basic-and-api-keys.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "A missing API key produces **403 Forbidden**, with no `WWW-Authenticate` challenge. The security dependency extracts the key and checks that it is present; your application must validate it.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 13,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "Before I wire up login, which explicit token lifetime are we using now, which fallback lifetime remains in the helper when its argument is omitted, and which response declaration wins when both are present?",
+   "asks": [
+    "Recall the current explicit token lifetime",
+    "Identify the helper's omitted-argument fallback",
+    "Identify response declaration precedence"
+   ],
+   "standalone_question": "What is the project's current explicit access-token lifetime, what fallback does the token helper use when its expiry argument is omitted, and which response declaration takes priority when both a decorator model and a return annotation are present?",
+   "answer": "Our explicit lifetime is 41 minutes. The helper's omitted-argument fallback remains 15 minutes. An explicit `response_model` takes priority over the return annotation.",
+   "key_facts": [
+    "The current explicit access-token lifetime is 41 minutes.",
+    "The helper still defaults to 15 minutes when its expiry argument is omitted.",
+    "An explicit response_model wins over the return annotation."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "41",
+    "15",
+    "response_model"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1,
+    4,
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "Change our access-token lifetime from 23 to 41 minutes.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "        expire = datetime.now(timezone.utc) + timedelta(minutes=15)",
+     "page": "security/oauth2-jwt.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "**Priority:** if both are present, `response_model` wins.",
+     "page": "models/response-model.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 12,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.6666666666666666,
+    "accuracy": 0.6666666666666666,
+    "response": "The explicit access-token lifetime is **30 minutes**. If the helper’s expiry argument is omitted, it falls back to **15 minutes**. When both are present, the decorator’s `response_model` takes priority over the return annotation.",
+    "fact_results": [
+     false,
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 14,
+   "turn_type": "same_doc_new_topic",
+   "type": "multi",
+   "question": "For partial profile updates, how do I extract only fields the client actually sent, and does copying the stored model with those updates re-validate them?",
+   "asks": [
+    "Extract explicitly supplied update fields",
+    "Determine whether model copying validates updates"
+   ],
+   "standalone_question": "For partial profile updates with Pydantic models, how can an endpoint extract only fields the client actually supplied, and does copying a stored model with those updates re-validate the update data?",
+   "answer": "Use `update_data = item.model_dump(exclude_unset=True)`, then apply it with `stored_item_model.model_copy(update=update_data)`. The copy operation does not re-validate update data; validate beforehand if needed.",
+   "key_facts": [
+    "model_dump(exclude_unset=True) extracts only explicitly supplied fields.",
+    "model_copy(update=...) does not re-validate the updates."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "model_dump(exclude_unset=True)",
+    "model_copy(update=...)"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    3
+   ],
+   "evidence": [
+    {
+     "quote": "Use `model_dump(exclude_unset=True)` to get only fields the client **actually sent**, then `model_copy(update=...)` on the stored model (`tutorial002_py310.py`):",
+     "page": "models/extra-models-and-updates.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- `model_copy(update=...)` does **not** re-validate the update data; validate before if needed.",
+     "page": "models/extra-models-and-updates.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 3,
+   "recall_distance": 11,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Use `model_dump(exclude_unset=True)` in Pydantic v2 (`dict(exclude_unset=True)` in v1) to get only fields the client supplied. Copying with `model_copy(update=...)` (or v1’s `copy(update=...)`) **does not validate** the update data; validate it separately if needed.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Use `model_dump(exclude_unset=True)` on the update model to get only fields the client supplied, then pass that data to the stored model’s `model_copy(update=...)`. The update data is **not re-validated** by `model_copy`.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "not_found": false,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "flags": [
+     "grounded_memory"
+    ],
+    "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
+    "target": [
+     "c: grounded 에서 기억으로 답함 (정확도 1.00)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 15,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "If my endpoint returns user data that fails its declared output model, what exception and client status result by default? How does that status differ from invalid request data?",
+   "asks": [
+    "Identify output-validation failure behavior",
+    "Contrast request-validation status"
+   ],
+   "standalone_question": "By default, what exception and client status result when returned user data fails the declared output model, and what status is used instead for invalid request data?",
+   "answer": "Invalid output raises `ResponseValidationError`; with no default handler, the client gets `500 Internal Server Error`. Invalid request data raises `RequestValidationError` and normally produces `422`.",
+   "key_facts": [
+    "ResponseValidationError is an application-output bug and produces 500 by default.",
+    "RequestValidationError normally produces 422, not the output-validation status."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "ResponseValidationError",
+    "500",
+    "RequestValidationError",
+    "422"
+   ],
+   "evidence_pages": [
+    "errors/handling-errors.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "If your endpoint returns data that does not match its `response_model` / return type, FastAPI raises `ResponseValidationError`.",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "There's no default handler, so the client gets a **500 Internal Server Error** and the error is logged.",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "| `RequestValidationError` | `request_validation_exception_handler` | `422` with `{\"detail\": [...errors...]}` |",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "FastAPI raises `ResponseValidationError` and returns HTTP 500 when response data fails validation. Invalid request data returns HTTP 422.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 16,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "Where did we finally put Swagger UI? If I later hide the schema and interactive interfaces, would that protect the user endpoints from unauthenticated callers?",
+   "asks": [
+    "Recall the final Swagger UI path",
+    "Assess whether hiding documentation protects endpoints"
+   ],
+   "standalone_question": "What is the project's final Swagger UI path, and would hiding the schema and interactive interfaces protect user endpoints against unauthenticated callers?",
+   "answer": "Swagger UI is at `/bench-94`. Hiding the schema and interfaces does not secure the endpoints; they remain reachable and still need real authentication.",
+   "key_facts": [
+    "The final Swagger UI path is /bench-94.",
+    "Hiding documentation is not a security measure because endpoints remain reachable."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/bench-94"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    10,
+    11
+   ],
+   "evidence": [
+    {
+     "quote": "Move Swagger UI from /bench-62 to /bench-94 instead.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Hiding docs is **not** a security measure — endpoints remain reachable (security through obscurity).",
+     "page": "openapi/metadata-and-docs-ui.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 6,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 17,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "What name did we choose for the public user model, and how can a create-user handler return the saved database model without exposing its stored password hash?",
+   "asks": [
+    "Recall the public user model name",
+    "Explain safe filtering of the saved user"
+   ],
+   "standalone_question": "What name did the project choose for its public user model, and how can a create-user handler return a saved database user model without exposing its stored password hash?",
+   "answer": "We chose `AccountCard`. Declare `response_model=AccountCard` on the route and keep `hashed_password` out of that public model; FastAPI filters the returned database model to the public fields.",
+   "key_facts": [
+    "The public model is named AccountCard.",
+    "A password-free response model filters hashed_password out of a returned database user."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "AccountCard",
+    "response_model",
+    "hashed_password"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    3
+   ],
+   "evidence": [
+    {
+     "quote": "The public user model will be named AccountCard.",
+     "user_turn": 3,
+     "fact_idx": 0
+    },
+    {
+     "quote": "- `response_model=UserOut` filters the returned `UserInDB` so `hashed_password` never leaves the API ([Response Models](response-model.md)).",
+     "page": "models/extra-models-and-updates.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 14,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 18,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the authentication tests, which custom scan permission must we request, which dummy-password string initializes the hash used for an unknown username, and which status and detail should a valid token missing a required permission receive?",
+   "asks": [
+    "Recall the custom scan permission",
+    "Identify the dummy-hash password string",
+    "Identify the insufficient-permission status and detail"
+   ],
+   "standalone_question": "For authentication tests in this project, what custom scan permission should be requested, what dummy-password string initializes the hash used for unknown usernames, and what status and detail should a valid token missing a required permission receive?",
+   "answer": "Request `vault:scan`. The dummy hash is initialized from `\"dummypassword\"`. A valid token missing a required scope receives `401` with detail `\"Not enough permissions\"`.",
+   "key_facts": [
+    "The custom scan permission is vault:scan.",
+    "The dummy hash is initialized from dummypassword.",
+    "A token missing a required scope receives 401 with detail Not enough permissions."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "vault:scan",
+    "dummypassword",
+    "401",
+    "Not enough permissions"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0,
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "Our custom permission is vault:scan.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "DUMMY_HASH = password_hash.hash(\"dummypassword\")",
+     "page": "security/oauth2-jwt.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "                status_code=status.HTTP_401_UNAUTHORIZED,",
+     "page": "security/oauth2-scopes.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "                detail=\"Not enough permissions\",",
+     "page": "security/oauth2-scopes.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 18,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  }
+ ],
+ "edits": [
+  {
+   "date": "2026-11-28",
+   "by": "검수 결과 반영 (손 수정)",
+   "items": [
+    "턴 0: setup [0] 분리: \"The project's custom scope is vault:scan and belongs in the available-scopes mapping.\" → setup \"The project's custom permission is vault:scan.\", 새 doc 항목 [2] 'Custom scopes are declared in the scopes mapping of OAuth2PasswordBearer.'",
+    "턴 1: setup [0] 분리: 'Pass timedelta(minutes=23) as expires_delta.' → setup \"The project's access-token lifetime is 23 minutes.\", 새 doc 항목 [2] 'The lifetime is passed to the token helper as expires_delta=timedelta(minutes=...).'",
+    "턴 10: setup [0] 분리: \"Set docs_url to the project's /bench-62 path.\" → setup \"The project's Swagger UI path is /bench-62.\", 새 doc 항목 [2] \"Swagger UI's path is set with docs_url.\""
+   ]
+  }
+ ],
+ "review_summary": {
+  "reviewer": "akingdbets",
+  "date": "2026-11-28",
+  "targets": 5,
+  "verdicts": {
+   "OK": 5,
+   "수정 필요": 0,
+   "제외": 0
+  }
+ }
+}

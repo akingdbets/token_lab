@@ -1,0 +1,2599 @@
+{
+ "schema_version": 2,
+ "scenario_id": "v2_05_deployment_setup",
+ "title": "Container Deployment Behind a Prefix-Stripping Proxy",
+ "topic": "배포 구성(서버·컨테이너·프록시)",
+ "status": "final",
+ "bundle": [
+  "deployment/deployment-concepts-and-servers.md",
+  "deployment/docker.md",
+  "deployment/https-and-cloud.md",
+  "app-structure/sub-applications-proxy-and-wsgi.md",
+  "app-structure/settings.md",
+  "getting-started/development-workflow.md",
+  "middleware/middleware.md",
+  "app-structure/lifespan-events.md",
+  "quickstart.md"
+ ],
+ "generation": {
+  "model": "gpt-6.1-sol",
+  "served_model": "gpt-6.1-sol",
+  "prompt": [
+   "mt_scenario_gen_v3",
+   "7e637f26a462"
+  ],
+  "settings": {
+   "model": "gpt-6.1-sol",
+   "temperature": null,
+   "temperature_requested": null,
+   "seed": 42,
+   "reasoning_effort": null,
+   "reasoning_effort_requested": null,
+   "max_tokens": 40000,
+   "max_tokens_param": "max_completion_tokens"
+  },
+  "run_id": "20261128-092938_v2_05_deployment_setup",
+  "attempts": 2,
+  "created_at": "2026-11-28T09:34:55"
+ },
+ "turns": [
+  {
+   "turn": 0,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm deploying a FastAPI service on one machine. Our internal port is 8137 and our initial worker count is 3. What production launch command should I use, and what are the production CLI's default bind address and reload behavior?",
+   "asks": [
+    "Production launch command using the chosen port and workers",
+    "Default production bind address and reload behavior"
+   ],
+   "standalone_question": "For a FastAPI service on one machine with internal port 8137 and initial worker count 3, what production launch command should I use, and what are the production CLI's default bind address and reload behavior?",
+   "answer": "Use `fastapi run main.py --port 8137 --workers 3`. By default, `fastapi run` binds to `0.0.0.0:8000` with auto-reload off; the explicit port overrides 8000.",
+   "key_facts": [
+    "The project's launch command must use port 8137 and 3 workers.",
+    "Use fastapi run for production; its defaults are 0.0.0.0:8000 with auto-reload off."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "fastapi run",
+    "main.py",
+    "8137",
+    "3",
+    "0.0.0.0:8000"
+   ],
+   "evidence_pages": [
+    "deployment/deployment-concepts-and-servers.md",
+    "quickstart.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our internal port is 8137 and our initial worker count is 3.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "`fastapi run` starts a **production** server: it listens on `0.0.0.0:8000` and has auto-reload **off** (unlike `fastapi dev`, which listens on `127.0.0.1` with reload on).",
+     "page": "deployment/deployment-concepts-and-servers.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.5,
+    "response": "Assuming your app is in `main.py`:\n\n```bash\nfastapi run main.py --port 8137 --workers 3\n```\n\nThe production CLI defaults to binding on `0.0.0.0` and has reload disabled.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "c: 한 턴 한 주제 경고"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 1,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm packaging the service in Docker. Why should dependency installation happen before copying the application, and which CMD form lets shutdown cleanup run reliably?",
+   "asks": [
+    "Reason for dependency-first Docker layers",
+    "CMD form for graceful shutdown"
+   ],
+   "standalone_question": "When packaging a service in Docker, why should dependency installation happen before copying the application, and which CMD form lets shutdown cleanup run reliably?",
+   "answer": "Copy the requirements and install dependencies before copying application code so code-only changes reuse the dependency layer. Use exec-form CMD, for example `CMD [\"fastapi\", \"run\", \"app/main.py\", \"--port\", \"80\"]`, so stop signals reach the server and lifespan shutdown cleanup runs.",
+   "key_facts": [
+    "Installing dependencies before copying application code preserves the dependency layer cache for code-only changes.",
+    "Exec-form CMD lets FastAPI receive stop signals and run lifespan shutdown cleanup; shell form does not forward signals."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "CMD",
+    "fastapi",
+    "run",
+    "app/main.py",
+    "80"
+   ],
+   "evidence_pages": [
+    "deployment/docker.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Copying `requirements.txt` and installing **before** copying `./app` means a code change only rebuilds the last layers, instead of reinstalling every package — saving minutes per build.",
+     "page": "deployment/docker.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "The shell form wraps the server in `/bin/sh`, which doesn't forward signals.",
+     "page": "deployment/docker.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "With the exec form, FastAPI receives the stop signal, shuts down gracefully and runs the shutdown part of [lifespan events](../app-structure/lifespan-events.md).",
+     "page": "deployment/docker.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Install dependencies before copying the application so code changes don’t invalidate the cached dependency layer. Use **exec-form CMD**—for example, `CMD [\"python\", \"app.py\"]`—so the process receives shutdown signals and can run cleanup.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 2,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "For that container approach, is the old prebuilt Gunicorn-based image still recommended, and how many workers does the single-machine multi-worker CMD example use?",
+   "asks": [
+    "Whether the old Gunicorn-based image is recommended",
+    "Worker count in the single-machine container example"
+   ],
+   "standalone_question": "For a FastAPI Docker deployment, is the old prebuilt Gunicorn-based image still recommended, and how many workers does the single-machine multi-worker CMD example use?",
+   "answer": "No. `tiangolo/uvicorn-gunicorn-fastapi` is deprecated; build your own image instead. The single-machine multi-worker example uses `--workers 4`, which is an example rather than a change to our chosen count.",
+   "key_facts": [
+    "tiangolo/uvicorn-gunicorn-fastapi is deprecated.",
+    "The single-machine multi-worker container example uses 4 workers."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "tiangolo/uvicorn-gunicorn-fastapi",
+    "--workers",
+    "4"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "The former `tiangolo/uvicorn-gunicorn-fastapi` image is **deprecated**.",
+     "page": "deployment/docker.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "CMD [\"fastapi\", \"run\", \"app/main.py\", \"--port\", \"80\", \"--workers\", \"4\"]",
+     "page": "deployment/docker.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "No. The old prebuilt Gunicorn-based image is no longer recommended; the example uses 4 workers.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 3,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "Our public prefix is /edge/r7, and the proxy strips it before forwarding requests. How should I configure that prefix without changing route declarations, and when is trusting forwarded headers from every IP safe?",
+   "asks": [
+    "Prefix configuration for a stripping proxy",
+    "Safety condition for trusting all forwarded-header senders"
+   ],
+   "standalone_question": "For a FastAPI service whose public prefix is /edge/r7 and whose proxy strips it before forwarding, how should I configure that prefix without changing route declarations, and when is trusting forwarded headers from every IP safe?",
+   "answer": "Set `--root-path /edge/r7`. Keep route paths unprefixed: root_path communicates the external prefix rather than adding it to the backend's routes. Use `--forwarded-allow-ips=\"*\"` only when nothing except the trusted proxy can reach the server.",
+   "key_facts": [
+    "The configured external prefix must be /edge/r7.",
+    "root_path represents the stripped external prefix while the backend still serves unprefixed paths.",
+    "--forwarded-allow-ips=\"*\" trusts every client IP and is safe only when nothing but the proxy can reach the server."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/edge/r7",
+    "--root-path",
+    "root_path",
+    "--forwarded-allow-ips"
+   ],
+   "evidence_pages": [
+    "app-structure/sub-applications-proxy-and-wsgi.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our public prefix is /edge/r7, and the proxy strips it before forwarding requests.",
+     "user_turn": 3,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Either way the server still serves the path **without** the prefix (`http://127.0.0.1:8000/app`); adding `/api/v1` is the proxy's job.",
+     "page": "app-structure/sub-applications-proxy-and-wsgi.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "`\"*\"` trusts every client IP — only appropriate when nothing but the proxy can reach the server.",
+     "page": "app-structure/sub-applications-proxy-and-wsgi.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "review": {
+    "changed_round2": true,
+    "target": []
+   },
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Set the ASGI `root_path` to `/edge/r7`—for example, `FastAPI(root_path=\"/edge/r7\")` or Uvicorn’s `--root-path /edge/r7`. This preserves route declarations when the proxy strips the prefix.\n\nTrust forwarded headers from every IP only if the app is reachable exclusively through trusted proxies that overwrite those headers. Otherwise, restrict trusted proxy IPs; clients could spoof them.",
+    "fact_results": [
+     true,
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-101331"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-101331"
+   }
+  },
+  {
+   "turn": 4,
+   "turn_type": "update",
+   "type": "multi",
+   "question": "Change our public prefix from /edge/r7 to /edge/r9; the proxy still strips it. What should the prefix option be now, and does this require adding the prefix to backend route declarations?",
+   "asks": [
+    "Updated prefix option",
+    "Whether backend routes need the prefix"
+   ],
+   "standalone_question": "For a FastAPI service whose proxy still strips the public prefix, change that prefix from /edge/r7 to /edge/r9. What should the prefix option be now, and does this require adding the prefix to backend route declarations?",
+   "answer": "Use `--root-path /edge/r9`. Do not add that prefix to backend route declarations: the proxy strips it, and the backend continues serving unprefixed paths.",
+   "key_facts": [
+    "The project's public prefix is now /edge/r9.",
+    "Backend route declarations remain unprefixed because the proxy strips the external prefix.",
+    "The stripped prefix is passed to the server with --root-path."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation",
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "--root-path",
+    "/edge/r9"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    3
+   ],
+   "evidence": [
+    {
+     "quote": "Change our public prefix from /edge/r7 to /edge/r9; the proxy still strips it.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Either way the server still serves the path **without** the prefix (`http://127.0.0.1:8000/app`); adding `/api/v1` is the proxy's job.",
+     "page": "app-structure/sub-applications-proxy-and-wsgi.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "fastapi run main.py --forwarded-allow-ips=\"*\" --root-path /api/v1",
+     "page": "app-structure/sub-applications-proxy-and-wsgi.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Public path prefix",
+     "from": "/edge/r7",
+     "to": "/edge/r9"
+    }
+   ],
+   "affects": [
+    13,
+    16,
+    18
+   ],
+   "source_turn": null,
+   "recall_distance": 1,
+   "review": {
+    "target": []
+   },
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.6666666666666666,
+    "response": "Set the prefix option to `/edge/r9`. No—because the proxy strips it, keep backend route declarations unchanged.",
+    "fact_results": [
+     true,
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-103340"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-103340"
+   }
+  },
+  {
+   "turn": 5,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "Our deployment admin email is release-otter@ops.example.org. How can I supply that through the environment to typed settings, and what items_per_user value does the example retain when I don't supply it?",
+   "asks": [
+    "Environment assignment for the chosen admin email",
+    "Example default for items_per_user"
+   ],
+   "standalone_question": "For FastAPI typed settings, how can I supply deployment admin email release-otter@ops.example.org through the environment, and what items_per_user value does the example retain when I don't supply it?",
+   "answer": "Set `ADMIN_EMAIL=\"release-otter@ops.example.org\"` before launching the service. A `BaseSettings` field named `admin_email` reads it case-insensitively. The example retains `items_per_user=50` when that setting is absent.",
+   "key_facts": [
+    "The deployment's ADMIN_EMAIL value is release-otter@ops.example.org.",
+    "BaseSettings matches environment names case-insensitively, so ADMIN_EMAIL populates admin_email.",
+    "The example's items_per_user default is 50."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "ADMIN_EMAIL",
+    "release-otter@ops.example.org",
+    "BaseSettings",
+    "admin_email",
+    "items_per_user",
+    "50"
+   ],
+   "evidence_pages": [
+    "app-structure/settings.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our deployment admin email is release-otter@ops.example.org.",
+     "user_turn": 5,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Each attribute is read from an environment variable with the same name, case-insensitively (`APP_NAME` → `app_name`).",
+     "page": "app-structure/settings.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "`items_per_user` keeps its default `50`.",
+     "page": "app-structure/settings.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.6666666666666666,
+    "response": "Set `ADMIN_EMAIL=release-otter@ops.example.org` in the environment. If you don’t set `items_per_user`, it remains **50**.",
+    "fact_results": [
+     true,
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 6,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "For testing those settings, what admin email does the dependency-override example construct, and what app_name does its expected response contain?",
+   "asks": [
+    "Admin email in the settings test override",
+    "App name in the expected test response"
+   ],
+   "standalone_question": "In the FastAPI settings dependency-override test example, what admin email is constructed, and what app_name does the expected response contain?",
+   "answer": "The override constructs `Settings(admin_email=\"testing_admin@example.com\")`. The expected response contains `app_name: \"Awesome API\"`.",
+   "key_facts": [
+    "The test override uses testing_admin@example.com.",
+    "The expected test response's app_name is Awesome API."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "Settings",
+    "admin_email",
+    "testing_admin@example.com",
+    "app_name",
+    "Awesome API"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "    return Settings(admin_email=\"testing_admin@example.com\")",
+     "page": "app-structure/settings.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "        \"app_name\": \"Awesome API\",",
+     "page": "app-structure/settings.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "The admin email is `testing_admin@example.com`, and the expected `app_name` is `Awesome API`.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "The override constructs `Settings(admin_email=\"testing_admin@example.com\")`. Since it doesn’t provide an `app_name`, the expected response uses the default `\"Awesome API\"` for `app_name`.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "not_found": false,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "flags": [
+     "grounded_memory"
+    ],
+    "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
+    "target": [
+     "c: grounded 에서 기억으로 답함 (정확도 1.00)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 7,
+   "turn_type": "same_doc_new_topic",
+   "type": "multi",
+   "question": "Before freezing deployment dependencies, what is the demonstrated minor-range FastAPI requirement, and should I separately pin Starlette?",
+   "asks": [
+    "Demonstrated FastAPI minor-range requirement",
+    "Whether to pin Starlette separately"
+   ],
+   "standalone_question": "When freezing FastAPI deployment dependencies, what is the demonstrated minor-range FastAPI requirement, and should Starlette be pinned separately?",
+   "answer": "The demonstrated range is `fastapi[standard]>=0.112.0,<0.113.0`. Do not separately pin Starlette: FastAPI declares its compatible Starlette range.",
+   "key_facts": [
+    "The demonstrated minor-range requirement is fastapi[standard]>=0.112.0,<0.113.0.",
+    "Starlette should not be separately pinned because FastAPI requires a compatible range."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "range"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "fastapi[standard]>=0.112.0,<0.113.0",
+    "Starlette"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "fastapi[standard]>=0.112.0,<0.113.0",
+     "page": "deployment/deployment-concepts-and-servers.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "**Don't pin Starlette** — each FastAPI version requires a compatible Starlette range itself.",
+     "page": "deployment/deployment-concepts-and-servers.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 0,
+   "recall_distance": 7,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "Use a minor-bounded requirement such as `fastapi>=0.100.0,<0.101.0`. Don’t pin Starlette separately; FastAPI specifies a compatible Starlette version.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 8,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm reproducing the development environment before building the image. What exact uv project-initialization command is demonstrated, and which files hold dependency declarations and locked versions?",
+   "asks": [
+    "Example uv project-initialization command",
+    "Dependency declaration and lock files"
+   ],
+   "standalone_question": "When reproducing a FastAPI development environment with uv before building a container image, what exact project-initialization command is demonstrated, and which files hold dependency declarations and locked versions?",
+   "answer": "The example starts with `uv init awesome-project --bare`. Dependencies are declared in `pyproject.toml`, and versions are locked in `uv.lock`.",
+   "key_facts": [
+    "The demonstrated initialization command is uv init awesome-project --bare.",
+    "Dependencies are declared in pyproject.toml and locked in uv.lock."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "uv init awesome-project --bare",
+    "pyproject.toml",
+    "uv.lock"
+   ],
+   "evidence_pages": [
+    "getting-started/development-workflow.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "uv init awesome-project --bare",
+     "page": "getting-started/development-workflow.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Dependencies are declared in `pyproject.toml` and locked in `uv.lock`.",
+     "page": "getting-started/development-workflow.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 9,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "For our initial single-machine launch, which internal port and worker count did we choose, and would the production CLI enable auto-reload by default?",
+   "asks": [
+    "Chosen initial port and worker count",
+    "Production auto-reload default"
+   ],
+   "standalone_question": "For the project's initially chosen single-machine FastAPI deployment, which internal port and worker count were selected, and does the production CLI enable auto-reload by default?",
+   "answer": "We chose port `8137` and `3` workers. The production CLI has auto-reload off by default.",
+   "key_facts": [
+    "The initial deployment uses internal port 8137 and 3 workers.",
+    "fastapi run has auto-reload off by default."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "8137",
+    "3",
+    "fastapi run"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "Our internal port is 8137 and our initial worker count is 3.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "`fastapi run` starts a **production** server: it listens on `0.0.0.0:8000` and has auto-reload **off** (unlike `fastapi dev`, which listens on `127.0.0.1` with reload on).",
+     "page": "deployment/deployment-concepts-and-servers.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 9,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 10,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm considering response compression for the deployed service. What are GZipMiddleware's default minimum response size and compression level, rather than the values explicitly supplied in its example?",
+   "asks": [
+    "Default GZip minimum response size",
+    "Default GZip compression level"
+   ],
+   "standalone_question": "For FastAPI response compression, what are GZipMiddleware's default minimum response size and compression level, rather than the values explicitly supplied in its example?",
+   "answer": "The defaults are `minimum_size=500` bytes and `compresslevel=9`. The example explicitly supplies different values, 1000 and 5.",
+   "key_facts": [
+    "GZipMiddleware defaults to minimum_size=500 bytes.",
+    "GZipMiddleware defaults to compresslevel=9."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "GZipMiddleware",
+    "minimum_size",
+    "500",
+    "compresslevel",
+    "9",
+    "1000",
+    "5"
+   ],
+   "evidence_pages": [
+    "middleware/middleware.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "`minimum_size` — don't compress responses smaller than this many bytes (default `500`).",
+     "page": "middleware/middleware.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "`compresslevel` — 1 (fast, larger) to 9 (slow, smaller); default `9`.",
+     "page": "middleware/middleware.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "GZipMiddleware defaults to a minimum response size of **500 bytes** and compression level **9**.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 11,
+   "turn_type": "update",
+   "type": "multi",
+   "question": "We're moving from one machine to Kubernetes. Change our worker count from 3 to 1 per container. Should scaling now replicate containers or add a worker manager inside each container?",
+   "asks": [
+    "Updated worker count and scaling mechanism"
+   ],
+   "standalone_question": "For a FastAPI deployment moving from one machine to Kubernetes, change the worker count from 3 to 1 per container. Should scaling replicate containers or add a worker manager inside each container?",
+   "answer": "Use `1` server process per container and let Kubernetes replicate containers. Do not add an internal multi-worker manager; the cluster load balancer distributes traffic.",
+   "key_facts": [
+    "The project's updated worker count is 1 per container.",
+    "In Kubernetes, replicate containers with one Uvicorn process each instead of adding an internal worker manager."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "1",
+    "Kubernetes",
+    "Uvicorn",
+    "--workers"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0,
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "Change our worker count from 3 to 1 per container.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Our internal port is 8137 and our initial worker count is 3.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Don't add `--workers` — another process manager inside the container only adds complexity.",
+     "page": "deployment/docker.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "On **Kubernetes** and similar orchestrators you usually do **not** use workers; run one Uvicorn process per container and let the cluster replicate containers.",
+     "page": "deployment/deployment-concepts-and-servers.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Worker count per container",
+     "from": "3",
+     "to": "1"
+    },
+    {
+     "what": "Deployment topology",
+     "from": "one machine",
+     "to": "Kubernetes"
+    }
+   ],
+   "affects": [
+    13,
+    18
+   ],
+   "source_turn": null,
+   "recall_distance": 11,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Scale by adding container replicas in Kubernetes; keep one worker per container. This lets Kubernetes manage scheduling, health checks, and scaling.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 12,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I want to test a shared HTTP client created during application startup. What request.state attribute does the lifespan-state example expose, and how must I use TestClient for lifespan to execute?",
+   "asks": [
+    "Request-state attribute in the shared HTTP client example",
+    "TestClient usage required to execute lifespan"
+   ],
+   "standalone_question": "When testing a shared HTTP client created during FastAPI startup, what request.state attribute does the lifespan-state example expose, and how must TestClient be used for lifespan to execute?",
+   "answer": "The example exposes `request.state.http_client`. Use `TestClient` as a context manager, such as `with TestClient(app) as client:`, for lifespan to run.",
+   "key_facts": [
+    "The lifespan-state example exposes the shared client as request.state.http_client.",
+    "Lifespan executes in tests only when TestClient is used as a context manager."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "request.state.http_client",
+    "TestClient",
+    "with TestClient(app) as client:"
+   ],
+   "evidence_pages": [
+    "app-structure/lifespan-events.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "    response = await request.state.http_client.get(\"https://example.com\")",
+     "page": "app-structure/lifespan-events.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "In tests, lifespan runs only when you use `TestClient` as a context manager (`with TestClient(app) as client:`).",
+     "page": "app-structure/lifespan-events.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "The example exposes `request.state.http_client`. Use `TestClient` as a context manager (`with TestClient(app) as client:`) so the lifespan runs.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 13,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the revised deployment, which internal port, public prefix, and per-container worker count are current; should production auto-reload be enabled; and must migrations run once before the replicated application processes start?",
+   "asks": [
+    "Current internal port, public prefix, and per-container worker count",
+    "Whether production auto-reload should be enabled",
+    "Whether migrations must run once before replicated processes start"
+   ],
+   "standalone_question": "For the project's revised FastAPI deployment, which internal port, public prefix, and per-container worker count are current; should production auto-reload be enabled; and must migrations run once before replicated application processes start?",
+   "answer": "The current values are port `8137`, prefix `/edge/r9`, and `1` worker per container. Keep production auto-reload disabled. Run migrations in a single process before starting the replicated application processes, rather than once in each process.",
+   "key_facts": [
+    "The current project configuration is internal port 8137, public prefix /edge/r9, and 1 worker per container.",
+    "Production auto-reload should not be enabled.",
+    "Migrations must run in a single process before replicated application processes start."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "8137",
+    "/edge/r9",
+    "1",
+    "--reload"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0,
+    4,
+    11
+   ],
+   "evidence": [
+    {
+     "quote": "Our internal port is 8137 and our initial worker count is 3.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Change our public prefix from /edge/r7 to /edge/r9; the proxy still strips it.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Change our worker count from 3 to 1 per container.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "**Don't use `--reload` in production** — it uses much more resources and is less stable; it's a development convenience.",
+     "page": "deployment/deployment-concepts-and-servers.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "**Previous steps** (like migrations) must run in a **single** process even if you then start many workers, otherwise parallel migrations can conflict.",
+     "page": "deployment/deployment-concepts-and-servers.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 13,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 14,
+   "turn_type": "same_doc_new_topic",
+   "type": "multi",
+   "question": "For local deployment configuration, what exact model_config expression enables the example dotenv file, and which wins if the same setting also exists in the real environment?",
+   "asks": [
+    "Example model_config expression for dotenv",
+    "Precedence between real environment and dotenv"
+   ],
+   "standalone_question": "For FastAPI settings used in local deployment configuration, what exact model_config expression enables the example dotenv file, and which wins if the same setting also exists in the real environment?",
+   "answer": "Use `model_config = SettingsConfigDict(env_file=\".env\")`. Real environment variables take precedence over values in the `.env` file.",
+   "key_facts": [
+    "The example uses model_config = SettingsConfigDict(env_file=\".env\").",
+    "Real environment variables take precedence over the .env file."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "model_config",
+    "SettingsConfigDict",
+    "env_file",
+    ".env"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "    model_config = SettingsConfigDict(env_file=\".env\")",
+     "page": "app-structure/settings.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Real environment variables still take precedence over the `.env` file.",
+     "page": "app-structure/settings.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 5,
+   "recall_distance": 9,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "`model_config = SettingsConfigDict(env_file=\".env\")`. If a setting appears in both, the real environment variable wins.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 15,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "As an alternative to operating the cluster ourselves, what single command deploys to FastAPI Cloud, and what exact example public URL does that workflow print?",
+   "asks": [
+    "FastAPI Cloud deployment command",
+    "Example public deployment URL"
+   ],
+   "standalone_question": "As an alternative to operating a FastAPI cluster ourselves, what single command deploys to FastAPI Cloud, and what exact example public URL does that workflow print?",
+   "answer": "Run `fastapi deploy`. The example public URL is `https://myapp.fastapicloud.dev`.",
+   "key_facts": [
+    "The FastAPI Cloud deployment command is fastapi deploy.",
+    "The example public deployment URL is https://myapp.fastapicloud.dev."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "fastapi deploy",
+    "https://myapp.fastapicloud.dev"
+   ],
+   "evidence_pages": [
+    "deployment/https-and-cloud.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "fastapi deploy",
+     "page": "deployment/https-and-cloud.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "The CLI (included via `fastapi-cli[standard]` in `fastapi[standard]`) detects your app, opens the browser to log in if needed, builds and deploys it, and prints a URL such as `https://myapp.fastapicloud.dev`.",
+     "page": "deployment/https-and-cloud.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "Run `fastapi deploy`. The example public URL is `https://my-app.fastapicloud.dev`.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 16,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "For our stripping proxy, what is the current public prefix, and where does its automatic entry appear in the OpenAPI servers list?",
+   "asks": [
+    "Current public prefix",
+    "Position of the automatic OpenAPI server entry"
+   ],
+   "standalone_question": "For the project's FastAPI service behind a prefix-stripping proxy, what is the current public prefix, and where does its automatic entry appear in the OpenAPI servers list?",
+   "answer": "The current prefix is `/edge/r9`. When a request has that non-empty root_path, the schema endpoint inserts `{\"url\": \"/edge/r9\"}` at the start of `servers`, unless an identical URL is already present.",
+   "key_facts": [
+    "The current public prefix is /edge/r9.",
+    "A non-empty root_path is inserted at the start of OpenAPI servers unless an identical URL is already present."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/edge/r9",
+    "root_path",
+    "servers"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    4
+   ],
+   "evidence": [
+    {
+     "quote": "Change our public prefix from /edge/r7 to /edge/r9; the proxy still strips it.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "When a request arrives with a non-empty `root_path`, the `/openapi.json` endpoint inserts `{\"url\": root_path}` at the start of the `servers` list (unless an identical URL is already there).",
+     "page": "app-structure/sub-applications-proxy-and-wsgi.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 12,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 17,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "Which admin email did we choose for deployment rather than testing, and what happens if the required setting has no default and I omit it when constructing Settings?",
+   "asks": [
+    "Chosen deployment admin email",
+    "Behavior when a required setting is omitted"
+   ],
+   "standalone_question": "For the project's typed FastAPI configuration, which admin email was chosen for deployment rather than testing, and what happens if a required setting has no default and is omitted when constructing Settings?",
+   "answer": "The deployment email is `release-otter@ops.example.org`, not the testing override. If the required `admin_email` has neither a supplied value nor an environment value, `Settings()` raises a validation error.",
+   "key_facts": [
+    "The chosen deployment admin email is release-otter@ops.example.org.",
+    "Settings() raises a validation error when a required field without a default is not set."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "release-otter@ops.example.org",
+    "admin_email",
+    "Settings()"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "Our deployment admin email is release-otter@ops.example.org.",
+     "user_turn": 5,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Defaults apply when the variable is missing; fields without defaults (`admin_email`) are **required** — `Settings()` raises a validation error if they are not set.",
+     "page": "app-structure/settings.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 12,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 18,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For our current container deployment, what worker count per container are we using, what public prefix are we advertising, and which constructor option would disable only the automatic prefix entry in the OpenAPI servers list?",
+   "asks": [
+    "Current worker count per container",
+    "Current advertised public prefix",
+    "Constructor option disabling the automatic prefix server entry"
+   ],
+   "standalone_question": "For the project's current FastAPI container deployment, what worker count per container is selected, what public prefix is advertised, and which constructor option would disable only the automatic prefix entry in the OpenAPI servers list?",
+   "answer": "We use `1` worker per container and advertise `/edge/r9`. Set `root_path_in_servers=False` to disable the automatic root_path server entry without removing the root_path configuration.",
+   "key_facts": [
+    "The current worker count is 1 per container.",
+    "The current advertised public prefix is /edge/r9.",
+    "root_path_in_servers=False disables the automatic root_path entry in OpenAPI servers."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "1",
+    "/edge/r9",
+    "root_path_in_servers=False",
+    "root_path",
+    "servers"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    11,
+    4
+   ],
+   "evidence": [
+    {
+     "quote": "Change our worker count from 3 to 1 per container.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Change our public prefix from /edge/r7 to /edge/r9; the proxy still strips it.",
+     "user_turn": 4,
+     "fact_idx": 1
+    },
+    {
+     "quote": "To stop the automatic `root_path` server, pass `root_path_in_servers=False` (`tutorial004_py310.py`).",
+     "page": "app-structure/sub-applications-proxy-and-wsgi.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 14,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  }
+ ],
+ "edits": [
+  {
+   "date": "2026-11-28",
+   "by": "검수 2차 결정 반영 (손 수정)",
+   "items": [
+    "턴 3: key_fact [2] 'appropriate' 를 원문 표현으로 좁힘"
+   ]
+  },
+  {
+   "date": "2026-11-28",
+   "by": "검수 결과 반영 (손 수정)",
+   "items": [
+    "턴 4: setup [0] 분리: 'The new root-path option is --root-path /edge/r9.' → setup \"The project's public prefix is now /edge/r9.\", 새 doc 항목 [2] 'The stripped prefix is passed to the server with --root-path.'"
+   ]
+  }
+ ],
+ "review_summary": {
+  "reviewer": "akingdbets",
+  "date": "2026-11-28",
+  "targets": 4,
+  "verdicts": {
+   "OK": 4,
+   "수정 필요": 0,
+   "제외": 0
+  }
+ }
+}

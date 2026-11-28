@@ -1,0 +1,2532 @@
+{
+ "schema_version": 2,
+ "scenario_id": "v2_20_client_contract",
+ "title": "Keeping a Generated SDK Contract Stable",
+ "topic": "클라이언트 생성과 API 계약",
+ "status": "final",
+ "bundle": [
+  "openapi/generating-clients.md",
+  "openapi/extending-openapi.md",
+  "models/response-model.md",
+  "app-structure/path-operation-configuration.md",
+  "responses/status-codes.md",
+  "models/dataclasses-and-pydantic-versions.md",
+  "request/extra-data-types-and-examples.md",
+  "app-structure/bigger-applications.md"
+ ],
+ "generation": {
+  "model": "gpt-6.1-sol",
+  "served_model": "gpt-6.1-sol",
+  "prompt": [
+   "mt_scenario_gen_v3",
+   "7e637f26a462"
+  ],
+  "settings": {
+   "model": "gpt-6.1-sol",
+   "temperature": null,
+   "temperature_requested": null,
+   "seed": 42,
+   "reasoning_effort": null,
+   "reasoning_effort_requested": null,
+   "max_tokens": 40000,
+   "max_tokens_param": "max_completion_tokens"
+  },
+  "run_id": "20261128-094017_v2_20_client_contract",
+  "attempts": 1,
+  "created_at": "2026-11-28T09:43:06"
+ },
+ "turns": [
+  {
+   "turn": 0,
+   "turn_type": "new",
+   "type": "code",
+   "question": "I'm building a typed frontend SDK for our inventory API. Our generated client directory is src/nebula-sdk. What Hey API command should I run against the running local example server?",
+   "asks": [
+    "Hey API generation command using our output directory"
+   ],
+   "standalone_question": "Our generated client directory is src/nebula-sdk. What Hey API command generates a typed frontend SDK against the running local example server?",
+   "answer": "Run:\n```bash\nnpx @hey-api/openapi-ts -i http://localhost:8000/openapi.json -o src/nebula-sdk\n```",
+   "key_facts": [
+    "Use npx @hey-api/openapi-ts with input http://localhost:8000/openapi.json.",
+    "Write the generated client to src/nebula-sdk."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    }
+   ],
+   "key_entities": [
+    "@hey-api/openapi-ts",
+    "http://localhost:8000/openapi.json",
+    "src/nebula-sdk"
+   ],
+   "evidence_pages": [
+    "openapi/generating-clients.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "npx @hey-api/openapi-ts -i http://localhost:8000/openapi.json -o src/client",
+     "page": "openapi/generating-clients.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Our generated client directory is src/nebula-sdk.",
+     "user_turn": 0,
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "`npx @hey-api/openapi-ts -i http://localhost:8000/openapi.json -o src/nebula-sdk`",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 1,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "Use RelicPublic as our public response model name. For the password-bearing input example, which field should that public model omit, and why is a separate model better than response_model_exclude for generated client types?",
+   "asks": [
+    "Public model name and omitted sensitive field",
+    "Separate model versus response_model_exclude for client schemas"
+   ],
+   "standalone_question": "Use RelicPublic as the public response model name. For the password-bearing input example, which field should that public model omit, and why is a separate model better than response_model_exclude for generated client types?",
+   "answer": "Define RelicPublic without password and use it as response_model. The example's output model drops password even when the returned value is the input model. Prefer a separate class because response_model_exclude still leaves the full model in OpenAPI, giving generated clients an inaccurate response shape.",
+   "key_facts": [
+    "The project's public response model is named RelicPublic.",
+    "The example's output model removes password from the returned input model.",
+    "response_model_exclude leaves the full model in OpenAPI; separate models document the actual response shape."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "RelicPublic",
+    "password",
+    "response_model",
+    "response_model_exclude"
+   ],
+   "evidence_pages": [
+    "models/response-model.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Use RelicPublic as our public response model name.",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "The returned `UserIn` is converted to `UserOut`; `password` is dropped.",
+     "page": "models/response-model.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "Prefer separate models over include/exclude: with include/exclude, the OpenAPI schema still shows the **full** model, while separate classes document exactly what is returned.",
+     "page": "models/response-model.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.6666666666666666,
+    "response": "`RelicPublic` should omit the `password` field. A separate response model documents the actual response shape in OpenAPI, so generated client types won’t incorrectly include `password`; `response_model_exclude` can hide it at runtime without removing it from the generated schema.",
+    "fact_results": [
+     true,
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 2,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "For sparse inventory responses, I'm considering response_model_exclude_unset=True. In the sample data, what does foo return, and does baz keep its explicitly supplied tax even when it equals the default?",
+   "asks": [
+    "Sparse response for foo",
+    "Explicit default-valued tax for baz"
+   ],
+   "standalone_question": "With response_model_exclude_unset=True, what does the sample item foo return, and does the sample item baz keep its explicitly supplied tax even when it equals the default?",
+   "answer": "foo returns {\"name\": \"Foo\", \"price\": 50.2}, omitting the unset default fields. Yes: baz keeps tax: 10.5 because it was explicitly supplied, even though it equals the default.",
+   "key_facts": [
+    "foo returns only name Foo and price 50.2 under response_model_exclude_unset=True.",
+    "baz's explicitly set tax of 10.5 is included even though it equals the default."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "response_model_exclude_unset",
+    "Foo",
+    "50.2",
+    "10.5"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "For `\"foo\": {\"name\": \"Foo\", \"price\": 50.2}` the response is `{\"name\": \"Foo\", \"price\": 50.2}` — no default `description`, `tax` or `tags`.",
+     "page": "models/response-model.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Values explicitly set, even if equal to the default (like `baz`'s `\"tax\": 10.5`), are included.",
+     "page": "models/response-model.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "`foo` returns `{\"name\": \"Foo\", \"price\": 50.2}`. Yes—`baz` keeps its explicitly supplied `tax`, even though it equals the default.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 3,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "Our public fetch operation ID is relics-fetch_relic. How should I pin that ID on a GET decorator, and will it take precedence over generate_unique_id_function?",
+   "asks": [
+    "Pin the chosen operation ID",
+    "Precedence over the ID generator"
+   ],
+   "standalone_question": "Our public fetch operation ID is relics-fetch_relic. How should I pin that ID on a GET decorator, and will it take precedence over generate_unique_id_function?",
+   "answer": "Set operation_id=\"relics-fetch_relic\" on the GET decorator. An explicit operation_id overrides generate_unique_id_function; keep the ID unique across operations.",
+   "key_facts": [
+    "The project's public fetch operation ID is relics-fetch_relic.",
+    "An explicit operation_id takes precedence over generate_unique_id_function and must remain unique."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "operation_id",
+    "relics-fetch_relic",
+    "generate_unique_id_function"
+   ],
+   "evidence_pages": [
+    "app-structure/path-operation-configuration.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Our public fetch operation ID is relics-fetch_relic.",
+     "user_turn": 3,
+     "fact_idx": 0
+    },
+    {
+     "quote": "An explicit `operation_id` always wins over the function.",
+     "page": "app-structure/path-operation-configuration.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "Set it explicitly with `operation_id` (you must keep it unique):",
+     "page": "app-structure/path-operation-configuration.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "review": {
+    "target": []
+   },
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.5,
+    "response": "```python\n@app.get(\"/relics\", operation_id=\"relics-fetch_relic\")\n```\n\nYes. The explicit `operation_id` takes precedence over `generate_unique_id_function`.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-103340"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-103340"
+   }
+  },
+  {
+   "turn": 4,
+   "turn_type": "update",
+   "type": "code",
+   "question": "The frontend package moved: change our generated client directory from src/nebula-sdk to packages/aster-client. What is the revised Hey API command against the same local server?",
+   "asks": [
+    "Revised generation command after the directory change"
+   ],
+   "standalone_question": "Change the generated client directory from src/nebula-sdk to packages/aster-client. What is the revised Hey API command against the previously used local server?",
+   "answer": "```bash\nnpx @hey-api/openapi-ts -i http://localhost:8000/openapi.json -o packages/aster-client\n```",
+   "key_facts": [
+    "The generated client directory is now packages/aster-client.",
+    "The command still uses @hey-api/openapi-ts with http://localhost:8000/openapi.json as input."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "packages/aster-client",
+    "@hey-api/openapi-ts",
+    "http://localhost:8000/openapi.json"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "The frontend package moved: change our generated client directory from src/nebula-sdk to packages/aster-client.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "npx @hey-api/openapi-ts -i http://localhost:8000/openapi.json -o src/client",
+     "page": "openapi/generating-clients.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Generated client output directory",
+     "from": "src/nebula-sdk",
+     "to": "packages/aster-client"
+    }
+   ],
+   "affects": [
+    9,
+    18
+   ],
+   "source_turn": null,
+   "recall_distance": 4,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 5,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm implementing inventory upserts. In the sample upsert, which statuses do existing and new items return, and does the directly returned JSONResponse still get response-model validation and filtering?",
+   "asks": [
+    "Existing and new item statuses",
+    "Validation and filtering of a directly returned JSONResponse"
+   ],
+   "standalone_question": "In the sample inventory upsert, which statuses do existing and new items return, and does the directly returned JSONResponse still get response-model validation and filtering?",
+   "answer": "Existing items return 200; new items return 201. A directly returned JSONResponse bypasses response-model validation and filtering, so its content must be serialized appropriately by your code.",
+   "key_facts": [
+    "The sample upsert returns 200 for existing items and 201 for new items.",
+    "A directly returned response is not validated or filtered by a response model."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "200",
+    "201",
+    "JSONResponse"
+   ],
+   "evidence_pages": [
+    "responses/status-codes.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Existing items → `200` with the item; new items → `201`.",
+     "page": "responses/status-codes.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "A directly returned response isn't validated or filtered by any response model — serialize the content yourself (here it's already a plain dict).",
+     "page": "responses/status-codes.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Existing items return **200 OK**; new items return **201 Created**. A directly returned `JSONResponse` bypasses response-model validation and filtering.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 6,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "Instead, how can I change the creation status per request while retaining response-model processing, and what exact text does the get-or-create task example store for a new task?",
+   "asks": [
+    "Dynamic status while retaining response-model processing",
+    "New task text in the example"
+   ],
+   "standalone_question": "How can an endpoint change its creation status per request while retaining response-model processing, and what exact text does the get-or-create task example store for a new task?",
+   "answer": "Inject a Response parameter, set response.status_code = status.HTTP_201_CREATED on creation, and return the ordinary value. FastAPI still serializes it through the response model. The example stores \"This didn't exist before\" for a new task.",
+   "key_facts": [
+    "Set the injected Response's status_code and return a normal value to retain response-model serialization.",
+    "The new-task example stores the exact string This didn't exist before."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "Response",
+    "response.status_code",
+    "status.HTTP_201_CREATED",
+    "This didn't exist before"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "To keep using your response model *and* change the status dynamically, declare a `Response` parameter and set `response.status_code`",
+     "page": "responses/status-codes.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Your return value is still serialized through the response model.",
+     "page": "responses/status-codes.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "        tasks[task_id] = \"This didn't exist before\"",
+     "page": "responses/status-codes.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Inject FastAPI’s `Response`, set `response.status_code` conditionally, and return the data normally so `response_model` processing still applies. The new task stores: `\"This didn't exist before\"`.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 7,
+   "turn_type": "same_doc_new_topic",
+   "type": "fact",
+   "question": "For organizing the SDK, what two service names does the items/users tagging example produce?",
+   "asks": [
+    "Service names produced by the tagging example"
+   ],
+   "standalone_question": "What two generated SDK service names does the items/users tagging example produce?",
+   "answer": "ItemsService and UsersService.",
+   "key_facts": [
+    "The items/users tagging example produces ItemsService and UsersService."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "ItemsService",
+    "UsersService"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "The client then has e.g. `ItemsService` and `UsersService`.",
+     "page": "openapi/generating-clients.md",
+     "fact_idx": 0
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 0,
+   "recall_distance": 7,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "ItemsService and UsersService.",
+    "fact_results": [
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 8,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I want selectable request examples for frontend developers. Which Body option gives Swagger UI a named-example dropdown, and what price values distinguish the converted and invalid examples?",
+   "asks": [
+    "Option for a named-example dropdown",
+    "Converted and invalid example price values"
+   ],
+   "standalone_question": "Which Body option gives Swagger UI a named request-example dropdown, and what price values distinguish the converted and invalid examples?",
+   "answer": "Use Body(openapi_examples={...}); those examples live in the operation's media-type examples rather than in JSON Schema. The converted example uses the string \"35.4\", while the invalid example uses \"thirty five point four\".",
+   "key_facts": [
+    "Use openapi_examples for selectable named examples; they are operation media-type examples, not JSON Schema examples.",
+    "The converted price is \"35.4\" and the invalid price is \"thirty five point four\"."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "Body",
+    "openapi_examples",
+    "35.4",
+    "thirty five point four"
+   ],
+   "evidence_pages": [
+    "request/extra-data-types-and-examples.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "To show **multiple named examples** in Swagger UI, use `openapi_examples` on `Path()`, `Query()`, `Header()`, `Cookie()`, `Body()`, `Form()` or `File()`",
+     "page": "request/extra-data-types-and-examples.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "These go into the OpenAPI operation's media-type `examples`, not the JSON Schema, and Swagger UI shows them in a dropdown.",
+     "page": "request/extra-data-types-and-examples.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "                        \"price\": \"35.4\",",
+     "page": "request/extra-data-types-and-examples.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "                        \"price\": \"thirty five point four\",",
+     "page": "request/extra-data-types-and-examples.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "Use `Body(openapi_examples=...)` for Swagger UI’s named example dropdown. The converted example uses `\"price\": \"35.4\"` (a numeric string); the invalid one uses a nonnumeric string, such as `\"not a float\"`.",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 9,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "Before I wire up generation in CI, which output directory are we using now, and which OpenAPI version must the generator support?",
+   "asks": [
+    "Current generated client directory",
+    "Required OpenAPI version support"
+   ],
+   "standalone_question": "For the project's client-generation CI job, which generated client output directory is currently selected, and which OpenAPI version must the generator support for FastAPI?",
+   "answer": "Use packages/aster-client. The generator must support OpenAPI 3.1.",
+   "key_facts": [
+    "The current output directory is packages/aster-client, not the original directory.",
+    "The generator must support OpenAPI 3.1."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "packages/aster-client",
+    "3.1"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0,
+    4
+   ],
+   "evidence": [
+    {
+     "quote": "The frontend package moved: change our generated client directory from src/nebula-sdk to packages/aster-client.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "FastAPI emits **OpenAPI 3.1**, so the tool must support 3.1.",
+     "page": "openapi/generating-clients.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 9,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 10,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm adding branding through a custom OpenAPI function. What title and version does the customization example pass to get_openapi, and where should the generated schema be cached?",
+   "asks": [
+    "Customization example title and version",
+    "Schema cache location"
+   ],
+   "standalone_question": "What title and version does the custom OpenAPI function example pass to get_openapi, and where should it cache the generated schema?",
+   "answer": "The example passes title=\"Custom title\" and version=\"2.5.0\". Cache the result in app.openapi_schema and return that cached schema on subsequent calls.",
+   "key_facts": [
+    "The customization example uses title Custom title and version 2.5.0.",
+    "Cache the generated schema in app.openapi_schema to avoid regenerating it on every request."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "Custom title",
+    "2.5.0",
+    "app.openapi_schema"
+   ],
+   "evidence_pages": [
+    "openapi/extending-openapi.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "        title=\"Custom title\",",
+     "page": "openapi/extending-openapi.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "        version=\"2.5.0\",",
+     "page": "openapi/extending-openapi.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Caching in `app.openapi_schema` avoids regenerating on every request.",
+     "page": "openapi/extending-openapi.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "It passes `title=\"Custom title\"` and `version=\"2.5.0\"`, then caches the schema in `app.openapi_schema`.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 11,
+   "turn_type": "update",
+   "type": "multi",
+   "question": "Rename our public fetch operation ID from relics-fetch_relic to relics-load_relic. What decorator setting should I use now, and does the custom ID generator override it?",
+   "asks": [
+    "Updated explicit operation ID",
+    "Precedence after the rename"
+   ],
+   "standalone_question": "Rename the public fetch operation ID from relics-fetch_relic to relics-load_relic. What decorator setting should be used now, and does the custom ID generator override it?",
+   "answer": "Use operation_id=\"relics-load_relic\". No: the explicit operation_id still takes precedence over generate_unique_id_function.",
+   "key_facts": [
+    "The project's public fetch operation ID is now relics-load_relic.",
+    "The custom ID generator does not override an explicit operation_id."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "operation_id",
+    "relics-load_relic",
+    "generate_unique_id_function"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    3
+   ],
+   "evidence": [
+    {
+     "quote": "Rename our public fetch operation ID from relics-fetch_relic to relics-load_relic.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "An explicit `operation_id` always wins over the function.",
+     "page": "app-structure/path-operation-configuration.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Public fetch operation ID",
+     "from": "relics-fetch_relic",
+     "to": "relics-load_relic"
+    }
+   ],
+   "affects": [
+    13,
+    17
+   ],
+   "source_turn": null,
+   "recall_distance": 8,
+   "review": {
+    "target": []
+   },
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Set `operation_id=\"relics-load_relic\"` on the route decorator. An explicit `operation_id` takes precedence over the custom ID generator.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-103340"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-103340"
+   }
+  },
+  {
+   "turn": 12,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "After moving to Pydantic v2, the Item example seems to generate two client types. Why is description optional on input but required on output, and what app setting restores one schema for a client we cannot regenerate yet?",
+   "asks": [
+    "Reason for different input/output requiredness",
+    "Setting to restore one schema"
+   ],
+   "standalone_question": "For the Pydantic v2 Item example, why is description optional on input but required on output, and what app setting restores one schema for an existing client that cannot yet be regenerated?",
+   "answer": "description has a default, so input may omit it. Output includes it, possibly as null, so the output schema marks it required; the schemas are Item-Input and Item-Output. Use FastAPI(separate_input_output_schemas=False) to get one Item schema with description not required.",
+   "key_facts": [
+    "The example splits into Item-Input and Item-Output because description may be omitted on input but is present, possibly null, on output.",
+    "FastAPI(separate_input_output_schemas=False) restores one Item schema with description not required."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "description",
+    "Item-Input",
+    "Item-Output",
+    "separate_input_output_schemas=False",
+    "Item"
+   ],
+   "evidence_pages": [
+    "models/dataclasses-and-pydantic-versions.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "- As **input**, `description` is **not required** (it has a default).",
+     "page": "models/dataclasses-and-pydantic-versions.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "- As **output**, `description` is **always present** in the JSON (possibly `null`), so it's marked **required**.",
+     "page": "models/dataclasses-and-pydantic-versions.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "OpenAPI therefore contains `Item-Input` and `Item-Output`.",
+     "page": "models/dataclasses-and-pydantic-versions.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "app = FastAPI(separate_input_output_schemas=False)",
+     "page": "models/dataclasses-and-pydantic-versions.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "Now there's just `Item`, with `description` not required, as in Pydantic v1-era output.",
+     "page": "models/dataclasses-and-pydantic-versions.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "`description` has a default of `None`, so callers may omit it on input. Once parsed, the model includes the field (possibly as `null`), so the output schema marks it required. To keep one schema for an older client, set `FastAPI(separate_input_output_schemas=False)`.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 13,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the contract review: what is our current public fetch operation ID, does directly returning a Response apply response-model filtering, and what warning during schema generation means operation IDs need fixing?",
+   "asks": [
+    "Current public fetch operation ID",
+    "Filtering of a directly returned Response",
+    "Warning indicating duplicate operation IDs"
+   ],
+   "standalone_question": "For the project's API contract review, what is its currently selected public fetch operation ID, does directly returning a Response apply response-model filtering, and what schema-generation warning indicates operation IDs need fixing?",
+   "answer": "1. The current public fetch operation ID is relics-load_relic.\n2. No. A directly returned Response is sent as-is without response-model validation or filtering.\n3. FastAPI warns with `Duplicate Operation ID ... for function ...`; fix duplicate IDs for clean client generation.",
+   "key_facts": [
+    "The current public fetch operation ID is relics-load_relic.",
+    "A directly returned Response bypasses response-model validation and filtering.",
+    "The Duplicate Operation ID ... for function ... warning indicates duplicate IDs that should be fixed for client generation."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "relics-load_relic",
+    "Response",
+    "Duplicate Operation ID ... for function ..."
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    11,
+    1,
+    10
+   ],
+   "evidence": [
+    {
+     "quote": "Rename our public fetch operation ID from relics-fetch_relic to relics-load_relic.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Any returned `Response` instance is sent as-is, without validation or filtering.",
+     "page": "models/response-model.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "While generating, FastAPI warns about duplicate operation IDs (`Duplicate Operation ID ... for function ...`) — fix those for clean client generation.",
+     "page": "openapi/extending-openapi.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 12,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 14,
+   "turn_type": "same_doc_new_topic",
+   "type": "fact",
+   "question": "I want endpoint docstrings to contain internal Sphinx notes without exposing those notes in OpenAPI. What delimiter should I insert, and which side is retained?",
+   "asks": [
+    "Docstring delimiter and retained portion"
+   ],
+   "standalone_question": "What delimiter keeps internal Sphinx notes in endpoint docstrings out of OpenAPI, and which portion of the docstring is retained?",
+   "answer": "Insert a form feed, \\f, before the internal notes. FastAPI keeps only the text before the first \\f in the OpenAPI description.",
+   "key_facts": [
+    "A form feed \\f truncates the OpenAPI docstring description at its first occurrence, retaining only the preceding text."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "\\f"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    3
+   ],
+   "evidence": [
+    {
+     "quote": "FastAPI keeps only the text before the first `\\f` (`route.description.split(\"\\f\")[0]` in `fastapi/routing.py`):",
+     "page": "app-structure/path-operation-configuration.md",
+     "fact_idx": 0
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 3,
+   "recall_distance": 11,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Use a form-feed character (`\\f`) as the delimiter; the portion before it is retained in OpenAPI.",
+    "fact_results": [
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "\\f — the portion before it.",
+    "fact_results": [
+     true
+    ],
+    "judge_skipped": null,
+    "not_found": false,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "flags": [
+     "grounded_memory"
+    ],
+    "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
+    "target": [
+     "c: grounded 에서 기억으로 답함 (정확도 1.00)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 15,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm splitting the backend into routers and checking the shared dependency examples. What exact token does get_token_header accept, and what status and detail does it reject a wrong token with?",
+   "asks": [
+    "Accepted header token",
+    "Wrong-token rejection status and detail"
+   ],
+   "standalone_question": "In the shared router dependency examples, what exact token does get_token_header accept, and what status and detail does it use to reject a wrong token?",
+   "answer": "get_token_header accepts fake-super-secret-token. Otherwise it raises HTTPException with status_code=400 and detail=\"X-Token header invalid\".",
+   "key_facts": [
+    "get_token_header accepts fake-super-secret-token.",
+    "A wrong header token raises status 400 with detail X-Token header invalid."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "get_token_header",
+    "fake-super-secret-token",
+    "400",
+    "X-Token header invalid"
+   ],
+   "evidence_pages": [
+    "app-structure/bigger-applications.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "    if x_token != \"fake-super-secret-token\":",
+     "page": "app-structure/bigger-applications.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "        raise HTTPException(status_code=400, detail=\"X-Token header invalid\")",
+     "page": "app-structure/bigger-applications.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "It accepts `fake-super-secret-token`. A wrong token gets **400** with detail **\"X-Token header invalid\"**.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 16,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "I'm finishing the public inventory response. Which public model name did we choose, and why shouldn't I replace that separate model with response_model_exclude if the generated client must describe the actual response?",
+   "asks": [
+    "Chosen public model name",
+    "Schema consequence of replacing it with response_model_exclude"
+   ],
+   "standalone_question": "Which public response model name did the project choose, and why should it retain a separate model rather than use response_model_exclude when the generated client must describe the actual response?",
+   "answer": "We chose RelicPublic. Keep the separate model: response_model_exclude changes the serialized fields but still exposes the full model schema in OpenAPI; a separate class documents the actual response fields.",
+   "key_facts": [
+    "The chosen public response model name is RelicPublic.",
+    "response_model_exclude leaves the full model in OpenAPI, whereas a separate class documents the actual returned shape."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "RelicPublic",
+    "response_model_exclude"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "Use RelicPublic as our public response model name.",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Prefer separate models over include/exclude: with include/exclude, the OpenAPI schema still shows the **full** model, while separate classes document exactly what is returned.",
+     "page": "models/response-model.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 15,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "The project chose **`UserPublic`**. A separate model keeps the OpenAPI schema—and therefore generated clients—accurate; `response_model_exclude` can hide fields at runtime while still documenting them in the schema.",
+    "fact_results": [
+     false,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 17,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "For the renamed public fetch method, what exact operation_id setting are we using now, and can generate_unique_id_function replace it?",
+   "asks": [
+    "Current explicit operation_id setting",
+    "Whether the generator can override it"
+   ],
+   "standalone_question": "For the project's renamed public fetch operation, what exact operation_id setting is currently selected, and can generate_unique_id_function replace that explicit setting?",
+   "answer": "Use operation_id=\"relics-load_relic\". generate_unique_id_function cannot replace it because an explicit operation_id always takes precedence.",
+   "key_facts": [
+    "The current explicit setting is operation_id=\"relics-load_relic\".",
+    "An explicit operation_id wins over generate_unique_id_function."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "operation_id",
+    "relics-load_relic",
+    "generate_unique_id_function"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    11
+   ],
+   "evidence": [
+    {
+     "quote": "Rename our public fetch operation ID from relics-fetch_relic to relics-load_relic.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "An explicit `operation_id` always wins over the function.",
+     "page": "app-structure/path-operation-configuration.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 6,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
+   }
+  },
+  {
+   "turn": 18,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "For the frontend handoff, which client output directory are we using now, which app setting restores a single schema for the client we cannot regenerate, and which two service names came from the items/users tagging example?",
+   "asks": [
+    "Current client output directory",
+    "App setting for a single schema",
+    "Service names from the tagging example"
+   ],
+   "standalone_question": "For this project's frontend handoff, what is its currently selected client output directory, which FastAPI app setting restores a single schema for an existing client that cannot be regenerated, and which two service names does the items/users tagging example produce?",
+   "answer": "1. Output directory: packages/aster-client.\n2. App setting: FastAPI(separate_input_output_schemas=False).\n3. Example services: ItemsService and UsersService.",
+   "key_facts": [
+    "The current generated client output directory is packages/aster-client.",
+    "FastAPI(separate_input_output_schemas=False) disables separate input/output schemas.",
+    "The tagging example produces ItemsService and UsersService."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "packages/aster-client",
+    "separate_input_output_schemas=False",
+    "ItemsService",
+    "UsersService"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    4,
+    12,
+    7
+   ],
+   "evidence": [
+    {
+     "quote": "The frontend package moved: change our generated client directory from src/nebula-sdk to packages/aster-client.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "app = FastAPI(separate_input_output_schemas=False)",
+     "page": "models/dataclasses-and-pydantic-versions.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "The client then has e.g. `ItemsService` and `UsersService`.",
+     "page": "openapi/generating-clients.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 14,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.6666666666666666,
+    "accuracy": 0.6666666666666666,
+    "response": "The client output directory is `frontend/src/client`. Set `separate_input_output_schemas=False` to restore a single schema. The tags produce `ItemsService` and `UsersService`.",
+    "fact_results": [
+     false,
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "c: 턴 7 의존은 간접 채점 (턴 7 가 인용한 페이지만 같음)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  }
+ ],
+ "edits": [
+  {
+   "date": "2026-11-28",
+   "by": "검수 결과 반영 (손 수정)",
+   "items": [
+    "턴 3: setup [0] 분리: 'Pin the project\\'s ID with operation_id=\"relics-fetch_relic\".' → setup \"The project's public fetch operation ID is relics-fetch_relic.\", 문서 부분은 기존 doc 항목 [1] 이 이미 다룸",
+    "턴 11: setup [0] 분리: 'The public fetch operation now uses operation_id=\"relics-load_relic\".' → setup \"The project's public fetch operation ID is now relics-load_relic.\", 문서 부분은 기존 doc 항목 [1] 이 이미 다룸"
+   ]
+  }
+ ],
+ "review_summary": {
+  "reviewer": "akingdbets",
+  "date": "2026-11-28",
+  "targets": 4,
+  "verdicts": {
+   "OK": 4,
+   "수정 필요": 0,
+   "제외": 0
+  }
+ }
+}

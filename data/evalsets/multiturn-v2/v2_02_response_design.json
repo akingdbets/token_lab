@@ -1,0 +1,2874 @@
+{
+ "schema_version": 2,
+ "scenario_id": "v2_02_response_design",
+ "title": "Artifact API Response Contracts",
+ "topic": "응답 상태·형식 설계",
+ "status": "final",
+ "bundle": [
+  "responses/status-codes.md",
+  "responses/custom-responses.md",
+  "models/response-model.md",
+  "errors/handling-errors.md",
+  "app-structure/path-operation-configuration.md",
+  "openapi/extending-openapi.md",
+  "responses/response-headers-and-cookies.md",
+  "internals/request-handling-internals.md",
+  "models/extra-models-and-updates.md"
+ ],
+ "generation": {
+  "model": "gpt-6.1-sol",
+  "served_model": "gpt-6.1-sol",
+  "prompt": [
+   "mt_scenario_gen_v2",
+   "14ed07361f1b"
+  ],
+  "settings": {
+   "model": "gpt-6.1-sol",
+   "temperature": null,
+   "temperature_requested": null,
+   "seed": 42,
+   "reasoning_effort": null,
+   "reasoning_effort_requested": null,
+   "max_tokens": 40000,
+   "max_tokens_param": "max_completion_tokens"
+  },
+  "run_id": "20261128-004434_v2_02_response_design",
+  "attempts": 2,
+  "created_at": "2026-11-28T00:50:47"
+ },
+ "turns": [
+  {
+   "turn": 0,
+   "turn_type": "new",
+   "type": "code",
+   "question": "I'm building an artifact service. Our upsert route is /artifacts/{artifact_id}. Show the minimal decorator and function pattern for returning 200 on update and 201 on creation without losing response-model filtering; assume ArtifactOut and save_artifact already exist, and save_artifact returns (record, created).",
+   "asks": [
+    "Show a model-preserving dynamic-status upsert pattern"
+   ],
+   "standalone_question": "I'm building an artifact service. Our upsert route is /artifacts/{artifact_id}. Show the minimal decorator and function pattern for returning 200 on update and 201 on creation without losing response-model filtering; assume ArtifactOut and save_artifact already exist, and save_artifact returns (record, created).",
+   "answer": "@app.put(\"/artifacts/{artifact_id}\", status_code=200, response_model=ArtifactOut)\ndef upsert_artifact(artifact_id: str, response: Response):\n    record, created = save_artifact(artifact_id)\n    if created:\n        response.status_code = status.HTTP_201_CREATED\n    return record\n\nImport Response and status from fastapi. Setting the injected response's status keeps normal response-model serialization.",
+   "key_facts": [
+    "Set the injected Response.status_code to 201 on creation and return data normally to preserve response-model serialization.",
+    "The project's upsert route is /artifacts/{artifact_id}."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/artifacts/{artifact_id}",
+    "Response",
+    "response.status_code",
+    "status.HTTP_201_CREATED",
+    "response_model"
+   ],
+   "evidence_pages": [
+    "responses/status-codes.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "Your return value is still serialized through the response model.",
+     "page": "responses/status-codes.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "        response.status_code = status.HTTP_201_CREATED",
+     "page": "responses/status-codes.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Our upsert route is /artifacts/{artifact_id}.",
+     "user_turn": 0,
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\n@app.put(\"/artifacts/{artifact_id}\", response_model=ArtifactOut)\ndef upsert_artifact(artifact_id: str, response: Response):\n    record, created = save_artifact(artifact_id)\n    response.status_code = 201 if created else 200\n    return record\n```\n\nSetting the injected `Response` status preserves `response_model` filtering.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)",
+    "target": []
+   }
+  },
+  {
+   "turn": 1,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For our artifact responses, the custom header is X-Forge-Stamp, the cookie is forge_ticket, and its lifetime is 1380 seconds. Capture those settings for later code. Separately, what cookie key and value does the simple injected-response example use?",
+   "asks": [
+    "Capture the project's response transport settings",
+    "Identify the sample cookie key and value"
+   ],
+   "standalone_question": "For our artifact responses, the custom header is X-Forge-Stamp, the cookie is forge_ticket, and its lifetime is 1380 seconds. Capture those settings for later code. Separately, what cookie key and value does the simple injected-response example use?",
+   "answer": "Project settings: header X-Forge-Stamp; cookie forge_ticket; max_age=1380 seconds. The example instead calls response.set_cookie(key=\"fakesession\", value=\"fake-cookie-session-value\").",
+   "key_facts": [
+    "The project uses X-Forge-Stamp and forge_ticket with a lifetime of 1380 seconds.",
+    "The injected-response example sets fakesession to fake-cookie-session-value."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "X-Forge-Stamp",
+    "forge_ticket",
+    "1380",
+    "fakesession",
+    "fake-cookie-session-value"
+   ],
+   "evidence_pages": [
+    "responses/response-headers-and-cookies.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "the custom header is X-Forge-Stamp, the cookie is forge_ticket, and its lifetime is 1380 seconds.",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "    response.set_cookie(key=\"fakesession\", value=\"fake-cookie-session-value\")",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)",
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 2,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "If I set those transport fields on an injected Response and return a database record, are they copied to the final response while filtering still runs? Would returning a JSONResponse instead retain that filtering?",
+   "asks": [
+    "Explain injected-response metadata propagation",
+    "Contrast direct-response filtering"
+   ],
+   "standalone_question": "If I set response headers and cookies on an injected Response and return a database record, are they copied to the final response while filtering still runs? Would returning a JSONResponse instead retain that filtering?",
+   "answer": "Yes: when you return data normally, FastAPI copies the temporary response's headers and cookies onto the final response and still applies response_model filtering. A directly returned JSONResponse skips that validation and filtering.",
+   "key_facts": [
+    "Metadata on the injected temporary Response is copied to the final response while response_model filtering remains active.",
+    "A directly returned response skips response_model validation and filtering."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "Response",
+    "JSONResponse",
+    "response_model"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1
+   ],
+   "evidence": [
+    {
+     "quote": "Internally, the injected response's raw headers are appended to the final response (`response.headers.raw.extend(solved_result.response.headers.raw)` in `fastapi/routing.py`).",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Remember: a directly returned response skips `response_model` validation/filtering — make sure the content is what you intend to send ([Custom Responses](custom-responses.md)).",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Yes. With FastAPI, returning a database record normally lets the response-model filtering run, and headers/cookies set on the injected `Response` are copied to the final response. Returning a `JSONResponse` directly bypasses that filtering.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)",
+    "target": []
+   }
+  },
+  {
+   "turn": 3,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "Two compatibility checks before I add export endpoints: in the legacy XML example, what is the root element and response media type? In the direct JSON example with a timestamp, what conversion happens before constructing the response?",
+   "asks": [
+    "Identify the XML example's root and media type",
+    "Explain the timestamp conversion in the direct JSON example"
+   ],
+   "standalone_question": "Two compatibility checks before I add export endpoints: in the legacy XML example, what is the root element and response media type? In the direct JSON example with a timestamp, what conversion happens before constructing the response?",
+   "answer": "The XML root is shampoo, and the response uses media_type=\"application/xml\". The JSON example first calls jsonable_encoder(item), converting its datetime timestamp into a string, and passes that JSON-compatible result to JSONResponse.",
+   "key_facts": [
+    "The legacy XML example has a shampoo root and uses application/xml.",
+    "The direct JSON example calls jsonable_encoder(item) to convert the datetime into a string before constructing JSONResponse."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "shampoo",
+    "application/xml",
+    "jsonable_encoder",
+    "datetime",
+    "JSONResponse"
+   ],
+   "evidence_pages": [
+    "responses/custom-responses.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "    <shampoo>",
+     "page": "responses/custom-responses.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    return Response(content=data, media_type=\"application/xml\")",
+     "page": "responses/custom-responses.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    json_compatible_item_data = jsonable_encoder(item)",
+     "page": "responses/custom-responses.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "Because nothing is converted for you, make sure the content is serializable — here `jsonable_encoder` turns the `datetime` into a string first.",
+     "page": "responses/custom-responses.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)",
+    "target": [
+     "c: 근거 인용이 짧음: fact 0 '    <shampoo>'"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 4,
+   "turn_type": "update",
+   "type": "code",
+   "question": "Change the cookie lifetime from 1380 to 2460 seconds; keep its name unchanged. Show the updated set_cookie call using ticket_value, on the response object that lets us keep output filtering.",
+   "asks": [
+    "Update the cookie call while preserving filtering"
+   ],
+   "standalone_question": "Change the project's cookie lifetime from 1380 to 2460 seconds; keep its previously chosen name unchanged. Show the updated set_cookie call using ticket_value, on the response object that lets us keep output filtering.",
+   "answer": "On the injected Response parameter:\n\nresponse.set_cookie(key=\"forge_ticket\", value=ticket_value, max_age=2460)\n\nReturn your data normally so response_model filtering still runs.",
+   "key_facts": [
+    "The cookie remains forge_ticket, but its lifetime is now 2460 seconds.",
+    "Setting the cookie on the injected Response and returning data normally preserves response-model filtering."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable",
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "forge_ticket",
+    "2460",
+    "ticket_value",
+    "max_age",
+    "Response"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1,
+    2
+   ],
+   "evidence": [
+    {
+     "quote": "Change the cookie lifetime from 1380 to 2460 seconds; keep its name unchanged.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "the cookie is forge_ticket",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Declare a parameter of type `Response`.",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "FastAPI injects a **temporary** response object; you set headers/cookies on it and return your data normally.",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Project cookie lifetime in seconds",
+     "from": 1380,
+     "to": 2460
+    }
+   ],
+   "affects": [
+    9,
+    13,
+    18,
+    19
+   ],
+   "source_turn": null,
+   "recall_distance": 3,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "```python\nresponse.set_cookie(key=\"ticket\", value=ticket_value, max_age=2460)\n```",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)",
+    "target": [
+     "c: 턴 2 의존은 간접 채점 (턴 2 가 인용한 페이지만 같음)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 5,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm testing sparse JSON responses. With response_model_exclude_unset=True, what exact JSON does the foo example produce, and does baz's explicitly supplied tax of 10.5 survive?",
+   "asks": [
+    "Give the sparse foo response",
+    "Explain explicitly supplied default-valued tax"
+   ],
+   "standalone_question": "I'm testing sparse JSON responses. With response_model_exclude_unset=True, what exact JSON does the foo example produce, and does baz's explicitly supplied tax of 10.5 survive?",
+   "answer": "foo produces {\"name\": \"Foo\", \"price\": 50.2}. Yes: baz's explicitly supplied \"tax\": 10.5 remains, even though it equals the default.",
+   "key_facts": [
+    "The foo response is {\"name\": \"Foo\", \"price\": 50.2}, without default description, tax, or tags.",
+    "exclude_unset retains explicitly set values even when they equal the default, including baz's tax of 10.5."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "foo",
+    "Foo",
+    "50.2",
+    "baz",
+    "10.5",
+    "response_model_exclude_unset"
+   ],
+   "evidence_pages": [
+    "models/response-model.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "For `\"foo\": {\"name\": \"Foo\", \"price\": 50.2}` the response is `{\"name\": \"Foo\", \"price\": 50.2}` — no default `description`, `tax` or `tags`.",
+     "page": "models/response-model.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Values explicitly set, even if equal to the default (like `baz`'s `\"tax\": 10.5`), are included.",
+     "page": "models/response-model.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "The `foo` response is `{\"name\":\"Foo\",\"price\":50.2}`. Yes—`baz`’s explicitly supplied `\"tax\":10.5` survives; `exclude_unset` omits only fields that weren’t supplied.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)",
+    "target": []
+   }
+  },
+  {
+   "turn": 6,
+   "turn_type": "followup",
+   "type": "multi",
+   "question": "For a public artifact view, would response_model_include or response_model_exclude also narrow the generated schema? What should I use if generated clients must see the exact public shape?",
+   "asks": [
+    "Explain include/exclude schema behavior",
+    "Recommend an exact public schema design"
+   ],
+   "standalone_question": "For a public artifact response, would response_model_include or response_model_exclude also narrow the generated schema? What should I use if generated clients must see the exact public shape?",
+   "answer": "No. Those options filter output, but OpenAPI still shows the full model. Use a separate public output model so the schema documents exactly the returned shape.",
+   "key_facts": [
+    "response_model_include and response_model_exclude do not narrow the OpenAPI schema.",
+    "Separate models document exactly what is returned and are preferred for distinct response shapes."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "response_model_include",
+    "response_model_exclude",
+    "OpenAPI"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5
+   ],
+   "evidence": [
+    {
+     "quote": "with include/exclude, the OpenAPI schema still shows the **full** model, while separate classes document exactly what is returned.",
+     "page": "models/response-model.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Prefer separate models over include/exclude:",
+     "page": "models/response-model.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "while separate classes document exactly what is returned.",
+     "page": "models/response-model.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 1,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "No. `response_model_include` and `response_model_exclude` filter the runtime response but don’t narrow the generated schema. Use a dedicated response model containing exactly the public fields and set it as `response_model`.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)",
+    "target": []
+   }
+  },
+  {
+   "turn": 7,
+   "turn_type": "same_doc_new_topic",
+   "type": "fact",
+   "question": "For a bodyless acknowledgment endpoint, which exact status-code set does FastAPI recognize as forbidding a response body?",
+   "asks": [
+    "List the body-forbidden status codes"
+   ],
+   "standalone_question": "For a bodyless acknowledgment endpoint, which exact status-code set does FastAPI recognize as forbidding a response body?",
+   "answer": "All status codes below 200, plus 204, 205, and 304.",
+   "key_facts": [
+    "FastAPI recognizes codes below 200 and codes 204, 205, and 304 as forbidding a response body."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "range",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "200",
+    "204",
+    "205",
+    "304"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0
+   ],
+   "evidence": [
+    {
+     "quote": "FastAPI knows which codes forbid a body (`is_body_allowed_for_status_code`: below 200, `204`, `205`, `304`).",
+     "page": "responses/status-codes.md",
+     "fact_idx": 0
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 0,
+   "recall_distance": 7,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "FastAPI treats all status codes below 200, plus 204 and 304, as forbidding a response body.",
+    "fact_results": [
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "{204, 304}",
+    "fact_results": [
+     false
+    ],
+    "judge_skipped": null,
+    "not_found": false,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)",
+    "target": []
+   }
+  },
+  {
+   "turn": 8,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm adding failure tests. What status and JSON message does the custom unicorn handler produce for yolo? Separately, if my returned artifact is missing a required output field, is that treated as a client validation error?",
+   "asks": [
+    "Give the custom unicorn error response",
+    "Classify invalid endpoint output"
+   ],
+   "standalone_question": "I'm adding failure tests. What status and JSON message does the custom unicorn handler produce for yolo? Separately, if my returned artifact is missing a required output field, is that treated as a client validation error?",
+   "answer": "For yolo, the handler returns 418 with {\"message\": \"Oops! yolo did something. There goes a rainbow...\"}. Invalid endpoint output is an application bug: it raises ResponseValidationError and, by default, the client gets 500 Internal Server Error, not a client-validation response.",
+   "key_facts": [
+    "The yolo unicorn response is 418 with the message 'Oops! yolo did something. There goes a rainbow...'.",
+    "Output that violates the response model raises ResponseValidationError and defaults to a 500 response."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "yolo",
+    "418",
+    "Oops!",
+    "There goes a rainbow...",
+    "ResponseValidationError",
+    "500 Internal Server Error"
+   ],
+   "evidence_pages": [
+    "errors/handling-errors.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "        status_code=418,",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "        content={\"message\": f\"Oops! {exc.name} did something. There goes a rainbow...\"},",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    if name == \"yolo\":",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "If your endpoint returns data that does not match its `response_model` / return type, FastAPI raises `ResponseValidationError`.",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "There's no default handler, so the client gets a **500 Internal Server Error** and the error is logged.",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "For `yolo`, the handler returns **418** with `{\"message\":\"Oops! yolo did something. There goes a rainbow...\"}`. A missing required field in the returned artifact is a **server-side response validation error**, not a client validation error.",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)",
+    "flags": [
+     "grounded_memory"
+    ],
+    "note": "실험 지시문 아래에서도 기억으로 답함 (제외하지 않고 표시 유지)",
+    "target": [
+     "c: grounded_memory 표시"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 9,
+   "turn_type": "recall",
+   "type": "code",
+   "question": "Can you recover our current header name, cookie name, and cookie lifetime in a short snippet using stamp_value and ticket_value? Keep the approach that protects the output model.",
+   "asks": [
+    "Recover current transport settings in a filtering-preserving snippet"
+   ],
+   "standalone_question": "Show a short snippet using the project's previously chosen current header name, cookie name, and cookie lifetime, with stamp_value and ticket_value. Keep the approach that preserves response-model filtering.",
+   "answer": "Use the injected Response parameter, then return data normally:\n\nresponse.headers[\"X-Forge-Stamp\"] = stamp_value\nresponse.set_cookie(key=\"forge_ticket\", value=ticket_value, max_age=2460)\n\nThis keeps response_model filtering active.",
+   "key_facts": [
+    "The current settings are X-Forge-Stamp, forge_ticket, and 2460 seconds.",
+    "Use the injected Response for metadata and return ordinary data to retain output-model filtering."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "X-Forge-Stamp",
+    "forge_ticket",
+    "2460",
+    "Response",
+    "stamp_value",
+    "ticket_value"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1,
+    2,
+    4
+   ],
+   "evidence": [
+    {
+     "quote": "the custom header is X-Forge-Stamp, the cookie is forge_ticket",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Change the cookie lifetime from 1380 to 2460 seconds; keep its name unchanged.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "FastAPI injects a **temporary** response object; you set headers/cookies on it and return your data normally.",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "Remember: a directly returned response skips `response_model` validation/filtering — make sure the content is what you intend to send ([Custom Responses](custom-responses.md)).",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 8,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)",
+    "target": [
+     "c: 턴 2 의존은 간접 채점 (턴 2 가 인용한 페이지만 같음)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 10,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "I'm polishing the operation descriptions. How can I keep internal parameter notes in a docstring but out of OpenAPI? Also, what response_description text does the create-item example explicitly set, rather than leaving the default?",
+   "asks": [
+    "Hide internal docstring notes from OpenAPI",
+    "Identify the example's explicit response description"
+   ],
+   "standalone_question": "I'm polishing the operation descriptions. How can I keep internal parameter notes in a docstring but out of OpenAPI? Also, what response_description text does the create-item example explicitly set, rather than leaving the default?",
+   "answer": "Put a form-feed character, written as \\f in the docstring, before the internal notes; FastAPI keeps only the preceding text for the description. The example explicitly sets response_description=\"The created item\"; the default is \"Successful Response\".",
+   "key_facts": [
+    "FastAPI truncates the OpenAPI description at the first form feed in the docstring.",
+    "The create-item example sets response_description to 'The created item', rather than the default 'Successful Response'."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "\\f",
+    "response_description",
+    "The created item",
+    "Successful Response"
+   ],
+   "evidence_pages": [
+    "app-structure/path-operation-configuration.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "FastAPI keeps only the text before the first `\\f` (`route.description.split(\"\\f\")[0]` in `fastapi/routing.py`):",
+     "page": "app-structure/path-operation-configuration.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    response_description=\"The created item\",",
+     "page": "app-structure/path-operation-configuration.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "`response_description` describes the main response; it defaults to `\"Successful Response\"`.",
+     "page": "app-structure/path-operation-configuration.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Use a form-feed character (`\\f`) in the docstring to stop the portion included in OpenAPI; notes after it stay out of the generated description. The create-item example sets `response_description=\"The created item\"`.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)",
+    "flags": [
+     "grounded_memory"
+    ],
+    "note": "실험 지시문 아래에서도 기억으로 답함 (제외하지 않고 표시 유지)",
+    "target": [
+     "c: grounded_memory 표시"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 11,
+   "turn_type": "update",
+   "type": "code",
+   "question": "Rename our custom response header from X-Forge-Stamp to X-Forge-Receipt. Show its updated assignment using stamp_value, and the extra setting needed for JavaScript on another origin to read it.",
+   "asks": [
+    "Apply the header rename",
+    "Expose the renamed header to cross-origin JavaScript"
+   ],
+   "standalone_question": "Rename our custom response header from X-Forge-Stamp to X-Forge-Receipt. Show its updated assignment using stamp_value, and the extra setting needed for JavaScript on another origin to read it.",
+   "answer": "response.headers[\"X-Forge-Receipt\"] = stamp_value\n\nAlso include expose_headers=[\"X-Forge-Receipt\"] in the CORSMiddleware configuration so JavaScript on another origin can read it.",
+   "key_facts": [
+    "The project header is now X-Forge-Receipt, replacing X-Forge-Stamp.",
+    "Cross-origin browser JavaScript needs the custom response header listed in CORSMiddleware expose_headers."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable",
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    }
+   ],
+   "key_entities": [
+    "X-Forge-Receipt",
+    "stamp_value",
+    "CORSMiddleware",
+    "expose_headers"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    1,
+    2
+   ],
+   "evidence": [
+    {
+     "quote": "Rename our custom response header from X-Forge-Stamp to X-Forge-Receipt.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "For JavaScript in a browser on **another origin** to read a custom response header, list it in `CORSMiddleware(expose_headers=[...])`",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Project custom response header name",
+     "from": "X-Forge-Stamp",
+     "to": "X-Forge-Receipt"
+    }
+   ],
+   "affects": [
+    13,
+    17,
+    19
+   ],
+   "source_turn": null,
+   "recall_distance": 10,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.5,
+    "response": "```js\nresponse.headers[\"X-Forge-Receipt\"] = stamp_value;\n```\n\nTo let JavaScript on another origin read it, expose it via CORS:\n\n```http\nAccess-Control-Expose-Headers: X-Forge-Receipt\n```",
+    "fact_results": [
+     true,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)",
+    "target": [
+     "c: 턴 2 의존은 간접 채점 (턴 2 가 인용한 페이지만 같음)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 12,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "For an explicit missing-item response, what exact JSON body does the additional-response example send, and which model is attached to its 404 entry? Does putting a model in responses automatically validate that error body at runtime?",
+   "asks": [
+    "Identify the additional-response example's 404 body and model",
+    "Explain whether additional-response models enforce runtime validation"
+   ],
+   "standalone_question": "For an explicit missing-item response, what exact JSON body does the additional-response example send, and which model is attached to its 404 entry? Does putting a model in responses automatically validate that error body at runtime?",
+   "answer": "It sends {\"message\": \"Item not found\"} in a JSONResponse with status 404, and the entry uses model Message. No: responses documents the response; it does not automatically validate or send that error body.",
+   "key_facts": [
+    "The example documents 404 with Message and explicitly returns {\"message\": \"Item not found\"}.",
+    "responses entries only document responses and do not automatically enforce runtime validation."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "404",
+    "Message",
+    "message",
+    "Item not found",
+    "responses",
+    "JSONResponse"
+   ],
+   "evidence_pages": [
+    "openapi/extending-openapi.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "@app.get(\"/items/{item_id}\", response_model=Item, responses={404: {\"model\": Message}})",
+     "page": "openapi/extending-openapi.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "    return JSONResponse(status_code=404, content={\"message\": \"Item not found\"})",
+     "page": "openapi/extending-openapi.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "These only **document** responses.",
+     "page": "openapi/extending-openapi.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "It sends `{\"message\": \"Item not found\"}` and attaches the `Message` model to the 404 entry. No—`responses` documents the error schema in OpenAPI; it doesn’t automatically validate that body at runtime.",
+    "fact_results": [
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)",
+    "target": []
+   }
+  },
+  {
+   "turn": 13,
+   "turn_type": "synthesis",
+   "type": "code",
+   "question": "Combine our upsert route, current transport settings, and model-preserving 200/201 behavior into one endpoint. Assume ArtifactOut, save_artifact, stamp_value, and ticket_value already exist. Also make creation visible to generated clients without changing how runtime filtering works.",
+   "asks": [
+    "Combine the project's current route and transport settings",
+    "Preserve model filtering with dynamic success status",
+    "Document the creation response"
+   ],
+   "standalone_question": "Write one artifact upsert endpoint using the project's previously chosen route and current header and cookie settings. Assume ArtifactOut, save_artifact, stamp_value, and ticket_value already exist, with save_artifact returning a record and creation flag. Preserve response-model filtering with 200 on update and 201 on creation, and document creation for generated clients.",
+   "answer": "from fastapi import Response, status\n\n@app.put(\n    \"/artifacts/{artifact_id}\",\n    status_code=200,\n    response_model=ArtifactOut,\n    responses={201: {\"model\": ArtifactOut, \"description\": \"Artifact created\"}},\n)\ndef upsert_artifact(artifact_id: str, response: Response):\n    record, created = save_artifact(artifact_id)\n    response.headers[\"X-Forge-Receipt\"] = stamp_value\n    response.set_cookie(key=\"forge_ticket\", value=ticket_value, max_age=2460)\n    if created:\n        response.status_code = status.HTTP_201_CREATED\n    return record\n\nThe injected response carries metadata and status while ordinary returned data is filtered. responses documents 201; it does not implement the branch.",
+   "key_facts": [
+    "Use /artifacts/{artifact_id}, X-Forge-Receipt, and forge_ticket with max_age=2460.",
+    "Set the injected Response status on creation and return the record normally to retain model filtering.",
+    "Declare the additional 201 response with responses; documentation does not implement the runtime status change."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/artifacts/{artifact_id}",
+    "X-Forge-Receipt",
+    "forge_ticket",
+    "2460",
+    "ArtifactOut",
+    "response.status_code",
+    "status.HTTP_201_CREATED",
+    "responses"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0,
+    4,
+    11,
+    12
+   ],
+   "evidence": [
+    {
+     "quote": "Our upsert route is /artifacts/{artifact_id}.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Rename our custom response header from X-Forge-Stamp to X-Forge-Receipt.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "the cookie is forge_ticket",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Change the cookie lifetime from 1380 to 2460 seconds; keep its name unchanged.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Your return value is still serialized through the response model.",
+     "page": "responses/status-codes.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "        response.status_code = status.HTTP_201_CREATED",
+     "page": "responses/status-codes.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "OpenAPI doesn't know about the extra status.",
+     "page": "responses/status-codes.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "These only **document** responses.",
+     "page": "openapi/extending-openapi.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 13,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)",
+    "target": []
+   }
+  },
+  {
+   "turn": 14,
+   "turn_type": "same_doc_new_topic",
+   "type": "multi",
+   "question": "For a separate redirect endpoint, what is RedirectResponse's default status? In the pydantic redirect example, which status overrides that default and what URL string does the function return?",
+   "asks": [
+    "Identify the redirect default status",
+    "Identify the configured pydantic redirect status and URL"
+   ],
+   "standalone_question": "For a separate redirect endpoint, what is RedirectResponse's default status? In the pydantic redirect example, which status overrides that default and what URL string does the function return?",
+   "answer": "RedirectResponse defaults to 307. The pydantic example sets status_code=302 and returns \"https://docs.pydantic.dev/\" with response_class=RedirectResponse.",
+   "key_facts": [
+    "RedirectResponse defaults to status 307.",
+    "The pydantic redirect example overrides the status to 302 and returns https://docs.pydantic.dev/."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "RedirectResponse",
+    "307",
+    "302",
+    "https://docs.pydantic.dev/"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    3
+   ],
+   "evidence": [
+    {
+     "quote": "`status_code` overrides the default 307.",
+     "page": "responses/custom-responses.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "@app.get(\"/pydantic\", response_class=RedirectResponse, status_code=302)",
+     "page": "responses/custom-responses.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "    return \"https://docs.pydantic.dev/\"",
+     "page": "responses/custom-responses.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": 3,
+   "recall_distance": 11,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)",
+    "target": []
+   }
+  },
+  {
+   "turn": 15,
+   "turn_type": "new",
+   "type": "fact",
+   "question": "I'm checking persistence behavior. In the replacement example, what happens to a stored tax of 20.2 when the incoming item omits tax?",
+   "asks": [
+    "Explain the replacement example's omitted-tax outcome"
+   ],
+   "standalone_question": "In the replacement example, what happens to a stored tax of 20.2 when the incoming item omits tax?",
+   "answer": "It is reset to the model default 10.5: the replacement stores the incoming item, and the omitted tax field takes its default.",
+   "key_facts": [
+    "The replacement example resets an omitted stored tax of 20.2 to 10.5."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example",
+      "condition",
+      "confusable"
+     ]
+    }
+   ],
+   "key_entities": [
+    "20.2",
+    "10.5"
+   ],
+   "evidence_pages": [
+    "models/extra-models-and-updates.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "resets `tax` to the model default `10.5`, because the omitted field takes its default.",
+     "page": "models/extra-models-and-updates.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "an item stored with `\"tax\": 20.2`",
+     "page": "models/extra-models-and-updates.md",
+     "fact_idx": 0
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "review": {
+    "target": [
+     "a: 질문 수정 (standalone_same_fact 확인)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28",
+    "standalone_same_fact": "예"
+   },
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "The stored tax of 20.2 is removed; replacement doesn’t preserve fields omitted from the incoming item.",
+    "fact_results": [
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 16,
+   "turn_type": "new",
+   "type": "multi",
+   "question": "Next, response costs. For ordinary returned data, which model-and-response-class combination enables direct JSON-byte serialization, and what does FastAPI skip on that path?",
+   "asks": [
+    "Identify the direct JSON-byte serialization condition",
+    "Identify what the fast path skips"
+   ],
+   "standalone_question": "For ordinary data returned from a FastAPI endpoint, which model-and-response-class combination enables direct JSON-byte serialization, and what does FastAPI skip on that path?",
+   "answer": "With a response field (from `response_model` or the return type) and the default response class, Pydantic serializes directly to JSON bytes, skipping the intermediate dict and `json.dumps`; FastAPI then returns `Response(media_type=\"application/json\")`.",
+   "key_facts": [
+    "A response field (from response_model or the return type) plus the default response class enables direct JSON-byte serialization.",
+    "That path skips the intermediate dict and json.dumps."
+   ],
+   "fact_meta": [
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "response_model",
+    "Pydantic",
+    "json.dumps"
+   ],
+   "evidence_pages": [
+    "internals/request-handling-internals.md"
+   ],
+   "depends_on": [],
+   "evidence": [
+    {
+     "quote": "With a response field (from `response_model` or the return type)",
+     "page": "internals/request-handling-internals.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Fast path: with a response field **and** the default response class, Pydantic serializes **directly to JSON bytes** (skipping the intermediate dict + `json.dumps`)",
+     "page": "internals/request-handling-internals.md",
+     "fact_idx": 0
+    },
+    {
+     "quote": "Fast path: with a response field **and** the default response class, Pydantic serializes **directly to JSON bytes** (skipping the intermediate dict + `json.dumps`)",
+     "page": "internals/request-handling-internals.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 0,
+   "review": {
+    "target": [
+     "a: 질문 수정 (standalone_same_fact 확인)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28",
+    "standalone_same_fact": "예"
+   },
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "A Pydantic v2 model serialized with `model_dump_json()` and returned in a plain `Response` (`application/json`) can send JSON directly. That bypasses FastAPI’s normal response validation and `jsonable_encoder` path.",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  },
+  {
+   "turn": 17,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "For my regression assertions, recover the current custom header name and the exact sparse foo JSON we established. Don't substitute the old header or fill in omitted defaults.",
+   "asks": [
+    "Recall the current custom header",
+    "Recall the exact sparse foo response"
+   ],
+   "standalone_question": "For regression assertions, recover the project's current custom response header name and the exact previously discussed sparse foo JSON response. Do not substitute the old header or fill in omitted defaults.",
+   "answer": "Current header: X-Forge-Receipt.\nSparse foo JSON: {\"name\": \"Foo\", \"price\": 50.2}.",
+   "key_facts": [
+    "The current custom response header is X-Forge-Receipt.",
+    "The sparse foo response is {\"name\": \"Foo\", \"price\": 50.2}."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
+    }
+   ],
+   "key_entities": [
+    "X-Forge-Receipt",
+    "foo",
+    "Foo",
+    "50.2"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    5,
+    11
+   ],
+   "evidence": [
+    {
+     "quote": "Rename our custom response header from X-Forge-Stamp to X-Forge-Receipt.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "For `\"foo\": {\"name\": \"Foo\", \"price\": 50.2}` the response is `{\"name\": \"Foo\", \"price\": 50.2}` — no default `description`, `tax` or `tags`.",
+     "page": "models/response-model.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 12,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)",
+    "target": []
+   }
+  },
+  {
+   "turn": 18,
+   "turn_type": "recall",
+   "type": "multi",
+   "question": "What cookie name and lifetime should the next implementation use now? Also remind me why replacing the normal data return with a direct JSONResponse would weaken our output contract.",
+   "asks": [
+    "Recall the current cookie settings",
+    "Recall the direct-response filtering caveat"
+   ],
+   "standalone_question": "What previously chosen current cookie name and lifetime should the artifact implementation use? Why would replacing a normal data return with a direct JSONResponse weaken the output contract?",
+   "answer": "Use forge_ticket with max_age=2460 seconds. A directly returned JSONResponse skips response_model validation and filtering, so the declared output model no longer protects that returned content.",
+   "key_facts": [
+    "The current cookie is forge_ticket with a lifetime of 2460 seconds.",
+    "Directly returning JSONResponse skips response_model validation and filtering."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "forge_ticket",
+    "2460",
+    "JSONResponse",
+    "response_model"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    2,
+    4
+   ],
+   "evidence": [
+    {
+     "quote": "the cookie is forge_ticket",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Change the cookie lifetime from 1380 to 2460 seconds; keep its name unchanged.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Remember: a directly returned response skips `response_model` validation/filtering — make sure the content is what you intend to send ([Custom Responses](custom-responses.md)).",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 1
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 16,
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)",
+    "target": [
+     "c: 턴 2 의존은 간접 채점 (턴 2 가 인용한 페이지만 같음)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   }
+  },
+  {
+   "turn": 19,
+   "turn_type": "synthesis",
+   "type": "multi",
+   "question": "Before I ship the upsert: which route, header name, cookie name and cookie lifetime are active now? Under default handling, which status does invalid incoming data get, and which does invalid modeled output get? Does an extra error model in responses validate a directly returned error body?",
+   "asks": [
+    "Recall the active route, header, cookie name and cookie lifetime",
+    "Give the default statuses for invalid request data and invalid modeled output",
+    "State whether an additional-response error model validates a directly returned error body"
+   ],
+   "standalone_question": "Before shipping the project's artifact upsert: which route, header name, cookie name and cookie lifetime are currently active? Under FastAPI's default handling, which status does invalid incoming request data get, and which does response data that fails its response model get? Does an extra error model declared in responses validate a directly returned error body?",
+   "answer": "- Active settings: /artifacts/{artifact_id}; header X-Forge-Receipt; cookie forge_ticket with max_age=2460 seconds.\n- Invalid request data raises RequestValidationError and defaults to 422 with a detail error list. Invalid modeled output raises ResponseValidationError and defaults to 500; that is an application bug.\n- An error model in responses documents the error schema only. It does not validate a directly returned error response; direct Response instances bypass response-model validation and filtering.",
+   "key_facts": [
+    "The active project settings are /artifacts/{artifact_id}, X-Forge-Receipt, and forge_ticket with a lifetime of 2460 seconds.",
+    "Default request validation failures produce 422, while response-model validation failures produce 500.",
+    "Additional-response models only document schemas, and directly returned responses bypass model validation and filtering."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "confusable"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "negation"
+     ]
+    }
+   ],
+   "key_entities": [
+    "/artifacts/{artifact_id}",
+    "X-Forge-Receipt",
+    "forge_ticket",
+    "2460",
+    "RequestValidationError",
+    "ResponseValidationError",
+    "422",
+    "500",
+    "responses"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    0,
+    4,
+    8,
+    11,
+    12
+   ],
+   "evidence": [
+    {
+     "quote": "Our upsert route is /artifacts/{artifact_id}.",
+     "user_turn": 0,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Rename our custom response header from X-Forge-Stamp to X-Forge-Receipt.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "the cookie is forge_ticket",
+     "user_turn": 1,
+     "fact_idx": 0
+    },
+    {
+     "quote": "Change the cookie lifetime from 1380 to 2460 seconds; keep its name unchanged.",
+     "user_turn": 4,
+     "fact_idx": 0
+    },
+    {
+     "quote": "| `RequestValidationError` | `request_validation_exception_handler` | `422` with `{\"detail\": [...errors...]}` |",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "If your endpoint returns data that does not match its `response_model` / return type, FastAPI raises `ResponseValidationError`.",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "There's no default handler, so the client gets a **500 Internal Server Error** and the error is logged.",
+     "page": "errors/handling-errors.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "These only **document** responses.",
+     "page": "openapi/extending-openapi.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "Remember: a directly returned response skips `response_model` validation/filtering — make sure the content is what you intend to send ([Custom Responses](custom-responses.md)).",
+     "page": "responses/response-headers-and-cookies.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": null,
+   "affects": null,
+   "source_turn": null,
+   "recall_distance": 19,
+   "review": {
+    "target": [
+     "a: 질문 수정 (standalone_same_fact 확인)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28",
+    "standalone_same_fact": "예"
+   },
+   "closed_book_knowledge": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "UNKNOWN",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "unknown",
+    "unknown": true,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-094550"
+   }
+  }
+ ],
+ "edits": [
+  {
+   "date": "2026-11-28",
+   "by": "검수 결정 반영 (손 수정)",
+   "items": [
+    "턴 0 의 [1], 턴 1·4·11 의 [0] 에 setup 태그",
+    "턴 11: 대안 없음 확인 (Access-Control-Expose-Headers 직접 설정은 대안으로 넣지 않음, 정답은 문서의 expose_headers)",
+    "턴 13: depends_on 에서 5 를 뺌 (턴 5 정보를 근거로 한 key_fact 가 없음, 의존 채점 규칙)",
+    "턴 15 를 둘로 나눔: 15 (교체 시 tax 기본값, extra-models-and-updates), 16 (기본 응답 클래스의 직렬화 경로, request-handling-internals). 뒤 턴 16·17·18 → 17·18·19, affects 를 맞춤 (턴 4: [9, 13, 18, 19], 턴 11: [13, 17, 19]). 뒤 턴 depends_on 은 15 이후를 가리키지 않아 그대로",
+    "턴 19 (옛 18): 'final review checklist' 를 세 가지를 하나씩 묻는 질문으로 (asks 3 = key_facts 3), standalone 도 같게"
+   ]
+  }
+ ],
+ "review_summary": {
+  "reviewer": "akingdbets",
+  "date": "2026-11-28",
+  "targets": 11,
+  "verdicts": {
+   "OK": 11,
+   "수정 필요": 0,
+   "제외": 0
+  }
+ }
+}
