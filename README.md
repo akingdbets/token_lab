@@ -413,6 +413,9 @@ LLM_MODEL=qwen2.5:3b python src/dataset_builder.py --docs 3 --dry-run
     실서비스의 요약은 짧다는 가정이고, 비율 예산이 커지면 요약이 출력 한도(4096)에 걸려 실패하는 것을 막는다 (v2_01 시험에서 턴 16 이후 실패).
     그래서 요약형은 예산을 다 쓰지 않을 수 있다: summary·budget_table 의 `budget_use_mean` (압축 뒤 기록 / 예산) 과 입력 절감률을 함께 본다.
     trial 행에 `summary_target_requested`, `summary_target`, `summary_target_capped`, summary 에 `summary_max_target`, `summary_target_capped` 기록. 0 이면 상한 없음
+    v2 정식 실행은 요약기 출력 한도를 16384 로 둔다 (`--summary-max-tokens 16384`, 답변기는 4096). 상한 3000 을 두어도 요약 시도가
+    출력 한도 4096 에 걸린 원인이 요약 길이가 아니라 추론 길이였기 때문이다 (v2_01 턴 16: 요약 출력 11,954 토큰 중 추론 8,411).
+    압축 LLM 호출 중 출력 한도에 걸린 시도 수는 trial 행 `compress_llm_length_hits`, summary `compress_length_hits` (압축기별)
   - `query_select_hybrid(<B>)`: query_select 와 같은 규칙(비율 예산, keep_recent, 원래 순서, 정답·key_facts 를 받지 않음)으로 고르되
     점수 = 0.5 × minmax(BM25) + 0.5 × minmax(bge-m3 코사인) (`--hybrid-bm25-weight`). 질의는 현재 질문만. 모든 조각이 후보 (query_select 는 BM25 > 0 만).
     임베딩은 Ollama (`EMBED_BASE_URL`, `EMBED_MODEL=bge-m3`), 같은 조각은 한 번만 계산 (`results/cache/embeddings.sqlite`).

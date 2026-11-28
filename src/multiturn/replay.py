@@ -488,29 +488,49 @@ class Replay:
         p = self.out_dir / "reference_grades.json"
         if p.exists():
             saved = json.loads(p.read_text(encoding="utf-8"))
-        for s in self.scenarios:
+        def one(s):
+            return s["scenario_id"], self.reference(s)
+
+        # 시나리오끼리는 독립이라 동시에 만든다 (한 시나리오 안의 턴은 앞 답변이 필요해 순서대로)
+        if self.cfg.concurrency > 1 and len(self.scenarios) > 1:
+            with ThreadPoolExecutor(max_workers=self.cfg.concurrency) as pool:
+                made = dict(pool.map(one, self.scenarios))
+        else:
+            made = dict(one(s) for s in self.scenarios)
+
+        def grade_scenario(s):
             sid = s["scenario_id"]
-            refs[sid] = self.reference(s)
-            grades[sid] = {}
-            for step in refs[sid]:
+            out, warns = {}, []
+            for step in made[sid]:
                 t = s["turns"][step.turn]
                 if not step.response_content:
-                    warnings.append(f"{sid} 턴 {step.turn}: 기준 궤적 답변이 비었습니다")
+                    warns.append(f"{sid} 턴 {step.turn}: 기준 궤적 답변이 비었습니다")
                 if step.finish_reason == "length":
-                    warnings.append(f"{sid} 턴 {step.turn}: 기준 궤적 답변이 출력 한도에 걸렸습니다 (finish_reason=length)")
+                    warns.append(f"{sid} 턴 {step.turn}: 기준 궤적 답변이 출력 한도에 걸렸습니다 (finish_reason=length)")
                 prev = saved.get(sid, {}).get(str(step.turn))
                 jv = judge_version_for(s)
                 if (prev is not None and prev.get("response") == step.response_content
                         and (not setup_indices(t) or "answer_accuracy_all" in prev)
                         and prev.get("judge_version", JUDGE_V2) == jv):
-                    grades[sid][str(step.turn)] = prev
+                    out[str(step.turn)] = prev
                     continue
                 g = self.grade(t, step.response_content, s)
                 sg = split_grade(t, g)       # answer_accuracy 는 setup 항목을 뺀 주 정확도 (depends_on_reference_ok 에 쓴다)
-                grades[sid][str(step.turn)] = {"answer_accuracy": sg["answer_accuracy"], "response": step.response_content,
-                                               **({"answer_accuracy_all": sg["answer_accuracy_all"],
-                                                   "setup_accuracy": sg["setup_accuracy"]} if setup_indices(t) else {}),
-                                               **({"judge_version": jv} if jv != JUDGE_V2 else {})}
+                out[str(step.turn)] = {"answer_accuracy": sg["answer_accuracy"], "response": step.response_content,
+                                       **({"answer_accuracy_all": sg["answer_accuracy_all"],
+                                           "setup_accuracy": sg["setup_accuracy"]} if setup_indices(t) else {}),
+                                       **({"judge_version": jv, "fact_satisfied": sg["fact_satisfied"]}
+                                          if jv != JUDGE_V2 else {})}
+            return sid, out, warns
+
+        if self.cfg.concurrency > 1 and len(self.scenarios) > 1:
+            with ThreadPoolExecutor(max_workers=self.cfg.concurrency) as pool:
+                graded = list(pool.map(grade_scenario, self.scenarios))
+        else:
+            graded = [grade_scenario(s) for s in self.scenarios]
+        for sid, out, warns in graded:            # 시나리오 순서대로 모은다 (출력·파일 순서가 실행마다 같게)
+            refs[sid], grades[sid] = made[sid], out
+            warnings += warns
         for w in warnings:
             print(f"  [경고] {w}", flush=True)
         self.out_dir.mkdir(parents=True, exist_ok=True)
@@ -627,6 +647,8 @@ class Replay:
             "completion_tokens": res.completion_tokens, "usage_source": res.usage_source,
             "compress_llm_prompt_tokens": llm_pt, "compress_llm_completion_tokens": llm_ct,
             "compress_llm_reasoning_tokens": sum(r.reasoning_tokens or 0 for r in results),
+            "compress_llm_calls": len(results),
+            "compress_llm_length_hits": sum(1 for r in results if r.finish_reason == "length"),
             "compress_cost": compress_cost, "history_budget_effective": info.get("history_budget"),
             "notes_made": notes.record(comp.extractor.target_ratio) if notes is not None else None,
             "presummary_pages": info.get("pages_replaced"),
@@ -665,6 +687,8 @@ class Replay:
                 "summary_fail_reason": info.get("summary_fail_reason"),
                 "summary_attempts": info.get("summary_attempts") if first else 0,
                 "compress_llm_prompt_tokens": hres.llm_prompt_tokens if first else 0,
+                "compress_llm_calls": len(results) if first else 0,
+                "compress_llm_length_hits": sum(1 for r in results if r.finish_reason == "length") if first else 0,
                 "compress_llm_completion_tokens": hres.llm_completion_tokens if first else 0,
                 "compress_cost": cost if first else {"usd": 0.0, "usd_nocache": 0.0, "calls": 0},
                 "summary_effort": summary_effort_of(comp_name),
@@ -713,8 +737,9 @@ class Replay:
                                       "model": e.model, "base_url": e.base_url, "where": where, "body": e.body[:500],
                                       "time": datetime.now().isoformat(timespec="seconds")})
 
-    def run(self) -> dict:
-        """잔액 부족(InsufficientBalanceError)이 나면 진행 중인 작업을 정리하고 ReplayStoppedError 를 낸다.
+    def run(self, references_only: bool = False) -> dict:
+        """references_only=True 면 기준 궤적(과 그 채점)만 만들고 멈춘다 (나중에 --resume 으로 압축기를 돌린다).
+        잔액 부족(InsufficientBalanceError)이 나면 진행 중인 작업을 정리하고 ReplayStoppedError 를 낸다.
         실행 구간은 run_segments.jsonl 에 시작·끝 두 줄로 남긴다 (끝 줄에 이어 붙인 행 수와 중복 키 수)."""
         prev_segments = self._read("run_segments.jsonl")
         numbered = [r["segment"] for r in prev_segments if "segment" in r]
@@ -728,6 +753,10 @@ class Replay:
             self._segment("end", seg, status="stopped_insufficient_balance", provider=e.provider,
                           rows_before=rows_before, rows_after=rows_before, rows_appended=0)
             raise ReplayStoppedError(e, self.out_dir) from e
+        if references_only:
+            self._segment("end", seg, status="references_only", rows_before=rows_before, rows_after=rows_before,
+                          rows_appended=0)
+            return {"references_only": True, "warnings": ref_warnings, "scenarios": len(refs)}
         done = {self.trial_key(r) for r in self._trials() if not r.get("summary_failed")}
         stateless = [c for c in self.cfg.compressors if not is_stateful(c)]
         stateful = [c for c in self.cfg.compressors if is_stateful(c)]
@@ -1347,6 +1376,12 @@ def summarize_replay(rows: list[dict], cfg: ReplayConfig, ref_warnings: list[str
     nc = {c: notes_compression([r for r in rows if r["compressor"] == c]) for c in cfg.compressors}
     if any(nc.values()):
         out["fact_notes_compression"] = {c: v for c, v in nc.items() if v}
+    if any("compress_llm_length_hits" in r for r in rows):
+        out["compress_length_hits"] = {
+            c: {"calls": _sum(rs, "compress_llm_calls"), "length_hits": _sum(rs, "compress_llm_length_hits"),
+                "trials_with_length_hit": sum(1 for r in rs if r.get("compress_llm_length_hits"))}
+            for c in cfg.compressors for rs in [[r for r in rows if r["compressor"] == c]]
+            if _sum(rs, "compress_llm_calls")}
     setup = setup_accuracy_block(rows, cfg.compressors)
     if setup is not None:
         out["setup_accuracy"] = setup
@@ -1436,6 +1471,8 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--chain-scenarios", default="", help="(--sequential-chains) 시나리오 id, 쉼표 구분. 기본: 시나리오마다 전부")
     ap.add_argument("--chain-samples", default="0", help="(--sequential-chains) sample_idx, 쉼표 구분")
     ap.add_argument("--summary-max-tokens", type=int, help="요약형 압축기가 있으면 필수 (추론 포함 출력 한도)")
+    ap.add_argument("--references-only", action="store_true",
+                    help="기준 궤적과 그 채점만 만들고 멈춘다 (확인 뒤 같은 명령에 --resume <run_id> 로 압축기를 돌린다)")
     ap.add_argument("--skip-preflight", action="store_true",
                     help="실행 전 API 연결·잔액 확인(작은 요청 1회씩)을 건너뛴다")
     ap.add_argument("--hybrid-bm25-weight", type=float, default=0.5,
@@ -1589,10 +1626,14 @@ def main(argv=None):
             print(f"저장: {out_dir / 'sequential_summary.json'}")
             return
         try:
-            summary = rep.run()
+            summary = rep.run(references_only=a.references_only)
         except ReplayStoppedError as e:
             print(f"\n[중단] {e}", flush=True)
             raise SystemExit(3)
+        if a.references_only:
+            print(f"[기준 궤적만] 시나리오 {summary['scenarios']}개, 경고 {len(summary['warnings'])}건. "
+                  f"저장: {out_dir}  (이어서: 같은 명령에서 --references-only 를 빼고 --resume {run_id})", flush=True)
+            return
     finally:
         answer.close()
         judge.close()

@@ -19,6 +19,9 @@
   구간마다 `run_segments.jsonl` 에 시작·끝 줄 (이어 붙인 행 수 `rows_appended`, 중복 키 `duplicate_keys`) 이 남는다.
 - **요약 목표 길이 상한**: rolling_summary 의 요약 목표 = min(예산에서 최근 원문 턴을 뺀 값, 3000 토큰) (`--summary-max-target`, 기본 3000).
   실서비스의 요약은 짧다는 가정, 출력 한도(4096)로 인한 실패 방지. 예산을 다 쓰지 않을 수 있어 `budget_use_mean` 을 함께 본다.
+- **요약기 출력 한도 16384** (`--summary-max-tokens 16384`, 답변기 4096 은 그대로): 상한 3000 을 두어도 v2_01 턴 16 에서 요약 시도
+  3번 중 2번이 출력 한도 4096 에 걸렸다. 원인은 요약 길이가 아니라 추론 길이다 (그 턴 요약 출력 11,954 토큰 중 추론 8,411).
+  fact_notes·presummary 의 출력 한도(4096)는 그대로 두고, summary 의 `compress_length_hits` 로 압축기별 출력 한도 도달 호출 수를 본다.
 - 시나리오 20개가 `data/evalsets/multiturn-v2/` 에 확정돼 있어야 한다 (시나리오 세션 브랜치 `feature/multiturn-v2-scenarios` 병합 후).
   2026-11-28 현재 그 브랜치에 샘플 2개(draft)만 있다.
 - 채점 지시문: 시나리오 브랜치가 fact_judge_v3 를 더한다. 병합 뒤 어떤 판정 버전으로 돌지 확인한다.
@@ -49,10 +52,13 @@ rolling_summary(r=0.5) (요약 추론 server_default 만, 요약 목표 상한 3
 query_select_hybrid 는 로컬 Ollama 의 bge-m3 가 필요하다 (`EMBED_BASE_URL`, 조각 임베딩은 `results/cache/embeddings.sqlite` 에 캐시).
 
 ```powershell
-python src/multiturn/replay.py --scenarios data/evalsets/multiturn-v2 --model gpt-6-luna --compressors "none,per_message(rule),per_message(llmlingua2),presummary,fact_notes,window_budget(r=0.5),query_select(r=0.5),rolling_summary(r=0.5),query_select_hybrid(r=0.5)" --samples 2 --reasoning-effort server_default --max-completion-tokens 4096 --summary-model gpt-6-luna --summary-reasoning-effort server_default --summary-max-tokens 4096 --summary-max-target 3000 --presummary-model gpt-6-luna --notes-model gpt-6-luna --notes-reasoning-effort server_default --notes-max-tokens 4096 --hybrid-bm25-weight 0.5 --concurrency 5 --estimate-only
+python src/multiturn/replay.py --scenarios data/evalsets/multiturn-v2 --model gpt-6-luna --compressors "none,per_message(rule),per_message(llmlingua2),presummary,fact_notes,window_budget(r=0.5),query_select(r=0.5),rolling_summary(r=0.5),query_select_hybrid(r=0.5)" --samples 2 --reasoning-effort server_default --max-completion-tokens 4096 --summary-model gpt-6-luna --summary-reasoning-effort server_default --summary-max-tokens 16384 --summary-max-target 3000 --presummary-model gpt-6-luna --notes-model gpt-6-luna --notes-reasoning-effort server_default --notes-max-tokens 4096 --hybrid-bm25-weight 0.5 --concurrency 5 --estimate-only
 ```
 
 같은 명령에서 `--estimate-only` 를 빼면 실행이다. 중단되면 `--resume <run_id>` 로 이어 간다.
+기준 궤적을 먼저 확인하려면 `--references-only` 를 붙여 기준 궤적(시나리오끼리 동시에)과 그 채점만 만들고 멈춘 뒤,
+확인 후 `--references-only` 를 빼고 `--resume <run_id>` 로 나머지를 돌린다. 2026-11-28 실행은 `--concurrency 10`
+(일반 429 가 반복되면 5 로 낮춘다).
 
 ### (3) 2단계 대상 선정
 
@@ -65,7 +71,7 @@ python src/multiturn/replay.py --scenarios data/evalsets/multiturn-v2 --model gp
 (같은 응답 캐시 파일, 같은 모델·설정·sample). 1단계 run 과 합쳐 보려면 두 run 의 none 행이 같은 요청인지 `prompt_hash` 로 확인한다.
 
 ```powershell
-python src/multiturn/replay.py --scenarios data/evalsets/multiturn-v2 --model gpt-6-luna --compressors "none,window_budget,query_select,rolling_summary" --history-budget r=0.25,0.75 --samples 2 --reasoning-effort server_default --max-completion-tokens 4096 --summary-model gpt-6-luna --summary-reasoning-effort server_default --summary-max-tokens 4096 --concurrency 5 --estimate-only
+python src/multiturn/replay.py --scenarios data/evalsets/multiturn-v2 --model gpt-6-luna --compressors "none,window_budget,query_select,rolling_summary" --history-budget r=0.25,0.75 --samples 2 --reasoning-effort server_default --max-completion-tokens 4096 --summary-model gpt-6-luna --summary-reasoning-effort server_default --summary-max-tokens 16384 --concurrency 5 --estimate-only
 ```
 
 ### 예상 비용 (샘플 2개로 추정해 20개로 10배 환산, 2026-11-28)

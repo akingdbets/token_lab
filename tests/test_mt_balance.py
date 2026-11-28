@@ -222,6 +222,24 @@ class ReplayStopResumeTest(unittest.TestCase):
     def test_summary_quota(self):
         self._stop_then_resume("summary", 1, "OpenAI")
 
+    def test_references_only_then_resume(self):
+        """--references-only: 기준 궤적·채점만 만들고 멈춘다. 이어서 돌리면 trial 만 돈다."""
+        cfg = self._cfg()
+        off = Switch(10 ** 9)
+        rep = self._replay(cfg, PoorLLM(off), PoorJudge(off), PoorSummaryLLM(off))
+        out = rep.run(references_only=True)
+        self.assertTrue(out["references_only"])
+        self.assertEqual(self._rows(), [])
+        ref = json.loads((self.root / "mt_bal" / "reference_grades.json").read_text(encoding="utf-8"))
+        self.assertEqual(len(ref["s1"]), len(SCENARIO["turns"]))
+        self.assertEqual(self._segments()[-1]["status"], "references_only")
+        rep2 = self._replay(cfg, PoorLLM(off), PoorJudge(off), PoorSummaryLLM(off))
+        summary = rep2.run()
+        self.assertEqual(len(self._rows()), len(SCENARIO["turns"]) * 3 * cfg.samples)
+        hits = summary["compress_length_hits"]["rolling_summary(r=0.5)[sre=server_default]"]
+        self.assertEqual(hits["length_hits"], 0)
+        self.assertGreater(hits["calls"], 0)
+
     def test_reference_quota(self):
         """기준 궤적 단계에서 잔액 부족: trial 없이 멈추고, 이어서 처음부터 끝낸다."""
         cfg = self._cfg()
