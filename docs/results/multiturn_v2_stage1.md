@@ -1,5 +1,7 @@
 # 멀티턴 v2 정식 실험 1단계 결과 (2026-11-28)
 
+2단계(예산 비율 0.25 / 0.75): [multiturn_v2_stage2.md](multiturn_v2_stage2.md)
+
 run: `results/runs/mt_20261128-173341` (trial 6,858개 = 381턴 × 9조건 × sample 2). 결과 표는 이 run 의 `summary.json`·`turn_trials.jsonl` 에서 다시 계산했다.
 
 ## 요약
