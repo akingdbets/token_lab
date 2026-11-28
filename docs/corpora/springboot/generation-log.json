@@ -1,0 +1,480 @@
+{
+  "begin": {
+    "status": "active",
+    "runId": "3f1bdcaa-f982-4432-ac9c-6fee32e06126",
+    "root": "/private/tmp/tokenlab-springboot-input",
+    "mode": "init",
+    "language": "en",
+    "languageChanged": false,
+    "phase": "planning",
+    "resumed": false,
+    "lastUpdate": {
+      "updatedAt": "2026-11-28T11:55:01.409Z",
+      "command": "init",
+      "gitHead": "2aac475cc4de920d1e8da1780b759a37188046f4",
+      "model": "host-agent/codex",
+      "status": "complete",
+      "language": "en"
+    },
+    "wikiGoal": "Write every wiki page in English.\n\nCreate a source-preserving Spring Boot v4.2.0 Reference edition for TokenLab. Use only the pinned upstream/ files and the source-mapped prepared/ AsciiDoc. Preserve Java annotations, code, configuration names and values. Do not invent missing generated tables or runtime defaults. Keep source claims grounded in upstream files. Kotlin and generated appendices are outside this corpus scope.",
+    "changedPaths": [],
+    "pageUpdateWindows": [],
+    "claimIssues": [],
+    "completedPages": 0
+  },
+  "pages": [
+    {
+      "page": "/openwiki/configuration/config-files.md",
+      "jobId": "3c594d83-cf3d-402e-ba2c-d54f69a9ac6e",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/configuration/config-files.md",
+        "remaining": 49
+      }
+    },
+    {
+      "page": "/openwiki/configuration/constructor-binding.md",
+      "jobId": "31b596ab-28ef-4264-aa4f-eba236b92b17",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/configuration/constructor-binding.md",
+        "remaining": 48
+      }
+    },
+    {
+      "page": "/openwiki/configuration/enabling-properties.md",
+      "jobId": "86cf71f1-3ea1-4f6c-8a33-0078e7519af1",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/configuration/enabling-properties.md",
+        "remaining": 47
+      }
+    },
+    {
+      "page": "/openwiki/configuration/imports-and-configtrees.md",
+      "jobId": "2fe2dbd9-7230-4b65-b140-f252716e86cc",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/configuration/imports-and-configtrees.md",
+        "remaining": 46
+      }
+    },
+    {
+      "page": "/openwiki/configuration/java-bean-binding.md",
+      "jobId": "78076558-1698-4056-b56c-1e692f392ff5",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/configuration/java-bean-binding.md",
+        "remaining": 45
+      }
+    },
+    {
+      "page": "/openwiki/configuration/json.md",
+      "jobId": "c5a19716-fe5a-4480-80bc-56888a23c8a2",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/configuration/json.md",
+        "remaining": 44
+      }
+    },
+    {
+      "page": "/openwiki/configuration/logging-levels.md",
+      "jobId": "d3e5b7d4-c179-4dc3-afc5-cf8f25deab56",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/configuration/logging-levels.md",
+        "remaining": 43
+      }
+    },
+    {
+      "page": "/openwiki/configuration/placeholders.md",
+      "jobId": "3b24ee04-ecca-41e9-9c46-1ecde9631daa",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/configuration/placeholders.md",
+        "remaining": 42
+      }
+    },
+    {
+      "page": "/openwiki/configuration/profiles.md",
+      "jobId": "3069e61a-420e-43c7-b7ee-371b99ac14ce",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/configuration/profiles.md",
+        "remaining": 41
+      }
+    },
+    {
+      "page": "/openwiki/configuration/properties-validation.md",
+      "jobId": "49dd9b8d-4960-4933-815f-8210e47bfa3d",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/configuration/properties-validation.md",
+        "remaining": 40
+      }
+    },
+    {
+      "page": "/openwiki/configuration/property-precedence.md",
+      "jobId": "e27e0b60-65c8-4005-9567-3d7f97b8ade4",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/configuration/property-precedence.md",
+        "remaining": 39
+      }
+    },
+    {
+      "page": "/openwiki/configuration/relaxed-binding.md",
+      "jobId": "137596f2-5187-4fe1-8fc2-c1b8c70af078",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/configuration/relaxed-binding.md",
+        "remaining": 38
+      }
+    },
+    {
+      "page": "/openwiki/configuration/yaml.md",
+      "jobId": "51c35bb5-7a69-4d8b-b52b-9adf66c2a061",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/configuration/yaml.md",
+        "remaining": 37
+      }
+    },
+    {
+      "page": "/openwiki/data/datasources.md",
+      "jobId": "908d2e98-959d-4134-b645-5a93e47d9727",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/data/datasources.md",
+        "remaining": 36
+      }
+    },
+    {
+      "page": "/openwiki/data/jdbc-template.md",
+      "jobId": "4b9f1ff6-1df5-4844-8639-6701bcfab460",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/data/jdbc-template.md",
+        "remaining": 35
+      }
+    },
+    {
+      "page": "/openwiki/data/jpa-and-repositories.md",
+      "jobId": "2695a3b7-b3a1-4ea1-bfa7-8190fac55262",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/data/jpa-and-repositories.md",
+        "remaining": 34
+      }
+    },
+    {
+      "page": "/openwiki/data/r2dbc.md",
+      "jobId": "77afd29c-30a7-41fe-ab4c-b79e7fb41391",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/data/r2dbc.md",
+        "remaining": 33
+      }
+    },
+    {
+      "page": "/openwiki/deployment/buildpacks.md",
+      "jobId": "954e7051-412d-4206-a539-612fae444c75",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/deployment/buildpacks.md",
+        "remaining": 32
+      }
+    },
+    {
+      "page": "/openwiki/deployment/dockerfiles.md",
+      "jobId": "af2b2a01-1cc1-4603-8138-a954fae8a4c9",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/deployment/dockerfiles.md",
+        "remaining": 31
+      }
+    },
+    {
+      "page": "/openwiki/deployment/efficient-packaging.md",
+      "jobId": "ca52139a-a4aa-458d-a469-7ccd50ce5384",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/deployment/efficient-packaging.md",
+        "remaining": 30
+      }
+    },
+    {
+      "page": "/openwiki/operations/actuator-enabling.md",
+      "jobId": "412be4ab-1d27-4851-83c9-32c76dbf67a4",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/operations/actuator-enabling.md",
+        "remaining": 29
+      }
+    },
+    {
+      "page": "/openwiki/security/web-security.md",
+      "jobId": "5e21f30b-6c59-4e8f-b4d8-57550fbf4130",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/security/web-security.md",
+        "remaining": 28
+      }
+    },
+    {
+      "page": "/openwiki/testing/detecting-configuration.md",
+      "jobId": "d850398c-dbcd-4de7-b072-3204f06017f8",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/testing/detecting-configuration.md",
+        "remaining": 27
+      }
+    },
+    {
+      "page": "/openwiki/testing/jpa-tests.md",
+      "jobId": "ab2e21fc-5325-4b44-aade-dbcc613ca56d",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/testing/jpa-tests.md",
+        "remaining": 26
+      }
+    },
+    {
+      "page": "/openwiki/testing/json-tests.md",
+      "jobId": "4fff394d-1638-4175-a73b-114fea3ad409",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/testing/json-tests.md",
+        "remaining": 25
+      }
+    },
+    {
+      "page": "/openwiki/testing/mock-environment.md",
+      "jobId": "bdff4c4b-e41c-433d-8392-45e69227d017",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/testing/mock-environment.md",
+        "remaining": 24
+      }
+    },
+    {
+      "page": "/openwiki/testing/mvc-tests.md",
+      "jobId": "f2d2fd94-0e55-41bc-87f4-1b4992309a55",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/testing/mvc-tests.md",
+        "remaining": 23
+      }
+    },
+    {
+      "page": "/openwiki/testing/running-server.md",
+      "jobId": "be7a5452-bb1d-4123-ae42-efe8fc9abab6",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/testing/running-server.md",
+        "remaining": 22
+      }
+    },
+    {
+      "page": "/openwiki/testing/test-foundations.md",
+      "jobId": "21c1ed26-3609-452e-8df6-c2bf5d129f09",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/testing/test-foundations.md",
+        "remaining": 21
+      }
+    },
+    {
+      "page": "/openwiki/testing/testcontainers.md",
+      "jobId": "8fb6db77-0936-473a-87b7-7a574c3d3428",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/testing/testcontainers.md",
+        "remaining": 20
+      }
+    },
+    {
+      "page": "/openwiki/using/application-annotation.md",
+      "jobId": "d6127845-de5d-4f08-bf6d-8189552675bf",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/using/application-annotation.md",
+        "remaining": 19
+      }
+    },
+    {
+      "page": "/openwiki/using/auto-configuration.md",
+      "jobId": "d8e11ae3-7f9f-4185-83a1-20d808f09c2e",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/using/auto-configuration.md",
+        "remaining": 18
+      }
+    },
+    {
+      "page": "/openwiki/using/configuration-classes.md",
+      "jobId": "5a56559b-a9e7-47b3-bf6b-6c70a28aa496",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/using/configuration-classes.md",
+        "remaining": 17
+      }
+    },
+    {
+      "page": "/openwiki/using/dependency-injection.md",
+      "jobId": "7831d9bd-652b-4359-a192-42c0681b1e73",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/using/dependency-injection.md",
+        "remaining": 16
+      }
+    },
+    {
+      "page": "/openwiki/using/production-packaging.md",
+      "jobId": "35ca06b2-26af-49d6-826b-0bf873cd23cb",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/using/production-packaging.md",
+        "remaining": 15
+      }
+    },
+    {
+      "page": "/openwiki/using/project-structure.md",
+      "jobId": "86c30370-3884-4791-94ee-3c14b68c1072",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/using/project-structure.md",
+        "remaining": 14
+      }
+    },
+    {
+      "page": "/openwiki/using/running-applications.md",
+      "jobId": "86b0eba5-a2c5-46d7-8a8a-8a8add953d9d",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/using/running-applications.md",
+        "remaining": 13
+      }
+    },
+    {
+      "page": "/openwiki/validation/method-validation.md",
+      "jobId": "1405661c-cb11-45bc-a52c-f9b5963ba060",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/validation/method-validation.md",
+        "remaining": 12
+      }
+    },
+    {
+      "page": "/openwiki/web/api-versioning.md",
+      "jobId": "894ce147-aca6-4fde-9d71-fa28d439025b",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/web/api-versioning.md",
+        "remaining": 11
+      }
+    },
+    {
+      "page": "/openwiki/web/content-negotiation.md",
+      "jobId": "773045b2-00a1-40b7-8bb0-c5f2a23dd8cf",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/web/content-negotiation.md",
+        "remaining": 10
+      }
+    },
+    {
+      "page": "/openwiki/web/controllers-and-routing.md",
+      "jobId": "3e2fffa8-c770-4709-a312-3aa2b397a14c",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/web/controllers-and-routing.md",
+        "remaining": 9
+      }
+    },
+    {
+      "page": "/openwiki/web/conversion-service.md",
+      "jobId": "82ea2a00-0462-4cb4-b8e8-f14de59a5958",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/web/conversion-service.md",
+        "remaining": 8
+      }
+    },
+    {
+      "page": "/openwiki/web/cors.md",
+      "jobId": "a4fb91e3-4621-43fe-9fc3-20fe848dee84",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/web/cors.md",
+        "remaining": 7
+      }
+    },
+    {
+      "page": "/openwiki/web/embedded-server-customization.md",
+      "jobId": "18eb1cc3-d329-4794-a0a0-98d47bdd8396",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/web/embedded-server-customization.md",
+        "remaining": 6
+      }
+    },
+    {
+      "page": "/openwiki/web/error-handling.md",
+      "jobId": "4d424e97-6045-4724-b102-3a19db883aed",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/web/error-handling.md",
+        "remaining": 5
+      }
+    },
+    {
+      "page": "/openwiki/web/graceful-shutdown.md",
+      "jobId": "979d1710-d590-4210-90cc-799979e78695",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/web/graceful-shutdown.md",
+        "remaining": 4
+      }
+    },
+    {
+      "page": "/openwiki/web/message-converters.md",
+      "jobId": "371c78fb-8a9f-4659-bca3-de896d9c7d85",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/web/message-converters.md",
+        "remaining": 3
+      }
+    },
+    {
+      "page": "/openwiki/web/mvc-auto-configuration.md",
+      "jobId": "ebb76c9b-7f3e-4105-8e6e-8c6f7d89d861",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/web/mvc-auto-configuration.md",
+        "remaining": 2
+      }
+    },
+    {
+      "page": "/openwiki/web/static-content.md",
+      "jobId": "24f6a472-8317-4f2c-bec9-fda4f7ed9766",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/web/static-content.md",
+        "remaining": 1
+      }
+    },
+    {
+      "page": "/openwiki/quickstart.md",
+      "jobId": "24c57159-4f76-43bd-a3da-3ab10d85fbfb",
+      "result": {
+        "status": "complete",
+        "page": "/openwiki/quickstart.md",
+        "remaining": 0
+      }
+    }
+  ],
+  "finish": {
+    "status": "complete"
+  }
+}

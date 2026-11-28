@@ -1,0 +1,1484 @@
+{
+  "tokenizer": "tiktoken:o200k_base",
+  "springboot": {
+    "documents": 60,
+    "topics": 49,
+    "quickstarts": 1,
+    "indexes": 10,
+    "non_index_pages": 50,
+    "total_tokens": 63566,
+    "non_index_tokens": 61706,
+    "non_index_distribution": {
+      "min": 338,
+      "p25": 686.25,
+      "median": 1027.0,
+      "p75": 1769.75,
+      "p90": 1948.7,
+      "p95": 2237.1,
+      "max": 5080,
+      "mean": 1234.12
+    },
+    "all_document_distribution": {
+      "min": 32,
+      "p25": 526.25,
+      "median": 895.0,
+      "p75": 1458.25,
+      "p90": 1913.9,
+      "p95": 2076.1,
+      "max": 5080,
+      "mean": 1059.43
+    },
+    "per_document": [
+      {
+        "path": "configuration/config-files.md",
+        "tokens": 1216,
+        "sha256": "709eeb4f335f1010e5630d85736b1355446d9bec8c2807307c0e87d8f5ab2f74",
+        "kind": "topic"
+      },
+      {
+        "path": "configuration/constructor-binding.md",
+        "tokens": 1769,
+        "sha256": "7de3ca7fd203521ac4a98e36a99d9dbb83ec6bd7d7c4b64aaef94eeeb88558f4",
+        "kind": "topic"
+      },
+      {
+        "path": "configuration/enabling-properties.md",
+        "tokens": 1065,
+        "sha256": "ed5f228df628613e1f0640be9f383efc38c01f831fb9aa21724aec76fbdddb9d",
+        "kind": "topic"
+      },
+      {
+        "path": "configuration/imports-and-configtrees.md",
+        "tokens": 1013,
+        "sha256": "0390e33ebcc6e0a1804c2c0a888c0aa2e9553778c49923c65e32f9f697b765fd",
+        "kind": "topic"
+      },
+      {
+        "path": "configuration/index.md",
+        "tokens": 441,
+        "sha256": "643583934994b6ef0ab4d7b901e6d2edc5ec23711252752f9deabfbe623f9317",
+        "kind": "index"
+      },
+      {
+        "path": "configuration/java-bean-binding.md",
+        "tokens": 1039,
+        "sha256": "fb438f4325ba6510184dd2eaf1bd8422a18fc8a14e16add0759aba9c95f5d9f6",
+        "kind": "topic"
+      },
+      {
+        "path": "configuration/json.md",
+        "tokens": 1770,
+        "sha256": "35c589173f2a2a9eaf78695facbdd0a0742b63a773693c9aceaf7b41022c86b3",
+        "kind": "topic"
+      },
+      {
+        "path": "configuration/logging-levels.md",
+        "tokens": 488,
+        "sha256": "cb240f1f49849fc2c3a6199504786314dd2c5a4be5a408498249bed5f6627e05",
+        "kind": "topic"
+      },
+      {
+        "path": "configuration/placeholders.md",
+        "tokens": 633,
+        "sha256": "9dfeec9e660516aa3579777783f5e314a5c2f6543e07076e2c11c9c849e96874",
+        "kind": "topic"
+      },
+      {
+        "path": "configuration/profiles.md",
+        "tokens": 1827,
+        "sha256": "0ceb388172299cba37d7ffacfaaa74d3942b83de7df2ef1f769a08cdf815541a",
+        "kind": "topic"
+      },
+      {
+        "path": "configuration/properties-validation.md",
+        "tokens": 1015,
+        "sha256": "9d83b30f83a81f971a78ea4f64a1c014e75893e126dcf52889b5db1d00b15de2",
+        "kind": "topic"
+      },
+      {
+        "path": "configuration/property-precedence.md",
+        "tokens": 1421,
+        "sha256": "00ac54594bdc6e1f0b6d0419e8283fe0be86517608fa3ccb342b2c992adcb4d6",
+        "kind": "topic"
+      },
+      {
+        "path": "configuration/relaxed-binding.md",
+        "tokens": 1850,
+        "sha256": "9ea8df33fdaff0f944e4ae6044f7641d7b10393ba5fdae8a52234f82bf9914bb",
+        "kind": "topic"
+      },
+      {
+        "path": "configuration/yaml.md",
+        "tokens": 738,
+        "sha256": "a1f11b4b92c548e928152163f8c4193991db2f58a2502d75888f7c7fdeafb831",
+        "kind": "topic"
+      },
+      {
+        "path": "data/datasources.md",
+        "tokens": 2060,
+        "sha256": "4a3b115acc5e5789fc9eddfe1e9f5471642d79adffe9db2c45b07e31c011b1f9",
+        "kind": "topic"
+      },
+      {
+        "path": "data/index.md",
+        "tokens": 151,
+        "sha256": "c9fb2aa8db9d5847da521ad9587745b26b7d1cafc684257b569697b7f0de78c0",
+        "kind": "index"
+      },
+      {
+        "path": "data/jdbc-template.md",
+        "tokens": 539,
+        "sha256": "aba902f47b4d3eddae4b53ffec257c8019f880916db6941b6bb7e75f0e3655bd",
+        "kind": "topic"
+      },
+      {
+        "path": "data/jpa-and-repositories.md",
+        "tokens": 2382,
+        "sha256": "59226b5ff3005834447efae5344545dc9cc94414ae53e21b10a2b36d36504eb0",
+        "kind": "topic"
+      },
+      {
+        "path": "data/r2dbc.md",
+        "tokens": 1895,
+        "sha256": "5fac85eaee67ae46dd3e75d6bb1a69eb7efb294d4728c1dc1790f2f1cec37ef4",
+        "kind": "topic"
+      },
+      {
+        "path": "deployment/buildpacks.md",
+        "tokens": 613,
+        "sha256": "a91181529e155bfb4a6b0689d141f9be84c26b865a88be1f40bb4c1b27bb2a4f",
+        "kind": "topic"
+      },
+      {
+        "path": "deployment/dockerfiles.md",
+        "tokens": 2027,
+        "sha256": "e08cea473c48f7a27e7afeba7ce50f54e055adde6c82f306c0899d804b12acc9",
+        "kind": "topic"
+      },
+      {
+        "path": "deployment/efficient-packaging.md",
+        "tokens": 604,
+        "sha256": "49c5e012dfa456b49e71214c71b3c12f13bb2b39a31303048afbb511c4fd0bcd",
+        "kind": "topic"
+      },
+      {
+        "path": "deployment/index.md",
+        "tokens": 104,
+        "sha256": "2561a0e0211431ee1c08a33ee3b8db3ed9832fad97aa3d8b7d6a97edf039b566",
+        "kind": "index"
+      },
+      {
+        "path": "index.md",
+        "tokens": 105,
+        "sha256": "f509907fbe6e91e0ca1bafb72679a96a6f8e04cda4202c8265c5089814170237",
+        "kind": "index"
+      },
+      {
+        "path": "operations/actuator-enabling.md",
+        "tokens": 411,
+        "sha256": "eef854bf0ed6f25180fbfecfa7a3bd6ece0c272c24d7b459784941ff7bfeb9c3",
+        "kind": "topic"
+      },
+      {
+        "path": "operations/index.md",
+        "tokens": 42,
+        "sha256": "f8eee0967429be4044dabd96897d65733148828be35147241e4b1db90bdc66c6",
+        "kind": "index"
+      },
+      {
+        "path": "quickstart.md",
+        "tokens": 1146,
+        "sha256": "7f6862995905b4ad668485f92d7a732b20e81f9dee66ece0d0e76a45935035de",
+        "kind": "quickstart"
+      },
+      {
+        "path": "security/index.md",
+        "tokens": 34,
+        "sha256": "ce66244eb3e85ed29b5514ac5088bb65cfb6f23068801afcc76e11d4293bf310",
+        "kind": "index"
+      },
+      {
+        "path": "security/web-security.md",
+        "tokens": 1841,
+        "sha256": "4ae4e2abe707206e48bc83c6295b399aabd394660c4cc98733e628e12d9b1e7e",
+        "kind": "topic"
+      },
+      {
+        "path": "testing/detecting-configuration.md",
+        "tokens": 669,
+        "sha256": "973b2d191df7afc4a90c45dd5612def67a3bef1b4e0a7788fb3523fca2047a03",
+        "kind": "topic"
+      },
+      {
+        "path": "testing/index.md",
+        "tokens": 300,
+        "sha256": "25e75afded3ad5c4de3c1352d62dcb8abdfadf8ba1737694a4dfbc7e7a0e140e",
+        "kind": "index"
+      },
+      {
+        "path": "testing/jpa-tests.md",
+        "tokens": 1294,
+        "sha256": "0feca81942ccf8b08a4a840eb7bebf162cc584f77adf8434bc0690eea037d57e",
+        "kind": "topic"
+      },
+      {
+        "path": "testing/json-tests.md",
+        "tokens": 1114,
+        "sha256": "0f3313342c700d97618a310a737761353d11921029cdd9208b891451466ed679",
+        "kind": "topic"
+      },
+      {
+        "path": "testing/mock-environment.md",
+        "tokens": 1940,
+        "sha256": "dd29231493e0c599743f99272a3aee44236ad876f3251f62e727ff761f308473",
+        "kind": "topic"
+      },
+      {
+        "path": "testing/mvc-tests.md",
+        "tokens": 1911,
+        "sha256": "b52c5e3cfd87ad051b6c10261f298dbd0e4cb7219d3c2b37df80f36840e7c25b",
+        "kind": "topic"
+      },
+      {
+        "path": "testing/running-server.md",
+        "tokens": 1570,
+        "sha256": "f84e0d10f736232b706b3b74ab8a03a6bc7ffe7873eed46dc1f417214c272919",
+        "kind": "topic"
+      },
+      {
+        "path": "testing/test-foundations.md",
+        "tokens": 935,
+        "sha256": "b350f77a4f665365e5e2c14e0e9e849e19aec5822cfc74cf4309188e0cef2694",
+        "kind": "topic"
+      },
+      {
+        "path": "testing/testcontainers.md",
+        "tokens": 5080,
+        "sha256": "a72570fd1262d0cb65c76043e4517d6adbce48e123c095dc75dd5645f4282393",
+        "kind": "topic"
+      },
+      {
+        "path": "using/application-annotation.md",
+        "tokens": 953,
+        "sha256": "39a8776e5f49e6c887456206faa7bc9cfebad0f4c459e7ffe282ca1cc696b75a",
+        "kind": "topic"
+      },
+      {
+        "path": "using/auto-configuration.md",
+        "tokens": 887,
+        "sha256": "7da7ce100f2f77724d2331183c9a71af54e580d9396b117875d91974d2c89969",
+        "kind": "topic"
+      },
+      {
+        "path": "using/configuration-classes.md",
+        "tokens": 410,
+        "sha256": "8d314dc8b1b04b7c4d3408e9150f79adac2ad0cdf369a633a9beb6758b5c5ea8",
+        "kind": "topic"
+      },
+      {
+        "path": "using/dependency-injection.md",
+        "tokens": 809,
+        "sha256": "be7cb085f990f8778b98555436de3f38c0226dfef3d1a6398aa1521dba2fed84",
+        "kind": "topic"
+      },
+      {
+        "path": "using/index.md",
+        "tokens": 257,
+        "sha256": "0bf4634d1cf6c1955fe2273f8fb527eb9921228e282dfe1ad2fd70256bffd7f0",
+        "kind": "index"
+      },
+      {
+        "path": "using/production-packaging.md",
+        "tokens": 338,
+        "sha256": "c35daa3f8d6bb6b9073c53f6bad791bddfc5827c244ca6fdcfeb4a3f8fa5dc80",
+        "kind": "topic"
+      },
+      {
+        "path": "using/project-structure.md",
+        "tokens": 842,
+        "sha256": "78b0c9761de90c9e3ae9eecf661c7719f302e663675054b69efcccfd6eae5f09",
+        "kind": "topic"
+      },
+      {
+        "path": "using/running-applications.md",
+        "tokens": 1067,
+        "sha256": "a9ca5ee581ef7ad3265a90a012e17de9ed189e13eeae5787363515b9af378d5a",
+        "kind": "topic"
+      },
+      {
+        "path": "validation/index.md",
+        "tokens": 32,
+        "sha256": "9db4feb9d517841b99121a709763b3a13eb221b171f15a71be5bfd30e58c3f92",
+        "kind": "index"
+      },
+      {
+        "path": "validation/method-validation.md",
+        "tokens": 597,
+        "sha256": "241031bb6dee35c802668e11cbf6bddddce5528f003700f3d57896f4214a4717",
+        "kind": "topic"
+      },
+      {
+        "path": "web/api-versioning.md",
+        "tokens": 608,
+        "sha256": "1279105b47264a6dd58e940a9e1dcd31f68f7be477f3d29176a81c72eb861b22",
+        "kind": "topic"
+      },
+      {
+        "path": "web/content-negotiation.md",
+        "tokens": 903,
+        "sha256": "df4780c392ff44cfbfb5a48b24b11601ce308add34ac5ecb3dedd5387ee09cbb",
+        "kind": "topic"
+      },
+      {
+        "path": "web/controllers-and-routing.md",
+        "tokens": 1334,
+        "sha256": "414336da1354cc07965a3d2500dcad5c44f10e7ccf0a4d0a98c182d1c23d1375",
+        "kind": "topic"
+      },
+      {
+        "path": "web/conversion-service.md",
+        "tokens": 480,
+        "sha256": "6597ed5829058099c32deae7f8b270ce69d73b15733c9b88f82913d92bab747b",
+        "kind": "topic"
+      },
+      {
+        "path": "web/cors.md",
+        "tokens": 763,
+        "sha256": "f7daa9a60551ba2f035f2d495944c2dd8eb83b23efa72346949ca222a4301a49",
+        "kind": "topic"
+      },
+      {
+        "path": "web/embedded-server-customization.md",
+        "tokens": 1804,
+        "sha256": "0c7a7c6a100dd2d82af60352f881cf6f7e125ce12b673e94f25c93c42ed0230f",
+        "kind": "topic"
+      },
+      {
+        "path": "web/error-handling.md",
+        "tokens": 2597,
+        "sha256": "d9e277035699b1d4e13316299f26ef0faaa722d945ced9469e777b1c36bcae0d",
+        "kind": "topic"
+      },
+      {
+        "path": "web/graceful-shutdown.md",
+        "tokens": 592,
+        "sha256": "2993177c044f71f37816cb8075e0a1f6c11b0af4f1cd7971721cff6d8b380aba",
+        "kind": "topic"
+      },
+      {
+        "path": "web/index.md",
+        "tokens": 394,
+        "sha256": "e033c092226f7f5fbef87eda4fa350f2792a73dc30d10b30601ddb4ee5604375",
+        "kind": "index"
+      },
+      {
+        "path": "web/message-converters.md",
+        "tokens": 808,
+        "sha256": "57ecc7b78de3c0bc4c34cc411221260ab69212bfe2854e26fcb124647c017344",
+        "kind": "topic"
+      },
+      {
+        "path": "web/mvc-auto-configuration.md",
+        "tokens": 806,
+        "sha256": "9a1850df1429e2ae5c0197eaf7b28b3a827546027e197897bf60c1c9afb6f51c",
+        "kind": "topic"
+      },
+      {
+        "path": "web/static-content.md",
+        "tokens": 1233,
+        "sha256": "3dfde9bd7f579a4a68bf2b27f4e779fa578dd9302ea5e3674067bf4552d6e9f7",
+        "kind": "topic"
+      }
+    ]
+  },
+  "fastapi": {
+    "documents": 66,
+    "topics": 49,
+    "quickstarts": 1,
+    "indexes": 16,
+    "non_index_pages": 50,
+    "total_tokens": 98098,
+    "non_index_tokens": 94709,
+    "non_index_distribution": {
+      "min": 1108,
+      "p25": 1557.25,
+      "median": 1935.5,
+      "p75": 2210.0,
+      "p90": 2411.5,
+      "p95": 2586.1,
+      "max": 2668,
+      "mean": 1894.18
+    },
+    "all_document_distribution": {
+      "min": 60,
+      "p25": 1112.75,
+      "median": 1714.0,
+      "p75": 2070.5,
+      "p90": 2365.5,
+      "p95": 2545.0,
+      "max": 2668,
+      "mean": 1486.33
+    },
+    "per_document": [
+      {
+        "path": "about/features-and-ecosystem.md",
+        "tokens": 2255,
+        "sha256": "ee75e46be074b0d778477f56c087fcf30e1a05e9d01348af33d294c96fc360af",
+        "kind": "topic"
+      },
+      {
+        "path": "about/index.md",
+        "tokens": 63,
+        "sha256": "8cb7dd25e873632c3472df92a0497c0bdd2f721091ed6d25844bd7bca54f1bab",
+        "kind": "index"
+      },
+      {
+        "path": "app-structure/bigger-applications.md",
+        "tokens": 2087,
+        "sha256": "42647ac866d4d535773872d4feac1796078598cc68f2156f20aba2f2b6513193",
+        "kind": "topic"
+      },
+      {
+        "path": "app-structure/index.md",
+        "tokens": 352,
+        "sha256": "c7f0051276e4476020ad2d5fd74622cf40c9eb5e34064c57c66c4f1a2d3a7e3e",
+        "kind": "index"
+      },
+      {
+        "path": "app-structure/lifespan-events.md",
+        "tokens": 1451,
+        "sha256": "445ece7cbdfea5dbd6b8fb706d3b66a15489043f3be57ace142b781c8229bda8",
+        "kind": "topic"
+      },
+      {
+        "path": "app-structure/path-operation-configuration.md",
+        "tokens": 2227,
+        "sha256": "742b3e12989ba5ed8295b2a6df160f80d07e26e1d6682825c88771af8219a188",
+        "kind": "topic"
+      },
+      {
+        "path": "app-structure/settings.md",
+        "tokens": 1554,
+        "sha256": "d9a4d3a3f9e1ea7996805d69b01d7b003531cd9808e19c0d7fe47e85b8ed116a",
+        "kind": "topic"
+      },
+      {
+        "path": "app-structure/static-files-templates-and-frontend.md",
+        "tokens": 1945,
+        "sha256": "dfdf344320bc156f92a37ce74c1b1f84400d3d026fb79f8051d8cd72cd68c573",
+        "kind": "topic"
+      },
+      {
+        "path": "app-structure/sub-applications-proxy-and-wsgi.md",
+        "tokens": 1933,
+        "sha256": "5292321b7e8c4bb0aa3539600179f4996565f0eb94daf06d154e118e0ddc8080",
+        "kind": "topic"
+      },
+      {
+        "path": "dependencies/advanced-dependencies.md",
+        "tokens": 1676,
+        "sha256": "4eb8ad9f01bf4248defe2764b39b3284ebce9c32a05d8ccff53c12c850807ee4",
+        "kind": "topic"
+      },
+      {
+        "path": "dependencies/decorator-and-global-dependencies.md",
+        "tokens": 1108,
+        "sha256": "3939061357a316cf8df1c719215125ec314efd46c2c22ccfafb43aa6cdb79d20",
+        "kind": "topic"
+      },
+      {
+        "path": "dependencies/dependencies-with-yield.md",
+        "tokens": 1995,
+        "sha256": "fb5ef214bf99651ce8f610c882690149a1be74123ee8f74db3ac3afad7cc2d26",
+        "kind": "topic"
+      },
+      {
+        "path": "dependencies/dependency-injection-basics.md",
+        "tokens": 1886,
+        "sha256": "96b789268b727f385e19fcd89bae14faa5e563eab84f7e5118d8bb6504e109b0",
+        "kind": "topic"
+      },
+      {
+        "path": "dependencies/index.md",
+        "tokens": 233,
+        "sha256": "03e38b0710bbcf8a7fe8c63325caa419ae5d05808e7c8114609f78901747b56a",
+        "kind": "index"
+      },
+      {
+        "path": "deployment/deployment-concepts-and-servers.md",
+        "tokens": 1537,
+        "sha256": "bddb3f20f269432ab6445d4756276aadfb31456f6dd33a43dba1254956d48b6c",
+        "kind": "topic"
+      },
+      {
+        "path": "deployment/docker.md",
+        "tokens": 1525,
+        "sha256": "5a0adac33ca424e51c23d15c6f3acd7778e216adb02cdfe62471ab0fa70295b3",
+        "kind": "topic"
+      },
+      {
+        "path": "deployment/https-and-cloud.md",
+        "tokens": 1237,
+        "sha256": "b931363d71bb6ea1c943f949db5d9ca1f0b9837b28c440d51566bdbc772a7184",
+        "kind": "topic"
+      },
+      {
+        "path": "deployment/index.md",
+        "tokens": 189,
+        "sha256": "8a68f7b9c0dd20130dc1e150ed7fbad3e91e0546b6d3c000697552369b95b2bf",
+        "kind": "index"
+      },
+      {
+        "path": "errors/handling-errors.md",
+        "tokens": 2244,
+        "sha256": "13b62e14961315942aaaf8fd22732851bf9ce99cbdbbb67d5133418626afaeb1",
+        "kind": "topic"
+      },
+      {
+        "path": "errors/index.md",
+        "tokens": 60,
+        "sha256": "71bd255c913586565dc6e7b7d6b3b0d63750ec6ab4def3aecfb8919e6a3d010e",
+        "kind": "index"
+      },
+      {
+        "path": "getting-started/development-workflow.md",
+        "tokens": 1127,
+        "sha256": "21c2661e511a006476654ef72a207ea83b0926beca439f2f6674a696c7729592",
+        "kind": "topic"
+      },
+      {
+        "path": "getting-started/first-steps.md",
+        "tokens": 1567,
+        "sha256": "321b6b0e80cf39bb8154e4a28b8a409643745910f7e19b768e1c0a65fddd84be",
+        "kind": "topic"
+      },
+      {
+        "path": "getting-started/index.md",
+        "tokens": 198,
+        "sha256": "d4c30e3ddcaae047636f505d05dce2e7962aba1229aefaf3c4e163f7149d6968",
+        "kind": "index"
+      },
+      {
+        "path": "getting-started/python-types-and-async.md",
+        "tokens": 1872,
+        "sha256": "689f10b49b622d85c58f0e344d4254a1d0ae5c05b8afa00b196dc29458b00d96",
+        "kind": "topic"
+      },
+      {
+        "path": "index.md",
+        "tokens": 176,
+        "sha256": "c604c0fa58f80b442c232111b0b98e1b0009f59bb711ed88015b791ef1553bd4",
+        "kind": "index"
+      },
+      {
+        "path": "integrations/background-tasks.md",
+        "tokens": 1166,
+        "sha256": "48f95fb9e3971753f3ad373f603f659e789f280499e100994dc2054e52aa6db0",
+        "kind": "topic"
+      },
+      {
+        "path": "integrations/graphql-and-opentelemetry.md",
+        "tokens": 1926,
+        "sha256": "9d923b423442f14cc42e97572f88b4e3cf8d91ec011782e25334080d07dc8102",
+        "kind": "topic"
+      },
+      {
+        "path": "integrations/index.md",
+        "tokens": 247,
+        "sha256": "3fd7777ad078f8cdf0a64d0c3a0a24f0c51cfb9957b2f7433c7f53b7011c6779",
+        "kind": "index"
+      },
+      {
+        "path": "integrations/sql-databases.md",
+        "tokens": 1819,
+        "sha256": "d131b2c2e1cea57d63314325d0eb7ed84ce877b9839167079e1fefe3c1f80f71",
+        "kind": "topic"
+      },
+      {
+        "path": "integrations/websockets.md",
+        "tokens": 1614,
+        "sha256": "537b3ceb247ea11cc6d9e3a65f84a4e24fcd6d6cadc1078305a6b377dea1dea6",
+        "kind": "topic"
+      },
+      {
+        "path": "internals/index.md",
+        "tokens": 81,
+        "sha256": "63135bcf6fd6d99075306f8c1ca2f2cdebb9edda7ef38fa5b82b2472f0b92e93",
+        "kind": "index"
+      },
+      {
+        "path": "internals/request-handling-internals.md",
+        "tokens": 2054,
+        "sha256": "570db1ed57c75d6f2db44a0be5ec792bccdb8c4dd0c1aa100d4817182618d08e",
+        "kind": "topic"
+      },
+      {
+        "path": "middleware/cors.md",
+        "tokens": 1212,
+        "sha256": "e3d9f674c05781d3f2e57755a10e3069e700af0ff9491a265de07bd2a1de12bf",
+        "kind": "topic"
+      },
+      {
+        "path": "middleware/index.md",
+        "tokens": 121,
+        "sha256": "e8542bc388530fdc76ac70d5b83c3dce47fdc542f305599656dafde85cb224db",
+        "kind": "index"
+      },
+      {
+        "path": "middleware/middleware.md",
+        "tokens": 1848,
+        "sha256": "b7450dca0edee850b78b16395ee910bc11c9273b86c0bc15c9eabfd382dd4d9c",
+        "kind": "topic"
+      },
+      {
+        "path": "models/dataclasses-and-pydantic-versions.md",
+        "tokens": 2159,
+        "sha256": "760949ca4de42da64345013ec7ce96405c6540d4b2934952d81b433a7e667bb5",
+        "kind": "topic"
+      },
+      {
+        "path": "models/extra-models-and-updates.md",
+        "tokens": 2316,
+        "sha256": "2e2320f93cb7055f75f28049ed92a0c2fc129d95cb7b3909ecd7a517d78726b5",
+        "kind": "topic"
+      },
+      {
+        "path": "models/index.md",
+        "tokens": 232,
+        "sha256": "30d85a9e74a18a183fea7771a9d444b4dd0b887c33a925d3d7f65f7715c91eb4",
+        "kind": "index"
+      },
+      {
+        "path": "models/response-model.md",
+        "tokens": 2251,
+        "sha256": "58784178cdde3342a14b89de009f69bceecbaf283f96a9def2894d5e52250064",
+        "kind": "topic"
+      },
+      {
+        "path": "openapi/extending-openapi.md",
+        "tokens": 2410,
+        "sha256": "8584d9f7f18aae7ef3e941ac6a194126200e3a45728d1162fade171e3a4b62be",
+        "kind": "topic"
+      },
+      {
+        "path": "openapi/generating-clients.md",
+        "tokens": 1517,
+        "sha256": "fe868437dfcef61670abc2c9a7dfd877385a42ea21d4f9da2e6f2a751d08d159",
+        "kind": "topic"
+      },
+      {
+        "path": "openapi/index.md",
+        "tokens": 209,
+        "sha256": "974356b36e76b86860976f7bfff1e5d5d277e5a4bda7cf1e0b317c2be992b10b",
+        "kind": "index"
+      },
+      {
+        "path": "openapi/metadata-and-docs-ui.md",
+        "tokens": 2343,
+        "sha256": "57bed3671e7205d9aded60ac2a3eb637a8938d12f6ae66f72e72a7c7a08e62c7",
+        "kind": "topic"
+      },
+      {
+        "path": "quickstart.md",
+        "tokens": 2645,
+        "sha256": "3187bd2a09afd59733ff034ee9deb376975583ee0e651f9d40e03858977ec19d",
+        "kind": "quickstart"
+      },
+      {
+        "path": "request/extra-data-types-and-examples.md",
+        "tokens": 2425,
+        "sha256": "dcfebf7a13539b86af002ef8b95dbc7fcfb6e2d3ce991201085d7d6a7d311031",
+        "kind": "topic"
+      },
+      {
+        "path": "request/forms-and-files.md",
+        "tokens": 2066,
+        "sha256": "f7050ccabad7867c1ef430ffc905f6696216a939bd9c4029da245337ba131a33",
+        "kind": "topic"
+      },
+      {
+        "path": "request/headers-and-cookies.md",
+        "tokens": 1659,
+        "sha256": "3d1d8a28d2d4f423edc61ed7c25c942675329654b30a85e4d80c10e52face23c",
+        "kind": "topic"
+      },
+      {
+        "path": "request/index.md",
+        "tokens": 497,
+        "sha256": "3661022c6c2666869f11692b21bf3c785ba136e824e3e250a2ac7537098ee88e",
+        "kind": "index"
+      },
+      {
+        "path": "request/path-parameters.md",
+        "tokens": 2072,
+        "sha256": "65cfd44539fbfad40d57c34af3ef960de0c5ce507a77fec39331da997370a996",
+        "kind": "topic"
+      },
+      {
+        "path": "request/query-parameters.md",
+        "tokens": 2587,
+        "sha256": "fd4254db5963eb93fd829d3567703574df353a7972c9bb8ce5a28fdd9a875793",
+        "kind": "topic"
+      },
+      {
+        "path": "request/request-body.md",
+        "tokens": 2585,
+        "sha256": "442a35b058f4f3360d2bf0bae53515f04abca9d198d6619ceb52c5c7a125d323",
+        "kind": "topic"
+      },
+      {
+        "path": "request/using-request-directly.md",
+        "tokens": 2104,
+        "sha256": "d58fc8440ff605d0e18ea6051cecb4ea23b5fd6b1e1233824e31ebe9f9c38413",
+        "kind": "topic"
+      },
+      {
+        "path": "responses/custom-responses.md",
+        "tokens": 2388,
+        "sha256": "00af3b3b275cb56bb9379fecb1d782b1b5e9d1724bafcd00728dde2bff21643d",
+        "kind": "topic"
+      },
+      {
+        "path": "responses/index.md",
+        "tokens": 272,
+        "sha256": "8cbb64681929ed873e674f4681b0a934888862f587146509f0cbd53f1fde11b0",
+        "kind": "index"
+      },
+      {
+        "path": "responses/response-headers-and-cookies.md",
+        "tokens": 1223,
+        "sha256": "3aed941a580078ffe176b0b23af80ccf8acf44d16fa2c7ed2eba66e913e23a31",
+        "kind": "topic"
+      },
+      {
+        "path": "responses/status-codes.md",
+        "tokens": 1472,
+        "sha256": "ac8f18787c30541f234a0211d93ab4f1f7326f1a5721259e9b9014d1414d0270",
+        "kind": "topic"
+      },
+      {
+        "path": "responses/streaming-and-sse.md",
+        "tokens": 2668,
+        "sha256": "8c2ab58ff755b78649044364dd4ffaef6c79243f41dd3c50a760b5ebdb37cc6a",
+        "kind": "topic"
+      },
+      {
+        "path": "security/http-basic-and-api-keys.md",
+        "tokens": 2059,
+        "sha256": "2a78e3501c972a7b1d10abe8a9255d05b162dd8f75d220c319f2ce96b2f85031",
+        "kind": "topic"
+      },
+      {
+        "path": "security/index.md",
+        "tokens": 280,
+        "sha256": "d25bf19478d37432491bb491ff6ad034350cb0fb6e2f5850f58ed5f5dfb03f45",
+        "kind": "index"
+      },
+      {
+        "path": "security/oauth2-jwt.md",
+        "tokens": 1975,
+        "sha256": "23be7ce73205c4f79068265454c17858032abf3a37ae1f64fdf979ff4198b608",
+        "kind": "topic"
+      },
+      {
+        "path": "security/oauth2-password-flow.md",
+        "tokens": 2019,
+        "sha256": "347b36ecb62e8793ea8f72ec878234a2b250b296abb3fb88feee77740214a478",
+        "kind": "topic"
+      },
+      {
+        "path": "security/oauth2-scopes.md",
+        "tokens": 1752,
+        "sha256": "2e5dd4188b83b59493bcecf4e338aa3a9110ebab9038dbe7be02d8f949a6aac3",
+        "kind": "topic"
+      },
+      {
+        "path": "testing/async-tests-and-database-testing.md",
+        "tokens": 1421,
+        "sha256": "60fc6a305e10b873c28fbfad72c7d221a85e4da6663ffd66f6d98d912e1b18c5",
+        "kind": "topic"
+      },
+      {
+        "path": "testing/index.md",
+        "tokens": 179,
+        "sha256": "4bfc07c9b0b9b8622181aaeba879706cc1b259ea1c1977e65321f782e083d47c",
+        "kind": "index"
+      },
+      {
+        "path": "testing/testing-basics.md",
+        "tokens": 1790,
+        "sha256": "735d0bd6f1e1387dd6ee6ac024517ecf2684e47d0fc115f89907de331c405242",
+        "kind": "topic"
+      },
+      {
+        "path": "testing/testing-dependencies-events-websockets.md",
+        "tokens": 1938,
+        "sha256": "94ad3fe028876111ddfc83e441393f6b53d58d5646a46e896823783eae6dab3b",
+        "kind": "topic"
+      }
+    ]
+  },
+  "checks": {
+    "json_parse": true,
+    "manifest_pages": 50,
+    "claims": 192,
+    "evidence_records": 260,
+    "evidence_source_files": 91,
+    "raw_source_hashes": 95,
+    "expansions_source_matched": 70,
+    "config_examples_source_matched": 33,
+    "code_blocks": {
+      "shell": 12,
+      "java": 67,
+      "yaml": 36,
+      "properties": 3,
+      "plain": 7,
+      "xml": 3,
+      "dockerfile": 3,
+      "gradle": 1,
+      "json": 1
+    },
+    "java_identifiers_checked": 634,
+    "local_heading_anchors_checked": 3,
+    "java_blocks_source_matched": 67,
+    "broken_links": {},
+    "corpus_documents": 60,
+    "corpus_links": 168,
+    "fastapi_manifest_unchanged": true,
+    "separate_manifest": "data/corpus_manifest.springboot-en.jsonl"
+  },
+  "upstream_xrefs": [
+    {
+      "unit": "using/project-structure",
+      "target": "using/using-the-springbootapplication-annotation.adoc",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "using/application-annotation",
+      "target": "using/auto-configuration.adoc",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "using/application-annotation",
+      "target": "using/structuring-your-code.adoc",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "using/application-annotation",
+      "target": "testing/spring-boot-applications.adoc#testing.spring-boot-applications.detecting-configuration",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "using/running-applications",
+      "target": "reference:using/packaging-for-production.adoc",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "using/running-applications",
+      "target": "how-to:hotswapping.adoc",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "using/production-packaging",
+      "target": "packaging/index.adoc",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "using/production-packaging",
+      "target": "how-to:actuator.adoc",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/property-precedence",
+      "target": "features/external-config.adoc#features.external-config.typesafe-configuration-properties",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/property-precedence",
+      "target": "testing/spring-boot-applications.adoc#testing.spring-boot-applications.autoconfigured-tests",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/property-precedence",
+      "target": "using/devtools.adoc#using.devtools.globalsettings",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/property-precedence",
+      "target": "features/external-config.adoc#features.external-config.files",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/property-precedence",
+      "target": "features/external-config.adoc#features.external-config.files.profile-specific",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/property-precedence",
+      "target": "features/external-config.adoc#features.external-config.files",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/property-precedence",
+      "target": "features/external-config.adoc#features.external-config.files.profile-specific",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/property-precedence",
+      "target": "features/external-config.adoc#features.external-config.typesafe-configuration-properties.relaxed-binding.environment-variables",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/property-precedence",
+      "target": "actuator/endpoints.adoc",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/config-files",
+      "target": "features/external-config.adoc#features.external-config.files.optional-prefix",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/config-files",
+      "target": "features/external-config.adoc#features.external-config.files.profile-specific",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/config-files",
+      "target": "features/external-config.adoc#features.external-config.files.profile-specific",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/imports-and-configtrees",
+      "target": "features/external-config.adoc#features.external-config.files.importing",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/placeholders",
+      "target": "features/external-config.adoc#features.external-config.typesafe-configuration-properties.relaxed-binding",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/placeholders",
+      "target": "how-to:properties-and-configuration.adoc#howto.properties-and-configuration.short-command-line-arguments",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/yaml",
+      "target": "features/external-config.adoc#features.external-config.typesafe-configuration-properties",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/relaxed-binding",
+      "target": "features/external-config.adoc#features.external-config.typesafe-configuration-properties.relaxed-binding.environment-variables",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/relaxed-binding",
+      "target": "features/external-config.adoc#features.external-config.typesafe-configuration-properties.relaxed-binding.environment-variables",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/properties-validation",
+      "target": "actuator/endpoints.adoc",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/profiles",
+      "target": "features/external-config.adoc#features.external-config.files.profile-specific",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/profiles",
+      "target": "features/external-config.adoc#features.external-config.files.activation-properties",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/profiles",
+      "target": "features/external-config.adoc#features.external-config.order",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/profiles",
+      "target": "features/external-config.adoc#features.external-config.typesafe-configuration-properties.merging-complex-types",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/profiles",
+      "target": "features/external-config.adoc#features.external-config.files.profile-specific",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/profiles",
+      "target": "features/external-config.adoc#features.external-config.files.activation-properties",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/profiles",
+      "target": "features/profiles.adoc#features.profiles.groups",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/profiles",
+      "target": "features/external-config.adoc#features.external-config.files.profile-specific",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/profiles",
+      "target": "features/external-config.adoc#features.external-config.files.activation-properties",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/profiles",
+      "target": "features/external-config.adoc#features.external-config.files.profile-specific",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/json",
+      "target": "how-to:spring-mvc.adoc#howto.spring-mvc.customize-jackson-jsonmapper",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/logging-levels",
+      "target": "features/external-config.adoc#features.external-config.typesafe-configuration-properties.relaxed-binding.maps-from-environment-variables",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "configuration/logging-levels",
+      "target": "features/external-config.adoc#features.external-config.application-json",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "web/mvc-auto-configuration",
+      "target": "web/servlet.adoc#web.servlet.spring-mvc.static-content",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "web/mvc-auto-configuration",
+      "target": "web/servlet.adoc#web.servlet.spring-mvc.message-converters",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "web/mvc-auto-configuration",
+      "target": "web/servlet.adoc#web.servlet.spring-mvc.message-codes",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "web/mvc-auto-configuration",
+      "target": "web/servlet.adoc#web.servlet.spring-mvc.binding-initializer",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "web/content-negotiation",
+      "target": "web/servlet.adoc#web.servlet.spring-mvc.static-content",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "web/error-handling",
+      "target": "appendix:application-properties/index.adoc#appendix.application-properties.web",
+      "file_exists": true,
+      "anchor_verified": false,
+      "generated_anchor_not_built": true
+    },
+    {
+      "unit": "web/error-handling",
+      "target": "actuator/metrics.adoc#actuator.metrics.supported.spring-mvc",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "web/api-versioning",
+      "target": "io/rest-client.adoc#io.rest-client.apiversioning",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "web/embedded-server-customization",
+      "target": "how-to:webserver.adoc#howto.webserver.configure-ssl",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "web/embedded-server-customization",
+      "target": "how-to:webserver.adoc#howto.webserver.enable-response-compression",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "web/embedded-server-customization",
+      "target": "how-to:webserver.adoc#howto.webserver.configure-access-logs",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "security/web-security",
+      "target": "security/oauth2.adoc#security.oauth2",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "security/web-security",
+      "target": "security/saml2.adoc#security.saml2",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "validation/method-validation",
+      "target": "features/internationalization.adoc",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "data/datasources",
+      "target": "how-to:data-access.adoc#howto.data-access.configure-custom-datasource",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "data/datasources",
+      "target": "how-to:data-initialization.adoc",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "data/datasources",
+      "target": "data/sql.adoc#data.sql.datasource.connection-pool",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "data/jpa-and-repositories",
+      "target": "using/auto-configuration.adoc#using.auto-configuration.packages",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "data/jpa-and-repositories",
+      "target": "how-to:data-access.adoc#howto.data-access.separate-entity-definitions-from-spring-configuration",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "data/jpa-and-repositories",
+      "target": "using/auto-configuration.adoc#using.auto-configuration.packages",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "data/r2dbc",
+      "target": "how-to:data-initialization.adoc#howto.data-initialization.using-basic-sql-scripts",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "data/r2dbc",
+      "target": "data/sql.adoc#data.sql.datasource.embedded",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "data/r2dbc",
+      "target": "using/auto-configuration.adoc#using.auto-configuration.packages",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "testing/test-foundations",
+      "target": "testing/spring-boot-applications.adoc#testing.spring-boot-applications.detecting-configuration",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "testing/test-foundations",
+      "target": "testing/spring-boot-applications.adoc#testing.spring-boot-applications.autoconfigured-tests",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "testing/test-foundations",
+      "target": "testing/spring-boot-applications.adoc#testing.spring-boot-applications.with-mock-environment",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "testing/detecting-configuration",
+      "target": "using/structuring-your-code.adoc",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "testing/detecting-configuration",
+      "target": "testing/spring-boot-applications.adoc#testing.spring-boot-applications.autoconfigured-tests",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "testing/detecting-configuration",
+      "target": "testing/spring-boot-applications.adoc#testing.spring-boot-applications.user-configuration-and-slicing",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "testing/mock-environment",
+      "target": "testing/spring-boot-applications.adoc#testing.spring-boot-applications.spring-mvc-tests",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "testing/mock-environment",
+      "target": "web/servlet.adoc#web.servlet.spring-mvc.error-handling.error-pages",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "testing/running-server",
+      "target": "how-to:webserver.adoc#howto.webserver.discover-port",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "testing/running-server",
+      "target": "testing/spring-boot-applications.adoc#testing.spring-boot-applications.with-mock-environment",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "testing/running-server",
+      "target": "testing/spring-boot-applications.adoc#testing.spring-boot-applications.autoconfigured-tests",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "testing/json-tests",
+      "target": "appendix:test-auto-configuration/index.adoc",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "testing/mvc-tests",
+      "target": "appendix:test-auto-configuration/index.adoc",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "testing/mvc-tests",
+      "target": "how-to:testing.adoc#howto.testing.with-spring-security",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "testing/mvc-tests",
+      "target": "testing/spring-boot-applications.adoc#testing.spring-boot-applications.with-running-server",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "testing/jpa-tests",
+      "target": "appendix:test-auto-configuration/index.adoc",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "testing/testcontainers",
+      "target": "#testing.testcontainers.service-connections",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "testing/testcontainers",
+      "target": "#testing.testcontainers.spring-beans",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "testing/testcontainers",
+      "target": "#testing.testcontainers.importing-configuration-interfaces",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "deployment/efficient-packaging",
+      "target": "reference:packaging/aot-cache.adoc#packaging.aot-cache.aot-cache",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "deployment/efficient-packaging",
+      "target": "reference:packaging/aot-cache.adoc#packaging.aot-cache.cds",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "deployment/dockerfiles",
+      "target": "packaging/container-images/efficient-images.adoc#packaging.container-images.efficient-images.layering",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "deployment/dockerfiles",
+      "target": "reference:packaging/aot-cache.adoc#packaging.aot-cache.aot-cache",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "deployment/dockerfiles",
+      "target": "reference:packaging/aot-cache.adoc#packaging.aot-cache.cds",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "deployment/buildpacks",
+      "target": "maven-plugin:build-image.adoc#build-image",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "deployment/buildpacks",
+      "target": "gradle-plugin:packaging-oci-image.adoc",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    },
+    {
+      "unit": "deployment/buildpacks",
+      "target": "packaging/container-images/efficient-images.adoc#packaging.container-images.efficient-images.layering",
+      "file_exists": true,
+      "anchor_verified": true,
+      "generated_anchor_not_built": false
+    }
+  ],
+  "warnings": [],
+  "errors": []
+}

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:cb240f1f49849fc2c3a6199504786314dd2c5a4be5a408498249bed5f6627e05",
+  "claims": [
+    {
+      "id": "claim_e9ca06cc997649989863c7b9035a50e3",
+      "statement": "All the supported logging systems can have the logger levels set in the Spring Environment (for example, in application.properties) by using logging.level.<logger-name>=<level> where level is one of TRACE, DEBUG, INFO, WARN, ERROR, FATAL, or OFF. The root logger can be configured by using logging.level.root.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/logging.adoc#L271-L293",
+          "version": "repo-lines-v1:sha256:1ee5cf3c855e579f2ae7ed508f274ab5195ef89098f5e45ccbe867da2c88d266:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFiNzhmZWUyMDg3NjRjMmI0ZjYxOWRmZTQyZjY5NzJiNjE3ZDA3MDE1NTI4M2MzNWI0YTZkODRiYTNjMjRjZjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ2NDk4OGRhZDIzOGI2ODE5ZGI1MDZiMTM4YThiMWY0MWE1MTcxOTA0MDhkMjE1Y2EwYjM1NDg4NzI5YzQ4NDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjExMTM5YjcyNTlmNzhkODliOThjZTQwM2NlMzE1OTI3Y2FkMmM5OTJhNTUxZDhhZTJiZmJjOWM1Y2JlNThiOGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_06eb1b7652cb4f33ae56a8b7fc7537d8",
+      "statement": "It is also possible to set logging levels using environment variables. For example, LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB=DEBUG will set org.springframework.web to DEBUG.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/logging.adoc#L271-L293",
+          "version": "repo-lines-v1:sha256:1ee5cf3c855e579f2ae7ed508f274ab5195ef89098f5e45ccbe867da2c88d266:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFiNzhmZWUyMDg3NjRjMmI0ZjYxOWRmZTQyZjY5NzJiNjE3ZDA3MDE1NTI4M2MzNWI0YTZkODRiYTNjMjRjZjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ2NDk4OGRhZDIzOGI2ODE5ZGI1MDZiMTM4YThiMWY0MWE1MTcxOTA0MDhkMjE1Y2EwYjM1NDg4NzI5YzQ4NDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjExMTM5YjcyNTlmNzhkODliOThjZTQwM2NlMzE1OTI3Y2FkMmM5OTJhNTUxZDhhZTJiZmJjOWM1Y2JlNThiOGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

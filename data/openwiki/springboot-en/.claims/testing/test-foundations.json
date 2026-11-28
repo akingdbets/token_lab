@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:b350f77a4f665365e5e2c14e0e9e849e19aec5822cfc74cf4309188e0cef2694",
+  "claims": [
+    {
+      "id": "claim_83698b221e014a959ef4503b36ebee03",
+      "statement": "A Spring Boot application is a Spring ApplicationContext, so nothing very special has to be done to test it beyond what you would normally do with a vanilla Spring context.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/spring-boot-applications.adoc#L1-L32",
+          "version": "repo-lines-v1:sha256:91bc7dc933b44984683df77bafb554c60be24ebebf3190748f54dd7d81889785:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM0NDUyMjAwNDJkZmU3Njg5ZGVhM2NhMWEzMzEzNjVhNjIxM2JlZjVlOTlkYWU1NDQwNDcyYmQwNTBiOWRhZjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2N2U2Y2VlODc5MGYxNmNlNWI5MDRhNmE4ODVhYWM0ZTQzNmY4NzgzNWExNzYxZWYyZWNlNDYwZTZhMTUyZDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bb4db25cfa2f49dcb4e26be44262dc70",
+      "statement": "Spring Boot provides a @SpringBootTest annotation, which can be used as an alternative to the standard spring-test @ContextConfiguration annotation when you need Spring Boot features. The annotation works by creating the ApplicationContext used in your tests through SpringApplication. In addition to @SpringBootTest a number of other annotations are also provided for testing more specific slices of an application.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/spring-boot-applications.adoc#L1-L32",
+          "version": "repo-lines-v1:sha256:91bc7dc933b44984683df77bafb554c60be24ebebf3190748f54dd7d81889785:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM0NDUyMjAwNDJkZmU3Njg5ZGVhM2NhMWEzMzEzNjVhNjIxM2JlZjVlOTlkYWU1NDQwNDcyYmQwNTBiOWRhZjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2N2U2Y2VlODc5MGYxNmNlNWI5MDRhNmE4ODVhYWM0ZTQzNmY4NzgzNWExNzYxZWYyZWNlNDYwZTZhMTUyZDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

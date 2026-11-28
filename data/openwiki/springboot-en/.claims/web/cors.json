@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:f7daa9a60551ba2f035f2d495944c2dd8eb83b23efa72346949ca222a4301a49",
+  "claims": [
+    {
+      "id": "claim_0cc9ebaf0f21467aa69121fb93b03465",
+      "statement": "Cross-origin resource sharing (CORS) is a W3C specification implemented by most browsers that lets you specify in a flexible way what kind of cross-domain requests are authorized, instead of using some less secure and less powerful approaches such as IFRAME or JSONP.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L444-L453",
+          "version": "repo-lines-v1:sha256:0eb900cc1d7a5704b10db253db65eb3bbf2a721e2afc85ac53debd196b74c579:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ2MmM5N2NiMmYxOTZhZmZhYTZhMmJhOTIwMmUwZTY5YTExNzExNTY1ZjRhOTEwOWUzZmI5YjI5MGQ1NzYyZmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2N2VkOTY0OWNmOTcwNGJhODJkZjRiNDU0Y2UzY2U4MzY2YjMwNjRhM2EzZDcwMGYxNTQ1YWI2MWMxMmMyNDUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/web/servlet/springmvc/cors/MyCorsConfiguration.java",
+          "version": "repo-file-v1:sha256:3a5ddd0888febc936dd870620a1b34d8ef6b55d3ad0ebaf078e76dcde426becc"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

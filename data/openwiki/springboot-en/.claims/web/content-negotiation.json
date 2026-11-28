@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:df4780c392ff44cfbfb5a48b24b11601ce308add34ac5ecb3dedd5387ee09cbb",
+  "claims": [
+    {
+      "id": "claim_a2c871261ab84bcb85c82869c55a86b9",
+      "statement": "Spring MVC can map incoming HTTP requests to handlers by looking at the request path and matching it to the mappings defined in your application (for example, @GetMapping annotations on Controller methods).",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L238-L288",
+          "version": "repo-lines-v1:sha256:4d8b881389a0edb32d0d3290092e52d358a0fde712a68d77aabb897f303790c6:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJjMDM4MjhiMzM1NDA5MDQwOWNmZTUxMTUwNDg3Njc5Y2YxMDE3OWYwMWUwZmFiYjQ0ZDU1ZTVhZWZiZGQ4MmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmMGU5M2QyNDU4Yjg5YjVhZTVhNTE3OGY2OWQyNzNkM2U5OTk1NTcwMDA2MjRiNDA2YzFmMTMzZDUyNzgyNzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_121f965deef94ef9b2642efd994f94e4",
+      "statement": "Spring Boot chooses to disable suffix pattern matching by default, which means that requests like \"GET /projects/spring-boot.json\" will not be matched to @GetMapping(\"/projects/spring-boot\") mappings. This is considered as a best practice for Spring MVC applications. This feature was mainly useful in the past for HTTP clients which did not send proper \"Accept\" request headers; we needed to make sure to send the correct Content Type to the client. Nowadays, Content Negotiation is much more reliable.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L238-L288",
+          "version": "repo-lines-v1:sha256:4d8b881389a0edb32d0d3290092e52d358a0fde712a68d77aabb897f303790c6:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJjMDM4MjhiMzM1NDA5MDQwOWNmZTUxMTUwNDg3Njc5Y2YxMDE3OWYwMWUwZmFiYjQ0ZDU1ZTVhZWZiZGQ4MmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmMGU5M2QyNDU4Yjg5YjVhZTVhNTE3OGY2OWQyNzNkM2U5OTk1NTcwMDA2MjRiNDA2YzFmMTMzZDUyNzgyNzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_27c1e8a8627140b8b2047180a5eb006e",
+      "statement": "Spring Boot uses the PathPatternParser strategy for matching request paths to controllers. PathPatternParser is an optimized implementation but restricts usage of some path pattern variants. It is also incompatible with configuring the DispatcherServlet with a path prefix (spring.mvc.servlet.path).",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L238-L288",
+          "version": "repo-lines-v1:sha256:4d8b881389a0edb32d0d3290092e52d358a0fde712a68d77aabb897f303790c6:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJjMDM4MjhiMzM1NDA5MDQwOWNmZTUxMTUwNDg3Njc5Y2YxMDE3OWYwMWUwZmFiYjQ0ZDU1ZTVhZWZiZGQ4MmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmMGU5M2QyNDU4Yjg5YjVhZTVhNTE3OGY2OWQyNzNkM2U5OTk1NTcwMDA2MjRiNDA2YzFmMTMzZDUyNzgyNzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0ed22f36be634821b165444a703bc5ff",
+      "statement": "Spring MVC will throw a NoHandlerFoundException if a handler is not found for a request. Note that, by default, the serving of static content is mapped to /** and will, therefore, provide a handler for all requests. If no static content is available, ResourceHttpRequestHandler will throw a NoResourceFoundException. For a NoHandlerFoundException to be thrown, set spring.mvc.static-path-pattern to a more specific value such as /resources/** or set spring.web.resources.add-mappings to false to disable serving of static content entirely.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L238-L288",
+          "version": "repo-lines-v1:sha256:4d8b881389a0edb32d0d3290092e52d358a0fde712a68d77aabb897f303790c6:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJjMDM4MjhiMzM1NDA5MDQwOWNmZTUxMTUwNDg3Njc5Y2YxMDE3OWYwMWUwZmFiYjQ0ZDU1ZTVhZWZiZGQ4MmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmMGU5M2QyNDU4Yjg5YjVhZTVhNTE3OGY2OWQyNzNkM2U5OTk1NTcwMDA2MjRiNDA2YzFmMTMzZDUyNzgyNzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

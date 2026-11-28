@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:f84e0d10f736232b706b3b74ab8a03a6bc7ffe7873eed46dc1f417214c272919",
+  "claims": [
+    {
+      "id": "claim_00763633feec4786a2cd72d9b2605420",
+      "statement": "If you need to start a full running server, we recommend that you use random ports. If you use @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT), an available port is picked at random each time your test runs.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/spring-boot-applications.adoc#L173-L200",
+          "version": "repo-lines-v1:sha256:e20cf4ab5b4d67ee6356460f6a5758fdcc2d00680bc78bab18e1933d6a53fe11:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQzYWRkZGMzMTU2NGUxZTQxMmFiNTY4NWM0OTViNDAyMWY2NDg5ZjM4NTY1Y2IxOWYxYTU2MmUyMTQxMzAyN2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwNTgxY2QyMjM3ZTZmYTUzNWEzMzczMzM3OTc4ZDA5MzA2ZDUzMDQzOGY1ZmQ1ODkyOTE3NzEzN2E0MTYxZjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/testing/springbootapplications/withrunningserver/MyRandomPortRestTestClientAssertJTests.java",
+          "version": "repo-file-v1:sha256:d522298b91ba8ad595a9183684ccec897e8b737960355ffee31ac6dca95a2aca"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/testing/springbootapplications/withrunningserver/MyRandomPortRestTestClientTests.java",
+          "version": "repo-file-v1:sha256:5848a3aafa662ae1784cd9a0bdde9f2825c3a8e61d26379f3ac73823eea5c81c"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/testing/springbootapplications/withrunningserver/MyRandomPortWebTestClientTests.java",
+          "version": "repo-file-v1:sha256:76d32caa0b5fe7b1245ea8aa9c94930147e86d31f38c8171b8917b1097de982b"
+        }
+      ]
+    },
+    {
+      "id": "claim_54344e85899b42568bf699a4dcd8de6b",
+      "statement": "The @LocalServerPort annotation can be used to inject the actual port used into your test.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/spring-boot-applications.adoc#L173-L200",
+          "version": "repo-lines-v1:sha256:e20cf4ab5b4d67ee6356460f6a5758fdcc2d00680bc78bab18e1933d6a53fe11:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQzYWRkZGMzMTU2NGUxZTQxMmFiNTY4NWM0OTViNDAyMWY2NDg5ZjM4NTY1Y2IxOWYxYTU2MmUyMTQxMzAyN2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwNTgxY2QyMjM3ZTZmYTUzNWEzMzczMzM3OTc4ZDA5MzA2ZDUzMDQzOGY1ZmQ1ODkyOTE3NzEzN2E0MTYxZjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b431af589f80445aa1406650896f7116",
+      "statement": "Tests that need to make REST calls to the started server can autowire a RestTestClient by annotating the test class with @AutoConfigureRestTestClient.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/spring-boot-applications.adoc#L173-L200",
+          "version": "repo-lines-v1:sha256:e20cf4ab5b4d67ee6356460f6a5758fdcc2d00680bc78bab18e1933d6a53fe11:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQzYWRkZGMzMTU2NGUxZTQxMmFiNTY4NWM0OTViNDAyMWY2NDg5ZjM4NTY1Y2IxOWYxYTU2MmUyMTQxMzAyN2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwNTgxY2QyMjM3ZTZmYTUzNWEzMzczMzM3OTc4ZDA5MzA2ZDUzMDQzOGY1ZmQ1ODkyOTE3NzEzN2E0MTYxZjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b05d4792c90b402eba1eaa1e88328f5d",
+      "statement": "If you have spring-webflux on the classpath, you can also autowire a WebTestClient by annotating the test class with @AutoConfigureWebTestClient.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/spring-boot-applications.adoc#L173-L200",
+          "version": "repo-lines-v1:sha256:e20cf4ab5b4d67ee6356460f6a5758fdcc2d00680bc78bab18e1933d6a53fe11:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQzYWRkZGMzMTU2NGUxZTQxMmFiNTY4NWM0OTViNDAyMWY2NDg5ZjM4NTY1Y2IxOWYxYTU2MmUyMTQxMzAyN2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwNTgxY2QyMjM3ZTZmYTUzNWEzMzczMzM3OTc4ZDA5MzA2ZDUzMDQzOGY1ZmQ1ODkyOTE3NzEzN2E0MTYxZjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

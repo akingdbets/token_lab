@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:e08cea473c48f7a27e7afeba7ce50f54e055adde6c82f306c0899d804b12acc9",
+  "claims": [
+    {
+      "id": "claim_3af3715d5daa45b2a4c0d4d3f5de3c31",
+      "statement": "While it is possible to convert a Spring Boot uber jar into a Docker image with just a few lines in the Dockerfile, using the layering feature will result in an optimized image. When you create a jar containing the layers index file, the spring-boot-jarmode-tools jar will be added as a dependency to your jar. With this jar on the classpath, you can launch your application in a special mode which allows the bootstrap code to run something entirely different from your application, for example, something that extracts the layers.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/packaging/container-images/dockerfiles.adoc#L1-L101",
+          "version": "repo-lines-v1:sha256:52b81867d7e1548728f00958b7ce606c01c3be269394bddb725a85a1d1f1a7f3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAxLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJjYjM4YTU0YmIxNjA5YzU2ZWI3ZDQxZjdiOTc5MDk1ZTc0YmUxYjNlNGFiMmFhNzQ1ZWYwNjAxM2ZjNTE1MzUxIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJkYjgzODFkMmFiMDUzYTMxMzBkMDI3OTcwYzQ1MGQzN2VkNjc4MWVlYTFkOTdlYjgyOTEzNjhmNDI3N2YxYWU5IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/partials/dockerfile",
+          "version": "repo-file-v1:sha256:f786a8926628a0abf128af390728acac3a49a1db5422b96aacde57d160249503"
+        }
+      ]
+    },
+    {
+      "id": "claim_2445e9f23141434680e84bed78821ed5",
+      "statement": "The extract command can be used to easily split the application into layers to be added to the Dockerfile. Here is an example of a Dockerfile using jarmode.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/packaging/container-images/dockerfiles.adoc#L1-L101",
+          "version": "repo-lines-v1:sha256:52b81867d7e1548728f00958b7ce606c01c3be269394bddb725a85a1d1f1a7f3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAxLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJjYjM4YTU0YmIxNjA5YzU2ZWI3ZDQxZjdiOTc5MDk1ZTc0YmUxYjNlNGFiMmFhNzQ1ZWYwNjAxM2ZjNTE1MzUxIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJkYjgzODFkMmFiMDUzYTMxMzBkMDI3OTcwYzQ1MGQzN2VkNjc4MWVlYTFkOTdlYjgyOTEzNjhmNDI3N2YxYWU5IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_5487d70332d742b6930354e2e5d63d59",
+      "statement": "This is a multi-stage Dockerfile. The builder stage extracts the directories that are needed later. Each of the COPY commands relates to the layers extracted by the jarmode.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/packaging/container-images/dockerfiles.adoc#L1-L101",
+          "version": "repo-lines-v1:sha256:52b81867d7e1548728f00958b7ce606c01c3be269394bddb725a85a1d1f1a7f3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAxLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJjYjM4YTU0YmIxNjA5YzU2ZWI3ZDQxZjdiOTc5MDk1ZTc0YmUxYjNlNGFiMmFhNzQ1ZWYwNjAxM2ZjNTE1MzUxIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJkYjgzODFkMmFiMDUzYTMxMzBkMDI3OTcwYzQ1MGQzN2VkNjc4MWVlYTFkOTdlYjgyOTEzNjhmNDI3N2YxYWU5IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_0ff712e354774b028425d64eff60a7e9",
+      "statement": "Of course, a Dockerfile can be written without using the jarmode. You can use some combination of unzip and mv to move things to the right layer but jarmode simplifies that. Additionally, the layout created by the jarmode is AOT cache (and CDS) friendly out of the box.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/packaging/container-images/dockerfiles.adoc#L1-L101",
+          "version": "repo-lines-v1:sha256:52b81867d7e1548728f00958b7ce606c01c3be269394bddb725a85a1d1f1a7f3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAxLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJjYjM4YTU0YmIxNjA5YzU2ZWI3ZDQxZjdiOTc5MDk1ZTc0YmUxYjNlNGFiMmFhNzQ1ZWYwNjAxM2ZjNTE1MzUxIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJkYjgzODFkMmFiMDUzYTMxMzBkMDI3OTcwYzQ1MGQzN2VkNjc4MWVlYTFkOTdlYjgyOTEzNjhmNDI3N2YxYWU5IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_ff3ba76831014fb9b98bff3d35d7550f",
+      "statement": "This is mostly the same as the above Dockerfile. As the last steps, it creates the AOT cache file by doing a training run and passes the AOT cache parameter to java -jar.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/packaging/container-images/dockerfiles.adoc#L1-L101",
+          "version": "repo-lines-v1:sha256:52b81867d7e1548728f00958b7ce606c01c3be269394bddb725a85a1d1f1a7f3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAxLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJjYjM4YTU0YmIxNjA5YzU2ZWI3ZDQxZjdiOTc5MDk1ZTc0YmUxYjNlNGFiMmFhNzQ1ZWYwNjAxM2ZjNTE1MzUxIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJkYjgzODFkMmFiMDUzYTMxMzBkMDI3OTcwYzQ1MGQzN2VkNjc4MWVlYTFkOTdlYjgyOTEzNjhmNDI3N2YxYWU5IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_43a08a327d6d4d1581473127e5a56727",
+      "statement": "This is mostly the same as the above Dockerfile. As the last steps, it creates the CDS archive by doing a training run and passes the CDS parameter to java -jar.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/packaging/container-images/dockerfiles.adoc#L1-L101",
+          "version": "repo-lines-v1:sha256:52b81867d7e1548728f00958b7ce606c01c3be269394bddb725a85a1d1f1a7f3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAxLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJjYjM4YTU0YmIxNjA5YzU2ZWI3ZDQxZjdiOTc5MDk1ZTc0YmUxYjNlNGFiMmFhNzQ1ZWYwNjAxM2ZjNTE1MzUxIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJkYjgzODFkMmFiMDUzYTMxMzBkMDI3OTcwYzQ1MGQzN2VkNjc4MWVlYTFkOTdlYjgyOTEzNjhmNDI3N2YxYWU5IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

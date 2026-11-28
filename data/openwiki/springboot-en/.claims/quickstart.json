@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:7f6862995905b4ad668485f92d7a732b20e81f9dee66ece0d0e76a45935035de",
+  "claims": [
+    {
+      "id": "claim_94cfc4a21af5406981f22416a2ac3713",
+      "statement": "Although there is not much code here, quite a lot is going on. We step through the important parts in the next few sections.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/tutorial/pages/first-application/index.adoc#L272-L330",
+          "version": "repo-lines-v1:sha256:9c97e3e7c80da54fb84744cc379e3379e98df04fb4cb1b3b7ad5e37e23bb61b1:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3MTUwMDliNzZjNWViMTMwOGQ5NGExNDc2Nzg3MDIwYjI4ZjA5MjRiMDdmMTkyZDY0NDljM2NhZTk5MDc1NTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3ODhlYjkzNGFkMDllZmIyMTUyMzgzM2Y0M2JlODViZjhmYjRlMWE5ZDUxZjY2ZmViZTEzNzAxZDRhOTlhOWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/gettingstarted/firstapplication/code/MyApplication.java",
+          "version": "repo-file-v1:sha256:1c0f1f84c482cd219c37155343fb23f15386d1dc43575c5b98e977f914ffd871"
+        }
+      ]
+    },
+    {
+      "id": "claim_9a80df4b0609429bada623a0a0beaa26",
+      "statement": "The first annotation on our MyApplication class is @RestController. This is known as a _stereotype_ annotation. It provides hints for people reading the code and for Spring that the class plays a specific role. In this case, our class is a web @Controller, so Spring considers it when handling incoming web requests.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/tutorial/pages/first-application/index.adoc#L272-L330",
+          "version": "repo-lines-v1:sha256:9c97e3e7c80da54fb84744cc379e3379e98df04fb4cb1b3b7ad5e37e23bb61b1:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3MTUwMDliNzZjNWViMTMwOGQ5NGExNDc2Nzg3MDIwYjI4ZjA5MjRiMDdmMTkyZDY0NDljM2NhZTk5MDc1NTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3ODhlYjkzNGFkMDllZmIyMTUyMzgzM2Y0M2JlODViZjhmYjRlMWE5ZDUxZjY2ZmViZTEzNzAxZDRhOTlhOWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_444d2861486e4fd2a8f4eb3ce5e202fd",
+      "statement": "The @RequestMapping annotation provides “routing” information. It tells Spring that any HTTP request with the / path should be mapped to the home method. The @RestController annotation tells Spring to render the resulting string directly back to the caller.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/tutorial/pages/first-application/index.adoc#L272-L330",
+          "version": "repo-lines-v1:sha256:9c97e3e7c80da54fb84744cc379e3379e98df04fb4cb1b3b7ad5e37e23bb61b1:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3MTUwMDliNzZjNWViMTMwOGQ5NGExNDc2Nzg3MDIwYjI4ZjA5MjRiMDdmMTkyZDY0NDljM2NhZTk5MDc1NTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3ODhlYjkzNGFkMDllZmIyMTUyMzgzM2Y0M2JlODViZjhmYjRlMWE5ZDUxZjY2ZmViZTEzNzAxZDRhOTlhOWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c8a10785c87541cea94c795c8b77f56e",
+      "statement": "The second class-level annotation is @SpringBootApplication. This annotation is known as a _meta-annotation_, it combines @SpringBootConfiguration, @EnableAutoConfiguration and @ComponentScan.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/tutorial/pages/first-application/index.adoc#L272-L330",
+          "version": "repo-lines-v1:sha256:9c97e3e7c80da54fb84744cc379e3379e98df04fb4cb1b3b7ad5e37e23bb61b1:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3MTUwMDliNzZjNWViMTMwOGQ5NGExNDc2Nzg3MDIwYjI4ZjA5MjRiMDdmMTkyZDY0NDljM2NhZTk5MDc1NTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3ODhlYjkzNGFkMDllZmIyMTUyMzgzM2Y0M2JlODViZjhmYjRlMWE5ZDUxZjY2ZmViZTEzNzAxZDRhOTlhOWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_eb7743d500fa4ea28b0dbee74b0e7201",
+      "statement": "Of those, the annotation we’re most interested in here is @EnableAutoConfiguration. @EnableAutoConfiguration tells Spring Boot to “guess” how you want to configure Spring, based on the jar dependencies that you have added. Since spring-boot-starter-webmvc added Tomcat and Spring MVC, the auto-configuration assumes that you are developing a web application and sets up Spring accordingly.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/tutorial/pages/first-application/index.adoc#L272-L330",
+          "version": "repo-lines-v1:sha256:9c97e3e7c80da54fb84744cc379e3379e98df04fb4cb1b3b7ad5e37e23bb61b1:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3MTUwMDliNzZjNWViMTMwOGQ5NGExNDc2Nzg3MDIwYjI4ZjA5MjRiMDdmMTkyZDY0NDljM2NhZTk5MDc1NTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3ODhlYjkzNGFkMDllZmIyMTUyMzgzM2Y0M2JlODViZjhmYjRlMWE5ZDUxZjY2ZmViZTEzNzAxZDRhOTlhOWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7d8a2033e36444b4aee49e082912e52f",
+      "statement": "Auto-configuration is designed to work well with starters, but the two concepts are not directly tied. You are free to pick and choose jar dependencies outside of the starters. Spring Boot still does its best to auto-configure your application.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/tutorial/pages/first-application/index.adoc#L272-L330",
+          "version": "repo-lines-v1:sha256:9c97e3e7c80da54fb84744cc379e3379e98df04fb4cb1b3b7ad5e37e23bb61b1:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3MTUwMDliNzZjNWViMTMwOGQ5NGExNDc2Nzg3MDIwYjI4ZjA5MjRiMDdmMTkyZDY0NDljM2NhZTk5MDc1NTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3ODhlYjkzNGFkMDllZmIyMTUyMzgzM2Y0M2JlODViZjhmYjRlMWE5ZDUxZjY2ZmViZTEzNzAxZDRhOTlhOWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

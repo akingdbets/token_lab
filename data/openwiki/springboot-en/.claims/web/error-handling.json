@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:d9e277035699b1d4e13316299f26ef0faaa722d945ced9469e777b1c36bcae0d",
+  "claims": [
+    {
+      "id": "claim_39a068aafc454b67af150ed9d2e0f4fa",
+      "statement": "By default, Spring Boot provides an /error mapping that handles all errors in a sensible way, and it is registered as a “global” error page in the servlet container. For machine clients, it produces a JSON response with details of the error, the HTTP status, and the exception message. For browser clients, there is a “whitelabel” error view that renders the same data in HTML format (to customize it, add a View that resolves to error).",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L326-L440",
+          "version": "repo-lines-v1:sha256:517bd1fc2854625e246351ae17a926adffe7a05b231844f004912d07c2ea7c2d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE1LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIxMGJlOGE3ZmZkNWNhMjlmMzUwZGMzZGRmMmJhY2EwNGM1MTQ2ODliNzJkZTUwNmEwMTQ0NDAwYTIzMmU5NzI5IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJjZGM3MzljZmY5MjA5NTkzNzRkODBiZmNhMjk2ZDdiY2E4NTI0ZGUwNTRkZmU0NDdmNzI3ZTBkOWU1ODM2NGE1IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/web/servlet/springmvc/errorhandling/MyControllerAdvice.java",
+          "version": "repo-file-v1:sha256:a4e850025adbfe81b3df65dd04e3df8aa089dabff1afea79c5216b245eed0411"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/web/servlet/springmvc/errorhandling/errorpages/MyErrorViewResolver.java",
+          "version": "repo-file-v1:sha256:d117aef609913baa93f0568696f842189b229ef3ddbfab50aa698da539d44154"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/web/servlet/springmvc/errorhandling/errorpageswithoutspringmvc/MyErrorPagesConfiguration.java",
+          "version": "repo-file-v1:sha256:28908ee1dbc790dd3326e2a75c0beeb9b5695655ff56571545468c7e165b2d7d"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/web/servlet/springmvc/errorhandling/errorpageswithoutspringmvc/MyFilterConfiguration.java",
+          "version": "repo-file-v1:sha256:c52ac1ec4570f9258651e347c2a7852b04089d5e1209c69371c9478ab71dfb97"
+        }
+      ]
+    },
+    {
+      "id": "claim_ee420eec181843408b1c107731c42b4e",
+      "statement": "There are a number of spring.web.error properties that can be set if you want to customize the default error handling behavior. See the Web Properties section of the Appendix.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L326-L440",
+          "version": "repo-lines-v1:sha256:517bd1fc2854625e246351ae17a926adffe7a05b231844f004912d07c2ea7c2d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE1LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIxMGJlOGE3ZmZkNWNhMjlmMzUwZGMzZGRmMmJhY2EwNGM1MTQ2ODliNzJkZTUwNmEwMTQ0NDAwYTIzMmU5NzI5IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJjZGM3MzljZmY5MjA5NTkzNzRkODBiZmNhMjk2ZDdiY2E4NTI0ZGUwNTRkZmU0NDdmNzI3ZTBkOWU1ODM2NGE1IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_88c43267cb9f471fbccc88f98acd83f7",
+      "statement": "To replace the default behavior completely, you can implement ErrorController and register a bean definition of that type or add a bean of type ErrorAttributes to use the existing mechanism but replace the contents.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L326-L440",
+          "version": "repo-lines-v1:sha256:517bd1fc2854625e246351ae17a926adffe7a05b231844f004912d07c2ea7c2d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE1LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIxMGJlOGE3ZmZkNWNhMjlmMzUwZGMzZGRmMmJhY2EwNGM1MTQ2ODliNzJkZTUwNmEwMTQ0NDAwYTIzMmU5NzI5IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJjZGM3MzljZmY5MjA5NTkzNzRkODBiZmNhMjk2ZDdiY2E4NTI0ZGUwNTRkZmU0NDdmNzI3ZTBkOWU1ODM2NGE1IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_983ad90a21684aa9ae145cd512c9639b",
+      "statement": "In the preceding example, if MyException is thrown by a controller defined in the same package as SomeController, a JSON representation of the MyErrorBody POJO is used instead of the ErrorAttributes representation.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L326-L440",
+          "version": "repo-lines-v1:sha256:517bd1fc2854625e246351ae17a926adffe7a05b231844f004912d07c2ea7c2d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE1LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIxMGJlOGE3ZmZkNWNhMjlmMzUwZGMzZGRmMmJhY2EwNGM1MTQ2ODliNzJkZTUwNmEwMTQ0NDAwYTIzMmU5NzI5IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJjZGM3MzljZmY5MjA5NTkzNzRkODBiZmNhMjk2ZDdiY2E4NTI0ZGUwNTRkZmU0NDdmNzI3ZTBkOWU1ODM2NGE1IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_449e8c85ad0d4fb0bffa2dcf35a1f08e",
+      "statement": "In some cases, errors handled at the controller level are not recorded by web observations or the metrics infrastructure. Applications can ensure that such exceptions are recorded with the observations by setting the handled exception on the observation context.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L326-L440",
+          "version": "repo-lines-v1:sha256:517bd1fc2854625e246351ae17a926adffe7a05b231844f004912d07c2ea7c2d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE1LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIxMGJlOGE3ZmZkNWNhMjlmMzUwZGMzZGRmMmJhY2EwNGM1MTQ2ODliNzJkZTUwNmEwMTQ0NDAwYTIzMmU5NzI5IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJjZGM3MzljZmY5MjA5NTkzNzRkODBiZmNhMjk2ZDdiY2E4NTI0ZGUwNTRkZmU0NDdmNzI3ZTBkOWU1ODM2NGE1IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_f98d7bd543c9436997b8719ecf893a3c",
+      "statement": "If you want to display a custom HTML error page for a given status code, you can add a file to an /error directory. Error pages can either be static HTML (that is, added under any of the static resource directories) or be built by using templates. The name of the file should be the exact status code or a series mask.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L326-L440",
+          "version": "repo-lines-v1:sha256:517bd1fc2854625e246351ae17a926adffe7a05b231844f004912d07c2ea7c2d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE1LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIxMGJlOGE3ZmZkNWNhMjlmMzUwZGMzZGRmMmJhY2EwNGM1MTQ2ODliNzJkZTUwNmEwMTQ0NDAwYTIzMmU5NzI5IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJjZGM3MzljZmY5MjA5NTkzNzRkODBiZmNhMjk2ZDdiY2E4NTI0ZGUwNTRkZmU0NDdmNzI3ZTBkOWU1ODM2NGE1IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

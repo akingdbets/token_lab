@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:3dfde9bd7f579a4a68bf2b27f4e779fa578dd9302ea5e3674067bf4552d6e9f7",
+  "claims": [
+    {
+      "id": "claim_f368b253c20c46359f58d18db1db04ff",
+      "statement": "By default, Spring Boot serves static content from a directory called /static (or /public or /resources or /META-INF/resources) in the classpath or from the root of the ServletContext. It uses the ResourceHttpRequestHandler from Spring MVC so that you can modify that behavior by adding your own WebMvcConfigurer and overriding the addResourceHandlers method.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L118-L201",
+          "version": "repo-lines-v1:sha256:4fe7c732b068a7735429d7f51f1075808e7435ef3e66e5c2b67dec5cec52f7a8:eyJzZWxlY3RlZExpbmVDb3VudCI6ODQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhZDU1OWEzNjVkOGRmMjIxNzAwYzg2ZmM3MGVmZmJmNzAzODQ5MDAwMTE5YzBhZDRlOWUyYzkzMWJhMTc0OTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlZTQ2NDE0YzllMzRkNWNiOGM3ZTQzZGJkM2YzMDU1OTQ0YTkzZDE5ZDhlYTEyMDE1MWJlYzY0YWE2OWFlMjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_208a39c989374752b2fa0b17172c7e00",
+      "statement": "In a stand-alone web application, the default servlet from the container is not enabled. It can be enabled using the server.servlet.register-default-servlet property.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L118-L201",
+          "version": "repo-lines-v1:sha256:4fe7c732b068a7735429d7f51f1075808e7435ef3e66e5c2b67dec5cec52f7a8:eyJzZWxlY3RlZExpbmVDb3VudCI6ODQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhZDU1OWEzNjVkOGRmMjIxNzAwYzg2ZmM3MGVmZmJmNzAzODQ5MDAwMTE5YzBhZDRlOWUyYzkzMWJhMTc0OTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlZTQ2NDE0YzllMzRkNWNiOGM3ZTQzZGJkM2YzMDU1OTQ0YTkzZDE5ZDhlYTEyMDE1MWJlYzY0YWE2OWFlMjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_aacf0d3a6fde44088e2ee7eaeb0d508f",
+      "statement": "The default servlet acts as a fallback, serving content from the root of the ServletContext if Spring decides not to handle it. Most of the time, this does not happen (unless you modify the default MVC configuration), because Spring can always handle requests through the DispatcherServlet.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L118-L201",
+          "version": "repo-lines-v1:sha256:4fe7c732b068a7735429d7f51f1075808e7435ef3e66e5c2b67dec5cec52f7a8:eyJzZWxlY3RlZExpbmVDb3VudCI6ODQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhZDU1OWEzNjVkOGRmMjIxNzAwYzg2ZmM3MGVmZmJmNzAzODQ5MDAwMTE5YzBhZDRlOWUyYzkzMWJhMTc0OTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlZTQ2NDE0YzllMzRkNWNiOGM3ZTQzZGJkM2YzMDU1OTQ0YTkzZDE5ZDhlYTEyMDE1MWJlYzY0YWE2OWFlMjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_89b2fd3f8b934caba6601b6d1f367861",
+      "statement": "You can also customize the static resource locations by using the spring.web.resources.static-locations property (replacing the default values with a list of directory locations). The root servlet context path, \"/\", is automatically added as a location as well.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L118-L201",
+          "version": "repo-lines-v1:sha256:4fe7c732b068a7735429d7f51f1075808e7435ef3e66e5c2b67dec5cec52f7a8:eyJzZWxlY3RlZExpbmVDb3VudCI6ODQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhZDU1OWEzNjVkOGRmMjIxNzAwYzg2ZmM3MGVmZmJmNzAzODQ5MDAwMTE5YzBhZDRlOWUyYzkzMWJhMTc0OTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlZTQ2NDE0YzllMzRkNWNiOGM3ZTQzZGJkM2YzMDU1OTQ0YTkzZDE5ZDhlYTEyMDE1MWJlYzY0YWE2OWFlMjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4667b7829bcc4ec09f3b8c9d6f0af501",
+      "statement": "In addition to the “standard” static resource locations mentioned earlier, a special case is made for Webjars content. By default, any resources with a path in /webjars/** are served from jar files if they are packaged in the Webjars format. The path can be customized with the spring.mvc.webjars-path-pattern property.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L118-L201",
+          "version": "repo-lines-v1:sha256:4fe7c732b068a7735429d7f51f1075808e7435ef3e66e5c2b67dec5cec52f7a8:eyJzZWxlY3RlZExpbmVDb3VudCI6ODQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhZDU1OWEzNjVkOGRmMjIxNzAwYzg2ZmM3MGVmZmJmNzAzODQ5MDAwMTE5YzBhZDRlOWUyYzkzMWJhMTc0OTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlZTQ2NDE0YzllMzRkNWNiOGM3ZTQzZGJkM2YzMDU1OTQ0YTkzZDE5ZDhlYTEyMDE1MWJlYzY0YWE2OWFlMjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a8d014b85527455f9464ff26ec8ac2c2",
+      "statement": "Spring Boot also supports the advanced resource handling features provided by Spring MVC, allowing use cases such as cache-busting static resources or using version agnostic URLs for Webjars.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L118-L201",
+          "version": "repo-lines-v1:sha256:4fe7c732b068a7735429d7f51f1075808e7435ef3e66e5c2b67dec5cec52f7a8:eyJzZWxlY3RlZExpbmVDb3VudCI6ODQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhZDU1OWEzNjVkOGRmMjIxNzAwYzg2ZmM3MGVmZmJmNzAzODQ5MDAwMTE5YzBhZDRlOWUyYzkzMWJhMTc0OTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlZTQ2NDE0YzllMzRkNWNiOGM3ZTQzZGJkM2YzMDU1OTQ0YTkzZDE5ZDhlYTEyMDE1MWJlYzY0YWE2OWFlMjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

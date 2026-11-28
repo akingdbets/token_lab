@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:78b0c9761de90c9e3ae9eecf661c7719f302e663675054b69efcccfd6eae5f09",
+  "claims": [
+    {
+      "id": "claim_11f3b04905f248a397496dd4c3a17eca",
+      "statement": "Spring Boot does not require any specific code layout to work. However, there are some best practices that help.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/using/structuring-your-code.adoc#L1-L56",
+          "version": "repo-lines-v1:sha256:7fbfe93353f8b9e5fe6d0fe243473b761f9ad3932fd0cc1e04254f410000f1aa:eyJzZWxlY3RlZExpbmVDb3VudCI6NTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMzMGM0YTlkMjMzNzcwZWQ0MzkxNjljY2JiZTgzNmY4YTY2YzliMDQyYTQ5YWEzMDI1NWE0NDMxMjcxMDhkMjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ0Nzk4NWJhMzdjNmM3NmQ2ZDY5OGE3MDVjNTZjNjdjMDVkMTIyYTBiMzFhMTZmYjk3YzFkYjVjZGI2MjI0MzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/using/structuringyourcode/locatingthemainclass/MyApplication.java",
+          "version": "repo-file-v1:sha256:9fe56a82deb892e443ec5a5db57c49893ba77d5f14e9be5853b2049a6cf112c3"
+        }
+      ]
+    },
+    {
+      "id": "claim_b0e7ecb891ec4868963ac107c91ac0d5",
+      "statement": "When a class does not include a package declaration, it is considered to be in the “default package”. The use of the “default package” is generally discouraged and should be avoided. It can cause particular problems for Spring Boot applications that use the @ComponentScan, @ConfigurationPropertiesScan, @EntityScan, or @SpringBootApplication annotations, since every class from every jar is read.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/using/structuring-your-code.adoc#L1-L56",
+          "version": "repo-lines-v1:sha256:7fbfe93353f8b9e5fe6d0fe243473b761f9ad3932fd0cc1e04254f410000f1aa:eyJzZWxlY3RlZExpbmVDb3VudCI6NTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMzMGM0YTlkMjMzNzcwZWQ0MzkxNjljY2JiZTgzNmY4YTY2YzliMDQyYTQ5YWEzMDI1NWE0NDMxMjcxMDhkMjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ0Nzk4NWJhMzdjNmM3NmQ2ZDY5OGE3MDVjNTZjNjdjMDVkMTIyYTBiMzFhMTZmYjk3YzFkYjVjZGI2MjI0MzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_40bdc61a444f4a4eb91cca7b66e34408",
+      "statement": "We generally recommend that you locate your main application class in a root package above other classes. The @SpringBootApplication annotation is often placed on your main class, and it implicitly defines a base “search package” for certain items. For example, if you are writing a JPA application, the package of the @SpringBootApplication annotated class is used to search for @Entity items. Using a root package also allows component scan to apply only on your project.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/using/structuring-your-code.adoc#L1-L56",
+          "version": "repo-lines-v1:sha256:7fbfe93353f8b9e5fe6d0fe243473b761f9ad3932fd0cc1e04254f410000f1aa:eyJzZWxlY3RlZExpbmVDb3VudCI6NTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMzMGM0YTlkMjMzNzcwZWQ0MzkxNjljY2JiZTgzNmY4YTY2YzliMDQyYTQ5YWEzMDI1NWE0NDMxMjcxMDhkMjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ0Nzk4NWJhMzdjNmM3NmQ2ZDY5OGE3MDVjNTZjNjdjMDVkMTIyYTBiMzFhMTZmYjk3YzFkYjVjZGI2MjI0MzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

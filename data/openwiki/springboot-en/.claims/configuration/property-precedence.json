@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:00ac54594bdc6e1f0b6d0419e8283fe0be86517608fa3ccb342b2c992adcb4d6",
+  "claims": [
+    {
+      "id": "claim_d024f931f0ac4af68484ffab3e10074c",
+      "statement": "Spring Boot lets you externalize your configuration so that you can work with the same application code in different environments. You can use a variety of external configuration sources including Java properties files, YAML files, environment variables, and command-line arguments.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L1-L59",
+          "version": "repo-lines-v1:sha256:b7cee71db6bed59a2038a5a75910e7c81664896e2f7f078055b867dc774b576f:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0MzgwZjI3MDNiYTQ2NTFmYWQyNGY3OGU5YzY1ZTRmMDBlZTdkZDU1Mzg2NDVlZTBhMzUxZTgzYTY2OGE2ZDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBkYzM2NmQ3M2YzMmM1ZGQ4OTczZmYwOTZhOTM4YzBkYmMxM2YzZDU4Y2E3NDJhOWM5MzZlOTU3NjYyMTA5NGMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/features/externalconfig/MyBean.java",
+          "version": "repo-file-v1:sha256:bae36d0116e290a68c385d628b78500ffcfe1bcec903587c5b4162fde22c92b5"
+        }
+      ]
+    },
+    {
+      "id": "claim_4d5197a9918e44c881dca8ca16a91776",
+      "statement": "Property values can be injected directly into your beans by using the @Value annotation, accessed through Spring’s Environment abstraction, or be bound to structured objects through @ConfigurationProperties.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L1-L59",
+          "version": "repo-lines-v1:sha256:b7cee71db6bed59a2038a5a75910e7c81664896e2f7f078055b867dc774b576f:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0MzgwZjI3MDNiYTQ2NTFmYWQyNGY3OGU5YzY1ZTRmMDBlZTdkZDU1Mzg2NDVlZTBhMzUxZTgzYTY2OGE2ZDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBkYzM2NmQ3M2YzMmM1ZGQ4OTczZmYwOTZhOTM4YzBkYmMxM2YzZDU4Y2E3NDJhOWM5MzZlOTU3NjYyMTA5NGMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_aece716127714521bf49ff10a7475988",
+      "statement": "Spring Boot uses a very particular PropertySource order that is designed to allow sensible overriding of values. Later property sources can override the values defined in earlier ones.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L1-L59",
+          "version": "repo-lines-v1:sha256:b7cee71db6bed59a2038a5a75910e7c81664896e2f7f078055b867dc774b576f:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0MzgwZjI3MDNiYTQ2NTFmYWQyNGY3OGU5YzY1ZTRmMDBlZTdkZDU1Mzg2NDVlZTBhMzUxZTgzYTY2OGE2ZDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBkYzM2NmQ3M2YzMmM1ZGQ4OTczZmYwOTZhOTM4YzBkYmMxM2YzZDU4Y2E3NDJhOWM5MzZlOTU3NjYyMTA5NGMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6cf20b99a3ad4146bbda15f79df82747",
+      "statement": "On your application classpath (for example, inside your jar) you can have an application.properties file that provides a sensible default property value for name. When running in a new environment, an application.properties file can be provided outside of your jar that overrides the name. For one-off testing, you can launch with a specific command line switch (for example, java -jar app.jar --name=\"Spring\").",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L1-L59",
+          "version": "repo-lines-v1:sha256:b7cee71db6bed59a2038a5a75910e7c81664896e2f7f078055b867dc774b576f:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0MzgwZjI3MDNiYTQ2NTFmYWQyNGY3OGU5YzY1ZTRmMDBlZTdkZDU1Mzg2NDVlZTBhMzUxZTgzYTY2OGE2ZDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBkYzM2NmQ3M2YzMmM1ZGQ4OTczZmYwOTZhOTM4YzBkYmMxM2YzZDU4Y2E3NDJhOWM5MzZlOTU3NjYyMTA5NGMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

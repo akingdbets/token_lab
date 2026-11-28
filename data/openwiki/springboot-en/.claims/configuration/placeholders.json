@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:9dfeec9e660516aa3579777783f5e314a5c2f6543e07076e2c11c9c849e96874",
+  "claims": [
+    {
+      "id": "claim_5cc3bba024bb42aeaeba7828373bd6ac",
+      "statement": "The values in application.properties and application.yaml are filtered through the existing Environment when they are used, so you can refer back to previously defined values (for example, from System properties or environment variables). The standard ${name} property-placeholder syntax can be used anywhere within a value. Property placeholders can also specify a default value using a : to separate the default value from the property name, for example ${name:default}.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L564-L592",
+          "version": "repo-lines-v1:sha256:13f92dfeeb00fc796b7a0588931a511e36197237b82356034d60d6d7ae75e5d2:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJjNjE3MDM4Zjg3NzllMTFkNWRlMGM3NjhiMmEyNTE2NGE0MjNiZjJmMmJhYWM4NWM5ZDlhZDc0ODYwZjNkYWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjllMDViNzBiZjMwZGVhZDFmNTdlYzBkZjNmMGViMWJiYmU2OWE1NDMzNTAxOGU4NDEzZmY2NGU2NjU3ZGMyNTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e1ec81f4cb1f46e49e45488994a10134",
+      "statement": "Assuming that the username property has not been set elsewhere, app.description will have the value MyApp is a Spring Boot application written by Unknown.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L564-L592",
+          "version": "repo-lines-v1:sha256:13f92dfeeb00fc796b7a0588931a511e36197237b82356034d60d6d7ae75e5d2:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJjNjE3MDM4Zjg3NzllMTFkNWRlMGM3NjhiMmEyNTE2NGE0MjNiZjJmMmJhYWM4NWM5ZDlhZDc0ODYwZjNkYWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjllMDViNzBiZjMwZGVhZDFmNTdlYzBkZjNmMGViMWJiYmU2OWE1NDMzNTAxOGU4NDEzZmY2NGU2NjU3ZGMyNTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c0daf674fd1b4be98d27d9516c77f72c",
+      "statement": "You should always refer to property names in the placeholder using their canonical form (kebab-case using only lowercase letters). This will allow Spring Boot to use the same logic as it does when relaxed binding @ConfigurationProperties.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L564-L592",
+          "version": "repo-lines-v1:sha256:13f92dfeeb00fc796b7a0588931a511e36197237b82356034d60d6d7ae75e5d2:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJjNjE3MDM4Zjg3NzllMTFkNWRlMGM3NjhiMmEyNTE2NGE0MjNiZjJmMmJhYWM4NWM5ZDlhZDc0ODYwZjNkYWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjllMDViNzBiZjMwZGVhZDFmNTdlYzBkZjNmMGViMWJiYmU2OWE1NDMzNTAxOGU4NDEzZmY2NGU2NjU3ZGMyNTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:b52c5e3cfd87ad051b6c10261f298dbd0e4cb7219d3c2b37df80f36840e7c25b",
+  "claims": [
+    {
+      "id": "claim_784fd6a2f6fe4a1383ecdf268a019428",
+      "statement": "To test whether Spring MVC controllers are working as expected, use the @WebMvcTest annotation from the spring-boot-webmvc-test module. @WebMvcTest auto-configures the Spring MVC infrastructure and limits scanned beans to @Controller, @ControllerAdvice, @JacksonComponent, @JsonComponent (deprecated), Converter, GenericConverter, Filter, HandlerInterceptor, WebMvcConfigurer, WebMvcRegistrations, and HandlerMethodArgumentResolver. Regular @Component and @ConfigurationProperties beans are not scanned when the @WebMvcTest annotation is used. @EnableConfigurationProperties can be used to include @ConfigurationProperties beans.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/spring-boot-applications.adoc#L339-L384",
+          "version": "repo-lines-v1:sha256:e6cf83ca6d28ab464c4b7042deac3fa0879234ddbd3ba2ce8c17fda772b55b25:eyJzZWxlY3RlZExpbmVDb3VudCI6NDYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkMzYyZTViMzRhM2YzYTg4ZDE2ZDZiZWRlY2JlNWNjOTNkNGJhMjc5YWQwMGZlYWJiNjljZGM1YzBiY2NkYTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxZDBlMjQzZDQ4ZjM2MzI2MzU1ZTQ4YzkxZTlmYWM3Zjk1M2VlNTM0ZmY1MzAzMWQ1OGZkY2MyODRlYTAxOTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/testing/springbootapplications/springmvctests/MockTransportTests.java",
+          "version": "repo-file-v1:sha256:0aab8e55da7b8fdbf9fd231b1d54494d345ed07d133e657a2e5f402548716927"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/testing/springbootapplications/springmvctests/MyControllerTests.java",
+          "version": "repo-file-v1:sha256:080b099f0123161667e9af495ede5fc00025d614ac6c80d58e070807a5f7d22c"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/testing/springbootapplications/springmvctests/MyHtmlUnitTests.java",
+          "version": "repo-file-v1:sha256:595bd751420e7bce9e06851d8a0d5d9bb6a87060ea9b65215d70ddd50195f01a"
+        }
+      ]
+    },
+    {
+      "id": "claim_779109f3f5ae4f7b85ee5879483fbea8",
+      "statement": "Often, @WebMvcTest is limited to a single controller and is used in combination with @MockitoBean to provide mock implementations for required collaborators.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/spring-boot-applications.adoc#L339-L384",
+          "version": "repo-lines-v1:sha256:e6cf83ca6d28ab464c4b7042deac3fa0879234ddbd3ba2ce8c17fda772b55b25:eyJzZWxlY3RlZExpbmVDb3VudCI6NDYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkMzYyZTViMzRhM2YzYTg4ZDE2ZDZiZWRlY2JlNWNjOTNkNGJhMjc5YWQwMGZlYWJiNjljZGM1YzBiY2NkYTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxZDBlMjQzZDQ4ZjM2MzI2MzU1ZTQ4YzkxZTlmYWM3Zjk1M2VlNTM0ZmY1MzAzMWQ1OGZkY2MyODRlYTAxOTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_df94ed3a14ac46d3a0e15fb0341fe96e",
+      "statement": "@WebMvcTest also auto-configures MockMvc. Mock MVC offers a powerful way to quickly test MVC controllers without needing to start a full HTTP server. If AssertJ is available, the AssertJ support provided by MockMvcTester is auto-configured as well.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/spring-boot-applications.adoc#L339-L384",
+          "version": "repo-lines-v1:sha256:e6cf83ca6d28ab464c4b7042deac3fa0879234ddbd3ba2ce8c17fda772b55b25:eyJzZWxlY3RlZExpbmVDb3VudCI6NDYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkMzYyZTViMzRhM2YzYTg4ZDE2ZDZiZWRlY2JlNWNjOTNkNGJhMjc5YWQwMGZlYWJiNjljZGM1YzBiY2NkYTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxZDBlMjQzZDQ4ZjM2MzI2MzU1ZTQ4YzkxZTlmYWM3Zjk1M2VlNTM0ZmY1MzAzMWQ1OGZkY2MyODRlYTAxOTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f1904468fc4c4a0ebc880decd784eceb",
+      "statement": "If you’d like to use RestTestClient in your tests, annotate your test class with @AutoConfigureRestTestClient. A RestTestClient that uses the Mock MVC infrastructure will then be auto-configured.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/spring-boot-applications.adoc#L339-L384",
+          "version": "repo-lines-v1:sha256:e6cf83ca6d28ab464c4b7042deac3fa0879234ddbd3ba2ce8c17fda772b55b25:eyJzZWxlY3RlZExpbmVDb3VudCI6NDYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkMzYyZTViMzRhM2YzYTg4ZDE2ZDZiZWRlY2JlNWNjOTNkNGJhMjc5YWQwMGZlYWJiNjljZGM1YzBiY2NkYTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxZDBlMjQzZDQ4ZjM2MzI2MzU1ZTQ4YzkxZTlmYWM3Zjk1M2VlNTM0ZmY1MzAzMWQ1OGZkY2MyODRlYTAxOTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d60ffda5738242599c63c54e93c5de6f",
+      "statement": "If you have Spring Security on the classpath, @WebMvcTest will also scan WebSecurityConfigurer beans. Instead of disabling security completely for such tests, you can use Spring Security’s test support. More details on how to use Spring Security’s MockMvc support can be found in this testing.adoc “How-to Guides” section.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/spring-boot-applications.adoc#L339-L384",
+          "version": "repo-lines-v1:sha256:e6cf83ca6d28ab464c4b7042deac3fa0879234ddbd3ba2ce8c17fda772b55b25:eyJzZWxlY3RlZExpbmVDb3VudCI6NDYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkMzYyZTViMzRhM2YzYTg4ZDE2ZDZiZWRlY2JlNWNjOTNkNGJhMjc5YWQwMGZlYWJiNjljZGM1YzBiY2NkYTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxZDBlMjQzZDQ4ZjM2MzI2MzU1ZTQ4YzkxZTlmYWM3Zjk1M2VlNTM0ZmY1MzAzMWQ1OGZkY2MyODRlYTAxOTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

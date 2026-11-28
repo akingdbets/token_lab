@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:2993177c044f71f37816cb8075e0a1f6c11b0af4f1cd7971721cff6d8b380aba",
+  "claims": [
+    {
+      "id": "claim_dc50587125bd46e08ff5a0b8b7d280c0",
+      "statement": "Graceful shutdown is enabled by default with all three embedded web servers (Jetty, Reactor Netty, and Tomcat) and with both reactive and servlet-based web applications. It occurs as part of closing the application context and is performed in the earliest phase of stopping SmartLifecycle beans. This stop processing uses a timeout which provides a grace period during which existing requests will be allowed to complete but no new requests will be permitted.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/graceful-shutdown.adoc#L1-L44",
+          "version": "repo-lines-v1:sha256:a3e8a573365e53d784613c280bd00131b1807d53fdc795b94fa802ff983a2942:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFiNzUzNjgwMTMwODFkNWMwZGFhYTVmZjdiNWU1MzcxMTRiNmUzMTUzMzlhMGYxMTUxNDg5ODI1OTQzODk0MTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxZWVmZTljMjY2NDE1ZTkyNTYzOGRlNGRkMzg5ZTUyMjRlNjRlOTNmZmFkZjAwMGFjMzQzNDc5YTUwYmE3ZTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c71255f668354b278dc5d0401fc6399c",
+      "statement": "The exact way in which new requests are not permitted varies depending on the web server that is being used. Implementations may stop accepting requests at the network layer, or they may return a response with a specific HTTP status code or HTTP header. The use of persistent connections can also change the way that requests stop being accepted.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/graceful-shutdown.adoc#L1-L44",
+          "version": "repo-lines-v1:sha256:a3e8a573365e53d784613c280bd00131b1807d53fdc795b94fa802ff983a2942:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFiNzUzNjgwMTMwODFkNWMwZGFhYTVmZjdiNWU1MzcxMTRiNmUzMTUzMzlhMGYxMTUxNDg5ODI1OTQzODk0MTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxZWVmZTljMjY2NDE1ZTkyNTYzOGRlNGRkMzg5ZTUyMjRlNjRlOTNmZmFkZjAwMGFjMzQzNDc5YTUwYmE3ZTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bd7b8f7d28394cf28271d0b0cb4cb706",
+      "statement": "Jetty, Reactor Netty, and Tomcat will stop accepting new requests at the network layer.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/graceful-shutdown.adoc#L1-L44",
+          "version": "repo-lines-v1:sha256:a3e8a573365e53d784613c280bd00131b1807d53fdc795b94fa802ff983a2942:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFiNzUzNjgwMTMwODFkNWMwZGFhYTVmZjdiNWU1MzcxMTRiNmUzMTUzMzlhMGYxMTUxNDg5ODI1OTQzODk0MTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxZWVmZTljMjY2NDE1ZTkyNTYzOGRlNGRkMzg5ZTUyMjRlNjRlOTNmZmFkZjAwMGFjMzQzNDc5YTUwYmE3ZTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

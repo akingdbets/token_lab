@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:414336da1354cc07965a3d2500dcad5c44f10e7ccf0a4d0a98c182d1c23d1375",
+  "claims": [
+    {
+      "id": "claim_690cd48579684bb88ad52404176c7537",
+      "statement": "The Spring Web MVC framework (often referred to as “Spring MVC”) is a rich “model view controller” web framework. Spring MVC lets you create special @Controller or @RestController beans to handle incoming HTTP requests. Methods in your controller are mapped to HTTP by using @RequestMapping annotations.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L8-L29",
+          "version": "repo-lines-v1:sha256:b39c036ddcc3e5ff71c08373b674ec0438bf4255d4336c41156182d5d8f9a9d0:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk2Yjg0Yjk1ZmQzYTkyZDNhODk3ZGEwMjBkMDVmZThmYTA3YjkyN2Y1MmZjMWFmYTkyN2RlMzY3ZTBkZGEyNTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkwOWFlZDEwNmYzMzY2ZTE5YmM4MGFjNDE2ZjI1MTFlMjU4OGQ5NGM4MTAxNzUxNTRhMWU2NTMxNTlhYWZiMDkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/web/servlet/springmvc/MyRestController.java",
+          "version": "repo-file-v1:sha256:c6ab418b9b956eec1ef71f92448aa59d514f8f789b88352f580098438f54c7e4"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/web/servlet/springmvc/MyRoutingConfiguration.java",
+          "version": "repo-file-v1:sha256:fd2aedfad695dd5cf55410ba811e47f5a11088619570e6085eb711bfca42df4e"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/web/servlet/springmvc/MyUserHandler.java",
+          "version": "repo-file-v1:sha256:541fa328a851a7ca6bed9f204ac33918a02d919a49933c35e7fe31e1a3434a07"
+        }
+      ]
+    },
+    {
+      "id": "claim_062899f84cc44dc7b5e7bd18dbd3cfd9",
+      "statement": "Spring MVC is part of the core Spring Framework, and detailed information is available in the reference documentation. There are also several guides that cover Spring MVC available at https://spring.io/guides.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L8-L29",
+          "version": "repo-lines-v1:sha256:b39c036ddcc3e5ff71c08373b674ec0438bf4255d4336c41156182d5d8f9a9d0:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk2Yjg0Yjk1ZmQzYTkyZDNhODk3ZGEwMjBkMDVmZThmYTA3YjkyN2Y1MmZjMWFmYTkyN2RlMzY3ZTBkZGEyNTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkwOWFlZDEwNmYzMzY2ZTE5YmM4MGFjNDE2ZjI1MTFlMjU4OGQ5NGM4MTAxNzUxNTRhMWU2NTMxNTlhYWZiMDkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

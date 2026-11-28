@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:7de3ca7fd203521ac4a98e36a99d9dbb83ec6bd7d7c4b64aaef94eeeb88558f4",
+  "claims": [
+    {
+      "id": "claim_491b7965b9dc46419005983ea0aea2c5",
+      "statement": "In this setup, the presence of a single parameterized constructor implies that constructor binding should be used. This means that the binder will find a constructor with the parameters that you wish to have bound. If your class has multiple constructors, the @ConstructorBinding annotation can be used to specify which constructor to use for constructor binding.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L850-L951",
+          "version": "repo-lines-v1:sha256:4aa5a82c6e9a60c26b06de4001cb78d601425906f6b6d109d9dc2f333d5916d4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI3N2JhMWFjYWNkMzYwOWY1NzliMmEyYmMyODZlNjg4YzA4MDBjMDk3YzM3NWI4N2E5MmNhYTM4YzY0ODhjMzhlIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJhMGQ1ZmQ5NWYwNWY5ZGU0MGRmNGQ4Y2QwMTkzMTUzNWYxZTFkOWZhMzU5NjhhY2VlOTJlYmMzNDdkZmY2MzRjIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/features/externalconfig/typesafeconfigurationproperties/constructorbinding/MyProperties.java",
+          "version": "repo-file-v1:sha256:e555154152f245035e276fc6f6b881ba13c62829283200ca470bbd7a0ecc63b5"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/features/externalconfig/typesafeconfigurationproperties/constructorbinding/defaultvalues/nonnull/MyProperties.java",
+          "version": "repo-file-v1:sha256:99897e27bfb2809e03f19adf4b167f1c4c1762f2bd18c19d8bb586a9ac32a8eb"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/features/externalconfig/typesafeconfigurationproperties/constructorbinding/primaryconstructor/MyProperties.java",
+          "version": "repo-file-v1:sha256:2f0dd442e72704e44f63955f478d584a81ffa08d725448e5d52385dd89b22716"
+        }
+      ]
+    },
+    {
+      "id": "claim_75511f66958b49558ec4cd7ba3e3d28e",
+      "statement": "To opt-out of constructor binding for a class, the parameterized constructor must be annotated with @Autowired or made private. Kotlin developers can use an empty primary constructor to opt-out of constructor binding.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L850-L951",
+          "version": "repo-lines-v1:sha256:4aa5a82c6e9a60c26b06de4001cb78d601425906f6b6d109d9dc2f333d5916d4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI3N2JhMWFjYWNkMzYwOWY1NzliMmEyYmMyODZlNjg4YzA4MDBjMDk3YzM3NWI4N2E5MmNhYTM4YzY0ODhjMzhlIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJhMGQ1ZmQ5NWYwNWY5ZGU0MGRmNGQ4Y2QwMTkzMTUzNWYxZTFkOWZhMzU5NjhhY2VlOTJlYmMzNDdkZmY2MzRjIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_9d5c3356d8cc42aba527678500c8fd1f",
+      "statement": "Constructor binding can be used with records. Unless your record has multiple constructors, there is no need to use @ConstructorBinding.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L850-L951",
+          "version": "repo-lines-v1:sha256:4aa5a82c6e9a60c26b06de4001cb78d601425906f6b6d109d9dc2f333d5916d4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI3N2JhMWFjYWNkMzYwOWY1NzliMmEyYmMyODZlNjg4YzA4MDBjMDk3YzM3NWI4N2E5MmNhYTM4YzY0ODhjMzhlIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJhMGQ1ZmQ5NWYwNWY5ZGU0MGRmNGQ4Y2QwMTkzMTUzNWYxZTFkOWZhMzU5NjhhY2VlOTJlYmMzNDdkZmY2MzRjIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_e7c71c25e9d14cceb20445be03798ae8",
+      "statement": "Nested members of a constructor bound class (such as Security in the example above) will also be bound through their constructor.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L850-L951",
+          "version": "repo-lines-v1:sha256:4aa5a82c6e9a60c26b06de4001cb78d601425906f6b6d109d9dc2f333d5916d4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI3N2JhMWFjYWNkMzYwOWY1NzliMmEyYmMyODZlNjg4YzA4MDBjMDk3YzM3NWI4N2E5MmNhYTM4YzY0ODhjMzhlIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJhMGQ1ZmQ5NWYwNWY5ZGU0MGRmNGQ4Y2QwMTkzMTUzNWYxZTFkOWZhMzU5NjhhY2VlOTJlYmMzNDdkZmY2MzRjIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_afd2669a22e54c6385b5a8a7aa58985f",
+      "statement": "Default values can be specified using @DefaultValue on constructor parameters and record components. Property placeholders in the annotation’s String value are replaced and the conversion service is applied to coerce it to the target type of a missing property.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L850-L951",
+          "version": "repo-lines-v1:sha256:4aa5a82c6e9a60c26b06de4001cb78d601425906f6b6d109d9dc2f333d5916d4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI3N2JhMWFjYWNkMzYwOWY1NzliMmEyYmMyODZlNjg4YzA4MDBjMDk3YzM3NWI4N2E5MmNhYTM4YzY0ODhjMzhlIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJhMGQ1ZmQ5NWYwNWY5ZGU0MGRmNGQ4Y2QwMTkzMTUzNWYxZTFkOWZhMzU5NjhhY2VlOTJlYmMzNDdkZmY2MzRjIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_d5e5716b41164899b57a293f03280467",
+      "statement": "In the MyProperties example above, you can see the nested Security class uses @DefaultValue(\"USER\") for the roles parameter. This means that if security properties are defined, but roles is not, the default of \"USER\" will be bound.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L850-L951",
+          "version": "repo-lines-v1:sha256:4aa5a82c6e9a60c26b06de4001cb78d601425906f6b6d109d9dc2f333d5916d4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI3N2JhMWFjYWNkMzYwOWY1NzliMmEyYmMyODZlNjg4YzA4MDBjMDk3YzM3NWI4N2E5MmNhYTM4YzY0ODhjMzhlIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJhMGQ1ZmQ5NWYwNWY5ZGU0MGRmNGQ4Y2QwMTkzMTUzNWYxZTFkOWZhMzU5NjhhY2VlOTJlYmMzNDdkZmY2MzRjIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

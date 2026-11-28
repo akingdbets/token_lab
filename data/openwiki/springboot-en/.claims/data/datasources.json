@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:4a3b115acc5e5789fc9eddfe1e9f5471642d79adffe9db2c45b07e31c011b1f9",
+  "claims": [
+    {
+      "id": "claim_54a6417120ac4efab8f0c4826df6c92c",
+      "statement": "Java’s DataSource interface provides a standard method of working with database connections. Traditionally, a DataSource uses a URL along with some credentials to establish a database connection.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/data/sql.adoc#L9-L184",
+          "version": "repo-lines-v1:sha256:d8f0160630fc24ec9bc8e9b4db02796e665e967bf6739c98d6eed3032436ba00:eyJzZWxlY3RlZExpbmVDb3VudCI6MTc2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJjZDY1NTlkNDllMWY3NDM0MWQ3ZDYxOGY4ZDk3YmMxOTJkOWMwMTFhNGVkYjE3NTg4ZGZjNmU0MjVjN2E2MWZkIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI2ZDg4ZWQ5YzMwNDNjZDVhOTYzMTA4MWRlYTQxNDQ0ZWQ5YzM5YzZmNTAxMGUxYmEzOTBhN2NhYTgzMWFlYjFlIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_063ba231527740d688221b4c7e562a12",
+      "statement": "It is often convenient to develop applications by using an in-memory embedded database. Obviously, in-memory databases do not provide persistent storage. You need to populate your database when your application starts and be prepared to throw away data when your application ends.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/data/sql.adoc#L9-L184",
+          "version": "repo-lines-v1:sha256:d8f0160630fc24ec9bc8e9b4db02796e665e967bf6739c98d6eed3032436ba00:eyJzZWxlY3RlZExpbmVDb3VudCI6MTc2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJjZDY1NTlkNDllMWY3NDM0MWQ3ZDYxOGY4ZDk3YmMxOTJkOWMwMTFhNGVkYjE3NTg4ZGZjNmU0MjVjN2E2MWZkIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI2ZDg4ZWQ5YzMwNDNjZDVhOTYzMTA4MWRlYTQxNDQ0ZWQ5YzM5YzZmNTAxMGUxYmEzOTBhN2NhYTgzMWFlYjFlIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_e1c5701a7cb84c5ab2a2b4ddaed00224",
+      "statement": "Spring Boot can auto-configure embedded H2, HSQL, and Derby (deprecated) databases. You need not provide any connection URLs. You need only include a build dependency to the embedded database that you want to use. If there are multiple embedded databases on the classpath, set the spring.datasource.embedded-database-connection configuration property to control which one is used. Setting the property to none disables auto-configuration of an embedded database.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/data/sql.adoc#L9-L184",
+          "version": "repo-lines-v1:sha256:d8f0160630fc24ec9bc8e9b4db02796e665e967bf6739c98d6eed3032436ba00:eyJzZWxlY3RlZExpbmVDb3VudCI6MTc2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJjZDY1NTlkNDllMWY3NDM0MWQ3ZDYxOGY4ZDk3YmMxOTJkOWMwMTFhNGVkYjE3NTg4ZGZjNmU0MjVjN2E2MWZkIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI2ZDg4ZWQ5YzMwNDNjZDVhOTYzMTA4MWRlYTQxNDQ0ZWQ5YzM5YzZmNTAxMGUxYmEzOTBhN2NhYTgzMWFlYjFlIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_2ca0b8136e1647e59690236e28f2b6be",
+      "statement": "If you are using this feature in your tests, you may notice that the same database is reused by your whole test suite regardless of the number of application contexts that you use. If you want to make sure that each context has a separate embedded database, you should set spring.datasource.generate-unique-name to true.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/data/sql.adoc#L9-L184",
+          "version": "repo-lines-v1:sha256:d8f0160630fc24ec9bc8e9b4db02796e665e967bf6739c98d6eed3032436ba00:eyJzZWxlY3RlZExpbmVDb3VudCI6MTc2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJjZDY1NTlkNDllMWY3NDM0MWQ3ZDYxOGY4ZDk3YmMxOTJkOWMwMTFhNGVkYjE3NTg4ZGZjNmU0MjVjN2E2MWZkIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI2ZDg4ZWQ5YzMwNDNjZDVhOTYzMTA4MWRlYTQxNDQ0ZWQ5YzM5YzZmNTAxMGUxYmEzOTBhN2NhYTgzMWFlYjFlIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_aed24a588ef740259cc149c89a574bcb",
+      "statement": "Production database connections can also be auto-configured by using a pooling DataSource.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/data/sql.adoc#L9-L184",
+          "version": "repo-lines-v1:sha256:d8f0160630fc24ec9bc8e9b4db02796e665e967bf6739c98d6eed3032436ba00:eyJzZWxlY3RlZExpbmVDb3VudCI6MTc2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJjZDY1NTlkNDllMWY3NDM0MWQ3ZDYxOGY4ZDk3YmMxOTJkOWMwMTFhNGVkYjE3NTg4ZGZjNmU0MjVjN2E2MWZkIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI2ZDg4ZWQ5YzMwNDNjZDVhOTYzMTA4MWRlYTQxNDQ0ZWQ5YzM5YzZmNTAxMGUxYmEzOTBhN2NhYTgzMWFlYjFlIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_2fcf30bdfac74a86bad883cdad66e4fc",
+      "statement": "This will set the pool to wait 10000ms before throwing an exception if no connection is available, limit the maximum number of connections to 50 and validate the connection before borrowing it from the pool.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/data/sql.adoc#L9-L184",
+          "version": "repo-lines-v1:sha256:d8f0160630fc24ec9bc8e9b4db02796e665e967bf6739c98d6eed3032436ba00:eyJzZWxlY3RlZExpbmVDb3VudCI6MTc2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJjZDY1NTlkNDllMWY3NDM0MWQ3ZDYxOGY4ZDk3YmMxOTJkOWMwMTFhNGVkYjE3NTg4ZGZjNmU0MjVjN2E2MWZkIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI2ZDg4ZWQ5YzMwNDNjZDVhOTYzMTA4MWRlYTQxNDQ0ZWQ5YzM5YzZmNTAxMGUxYmEzOTBhN2NhYTgzMWFlYjFlIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

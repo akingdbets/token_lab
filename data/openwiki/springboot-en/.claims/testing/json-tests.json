@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:0f3313342c700d97618a310a737761353d11921029cdd9208b891451466ed679",
+  "claims": [
+    {
+      "id": "claim_bb04e3084ad74fe4b41de1ddb0448563",
+      "statement": "If you need to configure elements of the auto-configuration, you can use the @AutoConfigureJsonTesters annotation.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/spring-boot-applications.adoc#L306-L335",
+          "version": "repo-lines-v1:sha256:aa54633ec6c3ebef03f07444bf73c4744580f164a1d916adb26aedbd48ca1d80:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmNjk4MTZjNGEwZDBjZTg1NjNkYzczNmEyNDcwMjRhZTQ1YzMxNjRjODg3NzNjNmIxNGU5NTM5ZjFhZThiZDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZkNWEwNzUxYmVkNWZmY2ZlZDFhMTRlYjExZDU5OGIyYmI5NzQ5MjEyOGMwZTIwMmIzZjI2MWY3OTJkZjNhZjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/testing/springbootapplications/jsontests/MyJsonAssertJTests.java",
+          "version": "repo-file-v1:sha256:fce81f540a4e2c446419278f7d0930bcfecb34c040162fac1986d8d3aab47f5d"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/testing/springbootapplications/jsontests/MyJsonTests.java",
+          "version": "repo-file-v1:sha256:001992a8d89cf4568e6e38dc416ac44af47b52e3e7ba630cb28e4b1c54f4984f"
+        }
+      ]
+    },
+    {
+      "id": "claim_4072d7df8df14391931adc44d2823e75",
+      "statement": "If you use Spring Boot’s AssertJ-based helpers to assert on a number value at a given JSON path, you might not be able to use isEqualTo depending on the type. Instead, you can use AssertJ’s satisfies to assert that the value matches the given condition. For instance, the following example asserts that the actual number is a float value close to 0.15 within an offset of 0.01.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/spring-boot-applications.adoc#L306-L335",
+          "version": "repo-lines-v1:sha256:aa54633ec6c3ebef03f07444bf73c4744580f164a1d916adb26aedbd48ca1d80:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmNjk4MTZjNGEwZDBjZTg1NjNkYzczNmEyNDcwMjRhZTQ1YzMxNjRjODg3NzNjNmIxNGU5NTM5ZjFhZThiZDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZkNWEwNzUxYmVkNWZmY2ZlZDFhMTRlYjExZDU5OGIyYmI5NzQ5MjEyOGMwZTIwMmIzZjI2MWY3OTJkZjNhZjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

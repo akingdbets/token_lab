@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:9ea8df33fdaff0f944e4ae6044f7641d7b10393ba5fdae8a52234f82bf9914bb",
+  "claims": [
+    {
+      "id": "claim_3ec96f9eed124e2d9dc3e415f7c72e14",
+      "statement": "Spring Boot uses some relaxed rules for binding Environment properties to @ConfigurationProperties beans, so there does not need to be an exact match between the Environment property name and the bean property name. Common examples where this is useful include dash-separated environment properties (for example, context-path binds to contextPath), and capitalized environment properties (for example, PORT binds to port).",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L1041-L1176",
+          "version": "repo-lines-v1:sha256:b7b45be3dfd6e496678c7aec54aad605d201e54abfd1182ac568298befd9f02e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTM2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJlODZhM2I0NGRlOTAxZDMyMTk3ODAzNTJiODlhOTE1MDI5NGZkNjMyZmE0N2IzOWRmNzY3ZGZhYTM0MzAzNWQ3IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIwNGFmYjZkYTUwNzQzMzBhYzM5ODk0N2Y1YTA5ZWU0Zjg0Njg0MTAyYjA5YTA4ODI3Y2VjMWVjYzhiN2UwZjc2IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/features/externalconfig/typesafeconfigurationproperties/relaxedbinding/MyPersonProperties.java",
+          "version": "repo-file-v1:sha256:c485ed8421472c6dfee7a15fca59a088205da7c1df945cc9d6d389a58a045ce6"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/features/externalconfig/typesafeconfigurationproperties/relaxedbinding/mapsfromenvironmentvariables/MyMapsProperties.java",
+          "version": "repo-file-v1:sha256:8efefab5606fba1039ba27d56435a5c3d3a32133dae88714e4102dc93ad33b21"
+        }
+      ]
+    },
+    {
+      "id": "claim_7da018d3e603462fb7dde18c995c5ca5",
+      "statement": "When binding to Map properties you may need to use a special bracket notation so that the original key value is preserved. If the key is not surrounded by [], any characters that are not alpha-numeric, - or . are removed.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L1041-L1176",
+          "version": "repo-lines-v1:sha256:b7b45be3dfd6e496678c7aec54aad605d201e54abfd1182ac568298befd9f02e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTM2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJlODZhM2I0NGRlOTAxZDMyMTk3ODAzNTJiODlhOTE1MDI5NGZkNjMyZmE0N2IzOWRmNzY3ZGZhYTM0MzAzNWQ3IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIwNGFmYjZkYTUwNzQzMzBhYzM5ODk0N2Y1YTA5ZWU0Zjg0Njg0MTAyYjA5YTA4ODI3Y2VjMWVjYzhiN2UwZjc2IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_08341dfdb1e04c4f8bfe0207371ca1f8",
+      "statement": "The properties above will bind to a Map with /key1, /key2 and key3 as the keys in the map. The slash has been removed from key3 because it was not surrounded by square brackets.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L1041-L1176",
+          "version": "repo-lines-v1:sha256:b7b45be3dfd6e496678c7aec54aad605d201e54abfd1182ac568298befd9f02e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTM2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJlODZhM2I0NGRlOTAxZDMyMTk3ODAzNTJiODlhOTE1MDI5NGZkNjMyZmE0N2IzOWRmNzY3ZGZhYTM0MzAzNWQ3IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIwNGFmYjZkYTUwNzQzMzBhYzM5ODk0N2Y1YTA5ZWU0Zjg0Njg0MTAyYjA5YTA4ODI3Y2VjMWVjYzhiN2UwZjc2IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_01405557cbd948d2845b46d7b102b689",
+      "statement": "When binding to scalar values, keys with . in them do not need to be surrounded by []. Scalar values include enums and all types in the java.lang package except for Object. Binding a.b=c to Map<String, String> will preserve the . in the key and return a Map with the entry {\"a.b\"=\"c\"}. For any other types you need to use the bracket notation if your key contains a .. For example, binding a.b=c to Map<String, Object> will return a Map with the entry {\"a\"={\"b\"=\"c\"}} whereas [a.b]=c will return a Map with the entry {\"a.b\"=\"c\"}.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L1041-L1176",
+          "version": "repo-lines-v1:sha256:b7b45be3dfd6e496678c7aec54aad605d201e54abfd1182ac568298befd9f02e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTM2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJlODZhM2I0NGRlOTAxZDMyMTk3ODAzNTJiODlhOTE1MDI5NGZkNjMyZmE0N2IzOWRmNzY3ZGZhYTM0MzAzNWQ3IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIwNGFmYjZkYTUwNzQzMzBhYzM5ODk0N2Y1YTA5ZWU0Zjg0Njg0MTAyYjA5YTA4ODI3Y2VjMWVjYzhiN2UwZjc2IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_5831ce9837be4c2cbbbcbf4438544c4c",
+      "statement": "Most operating systems impose strict rules around the names that can be used for environment variables. For example, Linux shell variables can contain only letters (a to z or A to Z), numbers (0 to 9) or the underscore character (_). By convention, Unix shell variables will also have their names in UPPERCASE.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L1041-L1176",
+          "version": "repo-lines-v1:sha256:b7b45be3dfd6e496678c7aec54aad605d201e54abfd1182ac568298befd9f02e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTM2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJlODZhM2I0NGRlOTAxZDMyMTk3ODAzNTJiODlhOTE1MDI5NGZkNjMyZmE0N2IzOWRmNzY3ZGZhYTM0MzAzNWQ3IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIwNGFmYjZkYTUwNzQzMzBhYzM5ODk0N2Y1YTA5ZWU0Zjg0Njg0MTAyYjA5YTA4ODI3Y2VjMWVjYzhiN2UwZjc2IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_eea6b84a495e4cfd8b0e01fbc7fcef8b",
+      "statement": "Spring Boot’s relaxed binding rules are, as much as possible, designed to be compatible with these naming restrictions.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L1041-L1176",
+          "version": "repo-lines-v1:sha256:b7b45be3dfd6e496678c7aec54aad605d201e54abfd1182ac568298befd9f02e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTM2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJlODZhM2I0NGRlOTAxZDMyMTk3ODAzNTJiODlhOTE1MDI5NGZkNjMyZmE0N2IzOWRmNzY3ZGZhYTM0MzAzNWQ3IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIwNGFmYjZkYTUwNzQzMzBhYzM5ODk0N2Y1YTA5ZWU0Zjg0Njg0MTAyYjA5YTA4ODI3Y2VjMWVjYzhiN2UwZjc2IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

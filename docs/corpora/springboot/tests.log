@@ -1,0 +1,540 @@
+test_floor_is_subtracted_on_paired_items (test_calibrated_retention.CalibratedRetentionTest.test_floor_is_subtracted_on_paired_items) ... ok
+test_no_pairs (test_calibrated_retention.CalibratedRetentionTest.test_no_pairs) ... ok
+test_small_gap_is_null (test_calibrated_retention.CalibratedRetentionTest.test_small_gap_is_null) ... ok
+test_core_missing_but_correct_is_suspect (test_calibrated_retention.MemorySuspectTest.test_core_missing_but_correct_is_suspect) ... ok
+test_answered_is_judged_per_fact (test_closed_book_check.ClosedBookCheckTest.test_answered_is_judged_per_fact) ... ok
+test_empty_answer_is_not_judged (test_closed_book_check.ClosedBookCheckTest.test_empty_answer_is_not_judged) ... ok
+test_is_unknown (test_closed_book_check.ClosedBookCheckTest.test_is_unknown) ... ok
+test_subset_report_excludes_closed_book_items (test_closed_book_check.ClosedBookCheckTest.test_subset_report_excludes_closed_book_items) ... ok
+test_summarize_by_split_and_type (test_closed_book_check.ClosedBookCheckTest.test_summarize_by_split_and_type) ... ok
+test_unknown_skips_judge (test_closed_book_check.ClosedBookCheckTest.test_unknown_skips_judge) ... ok
+test_kinds (test_copies.AnswerKindTest.test_kinds) ... ok
+test_answer_core_survives_chain (test_copies.ChainTest.test_answer_core_survives_chain) ... ok
+test_cross_unit_residual_fails_verification (test_copies.DropAllCopiesTest.test_cross_unit_residual_fails_verification) ... ok
+test_drops_evidence_and_all_spellings (test_copies.DropAllCopiesTest.test_drops_evidence_and_all_spellings) ... ok
+test_undefined_when_answer_absent (test_copies.DropAllCopiesTest.test_undefined_when_answer_absent) ... ok
+test_code_block_evidence_becomes_one_line (test_copies.KeepAnswerInPlaceTest.test_code_block_evidence_becomes_one_line) ... ok
+test_keeps_only_answer_phrase_in_evidence (test_copies.KeepAnswerInPlaceTest.test_keeps_only_answer_phrase_in_evidence) ... ok
+test_undefined_without_answer_in_evidence (test_copies.KeepAnswerInPlaceTest.test_undefined_without_answer_in_evidence) ... ok
+test_keep_code_copy (test_copies.KeepOneCopyTest.test_keep_code_copy) ... ok
+test_keep_prose_copy_keeps_first_non_evidence (test_copies.KeepOneCopyTest.test_keep_prose_copy_keeps_first_non_evidence) ... ok
+test_undefined_without_that_kind (test_copies.KeepOneCopyTest.test_undefined_without_that_kind) ... ok
+test_keeps_evidence_and_copies_and_matches_tokens (test_copies.MatchedRandomDropTest.test_keeps_evidence_and_copies_and_matches_tokens) ... ok
+test_seed_is_deterministic_and_varies (test_copies.MatchedRandomDropTest.test_seed_is_deterministic_and_varies) ... ok
+test_no_split_inside_inline_code (test_copies.SegmentTest.test_no_split_inside_inline_code) ... ok
+test_render_without_drop_is_identity (test_copies.SegmentTest.test_render_without_drop_is_identity) ... ok
+test_units (test_copies.SegmentTest.test_units) ... ok
+test_long_answer_needs_half_of_entities (test_core_match.CoreMatchTest.test_long_answer_needs_half_of_entities) ... ok
+test_really_missing_answers_stay_missing (test_core_match.CoreMatchTest.test_really_missing_answers_stay_missing) ... ok
+test_split_or_respelled_identifiers_are_found (test_core_match.CoreMatchTest.test_split_or_respelled_identifiers_are_found) ... ok
+test_token_boundaries_are_kept (test_core_match.CoreMatchTest.test_token_boundaries_are_kept) ... ok
+test_deepseek_no_write_price (test_cost.ComputeTest.test_deepseek_no_write_price) ... ok
+test_estimate_and_no_pricing (test_cost.ComputeTest.test_estimate_and_no_pricing) ... ok
+test_full_cache_info (test_cost.ComputeTest.test_full_cache_info) ... ok
+test_no_cache_info (test_cost.ComputeTest.test_no_cache_info) ... ok
+test_no_cache_write_info (test_cost.ComputeTest.test_no_cache_write_info) ... ok
+test_reasoning_not_double_counted (test_cost.ComputeTest.test_reasoning_not_double_counted) ... ok
+test_prefix_match (test_cost.PricingFileTest.test_prefix_match) ... ok
+test_values (test_cost.PricingFileTest.test_values) ... ok
+test_cost_from_fields_matches_compute (test_cost.RecomputeTest.test_cost_from_fields_matches_compute) ... ok
+test_recompute_with_new_pricing (test_cost.RecomputeTest.test_recompute_with_new_pricing) ... ok
+test_evidence_survives_chain (test_drop_evidence.DropEvidenceTest.test_evidence_survives_chain) ... ok
+test_multi_line_quote_drops_block (test_drop_evidence.DropEvidenceTest.test_multi_line_quote_drops_block) ... ok
+test_short_common_lines_not_dropped_elsewhere (test_drop_evidence.DropEvidenceTest.test_short_common_lines_not_dropped_elsewhere) ... ok
+test_single_line_quote_dropped_rest_kept (test_drop_evidence.DropEvidenceTest.test_single_line_quote_dropped_rest_kept) ... ok
+test_context_is_emptied_and_rest_kept (test_empty_compressor.EmptyContextTest.test_context_is_emptied_and_rest_kept) ... ok
+test_excerpts_mark_code_and_prose (test_error_review_sheet.ErrorReviewSheetTest.test_excerpts_mark_code_and_prose) ... ok
+test_html_escapes_and_marks (test_error_review_sheet.ErrorReviewSheetTest.test_html_escapes_and_marks) ... ok
+test_none_when_missing (test_error_review_sheet.ErrorReviewSheetTest.test_none_when_missing) ... ok
+test_intact_and_full (test_evidence_retention.ItemRetentionTest.test_intact_and_full) ... ok
+test_no_quotes (test_evidence_retention.ItemRetentionTest.test_no_quotes) ... ok
+test_word_weighted_over_quotes (test_evidence_retention.ItemRetentionTest.test_word_weighted_over_quotes) ... ok
+test_deleted_words_counted_out (test_evidence_retention.QuoteKeptTest.test_deleted_words_counted_out) ... ok
+test_empty (test_evidence_retention.QuoteKeptTest.test_empty) ... ok
+test_full_quote_kept (test_evidence_retention.QuoteKeptTest.test_full_quote_kept) ... ok
+test_scattered_common_words_not_counted (test_evidence_retention.QuoteKeptTest.test_scattered_common_words_not_counted) ... ok
+test_lost_correct (test_evidence_retention.SummarizeTest.test_lost_correct) ... ok
+test_alternatives_inserted_after_fact_only_for_that_fact (test_fact_judge_v3.V3PromptTest.test_alternatives_inserted_after_fact_only_for_that_fact) ... ok
+test_guards (test_fact_judge_v3.V3PromptTest.test_guards) ... ok
+test_no_alternatives_is_identical_to_v2 (test_fact_judge_v3.V3PromptTest.test_no_alternatives_is_identical_to_v2) ... ok
+test_v3_without_alternatives_sends_same_prompts_as_v2 (test_fact_judge_v3.V3PromptTest.test_v3_without_alternatives_sends_same_prompts_as_v2) ... ok
+test_bootstrap_seed_reproducible (test_final_experiment_analysis.AnalysisTests.test_bootstrap_seed_reproducible) ... ok
+test_constant_paired_effect_bootstrap (test_final_experiment_analysis.AnalysisTests.test_constant_paired_effect_bootstrap) ... ok
+test_html_extracts_main_body_and_preserves_code (test_final_experiment_analysis.AnalysisTests.test_html_extracts_main_body_and_preserves_code) ... ok
+test_shared_documents_form_connected_clusters (test_final_experiment_analysis.AnalysisTests.test_shared_documents_form_connected_clusters) ... ok
+setUpClass (test_final_experiment_artifacts.FrozenArtifactTests) ... skipped 'Independent dataset not yet created'
+test_code_fenced_json_is_accepted (test_grader.BatchTest.test_code_fenced_json_is_accepted) ... ok
+test_duplicate_index_triggers_retry (test_grader.BatchTest.test_duplicate_index_triggers_retry) ... ok
+test_five_facts_five_results_pass_through (test_grader.BatchTest.test_five_facts_five_results_pass_through) ... ok
+test_invalid_json_then_invalid_again_falls_back (test_grader.BatchTest.test_invalid_json_then_invalid_again_falls_back) ... ok
+test_out_of_range_in_all_five_is_still_retried (test_grader.BatchTest.test_out_of_range_in_all_five_is_still_retried) ... ok
+test_out_of_range_index_triggers_retry (test_grader.BatchTest.test_out_of_range_index_triggers_retry) ... ok
+test_retry_fails_then_per_fact_fallback_fills_all (test_grader.BatchTest.test_retry_fails_then_per_fact_fallback_fills_all) ... ok
+test_retry_with_duplicates_falls_back (test_grader.BatchTest.test_retry_with_duplicates_falls_back) ... ok
+test_retry_with_only_missing_indices_is_merged (test_grader.BatchTest.test_retry_with_only_missing_indices_is_merged) ... ok
+test_two_of_five_then_retry_succeeds (test_grader.BatchTest.test_two_of_five_then_retry_succeeds) ... ok
+test_batch_sums_cached_tokens_over_retry (test_grader.JudgeCacheTokensTest.test_batch_sums_cached_tokens_over_retry) ... ok
+test_missing_field_stays_none (test_grader.JudgeCacheTokensTest.test_missing_field_stays_none) ... ok
+test_partial_missing_is_none (test_grader.JudgeCacheTokensTest.test_partial_missing_is_none) ... ok
+test_single_grade_carries_cached_tokens (test_grader.JudgeCacheTokensTest.test_single_grade_carries_cached_tokens) ... ok
+test_answer_that_only_mentions_not_found_is_judged (test_grader.NotFoundTest.test_answer_that_only_mentions_not_found_is_judged) ... ok
+test_not_found_skips_judge_in_both_modes (test_grader.NotFoundTest.test_not_found_skips_judge_in_both_modes) ... ok
+test_not_found_without_judge_llm_is_fine (test_grader.NotFoundTest.test_not_found_without_judge_llm_is_fine) ... ok
+test_parse_complete (test_grader.ParseTest.test_parse_complete) ... ok
+test_parse_reports_problems (test_grader.ParseTest.test_parse_reports_problems) ... ok
+test_per_fact_mode_calls_once_per_fact (test_grader.PerFactModeTest.test_per_fact_mode_calls_once_per_fact) ... ok
+test_unknown_mode_rejected (test_grader.PerFactModeTest.test_unknown_mode_rejected) ... ok
+test_example_is_dynamic (test_grader.PromptTest.test_example_is_dynamic) ... ok
+test_prompt_numbers_facts_and_example_covers_all_indices (test_grader.PromptTest.test_prompt_numbers_facts_and_example_covers_all_indices) ... ok
+test_version_and_hash_recorded (test_grader.PromptTest.test_version_and_hash_recorded) ... ok
+test_empty_answer_skips_judge (test_grader.UnreadableJudgeTest.test_empty_answer_skips_judge) ... ok
+test_ox_failure_falls_back_to_match (test_grader.UnreadableJudgeTest.test_ox_failure_falls_back_to_match) ... ok
+test_parse_yes_no (test_grader.UnreadableJudgeTest.test_parse_yes_no) ... ok
+test_per_fact_failure_is_not_counted_as_unsatisfied (test_grader.UnreadableJudgeTest.test_per_fact_failure_is_not_counted_as_unsatisfied) ... ok
+test_build_embeds_rows_without_judge_and_escapes_script (test_judge_check_viewer.JudgeCheckViewerTest.test_build_embeds_rows_without_judge_and_escapes_script) ... ok
+test_committed_set_is_consistent (test_judge_fp_check.JudgeFpCheckTest.test_committed_set_is_consistent) ... ok
+test_human_overrides_expected (test_judge_fp_check.JudgeFpCheckTest.test_human_overrides_expected) ... ok
+test_rates (test_judge_fp_check.JudgeFpCheckTest.test_rates) ... ok
+test_expected_correction_skips_not_found (test_judge_sensitivity.JudgeSensitivityTest.test_expected_correction_skips_not_found) ... ok
+test_holm (test_judge_sensitivity.JudgeSensitivityTest.test_holm) ... ok
+test_error_class_rejects_unknown_value (test_label_report.LabelReportTest.test_error_class_rejects_unknown_value) ... ok
+test_error_section_counts_crosstab_and_recovery (test_label_report.LabelReportTest.test_error_section_counts_crosstab_and_recovery) ... ok
+test_info_vs_interp_fisher_repeat_mean_and_memo (test_label_report.LabelReportTest.test_info_vs_interp_fisher_repeat_mean_and_memo) ... ok
+test_judge_fn_rate_needs_full_labels (test_label_report.LabelReportTest.test_judge_fn_rate_needs_full_labels) ... ok
+test_judge_section_agreement_kappa_and_lists (test_label_report.LabelReportTest.test_judge_section_agreement_kappa_and_lists) ... ok
+test_manual_block_is_kept (test_label_report.LabelReportTest.test_manual_block_is_kept) ... ok
+test_parse_recover_splits_repeats (test_label_report.LabelReportTest.test_parse_recover_splits_repeats) ... ok
+test_judged_file_is_joined_and_unread_skipped (test_label_sheet.AgreementJudgedTest.test_judged_file_is_joined_and_unread_skipped) ... ok
+test_none_rows_plus_changed_compressor_rows_without_judge (test_label_sheet.LabelSheetTest.test_none_rows_plus_changed_compressor_rows_without_judge) ... ok
+test_types_spread_across_assignees (test_label_sheet.LabelSheetTest.test_types_spread_across_assignees) ... ok
+test_default_and_type (test_llm_endpoints.EnvTest.test_default_and_type) ... ok
+test_new_name_wins_over_old (test_llm_endpoints.EnvTest.test_new_name_wins_over_old) ... ok
+test_old_name_used_when_new_missing (test_llm_endpoints.EnvTest.test_old_name_used_when_new_missing) ... ok
+test_adapts_and_remembers (test_llm_endpoints.OpenAIUnsupportedParamTest.test_adapts_and_remembers) ... ok
+test_already_learned_param_not_sent_is_not_retried (test_llm_endpoints.OpenAIUnsupportedParamTest.test_already_learned_param_not_sent_is_not_retried)
+이미 뺀 인자로 또 거부되면 다시 보내지 않고 오류 (무한 재시도 방지). ... ok
+test_concurrent_rejection_retries_in_every_thread (test_llm_endpoints.OpenAIUnsupportedParamTest.test_concurrent_rejection_retries_in_every_thread)
+경합 재현: 두 스레드가 학습 전 페이로드(max_tokens)를 동시에 보내 둘 다 400 을 받는다. ... ok
+test_other_4xx_raises_with_body_and_no_retry (test_llm_endpoints.OpenAIUnsupportedParamTest.test_other_4xx_raises_with_body_and_no_retry) ... ok
+test_reasoning_effort_not_sent_by_default (test_llm_endpoints.OpenAIUnsupportedParamTest.test_reasoning_effort_not_sent_by_default) ... ok
+test_reasoning_effort_sent_and_dropped_when_rejected (test_llm_endpoints.OpenAIUnsupportedParamTest.test_reasoning_effort_sent_and_dropped_when_rejected) ... ok
+test_supported_server_keeps_params (test_llm_endpoints.OpenAIUnsupportedParamTest.test_supported_server_keeps_params) ... ok
+test_non_stream_usage (test_llm_endpoints.OpenAIUsageTest.test_non_stream_usage) ... ok
+test_stream_requests_usage_and_reads_final_chunk (test_llm_endpoints.OpenAIUsageTest.test_stream_requests_usage_and_reads_final_chunk) ... ok
+test_stream_without_usage_is_marked_estimate (test_llm_endpoints.OpenAIUsageTest.test_stream_without_usage_is_marked_estimate) ... ok
+test_explicit_args_override_role (test_llm_endpoints.RoleTest.test_explicit_args_override_role) ... ok
+test_models_info_has_no_key (test_llm_endpoints.RoleTest.test_models_info_has_no_key) ... ok
+test_role_picks_endpoint_and_model (test_llm_endpoints.RoleTest.test_role_picks_endpoint_and_model) ... ok
+test_unknown_role (test_llm_endpoints.RoleTest.test_unknown_role) ... ok
+test_kinds (test_llm_endpoints.TokenizerKindTest.test_kinds) ... ok
+test_combine (test_llm_endpoints.UsageSourceOfTest.test_combine) ... ok
+test_broken_code_fence_falls_back (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_broken_code_fence_falls_back) ... ok
+test_containing_word_is_added_even_past_identifier_limit (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_containing_word_is_added_even_past_identifier_limit) ... ok
+test_default_protection_contains_negation_and_identifier_separator (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_default_protection_contains_negation_and_identifier_separator) ... ok
+test_document_headers_and_code_blocks_keep_source_order (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_document_headers_and_code_blocks_keep_source_order) ... ok
+test_document_headers_are_excluded_and_restored_exactly (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_document_headers_are_excluded_and_restored_exactly) ... ok
+test_empty_and_larger_outputs_fall_back (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_empty_and_larger_outputs_fall_back) ... ok
+test_empty_context_does_not_load_model (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_empty_context_does_not_load_model) ... ok
+test_engine_error_falls_back_and_is_recorded (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_engine_error_falls_back_and_is_recorded) ... ok
+test_fenced_code_block_is_excluded_and_restored_exactly (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_fenced_code_block_is_excluded_and_restored_exactly) ... ok
+test_header_inside_code_block_stays_part_of_code (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_header_inside_code_block_stays_part_of_code) ... ok
+test_identifier_dropped_when_containing_word_does_not_fit (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_identifier_dropped_when_containing_word_does_not_fit) ... ok
+test_identifier_inside_longer_word_is_not_split (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_identifier_inside_longer_word_is_not_split) ... ok
+test_invalid_ratios_are_rejected (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_invalid_ratios_are_rejected) ... ok
+test_missing_code_block_marker_falls_back (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_missing_code_block_marker_falls_back) ... ok
+test_missing_document_header_marker_falls_back (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_missing_document_header_marker_falls_back) ... ok
+test_missing_question_identifier_falls_back (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_missing_question_identifier_falls_back) ... ok
+test_model_is_lazy_and_context_only_is_compressed (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_model_is_lazy_and_context_only_is_compressed) ... ok
+test_official_call_uses_retain_ratio_and_protection (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_official_call_uses_retain_ratio_and_protection) ... ok
+test_punctuated_tokens_split_by_compression_are_rejoined_by_word_labels (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_punctuated_tokens_split_by_compression_are_rejoined_by_word_labels) ... ok
+test_question_identifier_is_prioritized_and_preserved (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_question_identifier_is_prioritized_and_preserved) ... ok
+test_registry_exposes_default_and_rate_variants (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_registry_exposes_default_and_rate_variants) ... ok
+test_rejoin_is_off_by_default (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_rejoin_is_off_by_default) ... ok
+test_rejoin_is_skipped_when_labels_do_not_align_or_are_missing (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_rejoin_is_skipped_when_labels_do_not_align_or_are_missing) ... ok
+test_rejoin_skips_tokens_with_dropped_segments (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_rejoin_skips_tokens_with_dropped_segments) ... ok
+test_rejoin_uses_positions_not_matching_text (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_rejoin_uses_positions_not_matching_text) ... ok
+test_reordered_protected_markers_fall_back (test_llmlingua2_compressor.LLMLingua2CompressorTest.test_reordered_protected_markers_fall_back) ... ok
+test_headline_and_sensitivity (test_memory_suspect_v2.HandClassificationTest.test_headline_and_sensitivity) ... ok
+test_reproduces_manual_classification (test_memory_suspect_v2.HandClassificationTest.test_reproduces_manual_classification) ... ok
+test_only_known_paraphrased_answers_are_missing (test_memory_suspect_v2.NoneContextTest.test_only_known_paraphrased_answers_are_missing) ... ok
+test_unmeasurable_item_is_not_suspect (test_memory_suspect_v2.NoneContextTest.test_unmeasurable_item_is_not_suspect) ... ok
+test_identifier_parts_and_merged_words_are_not_matches (test_memory_suspect_v2.NormalizedMatchTest.test_identifier_parts_and_merged_words_are_not_matches) ... ok
+test_leading_article_is_ignored_for_short_answers (test_memory_suspect_v2.NormalizedMatchTest.test_leading_article_is_ignored_for_short_answers) ... ok
+test_spaces_inserted_by_compression_are_allowed (test_memory_suspect_v2.NormalizedMatchTest.test_spaces_inserted_by_compression_are_allowed) ... ok
+test_backoff (test_mt_replay.ArgsTest.test_backoff) ...   [백오프 1/6] 429 -> 2.3초
+  [백오프 2/6] 429 -> 4.1초
+ok
+test_config_validation (test_mt_replay.ArgsTest.test_config_validation) ... ok
+test_required_args (test_mt_replay.ArgsTest.test_required_args) ... ok
+test_estimate_matrix (test_mt_replay.EstimateTest.test_estimate_matrix) ... ok
+test_estimate_stops_on_missing_llmlingua (test_mt_replay.EstimateTest.test_estimate_stops_on_missing_llmlingua) ... ok
+test_prefix_cache (test_mt_replay.EstimateTest.test_prefix_cache) ... ok
+test_cli_requires_allow_flag (test_mt_replay.GuardTest.test_cli_requires_allow_flag) ... ok
+test_fallback_error_is_not_silent (test_mt_replay.GuardTest.test_fallback_error_is_not_silent) ... ok
+test_llmlingua_family_requires_package (test_mt_replay.GuardTest.test_llmlingua_family_requires_package) ... ok
+test_replay_stops_at_start_without_llmlingua (test_mt_replay.GuardTest.test_replay_stops_at_start_without_llmlingua) ... ok
+test_tokenizer_check (test_mt_replay.GuardTest.test_tokenizer_check) ... ok
+test_current_turn_guard_still_rejects_question_change (test_mt_replay.ReplayTest.test_current_turn_guard_still_rejects_question_change) ... ok
+test_depends_on_reference_ok (test_mt_replay.ReplayTest.test_depends_on_reference_ok) ... replay: trial 24 + 상태형 체인 0 (이미 끝남 0)
+ok
+test_end_to_end_summary (test_mt_replay.ReplayTest.test_end_to_end_summary) ... replay: trial 48 + 상태형 체인 0 (이미 끝남 0)
+ok
+test_judge_cost_uses_cached_tokens (test_mt_replay.ReplayTest.test_judge_cost_uses_cached_tokens)
+채점 비용: grader 가 준 캐시 읽기 토큰을 반영해 cost_source=api (no_cache_info 가 아님). ... replay: trial 6 + 상태형 체인 0 (이미 끝남 0)
+ok
+test_judge_cost_without_cache_info (test_mt_replay.ReplayTest.test_judge_cost_without_cache_info) ... replay: trial 6 + 상태형 체인 0 (이미 끝남 0)
+ok
+test_on_arrival_runs_in_replay (test_mt_replay.ReplayTest.test_on_arrival_runs_in_replay)
+현재 턴 문서를 압축해도 replay 의 현재 턴 검사(질문·형식 줄 보존)를 통과하고, 직전 턴 접두부가 이어진다. ... replay: trial 12 + 상태형 체인 0 (이미 끝남 0)
+ok
+test_pilot_report_builds_from_run (test_mt_replay.ReplayTest.test_pilot_report_builds_from_run)
+docs/results 보고서 생성기가 실제 run 산출물에서 표를 만든다 (수치를 손으로 옮기지 않는다). ... replay: trial 24 + 상태형 체인 0 (이미 끝남 0)
+ok
+test_reference_failure_stops_run (test_mt_replay.ReplayTest.test_reference_failure_stops_run)
+기준 궤적을 만들지 못하면 replay 를 시작하지 않는다 (기준이 없는 비교를 막음). ... ok
+test_reference_health_warning (test_mt_replay.ReplayTest.test_reference_health_warning) ...   [경고] s1 턴 0: 기준 궤적 답변이 비었습니다
+  [경고] s1 턴 0: 기준 궤적 답변이 출력 한도에 걸렸습니다 (finish_reason=length)
+  [경고] s1 턴 1: 기준 궤적 답변이 비었습니다
+  [경고] s1 턴 1: 기준 궤적 답변이 출력 한도에 걸렸습니다 (finish_reason=length)
+  [경고] s1 턴 2: 기준 궤적 답변이 비었습니다
+  [경고] s1 턴 2: 기준 궤적 답변이 출력 한도에 걸렸습니다 (finish_reason=length)
+  [경고] s1 턴 3: 기준 궤적 답변이 비었습니다
+  [경고] s1 턴 3: 기준 궤적 답변이 출력 한도에 걸렸습니다 (finish_reason=length)
+  [경고] s1 턴 4: 기준 궤적 답변이 비었습니다
+  [경고] s1 턴 4: 기준 궤적 답변이 출력 한도에 걸렸습니다 (finish_reason=length)
+  [경고] s1 턴 5: 기준 궤적 답변이 비었습니다
+  [경고] s1 턴 5: 기준 궤적 답변이 출력 한도에 걸렸습니다 (finish_reason=length)
+ok
+test_reference_reused (test_mt_replay.ReplayTest.test_reference_reused) ... ok
+test_resume_after_trial_failures (test_mt_replay.ReplayTest.test_resume_after_trial_failures) ... replay: trial 24 + 상태형 체인 0 (이미 끝남 0)
+replay: trial 3 + 상태형 체인 0 (이미 끝남 21)
+ok
+test_resume_records_execution_segments (test_mt_replay.ReplayTest.test_resume_records_execution_segments)
+--resume 로 concurrency 를 바꿔 이어 돌려도 앞 구간 기록을 덮어쓰지 않는다. ... replay: trial 24 + 상태형 체인 0 (이미 끝남 0)
+replay: trial 0 + 상태형 체인 0 (이미 끝남 24)
+ok
+test_sample_idx_cache_separation (test_mt_replay.ReplayTest.test_sample_idx_cache_separation) ... replay: trial 18 + 상태형 체인 0 (이미 끝남 0)
+replay: trial 18 + 상태형 체인 0 (이미 끝남 0)
+ok
+test_failed_grades_excluded (test_mt_replay.StatsTest.test_failed_grades_excluded) ... ok
+test_noise_pairs_against_reference_sample (test_mt_replay.StatsTest.test_noise_pairs_against_reference_sample) ... ok
+test_pairing_and_noninferiority (test_mt_replay.StatsTest.test_pairing_and_noninferiority) ... ok
+test_chain (test_mt_scenario_and_history.HistoryCompressorTest.test_chain) ... ok
+test_none_and_window (test_mt_scenario_and_history.HistoryCompressorTest.test_none_and_window) ... ok
+test_on_arrival_compresses_current_turn_docs_only (test_mt_scenario_and_history.HistoryCompressorTest.test_on_arrival_compresses_current_turn_docs_only) ... ok
+test_on_arrival_deterministic_across_instances (test_mt_scenario_and_history.HistoryCompressorTest.test_on_arrival_deterministic_across_instances)
+같은 문서 원문 + 같은 압축기면 새 인스턴스에서도 같은 결과 (replay 가 턴 k 기록을 다시 만들어도 같다). ... ok
+test_on_arrival_never_changes_a_compressed_doc (test_mt_scenario_and_history.HistoryCompressorTest.test_on_arrival_never_changes_a_compressed_doc)
+압축기가 호출마다 다른 결과를 내도, 한 번 압축한 문서는 이후 턴에서 같은 압축본을 쓴다. ... ok
+test_on_arrival_requests_are_prefix_of_next (test_mt_scenario_and_history.HistoryCompressorTest.test_on_arrival_requests_are_prefix_of_next)
+캐시 친화성: 턴 k 요청 + 턴 k 답변이 턴 k+1 요청의 접두부와 정확히 같다 (per_message 는 다르다). ... ok
+test_per_message_rejects_non_context (test_mt_scenario_and_history.HistoryCompressorTest.test_per_message_rejects_non_context) ... ok
+test_per_message_targets_only_past_doc_blocks (test_mt_scenario_and_history.HistoryCompressorTest.test_per_message_targets_only_past_doc_blocks) ... ok
+test_rule_per_message_matches_single_turn_rule (test_mt_scenario_and_history.HistoryCompressorTest.test_rule_per_message_matches_single_turn_rule)
+어댑터는 기존 rule 압축기를 문서 블록에 그대로 적용한다 (같은 입력이면 같은 출력). ... ok
+test_split (test_mt_scenario_and_history.HistoryCompressorTest.test_split) ... ok
+test_system_only_at_front (test_mt_scenario_and_history.HistoryCompressorTest.test_system_only_at_front) ... ok
+test_depends_on_same_or_future_turn (test_mt_scenario_and_history.ScenarioTest.test_depends_on_same_or_future_turn) ... ok
+test_grounding_detects_missing_quote (test_mt_scenario_and_history.ScenarioTest.test_grounding_detects_missing_quote) ... ok
+test_grounding_pages_follow_dependencies (test_mt_scenario_and_history.ScenarioTest.test_grounding_pages_follow_dependencies) ... ok
+test_min_recall_synthesis_and_rules (test_mt_scenario_and_history.ScenarioTest.test_min_recall_synthesis_and_rules) ... ok
+test_pilot_scenarios_valid_and_grounded (test_mt_scenario_and_history.ScenarioTest.test_pilot_scenarios_valid_and_grounded) ... ok
+test_valid (test_mt_scenario_and_history.ScenarioTest.test_valid) ... ok
+test_common_titles_skipped (test_mt_scenario_v2.CheckerFalsePositiveTest.test_common_titles_skipped) ... ok
+test_raw_substring_fallback (test_mt_scenario_v2.CheckerFalsePositiveTest.test_raw_substring_fallback) ... ok
+test_check_scenario_with_fakes (test_mt_scenario_v2.ClosedBookV2Test.test_check_scenario_with_fakes) ... ok
+test_grounded_messages_use_experiment_prompt (test_mt_scenario_v2.ClosedBookV2Test.test_grounded_messages_use_experiment_prompt) ... ok
+test_final_only_for_v2 (test_mt_scenario_v2.FinalStatusTest.test_final_only_for_v2) ... ok
+test_alternative_needs_evidence_user_or_page (test_mt_scenario_v2.ReviewRulesTest.test_alternative_needs_evidence_user_or_page) ... ok
+test_closed_book_main_accuracy_skips_setup (test_mt_scenario_v2.ReviewRulesTest.test_closed_book_main_accuracy_skips_setup) ... ok
+test_dependency_must_be_scored (test_mt_scenario_v2.ReviewRulesTest.test_dependency_must_be_scored) ... ok
+test_fixture_valid (test_mt_scenario_v2.ReviewRulesTest.test_fixture_valid) ... ok
+test_needs_non_setup_fact (test_mt_scenario_v2.ReviewRulesTest.test_needs_non_setup_fact) ... ok
+test_setup_required_and_only_where_allowed (test_mt_scenario_v2.ReviewRulesTest.test_setup_required_and_only_where_allowed) ... ok
+test_synthesis_one_to_one_and_open_ended (test_mt_scenario_v2.ReviewRulesTest.test_synthesis_one_to_one_and_open_ended) ... ok
+test_topic_warning_and_suspects (test_mt_scenario_v2.ReviewRulesTest.test_topic_warning_and_suspects) ... ok
+test_marks_and_seeded_sample (test_mt_scenario_v2.ReviewTargetsTest.test_marks_and_seeded_sample) ... ok
+test_ratio_overflow_counts_only_long_history (test_mt_scenario_v2.ToolsTest.test_ratio_overflow_counts_only_long_history) ... ok
+test_review_rows_and_leak (test_mt_scenario_v2.ToolsTest.test_review_rows_and_leak) ... ok
+test_grounding_user_entities_and_symbol_warning (test_mt_scenario_v2.UserSourceAndLeakTest.test_grounding_user_entities_and_symbol_warning) ... ok
+test_leak_is_error (test_mt_scenario_v2.UserSourceAndLeakTest.test_leak_is_error) ... ok
+test_question_size (test_mt_scenario_v2.UserSourceAndLeakTest.test_question_size) ... ok
+test_report_source_fields (test_mt_scenario_v2.UserSourceAndLeakTest.test_report_source_fields) ... ok
+test_source_needs_matching_evidence (test_mt_scenario_v2.UserSourceAndLeakTest.test_source_needs_matching_evidence) ... ok
+test_user_evidence_accepted_by_v1_validator_only_for_v2 (test_mt_scenario_v2.UserSourceAndLeakTest.test_user_evidence_accepted_by_v1_validator_only_for_v2) ... ok
+test_user_quote_must_be_in_chain_and_verbatim (test_mt_scenario_v2.UserSourceAndLeakTest.test_user_quote_must_be_in_chain_and_verbatim) ... ok
+test_user_share_range_and_user_update (test_mt_scenario_v2.UserSourceAndLeakTest.test_user_share_range_and_user_update) ... ok
+test_v1_pilot_still_valid (test_mt_scenario_v2.V1CompatTest.test_v1_pilot_still_valid) ... ok
+test_v1_rejects_new_types (test_mt_scenario_v2.V1CompatTest.test_v1_rejects_new_types) ... ok
+test_counts_and_distance (test_mt_scenario_v2.V2RulesTest.test_counts_and_distance) ... ok
+test_placement (test_mt_scenario_v2.V2RulesTest.test_placement) ... ok
+test_recall_distance_must_be_derived (test_mt_scenario_v2.V2RulesTest.test_recall_distance_must_be_derived) ... ok
+test_same_doc_rules (test_mt_scenario_v2.V2RulesTest.test_same_doc_rules) ... ok
+test_section_of_and_report (test_mt_scenario_v2.V2RulesTest.test_section_of_and_report) ... ok
+test_source_cue_and_title (test_mt_scenario_v2.V2RulesTest.test_source_cue_and_title) ... ok
+test_tags_and_alternatives (test_mt_scenario_v2.V2RulesTest.test_tags_and_alternatives) ... ok
+test_update_rules (test_mt_scenario_v2.V2RulesTest.test_update_rules) ... ok
+test_valid (test_mt_scenario_v2.V2RulesTest.test_valid) ... ok
+test_setup_excluded_from_main_and_reported (test_mt_setup_facts.ReplaySetupTest.test_setup_excluded_from_main_and_reported) ... replay: trial 24 + 상태형 체인 0 (이미 끝남 0)
+ok
+test_v1_results_unchanged (test_mt_setup_facts.ReplaySetupTest.test_v1_results_unchanged)
+setup 태그가 없으면 (fact_meta 가 없거나 다른 태그뿐이어도) 주 정확도와 summary 가 원래 채점 그대로다. ... replay: trial 24 + 상태형 체인 0 (이미 끝남 0)
+replay: trial 24 + 상태형 체인 0 (이미 끝남 0)
+ok
+test_all_setup_turn_has_no_main_accuracy (test_mt_setup_facts.SplitGradeTest.test_all_setup_turn_has_no_main_accuracy) ... ok
+test_judge_failure_only_on_setup (test_mt_setup_facts.SplitGradeTest.test_judge_failure_only_on_setup) ... ok
+test_no_setup_keeps_values (test_mt_setup_facts.SplitGradeTest.test_no_setup_keeps_values) ... ok
+test_setup_split (test_mt_setup_facts.SplitGradeTest.test_setup_split) ... ok
+test_v1_scenarios_have_no_setup (test_mt_setup_facts.SplitGradeTest.test_v1_scenarios_have_no_setup) ... ok
+test_expand_budgets (test_mt_summary_budget.BudgetCompressorTest.test_expand_budgets) ... ok
+test_query_select_keeps_recent_and_selects_relevant (test_mt_summary_budget.BudgetCompressorTest.test_query_select_keeps_recent_and_selects_relevant) ... ok
+test_query_select_signature_has_no_leak_inputs (test_mt_summary_budget.BudgetCompressorTest.test_query_select_signature_has_no_leak_inputs) ... ok
+test_window_budget_respects_budget_and_flags_overflow (test_mt_summary_budget.BudgetCompressorTest.test_window_budget_respects_budget_and_flags_overflow) ... ok
+test_end_to_end_budget_table_and_prefix (test_mt_summary_budget.ReplayStage3Test.test_end_to_end_budget_table_and_prefix) ... replay: trial 60 + 상태형 체인 8 (이미 끝남 0)
+ok
+test_prompt_versions_do_not_mix_references (test_mt_summary_budget.ReplayStage3Test.test_prompt_versions_do_not_mix_references) ... ok
+test_required_summary_args (test_mt_summary_budget.ReplayStage3Test.test_required_summary_args) ... ok
+test_state_rebuilt_from_cache_on_resume (test_mt_summary_budget.ReplayStage3Test.test_state_rebuilt_from_cache_on_resume) ... replay: trial 12 + 상태형 체인 2 (이미 끝남 0)
+replay: trial 0 + 상태형 체인 2 (이미 끝남 20)
+ok
+test_summary_failure_marks_chain_and_scores_zero (test_mt_summary_budget.ReplayStage3Test.test_summary_failure_marks_chain_and_scores_zero) ... replay: trial 12 + 상태형 체인 2 (이미 끝남 0)
+replay: trial 0 + 상태형 체인 2 (이미 끝남 16)
+ok
+test_chain_runs_in_replay_with_efforts (test_mt_summary_budget.Stage3bTest.test_chain_runs_in_replay_with_efforts) ... replay: trial 12 + 상태형 체인 4 (이미 끝남 0)
+ok
+test_end_to_end_budget_table_and_prefix (test_mt_summary_budget.Stage3bTest.test_end_to_end_budget_table_and_prefix) ... replay: trial 60 + 상태형 체인 8 (이미 끝남 0)
+ok
+test_estimate_effort_costs (test_mt_summary_budget.Stage3bTest.test_estimate_effort_costs) ... ok
+test_prompt_versions_do_not_mix_references (test_mt_summary_budget.Stage3bTest.test_prompt_versions_do_not_mix_references) ... ok
+test_required_summary_args (test_mt_summary_budget.Stage3bTest.test_required_summary_args) ... ok
+test_sequential_chains_no_cache_in_order (test_mt_summary_budget.Stage3bTest.test_sequential_chains_no_cache_in_order) ... ok
+test_sim_cost_uses_prefix_tokens (test_mt_summary_budget.Stage3bTest.test_sim_cost_uses_prefix_tokens) ... ok
+test_state_rebuilt_from_cache_on_resume (test_mt_summary_budget.Stage3bTest.test_state_rebuilt_from_cache_on_resume) ... replay: trial 12 + 상태형 체인 2 (이미 끝남 0)
+replay: trial 0 + 상태형 체인 2 (이미 끝남 20)
+ok
+test_summary_efforts_expand_and_use_separate_summarizers (test_mt_summary_budget.Stage3bTest.test_summary_efforts_expand_and_use_separate_summarizers) ... replay: trial 12 + 상태형 체인 4 (이미 끝남 0)
+ok
+test_summary_failure_marks_chain_and_scores_zero (test_mt_summary_budget.Stage3bTest.test_summary_failure_marks_chain_and_scores_zero) ... replay: trial 12 + 상태형 체인 2 (이미 끝남 0)
+replay: trial 0 + 상태형 체인 2 (이미 끝남 16)
+ok
+test_chain_summary_failure_propagates (test_mt_summary_budget.SummaryCompressorTest.test_chain_summary_failure_propagates) ... ok
+test_failure_not_cached_and_retried (test_mt_summary_budget.SummaryCompressorTest.test_failure_not_cached_and_retried) ... ok
+test_frozen_prefix_unchanged_and_recompress_recorded (test_mt_summary_budget.SummaryCompressorTest.test_frozen_prefix_unchanged_and_recompress_recorded) ... ok
+test_length_counts_as_failure (test_mt_summary_budget.SummaryCompressorTest.test_length_counts_as_failure) ... ok
+test_on_arrival_then_frozen_chain (test_mt_summary_budget.SummaryCompressorTest.test_on_arrival_then_frozen_chain)
+on_arrival(rule)>frozen_summary(B): 문서는 도착 시 압축, 넘치면 고정 요약. 요약 info 는 최상위로. ... ok
+test_rolling_summary_budget_and_labels (test_mt_summary_budget.SummaryCompressorTest.test_rolling_summary_budget_and_labels) ... ok
+test_stateful_stage_only_last_in_chain (test_mt_summary_budget.SummaryCompressorTest.test_stateful_stage_only_last_in_chain) ... ok
+test_summarizer_never_sees_current_turn (test_mt_summary_budget.SummaryCompressorTest.test_summarizer_never_sees_current_turn) ... ok
+test_estimate_counts_notes_calls (test_mt_v2_compressors.FactNotesTest.test_estimate_counts_notes_calls) ... ok
+test_estimate_uses_placeholder_for_missing_pages (test_mt_v2_compressors.FactNotesTest.test_estimate_uses_placeholder_for_missing_pages) ... ok
+test_extract_signature_has_no_leak_inputs (test_mt_v2_compressors.FactNotesTest.test_extract_signature_has_no_leak_inputs) ... ok
+test_not_in_chain (test_mt_v2_compressors.FactNotesTest.test_not_in_chain) ... ok
+test_notes_failure_raises (test_mt_v2_compressors.FactNotesTest.test_notes_failure_raises) ... ok
+test_replaces_older_doc_blocks (test_mt_v2_compressors.FactNotesTest.test_replaces_older_doc_blocks) ... ok
+test_replay_end_to_end_no_leak_and_attribution (test_mt_v2_compressors.FactNotesTest.test_replay_end_to_end_no_leak_and_attribution) ... replay: trial 36 + 상태형 체인 0 (이미 끝남 0)
+ok
+test_build_requires_settings (test_mt_v2_compressors.PresummaryTest.test_build_requires_settings) ... usage: - [-h] [--scenarios SCENARIOS] [--pages PAGES] --model MODEL
+         --reasoning-effort
+         {server_default,none,minimal,low,medium,high,xhigh} --max-tokens
+         MAX_TOKENS [--presummary-target-ratio PRESUMMARY_TARGET_RATIO]
+         [--temperature TEMPERATURE] [--prompt PROMPT] [--out OUT]
+         [--estimate-only] [--assume-reasoning-tokens ASSUME_REASONING_TOKENS]
+-: error: the following arguments are required: --model
+usage: - [-h] [--scenarios SCENARIOS] [--pages PAGES] --model MODEL
+         --reasoning-effort
+         {server_default,none,minimal,low,medium,high,xhigh} --max-tokens
+         MAX_TOKENS [--presummary-target-ratio PRESUMMARY_TARGET_RATIO]
+         [--temperature TEMPERATURE] [--prompt PROMPT] [--out OUT]
+         [--estimate-only] [--assume-reasoning-tokens ASSUME_REASONING_TOKENS]
+-: error: the following arguments are required: --reasoning-effort
+usage: - [-h] [--scenarios SCENARIOS] [--pages PAGES] --model MODEL
+         --reasoning-effort
+         {server_default,none,minimal,low,medium,high,xhigh} --max-tokens
+         MAX_TOKENS [--presummary-target-ratio PRESUMMARY_TARGET_RATIO]
+         [--temperature TEMPERATURE] [--prompt PROMPT] [--out OUT]
+         [--estimate-only] [--assume-reasoning-tokens ASSUME_REASONING_TOKENS]
+-: error: the following arguments are required: --max-tokens
+ok
+test_build_script (test_mt_v2_compressors.PresummaryTest.test_build_script) ... ok
+test_missing_summary_stops (test_mt_v2_compressors.PresummaryTest.test_missing_summary_stops) ... ok
+test_replaces_older_docs_only (test_mt_v2_compressors.PresummaryTest.test_replaces_older_docs_only) ... ok
+test_parse_and_expand (test_mt_v2_compressors.RatioBudgetTest.test_parse_and_expand) ... ok
+test_ratio_in_chain_is_relative_to_original (test_mt_v2_compressors.RatioBudgetTest.test_ratio_in_chain_is_relative_to_original)
+체인 안에서도 앞 단계(per_message(rule))가 줄이기 전의 원본 기록 기준. ... ok
+test_replay_config_accepts_ratio_and_v2_set (test_mt_v2_compressors.RatioBudgetTest.test_replay_config_accepts_ratio_and_v2_set) ... ok
+test_required_args (test_mt_v2_compressors.RatioBudgetTest.test_required_args) ... ok
+test_rolling_summary_ratio (test_mt_v2_compressors.RatioBudgetTest.test_rolling_summary_ratio) ... ok
+test_v2_set_contents (test_mt_v2_compressors.RatioBudgetTest.test_v2_set_contents) ... ok
+test_window_budget_ratio_uses_raw_history (test_mt_v2_compressors.RatioBudgetTest.test_window_budget_ratio_uses_raw_history) ... ok
+test_breakdown_uses_turn_types_as_given (test_mt_v2_compressors.TokenSummaryTest.test_breakdown_uses_turn_types_as_given) ... ok
+test_budget_table_ratio_keys (test_mt_v2_compressors.TokenSummaryTest.test_budget_table_ratio_keys) ... ok
+test_cache_mode_keeps_old_metrics (test_mt_v2_compressors.TokenSummaryTest.test_cache_mode_keeps_old_metrics) ... replay: trial 24 + 상태형 체인 0 (이미 끝남 0)
+ok
+test_default_has_no_cache_metrics (test_mt_v2_compressors.TokenSummaryTest.test_default_has_no_cache_metrics) ... replay: trial 24 + 상태형 체인 0 (이미 끝남 0)
+ok
+test_explicit_choices (test_multiturn_trajectory.ReasoningSettingTest.test_explicit_choices) ... ok
+test_sampling_record (test_multiturn_trajectory.ReasoningSettingTest.test_sampling_record) ... ok
+test_bad_mode (test_multiturn_trajectory.TrajectoryTest.test_bad_mode) ... ok
+test_history_excludes_reasoning (test_multiturn_trajectory.TrajectoryTest.test_history_excludes_reasoning) ... ok
+test_history_rejects_mixed_samples (test_multiturn_trajectory.TrajectoryTest.test_history_rejects_mixed_samples) ... ok
+test_roundtrip_and_hash (test_multiturn_trajectory.TrajectoryTest.test_roundtrip_and_hash) ... ok
+test_summary (test_multiturn_trajectory.TrajectoryTest.test_summary) ... ok
+test_corpus_and_quotes_match_export_manifest (test_published_evidence_results.PublishedResultsTests.test_corpus_and_quotes_match_export_manifest) ... ok
+test_missing_or_duplicate_pair_is_rejected (test_published_evidence_results.PublishedResultsTests.test_missing_or_duplicate_pair_is_rejected) ... ok
+test_oracle_recovery_excludes_already_correct_baselines (test_published_evidence_results.PublishedResultsTests.test_oracle_recovery_excludes_already_correct_baselines) ... ok
+test_published_pairs_and_statistics (test_published_evidence_results.PublishedResultsTests.test_published_pairs_and_statistics) ... ok
+test_all_modes_obey_budget_and_copy_protected_spans (test_question_preserve.QuestionPreserveTests.test_all_modes_obey_budget_and_copy_protected_spans) ... ok
+test_failures_are_explicit_and_label_free_signature (test_question_preserve.QuestionPreserveTests.test_failures_are_explicit_and_label_free_signature) ... ok
+test_impossible_budget_is_reported (test_question_preserve.QuestionPreserveTests.test_impossible_budget_is_reported) ... ok
+test_registration_leaves_baselines_intact (test_question_preserve.QuestionPreserveTests.test_registration_leaves_baselines_intact) ... ok
+test_units_and_bm25 (test_question_preserve.QuestionPreserveTests.test_units_and_bm25) ... ok
+test_public_compress_discards_gold_fields (test_question_preserve_boundary.BoundaryTests.test_public_compress_discards_gold_fields) ... ok
+test_token_sum_reduction_and_rates (test_ratio_curve.AggregateTest.test_token_sum_reduction_and_rates) ... ok
+test_only_fenced_blocks (test_ratio_curve.CodeTokensTest.test_only_fenced_blocks) ... ok
+test_kept_evidence (test_ratio_curve.MeasureTest.test_kept_evidence) ... ok
+test_lost_evidence (test_ratio_curve.MeasureTest.test_lost_evidence) ... ok
+test_evidence_excerpts_side_by_side (test_redundancy.CoreStateTest.test_evidence_excerpts_side_by_side) ... ok
+test_gone_everywhere_is_C (test_redundancy.CoreStateTest.test_gone_everywhere_is_C) ... ok
+test_in_evidence_is_A_even_if_quote_mostly_deleted (test_redundancy.CoreStateTest.test_in_evidence_is_A_even_if_quote_mostly_deleted) ... ok
+test_only_elsewhere_is_B_with_location (test_redundancy.CoreStateTest.test_only_elsewhere_is_B_with_location) ... ok
+test_outside_evidence_on_raw_and_compressed (test_redundancy.EvidenceTest.test_outside_evidence_on_raw_and_compressed) ... ok
+test_quote_window (test_redundancy.EvidenceTest.test_quote_window) ... ok
+test_trial_states (test_redundancy.EvidenceTest.test_trial_states) ... ok
+test_known_values (test_redundancy.FisherTest.test_known_values) ... ok
+test_code_ranges (test_redundancy.SpanTest.test_code_ranges) ... ok
+test_core_positions_code_and_prose (test_redundancy.SpanTest.test_core_positions_code_and_prose) ... ok
+test_iter_normalized_finds_every_position (test_redundancy.SpanTest.test_iter_normalized_finds_every_position) ... ok
+test_long_answer_uses_kth_entity (test_redundancy.SpanTest.test_long_answer_uses_kth_entity) ... ok
+test_needle_spans_strips_article_and_dedupes (test_redundancy.SpanTest.test_needle_spans_strips_article_and_dedupes) ... ok
+test_aggregate_pairs_items_across_runs (test_repeat_stats.StatsTest.test_aggregate_pairs_items_across_runs) ... ok
+test_describe (test_repeat_stats.StatsTest.test_describe) ... ok
+test_mcnemar_exact (test_repeat_stats.StatsTest.test_mcnemar_exact) ... ok
+test_wilcoxon_exact_known_values (test_repeat_stats.StatsTest.test_wilcoxon_exact_known_values) ... ok
+test_disabled (test_response_cache.CacheTest.test_disabled) ... ok
+test_env_switch (test_response_cache.CacheTest.test_env_switch) ... ok
+test_hit_returns_original_tokens (test_response_cache.CacheTest.test_hit_returns_original_tokens) ... ok
+test_passthrough_attrs (test_response_cache.CacheTest.test_passthrough_attrs) ... ok
+test_sample_idx_required (test_response_cache.CacheTest.test_sample_idx_required) ... ok
+test_bound_judge_path_also_deduplicated (test_response_cache.ConcurrencyTest.test_bound_judge_path_also_deduplicated) ... ok
+test_different_keys_run_in_parallel (test_response_cache.ConcurrencyTest.test_different_keys_run_in_parallel) ... ok
+test_existing_row_not_overwritten (test_response_cache.ConcurrencyTest.test_existing_row_not_overwritten) ... ok
+test_same_key_concurrent_calls_once (test_response_cache.ConcurrencyTest.test_same_key_concurrent_calls_once) ... ok
+test_store_if_failure_lets_waiter_retry (test_response_cache.ConcurrencyTest.test_store_if_failure_lets_waiter_retry)
+첫 응답이 store_if 를 통과 못하면 저장하지 않으므로, 기다리던 요청은 새로 호출한다 (실패를 공유하지 않는다). ... ok
+test_two_wrappers_same_file_share_lock (test_response_cache.ConcurrencyTest.test_two_wrappers_same_file_share_lock) ... ok
+test_key_components (test_response_cache.KeyTest.test_key_components) ... ok
+test_key_uses_requested_not_sent (test_response_cache.KeyTest.test_key_uses_requested_not_sent) ... ok
+test_connection_errors_wait_longer_then_succeed (test_resume.NetworkRetryTest.test_connection_errors_wait_longer_then_succeed) ...   [재시도 1/2] ConnectionError: dns (1초 후)
+  [네트워크 재시도] ConnectionError: dns (5초 후)
+  [네트워크 재시도] ConnectionError: dns (15초 후)
+ok
+test_interrupted_run_resumes_without_redoing_trials (test_resume.ResumeTest.test_interrupted_run_resumes_without_redoing_trials) ... 설정: backend=ollama model=qwen2.5:7b ctx=16384 temp=0.0 seed=42  judge=qwen2.5:7b (ollama)  tokenizer=Qwen/Qwen2.5-7B-Instruct
+답변 지시문: v1 (d12495bd1412)
+key_facts judge: fact_judge_v2 (7e441ad04bab)  mode=per_fact
+문항 2개 x 압축기 ['none', 'rule']  ->  /var/folders/mc/j8vcy8c97gvfp5c1ptxjvryc0000gn/T/tmp1lwk67mj/runs/20261128-205550
+모델 로딩 (첫 호출은 측정에서 제외)...
+[1/2] c0001 fact      input 2170 tok (ctx 2048)
+    none   input   2170 -> 2170   (  0.0%)  O [match]  out 2 tok  ttft 0.0s
+    rule   input   2170 -> 1930   ( 11.1%)  O [match]  out 2 tok  ttft 0.0s
+[2/2] c0002 code      input 2172 tok (ctx 2048)
+
+[중단] /var/folders/mc/j8vcy8c97gvfp5c1ptxjvryc0000gn/T/tmp1lwk67mj/runs/20261128-205550/trials.jsonl 에 2개 기록, summary.json 은 만들지 못했습니다 (KeyboardInterrupt)
+  이어서: python src/experiment.py --resume 20261128-205550
+설정: backend=ollama model=qwen2.5:7b ctx=16384 temp=0.0 seed=42  judge=qwen2.5:7b (ollama)  tokenizer=Qwen/Qwen2.5-7B-Instruct
+답변 지시문: v1 (d12495bd1412)
+key_facts judge: fact_judge_v2 (7e441ad04bab)  mode=per_fact
+문항 2개 x 압축기 ['none', 'rule']  ->  /var/folders/mc/j8vcy8c97gvfp5c1ptxjvryc0000gn/T/tmp1lwk67mj/runs/20261128-205550
+모델 로딩 (첫 호출은 측정에서 제외)...
+이미 기록된 trial 2개는 건너뜁니다
+[2/2] c0002 code      input 2172 tok (ctx 2048)
+    none   input   2172 -> 2172   (  0.0%)  X [match]  out 2 tok  ttft 0.0s
+    rule   input   2172 -> 1932   ( 11.1%)  X [match]  out 2 tok  ttft 0.0s
+ok
+test_default_keeps_summary_keys (test_rule_compressor.FrontmatterTest.test_default_keeps_summary_keys) ... ok
+test_frontmatter_rule_off (test_rule_compressor.FrontmatterTest.test_frontmatter_rule_off) ... ok
+test_idempotent (test_rule_compressor.FrontmatterTest.test_idempotent) ... ok
+test_keep_empty_removes_whole_block (test_rule_compressor.FrontmatterTest.test_keep_empty_removes_whole_block) ... ok
+test_registry (test_rule_compressor.FrontmatterTest.test_registry) ... ok
+test_budget_blocks_restore (test_sentence_repair.RepairTest.test_budget_blocks_restore) ... ok
+test_embedding_failure_is_logged_without_api_retry (test_sentence_repair.RepairTest.test_embedding_failure_is_logged_without_api_retry) ... ok
+test_high_similarity_keeps_compression (test_sentence_repair.RepairTest.test_high_similarity_keeps_compression) ... ok
+test_low_similarity_restores_original_in_place (test_sentence_repair.RepairTest.test_low_similarity_restores_original_in_place) ... ok
+test_missing_sentence_restored_before_next_sentence (test_sentence_repair.RepairTest.test_missing_sentence_restored_before_next_sentence) ... ok
+test_registry_and_invalid_settings (test_sentence_repair.RepairTest.test_registry_and_invalid_settings) ... ok
+test_sentence_boundaries_preserve_versions_and_code (test_sentence_repair.RepairTest.test_sentence_boundaries_preserve_versions_and_code) ... ok
+test_unaligned_text_is_not_modified (test_sentence_repair.RepairTest.test_unaligned_text_is_not_modified) ... ok
+test_unrelated_question_no_embedding (test_sentence_repair.RepairTest.test_unrelated_question_no_embedding) ... ok
+test_bytes_preserved_and_configuration_placeholders_untouched (test_springboot_preparation.IncludeResolutionTest.test_bytes_preserved_and_configuration_placeholders_untouched) ... ok
+test_external_javadoc_url_does_not_erase_class_identifier (test_springboot_preparation.IncludeResolutionTest.test_external_javadoc_url_does_not_erase_class_identifier) ... ok
+test_java_include_uses_heading_id_not_inline_anchor (test_springboot_preparation.IncludeResolutionTest.test_java_include_uses_heading_id_not_inline_anchor) ... ok
+test_missing_include_is_fatal (test_springboot_preparation.IncludeResolutionTest.test_missing_include_is_fatal) ... ok
+test_path_traversal_is_fatal (test_springboot_preparation.IncludeResolutionTest.test_path_traversal_is_fatal) ... ok
+test_catalog_has_50_distinct_topics (test_springboot_preparation.SourceSelectionTest.test_catalog_has_50_distinct_topics) ... ok
+test_missing_anchor_fails (test_springboot_preparation.SourceSelectionTest.test_missing_anchor_fails) ... ok
+test_section_boundaries_exclude_following_anchor (test_springboot_preparation.SourceSelectionTest.test_section_boundaries_exclude_following_anchor) ... ok
+test_all_tagged_and_untagged_lines (test_springboot_preparation.TaggedCodeTest.test_all_tagged_and_untagged_lines) ... ok
+test_excluded_tag_preserves_surrounding_java (test_springboot_preparation.TaggedCodeTest.test_excluded_tag_preserves_surrounding_java) ... ok
+test_missing_or_unbalanced_tag_fails (test_springboot_preparation.TaggedCodeTest.test_missing_or_unbalanced_tag_fails) ... ok
+test_named_tag_retains_code_before_inline_end (test_springboot_preparation.TaggedCodeTest.test_named_tag_retains_code_before_inline_end) ... ok
+test_unsupported_selection_option_is_fatal (test_springboot_preparation.TaggedCodeTest.test_unsupported_selection_option_is_fatal) ... ok
+test_wildcard_and_indent (test_springboot_preparation.TaggedCodeTest.test_wildcard_and_indent) ... ok
+test_binary_correct_uses_ox_field (test_stats.CompareTest.test_binary_correct_uses_ox_field) ... ok
+test_mcnemar_counts_and_cost (test_stats.CompareTest.test_mcnemar_counts_and_cost) ... ok
+test_unpaired_and_missing_accuracy_are_skipped (test_stats.CompareTest.test_unpaired_and_missing_accuracy_are_skipped) ... ok
+test_fallback_inside_chained_compressor (test_stats.LoadTest.test_fallback_inside_chained_compressor) ... ok
+test_fallback_qids (test_stats.LoadTest.test_fallback_qids) ... ok
+test_merges_runs_and_rejects_duplicates (test_stats.LoadTest.test_merges_runs_and_rejects_duplicates) ... ok
+test_known_values (test_stats.McNemarTest.test_known_values) ... ok
+test_point_estimates_match_summary_definitions (test_stats.PairedStatsTest.test_point_estimates_match_summary_definitions) ... ok
+test_same_seed_same_interval (test_stats.PairedStatsTest.test_same_seed_same_interval) ... ok
+test_interpolates (test_stats.PercentileTest.test_interpolates) ... ok
+test_non_stream_deepseek (test_usage_details.OpenAIChatTest.test_non_stream_deepseek) ... ok
+test_non_stream_openai_no_reasoning_text (test_usage_details.OpenAIChatTest.test_non_stream_openai_no_reasoning_text) ... ok
+test_cache_write_candidate (test_usage_details.ParseTest.test_cache_write_candidate) ... ok
+test_deepseek_miss_is_not_cache_write (test_usage_details.ParseTest.test_deepseek_miss_is_not_cache_write) ... ok
+test_missing_is_none_not_zero (test_usage_details.ParseTest.test_missing_is_none_not_zero) ... ok
+test_openai (test_usage_details.ParseTest.test_openai) ... ok
+test_responses_api_shape (test_usage_details.ParseTest.test_responses_api_shape) ... ok
+
+----------------------------------------------------------------------
+Ran 393 tests in 5.898s
+
+OK (skipped=1)
+
+================================================================
+압축 실험 평가 결과
+================================================================
+
+[none (Baseline)]
+  입력 토큰 절감률   : 0.0%
+  순 입력 토큰 절감률: 0.0%
+  문맥 토큰 절감률   : 0.0%  (보조)
+  의미 유사도        : -
+  핵심 엔티티 보존율 : 100.0%
+  답변 정확도        : 100.0%
+  답변 정확도 유지율 : -
+  의미 손실률        : -
+  NOT FOUND 비율     : 0.0%
+  답변 정확도 (type 균등): 100.0%
+    fact       n=1   정확도 100.0%  정답 100.0%  NOT FOUND   0.0%  출력 2.0 tok
+    code       n=1   정확도 100.0%  정답   0.0%  NOT FOUND   0.0%  출력 2.0 tok
+
+[rule]
+  입력 토큰 절감률   : 11.1%
+  순 입력 토큰 절감률: 11.1%
+  문맥 토큰 절감률   : 11.7%  (보조)
+  의미 유사도        : -
+  핵심 엔티티 보존율 : 100.0%
+  답변 정확도        : 100.0%
+  답변 정확도 유지율 : 100.0%
+  의미 손실률        : -
+  NOT FOUND 비율     : 0.0%
+  답변 정확도 (type 균등): 100.0%
+    fact       n=1   정확도 100.0%  정답 100.0%  NOT FOUND   0.0%  출력 2.0 tok
+    code       n=1   정확도 100.0%  정답   0.0%  NOT FOUND   0.0%  출력 2.0 tok
+
+================================================================
+
+저장: /var/folders/mc/j8vcy8c97gvfp5c1ptxjvryc0000gn/T/tmp1lwk67mj/runs/20261128-205550/ (trials.jsonl, summary.json, contexts/)
+SUMMARY testsRun=393 failures=0 errors=0 skipped=1 expectedFailures=0 unexpectedSuccesses=0

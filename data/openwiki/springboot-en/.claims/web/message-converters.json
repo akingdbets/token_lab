@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:57ecc7b78de3c0bc4c34cc411221260ab69212bfe2854e26fcb124647c017344",
+  "claims": [
+    {
+      "id": "claim_92468641bf6442cba73afc24b3c9a75f",
+      "statement": "Spring MVC uses the HttpMessageConverter interface to convert HTTP requests and responses. Sensible defaults are included out of the box. For example, objects can be automatically converted to JSON (by using the Jackson library) or XML (by using the Jackson XML extension, if available, or by using JAXB if the Jackson XML extension is not available). By default, strings are encoded in UTF-8.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L89-L106",
+          "version": "repo-lines-v1:sha256:ba40794639f09db9c268282de484e7003d800f796c6faf88c8aebf398468f3b8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3ZWQ1NzY1YjU3NTNhZjQzZjQ5YjllYWMzYzU1OTliYTJiMDdiMzUyYTI2ZTBlY2RhYWNiNDU5NmZhZjQzNWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRmMDRlNjNmNGQ3OGNmNDU1OGIyODE0MDVlYWMxNDg3NmFkYmRjNWVmMDViYmM5MDhhMjI3ZjFkYjQ2MDFmMzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/web/servlet/springmvc/messageconverters/MyHttpMessageConvertersConfiguration.java",
+          "version": "repo-file-v1:sha256:8ed49e244ed3c3cc7a383dbd720a6e4e6e2f27e696a009e69e1525c45d15fbd4"
+        }
+      ]
+    },
+    {
+      "id": "claim_93f39f47ee3a4423b2392e4ceec33bd1",
+      "statement": "Any HttpMessageConverter bean that is present in the context is added to the list of converters. You can also override default converters in the same way.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L89-L106",
+          "version": "repo-lines-v1:sha256:ba40794639f09db9c268282de484e7003d800f796c6faf88c8aebf398468f3b8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3ZWQ1NzY1YjU3NTNhZjQzZjQ5YjllYWMzYzU1OTliYTJiMDdiMzUyYTI2ZTBlY2RhYWNiNDU5NmZhZjQzNWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRmMDRlNjNmNGQ3OGNmNDU1OGIyODE0MDVlYWMxNDg3NmFkYmRjNWVmMDViYmM5MDhhMjI3ZjFkYjQ2MDFmMzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ee5df6f2f8c24a909d8a5e6cfa1dc503",
+      "statement": "If you need to add or customize converters, you can declare one or more ClientHttpMessageConvertersCustomizer or ServerHttpMessageConvertersCustomizer as beans. There, you can choose whether converter instances should be added before default ones (addCustomConverter) or if they should override a specific default converter (like withJsonConverter).",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L89-L106",
+          "version": "repo-lines-v1:sha256:ba40794639f09db9c268282de484e7003d800f796c6faf88c8aebf398468f3b8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3ZWQ1NzY1YjU3NTNhZjQzZjQ5YjllYWMzYzU1OTliYTJiMDdiMzUyYTI2ZTBlY2RhYWNiNDU5NmZhZjQzNWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRmMDRlNjNmNGQ3OGNmNDU1OGIyODE0MDVlYWMxNDg3NmFkYmRjNWVmMDViYmM5MDhhMjI3ZjFkYjQ2MDFmMzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

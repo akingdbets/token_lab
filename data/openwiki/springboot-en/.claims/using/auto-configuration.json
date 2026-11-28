@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:7da7ce100f2f77724d2331183c9a71af54e580d9396b117875d91974d2c89969",
+  "claims": [
+    {
+      "id": "claim_a6b4c04e725347d88b5c21f7d1bee60d",
+      "statement": "Spring Boot auto-configuration attempts to automatically configure your Spring application based on the jar dependencies that you have added. For example, if HSQLDB is on your classpath, and you have not manually configured any database connection beans, then Spring Boot auto-configures an in-memory database.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/using/auto-configuration.adoc#L1-L49",
+          "version": "repo-lines-v1:sha256:912fe96c89978362ddc7b43760290e954b86839f3a00dd7428729d81cd7f2bc3:eyJzZWxlY3RlZExpbmVDb3VudCI6NDksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjczOTE3NTdhYjllZTcyMDljMzI3Y2Y5YWFkYWIxNDVjZTRkMGY2OWQxN2M1NmZiZjIzZTI5MGFmZDU1NzIzMDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY1ZjlkNjJlYmNlYTdlNGQyNjg3ZTgzYmI1ZGY2M2JjODBhYWJjYWI0NDllNTk4NTgzNDc4ZDQ0MGM1NjU5MjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/using/autoconfiguration/disablingspecific/MyApplication.java",
+          "version": "repo-file-v1:sha256:9d1c2328a199103913f35d1eafb4259d8664b02bd3a245091524a7d93dd275ba"
+        }
+      ]
+    },
+    {
+      "id": "claim_5f7745185f854f7a8c247204f167e7cb",
+      "statement": "You need to opt-in to auto-configuration by adding the @EnableAutoConfiguration or @SpringBootApplication annotations to one of your @Configuration classes.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/using/auto-configuration.adoc#L1-L49",
+          "version": "repo-lines-v1:sha256:912fe96c89978362ddc7b43760290e954b86839f3a00dd7428729d81cd7f2bc3:eyJzZWxlY3RlZExpbmVDb3VudCI6NDksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjczOTE3NTdhYjllZTcyMDljMzI3Y2Y5YWFkYWIxNDVjZTRkMGY2OWQxN2M1NmZiZjIzZTI5MGFmZDU1NzIzMDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY1ZjlkNjJlYmNlYTdlNGQyNjg3ZTgzYmI1ZGY2M2JjODBhYWJjYWI0NDllNTk4NTgzNDc4ZDQ0MGM1NjU5MjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1fa6ecf4d24947f995bdf34826594666",
+      "statement": "Auto-configuration is non-invasive. At any point, you can start to define your own configuration to replace specific parts of the auto-configuration. For example, if you add your own DataSource bean, the default embedded database support backs away.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/using/auto-configuration.adoc#L1-L49",
+          "version": "repo-lines-v1:sha256:912fe96c89978362ddc7b43760290e954b86839f3a00dd7428729d81cd7f2bc3:eyJzZWxlY3RlZExpbmVDb3VudCI6NDksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjczOTE3NTdhYjllZTcyMDljMzI3Y2Y5YWFkYWIxNDVjZTRkMGY2OWQxN2M1NmZiZjIzZTI5MGFmZDU1NzIzMDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY1ZjlkNjJlYmNlYTdlNGQyNjg3ZTgzYmI1ZGY2M2JjODBhYWJjYWI0NDllNTk4NTgzNDc4ZDQ0MGM1NjU5MjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_615f7ca2c4b0400aba3fc3a165c65769",
+      "statement": "If you need to find out what auto-configuration is currently being applied, and why, start your application with the --debug switch. Doing so enables debug logs for a selection of core loggers and logs a conditions report to the console.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/using/auto-configuration.adoc#L1-L49",
+          "version": "repo-lines-v1:sha256:912fe96c89978362ddc7b43760290e954b86839f3a00dd7428729d81cd7f2bc3:eyJzZWxlY3RlZExpbmVDb3VudCI6NDksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjczOTE3NTdhYjllZTcyMDljMzI3Y2Y5YWFkYWIxNDVjZTRkMGY2OWQxN2M1NmZiZjIzZTI5MGFmZDU1NzIzMDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY1ZjlkNjJlYmNlYTdlNGQyNjg3ZTgzYmI1ZGY2M2JjODBhYWJjYWI0NDllNTk4NTgzNDc4ZDQ0MGM1NjU5MjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_42a4d5879dba4bddad861341f8e8c47e",
+      "statement": "If the class is not on the classpath, you can use the excludeName attribute of the annotation and specify the fully qualified name instead. If you prefer to use @EnableAutoConfiguration rather than @SpringBootApplication, exclude and excludeName are also available. Finally, you can also control the list of auto-configuration classes to exclude by using the spring.autoconfigure.exclude property.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/using/auto-configuration.adoc#L1-L49",
+          "version": "repo-lines-v1:sha256:912fe96c89978362ddc7b43760290e954b86839f3a00dd7428729d81cd7f2bc3:eyJzZWxlY3RlZExpbmVDb3VudCI6NDksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjczOTE3NTdhYjllZTcyMDljMzI3Y2Y5YWFkYWIxNDVjZTRkMGY2OWQxN2M1NmZiZjIzZTI5MGFmZDU1NzIzMDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY1ZjlkNjJlYmNlYTdlNGQyNjg3ZTgzYmI1ZGY2M2JjODBhYWJjYWI0NDllNTk4NTgzNDc4ZDQ0MGM1NjU5MjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_eb28319d59ae4953a57e3f2ba3e9092b",
+      "statement": "Auto-configuration packages are the packages that various auto-configured features look in by default when scanning for things such as entities and Spring Data repositories. The @EnableAutoConfiguration annotation (either directly or through its presence on @SpringBootApplication) determines the default auto-configuration package. Additional packages can be configured using the @AutoConfigurationPackage annotation.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/using/auto-configuration.adoc#L1-L49",
+          "version": "repo-lines-v1:sha256:912fe96c89978362ddc7b43760290e954b86839f3a00dd7428729d81cd7f2bc3:eyJzZWxlY3RlZExpbmVDb3VudCI6NDksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjczOTE3NTdhYjllZTcyMDljMzI3Y2Y5YWFkYWIxNDVjZTRkMGY2OWQxN2M1NmZiZjIzZTI5MGFmZDU1NzIzMDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY1ZjlkNjJlYmNlYTdlNGQyNjg3ZTgzYmI1ZGY2M2JjODBhYWJjYWI0NDllNTk4NTgzNDc4ZDQ0MGM1NjU5MjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

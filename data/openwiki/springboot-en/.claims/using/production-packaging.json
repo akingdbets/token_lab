@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:c35daa3f8d6bb6b9073c53f6bad791bddfc5827c244ca6fdcfeb4a3f8fa5dc80",
+  "claims": [
+    {
+      "id": "claim_c66ac1eac6dd4cb8ac89fc74b7cebaea",
+      "statement": "Once your Spring Boot application is ready for production deployment, there are many options for packaging and optimizing the application. See the packaging/index.adoc section of the documentation to read about these features.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/using/packaging-for-production.adoc#L1-L9",
+          "version": "repo-lines-v1:sha256:0acd01815c592e60561bd3ac5d29728f56a6e8949a4bc0a2ec639975bc112cd7:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDU3ODcwODgzYzI5OWFiYTM3Zjg5YmM4NzAyYWQxNGI1YzQyNDk5N2UyYzAxMTgxMzJhY2M2ODQzMGViNGRkMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjQwNDY2NzY1ZmRjZjQ5ZTljMTZhYWU0ZTBiMjEzMzhmNzRlY2M0NWE2MmFhYmRkYmM5NGJiOTBhN2U0YWUzYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_3fd45c04306e4c6c94a27c2dea7898ac",
+      "statement": "For additional \"production ready\" features, such as health, auditing, and metric REST or JMX end-points, consider adding spring-boot-actuator. See actuator.adoc for details.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/using/packaging-for-production.adoc#L1-L9",
+          "version": "repo-lines-v1:sha256:0acd01815c592e60561bd3ac5d29728f56a6e8949a4bc0a2ec639975bc112cd7:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDU3ODcwODgzYzI5OWFiYTM3Zjg5YmM4NzAyYWQxNGI1YzQyNDk5N2UyYzAxMTgxMzJhY2M2ODQzMGViNGRkMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjQwNDY2NzY1ZmRjZjQ5ZTljMTZhYWU0ZTBiMjEzMzhmNzRlY2M0NWE2MmFhYmRkYmM5NGJiOTBhN2U0YWUzYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

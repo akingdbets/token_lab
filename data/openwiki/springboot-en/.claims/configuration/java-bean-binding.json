@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:fb438f4325ba6510184dd2eaf1bd8422a18fc8a14e16add0759aba9c95f5d9f6",
+  "claims": [
+    {
+      "id": "claim_c17031f96ed24022986c2ac679ec365c",
+      "statement": "Some people use Project Lombok to add getters and setters automatically. Make sure that Lombok does not generate any particular constructor for such a type, as it is used automatically by the container to instantiate the object.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L813-L846",
+          "version": "repo-lines-v1:sha256:a5b0c597a3357f5083438de365ecdc3b3a850699a5467b1909368620b8fd4a6c:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJjN2ZiODMyYzQyZDdjNmNlY2NkYTQzNmJhMDMzZGE0YmNjNjUzNGQ5MzBkYWEyNGE1OWFjMDM2ZmMzMTVhZTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlZTQ2NDE0YzllMzRkNWNiOGM3ZTQzZGJkM2YzMDU1OTQ0YTkzZDE5ZDhlYTEyMDE1MWJlYzY0YWE2OWFlMjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/features/externalconfig/typesafeconfigurationproperties/javabeanbinding/MyProperties.java",
+          "version": "repo-file-v1:sha256:e6adc896e51503fe8311896ea00eee68883c7cd0d2d0e4d1efa79d6fa32875a0"
+        }
+      ]
+    },
+    {
+      "id": "claim_a74e45cd1f084e0697752cf350264361",
+      "statement": "Finally, only standard Java Bean properties are considered and binding on static properties is not supported.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L813-L846",
+          "version": "repo-lines-v1:sha256:a5b0c597a3357f5083438de365ecdc3b3a850699a5467b1909368620b8fd4a6c:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJjN2ZiODMyYzQyZDdjNmNlY2NkYTQzNmJhMDMzZGE0YmNjNjUzNGQ5MzBkYWEyNGE1OWFjMDM2ZmMzMTVhZTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlZTQ2NDE0YzllMzRkNWNiOGM3ZTQzZGJkM2YzMDU1OTQ0YTkzZDE5ZDhlYTEyMDE1MWJlYzY0YWE2OWFlMjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

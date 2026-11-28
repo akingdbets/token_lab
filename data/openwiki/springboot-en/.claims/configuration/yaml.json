@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:a1f11b4b92c548e928152163f8c4193991db2f58a2502d75888f7c7fdeafb831",
+  "claims": [
+    {
+      "id": "claim_61364c3b6131403e890cb76e678403fe",
+      "statement": "YAML is a superset of JSON and, as such, is a convenient format for specifying hierarchical configuration data. The SpringApplication class automatically supports YAML as an alternative to properties whenever you have the SnakeYAML library on your classpath.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L692-L763",
+          "version": "repo-lines-v1:sha256:cc881d557aa1208d383bb8217489351e44e7066b55416fb72fb9c65c8b45503c:eyJzZWxlY3RlZExpbmVDb3VudCI6NzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmODRmNDU0Y2JhYmJmNmMwOTc2NjdmZmFjNTdhNDkwZTJhYjQ2ZjNkNmMyYzViYTU5YmJmNGFiM2YzZTc4ZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0N2YxOTU0ZmRhNDZhY2NjNjU0NDJmNDgxOTI0NTM4MGM2NTJmYzk4NzFkODM0YzcwNGU0MjM4ODdkNzU2ZWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d81544d193954578951cc855774dac40",
+      "statement": "Spring Framework provides two convenient classes that can be used to load YAML documents. The YamlPropertiesFactoryBean loads YAML as Properties and the YamlMapFactoryBean loads YAML as a Map.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L692-L763",
+          "version": "repo-lines-v1:sha256:cc881d557aa1208d383bb8217489351e44e7066b55416fb72fb9c65c8b45503c:eyJzZWxlY3RlZExpbmVDb3VudCI6NzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmODRmNDU0Y2JhYmJmNmMwOTc2NjdmZmFjNTdhNDkwZTJhYjQ2ZjNkNmMyYzViYTU5YmJmNGFiM2YzZTc4ZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0N2YxOTU0ZmRhNDZhY2NjNjU0NDJmNDgxOTI0NTM4MGM2NTJmYzk4NzFkODM0YzcwNGU0MjM4ODdkNzU2ZWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4e30f8ee5dea43f8914586cfd8964627",
+      "statement": "You can also use the YamlPropertySourceLoader class if you want to load YAML as a Spring PropertySource.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L692-L763",
+          "version": "repo-lines-v1:sha256:cc881d557aa1208d383bb8217489351e44e7066b55416fb72fb9c65c8b45503c:eyJzZWxlY3RlZExpbmVDb3VudCI6NzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmODRmNDU0Y2JhYmJmNmMwOTc2NjdmZmFjNTdhNDkwZTJhYjQ2ZjNkNmMyYzViYTU5YmJmNGFiM2YzZTc4ZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0N2YxOTU0ZmRhNDZhY2NjNjU0NDJmNDgxOTI0NTM4MGM2NTJmYzk4NzFkODM0YzcwNGU0MjM4ODdkNzU2ZWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

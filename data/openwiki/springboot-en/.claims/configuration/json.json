@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:35c589173f2a2a9eaf78695facbdd0a0742b63a773693c9aceaf7b41022c86b3",
+  "claims": [
+    {
+      "id": "claim_1317eebc7b4348cb8de137e62efce766",
+      "statement": "Support for Jackson 2 is deprecated and will be removed in a future Spring Boot 4.x release. It is provided purely to ease the migration from Jackson 2 to Jackson 3 and should not be relied up in the longer term.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/json.adoc#L1-L104",
+          "version": "repo-lines-v1:sha256:689790eeea2ffb6e5491938b0a25504578135189d3b4b1d05e9fd97e1588c218:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIzY2M0MTViZWU0ZWM3NTgzYTBmMTJmNjQwZDc3NjRiZjcyMTA4ODMwN2FlMTYwOWFjMWI5YjNhZGZjN2I2NTAyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIxNjQ3ODA5ZDc5NDhmMmJmNjc3ZTgyNTY5OGM5MjIyMDZmOTlkNWEyZWQ2NGViZjU0NzdkN2Y3YTQ3NGQxY2I4IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/features/json/jackson/customserializersanddeserializers/MyJacksonComponent.java",
+          "version": "repo-file-v1:sha256:2ddc200ece6f7853ccc33d1635fb3cab72322b16ca0c428a69c4788a77513bbe"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/features/json/jackson/customserializersanddeserializers/object/MyJacksonComponent.java",
+          "version": "repo-file-v1:sha256:63219d22c3e7e7316c965514110eda901d148c0c0596ad2d05e5f622b2ec3289"
+        }
+      ]
+    },
+    {
+      "id": "claim_0b21bc3abddb4d62bba27606a5c6d32e",
+      "statement": "Auto-configuration for Jackson 3 is provided and Jackson is part of spring-boot-starter-json. When Jackson is on the classpath a JsonMapper bean is automatically configured. Several configuration properties are provided for customizing the configuration of the JsonMapper.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/json.adoc#L1-L104",
+          "version": "repo-lines-v1:sha256:689790eeea2ffb6e5491938b0a25504578135189d3b4b1d05e9fd97e1588c218:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIzY2M0MTViZWU0ZWM3NTgzYTBmMTJmNjQwZDc3NjRiZjcyMTA4ODMwN2FlMTYwOWFjMWI5YjNhZGZjN2I2NTAyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIxNjQ3ODA5ZDc5NDhmMmJmNjc3ZTgyNTY5OGM5MjIyMDZmOTlkNWEyZWQ2NGViZjU0NzdkN2Y3YTQ3NGQxY2I4IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_89060009533346d497652291b71acf53",
+      "statement": "If you use Jackson to serialize and deserialize JSON data, you might want to write your own ValueSerializer and ValueDeserializer classes. Custom serializers are usually registered with Jackson through a module, but Spring Boot provides an alternative @JacksonComponent annotation that makes it easier to directly register Spring Beans.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/json.adoc#L1-L104",
+          "version": "repo-lines-v1:sha256:689790eeea2ffb6e5491938b0a25504578135189d3b4b1d05e9fd97e1588c218:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIzY2M0MTViZWU0ZWM3NTgzYTBmMTJmNjQwZDc3NjRiZjcyMTA4ODMwN2FlMTYwOWFjMWI5YjNhZGZjN2I2NTAyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIxNjQ3ODA5ZDc5NDhmMmJmNjc3ZTgyNTY5OGM5MjIyMDZmOTlkNWEyZWQ2NGViZjU0NzdkN2Y3YTQ3NGQxY2I4IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_b8ce918527c641a5aebe82ffa3da65e4",
+      "statement": "All @JacksonComponent beans in the ApplicationContext are automatically registered with Jackson. Because @JacksonComponent is meta-annotated with @Component, the usual component-scanning rules apply.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/json.adoc#L1-L104",
+          "version": "repo-lines-v1:sha256:689790eeea2ffb6e5491938b0a25504578135189d3b4b1d05e9fd97e1588c218:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIzY2M0MTViZWU0ZWM3NTgzYTBmMTJmNjQwZDc3NjRiZjcyMTA4ODMwN2FlMTYwOWFjMWI5YjNhZGZjN2I2NTAyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIxNjQ3ODA5ZDc5NDhmMmJmNjc3ZTgyNTY5OGM5MjIyMDZmOTlkNWEyZWQ2NGViZjU0NzdkN2Y3YTQ3NGQxY2I4IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_121301189b83482484c013f584060cd2",
+      "statement": "Spring Boot also provides ObjectValueSerializer and ObjectValueDeserializer base classes that provide useful alternatives to the standard Jackson versions when serializing objects. See ObjectValueSerializer and ObjectValueDeserializer in the API documentation for details.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/json.adoc#L1-L104",
+          "version": "repo-lines-v1:sha256:689790eeea2ffb6e5491938b0a25504578135189d3b4b1d05e9fd97e1588c218:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIzY2M0MTViZWU0ZWM3NTgzYTBmMTJmNjQwZDc3NjRiZjcyMTA4ODMwN2FlMTYwOWFjMWI5YjNhZGZjN2I2NTAyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIxNjQ3ODA5ZDc5NDhmMmJmNjc3ZTgyNTY5OGM5MjIyMDZmOTlkNWEyZWQ2NGViZjU0NzdkN2Y3YTQ3NGQxY2I4IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_0b74cf8485504fd78e973dcc2309d233",
+      "statement": "Jackson has support for mixins that can be used to mix additional annotations into those already declared on a target class. Spring Boot’s Jackson auto-configuration will scan your application’s packages for classes annotated with @JacksonMixin and register them with the auto-configured JsonMapper. The registration is performed by Spring Boot’s JacksonMixinModule.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/json.adoc#L1-L104",
+          "version": "repo-lines-v1:sha256:689790eeea2ffb6e5491938b0a25504578135189d3b4b1d05e9fd97e1588c218:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIzY2M0MTViZWU0ZWM3NTgzYTBmMTJmNjQwZDc3NjRiZjcyMTA4ODMwN2FlMTYwOWFjMWI5YjNhZGZjN2I2NTAyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIxNjQ3ODA5ZDc5NDhmMmJmNjc3ZTgyNTY5OGM5MjIyMDZmOTlkNWEyZWQ2NGViZjU0NzdkN2Y3YTQ3NGQxY2I4IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

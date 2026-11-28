@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:241031bb6dee35c802668e11cbf6bddddce5528f003700f3d57896f4214a4717",
+  "claims": [
+    {
+      "id": "claim_60467239ef7b4c81b2a186b2b78c31c3",
+      "statement": "The method validation feature supported by Bean Validation 1.1 is automatically enabled as long as a JSR-303 implementation (such as Hibernate Validator, typically provided by spring-boot-starter-validation) is on the classpath. This lets bean methods be annotated with jakarta.validation constraints on their parameters and/or on their return value. Target classes with such annotated methods need to be annotated with the @Validated annotation at the type level for their methods to be searched for inline constraint annotations.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/io/validation.adoc#L1-L17",
+          "version": "repo-lines-v1:sha256:9c5d323df049d2cc8ce6e7e3965f44f3a1203fac5983c53ae7b709586f602d57:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmZDk2NzM2MWM4YTQ2NjhjN2VhZGY3NWQ0YzE2N2EzNzA5MjMxYTAwNGExOWYwZTI2MjhiNjU3YjE2Njk5YmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjNTdlOTg0ZDE0YjE5MDg3ZTk1NmZkMTBhMzZiNGRjNmFhNmY0NmJkMmY0ODEwMDI1YWI1MWQ2NDA1MjFjN2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/io/validation/MyBean.java",
+          "version": "repo-file-v1:sha256:51987d8f921bd4d6d676f6199441bf168dbcf39eaab992ea73b5cb91174e3706"
+        }
+      ]
+    },
+    {
+      "id": "claim_50b209bb3ab44746b66185b7c0cce077",
+      "statement": "The application’s MessageSource is used when resolving {parameters} in constraint messages. This allows you to use your application’s messages.properties files for Bean Validation messages. Once the parameters have been resolved, message interpolation is completed using Bean Validation’s default interpolator.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/io/validation.adoc#L1-L17",
+          "version": "repo-lines-v1:sha256:9c5d323df049d2cc8ce6e7e3965f44f3a1203fac5983c53ae7b709586f602d57:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmZDk2NzM2MWM4YTQ2NjhjN2VhZGY3NWQ0YzE2N2EzNzA5MjMxYTAwNGExOWYwZTI2MjhiNjU3YjE2Njk5YmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjNTdlOTg0ZDE0YjE5MDg3ZTk1NmZkMTBhMzZiNGRjNmFhNmY0NmJkMmY0ODEwMDI1YWI1MWQ2NDA1MjFjN2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bb0438dedc604f7381da22d54ffa10dc",
+      "statement": "To customize the Configuration used to build the ValidatorFactory, define a ValidationConfigurationCustomizer bean. When multiple customizer beans are defined, they are called in order based on their @Order annotation or Ordered implementation.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/io/validation.adoc#L1-L17",
+          "version": "repo-lines-v1:sha256:9c5d323df049d2cc8ce6e7e3965f44f3a1203fac5983c53ae7b709586f602d57:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmZDk2NzM2MWM4YTQ2NjhjN2VhZGY3NWQ0YzE2N2EzNzA5MjMxYTAwNGExOWYwZTI2MjhiNjU3YjE2Njk5YmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjNTdlOTg0ZDE0YjE5MDg3ZTk1NmZkMTBhMzZiNGRjNmFhNmY0NmJkMmY0ODEwMDI1YWI1MWQ2NDA1MjFjN2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

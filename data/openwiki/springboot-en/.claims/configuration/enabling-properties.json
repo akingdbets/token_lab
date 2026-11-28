@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:ed5f228df628613e1f0640be9f383efc38c01f831fb9aa21724aec76fbdddb9d",
+  "claims": [
+    {
+      "id": "claim_b3dc2e28456644628b2c0ac6de2ee7ac",
+      "statement": "Spring Boot provides infrastructure to bind @ConfigurationProperties types and register them as beans. You can either enable configuration properties on a class-by-class basis or enable configuration property scanning that works in a similar manner to component scanning.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L967-L997",
+          "version": "repo-lines-v1:sha256:4293de73b67ea7d07d3b6c5cdaba1a5080fc645c73368d70ead4c5e8c3228afe:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUwMDA2MzViNjRlNzcyNjk3NzMzOWIzN2MzMTVlZDUyNGI4MjllMGU1ZDI2MTg2ZTJkYmMwYjM0ODY5MzE1ODkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlM2Q5OGI5ZjIzMzVkYjQwYzhkNDEzYzk5NTQ1ZWI2NmRhMDhhMTM5NTczZjk0MTg2OWQ2MTg3NjE4YjU5MjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/features/externalconfig/typesafeconfigurationproperties/enablingannotatedtypes/MyApplication.java",
+          "version": "repo-file-v1:sha256:b82684c19f1acf5ff08b347de5c05054190911504bd25d972025d6f271886a12"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/features/externalconfig/typesafeconfigurationproperties/enablingannotatedtypes/MyConfiguration.java",
+          "version": "repo-file-v1:sha256:ae0e92da3ad52e8be3d17634ff83770f35073530348fd91153b99996209fe411"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/features/externalconfig/typesafeconfigurationproperties/enablingannotatedtypes/SomeProperties.java",
+          "version": "repo-file-v1:sha256:129d909a7a000706b586a26b4ee0adcb3bfcfbbe6f9328e3f474e8688c9dad8d"
+        }
+      ]
+    },
+    {
+      "id": "claim_f0d16907715b4b5482a8c8bbba2db354",
+      "statement": "When the @ConfigurationProperties bean is registered using configuration property scanning or through @EnableConfigurationProperties, the bean has a conventional name: <prefix>-<fqn>, where <prefix> is the environment key prefix specified in the @ConfigurationProperties annotation and <fqn> is the fully qualified name of the bean. If the annotation does not provide any prefix, only the fully qualified name of the bean is used.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L967-L997",
+          "version": "repo-lines-v1:sha256:4293de73b67ea7d07d3b6c5cdaba1a5080fc645c73368d70ead4c5e8c3228afe:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUwMDA2MzViNjRlNzcyNjk3NzMzOWIzN2MzMTVlZDUyNGI4MjllMGU1ZDI2MTg2ZTJkYmMwYjM0ODY5MzE1ODkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlM2Q5OGI5ZjIzMzVkYjQwYzhkNDEzYzk5NTQ1ZWI2NmRhMDhhMTM5NTczZjk0MTg2OWQ2MTg3NjE4YjU5MjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ae5aee17ddae4c17b7bebf408eeddcdb",
+      "statement": "Assuming that it is in the com.example.app package, the bean name of the SomeProperties example above is some.properties-com.example.app.SomeProperties.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L967-L997",
+          "version": "repo-lines-v1:sha256:4293de73b67ea7d07d3b6c5cdaba1a5080fc645c73368d70ead4c5e8c3228afe:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUwMDA2MzViNjRlNzcyNjk3NzMzOWIzN2MzMTVlZDUyNGI4MjllMGU1ZDI2MTg2ZTJkYmMwYjM0ODY5MzE1ODkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlM2Q5OGI5ZjIzMzVkYjQwYzhkNDEzYzk5NTQ1ZWI2NmRhMDhhMTM5NTczZjk0MTg2OWQ2MTg3NjE4YjU5MjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ccfcef655ff14dffa736995f174f1209",
+      "statement": "We recommend that @ConfigurationProperties only deal with the environment and, in particular, does not inject other beans from the context. For corner cases, setter injection can be used or any of the *Aware interfaces provided by the framework (such as EnvironmentAware if you need access to the Environment). If you still want to inject other beans using the constructor, the configuration properties bean must be annotated with @Component and use JavaBean-based property binding.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L967-L997",
+          "version": "repo-lines-v1:sha256:4293de73b67ea7d07d3b6c5cdaba1a5080fc645c73368d70ead4c5e8c3228afe:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUwMDA2MzViNjRlNzcyNjk3NzMzOWIzN2MzMTVlZDUyNGI4MjllMGU1ZDI2MTg2ZTJkYmMwYjM0ODY5MzE1ODkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlM2Q5OGI5ZjIzMzVkYjQwYzhkNDEzYzk5NTQ1ZWI2NmRhMDhhMTM5NTczZjk0MTg2OWQ2MTg3NjE4YjU5MjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

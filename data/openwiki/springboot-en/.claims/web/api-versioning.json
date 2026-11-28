@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:1279105b47264a6dd58e940a9e1dcd31f68f7be477f3d29176a81c72eb861b22",
+  "claims": [
+    {
+      "id": "claim_68088d073d06418ca82c555309b03e93",
+      "statement": "Spring MVC supports API versioning which can be used to evolve an HTTP API over time. The same @Controller path can be mapped multiple times to support different versions of the API.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L457-L487",
+          "version": "repo-lines-v1:sha256:4e441fb80b40de194ae78994fec975c84edf4032595fa2efbb8113a0a8f322ff:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImExMTYxNzIwNWJmMjgzYmYzYzhjOTA1OTQzZjFlZjdkZWU5NDYwMDBmMWU4OTUxNTIwNmZhMjUxM2U3MTYxYjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAwMmRlMTQ4NWJiNmNhMGFlY2QwYzA2ZmNmMTA2YzY2ZGVkMjIzYjYzYjYyZGRkN2JkN2E1NGNjNTQxNTE1NmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_142cdb4bbb7044bcaefc0e925aee8f82",
+      "statement": "Once mappings have been added, you additionally need to configure Spring MVC so that it is able to use any version information sent with a request. Typically, versions are sent as HTTP headers, query parameters, media type parameters, or as part of the path.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L457-L487",
+          "version": "repo-lines-v1:sha256:4e441fb80b40de194ae78994fec975c84edf4032595fa2efbb8113a0a8f322ff:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImExMTYxNzIwNWJmMjgzYmYzYzhjOTA1OTQzZjFlZjdkZWU5NDYwMDBmMWU4OTUxNTIwNmZhMjUxM2U3MTYxYjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAwMmRlMTQ4NWJiNmNhMGFlY2QwYzA2ZmNmMTA2YzY2ZGVkMjIzYjYzYjYyZGRkN2JkN2E1NGNjNTQxNTE1NmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a672751340fb4073b5a1dfaae13321cf",
+      "statement": "To configure Spring MVC, you can either use a WebMvcConfigurer bean and override the configureApiVersioning(…​) method, or you can use properties.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L457-L487",
+          "version": "repo-lines-v1:sha256:4e441fb80b40de194ae78994fec975c84edf4032595fa2efbb8113a0a8f322ff:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImExMTYxNzIwNWJmMjgzYmYzYzhjOTA1OTQzZjFlZjdkZWU5NDYwMDBmMWU4OTUxNTIwNmZhMjUxM2U3MTYxYjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAwMmRlMTQ4NWJiNmNhMGFlY2QwYzA2ZmNmMTA2YzY2ZGVkMjIzYjYzYjYyZGRkN2JkN2E1NGNjNTQxNTE1NmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}
