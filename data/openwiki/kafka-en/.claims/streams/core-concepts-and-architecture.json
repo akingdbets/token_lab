@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:ece2345aeae06ee62fd3173c606e77ae665e65cc7ad973349cab9937d2577f1e",
+  "claims": [
+    {
+      "id": "claim_ccaa34042dc0494aa19d4c8046f3610d",
+      "statement": "A Streams processor topology is a graph of stream processors connected by streams, with source processors reading from Kafka topics and sink processors writing to Kafka topics.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/core-concepts.md#L46-L60",
+          "version": "repo-lines-v1:sha256:edb88a82663e740121e57e5448d072bd3ac607e6a97da79c16576d60ef0173c1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFjNGFlYWZiNDBhMzgzNDBlYTUyOTQyNjMwNjMxOTAwZmRjYTY1NDdkNzYyNTU4NjFjMjU0MGJjYjM5MjQ4MTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQzZDhjZDliMDcyOThlNjAzZWY1NzUyNmEzMzUzMzU1ODA3Y2MxNDhmMTRkN2YwMDlkOWYzOThiOGRmNzk2YzEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNmNjM2YTI2YzRiMjJmZDFiN2IxMDIwNzk3YzRiMzE1MzhlMTQ1YTgzNzY1Y2I4ZDA5ZDFmYTMwMGE5ZTljYzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFhN2I0MDc1OTZiM2JmODcyYjBjMGRjMDAzMTYyMTllNDhiOTBiNzBjOGNhOGQxOWU3ODE4N2FlODEzYjc3OGQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9d29bf9144c04dc2959e4639c0b52307",
+      "statement": "Streams assigns record timestamps through the TimestampExtractor interface, stream time advances only with new records, and output timestamps follow rules such as max(left.ts, right.ts) for stream-stream and table-table joins and the stream record timestamp for stream-table joins.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/core-concepts.md#L62-L95",
+          "version": "repo-lines-v1:sha256:9f2a336328aadcf222ac790a557dc377cc6b52343c77021889269b3d117b3eb9:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYxZTQzOTM1ZWQzZGMyNzQ0OTkxNTYwMTA5OGNmOGNjMDdmZWRiNTg5ZTY1MWRlMWJhNDk4Y2E5MDY4ZjI4OTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk0MjJhNDA2MzMwM2EyYWZlNTQ4OGI3MmRhODNkY2JlMDU0NWVhYjRjY2JiMmI0ZmY4MDQxYjg4OWNmYjNjNDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY1ZDE4ZDI3YmI2ZTZlNjA3Nzc5YzBiNjY5NmE3YWVjYTQ5NzRhZTk4ZTJmNWMxNmEwZGVhNDAyZGJjM2E2YmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_09a916491f3449b498e7030b58c44d88",
+      "statement": "Aggregations always output a KTable so out-of-order records can update previously emitted results.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/core-concepts.md#L124-L128",
+          "version": "repo-lines-v1:sha256:1a7c22564e4e1c9a36e8e23cf384a96bd277e5740347ab9a43b26e1d48f4454e:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTQ3NmQ3NjZiZWIzZjY0MjI1YmU3YTJkZTQzNzQ4MzhmNjdjNzBkNzYzNjMxZDdjN2M1MjNiMDVlYjYwODE3MSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiODI1ZGMwMzAwMTI1ZGMzYmUxYTMyYjgzNzEyYjg4NTM1MmVjZGU0OWMxNmMzMzYyYzBjNGQ2YTQ3NmJkYWYyYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMmIwYmJhYjdiMWY1M2VjMmVjNjQ4ZmFmZjMxYTZmM2Q0YTM1NDAxZGRjYjQ0ZTdiMDVhYjNmZTA1NTg2N2U3MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZmM1MjdiMGM3MDNhNTJlMjJiM2JiZDQ4N2ZiODkzNTVmOWE2NzAwOWI3NGUzOTUyOTgxMGRjYTM1M2JhZGI5MiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_0983e61ee7ca44a6875640cfd347de7d",
+      "statement": "A windowed record is discarded if stream time exceeds the window end plus the grace period.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/core-concepts.md#L130-L136",
+          "version": "repo-lines-v1:sha256:8160238a0cce239d336f12334e33d5fb90529b7306b92d25d9c1f902f9266612:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTBhYjU1NTUxNDQ1ZGE1OTg1OGI4NWI5YjliZTdjODJmMDk1YTg3NGNkNGRiNGI5MmU0NGQxNjY2YTZkOTlmMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzkyZjJlOWY1ZmU5ODIyZWQyMzJmM2ZmOTU2MjM5M2U0Njg0OGFhM2MwMzkyNWJlNzZmMjBlMGJjN2QyZTRlNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMzY2YWViMzBiZWY3ZTYwNTRhYTg0NTIwMzQ0NDExMGM3ZmNkOTBkZmU5MGYwOTFlZWNlZmQ0MzNlYzJjZGYxNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDIyYWVmZjI2MjE5YjcwZDJiYTNkYjFkMzg2MGQyZjQ1ZTFhZTlmZmFhODg1ZTkwODRiYjk3ZDE2Y2VkYzliYSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_85b743a963bf4e2cbd89d74f852b6655",
+      "statement": "Kafka Streams exactly-once commits input offsets, state store updates and output writes atomically; exactly-once v2 exists since 2.6.0, needs brokers 2.5.0+, and v1 is deprecated since 3.0.0.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/core-concepts.md#L149-L154",
+          "version": "repo-lines-v1:sha256:cb0b1a03f0d26b85c2a2df19f413c27613d716fa88c99a4037ff729523dbd35b:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWYzMTI4MjlkYjI5YjI5ODZlMzcxNmFmNzg4OWYxNGQ2MGUxNzU1ZGY3OTFhYmI4NDJmZWU2YTU3YjU2NzhiYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZGQ5MWMxYWYwYjc4ZWIwN2Y3MzgxOTYyNWYwYzE4ZWMyMDVhMGE4OTk3ODJjNTc2NzM1OWI1NDVmZmY5ZjQxNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGYxZWMzNDEzYTIxNjkxZTJiYjgzNmMyYzczYzlkYmJhZjdmYWVlYzgxODk5ZGVmOWU1M2NkMGZmNzRjYzI0NCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWMxMjMzMDdmMGYzMDc3OWRjYzNkMWM4YzA1NzYxYzI4YmNmN2I0NWQ4MTNiYmFlNTY5ZDU3ODUzYmQyMWE3ZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_9a551ddb48fb48b9a71cc6994960d448",
+      "statement": "Stream-stream joins handle out-of-order records correctly, while stream-table and table-table joins only handle them with versioned state stores (stream-side only for stream-table joins).",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/core-concepts.md#L156-L170",
+          "version": "repo-lines-v1:sha256:dfaa8fe6eac91c482b6068ec5cfa0a1eab15cd2a41acae4c14b3c47213d90496:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM0MTU0YzM1ZWFlZjhkNzgzNmU5NTQwZmQ5NGIzM2M5ODNjOGRmODMzMzMyYThkYTJjOWMwNzAzNmZmYWZjZmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ2MWM2NmM5MWM5Nzc2YWRiMzMxNTY4OGNlYjMyNzU1MzIwMGM3OGFjZTcyYzEyNmZjZmQ4NjNiNDJlZGRmZjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM4ZTdmNzFjZGJkZGIxOTk2YzFlZjEwMWMzZDg4OTEwNTkwNjg2ZjU2MTM0MzY1M2UyNGFiOGRjNmY4ZDQ0MmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_da5ceeea98a54993bc7e9d316c62f0d8",
+      "statement": "Streams creates a fixed number of tasks from input partitions, so maximum parallelism is bounded by input partition count, and it uses StreamsPartitionAssignor while ignoring user-configured assignors.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/architecture.md#L35-L56",
+          "version": "repo-lines-v1:sha256:417342d80b6499d707ef14ece4d733dfcb06429adbd98216591bc88ff1fe9fad:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMyMTU1MzRkNDdjOTA1NzZlYTFmNjcwMTE5MDk3MzE1NjAwN2E4YjRlNzk5OGY1OGI3MGZkODVmYWEyYjNiMWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMyMzQxNTAwMjdlZGJjMWIwODI5MDYxYWI3M2EwNTgzYTIzYWQ1Y2UzMDg4N2IzYjNiNzY1MjYwZTNiMGViMTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg5ZjcwM2ZjY2M3MDRjODczNGMxNjQzY2Y1MTBkMWNhZGE2YTE0M2M4ZjNkMmMyMTZjYTZiMmU3NzBkOWY5MGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_489ab04d34f94619bea6a7b7d061660d",
+      "statement": "Stream threads share no state, and since 2.8 stream threads can be added or removed at runtime.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/architecture.md#L58-L71",
+          "version": "repo-lines-v1:sha256:ce301594de602c34fb9bd1bfaac73485120d128bc43c9e46cf8a61c248b58d24:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFhMTQ4YWQxYzM5NWNkN2VjNzA4NDZmNWQ1MDA5N2FlNzA5ZDc4ODdlODEyZTE0MjExNmJiZDFhYTkxN2VjYmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQzNmNkZGNiN2RmY2JmMWIxM2VjYTVjYzRhMmRjODc2YWJlNjYxMDVjODdmY2QxNzcwMDhhZDUxZWQ4NDRmYWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRkY2E2NmE2N2MwNzc3YmFhY2M3NWRkNWM4NmVkYTc4ZDNiZmJmMzljYjM0YzQzOGY5ODgzM2UxZTI0YjAwMTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4796abb6215341969c31ea528bbb30d6",
+      "statement": "Each state store is backed by a replicated compacted changelog topic replayed on failover, standby replicas reduce restoration time, and since 2.6 tasks are assigned only to caught-up instances when available.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/architecture.md#L84-L99",
+          "version": "repo-lines-v1:sha256:83c63cce8764c6b5a6102214ac677bd7256b71678eec56effdffb4ad213f2faa:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImExYzUzNzNmNTkzOTRiNTg0ZmZmZDBiNWRiYzFmY2ZhODM1MmY4NmJhYmQwYjcyYWIyZTM4ZmIzOTRiMzYwNmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYwZjFhNTg5NTg4MTg5M2YwODM1ODdiODAwNjIzNGI2YTE3NDQ4NzY5YThjZDljOGMxZGZiMjE3MDNhZDZiNTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

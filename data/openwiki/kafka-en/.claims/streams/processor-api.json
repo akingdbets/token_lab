@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:6aa4d11b293eed653293e0a8de3f2b6a3844dbce9683ba4b95d30bd5f32864da",
+  "claims": [
+    {
+      "id": "claim_2441d61250b54fe9b5e880153fab7875",
+      "statement": "A custom processor implements Processor<KIn,VIn,KOut,VOut> with init() receiving a ProcessorContext and process() called per Record, forwarding results via ProcessorContext#forward().",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/processor-api.md#L44-L54",
+          "version": "repo-lines-v1:sha256:53f375a8d26e8c403b937dde5198787252b20a5d61257fa446c419296b30f0ac:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg3ZDM0NjVlZTViZmY1MjQ0MGRiZmZhNTIwNjAwMDIwNjZhOWJmOWYyMGYwNTllOWU5NjY0ODI5N2EzZThiZWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYxY2JhM2UwNmZiNGRjZDUwZTVlM2QzYWQ0MzBhMjgxYjZiYjhmMGZkZWVjZjZjMjY3MWFkODVmYWU1Y2JjODYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjllMThlNjcyZTM1OTEwYjIwNWY5YjgzNTliZTUzZDFmZDA5N2IyMjUyNjkxYTkxNDRiYjA1NWY0NDMyYzEzOWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVkODE2ZGRiM2M3Njc2MGFmOTc4ZDc0YmUwMWQxNTdlZWZhMTdkYWUzMWEzMjNhMTI4MTc3NWE5ZTQxZjk4ZDEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a651921e874b4818b87445bf0a0fd3cc",
+      "statement": "Punctuations scheduled with PunctuationType.STREAM_TIME fire based on record timestamps and only when stream time advances, while WALL_CLOCK_TIME fires on system time.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/processor-api.md#L56-L66",
+          "version": "repo-lines-v1:sha256:689ee4cf7faf2155b0bb312f253112e5e4a1615693b489660ddc9483d3821b75:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZiODk4MTZjYWQwNDYxOTBiMTRiMDU0NDQ4OTFlZDRiYmZlMzhiMmFhMTA1OTJkMzBhOGEzMDdkMzgzYWIwMTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjZjc5NDQ5OWVhOWM4ODUxNDY4Y2Q0NTRmMzE4YmE3YTEzMWNmZTEzZjc2MTAyMmQ3OGY1MmFjNjE3MjUzZDYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRkOTdmMzExZTZiZDdlOGIyYjRmODNhZjQ5ZTFhMzdlYWM0MDM1M2ViZTc2NmQ0YmZhMmFkYTQ1ZmY0NzQyMjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMxNjBlYjE1ZGQwZDQ2ODcwNTExMzk1MTNkNTEzMTg3NWFhMmM5ODdkOWU3YTk0MmU1ZDBjMTQzNjgxMDA0N2UifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a168949993b449fabaa6e128824f5c94",
+      "statement": "State stores are defined through StoreBuilder instances from the Stores factory, with persistent RocksDB key-value stores recommended and in-memory stores available, and no in-memory versioned store exists.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/processor-api.md#L123-L247",
+          "version": "repo-lines-v1:sha256:1451ed7a936fa39e6391cfc2797b7f58acf457384a3f670ee45f74b966e5475d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTI1LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJmNTFmMWU0ZjA1MDU1YTk0ZDI2NTI4NmRmMDRmNWRhN2MyM2U3YjAyMTc5OWE3NzQ4NDRhMzM0MzliNzhiYjdjIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJkZjUzMWNlNmExNWYzYzgyNWQ1Mjk0YjhlODNmYzQ2ZDgzZjgxYjU2MzQ3YWQ4YzRjNzE5YjhhMjllODk0MmViIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI5YjkxYjc5MmUxYzI3YTBhMTVhZjk3Y2Y0Y2JhZTY0MWI3OTNhM2I2Mzc5M2Y0NDJlMjllZDIxNDczYmFjMGFjIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJkMTBhNTAwMTYzZmUzYTQ0Nzk0OWU4YTA3M2EzNzY0YTc4YmFhNDM1YjExMjg5NjFhOWI0ZTZkODRjZGE1NGU0In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_4835a205aacf4e52807f56e80d610b7f",
+      "statement": "Fault-tolerant stores are backed by compacted changelog topics, window store changelogs use compaction plus deletion, iterators must be closed to avoid OOM, and withLoggingDisabled removes fault tolerance and standby replicas.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/processor-api.md#L249-L293",
+          "version": "repo-lines-v1:sha256:ad28a0c32764ff92115abdd3ecd825e331f0eaea46752956206c067febe3d711:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVlZDliOWU2NDFlNDUxMDk0ZGIzMmE1OWY1ZGNhM2Q3OTc5YWE3OTNkZTBmYjM0MjMxMzUwYjkwNTI5MmU2ZDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI3YzFmNDI4NTcxYWVlZjc0N2VlMmJhZTUyNWUxYTUyMTZlNzIzYjY0MGMxOWNjM2U1MDk1ZWRlY2VkOGMwYzgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ5NzY3M2IzMDRiM2ZlMmI0N2NiZWYwMWZmOWIxNGE5ZDExOTA1MGZjNTEzYmY5NTM0NGJiYTZjYjJmOTVlZDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFhYzgyZWZhYTE1YzVhODFlMTBiYjBkMjQ2NmMwYmIxZTkxNzY2MjkyYWY5OTAzM2FiY2JlMDU1YjA3NWZhYjIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a0256ec95c1e45f8a6c50c464ed1bea6",
+      "statement": "Versioned key-value stores (since 3.5) keep multiple versions per key, use history retention as their grace period with per-partition stream time, and do not support caching or interactive queries.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/processor-api.md#L319-L344",
+          "version": "repo-lines-v1:sha256:5f938b5f254f7b7d342dff76b24025b7c8b1364bd98faf09e1b9ecccd864bf61:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE4YWMwODQ3NTkyZWU2NDQ1MDkyOTIwZjI5YTMwNmJkMWJhOGIwNDhhZGNiNzk3OWYyZTIxOTE1YThiZjhiZWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMxZmRmODg0YTcxNWNjMWEzNGRjMTE3ZDk5Yzc2YjUwYTJlMGZlYmM2OWQyYjgxYjVlMThhMzRkNjczMTI2ZWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFjNjRlMTgyOGJmYTk4YTUyMTBmZDU5YTc5YTI1Nzc3NDQ0YTMzMWYwNDhlY2JjNTZhZmE5NGM4ZTJjYWZlZDAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_113e6189d3e843cc8bd4b6df25cda926",
+      "statement": "Headers-aware state stores exist only as persistent RocksDB WithHeaders suppliers paired with matching builders.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/processor-api.md#L307-L317",
+          "version": "repo-lines-v1:sha256:088bcd82b968ebebe374711305e7ef9147e4f9096a1180c30451b009204292b8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ3NmViOWExYTAyNTg1YjVhNGFkNTRkNTVjYTBiYjU4YjM4ODUwNDlkMjBmMzk4NzM3N2FlMGYzMDA3MWI5NzAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM3MWRiNDY1ZTgzNDcyMmEzYjZkZGUxMjMzNjA2YzEyNGJlODQ5Y2EyM2ZkMjU3OTE1MjRjNjg4N2VjNWE1YTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI1ODFlNzFhZjBiZTM4NjVlOWVmMWNhMjY3YTZkZDBkM2ZhMjBjYjhjOWJiN2IyODg0MDc1ZjhlM2JjNzRiNjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg1Njk0MDVjNzc2M2JjMDExMDk3YmYyZjYyMmQ4NzVmMGFhNjIyZWE4YTdmNjI5MzQ2ZDYxYjBhMDVkZGJlZGEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5e3fd4b2a33f4c36975f7d8f2e31a815",
+      "statement": "Topologies are built with Topology#addSource, addProcessor, addStateStore and addSink, processors can own stores via ConnectedStoreProvider#stores(), and ProcessorSupplier#get() must return a new instance each time.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/processor-api.md#L366-L433",
+          "version": "repo-lines-v1:sha256:7af44b5e468d2c39301d05a567b45b59e3d42477c44a655321bd2f3ac9f5a250:eyJzZWxlY3RlZExpbmVDb3VudCI6NjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNlNTA2M2E3NDhmNTBkNzkzYzBjNjY3MWJiOWYwODdjOGRiZTg1ODdhNDMwN2M0ODg5N2I4NjlkNTc4Y2Y4NGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzMWVmZjg0Y2JiMjE1OTFlZjY1Y2NmMGExMDdiOWM0M2NiOWE3YWRmZGMyNDg3NWE0ODI4MzAzY2NmZjU2OWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

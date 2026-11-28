@@ -1,0 +1,3 @@
+# Files
+
+- [Wire Protocol and Implementation Internals](protocol-and-internals.md) - The internals users and client implementers need — Kafka's binary request/response protocol over TCP, ordering and pipelining per connection, bootstrapping via metadata requests and leader routing, partitioning strategies, batching, bidirectional compatibility through API versioning and ApiVersionsRequest, tagged fields and flexible versions, the SASL handshake sequence, message framing, error codes and API keys, the broker's NIO network layer, the record/control-record formats and group member ID recommendations.

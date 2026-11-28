@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:3950c0ed0f917ac55906d852dd22f7bf2089201be3ef9332e3f909a77f840ca7",
+  "claims": [
+    {
+      "id": "claim_b1d1679090524e61b67aadb04dc26553",
+      "statement": "Kafka combines publishing/subscribing to event streams, storing them durably, and processing them as they occur or retrospectively.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/introduction.md#L49-L59",
+          "version": "repo-lines-v1:sha256:a4c482c3f6706368840262adb1d24158cca56ad9bf66917b09a6dbc87debd702:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQxZmU0NmZkZTIyYTk1NDhhZTExMzRhNGVjZWI2MTc2NjEyZjFhOGYzYTMxOTBmYTc2NTRmNGY1ZjllZWU0ZWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlhYTZjNzFiOWRmZTFmMmIyM2FmNzNlNTFlNzgxOTVhZTE3MzgxNThkNTI0MzIyNjQ4ZmFiY2EwODg2ODM5ZjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY2OWI1NjhiYjg5ZGUzMjBmNTM5YmU3NGI0ZTE3MjFhNWYyY2QyZTI0MzYyNTcyOWQ5NmRhNjhhNDgzODI5ZmEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e3bab6c9be634dd986ba9cc64fdf796d",
+      "statement": "A Kafka cluster consists of servers, some acting as brokers forming the storage layer and others running Kafka Connect, plus clients that read, write and process event streams, communicating over a TCP protocol.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/introduction.md#L61-L67",
+          "version": "repo-lines-v1:sha256:409b9d97fbfa34f3bbd2a1c213b41dbfccbb86073aa40a558fbc277428d1efcd:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDg0MWU3ZTZmMTA2NjdhNmI1MmM0YzExM2M2NWY0NzQ2ODA4NTRhNDQ2M2IzN2UwYTYzYzgzMGFkOTBjNmViNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTkwMjAzOTY5ZDZiNDI0NTMxYzhkNDRmYzhiNmZkMjdmMGYyZGIzZWNhZTYzNzQ3MGM1OTczZjZkNTY1MDNjYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGFlMDg3NjE1MTgxMGFkZjUxMGU1ZDc2ZTZkNmJlNDA5NmQwNzM0MmI0MmZhMDQzYjBkODA2NjJiYTIwODY0YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTZiZDJmNDY0ODhjYTg2ZDIyMjgwNzA4ZDE4MTNmNTY4YWY3ZGRhNGI4ZTI1MzIxYTI0OTIwZmM4ZTIzZDJmMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_942e0bb6dcb14b0b953798d5307cda9a",
+      "statement": "Kafka offers Admin, Producer, Consumer, Kafka Streams and Kafka Connect APIs for Java and Scala in addition to command-line tools.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/introduction.md#L91-L101",
+          "version": "repo-lines-v1:sha256:f57cb6a916a480e39cbff30f4673a877a443d00ff16f78f925a5741a614d2296:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdiZmVhYThlNzQzOWE2NThlMzU5YjQzMDMzZDU0YTRlMDg4NGEyOGRjNWUwNjU3MjRhZTY0ODQ4YjYyYWExNmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJjNmFmM2ZmN2QxYzI5NDNhNjI4ZDUwNDdmMGFlMjMzMjJhM2I4NTM3NTcxMmQwNWU2N2ZlZDc5ZmY4MjY2NGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNmMTUxNDBhOGYwZWY0ZjY5MjU0OWMyNzY0NzY2NTBlNWZkYWY3MjU5MzZmZWM5YjMzOTcxNzIwZWYwYWJhZWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c6391f55df104afeba1bc0395a4b407e",
+      "statement": "Documented Kafka use cases include messaging, website activity tracking (the original use case), metrics, log aggregation, stream processing, event sourcing and commit log.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/uses.md",
+          "version": "repo-file-v1:sha256:41c26ac735703f26f631ddff0227fb65f33e00566fd791347ad4b69cc9818140"
+        }
+      ]
+    },
+    {
+      "id": "claim_af5f6dd311e849dcbb31b55dd13db30f",
+      "statement": "Tools integrating with Kafka outside the main distribution are listed on the ecosystem wiki page.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/ecosystem.md",
+          "version": "repo-file-v1:sha256:f752f589b707ac8ce17e335928df6b3bcb4683471f3778b9c40796349dcbeb46"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

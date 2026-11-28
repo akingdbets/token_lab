@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:0e9a2dc6cd5b0b551dc942e51a71133d7ce52efd6b4e2c523c13ec2f56ce72c0",
+  "claims": [
+    {
+      "id": "claim_0ef2037d88f04a53b7a7768b6dd5c8ed",
+      "statement": "The producer, consumer/share consumer and admin client config references are generated tables included from producer_config.html, consumer_config.html and admin_client_config.html.",
+      "evidence": [
+        {
+          "resource": "repo://docs/configuration/admin-configs.md",
+          "version": "repo-file-v1:sha256:11bd4205361cb75a67a29f11134ffc1d74a626da4dddb159b0500b96054a90f4"
+        },
+        {
+          "resource": "repo://docs/configuration/consumer-configs.md",
+          "version": "repo-file-v1:sha256:03f06caa02f18e547efe351a24f299b7cebde62e3292634a628fcab889c97323"
+        },
+        {
+          "resource": "repo://docs/configuration/producer-configs.md",
+          "version": "repo-file-v1:sha256:7b14676d8e8c272c19b613b25d3c338c8a334529782bdcc3e8f215fea285abbe"
+        }
+      ]
+    },
+    {
+      "id": "claim_cb4a10c2b4ed45c3aae863af67a71a13",
+      "statement": "connections.max.idle.ms defaults to 540000 for producers and consumers but 300000 for the admin client.",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/admin_client_config.html#L153-L162",
+          "version": "repo-lines-v1:sha256:cf1ed98ab0d3177e0d9d2d801d3b2d309889e998eb1841060564eecc52120365:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxMmQxNjBmZjk5M2E1NTY1MmE0ZmNlOTBhMDM2OGVjODg2OGIyMDQ4ZTE1NDM5ZWJmYTk0YzFmNTdiOWFlMTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYmJhYTQwMzk5YTlkZGE1M2ViNjUyMTdlOTkyZGFiNTcyMzdmM2E1NWY0YzNmMjllZmM2MWJlODhmZjlmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY0MTE5Njg1ZmViNjJjNTAzODBlM2E1NzM2NTMyNGI4N2MwNzFiMTU3NzZjYTY5Y2QyMzNhN2NkYjc3YTc1MzQifQ"
+        },
+        {
+          "resource": "repo://docs/generated/consumer_config.html#L233-L242",
+          "version": "repo-lines-v1:sha256:b007c9113e11f625d88f7ab8eb9b2b1742174743b7168549b82176b123d17012:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJjMTQ4ZTJjOWIwNzdiNmM4ODJlNDM5NzdlZjk0MjE1MmExNmU0ZGI1YWM5YmNlNWJlZjc4MzE1ZjA1ZTE1MjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYmJhYTQwMzk5YTlkZGE1M2ViNjUyMTdlOTkyZGFiNTcyMzdmM2E1NWY0YzNmMjllZmM2MWJlODhmZjlmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAxYTY3YzBmNDE1NmY4MmM4NjUwYzgyYTVjMmU1NmQzYWE3NTM2Mzg3NGI3MTU3YTQ5MDU5ZjU3NjNhZDg0NGQifQ"
+        },
+        {
+          "resource": "repo://docs/generated/producer_config.html#L233-L242",
+          "version": "repo-lines-v1:sha256:71bd36a0fa5e1c01e97db212ca3e545fe6e65b373ec728bb5c2ce1201fc39b72:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlMjY2YzQ4NDFiNTNkMzc3ZjE5NzhmMTBhMTI1YTU3NzBiZjYyZTk0YjBiYzgzMjRiYzkxM2FiNjk1ZjBhZTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYmJhYTQwMzk5YTlkZGE1M2ViNjUyMTdlOTkyZGFiNTcyMzdmM2E1NWY0YzNmMjllZmM2MWJlODhmZjlmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE5OTMxYzJjMmJiZDhlMjZkMjc0ZTNmZDUwZmExYzMzZmNiMzIzY2M5NzEwNGI1N2UyMDk5YzM4NmQ4YTA5M2IifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_82ddb8021dce40ff9cf5a85e89d913b3",
+      "statement": "enable.metrics.push defaults to true for producers and consumers and false for the admin client.",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/admin_client_config.html#L533-L542",
+          "version": "repo-lines-v1:sha256:1cb3bd709befa90f756866ee48dba861a27c9dd8b87ac54c9f4b774af317db70:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMyNmRhYmNkOTE3NTczNmU1ZTBmMThiMDQ4ZTRmODlhMGM0YmZkMzQ5ZjM0YzlkZTNiNjI3MDY3ZTdkMWMxNTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYmJhYTQwMzk5YTlkZGE1M2ViNjUyMTdlOTkyZGFiNTcyMzdmM2E1NWY0YzNmMjllZmM2MWJlODhmZjlmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA3OTE0NTFlZTIwZmRiMDkxZDgzZGFjNTNkNjg1ZjUzZGFkMzVlZGM0ZWRjMjk4YzJiYjI4NDMyNGQ2NzI5ODEifQ"
+        },
+        {
+          "resource": "repo://docs/generated/consumer_config.html#L763-L772",
+          "version": "repo-lines-v1:sha256:dfd2d37f5c3374ba0aef45888cf6640da1f70fc5b87b02412f193f5a8c57db1a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlNTY3N2ZjZGVlM2FiYjc0ZDIxOTA3M2VmYmIyMDlmMWU4OTc1OTI4ZmE5NTkyMzA4YWY1OWZlNWQwYzEyNjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYmJhYTQwMzk5YTlkZGE1M2ViNjUyMTdlOTkyZGFiNTcyMzdmM2E1NWY0YzNmMjllZmM2MWJlODhmZjlmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlkODNiNTA1ZmRkNjE5NzE3MmM0YjI4MmViY2QzZDkyMTBmODUxOTc0NTJjMTkxZDEyZDZkOGY5ZTRiNjMwMTYifQ"
+        },
+        {
+          "resource": "repo://docs/generated/producer_config.html#L693-L702",
+          "version": "repo-lines-v1:sha256:fab22a4d114d99bf8c72ee290d1ef172200e80e9dcb6b51f8e4ff9756d0918dc:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2YTVhY2U0OTM5MjkwMTJmOWQzYjk4MWU2ZWM0NjdlMDliZTgzOWM4YmQwYmM2NGQ1MWJlMzI0YmQ2ZTEzM2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYmJhYTQwMzk5YTlkZGE1M2ViNjUyMTdlOTkyZGFiNTcyMzdmM2E1NWY0YzNmMjllZmM2MWJlODhmZjlmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkzNWMwOWIzNzJhNTVhODMwMDQxOWZiY2VlYWEzNzdiYjQ5Njc3MWUzNGMzOTdlMzk0ZTJjZTgwODczMjA2NDgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5fdf020aa17f4e5ab392b15de3079e44",
+      "statement": "receive.buffer.bytes defaults to 32768 for the producer and 65536 for the consumer and admin client.",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/admin_client_config.html#L173-L182",
+          "version": "repo-lines-v1:sha256:26d9a4de9717c4d2a6dd9be8e7404613cf2b0b4813e052fa7de99ee9ab3e6185:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBiZWQ5YjAxYzA1MzFiMmJhMzVkNWYyZmU1MmE2Mjk4NGZmZTBkODk5ZTEwNDFiNTBlNzhiZjI5ZTMyZmIwNzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYmJhYTQwMzk5YTlkZGE1M2ViNjUyMTdlOTkyZGFiNTcyMzdmM2E1NWY0YzNmMjllZmM2MWJlODhmZjlmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc2NThlZWE5ZjZlN2VlMmRhMGYzYmExNjVlOGQwNzMwMzk4ZjljNjQ2Y2E4NTI0YmI3YmM2OTg2MTY2N2M3NjEifQ"
+        },
+        {
+          "resource": "repo://docs/generated/consumer_config.html#L343-L352",
+          "version": "repo-lines-v1:sha256:641df0eda2314240f2a0b5f803c8fe086689c49342e7bb28cd14ce89c0e71104:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNhMDZkZjJmZGUwNmI1NDk3YWIzNjkxMWUxOGU3MjUxNzA4Mzk5MWUwYTY2YTZkM2FhNzdmOTg2YmViYWM4MjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYmJhYTQwMzk5YTlkZGE1M2ViNjUyMTdlOTkyZGFiNTcyMzdmM2E1NWY0YzNmMjllZmM2MWJlODhmZjlmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxNmMyZDcwYTk4ZTYwNjUyY2Y1OGRiYjZiYzAyMjQ2YTcwNjE2OTliMWY1MWIzNWJmZjZmNTIzMzBlOTgxZDkifQ"
+        },
+        {
+          "resource": "repo://docs/generated/producer_config.html#L303-L312",
+          "version": "repo-lines-v1:sha256:a3f09c693ee6d7a80bd4e0ea60a1bb054dae85d6abf38676a0f33016cf0a1dca:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjExMmEyZmEwNDQ3NDM3MzA3NDhhYjk1YjlhMWNkY2JlNjQ5MjAxZGE5NTk4MjQ0ZjcxYjQ2ZmUwYzhmMTkxZTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYmJhYTQwMzk5YTlkZGE1M2ViNjUyMTdlOTkyZGFiNTcyMzdmM2E1NWY0YzNmMjllZmM2MWJlODhmZjlmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM0MjIwMmM3NjQzN2MwZDQ4ZDM1MjBmMzBlMTM4MmUzZjAwNDM0YTdjMmYzMGJkZTFkOTA2ZmRkNDE4MzMzZDMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bcd81b40043642eeb3d76af1ca4a66c3",
+      "statement": "A minimal SSL client configuration sets security.protocol=SSL with a truststore, and console tools load it via --command-config.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/encryption-and-authentication-using-ssl.md#L311-L342",
+          "version": "repo-lines-v1:sha256:7a0dbf1ef3178eaa27499d920d8da322a00c37d2992a7d1518fd3a08ee91222c:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4ZjU3MmU5Zjg4N2RjNjYwNzkxZTY1OWZlZDIwMTc4OTEwNTJiNDg1ZjczZWE4YjVkYWJkNjg0YmMyZmIwNzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY5OThjNjI4YWViMzhkZTExZTUyNWVjNWQ1YjA5ZjU5NjhmMDgzYzJmOTFmZGE4MWVjYjM5N2RlN2MyZWJkY2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

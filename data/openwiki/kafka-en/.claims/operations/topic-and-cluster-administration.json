@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:63fff1d24bea85b65b89b31b973a6c7dfc0121a6f099d7aecc00516da7339d19",
+  "claims": [
+    {
+      "id": "claim_f4d94a0ddc294ddb94900017da060f35",
+      "statement": "Topics are created with kafka-topics.sh --create specifying partitions, replication factor and --config overrides, and a replication factor of 2 or 3 is recommended.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/basic-kafka-operations.md#L31-L47",
+          "version": "repo-lines-v1:sha256:19c736806ae5c1073fe588bbebdbf7765ac4e859fa4d0aebaefa3b152ba362db:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZiNGY5YmZjYmU1ZDEyNTlhMzQxMGQwZGE0NDEzNmJkYTNmOTFmNzJhN2NkNTIzZDBjNjdiNTY5NGEyYzY5MWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc4MGRjZWZkNTFkMThjZDhiOGQ0M2JkNWQ1M2Q3N2IyZmUyYTM0NDRiM2YwN2M0ZjgyM2Y1NjI0MTVkMDFjNTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjljM2EzNDZjNzYyYjI3Mjc1MjJlOWJlYWEyODU0MjdkM2EwNDMzYTlhNzJhNzdjODI2ZGUzMTYzOGUxOGI5OTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bdacabd8e3444bcfa05fb46fe1432627",
+      "statement": "Graceful shutdown syncs logs to disk and, with controlled.shutdown.enable=true, migrates leadership before stopping, succeeding only if all hosted partitions have other live replicas.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/basic-kafka-operations.md#L102-L114",
+          "version": "repo-lines-v1:sha256:05467241802f4c0ccff8e2a2e7fc323c9765087afa4379fb2fc7afd8e20691ae:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViNDA3YzJmYzA1Njc3NmFjMGVkNjc4MGIzNjMxM2VlNjQ5YjU0YzkwMGZiNDE5YzA4NzAzNTA5MzhiODAzZDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1YTQ5NzZlYTUxZWVhYjdiMDk0ZDZlYmE1MzcwYzQ1MzljNjExYmNhNmZlYjU4N2NiNmIxMmY2YWNhZTE4YjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFhZDA2YjQwYTQwZWZkZDFkNjA4NDg1OTk0NDIwOWUwMTU4YjcyZjliNzVhNWM3ZGI5NzAyOGIwYjQ5NjY3ZTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ3NWNkYzQ3MmY0ZTc5OGMxNDgxOWU4YjE2ZjkxMmZhNzYwYzNiMDZhMDU4MjZiZTE3MTZkYTk2NTc5ZjA1MDMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_847a013dc1f640a9a7d26f742e24ebe1",
+      "statement": "The first replica in a partition's list is the preferred leader; auto.leader.rebalance.enable=true restores it automatically, otherwise kafka-leader-election.sh --election-type preferred is run manually.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/basic-kafka-operations.md#L116-L130",
+          "version": "repo-lines-v1:sha256:7e833c0592bc46d66ddcca3cff537681a58302a117e5df5c907e48cd4927a507:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3MjQ0NjY2NDY3ODlkYzY5OTI3ZGE5OTAzYjhkNDhmNTg2MmI0YTI3NWUyNWFmYWZlMDA1NmRmZjU2ZTZkNWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUyNTRhN2YzNTM5MmI2ZGZhMjY2YmM3ZDUwNzBiMjNhMDQyMzEwOWM2MzEyY2Q1NTEyNTA0ZjE3ZmE1YzI2MWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhkZmEwMjhiNzY0NGU2Y2ZmY2MzZDE2MjdiOTU2NmIwYzM2YWNmYmJiMDNlNzlmOGMwYjYxZWY4NjA2NDkxODEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_69a297d2f57d4d1f9e3aea5ed7b074a9",
+      "statement": "With broker.rack set, replicas span min(#racks, replication-factor) racks, and uneven broker counts per rack cause uneven replica distribution.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/basic-kafka-operations.md#L132-L146",
+          "version": "repo-lines-v1:sha256:935e48b81aa572ca915240d449abf53bd75f8367a3dea0b3bdcb3d0c1f26b057:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjYmNiMWEyNjI3NDVlZDg2ZjQ4YjljYmEzYWQ4NDYxMTZlNzY5YmJmMWIxMmE2YmFkMTA4YzUwNmE3YWRkOTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVlZjE1ZDE2ZTkxOTE2ODk3YWNjMjEyZGFhMTY5NWE0ZjNiNWY5YWY5NzFmNWQ3YTdhMWVhMDMzZWZiMzFhZWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA2MzNlYWI5NzVmZjMzYWNkMTE3Y2M5YzQ2YWZmYzdiY2QzYTI3MzRkMjA2MjgyMzhmZDAyODlhZDMxNzM3NjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY5NjU1ZWYzNGFhMTE1MmQ5N2QwYzhlYzdmMTFkMTA0MGQ2NmQ4ZTI1ZjIzZjIyOGM3ZTIwNmI2ZWUyMDE4NjAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c5814d1d19564a75a06e425ccc7cad67",
+      "statement": "New brokers receive no existing partitions automatically; kafka-reassign-partitions.sh has mutually exclusive --generate, --execute and --verify modes and does not balance load automatically.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/basic-kafka-operations.md#L409-L421",
+          "version": "repo-lines-v1:sha256:c3c332b370f35748b97857f34f1575bc40f2e4cbfaef05dc7105365cc142fa08:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY0ZDY1N2U5NTk4YWQ4OWRmODM0YjA4ZWM1ZWExOTg2OTQ3ZmM4ODQ0YmUxZmU3NTdjNTZhOTc5YTk1NWEwNjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMyNzVlNDQyNGRhNDkxMDlkOWM1YjllZTlmZWQ5MWE2ZmYxYmMzODliODAxNTBiOTAzYmViY2U5MDMwMzdjN2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMyNjY3NzQ2NGMwZWIyODYyNmY1NmZiZDIzMDM1OWRhNTg0ZDk1MWZlMGQ2ZWZiYTQ3YTEyNDFlNzEyZmJiM2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0f858ea8983a4c6fb4f85c14ec57e96b",
+      "statement": "Decommissioning a broker cordons it with cordoned.log.dirs=\"*\", reassigns its partitions manually, then unregisters it with kafka-cluster.sh unregister; log directories are cordoned individually and uncordoned via --bootstrap-controller while the broker is offline.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/basic-kafka-operations.md#L538-L604",
+          "version": "repo-lines-v1:sha256:6b7965c086a1013f21e06a5120bb6ed3057522de68b58570f623e21b488127b2:eyJzZWxlY3RlZExpbmVDb3VudCI6NjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkMTY1NzAxN2YxN2JmOWExYzNhYzlkOTRiYjkxMWRkNDg4ZWY0MGYxMDE0NWViMDUyMTUwNzA5M2U2ZTYxZGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5MjJkNjFhNTY1ZTdiYjQ0MDkxZmIxMmM5MDg3NGRjN2M1NTE0MmM3M2NkYThiOWNhZjM3MjAzYjRhZjIzZTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFjMzkyYTcyMmQ4NmNjMmMzYjQ2Mzk1YzNkNGJlOTNlOWE2MWFlNmM5YmRlZTk4ZWNkYjg1OGZkZWU1YTUxYzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEzMGExNWFmNDRlMTcwN2Q3YjZjZGIyOGExYWVlOTAxM2UyOGMyZTE4Zjg5OGQyM2Q5NWVmNWQyNDZhNzQ1OWYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_380091dbbbbd4d7d924123577d6d9ced",
+      "statement": "Replication factor is increased by listing extra replicas in a custom reassignment JSON and running --execute.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/basic-kafka-operations.md#L606-L647",
+          "version": "repo-lines-v1:sha256:0fe4de4890af6bc93f1a30b998476e6b95f309a853b9a5c493be079e76df5994:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM5NzRkNmYwYzllNWQ4ZjQ2NmQ3NzgxMmViMDA1ZmRkZTUxYWUyM2Y5NzcwYzI5NTJlNWU2MDlmZWI4ZmQ2YjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQxNDMxZjE3OWQ4MGM4MmViMmY0YTNhY2IwMDBkNzI5MDFjYmI5ZjE3OTY1MGE2NjY4ZWVkN2NhZjM3MmZiOGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU2MGY0NGY5NmFjYzliMTRlZTA2YWM5M2IxYTlmM2EzOTY3ZWFlYjM2ZjEwNzk4ODgxYWRjZGQzNzQyM2EzOGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_89d92172270b4e67a73d4dc513810550",
+      "statement": "Reassignment throttles set via --throttle and --replica-alter-log-dirs-throttle populate leader/follower.replication.throttled.rate and replicas configs, are cleared by --verify, and replication stalls if max(BytesInPerSec) exceeds the throttle.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/basic-kafka-operations.md#L649-L757",
+          "version": "repo-lines-v1:sha256:0573c943cf2e51520d86243ce5b47d3a2558db51b6911fc8ef934e0fcf27e145:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA5LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJmYWUzZDlkY2I0MGJhYmU4ZjlmNzNkYTU1ZDI0ZmMwYWRkMmQxNmUzOGQ3OGNmOGIyZjcxOTEwOWMwZmY4MTg1IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0ZjdmOWUzZDRjYjc2MzhiYjRiNWRhNWU0MzIxNGRlMTk1YjZjZjU2ZTY2ODY3ZGFjMTc1OGM5NTJjMWUzYzU5IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJmZDNlMDI2YmQyYzk1MjdhYzQ2NzcxYzg3NjNkMTQyNjQ4OGRiNDRjNDlhNTIwMzZmYmFmMTg5N2I4NzUzNzM3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJhNDg3NTY2NjBiM2YyMjgwYTQ3MWU2MDNjM2JlZmIzNzA0OGY2Y2QwZGRiMWI5OWM5MmYxMDM1ZmVkMzliMTc2In0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

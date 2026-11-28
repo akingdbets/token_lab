@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:2e78402c356ee2810bc4bc6924a518fb0be4a8c200012b9528100294cba9d9af",
+  "claims": [
+    {
+      "id": "claim_d633fe93674a4feab0e140d64d9b97f7",
+      "statement": "Topic configs have a server default and an optional per-topic override; the server default applies only when no override exists, and overrides are set with --config on kafka-topics.sh or with kafka-configs.sh --alter/--describe/--delete-config.",
+      "evidence": [
+        {
+          "resource": "repo://docs/configuration/topic-configs.md#L27-L56",
+          "version": "repo-lines-v1:sha256:6a5bf329496fa3467dc8f024bce6f298d2df0525889361e3786fd7d127f15542:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI5ZmE5MGEwNjdmZmRlMzY1ZGEzZDQ3NWZiZTVjM2E0YTA0Njg4MmRhYWZhODA0YmZjOGZkM2MyNzlhMmNlOTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIxYzg4MjI2MzRjZDM0ZDgzZjU1MTFhZWM2ZTJlMWQxNjM3NWY0OWU2N2ViOTI3ODNhMTZlNDI0YjllNGJhZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0d322eb8b9424c1c8449eb283f973620",
+      "statement": "max.decompressed.message.bytes (default 2147483639) bounds the decompressed size of a single record and rejects larger records with InvalidRecordException, unlike max.message.bytes which bounds the compressed batch.",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/topic_config.html#L179-L188",
+          "version": "repo-lines-v1:sha256:e5b6c06f146da71766eb79b4b17cb5e2e9ab346f345d51bf3e787f24b498b373:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM2NGU0OGM1MjQ1MGVkOThhODU2M2QzNGZlZjRlNTljZjhiZjEwZDNhMjVlOTU4OWQ3YzIyZGEwMWU4ZThhZWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiOWZjMGYxY2NmOWUyZWQ2MjMyMzczZjAwOTFlZTAxNGFmNDJmNjg2MzEzMzZhNmE0ZGQ5NDdmNDIwMTE0NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVlYWUyMWZmYjgxMGM4OTBkNzdkZmQxYWVkZDcxZmQwMTFlMDQ0MzljZTgyMWYwZGI5OWZlMjVlYzU0MzlkMWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5292ca433a264187add6d6691dfdb953",
+      "statement": "A topic must have errors.deadletterqueue.group.enable=true (default false) to be used as a share-group dead-letter queue.",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/topic_config.html#L69-L78",
+          "version": "repo-lines-v1:sha256:674ec63cc6fa664d7c93db203eefcd26c527d149afa2d6f19594c4a8cb2bb4ab:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBiMGU0OTM5MjkzYmY0YWE2YTI0OTJjMjlkNmFhNjBiMmU4ZTNhMDYzODY0NDRmMDRlOGIzZmNhZmYyZGNiZWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiOWZjMGYxY2NmOWUyZWQ2MjMyMzczZjAwOTFlZTAxNGFmNDJmNjg2MzEzMzZhNmE0ZGQ5NDdmNDIwMTE0NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMwMWRmNTdkN2E4MTI5ZWU0MTc3MzBjZTBiNzU5ZTkzODNlNTI1OTRlYTRmNzVkMTUwNjdiNjUzZDZhZWNhNzkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_51af38b7032e48cb92140cac349152aa",
+      "statement": "In the streams rebalance protocol, session timeout, heartbeat interval and number of standby replicas are group-level configurations set with kafka-configs.sh --entity-type groups, and client-side values are ignored.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/streams-rebalance-protocol.md#L135-L152",
+          "version": "repo-lines-v1:sha256:033e4faacd57bb5a4ee2fc795df42c28d2d08d4402fb9acc424819635ebc7c70:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVkMzEwMDBlY2Q5YzkwN2Y1ZTIzYzc0MzQ2M2RmNWQ2YzBkMGI1MjRjYWZlYWEwNTE4ZTk4ZjUzNDg5NTYxYjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlMGQ3YzQzYzg3NTg2NmRhODM0MjU3M2E3ZGYyZWJkMzZhMzZjZmYyMWM5NmZjNWU1YTc1YmI2YWE5Y2E3OWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIyMzY3ZmE3M2YwNjM1NDZmYTEwYmEwZDAyNjM5NDY4MzZlMjI2NTQxNzgzNjVhZGQxNzNkODUxNWJlNDhkZmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNlMTQ5NmYzYzY1Njk1NTk0ZWZiY2FjYzY4OWQwZDljZTBmYzZiNTA5NGFlYmEzZWU4OWQ2OWUzZjkwNGJiNGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_351ff31af208469ebf0f8873603001b2",
+      "statement": "Group-level share configs default to share.record.lock.duration.ms=30000 and share.delivery.count.limit=5, and streams.num.standby.replicas defaults to 0.",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/group_config.html",
+          "version": "repo-file-v1:sha256:5ee52e999a2237fdadc8daa14788c117c50203ffc48026863430cdf29454f873"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

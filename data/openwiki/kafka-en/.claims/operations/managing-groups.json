@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:0d1bf24ac60af3bc886bcb1398cc18591abc2566f7b654db9f8155e65e07b031",
+  "claims": [
+    {
+      "id": "claim_502c164aad4b442ea8bc8d4dbc045725",
+      "statement": "kafka-consumer-groups.sh --describe shows per-partition CURRENT-OFFSET, LOG-END-OFFSET and LAG for a consumer group.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/basic-kafka-operations.md#L152-L162",
+          "version": "repo-lines-v1:sha256:bfbe4e0b9a8b098c2953604804f82f788e4d77619a9f6e7421ee1a26733df6dc:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQyNTZhZTY2YTcwMGY0ODQyNTY5ZDdkMzBkMDliMGUyN2ZhODZlYjJiZjRjYTg4MmY0NjRlNTIwMTQ0NWFkN2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMxNjg0NDZhOTJiNzcxN2UxNDYzMDhiN2VhOTAxZTkyYzZhYmUwZjhjYWIxYmI2YTE4NjFiMTkwYzhjMmQ0MzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI0MTAyNmU2MjJjNmZjMzcxN2UwMjlmY2FkMDE5ODljMTM0MGY0OGQzM2MwNzBmNDM1NmNhMjU2Y2U3YmIyOWIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1b92bb1a89774defb99cb4723ba743ca",
+      "statement": "kafka-groups.sh lists groups of all types, while consumer, share and streams groups each have their own administration tool.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/basic-kafka-operations.md#L164-L173",
+          "version": "repo-lines-v1:sha256:8f3749cd2fa6d08bc085521e46df5124dd32d44cd9b9033f14848e891f45f4d3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJlZDE0MTZmYzZjMDZhYjIzOWFkODZlZDhiN2U4NDlmOWFmNjdmYjJjODZlOTNhYWRiOTg2Y2UzZTQ2ZGU2MzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJjOTgyMzdiMjQ0YTQ4MjA0OTg5MGFhZDQ3ZTliMzViMzIzODM3YWVkODk1NmRhZGM3ZTI2N2I3NWNjODY3ODUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJjOWVmNWQzMWEyZWVhZDY0YTBhMTc2Y2VlMTA0ZWQzMjFhNmYzZWVkNjE1ZWIwMTYyNDI3NTczMWQ2YmFkMmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d2666096255f4a289b06cea6e7c265fa",
+      "statement": "Describing consumer-protocol groups requires DESCRIBE on all subscribed topics, unlike the classic protocol, and describe supports --members, --members --verbose, --offsets (default) and --state.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/basic-kafka-operations.md#L196-L229",
+          "version": "repo-lines-v1:sha256:a8d8aff2b9a21f442b9a4b7e14c36eeffc8dd16534a2d02efba323e19267e164:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY3Yjc4ZDZiN2MxNmFhMTU5NDdmMzNkNjQyNmU0YWMxOGUzYTIwMDk2ZjE1YzQ4YjRmYjcxMzI5MWNhMzE3MzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ5NmRmMWE4M2Q3OWQ1YTBmODk3OTE3ZTNmYzIzZTM1OTA2YzYxY2I2ZjEwNGJkZDMxZDE2MzQyZDM2M2MwZTkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2948b9d3dd6449caa9de748424fb5b06",
+      "statement": "Consumer groups can be deleted manually only without active members, and --reset-offsets handles one inactive group at a time with --dry-run as default and scenarios such as --to-datetime, --shift-by, --by-duration and --from-file, clamping out-of-range offsets.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/basic-kafka-operations.md#L175-L268",
+          "version": "repo-lines-v1:sha256:a91d490f41ac6c4c727047fb797ba97146f1046e52926d54079553ecf1740a5b:eyJzZWxlY3RlZExpbmVDb3VudCI6OTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU0OGFjMWUxNjFjZTkxZThmZDgxNDE1YmU3NDM4MjU0YmViNWUyZTExMjVmNTY3NjM3MzgwYWQ0YWI3YjkwNDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQxODM4OTIyZjIxNmM2Mzg2NmJhNDllYzk1OTFmN2E0Yjk3ZGM0ZjNjMTA2ODZkODU5ZTU4ZWQwOTJhZjIzYjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNhMGMyOTNiMmQwYmIzZjk4ZTQzYmE2NTI1ZjExMzU4ZWFkN2Y4MGE4OWI5NTY1YzAyZDk3MmEzNzAyY2I5OTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fab1c61155c1423883612848de223784",
+      "statement": "kafka-share-groups.sh describe reports a START-OFFSET that is the earliest in-flight offset, supports --members and --state, and share groups can be reset (including from a consumer-group CSV export), have offsets deleted, or be deleted when they have no active members.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/basic-kafka-operations.md#L269-L363",
+          "version": "repo-lines-v1:sha256:9b2c1528e59d3a7a0f600c5cb92c23257d61eec6cd39c6c75fc71d262457fb39:eyJzZWxlY3RlZExpbmVDb3VudCI6OTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFlMjIyMTY3ODA4ZGQxNWQ5ODFlZDkxYWYyZTc5NDZlNGFiNDkwY2ZlNWU5MDk2MDJjN2UwNGQxYzc3N2YyYTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZmMDVkNWU5MzE5YmU5OGI5MmI4YWFjYzM5ZWQ2YTIxNDQzOGMwNzkwZWJhMzNjNmYyYzRkNDQyZGZmNTJhYzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM2NWVmODgzYzE2YzFjMzhjODA3ZjVlMWFjOTkyZDE5MmQ3YjJiNGIzZDU3Yjk2YzVjZDVkMjM0MzVkMzE1OTYifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

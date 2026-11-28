@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:488177816716e09bcfcb658c361bc7c298dd312ef140b7b0008ba72691ae7306",
+  "claims": [
+    {
+      "id": "claim_b2a4b3f02613465ea8e917a623f5634f",
+      "statement": "A KStream interprets records as inserts while a KTable interprets them as upserts with null values as deletes, so log compaction is safe for a KTable's topic but not a KStream's.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/dsl-api.md#L80-L110",
+          "version": "repo-lines-v1:sha256:f9fc9cb72f567a7d1705910d38527155d9d26bebefb14363265e34cb791b5432:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU3ZDEzODY3MjkzMjY1NGI4YzMxYTc0ZTI5ZGExNzhiYjY0OTRlYmVkZDA4ZGU0OTVhMzc4ZjNiZTZjMDE5NzAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImExYjAwNDQ2ZmY0NWNmNDEzMTI1YWE3OTA5ZDExZmIxODFlMjM0M2U4OWMzY2QzZGEwMGYzMTE5NjcxZWVhZTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM5MzFiMjNmYTZmODEyMWYyMDYyYzI4MzYzNGMyODYwMTU0MjViYTE4NzQ2MzQ5NmJhNDg2NmZmMmZmNWVjMTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMyN2QwNmFmYWZiN2VjYTk4OTFlZGUxZjg3NmZlMDM2OTQ2OTYwNzliMTE3MDc3MGExMTZjMTEzYjdjYzM4YjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_85c590a6d788489a920aafc791660d22",
+      "statement": "A GlobalKTable is populated from all partitions on every instance, enabling joins without co-partitioning and foreign-key lookups at the cost of more storage and network load.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/dsl-api.md#L112-L139",
+          "version": "repo-lines-v1:sha256:c95b3f04561368936bfe8151ebed086994fac2bb5152c6f894bd53f034c42894:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2OWNjZjJlOTliNDZlNWVkZWNhMzJjMmYwOTUwNTRlNmE5ZGJlMzdjN2YxMzA3YTFiYzlhZDZkZGE3ZDQwMTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYxNjYyYjU1Y2YyZjFhMmQ5MDk5ZWJjMjliNTFmMDQwZTA5YzFkOGQ3ZWM4ZDVkZmFmNmIzYjRjMTExNzI0NzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJiYWFiNzhhODg3MDZmMjNiNDQ0MDg4ZGQ5OWE5YTE4YTZjZDhlYzQ2NGQwZTA0NDUyOGEyYTE3ODQ1ODNmMzkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ef407bc2634f4c29a786443be3d5abbe",
+      "statement": "StreamsBuilder.stream, table and globalTable read source topics, default Serdes are used unless explicitly given, and tables must be named via Materialized to be queryable.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/dsl-api.md#L141-L266",
+          "version": "repo-lines-v1:sha256:f27a4ff40e2e77067492ef41ab8b030a1c6128b1bfdfb9ed1e9b209a9335cd38:eyJzZWxlY3RlZExpbmVDb3VudCI6MTI2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIwNDMwZjdkY2U1Yzk3MWY4NzRhMWYwMDRmOWExN2YzODdkZTU4MzNkMTY3ZjgxNjM4NTFiNTVjNzg4MzBjZWI4IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJkZjUzMWNlNmExNWYzYzgyNWQ1Mjk0YjhlODNmYzQ2ZDgzZjgxYjU2MzQ3YWQ4YzRjNzE5YjhhMjllODk0MmViIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJhZDFjNWEyZjFjOGExOTBlNjNkOThjZWJlYzU4NzkwZDRmZGZiNDkwYzQxOWI3ODY2YjY3NTE3ODcyNDRjMTkzIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_9cb20f52b23744d18397cf4c509bb207",
+      "statement": "map, flatMap and selectKey mark a stream for repartitioning, groupBy always repartitions, groupByKey repartitions only if marked, and repartition() always repartitions via a managed internal topic.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/dsl-api.md#L285-L915",
+          "version": "repo-lines-v1:sha256:7c2895a9d427dece1cc26b4dbe79b06ec4b6103a9b236f893634c4d7c878a3ef:eyJzZWxlY3RlZExpbmVDb3VudCI6NjMxLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJmYTU4ODVmZjg4NDU1YjVhYzFlZDFlNzcxZDE3NDQzODY2Mjk1ZjIyYzZhZjg2YjIwNmNkMjdkNjYzYjRiNWQ0IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIwMWJhNDcxOWM4MGI2ZmU5MTFiMDkxYTdjMDUxMjRiNjRlZWVjZTk2NGUwOWMwNThlZjhmOTgwNWRhY2E1NDZiIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIwODBlMmFjOTEwMjVmNzE1NTA3ODZiYThkNzJjOTQ2MzAzNGI4YTdlMmY3YmRkZjJjYTMxMDY3NjcxYzcwM2M2In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_c33995ead2a64251a8140dfd8fbd1bcd",
+      "statement": "Non-windowed aggregations use TimestampedKeyValueStore or VersionedKeyValueStore, time-windowed aggregations and stream-stream joins use TimestampedWindowStore, and session aggregations use SessionStore; dsl.store.format=HEADERS enables headers-aware stores.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/dsl-api.md#L916-L950",
+          "version": "repo-lines-v1:sha256:d7c2d7b901513acbc45ad7349db09a2f6a14f2c75cf072a4d783870e8eaa2d54:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk0MzhiZTE5MDY0YTE1ODFjOTdhMWRiOGQ2MDU5MmJhYTRmMDhhMDMxZWNiN2FhM2VlOWRkNmMwODY3MWVmOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ5NzY3M2IzMDRiM2ZlMmI0N2NiZWYwMWZmOWIxNGE5ZDExOTA1MGZjNTEzYmY5NTM0NGJiYTZjYjJmOTVlZDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk3NzU5NWNhNDVjMGNlNzhlYzllOWU0Y2FiZjI5ZmVmMmI2ZjBlYWJhMGQ5MGJmNjhkNWY4NDYzMzJlMGMzZWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_84e326251e0d488f9cb61ea11534d62a",
+      "statement": "Grouped-table aggregations call the subtractor with the old value before the adder on updates and only the subtractor on tombstones, while grouped-stream aggregations ignore null keys and call the initializer before the adder.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/dsl-api.md#L979-L1935",
+          "version": "repo-lines-v1:sha256:8053c7671484f81140129f66d170c124af7733e949e8c373daaa50d400e2b63b:eyJzZWxlY3RlZExpbmVDb3VudCI6OTU3LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJiY2QzZDJlNjlmYTJiMjZhOWYwODEwN2NlNTBiNjg5ZGI4MzhiOTgwODAyNGJkZThmZTJiYzExNDQ5OWE3Yjk5IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIwMWJhNDcxOWM4MGI2ZmU5MTFiMDkxYTdjMDUxMjRiNjRlZWVjZTk2NGUwOWMwNThlZjhmOTgwNWRhY2E1NDZiIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJiY2YzMWFhMmFiMzNkMWJmM2M2YjRjNmIyNThiMjFkYjcyYzQxYTAxMThkM2FkZWY0NzdmMDEwMjdhMzVhMmIzIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIyMzI0NzM4N2Y0N2VlMWVmZWY3YWY5ZGU5OWRmZTcxYWQxZWMxY2U5ZTBmNTE1NDNmMGZmMDg0NmRhZjdlMTM3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_51ad3f208e0a4b22ac5ae46c1a4992b1",
+      "statement": "Kafka 4.0 removed KStream#transform, flatTransform, transformValues, flatTransformValues and the old process in favor of process and processValues, with KAFKA-19668 requiring 4.0.1/4.1.1 and an opt-in fix when merge repartition topics optimization is used.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/dsl-api.md#L5011-L5037",
+          "version": "repo-lines-v1:sha256:86cc991d563a95ac4be7bbc2e72f0d440dc802d9185ba30d85d03273de7aa141:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0ZjQyNTc0MGVkMWFlMDI0Njc5ZDI5ZjM5YjljYWRjYWZkZjUxOTM4ODQyNTZiMjJhYzUzZjAyMWQ3NGQwMzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlhZDczOGRmMDU5ZmZlZjVkY2Q2MGI1OWYwZTZkYzQyZjQwYjBmOTdmMjdkZWZlNTA1ZTM2ZDZmMzBkNmI3YzUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjViODM2ZGYyNWE5MTkxNmU3NTBiZDhkODZiY2Q2ZDE0MWE4YTU5OTgxZGY4YWZlOTcwOTk1MzQyZTQ4M2Y1N2UifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_757a0742da29489a8cc47b5a854581f2",
+      "statement": "KTable#suppress with untilTimeLimit and a buffer config rate-limits downstream emissions per key.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/dsl-api.md#L5624-L5646",
+          "version": "repo-lines-v1:sha256:4efdac3bf766abdda09865529376939a6d75c6f9f3de33e903bbd24f30648400:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRlYWVlNmQzZGUyOGY4MWRlOGQ0OGEwY2RkMTQ4OGQ3ZGQ2ZTVmNjJjOGJkZTE4ZmIzM2EzODkwYzk1NjdiMWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA4ODY1ZDZkZGQ4ZWU0NmI1MzE1ZTEwYmJkNGQzMTdlMDVjNWJiY2Q1YmU1MTFlNmVjMWEzZDg5NWU5NzE5MmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI5MjhlNTU0YTg0YWNlYzhkOGY3YWNmNzg2YTcwZTRjYzhhYjA3YWQ0YWQ2ZDU1MDQzZWRhMmM2ZjM3MzBiOWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEyMzdlNmVhYjAwOTA4ZTk2YWI4YzM1YWM5NzgxOGQwYjAwMDU3YWU4OGE3NzI0YjZmZTU5ZTdlOTE5ZjRlYjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f50222f12f7b45439ec68251020873e3",
+      "statement": "Since Streams 3.5, versioned state stores give tables timestamp-based semantics, suppress is disallowed on versioned tables, and aggregation and table-table join results should not be materialized as versioned.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/dsl-api.md#L5648-L5679",
+          "version": "repo-lines-v1:sha256:39d59058c0528edac54328cfc8b17df20780752b79ce78a3f922b6400378de68:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE3MGRlYzVjZjJmODI2M2ZlZjBiMzU5OTg5NDE2ZmI1YWIyNDJhNzY3ZTc2YmQ4ZWEyNzliODYwYmM1NWFhYzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlhYjgzNTFkZDQ1MWY1Nzc5OTIyZWYyYTdmMmJiYTk2NDYzM2I3OWU2OTQzMDZlYjhiMjhmYzMxZDc1ODRlMWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRkYzIxMDZiM2EzNWNiYzU5NTRiNDJiYzdkNDdjMDgyOGUwYTYxZDQ4Njc0ZGQwNzJjODJlOTBjYzM2NGIyMWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJhZmRmNDFhYzE3NWRhZGNmMGFjZTBlZTE0ZDJmOTY5MzlmYjBjODBiZDRkMmY5ZGRmNjI0MmE2Yzk1N2QzNzgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_08dcbe52a17c496e8228ccf08c9c7fe8",
+      "statement": "KStream#to repartitions output if partition counts differ, the stream was marked, a custom StreamPartitioner is used, or the key is null.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/dsl-api.md#L5681-L5747",
+          "version": "repo-lines-v1:sha256:0fd15e32876364ccf6b9e81f8bad087169364f49ec18f33bc7ea42338c6de151:eyJzZWxlY3RlZExpbmVDb3VudCI6NjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0NDIwMWJlMzRlNDU0NWJiYzQ5MjUzMjQ0ZDgwNGQ1MTI4ZDMyOWY2ZGNiMWMxMjkwM2FmYTFmNTE4YTkyYzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMzZjM1NDg0ZmNhNWIxMWMwYjAwNmRiODhiMTU5NWIzN2MwYjk4NTQ3NWQwNjhkMTdiMGI2Y2VhNjBlYTgyNmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk4YTFmNGQ2ZWFiMjk0Zjk5NGI2MGQ4YzIxNDAxNDg5MmU1Y2I5NWFiNTQ3YzcwOTUwODgxNmI3NDkzOGI1OWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk0YWIyODE3NzZhNDcwOTVlOGMyM2Q5MGRmNDE0Y2U4YzNjMTc4ZTM3MWY0ZTY0OTM4MDRiYWNlZmU1NGE5NDYifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

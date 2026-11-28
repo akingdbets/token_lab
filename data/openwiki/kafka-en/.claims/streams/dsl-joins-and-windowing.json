@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:3398c1b0cc6919666e7d5770b0568cfaeca2376baa609fc9fd57fb4dccf653d9",
+  "claims": [
+    {
+      "id": "claim_56898bbc448b40e0aebb7ba66a77fadd",
+      "statement": "KStream-KStream and KTable-KTable joins support inner, left and outer variants, while foreign-key, KStream-KTable and KStream-GlobalKTable joins support only inner and left, and KTable-GlobalKTable joins are not supported.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/dsl-api.md#L1936-L2091",
+          "version": "repo-lines-v1:sha256:52ee3c8c97f70154d9092e680d8110dd6df7a0997606da2094d5c488dedb9ade:eyJzZWxlY3RlZExpbmVDb3VudCI6MTU2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJhMmMyZjg5ZjQ0NzdhYjljYmJjNDgxMDBkZjJmNzdlMDI2ODIxZTliY2QyMjU5MTMyYmRlZTI0NTUxOTlkY2FjIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIxNmQ1MTdjODdlNGIxNTYwOWM4MDczM2JiZWI1MWM2NzNmYzY0ZGExMTJiNTM3NjlhZGIzNWZhNGNmNGJiNThhIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJkOTc2NzNiMzA0YjNmZTJiNDdjYmVmMDFmZjliMTRhOWQxMTkwNTBmYzUxM2JmOTUzNDRiYmE2Y2IyZjk1ZWQ3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI1YjA3ZDYwYjc1MWEyYzJjYzhhMzI3MWZmM2VhOWVhZWFiODU2ZjRhYjdlZWM2ZmNjNzM3YmZhMjBmNDUwZjM2In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_b99f4df2245c45ac84bacde18f2a2895",
+      "statement": "Equi-joins require co-partitioned inputs with equal partition counts and identical partitioning strategies; Streams only verifies partition counts, throwing TopologyBuilderException, while GlobalKTable and foreign-key joins do not require co-partitioning.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/dsl-api.md#L2093-L2124",
+          "version": "repo-lines-v1:sha256:484df6807b7522f68e8d6fae89939767438cc57db5dfab2355da4f976acb2e4e:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUyOGEzYzhjYjVkMTI2ZjU2MzRlZTU4NDUxNjNhZjIyYzQxOTVhMWI0YzgxZGY1YmJhMGJkOTczZGI5MWEzZDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE3OGZiZmJiMmEwZTIwMGIwM2JiYzFlNDNiZmY3NzJjZWVkMDJlNGJjMWNjOTYxMzhkNzhiOWI2NzhmMjE4YjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg3YmRiZTA4M2UyYzhmYmFiMGY0N2VhZmMzNDk0ZDI4NWE5NjUxZWNmODg3NDI2MDMxYjFmZjNjNTRjNDEyZGQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c618147148484e19bf56450a10b638f4",
+      "statement": "KStream-KStream joins are always windowed via JoinWindows, and left/outer non-matches are emitted after the grace period, whereas the deprecated JoinWindows.of().grace() API emits them eagerly.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/dsl-api.md#L2126-L2330",
+          "version": "repo-lines-v1:sha256:5ff3db1009ce2596cc8e5a538199c3c1aa840da02ea554a01ca8240087ede2ec:eyJzZWxlY3RlZExpbmVDb3VudCI6MjA1LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIzNzE1ZTVmYjRhY2ViYzRhMzAzMDYzODE4N2EzOTRhODc4ZDk2OTUwZDdiMTU2ZjhlODQ3NDg0ZWI1ZDJkM2UxIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJjMDgxNjRlY2YzYTY2ZGExOTJkZmZlOGQzYmI0NGI0NDVlYWRkMmYyZDQ4MzZmNmRmYjliMDgyODRjMzEyZGVkIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIyZDdlMjhiMzYwMzE5YjQ1ODYzMTI1Nzc5NGJkZjhhNzU0ZDQ3NTdmMjMxNmFiYmJjYTliMmY5OWIyZTJhZDhkIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_a38bdd3b03084400a26c9b6a76d2c7aa",
+      "statement": "In KTable-KTable joins null values are tombstones that forward a tombstone to the result only if the key exists, and versioned tables ignore out-of-order records.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/dsl-api.md#L2928-L2990",
+          "version": "repo-lines-v1:sha256:df2623bb03e8d9e9849f5656ee16e788c45c0ba2abdd169dbba0a3fe88c5b37f:eyJzZWxlY3RlZExpbmVDb3VudCI6NjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIzZWUwMGZhYWIwOTQ2MGJmNGI0NWM2NmE5NjUwODQ2ZGQyYTI2YTdhZmIzYWVlN2YwNTZhMzU1NDIzMzZlZWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUzMDZjNjY0N2Q3MGU1ODQwOWFhZjgyMmNjODYwYTgxNzQyMWVkYWMzNWI4ZDU0YzZmZDg5YjNhNTU4MTRmZGMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgzN2U2MzFlNTA4YmIwMGUyNzdkYmVkMzQzZmRkMzI1NzM3NjM5N2IwMTBiMWQ1Yzc1OWVkZDgyZTJhN2M3NjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_52dcbabe01d044a28421d50fd2311d28",
+      "statement": "Foreign-key joins apply a foreignKeyExtractor to the left value, ignore records whose extracted key is null, and a right-side update produces updates for every left record with that foreign key.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/dsl-api.md#L3498-L3560",
+          "version": "repo-lines-v1:sha256:53f48b7116460143ff36ea68807d90c5d8ecc6a758803e8f93e86a37fb06f0c7:eyJzZWxlY3RlZExpbmVDb3VudCI6NjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAyY2JmMTI0MzY0ODFmOGU2MmY3MTM5ZjZlOGQyNzY2OTllZWQ0MjU5NThhYjQ2MjFjMjMwYmNkYmE5MTU2MDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNjNzA4OTlmODE5OWE0MzA1NmFjZTlmNjlmMWUzMmU3M2VlMjEzZGVmNjZmYmZjM2EzY2VlMTRmNjAzMzhhOTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZkZWQ5NmJmMzY4YmRkMDEyYjFmY2U1MmUwNjBhOTU4NTRkNTcwNjMyODVlZDQ1YTE1YjYwMTc3ZDRhYzNkM2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUwMWY3N2IyZTJmYjY5NDYzOThkZmRmNjM2YzAzZTc4OTM3NTNiMmE0YmEzMjA2M2ViMTk3MWI5YjA0NDU5NGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5c3123f8d8c241c5972b46c5a6d03a95",
+      "statement": "In KStream-KTable joins only stream-side records trigger the join, and Joined#withGracePeriod can be set.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/dsl-api.md#L3851-L3920",
+          "version": "repo-lines-v1:sha256:1679a7652b0a5d8d090e271b036888083705a3ace4c60bf6ebb8f4e3e3572c87:eyJzZWxlY3RlZExpbmVDb3VudCI6NzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4MGVkNWU2OTNjMjFjYjlmNzg5MTFjMWJkNjMyNTA1OTNjMzFkODE5YmQ4MWQxMGViZmUzNmJiNzY2ODNhZDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2MWNkNGU3NTYxYjhhZTI1OTBhZDJiYjFiZDFkZmYwN2Y1MjhlNjFlMjk5OTAzZTdhMTkyOWU1NTNiMGI2MzEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIwNmNhYjE3Nzk1NDYxYzU0Nzk0ZjA1ZjgwM2YzOTFmNTQ5NDE1OWYyZWZiZDRhYzMxZDViMDczMjExODMxZjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNkZGVmYTBhMmFkYTA1NTljM2RiMDBhZDYxYzJkNDNkOWVlNGY2YmUwOTMyMGE4ZGJjNmM4MDViZWNiZTRhZjQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_495c497528cf457ca6cf8215462ee084",
+      "statement": "KStream-GlobalKTable joins look up the table by a KeyValueMapper-derived key, and the GlobalKTable is fully bootstrapped before processing starts.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/dsl-api.md#L4328-L4400",
+          "version": "repo-lines-v1:sha256:3d3176854a7c742b49c972f04d6678bbff838bdfb49e5eaa9c2478532bdceaa2:eyJzZWxlY3RlZExpbmVDb3VudCI6NzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjODI3MmQ2NGY0MDdiMWZjYmE3NTI3NzZiNWRhYzVjNzJhODBiNjA5MWQyYzBhNzM5OWM3MmVmZGZmY2E1NDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZkZWQ5NmJmMzY4YmRkMDEyYjFmY2U1MmUwNjBhOTU4NTRkNTcwNjMyODVlZDQ1YTE1YjYwMTc3ZDRhYzNkM2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA2ZDE1OWJmMzBmODkxMzVhMDE4NDg0OWVmZmVkZjAyY2MzYjVkYjQ1YWQ0ODhlYzE2ODQ5NDBjYjVlOWM1NGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2550179d170e44fbbadb94c01ba29526",
+      "statement": "Window retention defaults to one day (Materialized#withRetention), hopping and tumbling windows are epoch-aligned with inclusive start and exclusive end, while sliding windows align to record timestamps with both bounds inclusive.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/dsl-api.md#L4457-L4610",
+          "version": "repo-lines-v1:sha256:e13fac490dffb11dec1e4db8c335119c9066ea5b3de9bf6c64415c51e47a5438:eyJzZWxlY3RlZExpbmVDb3VudCI6MTU0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI1NDdhOTUzYWNlNTA1MTYzMTc0NWRkM2I3YTYzNjEyYTIyNjkxODM1ZjA1N2I1YmY5OWNhNDMxYWQ0NWFiMWQ3IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIwMWJhNDcxOWM4MGI2ZmU5MTFiMDkxYTdjMDUxMjRiNjRlZWVjZTk2NGUwOWMwNThlZjhmOTgwNWRhY2E1NDZiIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJjMjcyNDZiMzE5MDQzMjdkYzhiNmRlYTE3ZDRhZjg0N2RkNGFiODI3OTJmNmNmYmVjNTkwMmZiMDhiNTZiMWQ5IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI5YzQwM2RlMGVkNTNiZDNhZmFlMjkxYjlmNmMzNjlmZTBkYmI3NzQyYTUxNDM2YWY1NGRhY2VlNjg5MTEzYmU5In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_85c91a463fca45ee97e1ad9a2a57ccd9",
+      "statement": "Session windows merge events within an inactivity gap and vary in size per key.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/dsl-api.md#L4611-L4643",
+          "version": "repo-lines-v1:sha256:33f6d896935f820cf8ae0916444e96b4834fdc219db81a220fff8ce9e98095f3:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM3MTZkZjY1ODczOTJlNjU2ZWI2NzZmMzM0YWFlMGFkY2FkZjcyOTRiZjRiMzZkNmE5ZThkNGRmZWY0MDMxNTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3YWQ3NjhiM2RlOTA0MGU4MjVjZDEwYjBkODg0M2E5ZDgyOTAwMjI3ZTQ5YjJiODI4NjYxZTlhYjU5OTVkNmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJmOWY0ZDQzYzI3YWFlYmMxNjBiYmI1MzE3ZGRhMDk5NGE5ODI2NWIzNTU1OGMzYjI4ZGJiMjUzZGI0MmIwNWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFhNzE2Yzk1NmMxMzQ1ZTJjN2EwNWFlZDcwOTY2NTllYzc5M2FlMTgxMTZiNWNmZGFiYTA3OGNiNDg2MmJiMmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6a0b17f1ca534d2a940773472d487b18",
+      "statement": "Suppressed.untilWindowCloses emits only the final result of a window after window end plus grace has passed.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/dsl-api.md#L4645-L4686",
+          "version": "repo-lines-v1:sha256:a8271ed82e11ba27b2461950434acdfdee3bfc5f14fe35c54a0b3b0e882f4eae:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA0Y2VhZjMyMGE5OTkyYmNlYTcwYTI1NTYwYTY1MDgyMGE1OWFiMDkxNmViYTIxYmI2OTc3MzU4OTJmNTg1NjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRiNGJmYjI5MDU2YmVlNGViMTNlNTIwZmJmMTNmZmUwNWFhZmUyNGI3NGZiYmQ1NTEyYTk2ZWEwZGNiYzljZjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhZTM2ODEyYjIzOTQ2NWRjMjZkMTFmZjk0MDU0MTNiMjE4ZWVhMzRmOGFiYjIyYTJmYWZjMTA1Y2MyYWU3ZWQifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

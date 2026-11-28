@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:2a810f6dbeff6d03f81763c758b4d924dd3f421f6d3037fb798188b72c558652",
+  "claims": [
+    {
+      "id": "claim_5a919cf7692b4d34b054bc5bbcd826d6",
+      "statement": "MirrorMaker 2 is built on Kafka Connect and replicates topics with configurations, consumer groups with offsets and ACLs while preserving partitioning and detecting new topics and partitions.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/geo-replication-(cross-cluster-data-mirroring).md#L29-L54",
+          "version": "repo-lines-v1:sha256:78279d743271a08ba4d5f803973f18c49fdc28306fb4afbccb14e807ba221e1f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIzYjRiYTEyMWM0NGM0MTUzMmE4YWQ5YTg0Njg3ZmUyNWY1Yjk2MTkyMGJmZjUwYjRiODhhNTRlNGE1MGU2N2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjllZGZiMGM0ZDA4NWVkNDkwODhhZmJmNjY5ZDY5OWFkZTIzN2U2OTQzMDhmODMwZjg4MTg2OWJkYmQ4ZDI0NzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljMzVmMmYwNDAyNTQ3NjExMDg0MzQyZjYxNjAyYTEwYmY1YTgyMzVhYWM1NGUxZTRhOGU4MDRlZDMxZmZjYmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRkYjgxNDU1MTBhN2RlMzc1MzdhMmY1NzA3OGI2MTY4MTFhMTNjNzFkYTcyZTE3ZjNjMDVjNDQyM2RhYzEwMjIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_74c58492acdc437d8fa4d1bb64f81c79",
+      "statement": "Replication flows are directional {source}->{target} pairs that must be enabled explicitly, with defaults topics=.*, topics.exclude=.*[\\-\\.]internal, .*\\.replica, __.*, groups=.* and groups.exclude=console-consumer-.*, connect-.*, __.*.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/geo-replication-(cross-cluster-data-mirroring).md#L194-L244",
+          "version": "repo-lines-v1:sha256:50459d4daa7f13af19fbea95204983a9b90c52163bc39d08e232aeb5d14b7cd7:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjViNDlkZmM2ODdlN2M5ZmZjNDczOTE2YzNiOWY0ZmU2YjVjMTY3NDFmOWE4NjMwMWFlMjc1YWM2MzU1OGI1NzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk0ZjdjYTRmNmEwN2FmY2RhMzI5N2ZjZDQyNDAwMjU0NzQwZGZkNjNmZmEzNTU1MzVlNzA5MjM1YmU0NDUwZjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhjNDM5OWZlN2M3MWQ4NGMyZWVhNTcyYzkxM2VkOGI1MWViZjBkZWJkM2UwNmUxZDg3NzZjZGFmMTE0N2Q2ZTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkzYzQxODBmZjdmMWM5YTM4YTRhYTU2NTdiYzJkNzU1ZTk5NzVkZWQxYzhhM2MzYzY5OWViNWM4MTZkZjYwOTYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9889f56f17c24377b97f0f680842e0e0",
+      "statement": "MirrorMaker client settings are overridden with {source}.consumer.*, {target}.producer.* and {cluster}.admin.* prefixes, Connect settings apply unprefixed, and tasks.max should be at least 2.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/geo-replication-(cross-cluster-data-mirroring).md#L125-L163",
+          "version": "repo-lines-v1:sha256:eae4604a194775a8fd72041b871753fae306e990da0fcc145aa04e34ad20572f:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVkZTA1NTUyMzFlODgxYTZmZTMxMWRjZWQxNmM3NWNjMDM4OTIzMGY4ZTY0ZmQ0MmFhZGY2YWE5MzdmZjdhYjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRlODI0NjhkYmFkZTE1YWUzZGU3YzNiNGUxMTg1YTdjOTdlNzNhOWRkMmQzYjUxNDM2Zjk5MGVhMjkxMWJhNGEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fba491d55a224caf9cc8513c39cfd6a2",
+      "statement": "Exactly-once is supported for dedicated MirrorMaker clusters since 3.5.0 via {target}.exactly.once.source.support=enabled (preparing first on existing clusters) and requires dedicated.mode.enable.internal.rest=true.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/geo-replication-(cross-cluster-data-mirroring).md#L165-L192",
+          "version": "repo-lines-v1:sha256:b84f7fb71814c1fc4aeb46c7648b0559ccd861a6574f3b6d1b4cc3845e7d60be:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlZTRkNTYzNzM1YTQ5OGI2Yjg5YzEzNzZiN2M2NzFiNGUwMjlhMTBhOTQxMDg3M2ZmZjFhZGYyYjg5ZWE5ZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjExYjljMDRmYTA0YzA0MDY2YWQyMjU1ZTQwNTg3YjEwNmUzZjE3MjE1YTgzMGJjYzRhN2MzZDZjZmExMTVkZmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhkZDYxNzUxYTNjZjliYjBhNjhjYzUyMmYxNjRjNWU4MjU4ODgyNmQzZGEzNTRkODFhNDk2YzFiZDhkODJhYTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhiZmRhMDg1YzMzZTcwNzVhY2UzOTVhNTI3NzY4MzI3OGU5MTJiNDM0YmY0NDkxMDc2ZmViNDM0NzE5NWUwNGEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bbf2da9ff0be41989c75d6a5d9338bad",
+      "statement": "DefaultReplicationPolicy names remote topics {source}.{topic}, with the separator configurable via replication.policy.separator and naming customizable through replication.policy.class.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/geo-replication-(cross-cluster-data-mirroring).md#L267-L285",
+          "version": "repo-lines-v1:sha256:3e2a3f6934364be678d13a616a93324df8f302d02d87085f4aaccdecb479cc95:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0ZThlOTU3MDA0Y2FlYzczZGNhYTdlMmYwYzcyOWFmNjQyY2FiOGI5N2UxMzcwZjhkZjNiN2M1MjBlODIxNjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFlZjNkMDg0ZDZmMDZlNDMzOTc0ZjRjMzg0OTZiMzJiZmM5NGEzNzM5Yzk5ZTE5Y2RjYzIxMTgyMjQ4ODFmNTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ0MDJiYjBiOWE1MTFkZTBlYzFmYzVlYWVlYjZjODI3Yzk2NTU4NTU0YTg1ZjIzZjc4NGU3OTk3NGI0N2U1OWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhN2UwMTY1OGI4ZGM4MDFmYjEwNDAzOTVhMGE3YjI4MTEyNDY5YzRiZDc0MmU3OGRiOTJlNmRhYzA3NDI0OTkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_41c21c2602b649f6bd0e2ed23315a760",
+      "statement": "MirrorMaker processes share configuration through target clusters, so inconsistent configs for the same target race and only the elected leader's settings apply.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/geo-replication-(cross-cluster-data-mirroring).md#L287-L305",
+          "version": "repo-lines-v1:sha256:f58702a2c5de75e885364c5a99f97cd4aeb6ae9e816d3997c7074a209275c610:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUzZDk3ZWFiMGU0Njc3YjQ0NzcyZDdmYzRhM2IxMDMyMzFiMDI1MGZjMjFiMGQ4MzlhZjIxODBmYjRkNjlmMmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ2MjJkZmZkY2ZlNGNlNTZiZWQ1NmRjYWJlYjE0MjFkYjlkMDFhNzAwMDQ5NmJhYjkyOTY2MTY4YTUzYjM3YmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE5MmQxNmVlMjE4NDdhNzQ2YzViYjU5NmRlYjUwNDM2OTdlMDNiNGI3Y2UwMjFiNzM5YTcyNTgwYzRlNzEyMjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZlNWNkNzg2OTk3ZWFjNTE5ODBiMDhlNmEwZmY3YzE4MWIzZmM3YWE4MjUyNzhhMzM3NWUxM2M0YTkzMjc2OTYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_59a93d0eebee4f41a00583d76eb482eb",
+      "statement": "MirrorMaker should run near its target clusters, with --clusters restricting it to producing to the named local clusters.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/geo-replication-(cross-cluster-data-mirroring).md#L307-L325",
+          "version": "repo-lines-v1:sha256:f6e2e5e489a9d2a29130d194b240ff68d54500ad5f52ea8859b03014c7d23917:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzNjM3NzJhOGY2MTdlNzQxZTU2YzQxNzU3NTQ5ZTI0YTQ0YTc0NzE5ZThiMDVkODcxNzAxYjlhMDJjYmFlMDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJlMzZiOTAyNzk5ZDY4Mzg3YTE1NzRlYTEzOTc4MGI5Mjk2NWM3NDg5NjBkZjRmNjFhNzgzYTk2MTRjMTNkNWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJlMWJjNTkzZWY2YjE5MzBjYTBkZThiYmRiMzFiNjA2NDJjZTNmZGFmNmViNGFhOTA3NDcyMWI0NjQxOGI5NjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ5YmViMGE3YWZkOWI2NjEyNTZlMjlmOWUzMTBiNDNhNWJlMTJlOTZlZjAzM2Y2MjE4NzIwM2VlMmZlZjM1ZDAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3c896a90fa9a4670ad0cc927682c56c6",
+      "statement": "MirrorMaker emits record-count, record-age-ms, replication-latency-ms and byte-rate under kafka.connect.mirror:type=MirrorSourceConnector and checkpoint-latency-ms under MirrorCheckpointConnector, and configuration changes require a restart.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/geo-replication-(cross-cluster-data-mirroring).md#L440-L488",
+          "version": "repo-lines-v1:sha256:a5db06e55719135764a0c473012b265a23d87c2ef9d67e4890bb1c4c194eaf53:eyJzZWxlY3RlZExpbmVDb3VudCI6NDksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUyZDBjOTIzYTM5YzlmOThjZmFlZmY4Y2MwOTVjZGRmNmNjMGYzZTI5ZTVkYjg4ZDQ4NDcwODQ5NjFhYjdmYzMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ1MjZmOWRkMGJjZDE1MzgxMGU0NDM2YjMxNTE4YmFjOTdkNDU0NzJjY2U4M2MwYjk3ZjZkZDVkODAxMzYwNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9da544eb891a4d9b87dfb10b579a971c",
+      "statement": "The recommended multi-datacenter pattern is a local cluster per datacenter with mirroring between them, while a single cluster spanning datacenters over a high-latency link is generally not advisable.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/datacenters.md",
+          "version": "repo-file-v1:sha256:d9b0209c4c17b69d83d64ad49dd641f1372ec334e64421c0c2fb9e3b6e04db38"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

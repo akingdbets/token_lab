@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:004ca5ff54e0885878744476a585d3751b8ebe2398df107f09f5e677930f0387",
+  "claims": [
+    {
+      "id": "claim_6b16b26a89df4beb9a3c3677c8f1e4e1",
+      "statement": "Kafka servers use Yammer Metrics and Java clients use Kafka Metrics, both exposed via JMX, and every rate metric has a cumulative -total counterpart.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/monitoring.md#L27-L31",
+          "version": "repo-lines-v1:sha256:1caa00066d7707810b9cfe9f976668abd4ef69957757b5f4a914186511c3f2b8:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNmQ1N2UxNDM1MzI1ZTQ1NTkzYjVjYWJlZTRiMzNmMmNhNzViMDdmYTM1YzczNGVjMDU0YWJkMzc1YjZkNjE2MiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjFjODgyMjYzNGNkMzRkODNmNTUxMWFlYzZlMmUxZDE2Mzc1ZjQ5ZTY3ZWI5Mjc4M2ExNmU0MjRiOWU0YmFmYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzEwNDY1Y2Y2NjVjNGIyZTNjOTJmNGJhMzMzNjE1M2U2Nzg2ZTU1OWY5NzdlNDk4MmEyMDAzYTA2MGYzMTk2NyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_321d5777b116492687a71c886374f602",
+      "statement": "Remote JMX is disabled by default and enabled with JMX_PORT; JMX authentication is disabled by default and must be configured via KAFKA_JMX_OPTS or system properties in production.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/monitoring.md#L35-L37",
+          "version": "repo-lines-v1:sha256:9ff13c0c36a28230ac2186f20d444dfd37974fbc1340f8c058b719e2af611027:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjY1M2Q0ZjJjMzYzYTU0ZGZhNzQ1MzlmZjlhMGM3MDQwNmQxZDAyOTQxNmM5M2E0M2QwZTRiNDJlMTdkZWY5ZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjc3ZmQyZTAwOWRjYTA3ZmUwM2YyNzA0MWY4M2JhY2M5MWUxMGNhMTQxMjVhZGFjYzFkY2NkMmE4OTQ0OWQ0NSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMzEwNDY1Y2Y2NjVjNGIyZTNjOTJmNGJhMzMzNjE1M2U2Nzg2ZTU1OWY5NzdlNDk4MmEyMDAzYTA2MGYzMTk2NyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGI0YTlkZjM4ZTliOGJjMmNjYWEwZDliNzIwZDJiMmFjZmE1MzRiOTdjY2UxNjYzZGQ2NGFlY2U1YWZhZWFlNiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_44ff9c9a38d34f26895029b72bbc03ab",
+      "statement": "UnderReplicatedPartitions, UnderMinIsrPartitionCount, OfflineReplicaCount, OfflineLogDirectoryCount and UncleanLeaderElectionsPerSec should normally be 0, and only one node should report ActiveControllerCount=1.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/monitoring.md#L379-L574",
+          "version": "repo-lines-v1:sha256:d334791389059854d8f6849d3f1aebae86abbece3809e2beadf06b810407b3b9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTk2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIzMDYzNjcwOGI2OTllMWRiYzc2OTRmODNkMTgyNGJlZWU5ZWI1NDY1NmU3ZjIyNjcxYmZiZTRiMDE3OTdmMWQyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIzMDYzNjcwOGI2OTllMWRiYzc2OTRmODNkMTgyNGJlZWU5ZWI1NDY1NmU3ZjIyNjcxYmZiZTRiMDE3OTdmMWQyIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJhYThjYTU1MDE5MmJlMzFmOTNkMjhlMjRiMWJmMmMxOGViYmQxYWEzNzhiYzdmMDBiMzdiNjNmYTZhYzFkZjBlIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIxMWUxZjY3MTFkNzNkMjAwMzA0NmJkYzNmZWIzYzI4YjYxNjJmODU4NTNiNzUxYjMwNTFlM2JjMmYwOGI0ZGMzIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_b04cde6b34fc4a3bb17cf28b3cae8cca",
+      "statement": "NetworkProcessorAvgIdlePercent and RequestHandlerAvgIdlePercent range from 0 to 1 and should ideally be above 0.3, and RemoteTimeMs is non-zero for produce requests with acks=-1.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/monitoring.md#L717-L820",
+          "version": "repo-lines-v1:sha256:316ba623e2cc3bed280fdd46270de034a40f983d18bbb95a9a37ad6e4abb95be:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIzMDYzNjcwOGI2OTllMWRiYzc2OTRmODNkMTgyNGJlZWU5ZWI1NDY1NmU3ZjIyNjcxYmZiZTRiMDE3OTdmMWQyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJmZDFkOWE4NjFlZWI0MzJlODc4ZmExMWJkYTliMDE0ZjNiYWJlMGNiMmRiMDMyY2Y3ZmM4ZDY3MjUwZDBhNTAzIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJhYThjYTU1MDE5MmJlMzFmOTNkMjhlMjRiMWJmMmMxOGViYmQxYWEzNzhiYzdmMDBiMzdiNjNmYTZhYzFkZjBlIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI3NzI0YTUwNTczZTAzNTAxMmFkZjlkMmY2ZTlmZTk3YzA0NDE1NDcwMWY2ZDg3Mzk4Y2IyZTE0Y2E1ODg4NzdiIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_6ca42d8d76a24832967b2181cc834587",
+      "statement": "The group coordinator exposes metrics under kafka.server:type=group-coordinator-metrics including group-count per protocol, consumer-group-count per state, rebalance rates and offset commit/expiration counts, with GroupMetadataManager NumGroups/NumOffsets deprecated.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/monitoring.md#L1082-L1724",
+          "version": "repo-lines-v1:sha256:767e8603dcb33b8bc1a50be8477c4ff60833ebbe9236d55ca69c9b7f12bb7871:eyJzZWxlY3RlZExpbmVDb3VudCI6NjQzLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI4MmJlYTdlNjRiNmZhYzM3ZGY2OWMyNzQ1MDA4ZGQ4NmE1N2NlYTM3YWFiZDFmYmMxNWNjZWE5ODQyYWRlOGY3IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJkZjUzMWNlNmExNWYzYzgyNWQ1Mjk0YjhlODNmYzQ2ZDgzZjgxYjU2MzQ3YWQ4YzRjNzE5YjhhMjllODk0MmViIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJmNjg2MWQzNWUzMDc3ZmEzNjVmZDNkOTM0NWJjOGEwYjA3YmE4NzVhZTQyODgyNWY3YjAzZGY4ZjgwZWU1MzNhIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI5ZTY0NWE1Yjc4NGZkNGE1YWUyMTI4NGViNDdlZWQ0NzA3MDlkOTM3NzFkNjg4NzA3MGUzMmUwMTAwZGEwNzg5In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_46fd894f878b4b878dcb6005a9ff65d7",
+      "statement": "Tiered storage metrics include RemoteFetchBytesPerSec, RemoteCopyBytesPerSec and RemoteCopyLagBytes/Segments under BrokerTopicMetrics, plus RemoteLogManager throttle and retention-percent metrics.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/monitoring.md#L1726-L2121",
+          "version": "repo-lines-v1:sha256:5325e7834c66472e89f2748d783ed03e64b4d3fdc04e70024ae2e4b143f2af08:eyJzZWxlY3RlZExpbmVDb3VudCI6Mzk2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJkMTE4MWExMzdiMzQ3MDBhNDQwYThiZjA2MGVlY2RlZDhjNTJlOWExNDc0NDcwMGJlOGQzMDllODBmMDJlYTM5IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJkZjUzMWNlNmExNWYzYzgyNWQ1Mjk0YjhlODNmYzQ2ZDgzZjgxYjU2MzQ3YWQ4YzRjNzE5YjhhMjllODk0MmViIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI5YzU1ODU5NmQwZjlhYWNkMzQ1ZmM0ZDk3NDY1ZThhMTFlNDZhMmE4ZDNhNzBmNTY0MzhiYTA0NWI4ZmM4MjYyIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJkMmExNGIzZmEyODRkZDQ3ZTQ3NDk0MjI5OTJlYTliMjY3MjdkOTYwNDIyMTFkOGNkMDVhMmFlMTg2MzJhODE3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_7e2b705089de4e86b0012ef65b12844d",
+      "statement": "KRaft quorum metrics are under kafka.server:type=raft-metrics (state, leader, epoch, high watermark, commit and election latency), and controller metrics such as OfflinePartitionsCount and FencedBrokerCount are under kafka.controller:type=KafkaController, with availability depending on process.roles.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/monitoring.md#L2123-L2711",
+          "version": "repo-lines-v1:sha256:4841fbcf582a78abdbca08098b372e3bb83ccb198f28e6d7d2fb4449faa995da:eyJzZWxlY3RlZExpbmVDb3VudCI6NTg5LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI3ZWRkZTY0MzMzYWMyYjM3M2RkOWFlNTg0NDc5ZTkwNDU5ZjA5ZThmMTEzZjE3YTViNjg1YTlhMGNhZTFlZDc1IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJkZjUzMWNlNmExNWYzYzgyNWQ1Mjk0YjhlODNmYzQ2ZDgzZjgxYjU2MzQ3YWQ4YzRjNzE5YjhhMjllODk0MmViIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI4NzQzMWZmYjYzY2Y2NmU5YzIxOGU3NzIwZTIwMjZkZTk4NjRjMGM0Y2VjMWY0Y2M0ZTcxNTIyMGI0NGJhYzA1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2NjUzNDU1ODFiZjgxZDg2MGYwNTY2MzM0OGExZTI0NjU1MmUzNjFiM2I1MTlhN2I5ZWY1MjY1YTIzODA1ZmFjIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_4497d2f83a0445c3bd1d9db88a8d6db2",
+      "statement": "Share group broker metrics include RecordAcknowledgementsPerSec per ackType Accept/Release/Reject/Renew and SharePartitionMetrics such as AcquisitionLockTimeoutPerSec and InFlightMessageCount.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/monitoring.md#L6806-L7082",
+          "version": "repo-lines-v1:sha256:fbcebf99bd48a30de222485656e72359e9f239a50c8ffcff968a87b97de622c0:eyJzZWxlY3RlZExpbmVDb3VudCI6Mjc3LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI4ZGZhODljNWM1MjFjYjgwMDQ3ODEyYzMyYWY2ZWVkOTlhNGNhMGUxOTQyMzNmMzRiN2FhZjQwMzgzOThkMjllIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJkZjUzMWNlNmExNWYzYzgyNWQ1Mjk0YjhlODNmYzQ2ZDgzZjgxYjU2MzQ3YWQ4YzRjNzE5YjhhMjllODk0MmViIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIxYzJiNjg3MjI5YjRmOTI4NDliOGYxMWI2MzY4MjUwOTMwZTlkNTJiYWE2YjdhODNmZjU3MDU1NjRjOGJkNmE1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI5OTNiYjljMzA3MGZjMjNmZDQ2YTg0NjY3Y2NmMTZiZmQ1NDhhMDgyOTdhNTkwMGUyMjhkOWE5YjM5ZTgzYTQ5In0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

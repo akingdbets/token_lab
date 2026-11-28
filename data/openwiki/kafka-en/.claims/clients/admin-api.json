@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:691fb3a2beadf39626fd2ed6ed1d603d7f071f51aee8df8ab14348b6d0ac200c",
+  "claims": [
+    {
+      "id": "claim_287a1b6358fd4cf4aa077c7fcd879a76",
+      "statement": "The Admin API is shipped in the org.apache.kafka:kafka-clients artifact and supports managing and inspecting topics, brokers, ACLs and other Kafka objects.",
+      "evidence": [
+        {
+          "resource": "repo://docs/apis/_index.md#L129-L143",
+          "version": "repo-lines-v1:sha256:0b57032848944bd4a2638b6fbdc88ba35e1fd100be36abcb971c906f699e863b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJiMGMzYTVmZTU2YWE3OWQwNDJlYzUxMjU1N2I3NWI5N2M4OTEyOGNjZjBhZjFlNGQ4M2Q1ZjNkMzJjMjA0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM3OTY4NTA4MDRiZTk2ZjgxNDNjNDE0N2I1MDFmOTQ2Njg1NmRkNDU4ZGFjMDJjMzBkNDJkOGFhMGY1OTIwODIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJhZjM1NDkwOThkNzQ2MmZmOWY2YTQ2NjU3MWE4MzFmMzdhOTZmODYzZmI5NDcyOTk1NTQ0Y2MyNTlhNzg4ZTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_275467fc62e94a6d8cc869dcbed4850b",
+      "statement": "The examples module recreates topics with Admin.create, deleteTopics and createTopics, tolerating UnknownTopicOrPartitionException on delete and retrying createTopics while TopicExistsException is raised, using replication factor -1 to apply the broker default.",
+      "evidence": [
+        {
+          "resource": "repo://examples/src/main/java/kafka/examples/Utils.java#L68-L100",
+          "version": "repo-lines-v1:sha256:c7256373bcfcb11dfe981f9c8995e8ba511a06142833e0e306ba90abfd36dfcc:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAwYjNmMGFkYmJjODJlNTA5YzA4NGJmYmZhYzM0YzZjNTQ3MDljM2JiOTI0YTExZmY4ZDEzYjc5ZDVlZmE2ZTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjNjQ3OWNjMjMwNDQwZmQ0MWU4MjI0MjE4Njc5Njk4NTU5ZDI4OTNiZDY3YjQzODBhZmFiODExYjM4YTU1YWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5OWJkZWZlZWFjYTYzNDBlMDI5MGRjODZlODg5Yzg5ZDVlMTg5YWE1YmE0NGI1ODViM2I3MDczNGY0YTYyZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY1ZGM2ZTQ5M2ViYWMxYmJjNTFkYjM4MTZkNzJiMTE2MjcyYjkzYWYzNDQ0NGExMzFhNTVkYTk2MWNmYmFkYTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7d00a7e7560d42f9afec1c2468b909a9",
+      "statement": "Decommissioning a broker starts by cordoning it via the Admin API, setting cordoned.log.dirs with kafka-configs.sh; an offline broker's log directory is uncordoned through --bootstrap-controller.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/basic-kafka-operations.md#L540-L587",
+          "version": "repo-lines-v1:sha256:a60eede63590805c50d34dc1790c1f7aa3cc3012c7a2b8d8163b65f0992dc6ff:eyJzZWxlY3RlZExpbmVDb3VudCI6NDgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4ZGViYjBiNjViODg0NTM5YWIxNTRlZjY2NTUzYzU3NDNmZmMzNDFjNmI1NjZlYTEzMmQ2MjZlMDg4NTNlZjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzYmViNzBiZGU1YzJmOWM1NmY1MTM3NTI1ZmE4YmM2YmQwZTIyNDg3NzFkZWExYjhlMGRhOTUwYmEzYTU1OTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjViMzg4N2JkN2YxYzA0OGYyYzdkOGZiOGNiYjdmZmZjN2ZjNzJkOTE2YWY1NjFmMGZhZDUxYWQ2MDM3ZGZiNDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI3MTU5MzMwODFmNzc4ZjkyMzA5ZmI5YWI0MzYzZjBlMGI3YTBmODhmMDU3NTdjMTRjZWJlOWMwZjE0NWZiMmIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1a9d56a2c6f945d7958dbaaf747245a6",
+      "statement": "The admin client defaults include default.api.timeout.ms=60000, request.timeout.ms=30000, retries=2147483647, security.protocol=PLAINTEXT and metadata.recovery.strategy=rebootstrap.",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/admin_client_config.html#L163-L200",
+          "version": "repo-lines-v1:sha256:01b6a39a17c74bcd3a91227f345c514d97d5fd50b46edbefb0238d424982f7d4:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVjZDk5NjhlNGI2YTcwMDY1NzMzNDM3ZWQyNWNlNWU4ZGQyOGE0ZmE2YWRlNzc1ZTEyZTYyNjdhYzc1ZDNjNGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3ZDRmNGU4OTQ0YjU4M2EwNTAyYzU4OGM5N2Q1NTg1NDQ4OTI3ZDZkNGUxNjg4ODAzZTUyMDU1YzAyZjc2NjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJhYTQ5NTlhOTQ0YmYwMjhhOTY3MTdlNmI5M2M1ZWRlMmUyYzI0MjIzMjljYjMyOGU5YjQ1MTNjMDA3YmFjOWIifQ"
+        },
+        {
+          "resource": "repo://docs/generated/admin_client_config.html#L433-L442",
+          "version": "repo-lines-v1:sha256:82d32589fa3486dd9696e9d567ad9de4e4310f7d8bb06284fbf3e349e81ba192:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZhMjY2ZTlmMzIxMTIyYzE3YWE5MmIyOTEyM2M5ODRhMDY5NzVkYzA1Mjg1ZWRlOTAxNzIxZjgyZTNkZmQ4NDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYmJhYTQwMzk5YTlkZGE1M2ViNjUyMTdlOTkyZGFiNTcyMzdmM2E1NWY0YzNmMjllZmM2MWJlODhmZjlmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNkMjRiN2UwNDA0ZjMxY2NjZTZlY2UxYWQzZjZhYjNhZTJmYzViODIyOGRjN2UwMjlhMGQ1YThhOWYxYzVlMjQifQ"
+        },
+        {
+          "resource": "repo://docs/generated/admin_client_config.html#L573-L582",
+          "version": "repo-lines-v1:sha256:155a203d91cc9353f84396dc594cf08071214e9d19c8abd29b3d9e5995499075:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI0ZTU4MTQxYjIyNTc5YTcyYzBjM2FkZGNlMDdlMjU4NTU1YTViZGRmOWMwODRiNTA5M2U3ZWE0YmIzZWZmZmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYmJhYTQwMzk5YTlkZGE1M2ViNjUyMTdlOTkyZGFiNTcyMzdmM2E1NWY0YzNmMjllZmM2MWJlODhmZjlmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg3NmZmNTc2OWQ3YzI4NDhkMWFmMWEzNjI4MjlhMDcwOGU3NGEzZWRjMmZiMjk0OGE3MDhjNzdmNzViY2VhNjQifQ"
+        },
+        {
+          "resource": "repo://docs/generated/admin_client_config.html#L643-L652",
+          "version": "repo-lines-v1:sha256:3bad8f0328a1e2bac4577633fd55d23e8e935894c275ebba99a2a0e37cdcadc9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYyZWI1MzVkYTVmNGVmNTdkYjMzN2E5Y2I0YTM1YzdiM2E3MjQ3YWRhZGU3YTFkODdhNjgxYmU0NmUwNjFjOWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYmJhYTQwMzk5YTlkZGE1M2ViNjUyMTdlOTkyZGFiNTcyMzdmM2E1NWY0YzNmMjllZmM2MWJlODhmZjlmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjllYzllZmU4ZDM4OGFjOGQ5NGNhMzJjMzc5ZTA3NDAzYTA4ZjkyMDFhZDZlMmJmYWU4YTMzNTFjMGI1NWRiMDMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_aff2af44b22146bc874d9777e7d1e02f",
+      "statement": "ACLs can be managed with the AdminClient createAcls/deleteAcls APIs, which are themselves gated by ACLs on the Cluster resource.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/security-model.md#L94-L94",
+          "version": "repo-lines-v1:sha256:c1e20510e85c636f5aaa0ce9cac395eca1d97979c4b38636198f895e3ba64b1a:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzFlMjA1MTBlODVjNjM2ZjVhYWEwY2U5Y2FjMzk1ZWNhMWQ5Nzk3OWM0YjM4NjM2MTk4Zjg5NWUzYmE2NGIxYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzFlMjA1MTBlODVjNjM2ZjVhYWEwY2U5Y2FjMzk1ZWNhMWQ5Nzk3OWM0YjM4NjM2MTk4Zjg5NWUzYmE2NGIxYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTI5NzdjZWEyOTg4YjFhODMzOTY4YTg1YTFhMTIyMzQ5MTdjZWRlZDY5YzkyY2E0MDQwNzExZGRiYzE4YTU0ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYmQzYzNmNThmMDJmNGRmNWNiNzVhZjk2MmNiODZmODBkY2MzMmU2YTg2ZTEwZTA5Mzc5ZTUzYjRlMzY1MjA0MiJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

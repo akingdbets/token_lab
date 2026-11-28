@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:25f41d2ecb162a0401cc15563093d14d3cd36f239b30245eefc16006ab59997b",
+  "claims": [
+    {
+      "id": "claim_61b13d44374947a182ac60f8f0f98e51",
+      "statement": "Streams tests use the kafka-streams-test-utils artifact with test scope.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/testing.md#L34-L44",
+          "version": "repo-lines-v1:sha256:99f0dd775307d83fa5326abce2840bfa55b43ab90719313e8fd41674bfd2b709:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU3ZWQzMmU5ZWYwYjU3M2IwYjY4Y2ViZTk0Y2U5NWE3YTdmYTM0YTY3YzJmNGFkYmY3ZTU2MGQ1NmI4NDA1ZWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc5ZjcyNmM4MzRjYzE0OGM2YjM3Y2JkM2NlMjk3NjQ0MjAxZjEwM2M2Y2MzMzY5YzgyMDY2N2QxZDM5YWM5OTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk0YWIyODE3NzZhNDcwOTVlOGMyM2Q5MGRmNDE0Y2U4YzNjMTc4ZTM3MWY0ZTY0OTM4MDRiYWNlZmU1NGE5NDYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_de8c2e773e744840afaa51fc10b2c9c1",
+      "statement": "TopologyTestDriver simulates the Streams runtime for DSL or Processor API topologies, with TestInputTopic for piping records, TestOutputTopic for reading results, getKeyValueStore for store access, and close() to release resources.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/testing.md#L46-L90",
+          "version": "repo-lines-v1:sha256:0855b68eea17874a1f5709d210e794c0835557a1412056a8533bded45ba8d6e2:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFiZDRmZjI0ZTQzYjViYWEyZThmZmQzMGMxN2M3NWI3MjlkZWRkYTNkY2EzNTY3NWNiNWU1NjM4ZjJhMDVlODEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzMDUxYmFmNjUxZmY0YWRmZGNiNGUzMDBhNDgwMzYzNmRlOGVlMmRiYTEzNTg2ODUxM2UwMDg2YTM3YjUyNTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNhZTNlMzBmMzRmYWU0ODFlOGE2ZDZhMWE4ZTk2YTI3MDE5Yzk0NDMyODU2ODM4ZGU5MmJhYzI3NmFkOTFhNzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUwZTY1OTJlMDcyYTFjNGNjYjI0NmNlNTYyYTNiYTE0ZTU2NzVlODIzNzdkNzJiNWUyODlkYzc4MzAzYzYyYTYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_724a798fdc2b43bdb81a39fba535a044",
+      "statement": "In TopologyTestDriver, event-time punctuations fire based on piped record timestamps and wall-clock punctuations fire via advanceWallClockTime.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/testing.md#L72-L80",
+          "version": "repo-lines-v1:sha256:355b32300f9b1452824d389b0dd9a4fb4d5ecefbd911a3d6b3773bdec4fd811a:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjNhZDhlODUzNDlmZTExODE5ODg1OTc2ZWY5NmNiZTNmNmY2NWMyODhiMjkwNzEzYWNhZGJkZjlhOTI4MDM4OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmVjNDM3MjU5MzEzNDk2NTdiMDAzMzczMzU5N2UzN2RmN2NiMjk5OGVkOWQxYzQ5NjdhYzllZDU0MDEyYTRlOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjgxMzJkZTc3MGQyZTk1NmU5ODRkYzc4NGVlNWU0MWY1ZDM3MGY2NmE5NDYyYzZhMjE1ZmJmZmY0MzI2Y2MyMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDdmOTNlZTc4NDJjZGZiZjY0YmMzOWMxM2E3ZTcwZTQ1ZDcxNTljYzA3YmUzNTcxZGFhODQ0MzA4ODdiNzRmOCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_ba72ec6f13584d29b10cc12d5b871e3c",
+      "statement": "The test example disables store logging to allow pre-populating the in-memory aggStore before processing.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/testing.md#L92-L229",
+          "version": "repo-lines-v1:sha256:99dc58b8a465448739245de80c3a580977894529967a57f07aa2ccb00c599418:eyJzZWxlY3RlZExpbmVDb3VudCI6MTM4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJjZWYyNTQ1MzVlYzYxZDY0ZGVjNDM5MjM5OTc4MjA3YTQ0NmYwZTliMTQxNjI3NmZmYjhkN2RiM2FjZTFhODUyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0ODkzZjQwZTM3ODFlYjg5NmM4MmQwNDZhMDgwNjdhMTFlMzVjZGYyZjFkZmFmMjZmZWE5MGI4ZGI2Njc2NDEzIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJhNTQ2NjFjOTZjYzRlZjlkYjNkMDQyYjdmZjQ2YjA3MmIwZTc4ZTNlZjJiNmYyODgxODcwMTZkZGNiZGYwMTZkIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIzOTg3ZTc4MzNmOGViZmQ4ZTliMWI3ZDM4YTU2NDM0OTE4NjU3ZjA3YWQ1NjA2NmY0MGQwM2Q2MTVlOWJmYmJkIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_1148fc7e0d5b4003a705f7b285a6c5c5",
+      "statement": "MockProcessorContext captures forwarded records (also per child), commit calls and scheduled punctuators without executing punctuators, supports setRecordMetadata, and requires in-memory stores with logging disabled.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/testing.md#L231-L329",
+          "version": "repo-lines-v1:sha256:1e53c96e2881bf235e2f284a6f80fb20195fdbcd4ea7c549e053ff05c9b284a3:eyJzZWxlY3RlZExpbmVDb3VudCI6OTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBiZWQ2Njg0MmE4MTJiOWFhZjYzYzIyMWVhZjFiZGQyZDExOGM2MzQ0OTUwOTVhYTI3NjIzYTdmZTFjZWZkOWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNkMjJkMmE1YWE5MThjZDE1N2U3MjBlNzhjZDBlMTg4Y2E2Mzg2ZDhjOGZmOTM4YTY3MzY4OWFlYTcxZWM5ZTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

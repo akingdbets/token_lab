@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:e9c751b18170c5d229ee49aff018e9f06897a988ffe91f85bc240a7d9ca3383c",
+  "claims": [
+    {
+      "id": "claim_1a581328088d4799aa645c0d42360c41",
+      "statement": "Broker keypairs are generated with keytool using the PKCS12 format (JKS being deprecated), and the key validity is distinct from the certificate validity set at signing.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/encryption-and-authentication-using-ssl.md#L31-L50",
+          "version": "repo-lines-v1:sha256:c603222bc283d528e4023b67326fd86f7bd562154e7ea620f475e939961b09d9:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0NjkwYTMzZWZhMzAyYjgxMGNlMjY4OGU0MWEwMmQ0NjExMmM3NjhkYTRmODZlZGY3ZjA3ZWI2YWViZGM0MTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFiMWYwNTdhZjhlMmQ4ZDMyNzcxM2E0NGYxYTcxYTU1ZTE0ZmZlNjk1YjBlNjA2MGEwNTBjZWU2NjFmYWU0YTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFmNWFhNzQ1ZWI5ZjlkNTc5NWYxODc1NDQ3Y2QxNTMzMTQ3NDFiN2MwZTc3YzczOWRkZDgyMjE4MjNkMTM2NTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI2ZWRlMzg0MzllZTkxYzA2YzJmMDQ2YTUzMzY0YjdiNjdlYTc0NTcxN2ViOGQ5ZDZlZDQ2ZTZhYWZhMjlhYWYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ac041d393dd94a7a8e8df4ec034584f4",
+      "statement": "Hostname verification has been enabled by default since Kafka 2.0.0 for client and inter-broker connections, can be disabled by setting ssl.endpoint.identification.algorithm to empty, and SAN fields are preferred over the deprecated CN check.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/encryption-and-authentication-using-ssl.md#L52-L78",
+          "version": "repo-lines-v1:sha256:9bb5089648f3c9261d127cafc09ac88f996c3e8babf68f2ea9b676fd669c9efd:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVmNjYxMDM1ZGM5MTU1OWZjOTk0ZGVlZDMzZDk2ZjViNmI4NDhmMjA4NTgxNDc3ZGZkNTgzNTEyNmE2YTQ1NTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYwNTYwNDcxZGQ5M2ExMWIyOGU5MDc2ODcxZDY2NTU2NDY3Yjk2ZGJkZjM0OWJiN2FhNTZhNDBlOTVkNmVmYmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNlMGY2MmUzY2MyYTIwNjE5OGQ0ZWM5ZDI2NjE5MzZkOTJhMjliMzE4ODkxOTk4M2VhZjM1YmFmZTZjMTZiZjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_89b61a49efbe4a46af53201ad7b8e55e",
+      "statement": "Because the OpenSSL x509 module does not copy CSR extensions, the guide uses the openssl ca module with copy_extensions = copy to preserve SANs, and imports the CA into client and server truststores.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/encryption-and-authentication-using-ssl.md#L80-L201",
+          "version": "repo-lines-v1:sha256:0534c61f0c3821f1d0f83cd764fa45524ab246e27d70f6ed7c0b46053b21b479:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI3NTNmY2NlMTViYjgzZTZmOTZlZGVlMDk1Yjk3NzY1MDU4YWZiNTMwODYyNTAxNGQ1NmQzY2IxZDAxMzUwZmI0IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIwMWJhNDcxOWM4MGI2ZmU5MTFiMDkxYTdjMDUxMjRiNjRlZWVjZTk2NGUwOWMwNThlZjhmOTgwNWRhY2E1NDZiIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJkNWM1NzEzMTQxN2JkYjM0Yzc3NDY1MzdkMWE2MDBjN2MxNDNlMzkxZTZjNmI1NGQ0YmI3MjFkNzI0NTdlMDZmIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI5ODM3MzE1ZDFiMjJiMGMzZTBiYWE2OGM0MWViNzM4YWE2MjI5NmUzZDFiNGMwMzA3ZjNiNjRhYTBiNTAxMWU0In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_be282d4b01ec4a15b554ce708c93a989",
+      "statement": "Since 2.7.0, PEM keys and certificates can be configured directly via ssl.keystore.key, ssl.keystore.certificate.chain and ssl.truststore.certificates, where store passwords are unused and ssl.key.password applies only to encrypted keys.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/encryption-and-authentication-using-ssl.md#L228-L232",
+          "version": "repo-lines-v1:sha256:c3f7a71d0d0424402ded1b8a48aaab5d6c65da8d1f0b8e7eed05da6f2fb670a2:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDVhNTkwOTZiYmRlODNkMjVmNmRiZjgwOGI0MDA5MGUzNDA3YjVjNTNmNjU3Y2M0YzNmMGE4YjlmYjQyODgwYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTUzY2RiYTE3OTk2M2RjYWRiYzkyZDRjZWIxODg2N2YyZjU3NjA1MWZjMTQxYmYwOTg3MmMyMjYwN2NhNmRhZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDJkNDJiOTMxMTAxYjhiM2E1Mjg0M2I4MzE4M2EzZTM3M2FjNzBhOGRmODdhYTc3M2E1NjQzMDEzNmM4NmFiMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjZhODRkYjE5NGRmMzMyYmRiMWE0NTM4OTNmMmU3M2NmMGY0MGY1YjJkMzc3YzNlYzNkMTkzMWQ1NDVmZmJiZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_67f96d24949d4eba9d427c50b0a69fe5",
+      "statement": "Broker certificates need both clientAuth and serverAuth extended key usages, intermediate-signed certificates require importing the full chain, and signed certificates should be checked for SANs.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/encryption-and-authentication-using-ssl.md#L234-L250",
+          "version": "repo-lines-v1:sha256:67e1857b0416d809eef710bfa96a7c9417272cd4d5b2076f242f4328221fb6b5:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjNmQ0ZTZlMTBiNDgxM2U5YWY4OTIyOWVlZTU3YmM0YTc3ZDk3ZTliM2FlOGRmM2RlN2ZmNmI5N2Q3NzVjNmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQzNzBhY2I4YmI1MzVjMjQ4YjgyYTk3ODI4N2ZlYWFlMjBjNDBmZTA4OGRlYzI4OWQwZWZkOGFjZmM3ZWE3MTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ0MTk3Y2Q2NmYwYzk3MTViOWU2YmViZDlhMDNjODNmMTIzODU4NzFiNTUxYTJhOTA1MWNiMWI2ZGIxZjM1MjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6c243d5cdbd7451bb739adea41ba962a",
+      "statement": "Brokers configure ssl.keystore.*, ssl.key.password and ssl.truststore.*, ssl.client.auth=requested is discouraged, and inter-broker SSL requires security.inter.broker.protocol=SSL (default PLAINTEXT).",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/encryption-and-authentication-using-ssl.md#L252-L309",
+          "version": "repo-lines-v1:sha256:2e4af4372235bf87de7cfd8039b8008340cff09d1c89d4eadc1ff97cc2b92226:eyJzZWxlY3RlZExpbmVDb3VudCI6NTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEyMjMzNTkzNjU2NWY5N2Y2N2YxNjkwMGMwNDQxNjkzM2RlOTkwNTZhYWMzZWI3Nzg0ZTU4OGRlOTliNzM3MTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZmZWJkNWNjNjZjYzBkM2RhZjEzNzU1ZWM0ODNiNjUyYzQ4N2RkN2YwMGI1OTU1Zjg3YjExZGJjM2VlZGQxODQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFmOWQ5NDI0YmNhM2Y1Yjk1YjJiMWU4NDFmNGU0ZDYyMTZmM2RjNmMzMTE0MTM4MGFjMTQxZGUyZDZlOTVjODAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b1aa4b4c78474877b9407024fbcc2ef8",
+      "statement": "A minimal SSL client sets security.protocol=SSL with a truststore, adding keystore settings when brokers require client authentication.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/encryption-and-authentication-using-ssl.md#L311-L342",
+          "version": "repo-lines-v1:sha256:7a0dbf1ef3178eaa27499d920d8da322a00c37d2992a7d1518fd3a08ee91222c:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4ZjU3MmU5Zjg4N2RjNjYwNzkxZTY1OWZlZDIwMTc4OTEwNTJiNDg1ZjczZWE4YjVkYWJkNjg0YmMyZmIwNzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY5OThjNjI4YWViMzhkZTExZTUyNWVjNWQ1YjA5ZjU5NjhmMDgzYzJmOTFmZGE4MWVjYjM5N2RlN2MyZWJkY2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

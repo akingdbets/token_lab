@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:86e5ebb170857e791cc2bdd3cb8972e3443f9afebfc5c0a3e321950a8c905b42",
+  "claims": [
+    {
+      "id": "claim_bd886b89c0af41beae37bae4e696b1e8",
+      "statement": "Producer, consumer and Connect clients share common metrics such as connection-count, request-rate, io-ratio and authentication counters under kafka.[producer|consumer|connect]:type=[...]-metrics, plus per-node metrics including request-latency-avg/max.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/monitoring.md#L2713-L3371",
+          "version": "repo-lines-v1:sha256:86d13cfeccacdd2a7bd282cdbbcd3c608b70a698fc5aa887c82c85ca302c78aa:eyJzZWxlY3RlZExpbmVDb3VudCI6NjU5LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI2MzA2OTQyYjI2MGQ1ZjEyNzM0OTQ1MDVmMTAxZGE5YjY3NjViMDBkYWZkZDI1MDQ2ZGY4MDcxMzIyMWE2YjFmIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJkZjUzMWNlNmExNWYzYzgyNWQ1Mjk0YjhlODNmYzQ2ZDgzZjgxYjU2MzQ3YWQ4YzRjNzE5YjhhMjllODk0MmViIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlMzU2ZTBmNjBiN2IwZDdmMWE3ODJmNGVkYTY1MTE5M2Q4YmE2ZGJhNmYyZjZmMDRjZGZmM2Q4MDY1NDI3ODBhIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI3ZWJjOTFhZTUwY2E2YjJlMDJhODFjYzQ1NWQxMTVkOGExMTIzY2FiMmViMGRhYjFiNjM1YzM4MTc1NWMyYTI3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_8305675ab54c44eba59a5110c4f559c7",
+      "statement": "Producer metrics under kafka.producer:type=producer-metrics include waiting-threads, buffer-available-bytes, buffer-exhausted-rate and per-transactional-API timing such as txn-commit-time-ns-total.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/monitoring.md#L3373-L3584",
+          "version": "repo-lines-v1:sha256:2dbc1427c832071d9c91f331140ef4a44e1f515a83151bb83ca476a7fec8dc4a:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJjMTFkYTRlMmRkZDI3NWU0ZGQ5MzVmNTQxMWMyZjAzMmEzNmEzNGQ4M2I5ZDU4N2ZmZDcxYTEzOGFiZjFkZTEwIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJkZjUzMWNlNmExNWYzYzgyNWQ1Mjk0YjhlODNmYzQ2ZDgzZjgxYjU2MzQ3YWQ4YzRjNzE5YjhhMjllODk0MmViIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIxODk4MjQxNDE3NzQ3NTU1Zjk4NTJlMTlmOTRmMDU5MWY4ZDg3NDJiMjU2NjUzMGE5YTAyYTBhNmQ2N2NlNzA1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI1ODM2MmE1YTljYmU2ZmIzMGQ5ZmZjMWFkODQ5Zjk4MDNjY2YyNTc2YjdhMGI4MWQ4MmQ2NjU2NjliYmQzNjcyIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_0ba4e1156d5940d4a2dfea60bb619e6c",
+      "statement": "Consumer metrics include time-between-poll-avg/max and poll-idle-ratio-avg, plus application/background event queue metrics specific to the consumer group protocol, and consumer-coordinator-metrics cover commits, heartbeats, rebalances and listener callback latency.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/monitoring.md#L3590-L4314",
+          "version": "repo-lines-v1:sha256:f9835612be4731f22019c7044a9ed47615f6ccc023cc44c7de0c9fd0cc20ede1:eyJzZWxlY3RlZExpbmVDb3VudCI6NzI1LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJmNjYxMDJmMGE3ODg5MGI0NmM5YWFjZGZjY2MxOWY1NGZjZDQwYTQ1MWZhNjhmOTQ2Y2IwZDUxNDRiNzkxYzhkIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJkZjUzMWNlNmExNWYzYzgyNWQ1Mjk0YjhlODNmYzQ2ZDgzZjgxYjU2MzQ3YWQ4YzRjNzE5YjhhMjllODk0MmViIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlYTNkMmZjMDQ3MTdmMDMxY2UxNzlkNGJhNjgzNmMyY2UyNTQ1OTkwMjUwMDBkZDNmZWJiOTMxYmNlMDU1MjRlIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIwMmM2YWFmNTUwZGE0NThlMzhkZDk5ODE0M2M1YmNiNDE5MDJjYjczYjI2ODdlZmIwNTExYmFmMGE0NDA2NGY1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_cbbe3bf4ee7141339ce65bb52389ba7b",
+      "statement": "A Connect worker contains all producer and consumer metrics plus worker, connector and task metrics.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/monitoring.md#L4320-L4322",
+          "version": "repo-lines-v1:sha256:7c82a1e94de5a1f6f87420d4cf6d7f22fd6a53fc625c9996d909e15e16a803dc:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTkxMzMwZjRkNzU0NGJhMTAzM2M4MTBhNzM2ODVmN2U4OTVjYzEzMGJhZWYwMzdlZjQ5Y2ZjODU5YjczYTZiZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDMzYzE1ZjY2ZDBlM2M2OTg3NmZhNjNiYjU2NmZmZjUyMDE5ZTA4NmY5MmVkZWQ4ZjA3NjI5ZTA4ZWYwZmNkNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTFjNTg2MjJkYWE1YTAwMjdjMjUzMWRkMjAzODE0ZTFkZTdiYzJiYzlkYjFlZjk2MzU3MzNhZTYzOTczM2U3MSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYmMyNWFlNGUzZWQ4NGJkN2NkN2EyNTZiMDZlZmNhZjI3ODVlYzFjOTg0Yzg2NDE1NzcwYzUxNmNlZTg5ZTk2NiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_0936ef25430148a9be8285da05a594e4",
+      "statement": "Kafka Streams metrics form a hierarchy of client, thread, task and processor node levels with state stores and record caches, selected by metrics.recording.level with info, debug and trace levels.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/monitoring.md#L4324-L4334",
+          "version": "repo-lines-v1:sha256:5f2b07673688165dd660f1597b2aab1ad086123afe9cf37c9a7a165e08f80a88:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViYjM2NGEwMDg1NDI2MmUyMjFjNDc4MjA2ZTAyMmFjMjFiODU1ZDIzOWE1NjAyMTIxZGJiZmQzYzk1MmUzMDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQxM2Q3M2Y5OTg3MWVhMjIxMWFiYzA4YmNjNmQzOTdlZTg1N2QyZGUyNTI0OGQ4NGE3ZTUzYmYxYjk3MTlmMGEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg1OTQ1ZmZmMTE0YjJmYzk2ZTIzZGRiMjA5OWQ1ZGE3ZThkNWM5OTJlMzk0Njg2MzkzMWU2NTZlOWU4OTk0ZTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_874baa007e44495fbe096d5877194935",
+      "statement": "Streams thread metrics are info level, task metrics are debug except dropped-records and active-process-ratio, and state store metrics are debug except record-e2e-latency (trace) and num-open-iterators/num-keys (info).",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/monitoring.md#L4471-L4476",
+          "version": "repo-lines-v1:sha256:38197ad32d6fdf0422fc69a5623b10906fdea73bf011d210195bad3d557e9efe:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDI0NjE2ZGY5Y2Y2YzA5NGRhNjhkN2NjMTI4MzYxOTVhOTg1MzFhZjFjZjkzOTA4OGQ5NmM5NDg0YWY4MDg0OSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzJkMDU1YmViNzZmYTZhZmMwOTYxYTg1NmVjZDJmMWI3NzdiYzY5MTlmZDMxZTU3ZmVhYTFlMzBmOWMxMTg1YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzcwM2EyNWFhMjdlMGY4MjNmYmEyYzdlMzZmOTMxMjM5Y2UwMmNhMmQwNjU0ZTY0MmZhMmY5OGQ0OGEyZjc3OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzI5NWVlZDE0Y2E2MWU4NjYwZmNjYzI5NWY2NmFiMDVhMmY1MjRhYzQ0YTUwOTdmNzQzOWYwYTdjNjVjMTgxMCJ9"
+        },
+        {
+          "resource": "repo://docs/operations/monitoring.md#L4983-L4986",
+          "version": "repo-lines-v1:sha256:053f4c3b3390e84bdb6e22a3c0c63956d5d96d3ae6ef1792e6de86a32a3932d9:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzQyYzlhNTA4MjcwZGFjNzllNTRjOTZlYzZjNTZiMjBhZmJmNzQ0OTNjM2YxYTIxOGMyYzQ0NTRkNTdjMDI2NyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2RiZWRjYTA2NTRkODg5ZWUxZDgwNzQxMmI1YzA2NTE3YTAzY2JlNjg0NGEwMzEyNjhkYzk5NjBmNmFhMDAwOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzkxYjhiY2UxZDQwNzdmMmM0NWFkZmRkMmNlYzFiMmE3ZGEzZjRmZGY0ZDA1MzA4ZDVjZDAxNjY0OWRkY2I4ZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDAyZGFkZDg2ZDIyNDMzOGI0ZTk3ZjY2ZTlhM2Y5MzM1NTE1MmVmMDJkZjFiOTg1MGNjNjM4MjkzYWUxYmE0MSJ9"
+        },
+        {
+          "resource": "repo://docs/operations/monitoring.md#L5526-L5528",
+          "version": "repo-lines-v1:sha256:85b4942a721f7076b870e70521d350049fa78127b8f05d9c9f8355345585fad4:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTJhOGViMmU2ZmJiOTNkOWZhZTYxNzZkY2ZjNzUwZWNlNjFjNTAxZjNkMzFiNjRjYzc2MzdiNGU4NGUxNzQ1NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWI4YjUwNTM2NTA4YzE1MmY4ZDA3ZjMwZDY3NWJkMGFmZDI0NDdkNmMyMjQyNzI5MzdkOGM0OGNkZjJlZTk2NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTMwNDQyNTQ3ODg4OGZkZGQ4YzYwYWFhZTdiYWEwOGQ0ZWQ4M2YzMTgyODEzZGZmZTkwNmVlZDM5ZmQ4NmQwMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTZhYTNkZjA3ZmJjMmY1MGNjNmI2NzJiN2NiZTA0MTRmZjdiOGUyNTNhM2ExMjMyYjM0YWFmODgyYWEyYjVjZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_f3e0525510fd471f8b7298120782b261",
+      "statement": "RocksDB statistics-based metrics are debug level and collected every minute, while properties-based metrics are info level and recorded when accessed.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/monitoring.md#L6139-L6147",
+          "version": "repo-lines-v1:sha256:c6d8db0f201ee2d233e7dc46895e692a15d8efbaaec85d18a32b21da615d5fbf:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGU4ZGZlZDNhM2FjYTZjYjBmYTZhNDU2MGFkODFhMzhlNmNmZWEyZmE5ZGRhZmE4MzUxY2RhOTZkNTJmOTYyMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjM5NzY2NTcyNDY0ZGJiNzM0ZmIyYmJmZmI3ZWZhN2QyMmJkNWYyODFhZTA2NjA2MGRhMTczYTUxMmMwNjUzNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMGNhNGFmODBiZGQ3YjFiZGMyOTAxZjdjZTk0Y2ZkYzdkZjc4OGNiZWQxYWFlYTlkZTA0MWM2OGUyZTNhY2Q4NyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjI1YjkxZTBmZWUwOWUxOTVmN2RlOWRlNzc0ZWIwNzVjNTUzMzkyYzM2ZTMxNWU0MGMzNjRjNGJhNzNhNTllMSJ9"
+        },
+        {
+          "resource": "repo://docs/operations/monitoring.md#L6447-L6447",
+          "version": "repo-lines-v1:sha256:ba362228a7709efaba31b45cc78eba0f70d1b852f3bec16c81323e4b9971c90b:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmEzNjIyMjhhNzcwOWVmYWJhMzFiNDVjYzc4ZWJhMGY3MGQxYjg1MmYzYmVjMTZjODEzMjNlNGI5OTcxYzkwYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmEzNjIyMjhhNzcwOWVmYWJhMzFiNDVjYzc4ZWJhMGY3MGQxYjg1MmYzYmVjMTZjODEzMjNlNGI5OTcxYzkwYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGUxYjhlMWVlZWQ0OTE3MzBjNzg1NjUzZjJkYjRmZTdiMjk5MWNiZmM2MDJmNzZiNjgxN2FkMDQ3ODBjNDU0YyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjI1YjkxZTBmZWUwOWUxOTVmN2RlOWRlNzc0ZWIwNzVjNTUzMzkyYzM2ZTMxNWU0MGMzNjRjNGJhNzNhNTllMSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7ea524effd3544ecb8f90590cd2611f9",
+      "statement": "Consumers keep up when max lag stays below a threshold and min fetch rate stays above 0.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/monitoring.md#L7691-L7693",
+          "version": "repo-lines-v1:sha256:2b070b18a701ebfd6764b27e6199f45478f750b87100bf9d8c384adfa9830f16:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTA3NDE1OWUyNzViZjgxMWYwOGJjOWYxZTAwNjU0NDFiMWNhMjQyZmY0ODY3MTgxZDQxY2IzOGU1YTBhMTdhYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWM1NTI3N2FiOWEzNDI2NDA1ZjA0MzBiYzhmNDg4N2Q2OGQ2ZTBiZWFmNWE3OTRlYmUwMjdiNWEwMDFlYWEwNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMGZjMWFkY2EzODNiMTBhZTIxNzBkMjM5MGUyNDZkYWIxOWE4Y2Q5YjViZDA4YWZhYmQzYWM4ZmNkOWZiNTY5ZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

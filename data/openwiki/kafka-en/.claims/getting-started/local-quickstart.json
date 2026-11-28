@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:c4d1c5e01bfd1e4ecd60480cc4fae0d360ab618bba0f3ac4f468e754ad0bef4b",
+  "claims": [
+    {
+      "id": "claim_b5aed12a4e0b442ab36a3792a1ea8ba4",
+      "statement": "The quickstart requires Java 17+ and starts Kafka by generating a cluster ID with kafka-storage.sh random-uuid, formatting with kafka-storage.sh format --standalone -t <id> -c config/server.properties, then running kafka-server-start.sh.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/quickstart.md#L38-L64",
+          "version": "repo-lines-v1:sha256:78edf376639599b63b664bd415f1b0ab2663285499c34f818ca11a90a4d36c4b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYxZGJiYWEwM2I1NTkwMDgwMDY4MzUxZDNiYzA4MzZmZGFmMWNiZDdiNTMzYzI1MWQ2M2ZlZjllZjU0NWRiZDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZjZmQ1NWQ5NDcxMTQwNDMxYTQ5MmUzY2U1MWEzOGU5ZWU1YjljZmZhOWM0MjE1ODlhNjdiZGUyYWRmNzI1YjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU1Y2VkN2FhN2U2ODc2ODBiM2ZiMWUzMGVhZmRmOTUwODZjZjVlN2IzZGI3ODQxMTY3OGZhNTQ2ZjEzYmY2N2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJiMWE3MTdjYTJmZjhmZTRkNjZjNTAyYzRlMDIwMjA0ODExYWU3MzI4YTFjNjRlYjE4MmQ1ZWRhMTk4NGFjZTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_758d3187fe7542b1b3e25d345e82b642",
+      "statement": "The quickstart creates topic quickstart-events with kafka-topics.sh and writes/reads events with kafka-console-producer.sh and kafka-console-consumer.sh --from-beginning.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/quickstart.md#L94-L143",
+          "version": "repo-lines-v1:sha256:b9b03df01171942a89e66dc1f58abcfaaf4743906a4721773e036ef116e5205e:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcyYzk5ZDdkYmVmODJkMzA5ZGFkNzBkMjJjODdlMjM5NDJmYWQzMGNhNjJkZjkzZTk1YWIwMzhiMTQzMjFlOTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIwNjNmNTEyOWE2MzkwZGM2YTc0OGMwMzc1YTRjYmNiNzQxZDMzOWE5NmFkYjBlYWQ3OTQ2MzdjYjhhYWVlYzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZkNWFhMjkxNDExMDJhN2Y2NWE4ODcwMzA1ZTc5OTBkZWRjZmZkNDhmZjRmNDQ0YzUxMjMzZjAwN2M1NDExZmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bee1c793166944578c0357663210ed1c",
+      "statement": "The Connect step adds plugin.path=libs/connect-file-4.3.0.jar to connect-standalone.properties and runs connect-standalone.sh with the file source and sink configs, copying test.txt through topic connect-test to test.sink.txt.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/quickstart.md#L144-L204",
+          "version": "repo-lines-v1:sha256:602d5567de4af5594ab01941215617cf2684bece5ce05e68d6bfc7382cfe92b5:eyJzZWxlY3RlZExpbmVDb3VudCI6NjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmOGVkZWVhMGY2YjNkZTM2YTQwZTdmN2MxNTRmYzczODkxNDY2OTIwYjY1YjY3YzVlODBkOWIyZDc4OTI2ZDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE2ZmE0NjJjYTBhMTVjZmEzNzUxZTgxNGE1OGQxNWQ4NGQzYWUyYzcyZTFjMjU1N2MzOGJjM2ExYzhlMGU0YzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFiYjM3ZGE5MWU2M2I5ZTcxMTk3ODRlMDc1ZDMyZTZmZTIzZjM1MjdiYTRhNTNkZTJmZDgyZjVkZjRmM2VhODYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_69ee97937a454f21aadea1894fb765de",
+      "statement": "The quickstart's Streams WordCount uses flatMapValues, groupBy and count on quickstart-events and writes to output-topic with Produced.with(Serdes.String(), Serdes.Long()).",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/quickstart.md#L205-L222",
+          "version": "repo-lines-v1:sha256:7e3b001f7d548a88f692f9f0258bc679dcbbe9189460aef503260c3301da9918:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJlY2NjN2E4MTA3YTRkNDgzYzE1Mzc0NjVkZjgwYmE5Zjk5ZWJlNGU2MTZhOTk2Njg0ZDBjNjk4NWFmMWQyNjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3NTg1MDI0MTY4M2I2MGNkNWE2MDJlYWU1ODJjZTEwMTQ4ZDlkMDk1NWUxMGViN2JmZmY1ZDc3NmI3OTRlY2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI3OWYzOTJhNzdkNTQzOTE3YzU1OGU3NjU2ZWJiZDFkNTAzNzA4NzhlNWRhYjg4Njc2MDYzZWI1N2M5MTg3ZjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjViYWY2OTkzNzkwOTFmNTBkYTE1NTNkZmFkZjY1MTE4ZDAxNTMzNmQzMmEyMGJjMjBhNjA5MDNiOWVkYjkwYTkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_21e0453d7bfe42dbbfae2fc0ab5099a7",
+      "statement": "Teardown stops clients and broker with Ctrl-C and optionally deletes /tmp/kafka-logs and /tmp/kraft-combined-logs.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/quickstart.md#L224-L237",
+          "version": "repo-lines-v1:sha256:7d9215a477b1450ea361661e4e7ad046729f0e979f191d4af076957fcbabcce2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEwM2I2NTZiYTE1NWYxOWQzZDdmMDFmNDdmZDI1ZDE3ZWUxOTM2NWYwZTFkOTdiZmVkYTAxNTQ5ODkxNjU4OGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJmY2VmN2U0YTk1Yzk3ZTMyNjE2ZWRjMDFjNDBhNGEzZjVhNDVjZTA5ZWY4NzJhZWRiNDhmZGI4ZjQ3ZjhiZTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUzZTk4YjY0N2MzZjEwMDQyOTA2OTA0MTUzZjMwYWFkOWU4MGNmMDZjODlmMDIwNTY4M2Q3YmZiYzFiZTU2MzQifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

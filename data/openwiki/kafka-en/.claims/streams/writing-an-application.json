@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:89efabcd3eb351eaab74213958cc97c05a5c2814585f98d5c422167f0d435691",
+  "claims": [
+    {
+      "id": "claim_4cc1871a53e64493be457a7e09d587f6",
+      "statement": "Streams applications depend on kafka-streams and kafka-clients, with kafka-streams-scala optional and requiring a Scala version suffix when not using SBT.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/write-streams-app.md#L27-L120",
+          "version": "repo-lines-v1:sha256:358bdf080b3f36cc58804a717d6cc69a0a66f6e881802272c4741ed4386d0c59:eyJzZWxlY3RlZExpbmVDb3VudCI6OTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIxYzg4MjI2MzRjZDM0ZDgzZjU1MTFhZWM2ZTJlMWQxNjM3NWY0OWU2N2ViOTI3ODNhMTZlNDI0YjllNGJhZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdmMWM2YjFiYTkxYTk4NjMwN2UxN2MzNjY4NTM0NDQ4MTdhNjY3ZGZhNjg1ZDU0M2FhMTY0ZjUyNDM0MTk5MWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_900556139c21476caf97575af2850b57",
+      "statement": "KafkaStreams is constructed from a Topology and Properties, begins processing only on start(), stops on close(), and a shutdown hook calling close() is recommended for graceful SIGTERM handling, after which tasks migrate to remaining instances.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/write-streams-app.md#L122-L214",
+          "version": "repo-lines-v1:sha256:f85cac7150591deae005a92f7cb05c0f7baebe0a2b899eeff3421715b1383398:eyJzZWxlY3RlZExpbmVDb3VudCI6OTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzYWQ4ZTg1MzQ5ZmUxMTgxOTg4NTk3NmVmOTZjYmUzZjZmNjVjMjg4YjI5MDcxM2FjYWRiZGY5YTkyODAzODgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk4NGU3ZTk1ZWM1NzBhZjFkY2ZjZTJkODdiOTBkZWU1NjkyNTU0NjBjZmIzN2IyN2Q0YTAwZTFmODgwMTUxYmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ0MmY3MDJlYjg0NTdjMzVhMjdmNDMxODE1OGJmZTJmNzI4ODJmNjEyZjhmODNmODE5YjE1NzAwMGY5ODE4ZTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU0YjY5NTkzOGZhNWYzZjU3MmU5MDY4YTQwNmQ3ZDc5ZjllOGYzMTIwZmMyYzQ1NGE0YjhmNGUxNjFiODVmYTMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_67714c17971043b1b70bca2848cf00e1",
+      "statement": "The tutorial generates a project with the streams-quickstart-java Maven archetype whose pom.xml targets Java 11.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/tutorial.md#L33-L69",
+          "version": "repo-lines-v1:sha256:ddc13e109fa24057bd88c9678e8b0647bc2190f6321fb628612dac6366fe8936:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAzODc5ODAyNzM0YjhkODk2YjNhZGMxZDY3MjU3M2Q4NmY3MDc0OGU2ZDQzNTI3YTM4ZjA5NTU2ZDM5NzY1YzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUxZTViMmFiMDZlNjk1ODZlMzVlYzNjZjBlN2VlMDZmMWExYTkwN2EzYmRjYWI4ZDk1MDI1Y2JmYmNkZDViNTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk4NDQzZDBhNzk3YTYwOWVlYWNjMDA4M2JhMTc5Nzk2MzgzZjIwNGMwNmVkZDhmMzllMjdmMWI0MDM1NWM3NTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBhZDZlOGIxMjg5YmFkYWFlODVlMjYyNjFjN2E0N2E5YjNkNGU5ZGQ4MTM1MDgxYjNiZTQ1ODNjNmEyZmZmNTkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0d1d5fb3b41743b0993fa2b665b9c6dc",
+      "statement": "The Pipe program copies streams-plaintext-input to streams-pipe-output and its described topology has one source and one sink node.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/tutorial.md#L71-L230",
+          "version": "repo-lines-v1:sha256:b419667dec59c96c9dde4cb985775421a4fe8c334857be8da8d00c99366a0186:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYwLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJmZGY5YjA1OWI4ZDQ2MDlhOWMxNTlhYTQwZmE3ZGJjYTNhZmJhMDE0Yzk5NDUzMzIwNTdkODA3MGEwODIyMWU1IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJlNDI1NTA2YjYwNjI1MWUzMDRiODA0ZjQ1YzUxNjA3OGEwYTQzOTE4NjNkMmQ0YzBhYWJkN2I5OTRlMjk5Zjg5IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlNmJhMmNmNTRkMTY5ZDUwNWM3NzU1MjFjNDRkYTZmZmRmMzc3NDViMmE5NDZmMjYzZGRlODJkOGRmYWVlMzE2IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIzZTJjZmY0ZWNjZTdhZjFlZTZmOTFlMGRiYWZhODI5MjIzMTBhZDQ2NDZjNmVjYTg5NmZiNzQ1NDk1MWY3MDRmIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_ff10ea8bdb0f467ea00733ec7aa42737",
+      "statement": "The LineSplit program inserts a flatMapValues processor between source and sink writing to streams-linesplit-output.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/tutorial.md#L232-L327",
+          "version": "repo-lines-v1:sha256:3ea3af6796806320c37ddea25870e07de8a886e6dd565259f4ce3836493c25e6:eyJzZWxlY3RlZExpbmVDb3VudCI6OTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRiMTFkOWE2ZTExYjA3NjNjODZiODgxZTlhOTA5Mzc2MjgzMDIyNTZiYjUwODBhOWQ2MTMzOTVmZmU1MWI3ZTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU2NGQ0NjFlYzA1OTZmZmEyZDU1NmM3ZDBhMWNhNmFhY2Q5OTg1NDZhZDljZTQ5Y2Q1NWEwYTAwZmE3MTgyMGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdiMTBkZWRiNGQ4MGIyZWRjZmNiM2EzMDkyMWQ0YzU2Njg4YjY0OTY0MmRkYzBkYjdkODE0YjhhZjBlYjNkODAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_df3996482c2c4ea9b306dfe36e775751",
+      "statement": "The WordCount program's groupBy creates a counts-store-repartition topic splitting the topology into two sub-topologies, with the aggregation using the counts-store state store and writing Long counts to a compacted streams-wordcount-output topic.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/tutorial.md#L329-L464",
+          "version": "repo-lines-v1:sha256:748e01899b7e041ef571e5dc5b5b31b58b9414828eda3a294901ae47c1ee672a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTM2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJjYTcyZWM2MjhmMzM1NDNlNGM3NWI0MTM2NGQwNDcxZDViNDBmYjM5ZTQ2NjJiZjMyMGI2YThkYzU5NWRlZGE3IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIwMWJhNDcxOWM4MGI2ZmU5MTFiMDkxYTdjMDUxMjRiNjRlZWVjZTk2NGUwOWMwNThlZjhmOTgwNWRhY2E1NDZiIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI5OTliZGVmZWVhY2E2MzQwZTAyOTBkYzg2ZTg4OWM4OWQ1ZTE4OWFhNWJhNDRiNTg1YjNiNzA3MzRmNGE2MmQ4IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

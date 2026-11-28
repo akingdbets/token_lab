@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:7aeccb0e88e5a8867b7b114e3aa2291b729d8f1dfca65c1b4a3ec89e801222c4",
+  "claims": [
+    {
+      "id": "claim_c223ce8351fb480fa5e4b7958d8c14fc",
+      "statement": "process.roles may be broker, controller or broker,controller (combined), and combined mode is not recommended for critical deployments because controllers cannot be rolled or scaled separately.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/kraft.md#L31-L41",
+          "version": "repo-lines-v1:sha256:fa7ded105238f3bf9163b29ddbbf279cf2704d4444d323ac227deec997560290:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg1Yjk4NWYxMThhZjFkYmFiYmMyYmE4ZWE4YmY0MDc1NDQ1ZmVhYzE5OTczOTEwOTI0MTNiNmY1MWY4MjIxOWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmN2ZmZDhmNzU1ZjQ5ZTkzMWQ2MjVmY2IxYTdmMmY4MmE0N2MyZWY5MGU0NDAyZTIxYjY4NTdhYTA4NDQwZWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU3ZDdhZjM4MGMwZDZlNjhiN2Y0YTlhZWM1YzMwOTNkMzE3OWFkNjNkZGQzYmQyYmExNTNiZTZhMDEwZTYyNjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY1MzUwMzIwODliZGVhNWUwYWJlOGMzODJkOGI0YmQ0MmQzMGFjYWViN2EyZWU5NzA1NzQwNjNhOWVhMWQ1ZTYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bbc9c419814c48e595d7c81e7eaf8874",
+      "statement": "A majority of controllers must be alive for availability, typically 3 or 5 controllers are used, and every broker and controller sets controller.quorum.bootstrap.servers.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/kraft.md#L43-L65",
+          "version": "repo-lines-v1:sha256:6a9a172467a04fbc5eb658b52fb10bc171c4b7dcf2b6c9ffe709db02f9e3a913:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ1ODZmYjZlOTRlYWNmMDM2YWM0MDBjYTcwZjUyZDhlOTdhMDgyZTAyNjkzNmUyMjA5OTFjMWYzN2MxMDQ2MjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQxZGRjMmFhMmEyZDJhNzYzZDI5NTk5MTNmZjk2NDdmYWE1MzVkNTk0OTY4OTFkNDljN2ZlNzI5ZmE1MzBmZGIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU0M2U4OTA1MmQzNDE0NTdhOWM0MDdmNjZlM2EwNmI4ZGMzNDMyMTc0Mjc3YTAyY2EzYjExYWYwYTQxMjliMjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU2ZTE0YjNmOGM3MTQ0ZTQ2OTkxYzAwYmU0YTdhYjU2NzZiMmY5Y2ZkMTIxY2JlYzQ4OTkxZDdhMDg1YTQzYTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e2d6de1ad81c4eadbc5c2d6e4b741ff5",
+      "statement": "Kafka 4.1 supports upgrading static to dynamic controller quorums by upgrading kraft.version to 1 with kafka-features.sh and replacing controller.quorum.voters with controller.quorum.bootstrap.servers on all nodes.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/kraft.md#L67-L109",
+          "version": "repo-lines-v1:sha256:9ff8d2cf8d8ba6a289c6c20405c18f1b172322626c087f33fe7f7c662d295968:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2MjNjMzcxMTdmZTM1MGJlZWI1NWRmNDMyMzRkODMyYjBjMTYzNzM0ZmQ2NWE5MGQwZjllMzYwODFhZDBmMzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY5MGE3ZDU5M2IwZjViMmE4MjQ5N2I2Y2M2OTZhMDg2NjUzOTRhNzRhYjdhN2I0YzBjOTQ4MTRhNGQ4ZTJlMzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ3YTg2MTY2MWI3YzQ2MjJlNmQ0ZTNjZDJiYTkyOWU5MWJmZTliMGE0ZGU5ZDc1Yzg3YTFmYTdhMDc5NzBhMjEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_125d32af2c364304bc4633b41f86dbb4",
+      "statement": "Storage must be formatted with kafka-storage.sh using a shared cluster ID; standalone format creates meta.properties and a bootstrap checkpoint with KRaftVersionRecord and VotersRecord, and --initial-controllers must be identical on all controllers.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/kraft.md#L111-L143",
+          "version": "repo-lines-v1:sha256:82333c49aa41745563ea24cad17ebebbf1292b21ec5c59088042ffc8963c5b17:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4ZTA3YzA5MWFkNDA2YjNmZGU1YzhhZTUwZmRmMTVhYjYwZjBkMTg2N2RjMDUxNzcwNDEwZjNiZWUzNDlhMGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA1YjE5ZDVmYjlhNDM0N2YyZDYzZGE0NmZjZThhZGJmNTk2MjkzYTY0ZTBjOTA4YTk3NWQ3NmM2NDI4ODEzOTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUxOTU5MWE2NDE5NzU2M2I4MzA2Y2RkMDE2MjNjZjQ2OTkwOWVlZDRmZmE1OWRhMTU0NmMwNzEzN2M0NDVkYzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA3MjgxMjU2NDA5MzI1NTYzYjFmYWVmMmZlZGE3NGRjYWYzMGZiZDM5YjQxYWFiNjlmZDBiZTk4Y2VlZmM1NGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c640b1416f6645d6ae06a80efc39dc44",
+      "statement": "New brokers are formatted without extra flags while new controllers use --no-initial-controllers.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/kraft.md#L145-L159",
+          "version": "repo-lines-v1:sha256:2890ce287d11edac2ffb011a3d906037d69785038c51185ae2b7ef0af7bc4d4f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZjMDUwZDUyNDRhMTE3ZGRiZDAyYzhiNTRmYjBkM2U5OTk0Yzk5YTg3ODZmMGRmYzEyYjdmYzA3ZDQyYmNjMzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRkNjA5NjRiYTM1ODY1MjQxYWQ2MDE3MzczMWVlYTY4MDQzODFjMzk3OGE4NmE3YzU4NTFjNjQ2YTdhMTdhYzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY0OWU3YzExNDJhODI0MTNkNGJhM2FjM2I1NTBjZDNkOWNjMzg1Y2M3MWRjNTAyNDU0NzJhYmZhNDZhODk4MjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7bdddc952a2a4904993f0565e07753d9",
+      "statement": "A quorum is formatted as dynamic when controller.quorum.voters is absent and --standalone, --initial-controllers or --no-initial-controllers is used, and kraft.version level 1 or higher indicates a dynamic quorum.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/kraft.md#L163-L197",
+          "version": "repo-lines-v1:sha256:2edbd8a5f091a7913b96baa21822e4fb10dff88493e895728e2184d3901f23ec:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY0YmMzODRhOWU3MTU3MWQwYTE1ZTJlYzBjZjlmMzQwNjZkYmRmOGM1NzBmOGQ3MjMwNmYwN2MzZjdjYzE4MzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxODNjZGE3MTkxYzllNDgzNjY1MzNmNDk0MzM0MGY0N2FmM2M5YzA4OTMzOTg3ZDA0ZjgxYzE1ZmIyNTkzNDUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY0OWU3YzExNDJhODI0MTNkNGJhM2FjM2I1NTBjZDNkOWNjMzg1Y2M3MWRjNTAyNDU0NzJhYmZhNDZhODk4MjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNmMTkxMTYxNTRjMzEwZGQ4NTZkNGNlMzY3NTA4OGNiMzJjMDMzZWIzMTdkY2E0MTZkODdiNmEzZDBhYWZjYjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6a60d592841f4315b1ae0bddf2cc7f0a",
+      "statement": "Controllers are added with kafka-metadata-quorum.sh add-controller using the new controller's --command-config, removed with remove-controller before shutdown, and unregistered with kafka-cluster.sh unregister-controller after removal.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/kraft.md#L201-L253",
+          "version": "repo-lines-v1:sha256:1ada9888de33b9ec56b56f8f46abf322c26eaab3536860613b3d6aceb6632e18:eyJzZWxlY3RlZExpbmVDb3VudCI6NTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3N2ExMmU5NDYyNDg3NzAyYzIwOGRhNzUyYTFmOTYyMjZmNTQ0MTJiMTgyMGEyYzlkMWIzMzZjNzQ5NWJkYmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNmMTkxMTYxNTRjMzEwZGQ4NTZkNGNlMzY3NTA4OGNiMzJjMDMzZWIzMTdkY2E0MTZkODdiNmEzZDBhYWZjYjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQzMGJjMjNjZDY1OTIxMDk4MThkYmYxOWI5ODE1MDM2MTlhN2Q1ZjdlNDNhYWVkM2U0NGYwMDIyNTExMmYxMDEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a69b7ecaaf624bec90efd3f80c2ac917",
+      "statement": "kafka-metadata-quorum.sh describe --status, kafka-dump-log.sh --cluster-metadata-decoder and kafka-metadata-shell.sh --snapshot are the KRaft debugging tools, and the bootstrap checkpoint contains no cluster metadata.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/kraft.md#L255-L316",
+          "version": "repo-lines-v1:sha256:4b2fd691d279e78751d45c6a1b47d71b8122a09f16b8359153bd44f931209f8b:eyJzZWxlY3RlZExpbmVDb3VudCI6NjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZlNDc4MTkwYjk4ZWZhYjcyOGY3NjU5M2ViMjI0NDkyNGJkZWU5Y2YyN2EyMTE5YzJlNWQ3ZjYzMjhmOTU5MWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMzNGQyZjE4N2ZiZjFjZDhiMTYzNzlmNDFlNGJkMDcxZjNmNzQ4MzE5MDcwZTgwODBkMDZmMTkzOWIwZmNiMWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZlNWJhMWQwYThiNTFlODBiYTEzNDY3MmNjYzc2NjY2MTllZWQ1ZGYxZDllMWU1ODQ1MWM3NzQ3NGZkZTZmZTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg2NzQ2ODhkYjNmOTBlNjg4NmRmMDBlYTUzYjkyODEyY2VmZWNlMzY2MWQ3MWNlNjI3MTY1ZDI1OTVjZmYxOTQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_df5edfbf719e4794aa723f2af5372108",
+      "statement": "Withstanding N concurrent controller failures requires 2N+1 controllers, and about 5GB of memory and 5GB of metadata disk is sufficient for a typical cluster.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/kraft.md#L318-L324",
+          "version": "repo-lines-v1:sha256:c0174e2e458b5762c8507306598c8152d89dcef50a6f0d7fb9f4a23fd672d851:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGQwMDUzOWU3MWRlMGFkN2ZlMmUzN2I1YmQyNjgwYWU2NGE2NWYwMDI3OTdhZDdiNTQ2NzQ1Y2Q5NTQwYmJmYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWIwZDAxNDhlMTZhMTcwYmE5OGEzMjczNTg5YTk5NTI1YjYzNzY5YmM5N2JlNzBjYjM3MjRlMGQwYWU3NGEyNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiY2JkNDQzNTAxMzY0YzMyMzIwN2JjZmU0Nzg5NDdlODI2MmFmMDNiZmI5Zjg5YTE1NGIwNGQzNTU1MzRjNzEwZiJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

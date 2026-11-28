@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:6268df56d4c9c585d0d80370ad60cc6b4fd5e609e080a3b55530a637220d3d5e",
+  "claims": [
+    {
+      "id": "claim_9b2a1581e86b46439a54c1ff4876ee53",
+      "statement": "Configuration providers are declared with config.providers aliases, config.providers.<alias>.class and config.providers.<alias>.param.<name>, and custom providers implement the ConfigProvider interface.",
+      "evidence": [
+        {
+          "resource": "repo://docs/configuration/configuration-providers.md#L27-L70",
+          "version": "repo-lines-v1:sha256:3dc6812791891f1493a53536038559c44e2677511651bcd0400b60de93b54e1f:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIxYzg4MjI2MzRjZDM0ZDgzZjU1MTFhZWM2ZTJlMWQxNjM3NWY0OWU2N2ViOTI3ODNhMTZlNDI0YjllNGJhZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhjNDg4MTcxNjcwYTk4MGE2MWY1OWNhMmQzODgzMDYyZGQwMmI0MWM2MGIyMmU4ZDEyMDUyZDQ0MmZkY2U5MmYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c340374e0c1343b5ba6fdf3c021f7876",
+      "statement": "DirectoryConfigProvider maps each file to a key, FileConfigProvider reads a single properties file, both restricted by allowed.paths, and EnvVarConfigProvider reads environment variables restricted by allowlist.pattern.",
+      "evidence": [
+        {
+          "resource": "repo://docs/configuration/configuration-providers.md#L72-L138",
+          "version": "repo-lines-v1:sha256:536b3a2e847d0109995545e11cb269022bafa852fa213722dbaf7326bb84b822:eyJzZWxlY3RlZExpbmVDb3VudCI6NjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5NThlYjcxMDRhMjg0Y2M0MmRjNzRiZWIzMWJjYzdiZTljYzUyZTE5NzBmNWVlOTE3ZmRhYTI2N2Q5MWZmODkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNmNGYzMTk1ODdlY2ViODc0ZmRiMDkwODMxY2NjMWU2OTBhNGI5MmNhOTRhODZhMjA0MmNiNjgxMDRmMzY2N2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVmMDU4N2JkOWZhZmM3Zjc5MzA3YmI4YTM4OGEyNWQ4M2VjNTZjZTAxYmVjNDczZWM1MjhiNzE3ZWEwYTZhOTMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_16cb7c76c196474b91737913f45ec770",
+      "statement": "Connectors can reference externalized credentials with placeholders like ${fileProvider:/path/to/file:key} after the worker declares a FileConfigProvider.",
+      "evidence": [
+        {
+          "resource": "repo://docs/configuration/configuration-providers.md#L140-L169",
+          "version": "repo-lines-v1:sha256:dba47190b314bb01a7f418c9cd1568a7bb69da57bb201c1cdf73c3e22a0577f2:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0OGU2YzE5ZThjOWIxZmRjM2RlMjRmOTQxMTU5ODRiYzdlYzc1YTJkNTBhZjVmMzljNWUxZjIyMTRjNzQ1NmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmY2I2NjBiYTVjYmFlY2Q4NTNjMzAxNTUwYjIwZTJjNTZiN2U1YzEwOWNkYzJkMDVlNmQyYTI1NDkwMjZiZGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU0MzFlNjA5YWY2YTZiNzJhZjAxMzU1OGNiNTU4ZTJiOTEyZTI3YjI4NjRjNzk3OGQ0NDZhMWE3MjY2NWQzN2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_87e1abcb3ba046508591636eabb4679b",
+      "statement": "OAUTHBEARER allowed files (since 4.1.0) and allowed URLs (since 4.0.0) system properties default to empty lists.",
+      "evidence": [
+        {
+          "resource": "repo://docs/configuration/system-properties.md#L31-L90",
+          "version": "repo-lines-v1:sha256:1a43cad04e1196a85b46075c3d4419f60f4be5c7a7488cf6e7be3dee83076ff5:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNhMmMzNTA1MTVkYWU3OTFjNDQ4MzgxMDQwZmQ2NDQzNGYzODUwNWI4NzQwZjNkMGZiMWRhZmY4NTZhYTY5ZmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAwNjFmMjIxZGFkZWI2ZjY3Yjk0ZjYyYzkyMWU1OTFkMDJkYmUwY2RlZjU3NzRjNjZmZDNmMDg0ZjRiNTgyNzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYzYmU0N2Q4YWUxZGRlMzAwOGQ3Y2I2MWZiNjViMDFmMzY4NjFlZWZhZjllMWJlZDNkZDliMzMyNTRiY2Q5ZjQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e9df4de12d6a4848857759446867b60d",
+      "statement": "org.apache.kafka.disallowed.login.modules (default JndiLoginModule and LdapLoginModule) is deprecated since 4.2.0 in favor of org.apache.kafka.allowed.login.modules, which takes precedence when both are set.",
+      "evidence": [
+        {
+          "resource": "repo://docs/configuration/system-properties.md#L91-L158",
+          "version": "repo-lines-v1:sha256:8511107cd5032c404faa5583f352c51afe63e1be2800db21c5b2355f9365465b:eyJzZWxlY3RlZExpbmVDb3VudCI6NjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM1OTIyNjEzZGU4MWU4N2U4OWZiNGM1NTA1ZWNiOWRiNWRiY2IzMGI2MzQ0ZDBmZjM3MTYyODQ4YjJkYjNkOGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI2NGYzYTI4NGIyYmZhMDEwZTgzZTYwOTEyMDFjNDA1ZmNiMTA0YzdjYjRiNTUzYjlkYjBkNWE3NGE3YjhlOGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzODA2MmE5ODNlMTBhMDQ2ZTRiOWUxMmNiYTVhZWRiZWIyZDMxNWQ2OTM5MTgxMzJhNTNiZTM4NDhmMTVhM2IifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_78da479a1af7410598fd96042565457b",
+      "statement": "org.apache.kafka.automatic.config.providers (since 3.8.0) enables all built-in ConfigProviders by default and can be set to none to disable them.",
+      "evidence": [
+        {
+          "resource": "repo://docs/configuration/system-properties.md#L159-L201",
+          "version": "repo-lines-v1:sha256:e694927ece9b57b72321b36e906b16d05e128be49d33ff1c0536753fd3c1d7d1:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFlZDExMTJjNGFiNTRiM2IxNjFlZTk1MGZiZmFlZGRkMzJkNDI5OGZiZjdiODM5OTk4NTk1ZDg1ZDc3OGRmZTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA4ZWM5NGM4YWQ0ZGQzNWRkMWFkMDgzNDVhMGY1NTdiOTczN2Y1NTRhZGQ1MTQ2ODg2ZWQxNThjY2U4M2YyOTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

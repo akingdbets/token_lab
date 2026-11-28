@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:d4b920c1526f677212a4a2f9ccfd055984d0987cf1803386f43ec5f8e1889ccf",
+  "claims": [
+    {
+      "id": "claim_3eb4026c90da488da2482ecdefcb1de4",
+      "statement": "Migrating from ZooKeeper to KRaft requires a bridge release, the last of which is Kafka 3.9, following the 3.9 documentation's migration steps.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/kraft.md#L326-L328",
+          "version": "repo-lines-v1:sha256:376108a6e3f76f5bca4188085e630306574b334de0d84c96231d332b44b0d17b:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZGIxY2ZlOWRkMmU3NjkzNjE4ZDkzODg4ZTNmOTIyNGFiNDY3NTM3OGFiYTI3MzI0NTI2YTMwZmM5MzJkZjUzOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTNlZWM0MDkzNmVmOGJhZjY0MDNmZjNhOGM5YzE4NWE4OTRlNmUyMmRiNjliZTg5NWQ1MWU5YTYwZWY2YmJlNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNmEzY2Y1MTkyMzU0ZjcxNjE1YWM1MTAzNGIzZTk3YzIwZWRhOTk2NDNmY2FmNWJiZTZkNDFhZDU5YmQxMjE2NyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_3708e85f5e064f88b2bd67713de589ae",
+      "statement": "KRaft removed password.encoder.* configs and stores sensitive data in metadata records without encryption, and removed control.plane.listener.name in favor of controller.listener.names, listeners and listener.security.protocol.map.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/zk2kraft.md#L35-L57",
+          "version": "repo-lines-v1:sha256:109529b5ac0f98b21d66b643c4e2a342aa5dd38a40a4325bf78f51811c506f09:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5Nzk2ZWRkOWM1ZThlNWVhNzI2NTljNmIzMTJjZjg5YTAyODljM2M2NGQzM2VkYzBjMzRmODIxMjU4MmFkZDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5YjUwNWFkZmQ1MTliNzA0OWQxNThkYmZjMWUxM2Y4M2NiMDA4ZWUyMDU0YTVkMTJhMWY1ZDc0OTA4NmIxOWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU3NmZmZDFiNGU5NGM0MGM5NGMxYzU0Yzc0OWMzNDU4N2U4MWQ5YTc4YWFmMjExNzNmOGUyNDEzMDk4ODMwNWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3cffc3237647435b891f6a2b964760f4",
+      "statement": "KRaft removed controlled.shutdown.max.retries, broker id generation configs, inter.broker.protocol.version (replaced by metadata.version via kafka-features.sh), leader.imbalance.per.broker.percentage and all zookeeper.* configs, and dynamic advertised.listeners now needs a restart.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/zk2kraft.md#L59-L101",
+          "version": "repo-lines-v1:sha256:8f0d91754a966e77f72a0891e28a36656a2009fe03eaca78369e7a19017d9d18:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM0OTUxN2I0NTA0NGU5ZWVjYmFhYTUyMzk2NjhjMzk3MmViYjk5NDE4NDI3YTg1NjA4NTE5OTkxMTRkMDY4NjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVlN2RhNWQ1MjBkM2U3NjY1OWNkMzEzOGUzZWMxZTYzMTI5ZDY5Njc5NDQzZjEzNjhjMmEzNTg1OTkzM2Y4YWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFmNjAwNTM2MzMwZjAxMWRhZTE0NWY4YmJlMjNmZmI2NDE0Nzk2ODg3MzE3ZTQ5YTk5MjEzYjk2NDBhZTRhZjIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7e60db77f619444e82879e7602d36144",
+      "statement": "Controller log levels are changed with kafka-configs.sh --bootstrap-controller using --entity-type broker-loggers, and combined nodes share one set of log levels.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/zk2kraft.md#L103-L135",
+          "version": "repo-lines-v1:sha256:fd2eb640ffc984b7b318c95de78a0bff410f8c7d85ccda999e4c6ef2d77e08bb:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg1MWFhZTU0OTI2YTFkY2RmN2MwYmNjNDJkMGZkM2U2MmVjMWRiZDUyZDM5NGZlNDI3ZmEzMjA0ZTI4Y2RmZjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ1YWEwYmMyNWU2NDdhZGU5MDMzMTA0YzU2YzMzNzJlNTU1ODJhZDZlMTEzNDJjMGZmNDMyOGFjOTAwMDc0YmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM1MGNmMWQxZjcwNDc4N2EyZWQyN2Y0NDJkMmM1NWI4MDhkNWVhMWRiZDEzZmU0Y2E2NWUzYmEwOWEwZjk5MzUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_eb5a460768f04861a2aec2aea713fe38",
+      "statement": "Controllers apply cluster-level dynamic configs such as max.connections, and before 4.3 dynamic configuration updates were unsupported unless a static quorum was used.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/zk2kraft.md#L137-L167",
+          "version": "repo-lines-v1:sha256:7114f441c6ce1cc2982419c34581530470e4297356fdab04b6ea25e1a5fb0eed:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUwNjc3MWI4YzEyZWQxYjJlYjdiNWY2MmVlMmY2OTVkMThmZDM0YWQ1NmU3ZTU0NGEwYTdlMDBmMDYzMjcyZGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI4MTY2YzY0NTZmNzViMjhjOGMwNWZlODVmNThjODQ5ZGI0NGQzMDE4M2I5NTVlNWUzNWQ2ZjRlYTc4NmY2YzkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e47de8cfedfe48f98ee32a8b1f6bffe6",
+      "statement": "ControlPlaneNetworkProcessorAvgIdlePercent and ControlPlaneExpiredConnectionsKilledCount were removed in favor of NetworkProcessorAvgIdlePercent and ExpiredConnectionsKilledCount, along with ZooKeeper-only controller and session metrics.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/zk2kraft.md#L169-L231",
+          "version": "repo-lines-v1:sha256:30b7e868db6898d8f0cad07cfd38d174a4601016d4c082b99960c5d09d96bded:eyJzZWxlY3RlZExpbmVDb3VudCI6NjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdiNGRmNTk3MjQxOTYwMzIxZTE4NmI1NzAxMTJmZGYzN2FhMjAzMDhkNmI2MTg1NjYzNzQ5ZWNmNGJlOTViNTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJhY2NlNzEzZDVmOTlmYzkyYzE2ZTc3OTc4ODA2YmNiZDZlNDVjMzEyNzlhZmYxYWExOTcwZWIwY2UzODAzYTMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f67cb2bc6664458d9b570c2c8716ca3f",
+      "statement": "In KRaft, config values are limited to Short.MAX_VALUE, CreateTopicPolicy and AlterConfigPolicy run on controllers, and custom KafkaPrincipalBuilder implementations must also implement KafkaPrincipalSerde.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/zk2kraft.md#L233-L244",
+          "version": "repo-lines-v1:sha256:c19eadc3064510c1c0f55bb8bcc682055144970bc8812dd53d84c99a9d3cb802:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI1MWNkYzUwZTJiYjM0NGQ4Nzk5NGJhMDBkNWJlMzYwN2Y1ZmM3YzFiNjAyYjE5MjIzNzJiYmZjNGE1ZGI1ZDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:c6b4e01d0150caf13f83f95798d432a3e93c34dd9797c72f534a7c65b6ee89a0",
+  "claims": [
+    {
+      "id": "claim_a89779bd68a04d5aa75d8778ccaf14a1",
+      "statement": "Kafka enforces network bandwidth quotas (byte-rate, since 0.9) and request rate quotas (percentage of network and I/O thread time, since 0.11) per group of clients sharing a quota.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L465-L472",
+          "version": "repo-lines-v1:sha256:14385f859d55f7283b97dd82da878ad94603661041eba69f009f8ff196d2e884:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmQ1OGYwOTcwMTZkOTU1MGJkYTgyZTQ4M2VlZGI2MzJhY2I2MzIwZjBhMzFiNmYwMTBiZmZmYjliMWJhNGI2MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiY2FhZDc0MjE3MjI4NjM2MDhlY2M1OWZjMmQ0NWJjYzliNGIyM2NkYzM0OTgyN2NkNTVmOGMzYjdlNThiODMwMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjgxMGNlOWY5MDc3ZjU3NWMwMmJhYjM4NTA2MjRiMTQ2MDIzZTliNzQxYjhkZWRkMzBiZjUzZjZjZjQ1M2Q4ZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_115f48d166ad4eaebea708b964be7d4d",
+      "statement": "Quotas apply to (user, client-id), user or client-id groups with the most specific match winning and shared by all connections in the group, following an eight-level precedence order, and overrides stored in the metadata log take effect immediately.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L478-L499",
+          "version": "repo-lines-v1:sha256:98cc9644f3be969f8dbe2ced5c30f0d2b12822fa9a64de1a10cbf8b97d72f187:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2YTBhMmFmNTU2YzY0MzcyYzliMjY5YjNmNWE2NjJlNWUwZmZjMjE0YjE5YTJhMmU2OTFiNTZiMjhhOGE5OTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY5MzVhNWU2ZGMxOGZmN2ExYTg3ODM5OWUzMDZhZTg1ZjZlMGYwM2RlNWEwZmNmMjkzN2U4MDE4MjQ3ZDkyMDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNjYzYzMGFhYTM1MGQ3MDc0NGY4NDRmNThkMDA2NWJhZDM5MTRjZTE0OGQxMDkwOWM0NzZmODhkNzBiNzc3MzkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1bcd76c6840d4c4d87e9f22c758929de",
+      "statement": "Quotas are defined per broker; a request quota of n% is out of ((num.io.threads + num.network.threads) * 100)%.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L501-L507",
+          "version": "repo-lines-v1:sha256:2d1a83fe5489766feee1e5697a45cf19fd3198d3d2dd6c9c6917432b5793816b:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiY2IzYWNlMmQwZTYxZTNmYjA4MTcwZGY1OThmODYxMmJlMmZkZDBjMTIyY2VkNDQ1M2JlMDUwMzc3ZDgxZjc3NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzU3YzhkN2U4OWMyOGNjYmM3MzE1MmMyNDFhZDBmZDdjNTdmZjBjNDdlNzc1MGZjYjMxNWQwYTZiOGY3MGU4ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNmEzY2Y1MTkyMzU0ZjcxNjE1YWM1MTAzNGIzZTk3YzIwZWRhOTk2NDNmY2FmNWJiZTZkNDFhZDU5YmQxMjE2NyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWY4YmNmMjdhMGZjY2ZjMzhiOGZhYmJmYWNhYjc1NGMyMWY1YTk4N2YxODUxZmEzZDI2ZmI2YThhYzNjNWY0MSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_9362604132124412acdb96e145a00b67",
+      "statement": "On quota violation the broker returns a response with the computed delay and mutes the client channel until the delay expires, measuring usage over many small windows.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L509-L515",
+          "version": "repo-lines-v1:sha256:dc6db52d336c20e8b8fa2c362fc81183eadd13117e9de4d8b40e0614e6c12c7e:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjM1YjlhOGJhZWM4ZjI1NzU5Y2QyNjExMDQ5ZGZhMjNmNGNmYzUzNjUzYWQzMDI2OGIzYTE3ODQxYmI0YTU2ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZGYwZGJlNTE3ZTkxNWRmMjkwMjU1Zjg1NjE4ODJkNzU5ZmYxNzg5YTU2YTdkNGI5YjMzMzBhMjZhYTZmYTk0MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzJhOTY4YjRhZmQyMWJhODgxNTVjMmJkZWIxYWFlZGY4ODMxMDIyNjY1ODAxZjFiNGVmOGM4ZjA4MzkwZDcxOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_6e5e1ffaa6ea4d92bf18a740c75161da",
+      "statement": "Clients have unlimited quota by default, and quotas such as producer_byte_rate, consumer_byte_rate and request_percentage are set and described with kafka-configs.sh using --entity-type users/clients and --entity-name or --entity-default.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/basic-kafka-operations.md#L759-L856",
+          "version": "repo-lines-v1:sha256:56923fdf3a6a0d3e9d3973452346141a0c9f585b3d126266de2dacfa0669e763:eyJzZWxlY3RlZExpbmVDb3VudCI6OTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzY2I0OGVmMWU1ZGVhZmFkZDdiNzNjNGE4YzVmMTU3YjE0YWEyNjNiNTYyNDYwOGIxMTdkNjg3N2I5ZGY3NTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNiMThmMjk0MzliYzRiZDk0ZGJhNmMyYWZiNTRlOGU1NDRkNjY4M2QyYTM3YzEzMmVhMThiYTU0ZGZmNDc4YzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_141603ccd39c4574a9f0c4874a444b0a",
+      "statement": "For multi-tenancy Kafka recommends hierarchical topic naming combined with prefixed ACLs, CreateTopicPolicy, or disabling user topic creation, since topics cannot be renamed.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/multi-tenancy.md#L44-L79",
+          "version": "repo-lines-v1:sha256:f4574ee8112daee478135c8704e2f9e0418f0c6c3f5bbd78531ab393b8871500:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgwZDdmMzMxOTFjODMwMzM2NmUzYjE1ZWM2NzM2ZGQxNGVhZDE0NTU2YmUyZWIwNTAwYTFhZDRhMDc4NGQwZTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI5YWVmOGMzYWJlYTMyNTY5Yjc4MzU0ODU0ZTRmNTlkNTA1MDljZmY5YzdmNjViNTFlODhjMDc0NjExZTRkYzIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d164158163b04de6a02bc99c376587b1",
+      "statement": "Request rate quotas often isolate tenants better than bandwidth quotas, controller_mutation_rate quotas limit topic operations, and server quotas limit connection rates and counts.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/multi-tenancy.md#L112-L120",
+          "version": "repo-lines-v1:sha256:91c73c4a7533c3ee86ecefb3b574f01140fc302968f04269f37d748c7b3ffd2d:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTUyNjQyOGRiYWQ5OTAwZGNlZmI4ZTZlYWRjZDk1NzAwMTllZjZmMTljODEwZDliYjQ4YTBjMjM0Y2I5Mjk4YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjAzN2MxYWFjODgxYTc4OTdhMTFhOWUzYTY3YzI1MGVmNjRmNTUzYWMzN2EwYjQ0MjAzZjMzOWRiZTZkNjE0MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWI0ZWM0ZmNjY2QxNGQxZjNhMDJjZDk0N2JjODMwZTMyNGVjOTE0MDdhZmMwZjFiOWE2YmU1ZDAwNGExODhlYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzU1MzhlNjYyNDgwZDhjZThkODVjZDBhNTFiOTM2ZTFlNTFmMzcxZDgyYmY0YzZhMmRkOWYwMjJlNWI0ODNjYyJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

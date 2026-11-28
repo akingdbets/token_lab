@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:c1bacfa5aee9019558d921e39782f13c48e14eb380463d02e139a7f9593e6a8f",
+  "claims": [
+    {
+      "id": "claim_338e4eef917d4614a66ce8ba8cd9496d",
+      "statement": "In Kafka only the producer is transactional; exactly-once comes from the producer transactionally updating the consumer's committed offset, with one producer per consumer recommended.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L209-L223",
+          "version": "repo-lines-v1:sha256:3c40487f537301ef7ab2a62a60caaf428205f911b6a8eca727b793ac78cd023c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0Y2IwNTUxMzNlMTFjNDViZTc0YzQwOGJjZGEyNTM5ZTU1NzdhMTFjZmEyYTA5YjViNzQ3ZWE1NjQyOWFiYjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYwZTMxY2VmMjU4OTI0NjE3NGVmMWY3Mzg4NDhkNDlmMjhkNjllOWY3YjFlZDdlYjUxMzgyZGM2ZGIxZDcxMmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZhMWRiMzQzNjg0MDBiNTlhMjBhMDVkYWRiOGEzMTdjYjc3YWFkNWJhYTkwZWRlOWZiZDk5M2U0M2NjNWEzYmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAyNDQwMjgwMmVjNGU0MjY5NGVkNDk1ZDYyNWY0MGVkMDA0OGRhYWVmNTM5ZDU4OTQ1MTFlY2RjODUxZWU3MTQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ea90d5f05c694ed7b9caccd043f5d17d",
+      "statement": "Exactly-once consumers must set isolation.level=read_committed and enable.auto.commit=false, and the producer's transactional.id makes a restarted application abort in-flight transactions of the previous instance.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L225-L227",
+          "version": "repo-lines-v1:sha256:c7ffdb07739d81edb4da3dba05895c8b588bae6d850c9aab06c5fed4652775da:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzA2YWMxNTZiMTk2MTNiNGEwZmVjYWJkMDM1NjA1ODE1ZTYwODYxNjAyZmUwNjNiZmM0ZmQ0OTVmYjVkOTQ4NyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWE3M2I4YjYxZGQzZjNmY2EwN2I2NWYyMzhmZTAyNTg4Y2MxZGNlNzViYjBkNzgxNzc0ZGZlMjRkNjhjMGIyNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZmIxNjU3MTkxNDAxYmU2MGVhODgyYWZkNWI2ODkyZWE0ZTFhMTI0M2MyNDZjMTUyMjRhYzAyZGUyNWRjMGYwNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzNhZTVkMDE2YzdlNWNjNDRkMTNiYTg3OTdkNzgyYjY5M2Q4MDJjNTIxYTg2MTI5MjMxOGVjNjVkZTZmNzhkZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_9b51da647d9542d49df22944f5decf65",
+      "statement": "After an aborted transaction the application must explicitly reset the consumer position, either by recreating clients or by seeking to committed offsets.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L231-L231",
+          "version": "repo-lines-v1:sha256:67e4f951e3bd9ec6a6e75789b9f44923c2c003321b19a96413a33f64798a0de4:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjdlNGY5NTFlM2JkOWVjNmE2ZTc1Nzg5YjlmNDQ5MjNjMmMwMDMzMjFiMTlhOTY0MTNhMzNmNjQ3OThhMGRlNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjdlNGY5NTFlM2JkOWVjNmE2ZTc1Nzg5YjlmNDQ5MjNjMmMwMDMzMjFiMTlhOTY0MTNhMzNmNjQ3OThhMGRlNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzNhZTVkMDE2YzdlNWNjNDRkMTNiYTg3OTdkNzgyYjY5M2Q4MDJjNTIxYTg2MTI5MjMxOGVjNjVkZTZmNzhkZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDEwMTU0ZDA5M2Y2MzEwOTcyNzU3NDExOTQ1MDJkN2UxZTk5N2Y0NTc5NGJlODNjOTA2Mzg3ZmYxODIxZWRlZSJ9"
+        },
+        {
+          "resource": "repo://docs/design/design.md#L245-L245",
+          "version": "repo-lines-v1:sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTYxM2RmMDE4Y2QxYmE4ZmUzMGYxODYyMzNlYTlmMDAwNjU4ZWVkMGUwM2M0YjA5MGZhZTYwMzVmZTgwODhjNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZmYyNDY4MGU0ZDk2NGVjZThjNzQxMjUxMTMxMjZjYTAzMzYwOGEwOTYxMGM4YWQ3YzM2YTNmZWJjZTdmNTU4NiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_0743f811954245a8acfac93565b2d03f",
+      "statement": "Transactional exceptions are categorized as RetriableException and RefreshRetriableException (handled internally), AbortableException (abort and reset), ApplicationRecoverableException (restart producer), InvalidConfigurationException and KafkaException.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L233-L241",
+          "version": "repo-lines-v1:sha256:3a0b97d058e976933617a3dc1f69e0339b2e4171e29374809c3c2d8f85a2b9aa:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNThiYTI5N2M1NjY4NDBiNzgyNjMyZjYyNzlhYmU5MTZlOTNhOGNhNzUzZDU4OTdkNTk0NzE5MjY2Y2VkZDc2ZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiN2ZhOWYwZDYyOTNlNjQxYmFkNzczNjYzMTFhZDNmN2UyY2VmZjQ5NmRmZjMxNmVlNTg2MmIxYzU1ZjA5ZTNlNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTYxM2RmMDE4Y2QxYmE4ZmUzMGYxODYyMzNlYTlmMDAwNjU4ZWVkMGUwM2M0YjA5MGZhZTYwMzVmZTgwODhjNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_af13c3e2f9c44ec6ba216ad63d7decdc",
+      "statement": "ExactlyOnceMessageProcessor calls initTransactions once, then per batch beginTransaction, send, sendOffsetsToTransaction with consumer.groupMetadata() and commitTransaction, aborting and rewinding on KafkaException.",
+      "evidence": [
+        {
+          "resource": "repo://examples/src/main/java/kafka/examples/ExactlyOnceMessageProcessor.java#L113-L170",
+          "version": "repo-lines-v1:sha256:16291e410b9e285569a5278c3f9ab80c4c4a1ce6132fa9269cdf4c9365b661e9:eyJzZWxlY3RlZExpbmVDb3VudCI6NTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVjOGU4ZGYzYThmMDkxNWU4N2VmYWY5YTAwM2JmZWMyZjIwNDk5ODlhNWJmNmZlNWQ5MjkxNDdhNTYxYzUxZWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjNjQ3OWNjMjMwNDQwZmQ0MWU4MjI0MjE4Njc5Njk4NTU5ZDI4OTNiZDY3YjQzODBhZmFiODExYjM4YTU1YWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFlZDdmNTFhNDVmMDRjYmY2OGJmMzg2NmE0YWNmN2RjZGJiYjM0M2NjMzJlMDI4YTUxZWY3NjYwYjNkYmY2MGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU3YjkxYzIxMDIyYjM4OWVjZDdiNWY1MDk4ZjcyMzdiNWYyZDMyMzE2NjE4ODg0MjRlYjNhYTFkYWQ3ODFjYjcifQ"
+        },
+        {
+          "resource": "repo://examples/src/main/java/kafka/examples/ExactlyOnceMessageProcessor.java#L231-L262",
+          "version": "repo-lines-v1:sha256:881ca49284a1862382c9bf05b5c614b2917cee14b64e985b409dde684e8686a0:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlNjIyMDA5Mjc3ZDRiNzg1Y2ZjODViOTMzNDU4MGIwODdjZWU2N2ExYWE3MTUyM2Y2YmI0NGU2OTk3ZGQxZWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmMTkyNWY5YWUwNzBjYWQ0MTM5ODdlNmE5ZmJmNzdkNDlkMjhhNTE1YmUzNTk5MTBlOTNiNGJjN2I0ZDM2Y2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNmMjBhMDcxOTcyZjZhZWMyOTYwN2IxYTFhMTg4MGY5ZThiMWE3Nzc4OWE4NDY3Nzg2NWRmOWEyNTU1ZTIyYmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIxMzUyNzUzY2Q5NTAyYjM5NGZhYzgzODRlYWRkNWU0YWZlZTFkZWZjYmQ5ZjliYjE0NDA0OTZlMDMxYjI3NzcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f45a9d7cbb8d48f3a25bc790ca78a1ac",
+      "statement": "KIP-890 transaction protocol is enabled server-side by default since 4.0 via the transaction.version feature flag, bumps the producer epoch on every transaction, and producers upgrade at the start of the next transaction without restart.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/transaction-protocol.md#L29-L39",
+          "version": "repo-lines-v1:sha256:de61e26b6b7d687e6dc1487e2336127470c6c7ba9ee7e343802c9fe5c8255126:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxMzNiYjY0ZDViYjk4NzRlYmY5N2NiZDZiYWM2Mjc0OTU2ZGUyNzNmZDE4Y2Y2OTdmZjBlMDcwMjhkOTI2OTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdhODdkN2EwMTZkOTBiZmJkNWZhYmU0ZGViZTNlNDI1ZDMyOTU1MDUxYjA0ZGEyYzU4YjAyMDMxZTc4YjdmMmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljMzVmMmYwNDAyNTQ3NjExMDg0MzQyZjYxNjAyYTEwYmY1YTgyMzVhYWM1NGUxZTRhOGU4MDRlZDMxZmZjYmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM4OTI1MjNlZDgzNGQyMzhhZDRkZmFlNzY3NTVjN2Q1MzhhYjAyYjM2NWRlMjc0ZGQyYzVlMGRkNDY0NDczZjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0115c424d2a246ebb4d0bbd5bc05296e",
+      "statement": "Under the new protocol the server retries adding partitions on CONCURRENT_TRANSACTIONS, tuned by add.partitions.to.txn.retry.backoff.ms (default 20) and add.partitions.to.txn.retry.backoff.max.ms (default 100).",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/transaction-protocol.md#L41-L54",
+          "version": "repo-lines-v1:sha256:f0d250c439ed170b8a8aa853c518f7e9ec8d8fa3b87bf22dd42183d39a1251e9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2NGJlMGY3ZGViYWJhZTliZjhlMWU4M2NiYzNhOWRlY2ZlMTZlZjQwOTM1NzUwMGYyMjU3ODdmMGY0NTE3NjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjExYzhlNGFmNGIwOWUwOTVlMmY4YzhhMTBkYzM5MzI4ZWQ2ZGQwZGVmODFlZWE0ODdmODRlOGI3MTdlNzQ3M2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2fc64a8a950d42e48f65801811cd9417",
+      "statement": "Broker transaction defaults are transaction.max.timeout.ms=900000 and transactional.id.expiration.ms=604800000, and the producer transaction.timeout.ms defaults to 60000.",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/kafka_config.html#L916-L925",
+          "version": "repo-lines-v1:sha256:7fe5bf8aefb60880f4dc4d033c0a15a4b611edacd4dd44153583a64588bc1469:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcwOTBkZWViNTMxYmY2NjFhYTc0NThhOWI0Yzc4MWY1NzA0NzZmZWYyYmE5MTI0N2QzNGQ2NDg0ODA2N2IzMTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiOWZjMGYxY2NmOWUyZWQ2MjMyMzczZjAwOTFlZTAxNGFmNDJmNjg2MzEzMzZhNmE0ZGQ5NDdmNDIwMTE0NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBiMTgxOTg0N2U0N2QzMTdlZDYyYzJhNDc0NzE4ODRjYmJjYTY5ZTkyMTA4NDExYjIyOGMzNzkzNDI5NzM4YTQifQ"
+        },
+        {
+          "resource": "repo://docs/generated/kafka_config.html#L982-L991",
+          "version": "repo-lines-v1:sha256:7637f3c051983343a37a3e409b9d5d0dc3b06123117bf265430c28086944cc37:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY3NzkxMTc1Nzc5YWFhMWExZjc3ZDM1MDdlMzk1YzFmMDc4ZmFmOTU0MTExYTgwYjdkOTEwODIyYmYyMzE4NjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiOWZjMGYxY2NmOWUyZWQ2MjMyMzczZjAwOTFlZTAxNGFmNDJmNjg2MzEzMzZhNmE0ZGQ5NDdmNDIwMTE0NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcyYmUxMzUzZGE4YzQ3NTQ4MjE1NmJlZGI1YzY5ZmQ5MzNmNTAxODFkNDk0Y2FjNGRlNDczM2VlMzg5ZDZmY2QifQ"
+        },
+        {
+          "resource": "repo://docs/generated/producer_config.html#L1163-L1172",
+          "version": "repo-lines-v1:sha256:644913d26d64a5d1691cbef221b91c8efc426348cfb8077300df5a5b20acead9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY5MjdkMTgwZGVlYjYxNzRjNTBhM2RiM2IxYzhiYzIwYjJkMzcwMmYzM2ExMGE3ZDVkNjk3ZDVmNTk0NjY0YjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYmJhYTQwMzk5YTlkZGE1M2ViNjUyMTdlOTkyZGFiNTcyMzdmM2E1NWY0YzNmMjllZmM2MWJlODhmZjlmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNkMWQ3YTliNmVhNWVjMjZlNzFiZmMyNjY0NGNhM2Y2MmZiM2ZiYzhhMjA2ODk1NGYwZjA3MzAwNTkyNTViMjkifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

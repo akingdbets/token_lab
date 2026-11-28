@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:53745298acc4897741bdeed4349f52c09fb66df43448409c98ad5961a96d6d50",
+  "claims": [
+    {
+      "id": "claim_656fdf20e8a4460db94d31ea5ba92378",
+      "statement": "The producer sends data directly to the partition leader using cluster metadata available from any broker, and the client chooses the partition, optionally by hashing a key.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L123-L127",
+          "version": "repo-lines-v1:sha256:ab18cb467af02c6e1b3001eb34077f33dbc356d3f0056c762fffdc360aa11c99:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGE3MDQzOGU3ZjU3ZGExNDFlNTdjMDkzM2YzN2U4ZmE4NmVhNTk1M2YxMGZjYjRiNTk5ZTI3ODM0MDFhNDU1NyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDcyNmIyMGE2Mjc4NTNlYmZjYjc5M2QwZTdhOWEwZmVlMGNlODEwZjE4OTRmOGRmY2ExMzkxMjhkOWU5ZjFlZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDU5OTdlZDgwYTAyNzE4MTFmODM3ZWNjOTQxNTBlYTMzNzI2NzEzMzIwMzFhMGYyNzNiYThkYTQyOWM1YzZmYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiM2Y0OTEyNjcwYjdiY2RhOWI4MjRkMTFhMjc4MjgxZDEyYzk3YWNkZjI5YjZhODg5YTFmMzY1YmM4YTEwNjEwYSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_5a69ca9a9d654c1c82684b5b1ac9c63b",
+      "statement": "The producer batches records in memory bounded by size and latency, trading a little latency for throughput, and linger.ms defaults to 5 ms after changing from 0 in Kafka 4.0.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L129-L131",
+          "version": "repo-lines-v1:sha256:e58c5b6db325e8e555ce658acc6885b83b374fe4a066d9358320f6e34b733eaf:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTgwYTQ3MzdiOWRhYWRhZTcwZjU1ODAzN2EwNzgwYmYyZmNlODg0NzkwM2FlNmJlNDQ1ZDI1Yzg3OWRlNDE0ZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiY2FhMjJiMjhiMzBjMzRjNmZlZmJhYmFmMDA1ZTBmYjQ0OGNiMDUyNTE4ZWRiNzRiZjljOGNjOTUxNjA2ZTY2OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTlhYjc4MWFiZTNlZmNlNTI5NGI1N2Y5NzEyMDc0M2Y5MGExMTIwZmQwMDgxMTI0OWJhNzgxZDc3OWM2NDAyMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDczOTBiZmM3ZDBlY2Y2NDI2ZTU3M2I3MzdhMDQxZWZkYzhkNGE3YWQyOTZmYWNhZDRlOWMyYWJlODhhMjliMSJ9"
+        },
+        {
+          "resource": "repo://docs/generated/producer_config.html#L253-L262",
+          "version": "repo-lines-v1:sha256:8bd202e5101db78597adfbed6a6686937387306b90ea61e5531ec9d5ecd556fd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0MzNhMzNmYWE3ZTQzZmIzOWE4NTdlZGFiZmNiYmY4ZDQ2MGI4YmVlMTUzMDljNDE4OWE5MjE0ODdmN2I5ZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYmJhYTQwMzk5YTlkZGE1M2ViNjUyMTdlOTkyZGFiNTcyMzdmM2E1NWY0YzNmMjllZmM2MWJlODhmZjlmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVhZjM0MjczZGQxMDgzODAyNTBlNTc5MGZiMGNiYzU2NmNhNDFlNDQyOWY5YjlhY2U1ZGJhMWE1ZDEzYjBhMWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e2618134fdf24da49fcdb6e0722466b1",
+      "statement": "Compressed batches are validated by the broker but stored and delivered to consumers in compressed form; GZIP, Snappy, LZ4 and ZStandard are supported, with compression.type defaulting to none.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L113-L119",
+          "version": "repo-lines-v1:sha256:116ae804c0d36f5f38707320fda80184b8e5b23e2cdc62261853d360c69caaa4:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTJhMTIzNTA3YTNmNzc3MjNjMWQ0Nzg2NTI5ZTQyMzE2MTQwMzNlNzYzYjU0OTc4MTUxZmE2MGE5MDBhMjY5MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWMzNWJkZGE0OTA5NmM1MjI2MmU2YjBkZGE4NmFkZjk4NTE1ZmJhN2Q4ODM1NmI5Y2M5NTNkNmU1NzQwYzk0OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGZkY2YyMGU0NzQ5MTQzODFkNDVhMjUwMjk4MDFjZDhiMWM3YWQ0NjAxN2Q3NDgwZjNjOGJhZWQxNjY3NjY1MSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDU5OTdlZDgwYTAyNzE4MTFmODM3ZWNjOTQxNTBlYTMzNzI2NzEzMzIwMzFhMGYyNzNiYThkYTQyOWM1YzZmYSJ9"
+        },
+        {
+          "resource": "repo://docs/generated/producer_config.html#L53-L62",
+          "version": "repo-lines-v1:sha256:4226fe79f0376e4fca3d8379bab2a971af2fcd511e519fe89e1da851c30790ef:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg2MDhmMzhlYjUzYzY3NTYxNTUwNGM4NDhkOWRiOThkN2FjM2QyMDIxNzA0OGYzNzZlNDgyMGY0NWZmNjk1YTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYmJhYTQwMzk5YTlkZGE1M2ViNjUyMTdlOTkyZGFiNTcyMzdmM2E1NWY0YzNmMjllZmM2MWJlODhmZjlmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM0NDA4MTllMTI4NjRjNTUyOGRmZDUxYTNkMzk0ODgyYjRkZDAwOWQxMWFlYWY2ZDQ1NzMxNDkxNDg5NzMxYWYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fd1cd92ed99640cf93ad2e70fe632157",
+      "statement": "acks defaults to all, meaning the leader waits for the full in-sync replica set; acks=0 gives no delivery guarantee and returns offset -1, and acks=1 can lose data if the leader fails before replication.",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/producer_config.html#L653-L662",
+          "version": "repo-lines-v1:sha256:bc65e13c3cc8fffb82809b12ac29371006ae20e9279df086a0b69774fe2d6804:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQyNDk1NDljOGRmMWU1MTEwYmFkOGVjODkyMGIwZmY5MWZlM2E2ZmYzODAxZDM2NTdjMTFhNDc2NjExY2Q4NzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYmJhYTQwMzk5YTlkZGE1M2ViNjUyMTdlOTkyZGFiNTcyMzdmM2E1NWY0YzNmMjllZmM2MWJlODhmZjlmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgyNGE0YWM0YmY0ZTI3MTdkMzIzOTgyMjM3OTlmODg3YjBlMTQwM2Q3YzFkYzg5NmU0NjY2ODMxZTRhZTRiNWEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0d4454401e8d40c389559c9100b9b915",
+      "statement": "Idempotence is enabled by default and requires max.in.flight.requests.per.connection <= 5, retries > 0 and acks=all; conflicting configs silently disable it unless it was explicitly enabled, in which case a ConfigException is thrown.",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/producer_config.html#L683-L692",
+          "version": "repo-lines-v1:sha256:5162c4b7227700a9fff641c9299b5a703d21643e201b91959d48b872791b40de:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI1Y2VhYWU4OTE5MmRjYTU3ODliYTNjZjFmYmZlNjg1NjY3OTUxODY1NjYxZjM5NDNhNjFiMGY2MTM0NTA1YjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYmJhYTQwMzk5YTlkZGE1M2ViNjUyMTdlOTkyZGFiNTcyMzdmM2E1NWY0YzNmMjllZmM2MWJlODhmZjlmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE2MDY0ZDEzZDE0NDhmYjc0NzdhY2Q5NDQ5YjQzYTQ4ZGM2ZjM3NGEwOTE0NjJlYjYxMTc2MWM2MDU4MDliODIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f29beb28dba64b0f9c8eaa57be7d8331",
+      "statement": "With no partitioner.class set, keyed records are hashed to a partition and unkeyed records use a sticky partition that changes after batch.size bytes, optionally rack-aware via client.rack and partitioner.rack.aware.",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/producer_config.html#L283-L292",
+          "version": "repo-lines-v1:sha256:9df35f1fa2740994e7585703f98c7bd596ce73a271079345072d652fb3c74c87:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYwZjg3ZDI5YzEzNWZmZjg2ZmQ3MzEzYmUyODg5YWM1Y2Y2ZTA5MTA3ODJhOWMwZTBmNjE3YTA3NTU3ZDZjYTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYmJhYTQwMzk5YTlkZGE1M2ViNjUyMTdlOTkyZGFiNTcyMzdmM2E1NWY0YzNmMjllZmM2MWJlODhmZjlmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM1OWEwODU0ZDE4M2YwOTA0YjllMTE0ODA1ZmUwZGQ0M2Y0OGQ3MGEzMjNjZmJiMzk0NzYwZjQ5MjNiYjZmYmIifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

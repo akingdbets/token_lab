@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:15b835ca8c4d75c098b4773bf4a6484405339ed68312700cb488b25487b302c0",
+  "claims": [
+    {
+      "id": "claim_3c8a40cdc7e4424c80df8affb425bb05",
+      "statement": "Brokers configure JAAS via the KafkaServer section (optionally listener-prefixed) or listener.name.{listenerName}.{saslMechanism}.sasl.jaas.config, which takes precedence; clients use sasl.jaas.config, which overrides java.security.auth.login.config.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/authentication-using-sasl.md#L29-L88",
+          "version": "repo-lines-v1:sha256:91899669d7d646099ced1ebc002e48147b70f433deeda0c14fb8fabdb4d1c22b:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4YzM1YTlhMTMzMWY5YTljNDVlOTI3NTdkYjE0Y2UyNjM2MjJhNTc3ZTJjM2FkNTRhOWIzZjA0NjcwZTc3MWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA1OTZmNmI5MzNkNmJhMDE4ODQ2NmY0MGVkOWFhMDY5YTNhZTU5YTZjYTA2MmZhN2RhNGQ4YzIxMzhjN2JjNTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljMzVmMmYwNDAyNTQ3NjExMDg0MzQyZjYxNjAyYTEwYmY1YTgyMzVhYWM1NGUxZTRhOGU4MDRlZDMxZmZjYmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVjYmQ5NTkzZjNmYTAyNjBkYjg3MjJhNmNiMGRkMmM1MGViYzQzZTJhNDE4YjdmYzAxNWRkMmU2MzUyNzliNTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d99c1ac13b1c48ee8b376e839de288ee",
+      "statement": "SASL runs over SASL_PLAINTEXT or SASL_SSL, supports GSSAPI, PLAIN, SCRAM-SHA-256, SCRAM-SHA-512 and OAUTHBEARER, and clients may see slow handshakes without FQDNs due to reverse DNS lookups.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/authentication-using-sasl.md#L90-L124",
+          "version": "repo-lines-v1:sha256:3b7ce442d8b015ae43a9a77731ab4c646d3490a1a49959b64d5463b71a350167:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhMzVkZWJiN2I5ODEzYTEzZDhkMWZiMDJlMzdmMzY3MmI0M2JiMGVkMjJmODVhNmUxM2NkNTY2MmZkNjJjZTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA4ZGU0YTU2ODJmODc5M2U4OWQzZjdmYjhjZDU2MTk0MWUwMGE1NzA4OTM5MTI4OGQ3NDc4ZjBhMjU3ZTY4ZmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk4ZDczYWZiOTY5YjM1OTY3YWYwZjdlNGFmNTA3Y2QxYzE4MzM0NWQyOGJkOTIyNjQ3OTI5MTYwOWViNzQxNzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc3OTkwYmUxMGY2YTQ4NWMwYWMxOTY0NTU3YTAxNDEyMDM3NjQ2M2QwOGM4MGU4Njk2ZmZiZjg2ZmFkODVlMmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_57031b80edf54d1185812c7becf61b0b",
+      "statement": "Kerberos brokers use a KafkaServer Krb5LoginModule with a keytab, sasl.enabled.mechanisms=GSSAPI and sasl.kerberos.service.name matching the broker principal.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/authentication-using-sasl.md#L126-L218",
+          "version": "repo-lines-v1:sha256:926447788077deb9f93e00f2cc592c50373fa96e0c1f07ded298819f1485d3c8:eyJzZWxlY3RlZExpbmVDb3VudCI6OTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE1NTVlZjJkOWUxYTRlNjRhMTk1NTA2MWU2ZDA2YjMyNTEzODAxMGE5ZjBiMzJiZmM1MDFjOTljOTY3ZTZjOTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA1OTZmNmI5MzNkNmJhMDE4ODQ2NmY0MGVkOWFhMDY5YTNhZTU5YTZjYTA2MmZhN2RhNGQ4YzIxMzhjN2JjNTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI2M2Q5NWM0MWU1ZThjZDQ2N2IyYzcyMzRmOTM5ZjhlNjQ0ZmE2NDVmNTM1MmEyNmQyYWY3MzQ1ODRkNDFhMWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZiYTE3YzgzNDM4NjA1YjdiOTNkYzA4ZTcxOWFjNDhmNWU3ZDM1ZjdhNTc2OGU4ZjlkMjg2NzQzNDAyMjE1MDAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a2310025561a4ef4a8541b1d136c0379",
+      "statement": "In SASL/PLAIN the KafkaServer username/password is used for inter-broker connections and user_<name> entries define accepted passwords, and PLAIN should be used only with SSL, with callback handlers available since 2.0 to avoid on-disk passwords.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/authentication-using-sasl.md#L220-L280",
+          "version": "repo-lines-v1:sha256:cc4afb760344c5fe8b2f4306d8c239550f87df8b92702aab9724b3c530e4f693:eyJzZWxlY3RlZExpbmVDb3VudCI6NjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA3MTczMzYyMzA5ODRmZWI4YjkwM2ZlMGUwODkwNzMwYTAzNzZhZjVjNzQzYmRiZjZjYmEwODNkNzM5NmRkOTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5MjU5ODAyODkxNGJmNjViZTYxZWFmMzYzMTRjYzU3NDk2YWUzYjIwZTIwNjZmNDYyY2MzZjAxY2ZjNGJiNmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhkY2E3M2EyMzc2MDJlOTVjZTcyMzQzYjlmN2RmOTRhZDM2MjNiMjk5NmYxMjI3MGFhOGVhNGI3NzZlYTRjYTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFmZGNkZGNmY2Q0NDNjNjdmNzMxZTIyOTc0MjI2ZmY4NzllM2JkYzdhMDJiMjRlYWZmZjliN2Y0NDVjMzlkMmEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_eb897e307c2945dfba95be3400746eee",
+      "statement": "SCRAM credentials are stored in the KRaft metadata log, inter-broker credentials must be created before startup via kafka-storage.sh format --add-scram, client credentials are managed with kafka-configs.sh, and the default iteration count is 4096.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/authentication-using-sasl.md#L282-L378",
+          "version": "repo-lines-v1:sha256:54e0f57a5337d91bd0b4f12f70fd429f3bf83f24ef87c7542a95c20fbc80f56a:eyJzZWxlY3RlZExpbmVDb3VudCI6OTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0YTI4MmVkMWQ2NWQyNzRjYWI3ZTgyZWVmMjE0Y2VjZTk2MTg1ZWNiYTQxOWI1ODU0OGU1ZGM4ZDNjYmZiZDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQyOTBmYmUxMDkwNDllYjE1MjQzMmNiNTI3ZjgwNmRiZTJiODhmYzZhN2NkMWFkNWNmZjQ1YTEzZTIzNDViNDEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBiY2QzZTdmN2FjMjU0ZTk3ZDIxNjI2ODFhN2Y3MDU2M2M1NjliOWE5NjY2ZmUxMTNlOWJiOGRkZmIzMDg2OTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFlMTM0MDZhN2MyYWFiM2YzZTU1MWIwNThkMTdmNTljYWEzNjA4NzIyZmYxZTliY2ZlZGVhMmJjYjU5NmY4Y2MifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ad57d81311dd49af9457281aa77ca52f",
+      "statement": "The default OAUTHBEARER implementation uses unsecured JWTs for non-production only; production brokers use OAuthBearerValidatorCallbackHandler with a JWKS endpoint and clients use DefaultJwtRetriever delegating to ClientCredentialsJwtRetriever or FileJwtRetriever.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/authentication-using-sasl.md#L380-L560",
+          "version": "repo-lines-v1:sha256:4ae5e666a63daa0f23f4d4769e62e0ae7eee4422caf780569c82c1f5e830a434:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgxLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIzYTA2Zjg0NzBhMTI1NDEyY2Y5MjU0Y2E5NTRlODcyMjk0M2EyNmEzZjlmZTU0ZjZhZTk4OWRmMjYxMzRjYzFkIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIzMDYzNjcwOGI2OTllMWRiYzc2OTRmODNkMTgyNGJlZWU5ZWI1NDY1NmU3ZjIyNjcxYmZiZTRiMDE3OTdmMWQyIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJiYmE3MmVjNGY2OTZkOGFkYTZjZWVmMWQ2MjY3ZmVkMzFmYTE0YTZjMmRmYTYxNjBjNzI4NjY0ZDU2ZjhmNDdjIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJiOWI5Mzk5NDE1OGFhYzk0ZWEwZjhlYmI1YzU0ODQ3ZWQ2MDJhMGJhODZmNjU0ZWI2ODE4ODQ3NzQ0OTBhODZjIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_1a7ca454ae564e9b856e77f3ac77007f",
+      "statement": "ClientCredentialsJwtRetriever prefers a file-based assertion, then a locally generated assertion, then the client secret, chosen at configuration time without runtime fallback, while jwt-bearer requires JwtBearerJwtRetriever explicitly.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/authentication-using-sasl.md#L560-L690",
+          "version": "repo-lines-v1:sha256:acce5f891b7ffd4d96859a782d1c6fc14228e2121810a771a493188148956388:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMxLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIzMDYzNjcwOGI2OTllMWRiYzc2OTRmODNkMTgyNGJlZWU5ZWI1NDY1NmU3ZjIyNjcxYmZiZTRiMDE3OTdmMWQyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJkMTYwZDk0NTY5MzZmMDRjOTA0MTVmMmUxNTgwZWZkNzg3N2NhNzg3M2FlNGNiMjQ3NGRmMGQzNjkyMTI3ZWEwIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIyMTQ2MTEzMmI5MGE3OTNkNGY5M2RhMGNjN2VjZGVjMDAyMjMzY2EwZTZkMTQ2ZWMwMmVmY2UyNzQ0N2RlZDAxIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIzNDM0NzE0NzA1ODY3NTllNTM2NjkxZThlMjJkODlhMDQwYmIyN2IxZjhiNzZmZTIzOGI3NDgzM2M2NjJlMjM5In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_c10c5898fb954ac38a2a00e4fcfbec65",
+      "statement": "Changing a SASL mechanism in a running cluster is done by enabling the new mechanism, restarting clients, switching sasl.mechanism.inter.broker.protocol, then removing the old mechanism, each with rolling bounces.",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/authentication-using-sasl.md#L748-L788",
+          "version": "repo-lines-v1:sha256:64153a5295bbfe54bd564518731e960511030b5aaef6ac903ff88ebc6899b107:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmNTVhYzYwNzk3OGQ0YWMzZWZhZmI5YTUzMDgyZGM3MWMyOWQ4N2E2MGI3MzdhODQwMDk0OWM0ZDIzMmI3MWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkNTFkZjFiNDljN2FlMzk5NTEzZDIxNGFjYmFhNjgyOTM1YjhjNDc3NDdhYWNjM2UxYWRlNWFhYjAwZTU1M2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU5NjdhYWNhZmMwZDE2ZDhiMjNjNmI0ZTkxZmZhZDVmN2YxMGQ1ZWMyMTI0ODI0YjQ5Y2FlYWQxOTAxMTllMWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY2NzgwYTVlYmRiNjFkMTIyMGJjMmZjOGVhM2E0NzJkOTZkYzM4MWQ3MWJhNjc0MWVlZGI4Njg1MTRjNWFmNTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cf00827128a14997aac0ef4f7e28d40c",
+      "statement": "Delegation tokens require the same delegation.token.secret.key on all brokers and controllers, default to 24-hour renewal up to 7 days, are managed with kafka-delegation-tokens.sh, and authenticate via SCRAM with tokenauth=\"true\".",
+      "evidence": [
+        {
+          "resource": "repo://docs/security/authentication-using-sasl.md#L790-L882",
+          "version": "repo-lines-v1:sha256:31f5151248cdac9b46a8278e91f2c2da5bef1e2c5b7a8e6380c3869f3ca58b86:eyJzZWxlY3RlZExpbmVDb3VudCI6OTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlZWFiZjIyYjJmYjQ2NTQ4YWNhMWNkM2Q2ZmU0ZjViYzNjMTBlMDg0OTM4NGYwYjExMjRjZmEwODFmNDc0ZmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM1YjU0ODAzYjQ1ZjI1MzFkMWQzYWM4ZDg3MDkzODgzMmRhNTVhYWQ0ZWEyOTg2NTVmNDAwYWEwOTk1M2E1ZDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

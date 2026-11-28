@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:89455e81911a15bc45a6821b17938fd50003fb8e4853c4573f6199774a9342ce",
+  "claims": [
+    {
+      "id": "claim_8239f09aa8d547688d5b6945d661ea4b",
+      "statement": "The example scripts default KAFKA_HEAP_OPTS to -Xmx512M and exec kafka-run-class.sh with kafka.examples.KafkaConsumerProducerDemo or kafka.examples.KafkaExactlyOnceDemo.",
+      "evidence": [
+        {
+          "resource": "repo://examples/README.md",
+          "version": "repo-file-v1:sha256:e8048dd6515b466296ee4092bd59656cb38f267b475c894a556b42ff98e1bc76"
+        },
+        {
+          "resource": "repo://examples/bin/exactly-once-demo.sh#L19-L23",
+          "version": "repo-lines-v1:sha256:30ad187de258e78521c741a47e2db261e8f9bf5cb2481bd2ca8d2288d34b6cf4:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2U5NDYyZmE2YjkzYzBkYTVmYWE1Mjk5OWFiYjYxYWU5ODA1YzIyYmI1OTY4NzhkYzdlZTY5MmJhYWM1MDFhZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDNiNDQyYzg5OWFmNmVjODdkMzBiMTk0ZGFlNTYwNTlmYzJhNTM3YTlmZWYyMjU4ZWI0N2IzODc5NmM0ZTdmNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDgxYjIwNGM3NzdlMDgwODU3ZDU0MjJhN2UzMTJjZGVhNmNiMmUwMGI3OGE1YzMyMWY0MDI3ODBlNGRlMjVkNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://examples/bin/java-producer-consumer-demo.sh#L19-L22",
+          "version": "repo-lines-v1:sha256:f5ddee16abad3e069527197aae9ab81f366b3dc479b15873115cbacf1e18c390:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2U5NDYyZmE2YjkzYzBkYTVmYWE1Mjk5OWFiYjYxYWU5ODA1YzIyYmI1OTY4NzhkYzdlZTY5MmJhYWM1MDFhZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDEzNmUwYWEyOTFlYTljMWNjNjUwZGE0YmY3NDFjMWE0NWNhYjU0NTY5YzBiOTNlZDQ2MWY1NDM5NmE3MzgzNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDgxYjIwNGM3NzdlMDgwODU3ZDU0MjJhN2UzMTJjZGVhNmNiMmUwMGI3OGE1YzMyMWY0MDI3ODBlNGRlMjVkNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_e11ab3df5e874b8fb5fdda1d6c097133",
+      "statement": "KafkaConsumerProducerDemo recreates my-topic, then runs a producer thread (async unless the second argument is sync) and a consumer thread in group my-group, waiting up to 5 minutes.",
+      "evidence": [
+        {
+          "resource": "repo://examples/src/main/java/kafka/examples/KafkaConsumerProducerDemo.java#L40-L68",
+          "version": "repo-lines-v1:sha256:06c9b811c4958a831387e3c236d989ec2cbab88271ee0b471cfa9641960406fc:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmZTRiMmU2NzBhOTYyMjRmOWU5NGQ4ZDVhNzkwMTA5ZTBmOTA5ODU0YWZlMmUwN2ZhYTExNmJlOTU0ZWIxZjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1MjJjNDJjZDE5YzZkMDNkODA4YzQ1MjcyMDU1MjgyNWI3ZWExYzViNDkxYjIxODUxMWNhYzc0MTVjZjlkOWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY3Y2JhNDlmMzUzZmRhZGI5ODY3Njg0MWMzYzNhZTIyZDAwNjFjYTFkMGNlODU1NTgxN2NhNjI1ZWUwZjc3MGEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIzMTc0Yzk4NmZlZWEzYTE5MzliY2I3YTAyNTEzMWZiNjZiMzRjMDhkOGIyZjRjNzIzNDNkODE1NGY4YTNlZDAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7dc0d0eb72084982916c1b0c12865752",
+      "statement": "KafkaExactlyOnceDemo takes partitions, instances and records, pre-populates input-topic with an idempotent producer, runs ExactlyOnceMessageProcessor instances, and verifies output-topic with a read_committed consumer in group check-group.",
+      "evidence": [
+        {
+          "resource": "repo://examples/src/main/java/kafka/examples/KafkaExactlyOnceDemo.java#L28-L118",
+          "version": "repo-lines-v1:sha256:e4995661b61e6609004467471f1610d8d8d668a0a8094c087debc6bc771ae1fa:eyJzZWxlY3RlZExpbmVDb3VudCI6OTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwZjQ1ODY2MzAwZTgwNWNmODhmYmUzNGI1ZjcyMGJmYjJkZDBkMTU1Mjk2MDBlNjUwNmMwNzkxNjFhYzM1YzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM0ODg5MGQ5MWE0ZjUxMzFjNzA4NDRmYWJlNzk3N2YzY2ExMTIxZjU5M2U1NWY5MzRkNjA5YzEyMGE2NDA3MmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJjNDA3MDk1NGIzZGYxNTcxNjZhMjA3MTYyNjhmOWQ4ZTRkOTgwMTMxZGExZjJiNjNlOThmOWJlMjc4Y2EzMDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIxZTNkMmMxMWVjOWFmZTZhMDJjY2FmZjExNDE2YjUyMzcwYzhhYTFlYTE5OWU1YzczZjNlNGQ0NDg4ZDlkOTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2fd45559decd4abb9f84d2b947660897",
+      "statement": "In the example Producer, async sends use a callback that treats non-RetriableException errors as fatal, and sync sends treat AuthorizationException, UnsupportedVersionException, ProducerFencedException, FencedInstanceIdException, OutOfOrderSequenceException and SerializationException as unrecoverable.",
+      "evidence": [
+        {
+          "resource": "repo://examples/src/main/java/kafka/examples/Producer.java",
+          "version": "repo-file-v1:sha256:d2f620256f7a907b189a23547dba00bded531900a4de05ae80a51c044a711aad"
+        }
+      ]
+    },
+    {
+      "id": "claim_9f78142e97a847eda1cb10c0e225712f",
+      "statement": "TransactionalClientDemo aborts and rewinds the consumer on TransactionAbortableException, restarts clients on ApplicationRecoverableException or other KafkaException, and treats InvalidConfigurationException as fatal, committing consumed offsets via sendOffsetsToTransaction.",
+      "evidence": [
+        {
+          "resource": "repo://examples/src/main/java/kafka/examples/TransactionalClientDemo.java#L95-L156",
+          "version": "repo-lines-v1:sha256:86ced7d05f21adad74b5bf4fa40b55462fc8862c35840e0bf09850b5d8e86a30:eyJzZWxlY3RlZExpbmVDb3VudCI6NjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUzZjQ1NTI5OGE0MTNlZjM2MzllY2NlZmNjNDYzMmQ3NDMzYmFlNjRjYTdlOTU2ZDFjOTJkMTNmMTc4ZGFmMWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM4NTQ3MGNmMGMwMzMxOWE1YWQ5NDEwNTZlNjM0ZTdjOWFhMzQwZjliNDEwMGFlMTQ5MzgwZDNjN2U2ZWE3MzkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMzMjRmMTQ1MTMwMDQzMDcxYTVjYmIwNGYyYzA5YzQ5MjkzZGExZjA3ODYxNDc3NDRkMGM3NWYxM2VlMDcwMjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFjYTFiOWQ0ZGJhZjM5NTM5M2QxNWY3YTY3MTAwNTQ4YTQyN2I0NGFhNGU0MmQ2ZTljNDgyOWUyOGVkYjZmMzUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

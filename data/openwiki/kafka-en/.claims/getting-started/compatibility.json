@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:0cf4cb1b953f5057b45bb85b9806c828890444021c1a3f74f26311c592420c08",
+  "claims": [
+    {
+      "id": "claim_20da35d89c31404d953ca47817e2226c",
+      "statement": "In the Kafka 4.0.0 JDK matrix, Clients and Streams support Java 11, 17 and 23 while Connect and Server require Java 17 or 23, and Java 8 is no longer supported.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/compatibility.md#L31-L140",
+          "version": "repo-lines-v1:sha256:3fa0df4c90b1aa8a9dafc51e95779821a9b0d9264ae93b3e74247df588b16f69:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEwLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJlM2UzNWZmNzI0MTA5YjBjOWEyZTE2MmI0Y2FiMDk5MGRmMzk5MjUxNTQ5YjY3NDBiODRlMmViODRmOGVmZjAzIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI5YTk3MzY5YzQwYTJlOTNmZDJlNDA5MDAzYWU3MTNlMTk3ZjBlNWZlYjYwMjc1NjVlYWI4NTY1MDZhNTZmMGZhIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI1MTRlZmJlMmNiMDU1NWFmMjc3OTE3N2E4YzU5MmYyYmMwNjhlYTA2ZDI4ZDExNThlNjZlZGEwMTI0MTFjMjIzIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2MGM0Zjk3YTJmZWYyZjE2ZjM5MjM4MTRjMmE3ZTc0YzQ4ZTk2ZTliMWVjZmM2OGZkMGRiM2UzMGEwMmY0ZDE5In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_37799582e86c4a89ae545e96a49ef38a",
+      "statement": "KRaft clusters from 3.3.x to 3.8.x can upgrade to a 4.0 server only with static voters, 3.9.x and 4.0.x support both static and dynamic voters, and upgrading from static to dynamic voters is not possible.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/compatibility.md#L142-L276",
+          "version": "repo-lines-v1:sha256:dc03a8e276f1bb655bcc1f1e15a15c93c8600246749adff22ef6d160052593e4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTM1LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI3M2QzNWQxYjllYWRkMWYyYWE1NjU1ZWYyMzcwZjhkZDMxMWM2YTc1YjNjZmI3MTk0OGZjZTQ3ZTkwY2Q2ZmQ4IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJhYzk4M2U2ZWY4MjlmMzJlNzM3Y2QyOWRhYzliMWMwNjNmYzA0OGE3NzU3YjFlNTQyYWRlYzZjYTE3MTE4ZWQ4IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJjYTU3NmRmZTM5ZWNhMWViZTE5MWMyYWY0NzAzMDlmZGFjODA3N2JiNjg3ZDk5OTJlNDU5NjdlYTE4YTVjODEyIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJkMGIwNzdmZjJhNTNkMWNmZDhlODhhYzgxOWRmZjNhYzc3MmYyOTE4MWVkYzBlYTg0NTliY2JmYzJiN2Q3MDJkIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_33887ed96bc94d31b09b337377280c83",
+      "statement": "Clients, Streams and Connect at 0.x, 1.x and 2.0 are not compatible with Kafka 4.0 because pre-0.10.x protocols were removed (KIP-896), 2.1-2.8 are partially compatible, and 3.x is fully compatible.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/compatibility.md#L278-L348",
+          "version": "repo-lines-v1:sha256:74dbc870146cc6ec40e928cfefa43dce97a5eaab2ab95449e2b530774d087eb1:eyJzZWxlY3RlZExpbmVDb3VudCI6NzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE4ZWJhMzdhYjkxMjM2NmQ4ZTZmNGMzYjg0OWM1NDljYjYwNThlYzc2ZDU0ZWFhNWE3NDk0MGU2Yzk3Mjg5OTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA0YjBhOWE0Nzk3Mzg3YjNjZGQyYTU2NjFiY2QxNDExOTVkOWE1ZGViZGVhYmEwYTIyZjRlM2M3NmYzNGY2MWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBlMWVlOTA4ZTM4NmY5ZWE0MmU3NGJhNWNmNDFjNTA5YmExYzZiNzRjZGJjYWZhNjI2MWE4NmJmM2IwZjBlYzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUyYTcyNDllNzUyYTk2YTViZDEyNjAzYmNkMDBjZTE1MWZmNTJhYWMxM2Q0NzUyODM0ZjE2YzQ1NDY0NTViZGUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e65ed1feeaed407fafb84d2aad6c975f",
+      "statement": "Starting with Kafka 4.0 the --zookeeper option was removed from admin commands in favor of --bootstrap-server.",
+      "evidence": [
+        {
+          "resource": "repo://docs/getting-started/compatibility.md#L350-L350",
+          "version": "repo-lines-v1:sha256:fde0a815ca6befb7a51ff4b2ba6bbb547484f3586570510654062d082fc757cf:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmRlMGE4MTVjYTZiZWZiN2E1MWZmNGIyYmE2YmJiNTQ3NDg0ZjM1ODY1NzA1MTA2NTQwNjJkMDgyZmM3NTdjZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmRlMGE4MTVjYTZiZWZiN2E1MWZmNGIyYmE2YmJiNTQ3NDg0ZjM1ODY1NzA1MTA2NTQwNjJkMDgyZmM3NTdjZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzJiM2Q3ZTgzMzhlNDIwNGY3Njc4Mzg3YjkwNDFjM2MzOThhYzQwZTQyMTk1OWNiYmYwNDYyNWZlNGQxODdkNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_a0158bba30ff41e4a0fade88cc0a04b8",
+      "statement": "Java 17, 21 and 25 are fully supported, Java 11 only for clients, streams and related modules, and the docs recommend the latest LTS with G1GC arguments such as -Xmx6g -Xms6g -XX:MaxGCPauseMillis=20.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/java-version.md",
+          "version": "repo-file-v1:sha256:b54dc5dc9d8fb8fab69b6e32ffd75e8ed6eba8cfb44184afa3a359d13072f8f6"
+        }
+      ]
+    },
+    {
+      "id": "claim_29e276ad994a44d9a9fd45fc6ad9705a",
+      "statement": "The build targets javac release 11 for clients and streams and 17 for other modules, and Scala 2.13 is the only supported Scala version.",
+      "evidence": [
+        {
+          "resource": "repo://README.md#L15-L20",
+          "version": "repo-lines-v1:sha256:56a8c7963788c84f81e38666e1ac4a9faedb92f5f5032297c739ff712815ed35:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWNjMDFiNDRlNTYyYmI4MTRjYWE0MzExZWE5MTI0ZTBhOWQ2MDM2MmQwNWQ2OTEzNWNjZTMyZjM5Zjg3ZDhkMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzZiZGJjNjcyOTU5M2I3ZmZmNjZkM2VmYzJhOGFkN2QzNTFhZWJlMDZjOGQyZWFjZGI2NDVlMTE5YWQ5MmEwMyJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:812cde9453eb97b9f148ae8c7d433b27d70ea8e39d3a46826ac9fdd8e153969f",
+  "claims": [
+    {
+      "id": "claim_f746045b7f4348408a00eaae24034d46",
+      "statement": "In share groups, partitions may be assigned to multiple consumers, membership can exceed the partition count, records are acknowledged individually, and delivery attempts are counted.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L246-L262",
+          "version": "repo-lines-v1:sha256:95719d273dd3dea7018b31c95b5bc4649c971dfe78a870b09a53543bc02d3c6c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRhYjYzODJhOTY3OGViNDEyMjkwYTA3NDI3ODNhZTY4MDhhMzBkOTE5NmU2ZmE4NGUyNzQzNzE3ZjcwOWJkYjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI0YTZhNGMxODYwZTU2ZDU4NjcyMjNhYjk1NTk5ZTlmZGNkOGJjNTYxMTk1OGZiNmIwNGUwNjc5MDdkM2IxZDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJhODVlMWRlM2M0NTAyNmRhMDg5ZDBiZmI3NGZmMjczODU2MzVkNGQxZTg4Nzk0YmE1ZmNkOWJhNmMzNzM1NmUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cd1dfbf021954f47b05afc069e599fd3",
+      "statement": "Fetched records are acquired under a time-limited lock (default 30 seconds via share.record.lock.duration.ms) during which they are unavailable to other members, and the holder can acknowledge, release, reject or renew them, or let the lock expire.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L264-L276",
+          "version": "repo-lines-v1:sha256:354fdcc7e386fc240e3acb0aec681508516d9e14ba70da0138ae5fc2671f1994:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEwOGQzYTAwYzYzMDk2NzljZWJhZDk0NWQ1ZWNiY2ZmM2Q5OWE3NWZjM2UwNjE2YjAwOWJmNmYyNmY0OWZkZWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE1ODRhMzEzNmQwZmE0ZWY1Y2I2NTMyNTk2NDRlNDM5OGNlODBhOGVjYWQ5YWM3MjI5MjFlZDQxNDZhMGFhOTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4cfa1d291af64919bd227ddf4c8430b4",
+      "statement": "group.share.partition.max.record.locks limits acquired records per share-partition; once reached, fetches yield no records until acquisitions drop.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L278-L278",
+          "version": "repo-lines-v1:sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWM5YmRhNGUzZmY5ZTE4YjM4MWNkMmFkMTY5NjY1MmM5NDMzZDMzY2ExY2VjNTFkYWEzMjA1NGE0Y2M1ODMzNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzEwZTMzMDczOTcxNDc5NWExNjAwMGY2MTI1ZDhjZDM2ZjU5MGIyNWMzMzk2Mzg2NDUyMDliYThmYWE5NTkxNCJ9"
+        },
+        {
+          "resource": "repo://docs/generated/kafka_config.html#L1675-L1684",
+          "version": "repo-lines-v1:sha256:f24e425214ec6d0b2d6accc470871afa161b726bfe6bee0f54514a7de51dfee9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVlZDY5ZmRmYWM5OTViZjU0NWNkZDQ2OGY4Y2Q1ZDBlY2UxOWIzN2U2Y2M0MTg2Yzc2YTVlNDJlNzk5NDMzMjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiOWZjMGYxY2NmOWUyZWQ2MjMyMzczZjAwOTFlZTAxNGFmNDJmNjg2MzEzMzZhNmE0ZGQ5NDdmNDIwMTE0NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlkODJjODYzMWMxOTkwMjAwYmRjMDA3NzMyZGZhNjJlNjFlNDVlYWMzOWQ1ZTk4ZDJjYjE5ZWU2N2JiMmVmMjYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a03afa8335ff4776b8b08d47ae38d678",
+      "statement": "share.acknowledgement.mode defaults to implicit, where ShareConsumer.acknowledge() must not be used and delivery is acknowledged on the next poll or commit; explicit mode requires calling acknowledge().",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/consumer_config.html#L623-L632",
+          "version": "repo-lines-v1:sha256:3441a05a02813806623e7891ceb7421bd7eb5b549dfed3a1b4684e42125e6b8d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJhMGYyMTEyYmVhZWI1NTJiNWZkMjcxZjRlMWUxNmE3ZjFkN2Y4OWQwYTc1MDU2NTNiOGQxNTg4NWQ3YjAzYmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYmJhYTQwMzk5YTlkZGE1M2ViNjUyMTdlOTkyZGFiNTcyMzdmM2E1NWY0YzNmMjllZmM2MWJlODhmZjlmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFjMjU2MTEyOWJhZThhMzg5MmIzYjQwMzRkMTIwN2YxYzUyNWE4ODg5NzIzZWEzZWNmOWNjY2IyMTg2NDEwM2MifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_13412cc20ba64fcfaf68323e27bf691f",
+      "statement": "Share-group DLQs require share.version >= 2 and are configured with errors.deadletterqueue.topic.name per group; topics must use the errors.deadletterqueue.topic.name.prefix (default dlq.), auto-creation is disabled by default, and self-created DLQ topics need errors.deadletterqueue.group.enable=true.",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/kafka_config.html#L1202-L1222",
+          "version": "repo-lines-v1:sha256:9185872b2bd1f31e94ec8f4c5828d6a9ef2ca0c58d8f984c410f61a51cf66390:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlNTAxOWViODljNGU3MGZlODlkNWZkNzdjMWQ2NmQzNDI3YjIyNzdiZjM1ODEzM2NhOGNlMjQ1YzA3ZWEwYWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiOWZjMGYxY2NmOWUyZWQ2MjMyMzczZjAwOTFlZTAxNGFmNDJmNjg2MzEzMzZhNmE0ZGQ5NDdmNDIwMTE0NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY0OTZmOTRiMzU5NzQ1OTdkZTRiZWQ2NzY4ZmIzZjlhYzlkMmYzNDljZmMyOGYxZjhhNDE3MmY4YTNkMTRmOWMifQ"
+        },
+        {
+          "resource": "repo://docs/operations/basic-kafka-operations.md#L365-L407",
+          "version": "repo-lines-v1:sha256:3f45565c7e94eaa7165cb1ec96b0e4bc29be2cc0bfba7e8434fd992bc40ccc2c:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwY2ViMDk3ZmNmZWU1MzNiNmRlNGE2NTZjNGVmZTE3MGFlZTc4YmRkNjQ3ZGQ3MTUwMjAwMWEwZjJmNDljNjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUyNjA5N2IxYjdmYWY5OGUwNDI4YzVjNDcxYmMyMThhYzBiZDI4YzI4MmFjMzMxYzI0MTE1YzczZjA0Zjk2MjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNlNzZkZDYzODhlMzJjNmM2NDk1ZjdmMGYyMzBkMzU4MzhjZGMwZjgwMGQ0MmY2ZTFlOTRiOGQ5YThmOGE5NGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ee2da97cefa54de68c432379d779370b",
+      "statement": "Group-level share defaults include share.delivery.count.limit=5, share.partition.max.record.locks=2000, share.auto.offset.reset=latest and share.isolation.level=read_uncommitted.",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/group_config.html#L53-L142",
+          "version": "repo-lines-v1:sha256:ac7a6e29b777efe4f3b60fd7aaa839818a8db4c2ec43d2ef37183c3e1e878019:eyJzZWxlY3RlZExpbmVDb3VudCI6OTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2MGFiNjhhMjBlMmI3N2IwZjVlYzgwNTQzMDY3YTU4YjM1MjVhMjg0MzAwMWMwMGEwYjZkMWIwZjJhODg2MGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYmJhYTQwMzk5YTlkZGE1M2ViNjUyMTdlOTkyZGFiNTcyMzdmM2E1NWY0YzNmMjllZmM2MWJlODhmZjlmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVhOWZiNGIwYzRkYzVkYjc2ZTVhNTBhOTYyMzM2ZWM2MmU4NzhmMDU2NzAyMDc4ODc2ZmFmMTAzNWVmMzRjYWIifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

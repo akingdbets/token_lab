@@ -1,0 +1,6 @@
+# Files
+
+- [Compatibility and Java Versions](compatibility.md) - Which Java versions each Kafka module supports, which older KRaft clusters can be upgraded to 4.x (static vs dynamic voters), how old clients, Streams and Connect interoperate with Kafka 4.0 brokers (KIP-896), and the recommended JVM version and GC settings for running Kafka.
+- [Running Kafka with Docker](docker.md) - How to run Apache Kafka from the official Docker images — the JVM-based apache/kafka image (since 3.7.0) and the experimental GraalVM native apache/kafka-native image (since 3.8.0) — with pull and run commands, when to use each, and how they fit the quickstart.
+- [Introduction to Apache Kafka](introduction.md) - What event streaming is, Kafka's three core capabilities (publish/subscribe, store, process), how servers (brokers, Connect) and clients fit together, the main concepts (events, producers, consumers, topics, partitions, replication), the Kafka APIs, typical use cases and the wider ecosystem.
+- [Quickstart: Run Kafka Locally](local-quickstart.md) - Step-by-step quickstart for a single-node KRaft Kafka — download and extract, generate a cluster ID and format storage with kafka-storage.sh, start the server, create and describe a topic, produce and consume with the console tools, move data with Connect file connectors, a first Kafka Streams WordCount, and teardown.

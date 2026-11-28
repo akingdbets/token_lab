@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:36641b523c25c19462375aecdb6768850cb6d4b6d80eb9674e014e8dea3c33e3",
+  "claims": [
+    {
+      "id": "claim_050a48fceb4c4ed3b178e82fc4aa33e6",
+      "statement": "The Connect REST server defaults to HTTP on port 8083, can use listeners.https-prefixed SSL settings that replace unprefixed ssl.* settings, and is also used for follower-to-leader forwarding configured via rest.advertised.* options.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/user-guide.md#L262-L291",
+          "version": "repo-lines-v1:sha256:33cf3283dee640bd37df5bcbb95320cdc695384d64f415926f091b4153a6e249:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJlY2MwYjA0N2NmNDI0ZmVhZGY3NjI5YjZkMTk3OTFlNTgxYmJmMTRiMTY2MDhhZjhhY2Q2MzE4MDYxOTIxOGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNhMWRmOGQyMmViMGJkODMzMGRlNDYxYTFlM2I3NzRiNWM3MDg2MzFiYzFkMThjN2M4NTJjZjMzNTVmNTA3NTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg2YTI0NTJjNjEzZTg5Y2Q1MjM3YmYzYjVlYWY1ZTgxMmE5MGE1YmQ0YjVjM2Q1OGUzNGZlZGI1YzU2MzQ1ODEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE0OTZlNzgyMGNmZTkyYzkzOGE4MjEwZmQ3ZmE2YTJkNTM0YzBmMzkzNDU5N2M4ZDEzNWZkOGM4YzM4MWExYjQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e4b47492d3a443798d0c2761dbef4d12",
+      "statement": "Connector offsets can be read, reset or altered via KIP-875 endpoints, and reset/alter require the connector to be in the STOPPED state; sink connectors share a common offsets format using kafka_topic, kafka_partition and kafka_offset.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/user-guide.md#L314-L357",
+          "version": "repo-lines-v1:sha256:9808d8459cd072e9f30c2e27efa23f5781b4e5c7c3745d2b508d1a41fabc216d:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3YTc0M2ZlNjIwMjgzZjdlYTRkZTY2ZGQ1ZWQ3NjlmYzc3MTJhZDUyMGExZTExZGUwMTYyNDQ1NTUwMGYwNzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNkODQ5OGRmNTFmMjNkNjFkZDEzMWZmYjM1NGNhOTM5MDY1Njg2YTU3NDIxNTA2ZDUyOWJlZGM0ZmU2ZDFhMDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM1OWE2YmJmMzBhYzk3NWViODlkMjA3ZDAwOWIwOGQ5MThlNTljYWFhNzJhMzFkNjA4YTRmYTcxMzMxNTY0MzAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0983efb31af44db88cef676405cbb135",
+      "statement": "Since 2.3.0 Connect uses incremental cooperative rebalancing (eager available via connect.protocol=eager) and waits scheduled.rebalance.max.delay.ms, default 300000, before reassigning a departed worker's tasks.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/administration.md#L29-L37",
+          "version": "repo-lines-v1:sha256:10e4149bc5b5403c7b4b12fe48b24619e58241cdc218817cdd23822a36cf1b17:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWZiMThjMjIxOTRiNWUwMjMzMGQ5ODJjZDViMzM4YzEwMjkzNDM1YjkyN2Q3OWY0OGExMmQyMzg0OWQ3OGY4NCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTc5YjcyM2NlNWFmZGNiMjJiMzc3YzdjZmZjY2Q5MDc1ZjVmYThkMTEyYTE3MmQxNGM0NjFkODNjMjAxOWYzMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWMzNWYyZjA0MDI1NDc2MTEwODQzNDJmNjE2MDJhMTBiZjVhODIzNWFhYzU0ZTFlNGE4ZTgwNGVkMzFmZmNiZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTRiYTNkZWM4ZjYzY2E0YWI5YjFlYjcxN2EzYmM0MWZhZmMzMmRkNWMyZDRjNmI1ZjgzMmU0ZmFkZTc0YTE2ZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7987d9937ebf4153b1fed68488637a68",
+      "statement": "Connect does not automatically restart failed tasks, and restarting a task during a rebalance returns 409 Conflict.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/administration.md#L68-L68",
+          "version": "repo-lines-v1:sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjk1NzlkMWM4NWI5NmZhNmJhYWVjNTFhNDI5ZjFkM2QzYzcwOTEyYTM1ZWZlZjc0ZTk3YTRkYmUxMGYwOThlYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTZiZjUwYTM3MTRhN2Q4Y2NhZWNiYzkxYjg3YzdhYmVkNjI3MzI5ZmU1MzNjNzA5NzJiYzZmYTUyNGMxNjU1MSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_d2765b237439495ba8d7dc8168005bbe",
+      "statement": "By default Connect fails fast on errors (errors.tolerance=none, errors.retry.timeout=0, no log, no DLQ), and errors.deadletterqueue.topic.name routes failed records to a DLQ topic.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/user-guide.md#L396-L436",
+          "version": "repo-lines-v1:sha256:ed90939202e092d44e06af1887395dcf065d22f0df2a8c51e43ae608d3f8f637:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwOWIzZTJiM2UzODkwZjhkNGEwNGMyZjU2NTYxOWM0NmJlN2UyNTFlZmIyYWIzOWUzNTQ4ODgzMmY4ZjEzMmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUwMjU4MzY2NmM5MzRmNThlNTg2N2JlODM4ZGM2ODFhYzliZmRiNzFkM2JkNWQzNzAwNjNkZjZmMzM2MDFmZmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY1ZGY4YzY0OTBjNDIzOTY0ODA1OWQ4NTQwYWFlMDkyNWMzYWQ3MGY5MmZlYWUxYjY3M2NmNDViNTNlOGNlZTQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6abe24f69dbc4f74a1b9fec536914423",
+      "statement": "Exactly-once source connectors require distributed mode and exactly.once.source.support=enabled, reached on existing clusters through two rolling upgrades via preparing; sink exactly-once needs consumer isolation.level=read_committed.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/user-guide.md#L438-L452",
+          "version": "repo-lines-v1:sha256:ccc9c4a2fb4b622eec4d699c33ba18c43f859bd3c2a78526e5948afb8cb7fb4b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE4ZTdkN2U2YWMxYTAyZjA2MjA3NDNjODQwZThiMjBjNjQzNjY3MjBkNDI2OTQzYWEzZjYxYjZmMTdmOWY4ZDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNjMmUyZjQ4MGQzZmFjNmE0OTg0YzZkOWY4ZDFkYjU1NDdhZmM3NzU4YTFhODk3YzE2MTFhYTFmODUxN2Y1NWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY2Yzc3MWNjYTVkYjZkZTI4NTdlZjFmYWMxOTIzZDUyMDExYjE4YmFiNGExMDJlYTVhNGIwZjEzMTUxMzZhNGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBlMDQxOTM5ZjNlZjk5ZTQ0YmNjZGE2NWY2ZGJjYWViNGQxMWQ0NjZhZTYyMWNmOGY3NDg2N2NhZTM1MTdmYmYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d267c39bb60644658c4e77d49c4a3785",
+      "statement": "Since Kafka 4.2.0 it is recommended to set connector.client.config.override.policy=Allowlist, which becomes the default in 5.0.0, because the REST API is unsecured by default and plugins run arbitrary code.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/user-guide.md#L516-L518",
+          "version": "repo-lines-v1:sha256:a8db7e8728f397e86129c8401668b2807ab6a745d50d258cd6b748fdcd6cdd01:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzgzNDA0ZmQ4NmMzZDVjNDU5OTk5YWFjZWMwNDc4NzZkMDM2Y2U3MWNhM2IzZTQ4ODhmZjg0ODA5ZjlmOWY2NyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTBiNTg0YjE1YTU5YThjOGExNzYyZmVmYzMzNTAzOTQxZWY2MGQ0YTk3YmE4YTZhY2ZkMDVhNTYxM2FhMGY2MiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2ZkYjA2NmE1MTE2MDEyMDgyNDI4OWE4NTEwODkxYjQ2ZTAyODkwMjlhOGY2MzQ3OGUwZmFhMDQ1ZDNhMWE3MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTg0MmMxNjgwOWM2OWVjYjA3Yjg2YTBjZGYxYjA4MmQ4Y2JkMjJjMzgxNGU2MThjNWE1Yzg1NmYzYjRmZjJkNCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_2b801402d1d44d0db9bf5cea966a1fb1",
+      "statement": "Connect workers need Read on their group and Read/Write on the config, offset and status topics, plus Write/Describe on TransactionalId connect-cluster-${groupId} when exactly-once source support is enabled or preparing.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/user-guide.md#L520-L598",
+          "version": "repo-lines-v1:sha256:94578f5eecf4b53ba91c81bf0ed605df26c2f06ffaaea34358ebd5185ae2bc64:eyJzZWxlY3RlZExpbmVDb3VudCI6NzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdhNDM3MDgyODAzYTQ0NTI1YzEwZWNhYjBlNjc1OTA5YmU5MTU1M2VmNzMwNWFiZmYyMGYyODgwYmExMjFjNjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA0YjBhOWE0Nzk3Mzg3YjNjZGQyYTU2NjFiY2QxNDExOTVkOWE1ZGViZGVhYmEwYTIyZjRlM2M3NmYzNGY2MWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ0ZmQ2NzVhMzdlN2Q3MzI4NWVjYmFlZGQ4ODE3Y2I2ZGJhZDVlZWVhZTU3OWEwZTM4MjJiYzY1NTViYzUzYzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM4YzJiYjA4ZDY0OTc2YTM4ODExNmY4ZWM5YWFlZDYwYmQyMmI1ZjNhYzBkZjAyZjJhZDNkZmY3YWVkZmZkOTcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

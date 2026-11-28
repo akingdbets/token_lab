@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:c20a3b8314056f01930b3bbe772bedb76d7ec944ce1eec807be2009af004e672",
+  "claims": [
+    {
+      "id": "claim_24e33ecf9c0141edafe6105f854abf9f",
+      "statement": "Standalone Connect runs all work in one process without fault tolerance and takes a worker config plus optional connector properties or JSON files, storing source offsets in offset.storage.file.filename.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/user-guide.md#L31-L62",
+          "version": "repo-lines-v1:sha256:ba2a062a3d14300195bd9de65c8fa5949b2ebf4a1a3cbb8373281f9a75134af6:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUyYzFkN2NlNzI4YjMyZjk4NzFjM2EzMDlmMWI5MmU2NmEyMmY5ZWFjODA1MDNmNWVmZWFhMGQ5NmU2ZDdkMGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxMGRiNmMxYzUwMThhZjRhYjIzODMyOTJjNWE2MGRmMmZlODhhZTg1YmNkZDIyNzljYjY1MjRkM2M2NmU1ZjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI1MmI3NTI1MTcxNzFlMDEzZDQyMmRhNDEzNWNmNzcwZjk3ZTg5NmUyOGUxMTE4MWU3MzY5MzRiNGQ4NDViYTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdmMTlhMDZlZDE2YWNlMDdjZWMxYTg3NjkzOTgxYjUwNDA0MjVkY2I2OTQ3YzdjNzc2YjliOTQ1MmEzZDU5OTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7f25023e29c0462498caab8c3f8eedba",
+      "statement": "Worker-level client settings apply to internal topics, while source-task producers and sink-task consumers need producer. and consumer. prefixes; only bootstrap.servers is inherited unprefixed, and per-connector overrides use producer.override. and consumer.override.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/user-guide.md#L53-L57",
+          "version": "repo-lines-v1:sha256:9dc35312920dfa0ac6a4747c14bbc0dd22aaf768f7f7180bb159c7cfcf6c8ca0:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWNkMWU5ODM4NzVhMjg5NGJiYWQzMjYxZTFlYzg3MzkyOGI3OGM4YzE5YmMyZmVmZmEwZWQzZTgwZGUwMTA0NCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTBmZDdiMWI0ZTExYTczMmQ4YzVkOTAyNTU4OTY4YmQ0YTAxZmM1NzEwODQyNDgwMjM4NWYyZmRhMmQwNGFhYyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_4ec191c169ef4587afc2d3ad35e358c1",
+      "statement": "Distributed Connect stores configs, offsets and statuses in Kafka topics; group.id must not conflict with consumer groups, the config topic should have a single partition, and all three should be replicated and compacted.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/user-guide.md#L61-L77",
+          "version": "repo-lines-v1:sha256:509d6bb2f4b12c394466532cd223767a199d31862c8f1745d243d90d199d9e6b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEwZmQ3YjFiNGUxMWE3MzJkOGM1ZDkwMjU1ODk2OGJkNGEwMWZjNTcxMDg0MjQ4MDIzODVmMmZkYTJkMDRhYWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIyNTliZWFhNDFjZWYzODUxZWZkMDZmYTIyMjU3NTEwNGNjYTU4ZmEwOTQwYTIxYjBlMzEwNTllYTcwYzBhZjYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_88ff45123eb44990bc584f7459a2654b",
+      "statement": "Every connector config has name, connector.class (full name or alias) and tasks.max, and sink connectors must set either topics or topics.regex.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/user-guide.md#L81-L104",
+          "version": "repo-lines-v1:sha256:fdd8dfe3089088efae0f2fa8018d95e13c818878679c00e6c28fdb303739e95b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEwMGRhMWI2NmI2OGI0MDc1MTg5ZDc4NWU4ODllODA3ZjgzODM2NGQ0ZjFkYTA2OWZjNzk5ZjgzYzQ5ZjUyODIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk4NTU4NzBhYjIzYzcxMzBmZjQ1ZGRkZWZmOTcxMjYyNzk4YjE3YmFlYmVkZTM1ZGQ2MjdhYzJiNmRjZTIwMGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIyNTliZWFhNDFjZWYzODUxZWZkMDZmYTIyMjU3NTEwNGNjYTU4ZmEwOTQwYTIxYjBlMzEwNTllYTcwYzBhZjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMxYzdiODEyMGYzMmQ1Y2RhZjk4MGRmNTNhNWI3MWJkMjVhY2M4MzBkOGQwYjA2MDVkN2MyZmU2NDFjZGU2ZGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_baafb3890a0f418ea76bc011192854fa",
+      "statement": "plugin.discovery defaults to hybrid_warn since 3.6, with only_scan, hybrid_fail and service_load alternatives, and bin/connect-plugin-path.sh can list and sync-manifests incompatible plugins.",
+      "evidence": [
+        {
+          "resource": "repo://docs/kafka-connect/user-guide.md#L454-L487",
+          "version": "repo-lines-v1:sha256:e9f38cefb666f6208731fd52e11ba2db6ccf8e852ee18103855f8f5a9ac6689e:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0MzU5ZDk0OGRhNmNmNzk3YjBmZTFiZjQwZjRmNjBiYmZmODdmZmQzMTk3NzYyMTQ3OGNkMDEwZWYxYTU2NGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2YTQzYTc5NzVmMWYyY2Y1YTI1YWUxNGFkYzA4ZWNmNWQ3YzFlNTZjYzk0Y2U1NjBjMzViZWVlZDNmZGVhMjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBkZGY0NzIxOGUwZjdlYWJmMzA1YzEwMmZiYzQ0Yzg4MjE1MGE3ZDQyOGE5NWMyN2FiOWNlYTAzNDNmMWMxNDYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM0NWNhNTgxOTA0MzdiMDEyNjkyMmU3NzYxYjIwMjdmYTEyY2ZlNGI1YmVkZGUwZTRjMGVjYTQxMWQ3M2JiNDEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2206911b352d4f24ab4d1ff8ebfa8568",
+      "statement": "In plugin.path each direct child directory or archive is loaded separately for isolation, and config provider variables must not be used in it.",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/connect_config.html",
+          "version": "repo-file-v1:sha256:3351cafaddac3661737efd1252ead2f24cb0176dc3cfea6e7d6bbd05e06580e2"
+        }
+      ]
+    },
+    {
+      "id": "claim_89cc0c2692084c36a01a966abf840e28",
+      "statement": "The shipped connect-file-source and connect-file-sink properties copy test.txt to topic connect-test and back to test.sink.txt using FileStreamSource and FileStreamSink.",
+      "evidence": [
+        {
+          "resource": "repo://config/connect-file-sink.properties",
+          "version": "repo-file-v1:sha256:6c61c53f00f40e6cb9fb1c5b6543747cf61745ba68e79a8cb96f5bf73dd1c26a"
+        },
+        {
+          "resource": "repo://config/connect-file-source.properties",
+          "version": "repo-file-v1:sha256:0d3a6a5582a797b15e095b0c7fd4b0c12df096f7dbd85db32866bb42322a6d5f"
+        },
+        {
+          "resource": "repo://docs/getting-started/quickstart.md#L144-L204",
+          "version": "repo-lines-v1:sha256:602d5567de4af5594ab01941215617cf2684bece5ce05e68d6bfc7382cfe92b5:eyJzZWxlY3RlZExpbmVDb3VudCI6NjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmOGVkZWVhMGY2YjNkZTM2YTQwZTdmN2MxNTRmYzczODkxNDY2OTIwYjY1YjY3YzVlODBkOWIyZDc4OTI2ZDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE2ZmE0NjJjYTBhMTVjZmEzNzUxZTgxNGE1OGQxNWQ4NGQzYWUyYzcyZTFjMjU1N2MzOGJjM2ExYzhlMGU0YzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFiYjM3ZGE5MWU2M2I5ZTcxMTk3ODRlMDc1ZDMyZTZmZTIzZjM1MjdiYTRhNTNkZTJmZDgyZjVkZjRmM2VhODYifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

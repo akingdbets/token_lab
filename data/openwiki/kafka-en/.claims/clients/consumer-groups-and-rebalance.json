@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:43100355bd7b7eaa90101be6bab04a5ebb28664270ab3d87003db2c2d33ab5c9",
+  "claims": [
+    {
+      "id": "claim_106c6bf11474439ebecd93d75e5e0fa6",
+      "statement": "The KIP-848 consumer rebalance protocol is GA since Kafka 4.0 and is enabled on the server automatically, controlled by the group.version feature flag, but consumers must set group.protocol=consumer to use it.",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/consumer_config.html#L63-L71",
+          "version": "repo-lines-v1:sha256:2f5476d8325b8c2a314be5e6730932932d589b13c6ba8ba454e414835887cf08:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODk0MTBlNmNiOTQzOTVhYTU0MGIxMDBhYjA2YzI3OTRiYTJjOTEzNTcxZDI0ZjFhOGE3MWY4MjZmMzZmNzBjYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiY2I5ZmMwZjFjY2Y5ZTJlZDYyMzIzNzNmMDA5MWVlMDE0YWY0MmY2ODYzMTMzNmE2YTRkZDk0N2Y0MjAxMTQ2ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTI1NzM2NzdiZGZiZmVjNmVmYzFlYzEwMWUwYTdhZmMwOTA3Y2EyZjA5YTk3YjgyODU1YzFjZDAwZTM2OTg1OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNWYwYjE4ZWI1OTdjOGRmNWUwY2Q2YWMxNzVhMGJmYzQwYjliMWYyYWU2MGNmNDllM2VmZjhkNTUyNGVmNWYxYyJ9"
+        },
+        {
+          "resource": "repo://docs/operations/consumer-rebalance-protocol.md#L29-L38",
+          "version": "repo-lines-v1:sha256:ca509552687896ac204346b31a71a15038d4778140e45859afd4f2477f6f1dae:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxMzNiYjY0ZDViYjk4NzRlYmY5N2NiZDZiYWM2Mjc0OTU2ZGUyNzNmZDE4Y2Y2OTdmZjBlMDcwMjhkOTI2OTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgzM2NkM2QyMmRiMWE5YmMwYWZhZmYzNjU1NzRmMjdiYTFlMmExYzZjMDNmZmJkMTZjYTNkYTcwNzY5MjAxNWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljMzVmMmYwNDAyNTQ3NjExMDg0MzQyZjYxNjAyYTEwYmY1YTgyMzVhYWM1NGUxZTRhOGU4MDRlZDMxZmZjYmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJhNzZjMTZhMDdmOTk5ZDk1MmRiMzBiMjkzZjZkMjVhY2QxNTY0ZDE2OWRjYWZiNzQzNTA4ZGQ2ZmM0N2ZkMjUifQ"
+        },
+        {
+          "resource": "repo://docs/operations/consumer-rebalance-protocol.md#L64-L66",
+          "version": "repo-lines-v1:sha256:1f8542b77e8f2e4ff2d27f4942d59f57ebc80a7975fddde988b90e10e17e7f89:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzUyYzZlNzJkNmE5ZjllYzFkYjMxOGU5ZGYwOTQzYTJkMjNhMWQ2ZWU1YmQwNGQyNjQ5MDhhN2U3YjMzNGQxMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTY3YTAyNzc1ZWY4YzFiNTkzZDQ3ZDUzMzYwNjc1NDM5OTBlNzBiYjM1MjcxMjE5Mjg5MzdkOTg3ODM4MWU2NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGM2NjUxMDIwYTRmNTFkMjI5ZmJiODA3MTg0NTlhMWVhMTAxMzc1MDNhZTBlMTljYTIwZWI5YTAzNzA5ZTI2ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODI4NDc5NDYwODJjMTQ5YTllYWUwNzNiYjhjN2EzODU1OGVkNzY0N2ZmOTgwYjE3ZmI2ODgxN2NjZjgwN2RjZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c598ff45158f423eb2e535f3cb15d2cf",
+      "statement": "Under the new protocol heartbeat interval, session timeout and assignment strategy are controlled by the server (group.consumer.heartbeat.interval.ms, group.consumer.session.timeout.ms, group.consumer.assignors), and the client configs heartbeat.interval.ms, session.timeout.ms, partition.assignment.strategy and enforceRebalance() are no longer usable.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/consumer-rebalance-protocol.md#L40-L49",
+          "version": "repo-lines-v1:sha256:335eaf19014020086595d164a9aad803c965000eb558cd4d9798895a7c016450:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4NzE3OTMzNTk1MzI1YTE5YmM4NWQzNzQ2NDViNzcwNTZjOWFiZTIyMWZlZmYyN2M4N2Y2ODljOWIyZTlmMTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU0MzFhN2JlZTVkZmRkMTdiYWEwZjQ1OGI3MzdkMDNjMmZjYmNmZmUwMTk4MDY3NGI2ZTZmN2RkNDY5YTBmMDQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdlZDZmZjBiMzU3MmQ2OGY4YTNlNDIwMDNhZDhmYjdhM2QwMzIwNDBhMzg1NjlkOTFiM2ZkZWFhNWNhZjA5ODIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUxOTdmOWU4NTJiNjE3M2ViOGMxZTk0MTJjYjNiNjczNTRmODU1NTJiYTFhZjRjMTdmYmU2ZGI3YmJhNjdlYjYifQ"
+        },
+        {
+          "resource": "repo://docs/operations/consumer-rebalance-protocol.md#L72-L78",
+          "version": "repo-lines-v1:sha256:2549aca8ad70c66349e5ff31c736fb88298bc4e220d25803d8a75d9e90c778aa:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDJlMTVhYjZiZGJmODc1YmIzYzI3YjVjMGY0ZTc1ZjI5ODY0MTlmOTc5YjY1NzU1NTU1ZDU0NjI0MGZhNzA2YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzFiMjkwNDg2MmVmOWViOWU0NTdiOTk0Y2QzOWUwYjBmNjc2ODIxNzJhYjY4MDI4NGVhZDkzZWU5MmRlM2Q4NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODcwMTA4ZDQyMjQyMDMwNTk1MTFmY2YwMzE1ZDU4NzcyZmJiMjRkMjBmMGU5YTkyZTUyZDA2MWQ3NTY1NTQ1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_bf88d6613943428c9ed3c77a37f831cd",
+      "statement": "group.consumer.assignors defaults to uniform,range; the first assignor is the default unless the consumer sets group.remote.assignor, and custom server-side assignors implement ConsumerGroupPartitionAssignor.",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/kafka_config.html#L1279-L1288",
+          "version": "repo-lines-v1:sha256:9ce52c9f1d3b727f295a853064f6f9100f33d0a3fa86b861dd78280862a5beb7:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAzYmQxMGFkODQ5NDI5MGZiOTIxZmIxNmY2YmNjNDBkYTJhOTFmZWE0NTM3NzZhODMwYjJlMDhhNjFiYmNkMTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiOWZjMGYxY2NmOWUyZWQ2MjMyMzczZjAwOTFlZTAxNGFmNDJmNjg2MzEzMzZhNmE0ZGQ5NDdmNDIwMTE0NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNTczNjc3YmRmYmZlYzZlZmMxZWMxMDFlMGE3YWZjMDkwN2NhMmYwOWE5N2I4Mjg1NWMxY2QwMGUzNjk4NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ5NGYxYjIxNGU1ZWQ4NDczNTE2NDE2MDM2ZTA5OTdhZWNlYjBlMjU0Y2U3MmE2YzNlNmJiNWY2MGFmOTk4OWQifQ"
+        },
+        {
+          "resource": "repo://docs/operations/consumer-rebalance-protocol.md#L45-L49",
+          "version": "repo-lines-v1:sha256:e8b384c40d8515d610d890a02faf0c5b5439cf84ce3356ed1e41c83ab64045b9:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTQzMWE3YmVlNWRmZGQxN2JhYTBmNDU4YjczN2QwM2MyZmNiY2ZmZTAxOTgwNjc0YjZlNmY3ZGQ0NjlhMGYwNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiY2ZiY2Y5MTQzN2ZiOGZiYTNjNDFhZWI3YjBhMTBiMzAyOGU1MGM3ZDUzMzQ1MGQxMDU1MGY0YWFlZTZkMDMwOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTE5N2Y5ZTg1MmI2MTczZWI4YzFlOTQxMmNiM2I2NzM1NGY4NTU1MmJhMWFmNGMxN2ZiZTZkYjdiYmE2N2ViNiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_2698b680ed5b44d5a903668b64b95442",
+      "statement": "Client-side RangeAssignor maps to the range server-side assignor, while CooperativeStickyAssignor, StickyAssignor and RoundRobinAssignor map to uniform.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/consumer-rebalance-protocol.md#L52-L62",
+          "version": "repo-lines-v1:sha256:51a2681a1e2e2f1cc0acbf8add6f6176ed35905168f5ac36f025f3f256b2432e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU0YjhkZDE1ZGVhZjZkMDViZDViOTk4MDIxMjkxMDBhYTIzYWI2NjIzMmQ3MWU0ZmVkZjcyYzE5NDViYTczNGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUxZDYyZTFiMzJlZDIyMTM2NTJlZDkzOGZhYzA0NWU4ZWE2ZDM0N2JmMjQ4OTA5ODU1N2MzZGVmZTZiM2Q4NWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU0NWYzZThhMDEyNzQ0NDE5YjczZDI5YTMzNDIzYzNlMTc3MTg1NTg1ZTEwZmI3ZjhhNzcwZTc4MWMzM2M1ODUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2998b205e35546fd9b689565c6f296e2",
+      "statement": "Empty groups convert between Classic and Consumer automatically; online upgrade converts the group when the first new-protocol consumer joins, which only works if the classic assignor embeds no custom metadata, and downgrade converts back when the last new-protocol consumer leaves.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/consumer-rebalance-protocol.md#L81-L91",
+          "version": "repo-lines-v1:sha256:071a04ea1a680a68c7ef7ef6cce46b9f4289d4e28c883bcc88fc5067e4c330c5:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVkYTQ0OThjYzY3ZWEwZjBhMmJjMzllMzEwZTU3NmUxZGZmNGYyZWMwZWM1ZjUwYTg4ZWNhZTBiODA5NTQyYTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcwMjY3MWZiMDM4M2I3NGU3MThmY2Q2NGM3NTY5MzA2OGJiZjk3YTNjNjViYWQyYmNkNmQ5YTM5NjI3ZDMyYjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMjE1OWVkYTZmMDU0ODQ4YjExZTgyMWQ1MmNmZDU3YTExYzE4OTQzOTc2N2Y1Njk3OTk0ZGFjOWQ5ZjM2NzYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_93225da78aff451eaab4ba1ebb027740",
+      "statement": "Per KIP-1274, KafkaConsumer will default to the Consumer protocol in Kafka 5.0 and support only Consumer in 6.0 while the broker keeps Classic support.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operations/consumer-rebalance-protocol.md#L93-L100",
+          "version": "repo-lines-v1:sha256:1fe70d3e75e1724a6d6670675a4fb2268ded40470dfd8c740c5bb7a3889a08c2:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiY2ZmMzg2NTRmYTlmMGQ2ZmRmNGM4ZDg3ZjU4M2I2YTRmZDRhMTBkYTc4MWM4YzhiNDk0YjJmM2FmZThmNTU2YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiY2E3OTA0ZWEzMDJjMzdiNmFhYzY2ZTk2NjQwMjY0NmUxNWEyZWNlNjg3ZWU5YTMzYjY4YjQ3Zjc4MzVmYzdiZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDY5MTlhMWRkZmJhYjI4NDdlY2QwOTAxOWQ2ZDQ3YzA5YmIzNGU1NzcwMTY2Nzg2YTYyN2I0YzI4ZTUxMGQxYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYWEyNjZhNmRmODc3NWQzNmU3NDNiNjNiOGJhODNlYWFlODk4Y2MyMGFmOTc5ODRmY2UwZWY5MjU3OTEzZTdkMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c3bedb35f1fc4266ad67201e0936e534",
+      "statement": "Each partition is consumed by exactly one consumer within each subscribing consumer group at a time, so a consumer's position per partition is a single offset.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L157-L157",
+          "version": "repo-lines-v1:sha256:20953fe0adf9f9f2f87bf11881eab7723a0a3770503ae3092b87d729d3f27c2d:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjA5NTNmZTBhZGY5ZjlmMmY4N2JmMTE4ODFlYWI3NzIzYTBhMzc3MDUwM2FlMzA5MmI4N2Q3MjlkM2YyN2MyZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjA5NTNmZTBhZGY5ZjlmMmY4N2JmMTE4ODFlYWI3NzIzYTBhMzc3MDUwM2FlMzA5MmI4N2Q3MjlkM2YyN2MyZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWIwMDQ2ZDM1ZTNjMGM5OTVhZWE1ZGNmZjAyZDlkYWE2MTU5MDA1OGExMjcxZTNjMzg1YWRmNWIwNDQwOGI0NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiM2Y1NTlhN2RmODZkNDBiNjYxNTRiN2I0NTY5OTMxOTBiZGU4OWIwOTY1MmIwNmFhZGVhZjk4NDcxZTEwZmE0ZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7d0e73ac4aac471abc42288084ea3be6",
+      "statement": "Group-level configs consumer.heartbeat.interval.ms (5000), consumer.session.timeout.ms (45000) and consumer.assignment.interval.ms (1000) can be set per consumer group.",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/group_config.html#L1-L32",
+          "version": "repo-lines-v1:sha256:49740c3394896704112f0bf50b9ec93b6bdfc802a079e915d3a5eab6b69518c5:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc2OTFkMDIzNTM4MjJjY2Y3ODAwNDBhMWQ5ODExMDFiZjA1YjU0NzkxNGY1NTkzNzQwNTQ2YjY4M2RkM2MyY2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzYmJhYTQwMzk5YTlkZGE1M2ViNjUyMTdlOTkyZGFiNTcyMzdmM2E1NWY0YzNmMjllZmM2MWJlODhmZjlmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ1MjgxYTcwYjAwMDEzOWU1MzA2NGViZGZmY2FlMWNkZTk3NDM5OWYyOWEzYTNlZDMxNmI5MjQyYTNiZDg2YTkifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

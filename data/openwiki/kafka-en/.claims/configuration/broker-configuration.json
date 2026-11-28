@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:866663e7212a56bf1bb6c8f71ae3f46100914ebe583074c714c7eb3b124539f3",
+  "claims": [
+    {
+      "id": "claim_f9d20afb333f4d13a37aa4abe47715c2",
+      "statement": "The essential broker configurations are node.id, log.dirs, process.roles, controller.quorum.bootstrap.servers and controller.listener.names.",
+      "evidence": [
+        {
+          "resource": "repo://docs/configuration/broker-configs.md#L29-L37",
+          "version": "repo-lines-v1:sha256:1caa716a33f60cf743c5922fdbd5eaaa72feffa749f97f001b496c15267f8dbc:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGU5MDE2YzBlODU0OTRjMmI4ZGU4MTY1ZDVlZTI2NDA5ZDJlM2UyYWRlZWM4NDQ5YTI4YjRiOGNjNmMxMzUxZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWE4ZDdhYWM4OTIxY2VlZDEwYzFjYWY1YzdiYWU3YzVmNTFiMTJlYTVjMTg2MTk1Y2I5ODI5MjgxZGUwMDc0YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWMzNWYyZjA0MDI1NDc2MTEwODQzNDJmNjE2MDJhMTBiZjVhODIzNWFhYzU0ZTFlNGE4ZTgwNGVkMzFmZmNiZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjIwMTViOTE5MWJkY2UzNDQ2NjIyNmU3NWJiY2Q4ZjVlYTgxNTZkNjJlMGJmMjJlNjU0M2Q0M2RmNjJjNjMyYyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_06d89d3df6604bb5b580607879696d8a",
+      "statement": "The shipped config/server.properties runs a combined broker,controller node 1 with PLAINTEXT on 9092, CONTROLLER on 9093, log.dirs=/tmp/kraft-combined-logs and internal-topic replication factors of 1.",
+      "evidence": [
+        {
+          "resource": "repo://config/server.properties",
+          "version": "repo-file-v1:sha256:a20896da0834c1baf0271760d726ec06420b12767690a1f340e758d02c39b0db"
+        }
+      ]
+    },
+    {
+      "id": "claim_2cbbab344f1a485abb7fb136d08b72d0",
+      "statement": "Broker configs have read-only, per-broker or cluster-wide update modes, and dynamic values take precedence in the order per-broker dynamic, cluster-wide dynamic, static server.properties, then Kafka default.",
+      "evidence": [
+        {
+          "resource": "repo://docs/configuration/broker-configs.md#L41-L92",
+          "version": "repo-lines-v1:sha256:bacb38145ab398be3eb48bb72d6dfbd7b21ef2eb5ccd4a7fdd479efdf0ec553e:eyJzZWxlY3RlZExpbmVDb3VudCI6NTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUzMjdiZjJkYjYwZjAwN2I1ZmZhMTMwMTU4MGIyNDQzYTc5NmQwNTEzNjExZmJiOWFlZTNmNDdmYjljNWRiYTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIyMDE1YjkxOTFiZGNlMzQ0NjYyMjZlNzViYmNkOGY1ZWE4MTU2ZDYyZTBiZjIyZTY1NDNkNDNkZjYyYzYzMmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg1MTY5NDIyY2ZiNWRiYmI4ZGIyY2FhNTk0NjNiMDFjYWYzY2UwNTEwMzFmY2ExYWNkNTFkZDc1OGYzM2FjMTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1532b0277d6945588d5f69c4cb65f392",
+      "statement": "Listener SSL keystores and truststores can be updated dynamically per broker using the listener.name.{listenerName}. prefix, with trust validation only for the inter-broker listener.",
+      "evidence": [
+        {
+          "resource": "repo://docs/configuration/broker-configs.md#L94-L113",
+          "version": "repo-lines-v1:sha256:6b0d5e3d2a7ac33068a0bd7046f7a2ae71f9848aa7ca2b2d4b79b2ca05da2429:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2ODk5YjFhMTI0MTE4NzQ1NGE4NmQ2YjU2N2NlYzc5MjRhMTkyY2IzOTU0NzQ5MTMwNWVmMTk5OGVjYTY3NTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVmNDhjYzg2MWQ5NDVmZGJiMTFhZDUyOTM2NTBlMjg2M2ZmNjE4NmNiZjRiOGRjOTlkMGUwNDIxNWU1OTJiODYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhjNTk0ZDE4MjMwNzU1NDcxOTA2Y2QwYTAzNDczYWU1NzkxYWM4NTQyNjcwODZjNzRiMzAzY2RmZDQ0ZTNiNDIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9872ae8be15840a7bb69b87a434ab054",
+      "statement": "Thread pool sizes such as num.network.threads and num.io.threads can be updated at cluster-default level only within currentSize/2 to currentSize*2.",
+      "evidence": [
+        {
+          "resource": "repo://docs/configuration/broker-configs.md#L160-L175",
+          "version": "repo-lines-v1:sha256:6f44a54a93a3800cbfc50b3a9c269a1c5d2f5da220f2d329cda3ca3f91aa0587:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA5MGQ1ZWNkYTVkNmYzZTViYjVkMGVhNWM1YzEwYTk2NmNhMGJlZTdhMjhkMTJmNjVhODc5MjUzM2JmZDMyNjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI1MGNiODQ4NDVlYTUzZjAwZTc5YjRjZjI4MGJiNzE2ZDY1ZGFmZDQwZjE5MmVjMGNmYmMxMWUyYzU4ODg4NzYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7b21fc97e13c414a96e9b550c732e64b",
+      "statement": "listeners, advertised.listeners and listener.security.protocol.map can be updated dynamically per broker, while the inter-broker listener is set statically via inter.broker.listener.name or security.inter.broker.protocol.",
+      "evidence": [
+        {
+          "resource": "repo://docs/configuration/broker-configs.md#L186-L198",
+          "version": "repo-lines-v1:sha256:30a805d13c2e37399a8069d3b1f00750af009385273a242ed82865d63aef98b4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVmMDA0NDE5OWNiNDFhZWE4MDY5NGM4ZGMwNWNjYWI4ZWIwNjMxNTc3NTI5NzM4YjUwMDBiZTU1ZjgyNmE2NmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhYjdjZjRkZTEzZmMzZmNhZjBmYjdlMzRiYzI1MTAwNTYyMDA4NTkzMzQ3N2UyY2IzNWNjYTQyY2RhN2Y5MWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_de1dcee829fd4e52909b7e078595deeb",
+      "statement": "broker.id is deprecated and will be removed in Kafka 5.0 in favor of node.id, and listeners defaults to PLAINTEXT://:9092.",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/kafka_config.html",
+          "version": "repo-file-v1:sha256:8c128d4daf2f63c6f5b4791019ef9bce78dc19abdd876c01b8d7106cd899cd29"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

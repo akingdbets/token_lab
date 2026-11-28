@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:40f287b598604e23b1da55cf0651a2510502ef0aa1757fd5d80840209e59d80a",
+  "claims": [
+    {
+      "id": "claim_866f3fa68ff84308b3ede6a545340654",
+      "statement": "Streams operations such as stream(), table(), to(), repartition(), groupByKey() and groupBy() require Serdes, provided via default.key.serde/default.value.serde (default null) or explicitly on API calls.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/datatypes.md#L27-L53",
+          "version": "repo-lines-v1:sha256:3d7b96f22e97d2edd576911c09c0bcdcecf79a49be2ae2274a43fc033b86dc75:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFhOGQ0MjhkY2ZlZDgwMGE5MzAyY2NiNTNkOTkyMWRiNDEwZGFiODU4MTFlMTQyMDIxNjFlNmRkZDg1YjU4MmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIxYzg4MjI2MzRjZDM0ZDgzZjU1MTFhZWM2ZTJlMWQxNjM3NWY0OWU2N2ViOTI3ODNhMTZlNDI0YjllNGJhZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYzOGE2NmI5YmRhZjI0ZWZlZjY3Mzg5ODUwMjIxZmMyNTRmZjgwNzVhYzZjMzMwZTQ5YjRhMjNkMDJhNDBlMzIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_857b77b47628431ab9dfcce65555bec1",
+      "statement": "Explicit Serdes passed via Produced override defaults, and Produced.valueSerde can override only the value Serde.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/datatypes.md#L55-L83",
+          "version": "repo-lines-v1:sha256:86393530e8afb01f5c891a426f1ab0ae88cadd7c94a38769529f790621b4fa81:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFlOWFmMTU3YWJkYWI5MTljNzdkOGJmNDVmZWNlOWRlMmQyOWY0YTVmZjEzYjYwMTRjNTlmYWFmYzNiNTg1MmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0YjI2OTQ1NjFmY2Y2ZjMxMmM2MTZkODJlNDgxNzU4NTc4MzQ1OTE0MGQ4MWM5YjAxZDhlMTZjNjhhYmQ2NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU5ODQxZjJjMDU4ZDJjYmM5ZDQyNmQ4YTNjZmU0ZDg4ODdlNGU1NWJmMjI2ZGUzNDFiMWQyMjY4YzJmZjdhNGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlhNDg1YTljNDNjMDVkMDI1NzU2ZDk1NjYxYWI5Mjk4Y2MxMmZlNzRjNDZkZDM5ODEyYTY5OWRhN2RhMDJhMTcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7c9c0c06f1f9491996486ba93f63a20e",
+      "statement": "kafka-clients provides built-in Serdes for byte[], ByteBuffer, Double, Integer, Long, String, UUID, Void, List and Boolean, and Bytes is recommended over byte[] for equality and ordering.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/datatypes.md#L85-L203",
+          "version": "repo-lines-v1:sha256:50f44796467c7eef955e621f9df3895f495ab1d708a918a36d278911f4d98081:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE5LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJjMWJmZTkyZTRhNzJjN2JjZmZiZTViMmVhNTc2ZWU4Y2Y0MDBlMmI0MzRiNWYwNmMwNWFkZDJkYTY1YzFkNTBkIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJiMGQ5ZWQ4ZWY3ZjA0NTY0MjVmYzc4ZWU5ODBlM2E4NjIwZjE1MDQ5ZjgxNDNhYTU1OGY4NjM1ZDdlNWYzYmZiIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJjYTU1ZTJkZjA2YzM4YmU2MWY2MWFjN2Y1MDZjMDM2NTNhZjVhNDE5NTAwZTdlZjk5MDNiMjFlMDMwNTVhMGQ5IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI0MzNiNmU2MmU4OTJhOGFjMmMyOGQ2ZTA0YzhlYWYzYzEyZmIxNjg5ZTNlMGUyODA5Y2FlNjliZjM1YTM3MTMyIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_0778976303494d7ea749bc99c9b68da2",
+      "statement": "kafka-streams provides TimeWindowedSerde and SessionWindowedSerde, and console tools configure TimeWindowedDeserializer via key.deserializer.windowed.inner.deserializer.class and key.deserializer.window.size.ms.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/datatypes.md#L215-L289",
+          "version": "repo-lines-v1:sha256:b5491e35f3c6771c80b4305407c994de43f3da35966a3558d8fb2d13847ec634:eyJzZWxlY3RlZExpbmVDb3VudCI6NzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1NGFmMjA3NzY3N2NkZDQzYTNhMTcwNmY4NTQ5MTU2MzM5MWE1MzUxYmU5MDZiYzExZDBlZmY4MzIwMDJkNjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFmZjg3ZTM5YzM5OWE1MWUzNjMxODYwMGMyNGU2NThkOWQ4ZjFiNjlmY2FmMjgwYmNhZGI0YWQ3MzA4YmEzNWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ4ZmZhMWFhNTFmNWMyNjA1NmNiNDI2MTExZWI3N2QwMjYxZGMxZmY0NjRiYmJkZmU4YTk1MzA4OGUxNThiZWYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_eb5b794fbd9e485aa0d6e12576de7fc0",
+      "statement": "StreamsConfig.WINDOWED_INNER_CLASS_SERDE and WINDOW_SIZE_MS_CONFIG are deprecated in favor of serializer/deserializer constructor parameters.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/datatypes.md#L290-L297",
+          "version": "repo-lines-v1:sha256:e907cef8c94a9ba1ee15bee4750b30cb62ab3b1f0a4a1652a255967ef77aae51:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWY1ODg5YjQxNjM5MDgzNTczY2VmZjc0ZDMxZDRhNGFkNzFjMjQyYzlhMjRjY2RmZjZmODliOWU2ODg0YWEwMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDdhZDJmZDk1ZTQ2YWUyZTJiN2I0OWVhZTI3OWIwOGE2NGYyNTMwMTVmNjRlYjc5ODFlZjI1ZmRiMTZkZmJhYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzY2OTU2NzA5YWFhNDI1Zjk1ZTkwYWI4OTAxNmFmYTU0MDkzYWZiYTZiYjk5YzJiMjg5MTQxY2I5YzBkNWE4NCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_eb6cc262a378452bab42061f19eb4f85",
+      "statement": "Custom Serdes implement Serializer, Deserializer and Serde from org.apache.kafka.common.serialization.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/datatypes.md#L299-L307",
+          "version": "repo-lines-v1:sha256:2b40525cbcd96268cc6e2ab5dad68f5152d8e0f835305f29f4663a704cdd8268:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTM1MmNjZTlmODQyODE1NzE1ZmNkYjUwZDAxOGUzZWFkNzVkZjlkM2IyYzEwMWQ5ZGVmNjllMmEzNGJkN2MwYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNmEzY2Y1MTkyMzU0ZjcxNjE1YWM1MTAzNGIzZTk3YzIwZWRhOTk2NDNmY2FmNWJiZTZkNDFhZDU5YmQxMjE2NyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzJhMDM5OTk1YTczN2YzNmNhNGY5MjUwMmVhNjBmOTE1OThiZWY3NDhmNzI2MDZjZmNkZWYyMmU3YWEyMjRkYiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_cc7e6ae5765047f8990b2bc65b749d7f",
+      "statement": "kafka-streams-scala is deprecated as of Kafka 4.3 and will be removed in 5.0, and migration means using Java types directly and configuring Serdes explicitly.",
+      "evidence": [
+        {
+          "resource": "repo://docs/streams/developer-guide/scala-migration.md#L27-L104",
+          "version": "repo-lines-v1:sha256:0be876ee11863b111b7b8839737f065958d4a903f7f02868475b9cd24aa1821d:eyJzZWxlY3RlZExpbmVDb3VudCI6NzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIxYzg4MjI2MzRjZDM0ZDgzZjU1MTFhZWM2ZTJlMWQxNjM3NWY0OWU2N2ViOTI3ODNhMTZlNDI0YjllNGJhZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

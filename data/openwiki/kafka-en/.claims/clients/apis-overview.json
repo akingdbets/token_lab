@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:5632d5ed8f23e066f8989a53866e2a07db7d11e0d407099a7a8228d72b8ab4e0",
+  "claims": [
+    {
+      "id": "claim_01f80425b1104bcf8c58f202128abb6a",
+      "statement": "Kafka has six core APIs: Producer, Consumer, Share Consumer, Streams, Connect and Admin; only the Java clients are maintained in the main Kafka project.",
+      "evidence": [
+        {
+          "resource": "repo://docs/apis/_index.md#L29-L37",
+          "version": "repo-lines-v1:sha256:b11f013dcd23f24f22050d76136eb9fc02b4fc6ba81ebc910e754e6169692d11:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTE4YTBlZTNhZDZiMmU2MWQxMWVmMDU1OGQ1M2JiMDgyNzM0NTA1MjJlOWQ2YTk5M2RmOTI0OWUxYzc5ZDJiMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzVkY2FkYWQzNzM3MDIxZjU0NGNiZjE1OWU3MjRkZjcwNjc4Mjc4YzA2NDRlMjNiYmRiNjViOGI5NjAwOTRkYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWMzNWYyZjA0MDI1NDc2MTEwODQzNDJmNjE2MDJhMTBiZjVhODIzNWFhYzU0ZTFlNGE4ZTgwNGVkMzFmZmNiZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2M5NDVkNDBjYzBjZjJkNGQzMDBmMGU4OGNiODQ3MmMzODUwZjY0YzliYWU4NDc3NmU5NDNlYjNlMzI1ZTYzMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_30aab0a807674300b4c3a1a868f0d8bf",
+      "statement": "The Producer, Consumer, Share Consumer and Admin APIs use the kafka-clients artifact while Streams uses kafka-streams, and kafka-streams-scala is deprecated as of 4.3 and slated for removal in 5.0.",
+      "evidence": [
+        {
+          "resource": "repo://docs/apis/_index.md#L39-L141",
+          "version": "repo-lines-v1:sha256:4e83ff9e5a7159b7e55aace52174d14e1ac4b15c19c91472a08b2ba663760764:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAzLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJiMDVmYmZiYzM1NzEzYmEyMjQ0MzdiYTc1MDRhYjIxOWY2MGU2YTcxNjAzMTkxMjQ0ZWM5OWVkOTdjMzU0YTUzIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0N2MwNmM1NjFkNWMzMjczNDM2ODUyNjhhNDZiMzM5MWYzOTk4ZWVlODkwZDJiZTUxZjBkMjFjYzRhNTNhZTZkIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI0OGVjNWVkYTE3ZDdhYjQzNDkwN2Y4ODYwODczYjRlY2U1ZTMzNGU5N2QxYjc0MjBjMmMyYmM5MmFhZDA3MTk4IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MiwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJmNTYyMWM4NjZlNGQ0MzRkYmQ1NzE2YzQzNDU5Y2VjY2Y5N2Y2ZjMxOGM5NDczMDU1M2JiNjM2ZTZmMDM0ZjA3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_5c44279b1dea47f2a908b0d81471a582",
+      "statement": "The Gradle internal API checker registers a kafkaInternalApiChecker task hooked onto check that fails the build on unsuppressed references to classes not marked @InterfaceAudience.Public, and can be skipped with -PkafkaInternalApiChecker.skip.",
+      "evidence": [
+        {
+          "resource": "repo://docs/apis/internal-api-checker.md#L30-L77",
+          "version": "repo-lines-v1:sha256:3d5e4a86109c1c9ef20e9fcb04588df4bf28f85674feca55c0e06f5087183097:eyJzZWxlY3RlZExpbmVDb3VudCI6NDgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1NzdhNGU1OWQxNDU0NWVkZmU0Y2ZmOTA0MzMyZmVkNDhjNWRjMjFhZmViMTEyYWUwZmJlODRjNDEyOGY3MzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFkYTgyZmFjMWJjZjQyYjdmZTEzNDUwOWI1NzgxNjJmZDlhNGMyYmM5M2Y5NWQ2ZmE0N2JlNmNkODY1NDYyNTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI1MGFjODNjMThlMTUxZDhhYWJmODU3NWI2ZjRlZjRjODI2ZmQzZjM3MjI4MzdhYThmNmE2OTUzN2RmY2I1OTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fc317f91ad9a4422b1996bb99c9ca841",
+      "statement": "The checker derives the public surface from Kafka libraries on the compile classpath, so depending on a pre-KIP-1265 Kafka release makes every org.apache.kafka reference a violation.",
+      "evidence": [
+        {
+          "resource": "repo://docs/apis/internal-api-checker.md#L133-L147",
+          "version": "repo-lines-v1:sha256:d153caf7ad9924f5b232051009fd7d5f2b139276626a3917182d875e49041fd7:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZmNDQ5N2VhMDBmM2Q5ZTY3N2JhMTJkMzAyNmJiYzg4OTcxYTYwZGM2MWIwN2RjMTYwYjg5YjcwNTE3OTM2YTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYyMjE0ZTM5YjZiMzI4ZDBhZDRiZDQ2ZDJhYmNlOWJkNTNhOGYzMGE2ODY1M2Q2NWRiYTlhNzU4Nzg5Yjg2MDciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg4YmY4MTdjZmNjNDZmNDUwNWNhYzAzMTk3ZTg4ZjQ1MGMzNWM0OTgzZjU0MTFlMjE1MmUwZTZmMmU1NWI5ODEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg0YmYyZWVhN2RhMzg2NThjODU4OTdmNWYzNGE0NjEyMTE5Y2RlZDc3MzIzOTQ3YjM0ZDgzNzFhYzZhZTQyYTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8939129083624e58b3daac175dd4d8fe",
+      "statement": "Intentional internal references can be suppressed with @SuppressKafkaInternalApiUsage, and suppressions are listed separately in the kafka-internal-api-usage.txt report.",
+      "evidence": [
+        {
+          "resource": "repo://docs/apis/internal-api-checker.md#L97-L131",
+          "version": "repo-lines-v1:sha256:76deee30a8cbb9196b5e6e8979df8591033f55fd3e8c42da4faa523fc36e3c45:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRiZmMzZjdhYTBjOWY1NjJmZDBhNTliZTAzMThlNzJlNjVhZmY4MmMzOTgzZjNkNGRlYjFmYmM5ZDY4Y2RhMGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI0Y2Y5MGY2ZDQxNzQxZjk5YzU5MDhmNGU5YWI1MTZkYjJlNzdhMTkzNGQwZmI1ZmFkNjVmZDU5Y2ZmMWUyY2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2M3MmZjNzdhYzNlMDNlM2ZiMDFkYmQ4YjViNDBmMzMwODBmMjdlMWY3MmJlZDA0YzIzN2QzYWJmZTYyMzkifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}

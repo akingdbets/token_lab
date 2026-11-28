@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:c41c4f4453524dec01ee245a169e5e25a628cc12facd713e9192e9339ba75af6",
+  "claims": [
+    {
+      "id": "claim_56425dd225d84714a17735ac38af79dc",
+      "statement": "The Kafka consumer pulls data by issuing fetch requests that specify its log offset, and long-poll parameters let a fetch block until data (optionally a minimum number of bytes) is available.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L137-L147",
+          "version": "repo-lines-v1:sha256:37c0e0e7fa7d8f11da2f168e73521b6e92f824a9f162a84611facc956daed3e9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUwMzg5ZDEwYWM0YTRmNmY1OGYzOTFjYjBlZjQxZDEwMTBiMDM0YTI2OTJhMGI0MGU0YWZiMjMzMTE4M2Y2ZGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI1YTUwYzM5NzRmYzRhMzA4YjUyOTRkNTEzNGQyM2Q2MDI1NThmNGQyNmE2NmE4YWJiZmRlNWUzNTE2MGI1ZTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU0OTNiZGU3ODY2YjFmNGVjZDQ3NzhiODEwN2ZkNWM1ODI5OGUwYzhhODI1ZTZmYmZjMzVkM2NlYmJiMmE3MzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM2OGI2YjljZmEzYzFhZTJmYTkwYmY1NjNlMmIwZTQ2ZTNmM2E2M2JkMTBiZDE0YjM1OGEwN2JhMWRjYjMwZDQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_daceaa4005604205b34c2c7f0aa01e5b",
+      "statement": "Offset commits go to the group's coordinator broker, are appended to the compacted __consumer_offsets topic, and are acknowledged only after all replicas of the offsets topic receive them; a coordinator still loading offsets fails fetches with CoordinatorLoadInProgressException.",
+      "evidence": [
+        {
+          "resource": "repo://docs/implementation/distribution.md#L29-L35",
+          "version": "repo-lines-v1:sha256:87a9deab32ad199e0367efac38796e4f1ba2c4e57e11f3db9cbf877ed45bb4ac:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjMxOTE5MGZhYjZhNzA4NjRiNDFjODI5ZTQwZDA3ZmU4YThlMmQwYWUxOTAxNGZjZDNjMzQ5YzI4ZjgzNDJlMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWJlZGYwNmNhZWI4Njg3NjYxZjkxYzE4NmY2MzZmNGI5YTRlNDYwMjgxODE2NDMwNmNjZmM4ZGViNjAxNGE5NyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWMzNWYyZjA0MDI1NDc2MTEwODQzNDJmNjE2MDJhMTBiZjVhODIzNWFhYzU0ZTFlNGE4ZTgwNGVkMzFmZmNiZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_289c4a0afa8a40ebaef8c55468702d00",
+      "statement": "The example consumer treats AuthorizationException, UnsupportedVersionException and RecordDeserializationException as unrecoverable, recovers from OffsetOutOfRangeException/NoOffsetForPartitionException by seeking to the end and committing, and disables auto commit when reading committed (EOS) data.",
+      "evidence": [
+        {
+          "resource": "repo://examples/src/main/java/kafka/examples/Consumer.java#L126-L149",
+          "version": "repo-lines-v1:sha256:d2c331e9184ecbb5370fadce056e48b728464861e8692de367d826235a50694f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVhNGFkOTk5ZGRmNmIxNmI1NDFjMTk3YzE5NDkwOWIzMWZkZDIzOWU1MTE3YzNkMDVlMGQ1NTU3NTE1M2Q1OTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5OWJkZWZlZWFjYTYzNDBlMDI5MGRjODZlODg5Yzg5ZDVlMTg5YWE1YmE0NGI1ODViM2I3MDczNGY0YTYyZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk1N2NiNjU2MTA0OTA3OTdmYTdjODc3OGUzZDMxOTUyYTM2MjAwNTFlZjEwOWZmMzAwZDgzMzk0MWJjMmU3OTAifQ"
+        },
+        {
+          "resource": "repo://examples/src/main/java/kafka/examples/Consumer.java#L96-L109",
+          "version": "repo-lines-v1:sha256:187c6fe3381398716549319c4b854514b47ba980c45c4cc919279c6f89bf0ae7:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFiYzllY2Q2NmZlZDU5YWIwN2Y1NzI3YmZhOTE2MzAxMjAzOWE5NDVkMjU4Yjk0YjMwNmIxNTk1M2NiN2ZmODAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjNjQ3OWNjMjMwNDQwZmQ0MWU4MjI0MjE4Njc5Njk4NTU5ZDI4OTNiZDY3YjQzODBhZmFiODExYjM4YTU1YWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUyMWRlODBmMjk5NzRlNWIzMmE5MTQzNmM1ZjgwOWFhMjQ1ZGVmNTI1MTBlZmVmNTJhZTAyYmY3NTA1MDc0MTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU3YjkxYzIxMDIyYjM4OWVjZDdiNWY1MDk4ZjcyMzdiNWYyZDMyMzE2NjE4ODg0MjRlYjNhYTFkYWQ3ODFjYjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c93be2ac7e6d4507bc8e1797c00ef9f9",
+      "statement": "Static membership is enabled by setting group.instance.id per instance; duplicate ids are fenced with FencedInstanceIdException.",
+      "evidence": [
+        {
+          "resource": "repo://docs/design/design.md#L167-L177",
+          "version": "repo-lines-v1:sha256:7fc74db0d648921d3cc92847caf511df43cee886f9353b53eb75c41f5d4b718e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkYzY5M2I3ZDQ4OGQ0NGY0NjhjYzY2YzNkMGZmYTE1MDVjZjY4ZDg2MzQxYmI4OWZjMDcxMjE2YjU1ZTE0MTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU1MGRlZmZkNTZiYzEyMGE1ZmQzYmY2NjQ3YWMyZGY3MTdhZDE2MjY3MzhiZTZhNDg1NjAwYjcyN2FhMWYzNmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYwMmIxN2MxMDhmOGIzYzY5NjQ2ZTcwMmIyNDM2NzMyNjQyNjA4NmJjMGU0ZGYzZTM4ZTlmODQwNmU1OTUwOTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMyNmE3ZjdkYjA2ZGM4MzlkYTgwNDdmY2Q1YzMyYjQxMGQ3ZjVkMmJlMzU0NjFmZjBmZjM5NTE4ZjU2MDNmOTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_10838bac94c44eefb8fb7bf28436aedd",
+      "statement": "Consumer defaults include auto.offset.reset=latest (also supporting by_duration), enable.auto.commit=true, isolation.level=read_uncommitted and max.poll.records=500.",
+      "evidence": [
+        {
+          "resource": "repo://docs/generated/consumer_config.html#L213-L330",
+          "version": "repo-lines-v1:sha256:bbad9359bfe128c2cce3151bc24b94a97c062ea8350728b274fa32b4e99c4a72:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI3NDY5ZDVjNTg2MzViMjUxYjczZTExMDUzYjc0YzA0ODIwNTYxOTQzZDEzZDQ5NzY1YmNjYTYyYjNkZWVlYTk3IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI5N2Q0ZjRlODk0NGI1ODNhMDUwMmM1ODhjOTdkNTU4NTQ0ODkyN2Q2ZDRlMTY4ODgwM2U1MjA1NWMwMmY3NjYwIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIxMjU3MzY3N2JkZmJmZWM2ZWZjMWVjMTAxZTBhN2FmYzA5MDdjYTJmMDlhOTdiODI4NTVjMWNkMDBlMzY5ODU4IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlYmNlYjZjNzQ3ZThjMjgwNmMwZmMzMmM4NmUzYWY5ZDRmNjMwMzBhOWQ4NDE4ODA2YzkzZWE5MDg5MDBlOThlIn0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T05:22:57.903Z"
+  }
+}
