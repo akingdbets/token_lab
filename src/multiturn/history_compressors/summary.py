@@ -138,8 +138,9 @@ class Summarizer:
 class SummaryCompressor(BudgetCompressor):
     stateful = True
 
-    def __init__(self, budget: int, summarizer: Summarizer | None, keep_recent: int = 1, token_counter=None):
-        super().__init__(budget, keep_recent, token_counter)
+    def __init__(self, budget: int | None, summarizer: Summarizer | None, keep_recent: int = 1, token_counter=None,
+                 ratio: float | None = None):
+        super().__init__(budget, keep_recent, token_counter, ratio=ratio)
         if summarizer is None:
             raise ValueError(f"{self.name} 는 요약기가 필요합니다 (--summary-model, --summary-reasoning-effort, "
                              "--summary-max-tokens)")
@@ -163,8 +164,11 @@ class SummaryCompressor(BudgetCompressor):
         calls.append(o)
         return o
 
-    def _finish(self, state, msgs, calls, **extra):
-        info = budget_info(msgs, self.budget, self.count, summary_calls=sum(len(c.results) for c in calls),
+    def _finish(self, state, msgs, calls, budget=None, **extra):
+        budget = self.budget if budget is None else budget
+        if self.ratio is not None:
+            extra["history_budget_ratio"] = self.ratio
+        info = budget_info(msgs, budget, self.count, summary_calls=sum(len(c.results) for c in calls),
                            summary_cache_hits=sum(sum(c.cache_hits) for c in calls),
                            summary_blocks=len(state["blocks"]), summarized_through=state["through"], **extra)
         info["_llm_results"] = [r for c in calls for r in c.results]
@@ -179,31 +183,33 @@ class RollingSummary(SummaryCompressor):
     family = "rolling_summary"
 
     def compress_past(self, past, current_user, budget_tokens, state):
+        budget = self.effective_budget(past)
         state = dict(state or self.initial_state(0))
         state["blocks"] = list(state["blocks"])
         turns = split_turns(past)
         raw = turns[state["through"]:]
         calls = []
         msgs = self._block_msgs(state) + [m for t in raw for m in t]
-        if history_tokens(msgs, self.count) > self.budget and len(raw) > self.keep_recent:
+        if history_tokens(msgs, self.count) > budget and len(raw) > self.keep_recent:
             fold_n = len(raw) - self.keep_recent
             fold = [(state["through"] + i, t) for i, t in enumerate(raw[:fold_n])]
             recent = raw[fold_n:]
             previous = state["blocks"][0]["text"] if state["blocks"] else None
-            target = self.budget - history_tokens([m for t in recent for m in t], self.count)
+            target = budget - history_tokens([m for t in recent for m in t], self.count)
             o = self._call(state, calls, fold, previous, target)
             if o.failed:
-                return self._fail(o, budget_info([], self.budget, self.count))
+                return self._fail(o, budget_info([], budget, self.count))
             state["through"] += fold_n
             state["blocks"] = [{"text": o.text, "first": 0, "last": state["through"] - 1}]
             msgs = self._block_msgs(state) + [m for t in recent for m in t]
-        return self._finish(state, msgs, calls)
+        return self._finish(state, msgs, calls, budget)
 
 
 class FrozenSummary(SummaryCompressor):
     family = "frozen_summary"
 
     def compress_past(self, past, current_user, budget_tokens, state):
+        budget = self.effective_budget(past)
         state = dict(state or self.initial_state(0))
         state["blocks"] = list(state["blocks"])
         state["recompress_turns"] = list(state["recompress_turns"])
@@ -213,28 +219,28 @@ class FrozenSummary(SummaryCompressor):
         calls = []
         recompressed = False
         msgs = self._block_msgs(state) + [m for t in raw for m in t]
-        if history_tokens(msgs, self.count) > self.budget and len(raw) > self.keep_recent:
+        if history_tokens(msgs, self.count) > budget and len(raw) > self.keep_recent:
             fold_n = len(raw) - self.keep_recent
             fold = [(state["through"] + i, t) for i, t in enumerate(raw[:fold_n])]
             recent = raw[fold_n:]
             recent_msgs = [m for t in recent for m in t]
-            target = (self.budget - history_tokens(self._block_msgs(state), self.count)
+            target = (budget - history_tokens(self._block_msgs(state), self.count)
                       - history_tokens(recent_msgs, self.count))
             o = self._call(state, calls, fold, None, target)          # 새 블록: 이전 요약은 넣지 않는다
             if o.failed:
-                return self._fail(o, budget_info([], self.budget, self.count))
+                return self._fail(o, budget_info([], budget, self.count))
             first = state["through"]
             state["through"] += fold_n
             state["blocks"].append({"text": o.text, "first": first, "last": state["through"] - 1})
             msgs = self._block_msgs(state) + recent_msgs
-            if history_tokens(msgs, self.count) > self.budget and len(state["blocks"]) >= 2:
+            if history_tokens(msgs, self.count) > budget and len(state["blocks"]) >= 2:
                 previous = "\n\n".join(m["content"] for m in self._block_msgs(state))
-                o = self._call(state, calls, [], previous, self.budget - history_tokens(recent_msgs, self.count))
+                o = self._call(state, calls, [], previous, budget - history_tokens(recent_msgs, self.count))
                 if o.failed:
-                    return self._fail(o, budget_info([], self.budget, self.count, recompressed=True))
+                    return self._fail(o, budget_info([], budget, self.count, recompressed=True))
                 state["blocks"] = [{"text": o.text, "first": 0, "last": state["through"] - 1}]
                 state["recompress_turns"].append(k)
                 recompressed = True
                 msgs = self._block_msgs(state) + recent_msgs
-        return self._finish(state, msgs, calls, recompressed=recompressed,
+        return self._finish(state, msgs, calls, budget, recompressed=recompressed,
                             recompress_turns=list(state["recompress_turns"]))

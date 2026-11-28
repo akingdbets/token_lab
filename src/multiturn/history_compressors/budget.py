@@ -3,13 +3,17 @@
 
 기록 토큰 = system 과 현재 턴을 뺀 과거 메시지 본문을 token_counter 로 센 합 (replay 의 history_tokens_compressed 와 같은 단위).
 최근 keep_recent 턴은 예산을 넘어도 원문으로 남기고 info.overflow=True 로 표시한다 (잘라 내지 않는다).
+
+예산은 절대 토큰(window_budget(2000)) 또는 비율(window_budget(r=0.5)) 로 준다.
+비율 예산 = 그 턴의 **원본** 과거 기록 토큰 × r (반올림, 최소 1). 체인 안에서도 앞 단계가 압축하기 전의 원본을 기준으로 한다
+(HistoryCompressor.compress_history 가 원본 과거 기록을 RAW_PAST 에 넣어 둔다).
 """
 
 from __future__ import annotations
 
 import re
 
-from multiturn.history_compressors.base import HistoryCompressor, HistoryResult, split_turns
+from multiturn.history_compressors.base import RAW_PAST, HistoryCompressor, HistoryResult, split_turns
 from multiturn.prompt import DOC_BLOCK_RE
 
 _QUESTION_RE = re.compile(r"Question: (.*?)(?:\n\nAnswer format:|\Z)", re.S)
@@ -38,18 +42,35 @@ def budget_info(messages, budget, token_counter, **extra) -> dict:
 class BudgetCompressor(HistoryCompressor):
     family = "budget"
 
-    def __init__(self, budget: int, keep_recent: int = 1, token_counter=None):
-        if budget <= 0:
+    def __init__(self, budget: int | None = None, keep_recent: int = 1, token_counter=None, ratio: float | None = None):
+        if (budget is None) == (ratio is None):
+            raise ValueError("예산은 budget(토큰) 과 ratio(비율) 중 하나만 준다")
+        if budget is not None and budget <= 0:
             raise ValueError("예산은 양의 정수")
+        if ratio is not None and not 0 < ratio <= 1:
+            raise ValueError("비율 예산 r 은 0 초과 1 이하")
         if keep_recent < 0:
             raise ValueError("keep_recent 는 0 이상")
         self.budget = budget
+        self.ratio = ratio
         self.keep_recent = keep_recent
         self.count = token_counter or default_token_counter
-        self.name = f"{self.family}({budget})"
+        self.name = f"{self.family}({budget})" if ratio is None else f"{self.family}(r={ratio:g})"
+
+    def effective_budget(self, past: list[dict]) -> int:
+        """이 턴에 쓸 예산 (토큰). 비율 예산이면 원본 과거 기록(RAW_PAST, 없으면 past) 토큰 × r."""
+        if self.ratio is None:
+            return self.budget
+        raw = RAW_PAST.get(None)
+        return max(1, round(self.ratio * history_tokens(raw if raw is not None else past, self.count)))
 
     def config(self):
-        return {"name": self.name, "family": self.family, "budget": self.budget, "keep_recent": self.keep_recent}
+        return {"name": self.name, "family": self.family, "budget": self.budget, "ratio": self.ratio,
+                "keep_recent": self.keep_recent}
+
+
+def _ratio_extra(comp, budget) -> dict:
+    return {"history_budget_ratio": comp.ratio} if comp.ratio is not None else {}
 
 
 class WindowBudget(BudgetCompressor):
@@ -57,19 +78,20 @@ class WindowBudget(BudgetCompressor):
     family = "window_budget"
 
     def compress_past(self, past, current_user, budget_tokens, state):
+        budget = self.effective_budget(past)
         turns = split_turns(past)
         kept: list[list[dict]] = []
         used = 0
         for i, t in enumerate(reversed(turns)):
             n = history_tokens(t, self.count)
-            if i < self.keep_recent or used + n <= self.budget:
+            if i < self.keep_recent or used + n <= budget:
                 kept.insert(0, t)
                 used += n
             else:
                 break
         msgs = [m for t in kept for m in t]
-        return HistoryResult(messages=msgs, info=budget_info(msgs, self.budget, self.count, turns_total=len(turns),
-                                                             turns_kept=len(kept)))
+        return HistoryResult(messages=msgs, info=budget_info(msgs, budget, self.count, turns_total=len(turns),
+                                                             turns_kept=len(kept), **_ratio_extra(self, budget)))
 
 
 # ---------------- query_select ----------------
@@ -155,5 +177,6 @@ class QuerySelect(BudgetCompressor):
     family = "query_select"
 
     def compress_past(self, past, current_user, budget_tokens, state):
-        msgs, sel = select_history(question_of(current_user), past, self.budget, self.count, self.keep_recent)
-        return HistoryResult(messages=msgs, info=budget_info(msgs, self.budget, self.count, **sel))
+        budget = self.effective_budget(past)
+        msgs, sel = select_history(question_of(current_user), past, budget, self.count, self.keep_recent)
+        return HistoryResult(messages=msgs, info=budget_info(msgs, budget, self.count, **sel, **_ratio_extra(self, budget)))

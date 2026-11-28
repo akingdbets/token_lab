@@ -22,6 +22,11 @@ LLM 객체를 감싸 같은 요청이면 저장된 LLMResult 를 돌려준다. l
 RESPONSE_CACHE=off 면 캐시를 읽지도 쓰지도 않는다 (hit 는 항상 False).
 
 스레드: 연결은 스레드마다 따로 연다 (sqlite3 연결은 스레드 간 공유 불가). 쓰기는 lock 으로 직렬화한다.
+같은 키의 요청이 동시에 오면 키별 잠금으로 첫 요청만 API 를 부르고, 나머지는 기다렸다가 캐시에서 받는다 (hit=True).
+예전에는 확인-후-호출 사이에 잠금이 없어 둘 다 미스로 호출하고 나중 응답이 행을 덮어썼다
+(2026-11-23 run 에서 none 과 window(2) 가 같은 요청을 동시에 보내 none 행과 캐시 응답이 갈림).
+이미 있는 행은 덮어쓰지 않는다 (먼저 저장된 응답 유지). 예외: 저장된 응답이 store_if 를 통과하지 못해 새로 부른 경우만 바꾼다.
+키별 잠금은 한 프로세스 안에서만 작동한다. 프로세스가 여럿이면 중복 호출은 생길 수 있지만 먼저 저장된 행은 유지된다.
 bind(sample_idx) 는 sample_idx 를 고정한 객체를 돌려준다. grader 처럼 llm.ask / llm.chat 을 그대로 부르는 코드에
 넘길 때 쓴다 (그 객체의 chat 은 LLMResult 만 돌려주고, 적중 여부는 last_hit 에 남는다).
 """
@@ -42,6 +47,11 @@ from llm import LLMResult
 
 CACHE_FORMAT_VERSION = 1
 DEFAULT_PATH = CFG.results_dir / "cache" / "responses.sqlite"
+
+
+# 키별 잠금: (캐시 파일, 키) 단위. 같은 파일을 쓰는 CachedLLM 객체가 여럿이어도(답변·요약·메모·judge) 공유한다
+_KEY_GUARD = threading.Lock()
+_KEY_LOCKS: dict[tuple[str, str], list] = {}      # (path, key) -> [Lock, 사용 중인 요청 수]
 
 
 def cache_enabled() -> bool:
@@ -93,6 +103,22 @@ class CachedLLM:
         self._lock = threading.Lock()
         self._conns: list[sqlite3.Connection] = []
 
+    def _acquire_key(self, key: str) -> None:
+        lk = (str(self.path.resolve()), key)
+        with _KEY_GUARD:
+            entry = _KEY_LOCKS.setdefault(lk, [threading.Lock(), 0])
+            entry[1] += 1
+        entry[0].acquire()
+
+    def _release_key(self, key: str) -> None:
+        lk = (str(self.path.resolve()), key)
+        with _KEY_GUARD:
+            entry = _KEY_LOCKS[lk]
+            entry[0].release()
+            entry[1] -= 1
+            if entry[1] == 0:
+                del _KEY_LOCKS[lk]
+
     def __getattr__(self, name):
         return getattr(self.llm, name)
 
@@ -116,11 +142,13 @@ class CachedLLM:
         row = self._db().execute("SELECT result FROM responses WHERE key = ?", (key,)).fetchone()
         return _result_from_json(row[0]) if row else None
 
-    def put(self, key: str, res: LLMResult, sample_idx: int) -> None:
+    def put(self, key: str, res: LLMResult, sample_idx: int, replace: bool = False) -> None:
+        """기본은 이미 있는 행을 그대로 둔다 (INSERT OR IGNORE). replace=True 는 저장된 응답이 store_if 를 통과하지
+        못해 새로 부른 경우에만 쓴다."""
         db = self._db()
         with self._lock:
             db.execute(
-                "INSERT OR REPLACE INTO responses VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                f"INSERT OR {'REPLACE' if replace else 'IGNORE'} INTO responses VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                 (key, self.llm.backend, self.llm.base_url, self.llm.model, sample_idx,
                  json.dumps(self.llm.sampling_info(), ensure_ascii=False), _result_to_json(res),
                  datetime.now(timezone.utc).isoformat(timespec="seconds")))
@@ -136,13 +164,17 @@ class CachedLLM:
         if not self.enabled:
             return self.llm.chat(messages, stream_ttft=stream_ttft), False
         key = cache_key(self.llm, messages, sample_idx)
-        hit = self.get(key)
-        if hit is not None and (store_if is None or store_if(hit)):
-            return hit, True
-        res = self.llm.chat(messages, stream_ttft=stream_ttft)
-        if store_if is None or store_if(res):
-            self.put(key, res, sample_idx)
-        return res, False
+        self._acquire_key(key)                 # 같은 키는 한 번에 하나만: 기다린 요청은 아래 get 에서 적중한다
+        try:
+            hit = self.get(key)
+            if hit is not None and (store_if is None or store_if(hit)):
+                return hit, True
+            res = self.llm.chat(messages, stream_ttft=stream_ttft)
+            if store_if is None or store_if(res):
+                self.put(key, res, sample_idx, replace=hit is not None)
+            return res, False
+        finally:
+            self._release_key(key)
 
     def bind(self, sample_idx: int) -> "BoundCachedLLM":
         return BoundCachedLLM(self, sample_idx)

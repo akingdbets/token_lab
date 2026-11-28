@@ -315,7 +315,7 @@ class ReplayStage3Test(unittest.TestCase):
         return rows
 
     def test_end_to_end_budget_table_and_prefix(self):
-        rep, llm, sum_llm = self._replay(self._cfg())
+        rep, llm, sum_llm = self._replay(self._cfg(cost_mode="cache"))   # 캐시 비용 지표까지 본다
         summary = rep.run()
         rows = self._rows()
         self.assertEqual(len(rows), 6 * (1 + 4 * 2) * 2)

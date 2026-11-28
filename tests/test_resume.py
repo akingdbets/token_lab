@@ -10,8 +10,8 @@ from __future__ import annotations
 
 import argparse
 import json
-import shutil
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 from unittest import mock
@@ -42,11 +42,13 @@ class ResumeTest(unittest.TestCase):
         self.eval_dir = mock.patch.object(CFG, "eval_dir", ROOT / "data" / "evalsets" / "claude-v1")
         self.eval_dir.start()
         self.addCleanup(self.eval_dir.stop)
+        # 실제 results/ 에 쓰지 않는다: run 폴더는 임시 results_dir 아래에 만든다
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.results_dir = mock.patch.object(CFG, "results_dir", Path(self.tmp.name))
+        self.results_dir.start()
+        self.addCleanup(self.results_dir.stop)
         self.out = None
-
-    def tearDown(self):
-        if self.out is not None:
-            shutil.rmtree(self.out, ignore_errors=True)
 
     def test_interrupted_run_resumes_without_redoing_trials(self):
         answers = {"n": 0}
@@ -61,8 +63,9 @@ class ResumeTest(unittest.TestCase):
         with mock.patch.object(LLM, "chat", chat):
             with self.assertRaises(KeyboardInterrupt):
                 E.run(args())
-            runs = sorted((CFG.results_dir / "runs").iterdir(), key=lambda p: p.stat().st_mtime)
-            self.out = runs[-1]
+            runs = list((CFG.results_dir / "runs").iterdir())
+            self.assertEqual(len(runs), 1)
+            self.out = runs[0]
             first = [json.loads(l) for l in open(self.out / "trials.jsonl", encoding="utf-8")]
             self.assertEqual(len(first), 2)
 

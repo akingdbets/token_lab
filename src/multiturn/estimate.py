@@ -31,6 +31,12 @@ replay 실행 행렬의 오프라인 비용 추정 (replay.py --estimate-only). 
     요약은 sample 마다 따로 호출한다 (응답 캐시 키에 sample_idx). 압축기 비교 비용 = 답변 + 요약 (실험상 비용).
     요약 추론 조건([sre=...]) 별로 요약기를 따로 둔다. 조건 none 은 추론 토큰 0, 나머지는 summary_reasoning_tokens 로 가정한다.
 접두부 공유율: 같은 체인의 직전 턴 요청과 메시지 단위로 겹치는 접두부 / 입력 (common_prefix_tokens, replay 와 같은 함수).
+
+presummary
+    저장된 사전 요약을 쓴다. 아직 없으면 원문 × 0.25 길이의 자리표시 요약으로 센다 (구축 비용은 build_presummaries.py --estimate-only).
+fact_notes
+    문서가 있는 턴 × sample 마다 메모 추출 1회. 입력은 실제 메모 프롬프트(fact_notes_v1)로, 출력은 목표 길이 + summary_reasoning_tokens
+    (notes_reasoning_effort 가 none 이면 추론 0) 로 센다. 비용은 "요약" 열에 합친다 (압축 LLM 비용).
 """
 
 from __future__ import annotations
@@ -90,6 +96,48 @@ class EstimateSummarizer(Summarizer):
                 "reasoning_tokens": self.reasoning_tokens}
 
 
+class EstimateNotesExtractor:
+    """API 를 부르지 않는 메모 추출기: 목표 길이의 자리표시 메모를 돌려주고 토큰만 센다."""
+
+    def __init__(self, model: str, target_ratio: float, reasoning_tokens: int):
+        from multiturn.history_compressors.notes import load_section_prompt
+        self.model, self.target_ratio, self.reasoning_tokens = model, target_ratio, reasoning_tokens
+        self.prompt = load_section_prompt("fact_notes", "v1")
+
+    def extract(self, turn, documentation, question, answer, sample_idx):
+        from llm import LLMResult
+        from multiturn.history_compressors.notes import NotesExtractor, NotesOutcome, target_tokens_for
+        src = count_tokens(documentation)
+        target = target_tokens_for(src, self.target_ratio)
+        msgs = NotesExtractor.build_messages(self, turn, documentation, question, answer, target)
+        text = " ".join(["note"] * target)
+        res = LLMResult(text=text, prompt_tokens=count_message_tokens(msgs),
+                        completion_tokens=target + self.reasoning_tokens, latency=0.0, model=self.model,
+                        finish_reason="stop", reasoning_tokens=self.reasoning_tokens)
+        return NotesOutcome(turn=turn, text=text, source_tokens=src, target_tokens=target, results=[res],
+                            cache_hits=[False], notes_tokens=target)
+
+    def config(self):
+        return {"estimate": True, "model": self.model, "target_ratio": self.target_ratio,
+                "reasoning_tokens": self.reasoning_tokens}
+
+
+class PlaceholderPresummaryStore:
+    """사전 요약이 아직 없을 때: 원문 × ratio 길이의 자리표시 요약."""
+
+    def __init__(self, corpus, ratio: float = 0.25):
+        self.corpus, self.ratio = corpus, ratio
+        self.manifest = {"placeholder": True, "target_ratio": ratio}
+
+    def get(self, page: str) -> str:
+        from multiturn.history_compressors.notes import target_tokens_for
+        n = target_tokens_for(count_tokens(self.corpus.expanded_text(page)), self.ratio)
+        return " ".join(["summary"] * n)
+
+    def config(self):
+        return {"placeholder": True, "target_ratio": self.ratio}
+
+
 class PrefixCache:
     """메시지 단위 접두부 캐시 시뮬레이션."""
 
@@ -133,7 +181,7 @@ def _round(d: dict) -> dict:
 def estimate(cfg, scenarios: list[dict], corpus, answer_tokens: int = 300, reasoning_tokens: int = 1000,
              judge_model: str = "deepseek-flash", judge_in: int = 261, judge_out: int = 101,
              pricing: dict | None = None, tokenizer_check: dict | None = None,
-             summary_tokens: int = 300, summary_reasoning_tokens: int = 1000) -> dict:
+             summary_tokens: int = 300, summary_reasoning_tokens: int = 1000, presummary_store=None) -> dict:
     pricing = load_pricing() if pricing is None else pricing
     prompt = load_mt_prompt(cfg.prompt_version)
     ap = find_price(cfg.model, pricing)[1]
@@ -144,8 +192,14 @@ def estimate(cfg, scenarios: list[dict], corpus, answer_tokens: int = 300, reaso
                                          0 if e == "none" else summary_reasoning_tokens)
                    for e in cfg.summary_efforts} if cfg.has_summary else None)
     # 압축기 생성 실패(llmlingua 없음 등)는 삼키지 않는다: 여기서 예외가 나면 추정도 멈춘다
+    if getattr(cfg, "has_presummary", False) and presummary_store is None:
+        presummary_store = PlaceholderPresummaryStore(corpus)
+    notes_extractor = (EstimateNotesExtractor(cfg.notes_model, cfg.notes_target_ratio,
+                                              0 if cfg.notes_reasoning_effort == "none" else summary_reasoning_tokens)
+                       if getattr(cfg, "has_notes", False) else None)
     comps = {name: get_history_compressor(name, token_counter=lambda t: count_tokens(t), summarizer=summarizer,
-                                          keep_recent=cfg.keep_recent)
+                                          keep_recent=cfg.keep_recent, presummary_store=presummary_store,
+                                          notes_extractor=notes_extractor)
              for name in cfg.compressors}
     cache = PrefixCache()
 
@@ -189,8 +243,9 @@ def estimate(cfg, scenarios: list[dict], corpus, answer_tokens: int = 300, reaso
             r["summary_calls"] += 1
             r["summary_in"] += call.prompt_tokens
             r["summary_out"] += call.completion_tokens
-            if sp:
-                r["summary_usd"] += (call.prompt_tokens * sp["input"] + call.completion_tokens * sp["output"]) / M
+            cp = find_price(call.model, pricing)[1] if call.model else sp
+            if cp:
+                r["summary_usd"] += (call.prompt_tokens * cp["input"] + call.completion_tokens * cp["output"]) / M
         if res.info.get("recompressed"):
             r["recompress"] += 1
             r["recompress_turns"].append(k)
@@ -219,6 +274,16 @@ def estimate(cfg, scenarios: list[dict], corpus, answer_tokens: int = 300, reaso
                         state = res.state
                         record(name, s_, k, i, res, prev)
                         prev = res.messages
+            elif hasattr(comp, "turn_end"):          # fact_notes: 턴 k 메모 추출은 턴 k trial 에 귀속 (sample 마다)
+                for i in range(cfg.samples):
+                    prev = None
+                    for k in range(len(s_["turns"])):
+                        history, user = histories[sid][k]
+                        res = comp.compress_history(history, user, None, {"sample_idx": i})
+                        o = comp.turn_end(k, user, placeholder_answer(answer_tokens), i)
+                        res.info["_llm_results"] = list(o.results) if o is not None else []
+                        record(name, s_, k, i, res, prev)
+                        prev = res.messages
             else:
                 prev = None
                 for k in range(len(s_["turns"])):
@@ -245,7 +310,7 @@ def estimate(cfg, scenarios: list[dict], corpus, answer_tokens: int = 300, reaso
                                             if base and base["input_tokens"] else None),
             "history_reduction_pct": round(100 * (1 - r["history_comp"] / r["history_raw"]), 2) if r["history_raw"] else None,
             "answer_usd_experimental": _round(r["usd_experimental"]),      # 압축기 비교 기준 (호출당)
-            "summary_usd": round(r["summary_usd"], 4) if sp or not r["summary_calls"] else None,
+            "summary_usd": round(r["summary_usd"], 4),     # 요약·메모 호출 (호출의 모델 단가로)
             "total_usd_experimental": _round({v: (r["usd_experimental"].get(v) or 0) + r["summary_usd"]
                                               for v in VARIANTS}) if ap else None,
             "cost_reduction_pct_vs_none": red,                             # 실험상 비용 (답변 + 요약) 기준

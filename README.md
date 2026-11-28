@@ -118,7 +118,8 @@ token_lab/
 │   ├── compressors/          # 입력 압축 기법 (none, rule) 과 조합(">")
 │   └── multiturn/            # 멀티턴: trajectory.py (궤적 JSONL), response_cache.py (SQLite 응답 캐시), scenario.py,
 │                             #   history_compressors/ (none, window(n), per_message(...), window_budget, query_select,
-│                             #   rolling_summary, frozen_summary), replay.py (replay 실행기), estimate.py
+│                             #   rolling_summary, frozen_summary, presummary, fact_notes), replay.py (replay 실행기),
+│                             #   estimate.py, build_presummaries.py (사전 요약 구축)
 ├── tests/                    # 단위 테스트 (python -m unittest discover -s tests)
 ├── results/                  # 실험 로그 (runs/<run_id>/)
 └── dashboard/                # Grafana 실험 대시보드 (MVP)
@@ -391,4 +392,24 @@ LLM_MODEL=qwen2.5:3b python src/dataset_builder.py --docs 3 --dry-run
   - 비용 주 지표는 시뮬레이션 캐시 비용 (`cost_reduction_pct_sim`, 직전 턴 접두부 기준). 실측 cached_tokens 는 병렬 실행이라 참고용, `--sequential-chains` 로 순차 검증
   - 요약 추론 조건 `--summary-reasoning-effort server_default,none` → `[sre=...]` 로 펼침, overflow 제외 집계
   - 파일럿 추정 (예산 2000·4000·8000, per_message(rule) 포함): 시뮬레이션 캐시 기준으로 어떤 압축기도 none 보다 싸지 않음 (none 의 직전 턴 접두부 공유율 76%). sim 은 대화 간격 30분 안 가정, 캐시 0% 는 만료 경계값
+- [ ] 멀티턴 v2 압축기 준비 — 캐시 없는 LLM 가정, 토큰·정확도 기준 평가 (멘토 회의 결정)
+  - 주 지표 (summary.json, budget_table): 입력 토큰 절감률, 총 토큰 절감률 (입력 + 출력(추론 포함) + 압축 LLM 토큰), 정확도 유지율,
+    비열등 판정 (턴 단위 + 시나리오 군집). 턴 유형별(시나리오 값 그대로)·recall 거리별 정확도 (`accuracy_breakdown`)
+  - 캐시 관련 지표(sim, sim_write, nocache, 접두부 공유율, 실측)는 `--cost-mode cache` 일 때만 summary 에 나온다 (기본 `none`). trial 행에는 계속 저장
+  - 실험 세트 `--compressors v2` = none, window_budget, query_select, rolling_summary, per_message(rule), per_message(llmlingua2),
+    on_arrival(rule), presummary, fact_notes. window(n)·frozen_summary·on_arrival(llmlingua2) 는 코드에 남기고 세트에서만 뺐다
+  - 비율 예산: `window_budget(r=0.5)` = 그 턴 원본 기록 토큰의 50% (window_budget, query_select, rolling_summary). `--history-budget 2000,r=0.25,r=0.5`
+  - `presummary`: 과거 문서 블록의 페이지 본문을 위키 구축 단계에서 미리 만든 페이지 요약으로 바꾼다 (직전 keep_recent 턴·현재 턴은 원문).
+    `python src/multiturn/build_presummaries.py --scenarios <폴더> --model <m> --reasoning-effort <e> --max-tokens <n> --presummary-target-ratio 0.25`
+    → `data/presummaries/<모델>/<페이지>.md`, 구축 비용·페이지별 압축률은 `_build_log.jsonl` (run 비용과 따로). replay 는 `--presummary-model`
+    총 토큰 절감률은 두 값을 낸다 (summary 의 presummary 블록과 budget_table):
+    `total_token_reduction_pct_without_build` 는 구축 토큰을 빼고, `total_token_reduction_pct_with_build` 는 이 run 이 쓰는 페이지의
+    구축 토큰 전부를 이 run 에 더해 계산한다. 실서비스에서는 페이지 요약을 여러 대화가 공유하므로 대화 하나(이 run)에 전부 넣은
+    with_build 는 구축 부담의 상한(절감률의 하한)이고, without_build 는 대화가 충분히 많을 때의 극한이다. 실제 값은 둘 사이다.
+  - `fact_notes`: 턴이 끝날 때 그 턴의 문서·질문·답변(replay 에서는 기준 궤적)으로 사실 메모를 만들어, 이후 턴 기록의 그 턴 문서 블록을 메모로 바꾼다.
+    문서 없는 턴은 건너뜀. 메모 토큰은 만든 턴 trial 에 귀속. `--notes-model`, `--notes-reasoning-effort`, `--notes-max-tokens` 필수, `--notes-target-ratio 0.25`
+  - 지시문: `src/prompts/presummary_v1.md`, `src/prompts/fact_notes_v1.md` (이름·값·조건·부정을 원문 표기 그대로, 목표 길이 포함)
+  - **per_message(llmlingua2) / on_arrival(llmlingua2) 주의**: llmlingua2 는 문서가 들어온 턴의 질문에 나온 식별자를 보호한다
+    (`compressors/llmlingua2.py` `_question_identifiers`). 그래서 이후 턴이 같은 문서의 다른 부분을 물으면 그 부분의 식별자는 보호되지 않아
+    불리할 수 있다 (동작은 그대로 둠). rule 은 질문을 받기만 하고 어떤 규칙에도 쓰지 않는다
 - [ ] free-run 모드

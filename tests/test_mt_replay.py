@@ -149,7 +149,8 @@ class ReplayTest(unittest.TestCase):
 
     def test_end_to_end_summary(self):
         llm = FakeLLM()
-        summary = self._replay(llm, scenarios=(SCENARIO, SCENARIO2)).run()
+        # 캐시 비용 지표(cost_basis 등)까지 보는 테스트라 --cost-mode cache
+        summary = self._replay(llm, cfg=make_cfg(cost_mode="cache"), scenarios=(SCENARIO, SCENARIO2)).run()
         out = self.root / "mt_test"
         rows = [json.loads(l) for l in (out / "turn_trials.jsonl").read_text(encoding="utf-8").splitlines()]
         self.assertEqual(len(rows), 2 * 6 * 2 * 2)

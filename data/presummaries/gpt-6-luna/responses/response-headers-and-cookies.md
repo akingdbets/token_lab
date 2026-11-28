@@ -1,0 +1,12 @@
+- **Setting response headers and cookies**
+  - Two ways, mirroring setting [status codes](status-codes.md):
+  - **1. A `Response` parameter (recommended when returning data):** FastAPI injects a temporary `Response`. Set headers/cookies (and optionally status code) on it, then return data normally. FastAPI copies its headers, cookies, and status code onto the final response, built from the return value and filtered by `response_model`. Works in dependencies, e.g. to refresh a session cookie for every request. Internally, raw headers are appended: `response.headers.raw.extend(solved_result.response.headers.raw)` (`fastapi/routing.py`).
+    - Headers: `response.headers["X-Cat-Dog"] = "alone in the world"`; cookies: `response.set_cookie(key="fakesession", value="fake-cookie-session-value")`.
+  - **2. Returning a `Response` directly:** Build and return it, setting headers/cookies on it; e.g. `JSONResponse(content=content, headers=headers)` or `response.set_cookie(key="fakesession", value="fake-cookie-session-value")`. A directly returned response skips `response_model` validation/filtering; ensure its content is intended ([Custom Responses](custom-responses.md)).
+- **`set_cookie` options**
+  - `Response.set_cookie()` (from Starlette): `key`, `value` are cookie name/value; `max_age` is lifetime in seconds; `expires` accepts seconds, `datetime`, or date string; `path` scope defaults to `/`; `domain` sets domain scope; `secure` sends only over HTTPS; `httponly` prevents JavaScript access; `samesite` accepts `"lax"` (default), `"strict"` or `"none"`.
+  - Use `response.delete_cookie(key, ...)` to remove one. For session/auth cookies, set `httponly=True`, `secure=True` and a suitable `samesite`.
+- **Headers and browsers**
+  - Custom proprietary headers conventionally use `X-`.
+  - JavaScript on another origin can read a custom response header only if it is listed in `CORSMiddleware(expose_headers=[...])` ([CORS](../middleware/cors.md)).
+- **Related:** [Response Status Codes](status-codes.md); [Header and Cookie Parameters](../request/headers-and-cookies.md); [Middleware](../middleware/middleware.md).

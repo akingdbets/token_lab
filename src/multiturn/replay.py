@@ -31,7 +31,13 @@
     요약 실패(3번 시도 뒤에도 빈 요약·length): 그 체인을 그 턴부터 summary_failed 로 표시하고 남은 턴은 건너뛴다.
     실패한 응답은 캐시에 저장하지 않으므로, 이어 돌리면 summary_failed 체인은 다시 시도된다.
 
-비용 지표
+주 지표 (토큰 기준, 캐시가 없는 LLM 가정)
+    입력 토큰 절감률 (input_reduction_pct), 총 토큰 절감률 (total_token_reduction_pct = 입력 + 출력(추론 포함) + 압축에 쓴
+    LLM 토큰(요약·메모, 추론 포함)), 정확도 유지율 (retention_pct), 비열등 판정 (턴 단위 + 시나리오 군집).
+    토큰 항목별 합은 tokens 에, 턴 유형별·recall 거리별 정확도는 accuracy_breakdown 에 있다.
+    아래 캐시 관련 지표는 --cost-mode cache 일 때만 summary 에 나온다 (기본 none). trial 행에는 항상 계산해 저장한다.
+
+비용 지표 (--cost-mode cache)
     replay 는 턴을 병렬·순서 무관하게 처리하므로 실험 중 서버가 보고한 cached_tokens 는 실제 대화의 프롬프트 캐시 동작이 아니다.
     그래서 비용 절감률 주 지표는 prefix_shared_tokens (같은 압축기로 실제 대화했을 때 직전 턴 요청과 겹치는 접두부) 로 계산한
     시뮬레이션 캐시 비용 (*_sim: 캐시 읽기 단가, *_sim_write: 미스 부분을 캐시 쓰기 단가로) 이다. 실측 cached_tokens 기반은 *_measured (참고).
@@ -83,8 +89,8 @@ from cost import compute_cost, cost_from_fields, find_price, load_pricing
 from grader import contains_words, is_not_found_answer, word_tokens
 from llm import count_message_tokens, count_tokens
 from multiturn.history_compressors import (
-    BUDGET_FAMILIES, budget_of, expand_budgets, expand_summary_efforts, family_of, get_history_compressor,
-    is_stateful, label_of, split_compressor_list, summary_effort_of,
+    BUDGET_FAMILIES, budget_of, expand_budgets, expand_sets, expand_summary_efforts, family_of, get_history_compressor,
+    is_stateful, label_of, parse_budget, parse_budget_list, split_compressor_list, summary_effort_of,
 )
 from multiturn.mt_stats import bootstrap_diff, non_inferiority, pair_rows
 from multiturn.prompt import load_mt_prompt
@@ -95,6 +101,7 @@ from multiturn.trajectory import (
 )
 
 REFERENCE_ROOT = CFG.results_dir / "multiturn" / "references"
+COST_MODES = ("none", "cache")
 RETRY_STATUS = {429, 500, 502, 503, 504}
 # 답변 모델 -> history_tokens_* / input_tokens_est 를 셀 토크나이저 (TOKENIZER). 정확히 일치하는 키, 없으면 가장 긴 접두사
 EXPECTED_TOKENIZERS = {"gpt-6-luna": "tiktoken:o200k_base"}
@@ -137,11 +144,17 @@ class ReplayConfig:
     reference_sample: int = 0
     temperature: str = SERVER_DEFAULT   # server_default 또는 숫자 문자열
     prompt_version: str = "v2"          # src/prompts/mt_answer_v2.md (요약·발췌 블록도 제공 정보로 봄)
-    history_budgets: list[int] = field(default_factory=list)   # 예산형 압축기 기록 토큰 예산
+    history_budgets: list = field(default_factory=list)   # 예산형 압축기 기록 예산: 토큰(int) 또는 비율("r=0.5")
     keep_recent: int = 1                # 예산형 압축기가 항상 원문으로 남기는 최근 턴 수
     summary_model: str | None = None            # 요약형 압축기가 있으면 필수
     summary_reasoning_effort: str | list | None = None  # 요약형 압축기가 있으면 필수. 쉼표로 여러 조건 (server_default,none)
     summary_max_tokens: int | None = None        # 요약형 압축기가 있으면 필수
+    presummary_model: str | None = None          # presummary 가 있으면 필수 (data/presummaries/<모델>/)
+    notes_model: str | None = None               # fact_notes 가 있으면 필수
+    notes_reasoning_effort: str | None = None    # fact_notes 가 있으면 필수
+    notes_max_tokens: int | None = None          # fact_notes 가 있으면 필수
+    notes_target_ratio: float = 0.25             # 메모 목표 길이 = 그 턴 문서 토큰 × 비율
+    cost_mode: str = "none"                      # none: 토큰 지표만. cache: 캐시 관련 비용 지표(sim, nocache, 접두부 공유율, 실측)도 summary 에
     judge_mode: str = CFG.judge_mode
     concurrency: int = 5
     margin: float = 0.10
@@ -154,12 +167,17 @@ class ReplayConfig:
         reasoning_effort_for_llm(self.reasoning_effort)      # 잘못된 값이면 ValueError
         if not isinstance(self.max_completion_tokens, int) or self.max_completion_tokens <= 0:
             raise ValueError("max_completion_tokens 는 양의 정수로 명시해야 합니다")
+        self.compressors = expand_sets(list(self.compressors))       # "v2" -> 정한 압축기 목록
         if "none" not in self.compressors:
             raise ValueError("compressors 에 none(기준선)이 있어야 합니다")
         if not 0 <= self.reference_sample < self.samples:
             raise ValueError("reference_sample 은 0 이상 samples 미만")
-        if any(b <= 0 for b in self.history_budgets):
-            raise ValueError("history_budgets 는 양의 정수")
+        for b in self.history_budgets:
+            v = parse_budget(str(b))
+            if (isinstance(v, int) and v <= 0) or (isinstance(v, float) and not 0 < v <= 1):
+                raise ValueError("history_budgets 는 양의 정수 또는 r=<0 초과 1 이하>")
+        if self.cost_mode not in COST_MODES:
+            raise ValueError(f"cost_mode 는 {COST_MODES} 중 하나")
         if isinstance(self.summary_reasoning_effort, str):
             self.summary_reasoning_effort = [e.strip() for e in self.summary_reasoning_effort.split(",") if e.strip()]
         self.compressors = expand_budgets(list(self.compressors), list(self.history_budgets))
@@ -177,6 +195,19 @@ class ReplayConfig:
                     raise ValueError(f"{c} 의 요약 조건이 --summary-reasoning-effort 에 없습니다")
             if not isinstance(self.summary_max_tokens, int) or self.summary_max_tokens <= 0:
                 raise ValueError("summary_max_tokens 는 양의 정수")
+        if self.has_presummary and not self.presummary_model:
+            raise ValueError("presummary 에는 presummary_model 이 필요합니다 (--presummary-model)")
+        if self.has_notes:
+            missing = [k for k in ("notes_model", "notes_reasoning_effort", "notes_max_tokens")
+                       if getattr(self, k) in (None, "")]
+            if missing:
+                raise ValueError(f"fact_notes 에는 {missing} 가 필요합니다 (--notes-model, --notes-reasoning-effort, "
+                                 "--notes-max-tokens). config 기본값을 쓰지 않습니다")
+            reasoning_effort_for_llm(self.notes_reasoning_effort)
+            if not isinstance(self.notes_max_tokens, int) or self.notes_max_tokens <= 0:
+                raise ValueError("notes_max_tokens 는 양의 정수")
+            if not 0 < self.notes_target_ratio <= 1:
+                raise ValueError("notes_target_ratio 는 0 초과 1 이하")
 
     @property
     def summary_efforts(self) -> list[str]:
@@ -185,6 +216,14 @@ class ReplayConfig:
     @property
     def has_summary(self) -> bool:
         return any(is_stateful(c) for c in self.compressors)
+
+    @property
+    def has_presummary(self) -> bool:
+        return any("presummary" in c for c in self.compressors)
+
+    @property
+    def has_notes(self) -> bool:
+        return "fact_notes" in self.compressors
 
 
 def configure_llm(llm, model: str, reasoning_effort: str, max_tokens: int, temperature: str):
@@ -203,6 +242,10 @@ def configure_llm(llm, model: str, reasoning_effort: str, max_tokens: int, tempe
 
 def configure_answer_llm(llm, cfg: ReplayConfig):
     return configure_llm(llm, cfg.model, cfg.reasoning_effort, cfg.max_completion_tokens, cfg.temperature)
+
+
+def configure_notes_llm(llm, cfg: ReplayConfig):
+    return configure_llm(llm, cfg.notes_model, cfg.notes_reasoning_effort, cfg.notes_max_tokens, cfg.temperature)
 
 
 def configure_summary_llm(llm, cfg: ReplayConfig, effort: str | None = None):
@@ -273,9 +316,11 @@ def entity_retention_in_history(entities: list[str], raw_past: list[dict], comp_
 class Replay:
     def __init__(self, cfg: ReplayConfig, scenarios: list[dict], corpus, answer_cached, judge_cached,
                  out_dir: Path, reference_root: Path = REFERENCE_ROOT, grade_fn=None, sleep=time.sleep,
-                 tokenizer_check: dict | None = None, summarizer=None):
+                 tokenizer_check: dict | None = None, summarizer=None, presummary_store=None, notes_extractor=None):
         self.cfg, self.scenarios, self.corpus = cfg, scenarios, corpus
         self.summarizer = summarizer
+        self.presummary_store = presummary_store
+        self.notes_extractor = notes_extractor
         self.answer = answer_cached                    # multiturn.response_cache.CachedLLM (answer LLM 감쌈)
         self.judge = judge_cached.bind(0)              # 같은 답변은 같은 채점 (sample_idx 0 고정)
         self.out_dir = Path(out_dir)
@@ -290,7 +335,9 @@ class Replay:
                                                    "note": "확인하지 않음 (Replay 를 직접 만든 경우)"}
         # 압축기를 여기서 만든다: llmlingua 가 필요한데 없으면 시작 시점에 MissingDependencyError 로 멈춘다
         self.compressors = {name: get_history_compressor(name, token_counter=lambda t: count_tokens(t),
-                                                         summarizer=summarizer, keep_recent=cfg.keep_recent)
+                                                         summarizer=summarizer, keep_recent=cfg.keep_recent,
+                                                         presummary_store=presummary_store,
+                                                         notes_extractor=notes_extractor)
                             for name in cfg.compressors}
         self._lock = threading.Lock()
         self._memo: dict = {}
@@ -417,15 +464,20 @@ class Replay:
         t = scenario["turns"][k]
         return history_before_turn(ref_steps, k, system=self.prompt.system), self.prompt.user_message(t, self.corpus)
 
-    def _stateless(self, scenario, ref_steps, k, comp_name):
-        """상태 없는 압축기의 턴 k 결과 (sample 과 무관해 메모해 둔다. 직전 턴 접두부 비교에도 쓴다)."""
-        key = (scenario["scenario_id"], k, comp_name)
+    def _stateless(self, scenario, ref_steps, k, comp_name, sample_idx: int = 0):
+        """상태 없는 압축기의 턴 k 결과 (sample 과 무관해 메모해 둔다. 직전 턴 접두부 비교에도 쓴다).
+        fact_notes 처럼 기록이 sample 마다 다른 압축기(per_sample)는 sample 별로 메모하고 state={"sample_idx": i} 를 넘긴다."""
+        comp = self.compressors[comp_name]
+        per_sample = getattr(comp, "per_sample", False)
+        key = (scenario["scenario_id"], k, comp_name, sample_idx if per_sample else None)
         with self._lock:
             if key in self._memo:
                 return self._memo[key]
         history, current_user = self._inputs(scenario, ref_steps, k)
         t0 = time.perf_counter()
-        hres = self.compressors[comp_name].compress_history(history, current_user, None, None)
+        hres = with_backoff(lambda: comp.compress_history(history, current_user, None,
+                                                          {"sample_idx": sample_idx} if per_sample else None),
+                            self.cfg, self.sleep)
         out = (history, current_user, hres, time.perf_counter() - t0)
         with self._lock:
             self._memo[key] = out
@@ -435,16 +487,27 @@ class Replay:
                   comp_name: str, sample_idx: int, pre=None, prev_messages=None) -> dict:
         t = scenario["turns"][k]
         if pre is None:
-            pre = self._stateless(scenario, ref_steps, k, comp_name)
+            pre = self._stateless(scenario, ref_steps, k, comp_name, sample_idx)
             if k > 0 and prev_messages is None:
-                prev_messages = self._stateless(scenario, ref_steps, k - 1, comp_name)[2].messages
+                prev_messages = self._stateless(scenario, ref_steps, k - 1, comp_name, sample_idx)[2].messages
         history, current_user, hres, compress_sec = pre
         comp = self.compressors[comp_name]
         messages = hres.messages
         if messages[0] != history[0] or not _same_current_turn(comp, messages[-1]["content"], current_user):
             raise AssertionError("압축기가 system 또는 현재 턴 메시지를 바꿨습니다")
         info = dict(hres.info)
-        results = info.pop("_llm_results", []) or []
+        results = list(info.pop("_llm_results", []) or [])
+        llm_pt, llm_ct = hres.llm_prompt_tokens, hres.llm_completion_tokens
+        notes = None
+        if hasattr(comp, "turn_end"):
+            # 턴 k 가 끝날 때 만드는 메모 (기준 궤적의 턴 k 문서·질문·답변). 토큰은 이 trial 에 귀속한다.
+            # 이후 턴에서 다시 쓰는 것은 0 토큰 (같은 메모 재사용). 응답 캐시 적중이어도 원래 호출의 usage 로 센다 (실험상 비용)
+            notes = with_backoff(lambda: comp.turn_end(k, current_user, ref_steps[k].response_content, sample_idx),
+                                 self.cfg, self.sleep)
+            if notes is not None:
+                results += notes.results
+                llm_pt += notes.prompt_tokens
+                llm_ct += notes.completion_tokens
         compress_cost = compress_cost_of(results)
         res, hit = with_backoff(lambda: self.answer.chat(messages, sample_idx=sample_idx), self.cfg, self.sleep)
         response = res.text.strip()
@@ -465,8 +528,9 @@ class Replay:
             messages_sent=messages, response_content=response,
             sampling=sampling_record(self.answer.llm, res, self.cfg.reasoning_effort),
             history_tokens_raw=_history_tokens(raw_past), history_tokens_compressed=_history_tokens(comp_past),
-            compression_info={"config": comp.config(), "llm_prompt_tokens": hres.llm_prompt_tokens,
-                              "llm_completion_tokens": hres.llm_completion_tokens, "info": info,
+            compression_info={"config": comp.config(), "llm_prompt_tokens": llm_pt,
+                              "llm_completion_tokens": llm_ct, "info": info,
+                              "notes_made": notes.record(comp.extractor.target_ratio) if notes is not None else None,
                               "compress_cost": compress_cost, "compress_sec": round(compress_sec, 3)})
         row = {
             **self._row_base(scenario, ref_grades, k, comp_name, sample_idx),
@@ -476,8 +540,11 @@ class Replay:
             "prompt_tokens": res.prompt_tokens, "cached_tokens": res.cached_tokens,
             "cache_write_tokens": res.cache_write_tokens, "reasoning_tokens": res.reasoning_tokens,
             "completion_tokens": res.completion_tokens, "usage_source": res.usage_source,
-            "compress_llm_prompt_tokens": hres.llm_prompt_tokens,
-            "compress_llm_completion_tokens": hres.llm_completion_tokens, "compress_cost": compress_cost,
+            "compress_llm_prompt_tokens": llm_pt, "compress_llm_completion_tokens": llm_ct,
+            "compress_llm_reasoning_tokens": sum(r.reasoning_tokens or 0 for r in results),
+            "compress_cost": compress_cost, "history_budget_effective": info.get("history_budget"),
+            "notes_made": notes.record(comp.extractor.target_ratio) if notes is not None else None,
+            "presummary_pages": info.get("pages_replaced"),
             "summary_calls": info.get("summary_calls"), "summary_cache_hits": info.get("summary_cache_hits"),
             "recompressed": info.get("recompressed"), "recompress_turns": info.get("recompress_turns"),
             "cost": cost, "judge_cost": judge_cost, "cache_hit": hit, "finish_reason": res.finish_reason,
@@ -574,7 +641,10 @@ class Replay:
             "concurrency": self.cfg.concurrency, "trials_submitted": len(tasks), "chains_submitted": len(chains),
             "already_done": len(done), "failed": failed})
         rows = self._trials()
-        summary = summarize_replay(rows, self.cfg, ref_warnings=ref_warnings, n_scenarios=len(self.scenarios))
+        build = (presummary_build_block(self.presummary_store, self.scenarios)
+                 if self.presummary_store is not None else None)
+        summary = summarize_replay(rows, self.cfg, ref_warnings=ref_warnings, n_scenarios=len(self.scenarios),
+                                   presummary_build=build)
         summary["failed_trials_this_run"] = failed
         summary["tokenizer_check"] = self.tokenizer_check
         if self.tokenizer_check.get("approx"):
@@ -584,6 +654,8 @@ class Replay:
         steps = [TrajectoryStep.from_dict(d) for d in self._read("trajectory.jsonl")]
         summary["trajectory"] = summarize_steps(steps)
         summary["budget"] = budget_block(steps, [st for v in refs.values() for st in v], rows)
+        if build is not None:
+            summary["presummary_build"] = build
         (self.out_dir / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=1), encoding="utf-8")
         return summary
 
@@ -605,7 +677,8 @@ class Replay:
         rows = []
         for name in comp_names:
             comp = get_history_compressor(name, token_counter=lambda t: count_tokens(t), summarizer=summ,
-                                          keep_recent=self.cfg.keep_recent)
+                                          keep_recent=self.cfg.keep_recent, presummary_store=self.presummary_store,
+                                          notes_extractor=self.notes_extractor)
             for s in scen:
                 for i in (samples or [0]):
                     state = comp.initial_state(i) if hasattr(comp, "initial_state") else None
@@ -666,6 +739,8 @@ class Replay:
             "compressor_configs": {n: c.config() for n, c in self.compressors.items()},
             "summarizer": ({e: sm.config() for e, sm in self.summarizer.items()} if isinstance(self.summarizer, dict)
                            else self.summarizer.config() if self.summarizer else None),
+            "presummary": self.presummary_store.config() if self.presummary_store else None,
+            "notes_extractor": self.notes_extractor.config() if self.notes_extractor else None,
             "tokenizer": CFG.tokenizer,
             "tokenizer_check": self.tokenizer_check,
         }
@@ -811,6 +886,119 @@ def budget_block(replay_steps: list, reference_steps: list, rows: list[dict] | N
     }
 
 
+# --cost-mode none 이면 summary 에서 빼는 캐시 관련 키 (compare_block / overflow_block / budget_table)
+CACHE_BLOCK_KEYS = ("cache", "cost_basis", "cost_reduction_pct_sim", "cost_reduction_pct_sim_write",
+                    "cost_reduction_pct_nocache", "cost_usd_sim", "cost_reduction_pct_measured", "cost_usd_measured")
+TOKEN_BASIS_NOTE = ("주 지표는 토큰 기준이다 (캐시가 없는 LLM 가정): 입력 토큰 절감률, 총 토큰 절감률(입력 + 출력(추론 포함) + "
+                    "압축에 쓴 LLM 토큰(요약·메모, 추론 포함)), 정확도 유지율, 비열등 판정. 토큰은 서버 usage 기준 실험상 값이다 "
+                    "(응답 캐시 적중이어도 원래 호출의 usage). presummary 의 요약 생성 토큰은 run 이 아니라 구축 비용(presummary_build) 이다.")
+PRESUMMARY_BUILD_NOTE = ("presummary 의 총 토큰 절감률은 두 값을 낸다. total_token_reduction_pct_without_build: 구축 토큰을 빼고 계산 "
+                         "(= total_token_reduction_pct). total_token_reduction_pct_with_build: 이 run 이 쓰는 페이지의 구축 토큰 "
+                         "전부를 이 run 의 압축 쪽 토큰에 더해 계산. 실서비스에서는 페이지 요약을 여러 대화가 공유하므로, "
+                         "구축 토큰을 이 run 에 전부 넣은 with_build 는 구축 비용 부담의 상한(절감률의 하한)이고 "
+                         "without_build 는 대화가 충분히 많을 때의 극한이다. 실제 값은 둘 사이다.")
+
+
+def build_tokens_of(build: dict | None) -> int:
+    if not build:
+        return 0
+    return (build.get("build_prompt_tokens") or 0) + (build.get("build_completion_tokens") or 0)
+
+
+def add_build_reduction(block: dict, build: dict | None) -> dict:
+    """presummary 블록에 구축 토큰을 넣은 총 토큰 절감률과 뺀 값을 더한다."""
+    if not block or not block.get("tokens"):
+        return block
+    base, comp = block["tokens"]["none"]["total"], block["tokens"]["compressed"]["total"]
+    bt = build_tokens_of(build)
+    block["total_token_reduction_pct_without_build"] = block.get("total_token_reduction_pct")
+    block["total_token_reduction_pct_with_build"] = _pct_reduction(base, comp + bt)
+    block["presummary_build_tokens"] = bt
+    return block
+
+
+def token_totals(rows: list[dict]) -> dict:
+    """답변 입력·출력(추론 포함)·추론, 압축 LLM 입력·출력(추론 포함)·추론 토큰 합."""
+    inp, out = _sum(rows, "prompt_tokens"), _sum(rows, "completion_tokens")
+    reas = _sum(rows, "reasoning_tokens")
+    cp, cc = _sum(rows, "compress_llm_prompt_tokens"), _sum(rows, "compress_llm_completion_tokens")
+    return {"input": inp, "output": out, "reasoning": reas, "output_visible": out - reas,
+            "compress_input": cp, "compress_output": cc, "compress_reasoning": _sum(rows, "compress_llm_reasoning_tokens"),
+            "compress": cp + cc, "total": inp + out + cp + cc}
+
+
+def _acc_cell(pairs) -> dict:
+    if not pairs:
+        return {"n_pairs": 0}
+    b = _mean(x["answer_accuracy"] for x, _ in pairs)
+    c = _mean(y["answer_accuracy"] for _, y in pairs)
+    return {"n_pairs": len(pairs), "n_turns": len({(y["scenario_id"], y["turn"]) for _, y in pairs}),
+            "none": b, "compressed": c, "retention_pct": round(100 * c / b, 2) if b else None}
+
+
+def accuracy_breakdown(pairs: list[tuple[dict, dict]]) -> dict:
+    """턴 유형별(시나리오에 나오는 turn_type 그대로) · recall 거리별 정확도.
+    거리 = depends_distance_max (현재 턴 − 가장 먼 의존 턴). recall 턴만, 그리고 의존이 있는 모든 턴."""
+    by_type = defaultdict(list)
+    by_dist_recall, by_dist_all = defaultdict(list), defaultdict(list)
+    for b, c in pairs:
+        by_type[c["turn_type"]].append((b, c))
+        d = c.get("depends_distance_max")
+        if d is not None:
+            by_dist_all[d].append((b, c))
+            if c["turn_type"] == "recall":
+                by_dist_recall[d].append((b, c))
+    return {"by_turn_type": {tt: _acc_cell(v) for tt, v in sorted(by_type.items())},
+            "by_recall_distance": {str(d): _acc_cell(v) for d, v in sorted(by_dist_recall.items())},
+            "by_dependency_distance": {str(d): _acc_cell(v) for d, v in sorted(by_dist_all.items())}}
+
+
+def notes_compression(rows: list[dict]) -> dict | None:
+    """fact_notes 가 턴마다 만든 메모의 실제 압축률 (메모 토큰 / 그 턴 문서 토큰). sample 별로 따로 만든다."""
+    made = [r["notes_made"] for r in rows if r.get("notes_made")]
+    if not made:
+        return None
+    ok = [m for m in made if not m.get("failed") and m.get("notes_tokens") is not None]
+    by_turn = defaultdict(list)
+    for r in rows:
+        m = r.get("notes_made")
+        if m and m.get("ratio") is not None:
+            by_turn[f"{r['scenario_id']}:{r['turn']}"].append(m["ratio"])
+    return {"notes": len(made), "failed": len(made) - len(ok),
+            "target_ratio": made[0].get("target_ratio"),
+            "ratio_mean": _mean(m["ratio"] for m in ok),
+            "ratio_total": _ratio(sum(m["notes_tokens"] for m in ok), sum(m["source_tokens"] for m in ok)),
+            "over_2x_target": sum(bool(m.get("over_2x_target")) for m in ok),
+            "over_2x_target_rate": _ratio(sum(bool(m.get("over_2x_target")) for m in ok), len(ok)),
+            "by_turn_ratio_mean": {k: _mean(v) for k, v in sorted(by_turn.items())}}
+
+
+def presummary_build_block(store, scenarios: list[dict]) -> dict:
+    """presummary 구축 비용과 페이지별 실제 압축률 (이 run 이 쓰는 페이지만). run 의 압축 LLM 토큰은 0 이다."""
+    from multiturn.build_presummaries import pages_of
+    pages = set(pages_of(scenarios))
+    log = [r for r in store.build_log() if r["page"] in pages]
+    ok = [r for r in log if not r.get("failed")]
+    return {
+        "note": "구축 비용: 위키 구축 단계에서 페이지마다 한 번 만든 요약의 비용이다. 실험 run 비용(총 토큰 절감률)에 넣지 않는다.",
+        "manifest": store.manifest, "pages": len(log), "pages_needed": len(pages),
+        "build_prompt_tokens": _sum(log, "prompt_tokens"), "build_completion_tokens": _sum(log, "completion_tokens"),
+        "build_reasoning_tokens": _sum(log, "reasoning_tokens"), "build_usd": round(sum(r.get("usd") or 0 for r in log), 6),
+        "ratio_mean": _mean(r.get("ratio") for r in ok),
+        "ratio_total": _ratio(_sum(ok, "summary_tokens"), _sum(ok, "source_tokens")),
+        "over_2x_target": sum(bool(r.get("over_2x_target")) for r in ok),
+        "by_page": {r["page"]: {k: r.get(k) for k in ("source_tokens", "target_tokens", "summary_tokens", "ratio",
+                                                      "over_2x_target")} for r in sorted(log, key=lambda r: r["page"])},
+    }
+
+
+def _strip_cache(block: dict) -> dict:
+    out = {k: v for k, v in block.items() if k not in CACHE_BLOCK_KEYS}
+    if isinstance(out.get("excluding_overflow"), dict):
+        out["excluding_overflow"] = {k: v for k, v in out["excluding_overflow"].items() if k not in CACHE_BLOCK_KEYS}
+    return out
+
+
 def compare_block(pairs: list[tuple[dict, dict]], cfg: ReplayConfig, n_scenarios: int) -> dict:
     """짝지은 (none, 압축) trial 들의 절감률·정확도·비열등 판정."""
     if not pairs:
@@ -828,7 +1016,8 @@ def compare_block(pairs: list[tuple[dict, dict]], cfg: ReplayConfig, n_scenarios
     cluster = bootstrap_diff(all_pairs, unit="scenario", boot=cfg.boot, seed=cfg.seed)
     excl = bootstrap_diff(pairs, unit="turn", boot=cfg.boot, seed=cfg.seed) if failed else None
     comp_rows = [c for _, c in all_pairs]
-    return {
+    tb, tc = token_totals(bs), token_totals(cs)
+    block = {
         "n_pairs": len(all_pairs),
         "summary_failed": len(failed),
         "summary_failed_rate": _ratio(len(failed), len(all_pairs)),
@@ -840,6 +1029,10 @@ def compare_block(pairs: list[tuple[dict, dict]], cfg: ReplayConfig, n_scenarios
         "history_reduction_pct": _pct_reduction(_sum(bs, "history_tokens_raw"), _sum(cs, "history_tokens_compressed")),
         "input_reduction_pct": _pct_reduction(_sum(bs, "prompt_tokens"), _sum(cs, "prompt_tokens")),
         "total_token_reduction_pct": _pct_reduction(base_total, comp_total),
+        "output_reduction_pct": _pct_reduction(tb["output"], tc["output"]),
+        "reasoning_reduction_pct": _pct_reduction(tb["reasoning"], tc["reasoning"]),
+        "compress_token_share_pct": round(100 * tc["compress"] / tc["total"], 2) if tc["total"] else None,
+        "tokens": {"none": tb, "compressed": tc},
         # 비용 주 지표: 시뮬레이션 캐시 비용 (prefix_shared_tokens). 실측(cached_tokens) 은 참고
         "cost_basis": "simulated_prefix_cache",
         "cost_reduction_pct_sim": _pct_reduction(_usd_sim(bs, "usd_read"), _usd_sim(cs, "usd_read")),
@@ -865,12 +1058,14 @@ def compare_block(pairs: list[tuple[dict, dict]], cfg: ReplayConfig, n_scenarios
         "excluding_summary_failed": ({"paired_bootstrap_turn": excl, "non_inferiority": non_inferiority(excl, cfg.margin)}
                                      if excl is not None else None),                 # 보조
         "excluding_overflow": overflow_block(all_pairs, cfg),                          # 보조
+        "accuracy_breakdown": accuracy_breakdown(all_pairs),
     }
+    return block if cfg.cost_mode == "cache" else _strip_cache(block)
 
 
 def overflow_block(all_pairs, cfg: ReplayConfig) -> dict | None:
     """overflow 턴(최근 원문 턴만으로 예산 초과)을 뺀 집계. 예산형이 아니면 None."""
-    if not any(c.get("history_budget") for _, c in all_pairs):
+    if not any(c.get("history_budget") is not None for _, c in all_pairs):
         return None
     ps = [(b, c) for b, c in all_pairs if not c.get("overflow")]
     ok = [(b, c) for b, c in ps if not c.get("summary_failed")]
@@ -879,11 +1074,12 @@ def overflow_block(all_pairs, cfg: ReplayConfig) -> dict | None:
     return {"n_pairs": len(ps), "retention_pct": t.get("retention_pct"), "paired_bootstrap_turn": t,
             "non_inferiority": non_inferiority(t, cfg.margin) if ps else None,
             "input_reduction_pct": _pct_reduction(_sum(bs, "prompt_tokens"), _sum(cs, "prompt_tokens")),
+            "total_token_reduction_pct": _pct_reduction(token_totals(bs)["total"], token_totals(cs)["total"]),
             "cost_reduction_pct_sim": _pct_reduction(_usd_sim(bs, "usd_read"), _usd_sim(cs, "usd_read"))}
 
 
 def summarize_replay(rows: list[dict], cfg: ReplayConfig, ref_warnings: list[str] | None = None,
-                     n_scenarios: int | None = None) -> dict:
+                     n_scenarios: int | None = None, presummary_build: dict | None = None) -> dict:
     n_scen = n_scenarios or len({r["scenario_id"] for r in rows})
     subsets = {"all": lambda r: True, "depends_on_reference_ok": lambda r: r["depends_on_reference_ok"]}
     out: dict = {
@@ -894,12 +1090,16 @@ def summarize_replay(rows: list[dict], cfg: ReplayConfig, ref_warnings: list[str
             "depends_on_reference_ok=False 인 턴은 기준 궤적의 앞 턴 답변이 틀려 압축과 무관하게 틀릴 수 있다.",
             "요약 실패 턴은 정확도 주 기준에서 0점으로 넣는다 (실서비스에서 나쁜 결과). 실패 턴을 뺀 집계는 excluding_summary_failed (보조). "
             "토큰·비용 절감률은 실제로 답한 trial 만으로 계산한다.",
+            TOKEN_BASIS_NOTE,
+            "fact_notes 의 메모 추출 토큰은 메모를 만든 턴의 trial 에 넣는다 (이후 턴의 재사용은 0).",
+            REFERENCE_SPEND_NOTE,
+        ] + ([PRESUMMARY_BUILD_NOTE] if cfg.has_presummary else []) + ([
             "prefix_shared_tokens 는 직전 턴 요청과 메시지 단위로 겹치는 접두부 토큰 (1,024 미만은 0, 원래 값은 _raw). "
             "actual_cache_hit_rate 는 서버가 보고한 cached_tokens / prompt_tokens.",
             COST_BASIS_NOTE,
             SIM_INTERPRETATION_NOTE,
-            REFERENCE_SPEND_NOTE,
-        ],
+        ] if cfg.cost_mode == "cache" else []),
+        "cost_mode": cfg.cost_mode,
         "reference_health": {"warnings": ref_warnings or [], "n_warnings": len(ref_warnings or [])},
         "n_trials": len(rows),
         "answer_health": {c: answer_health([r for r in rows if r["compressor"] == c and not r.get("summary_failed")])
@@ -909,7 +1109,17 @@ def summarize_replay(rows: list[dict], cfg: ReplayConfig, ref_warnings: list[str
                                 "chains_failed": len({(r["scenario_id"], r["sample_idx"]) for r in rs if r.get("summary_failed")})}
                             for c in cfg.compressors if is_stateful(c)
                             for rs in [[r for r in rows if r["compressor"] == c]]},
-        "cache_by_compressor": {c: cache_metrics([r for r in rows if r["compressor"] == c]) for c in cfg.compressors},
+        "accuracy_by_turn_type": {c: {tt: _mean(r["answer_accuracy"] for r in rows if r["compressor"] == c
+                                                 and r["turn_type"] == tt and r.get("answer_accuracy") is not None)
+                                      for tt in sorted({r["turn_type"] for r in rows})} for c in cfg.compressors},
+        "accuracy_by_recall_distance": {c: {str(d): _mean(r["answer_accuracy"] for r in rows if r["compressor"] == c
+                                                         and r["turn_type"] == "recall"
+                                                         and r.get("depends_distance_max") == d
+                                                         and r.get("answer_accuracy") is not None)
+                                            for d in sorted({r["depends_distance_max"] for r in rows
+                                                             if r["turn_type"] == "recall"
+                                                             and r.get("depends_distance_max") is not None})}
+                                        for c in cfg.compressors},
         "not_found_rate_by_turn_type": {
             c: {tt: _rate([r for r in rows if r["compressor"] == c and r["turn_type"] == tt], lambda r: r["not_found"])
                 for tt in sorted({r["turn_type"] for r in rows})}
@@ -930,29 +1140,48 @@ def summarize_replay(rows: list[dict], cfg: ReplayConfig, ref_warnings: list[str
             sub = [r for r in rows if pred(r)]
             pairs = pair_rows(sub, comp)
             block[name] = compare_block(pairs, cfg, n_scen)
+            if "presummary" in comp:
+                # 구축 토큰은 run 전체(이 run 이 쓰는 페이지)의 것이라 부분집합·턴별 블록에는 넣지 않는다
+                add_build_reduction(block[name], presummary_build if name == "all" else None)
+                if name != "all":
+                    block[name].pop("total_token_reduction_pct_with_build", None)
+                    block[name].pop("presummary_build_tokens", None)
             block[f"{name}_by_turn_type"] = {
                 tt: compare_block([p for p in pairs if p[1]["turn_type"] == tt], cfg, n_scen)
                 for tt in sorted({p[1]["turn_type"] for p in pairs})}
         block["by_turn"] = {str(k): compare_block([p for p in pair_rows(rows, comp) if p[1]["turn"] == k], cfg, n_scen)
                             for k in sorted({r["turn"] for r in rows})}
         out["compressors"][comp] = block
+    if cfg.cost_mode == "cache":
+        out["cache_by_compressor"] = {c: cache_metrics([r for r in rows if r["compressor"] == c]) for c in cfg.compressors}
+    nc = {c: notes_compression([r for r in rows if r["compressor"] == c]) for c in cfg.compressors}
+    if any(nc.values()):
+        out["fact_notes_compression"] = {c: v for c, v in nc.items() if v}
     out["budget_table"] = budget_table(out["compressors"], cfg)
     return out
 
 
 TABLE_KEYS = ("n_pairs", "history_reduction_pct", "input_reduction_pct", "total_token_reduction_pct",
-              "cost_reduction_pct_sim", "cost_reduction_pct_sim_write", "cost_reduction_pct_nocache",
-              "cost_reduction_pct_measured", "retention_pct", "overflow_rate", "summary_failed_rate", "summary_calls",
-              "recompress_count", "compress_cost_usd")
+              "output_reduction_pct", "reasoning_reduction_pct", "compress_token_share_pct",
+              "retention_pct", "overflow_rate", "summary_failed_rate", "summary_calls", "recompress_count",
+              "compress_cost_usd")
+CACHE_TABLE_KEYS = ("cost_reduction_pct_sim", "cost_reduction_pct_sim_write", "cost_reduction_pct_nocache",
+                    "cost_reduction_pct_measured")
 
 
 def budget_table(blocks: dict, cfg: ReplayConfig) -> dict:
-    """예산 × 압축기 비교표 (none 대비, 실험상 비용 기준). 예산이 없는 압축기는 "no_budget" 아래에 둔다."""
+    """예산 × 압축기 비교표 (none 대비, 토큰 기준). 예산이 없는 압축기는 "no_budget" 아래에 둔다.
+    키: 절대 예산 "2000", 비율 예산 "r=0.5". --cost-mode cache 면 캐시 관련 열을 더한다."""
     table: dict = {}
+    cache = cfg.cost_mode == "cache"
     for comp, block in blocks.items():
         b = block.get("all") or {}
-        key = str(budget_of(comp)) if budget_of(comp) else "no_budget"
-        row = {k: b.get(k) for k in TABLE_KEYS}
+        key = str(budget_of(comp)) if budget_of(comp) is not None else "no_budget"
+        row = {k: b.get(k) for k in TABLE_KEYS + (CACHE_TABLE_KEYS if cache else ())}
+        if "presummary" in comp:
+            row["total_token_reduction_pct_without_build"] = b.get("total_token_reduction_pct_without_build")
+            row["total_token_reduction_pct_with_build"] = b.get("total_token_reduction_pct_with_build")
+        row["reasoning_mean"] = b.get("reasoning_tokens")
         row["non_inferior"] = (b.get("non_inferiority") or {}).get("non_inferior")
         row["non_inferior_cluster"] = (b.get("non_inferiority_cluster") or {}).get("non_inferior")
         ex = b.get("excluding_summary_failed")
@@ -961,12 +1190,20 @@ def budget_table(blocks: dict, cfg: ReplayConfig) -> dict:
         row["n_pairs_excluding_overflow"] = eo.get("n_pairs")
         row["retention_pct_excluding_overflow"] = eo.get("retention_pct")
         row["non_inferior_excluding_overflow"] = (eo.get("non_inferiority") or {}).get("non_inferior")
-        row["cost_reduction_pct_sim_excluding_overflow"] = eo.get("cost_reduction_pct_sim")
-        cm = (b.get("cache") or {}).get("compressed") or {}
-        row["prefix_share_mean"] = cm.get("prefix_share_mean")
-        row["actual_cache_hit_rate"] = cm.get("actual_cache_hit_rate")
+        row["total_token_reduction_pct_excluding_overflow"] = eo.get("total_token_reduction_pct")
+        if cache:
+            row["cost_reduction_pct_sim_excluding_overflow"] = eo.get("cost_reduction_pct_sim")
+            cm = (b.get("cache") or {}).get("compressed") or {}
+            row["prefix_share_mean"] = cm.get("prefix_share_mean")
+            row["actual_cache_hit_rate"] = cm.get("actual_cache_hit_rate")
         table.setdefault(key, {})[label_of(comp) if key != "no_budget" else comp] = row
-    return dict(sorted(table.items(), key=lambda kv: (kv[0] == "no_budget", int(kv[0]) if kv[0].isdigit() else 0)))
+
+    def order(kv):
+        k = kv[0]
+        if k == "no_budget":
+            return (2, 0.0)
+        return (0, float(k)) if k.isdigit() else (1, float(k[2:]))
+    return dict(sorted(table.items(), key=order))
 
 
 # ---------------- CLI ----------------
@@ -987,6 +1224,14 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--margin", type=float, default=0.10, help="비열등 마진 (none 정확도의 비율)")
     ap.add_argument("--boot", type=int, default=10000)
     ap.add_argument("--prompt", default="v2", help="src/prompts/mt_answer_<version>.md (기본 v2)")
+    ap.add_argument("--cost-mode", default="none", choices=COST_MODES,
+                    help="none(기본): 토큰 지표만. cache: 캐시 관련 비용 지표(sim, nocache, 접두부 공유율, 실측)도 summary 에")
+    ap.add_argument("--presummary-model", help="presummary 가 있으면 필수. data/presummaries/<모델>/ 의 요약을 쓴다")
+    ap.add_argument("--presummary-dir", help="(presummary) 요약 폴더를 직접 지정 (기본 data/presummaries/<presummary-model>)")
+    ap.add_argument("--notes-model", help="fact_notes 가 있으면 필수")
+    ap.add_argument("--notes-reasoning-effort", choices=REASONING_EFFORT_CHOICES, help="fact_notes 가 있으면 필수")
+    ap.add_argument("--notes-max-tokens", type=int, help="fact_notes 가 있으면 필수 (추론 포함 출력 한도)")
+    ap.add_argument("--notes-target-ratio", type=float, default=0.25, help="메모 목표 길이 = 그 턴 문서 토큰 × 비율 (기본 0.25)")
     ap.add_argument("--history-budget", default="2000,4000,8000",
                     help="예산형 압축기 기록 토큰 예산, 쉼표로 여러 개 (파일럿 기본 2000,4000,8000)")
     ap.add_argument("--keep-recent", type=int, default=1, help="예산형 압축기가 항상 원문으로 남기는 최근 턴 수")
@@ -1020,9 +1265,12 @@ def config_from_args(a) -> ReplayConfig:
                         compressors=split_compressor_list(a.compressors), samples=a.samples,
                         reference_sample=a.reference_sample, temperature=a.temperature, prompt_version=a.prompt,
                         judge_mode=a.judge_mode, concurrency=a.concurrency, margin=a.margin, boot=a.boot,
-                        history_budgets=[int(x) for x in a.history_budget.split(",") if x.strip()],
+                        history_budgets=parse_budget_list(a.history_budget),
                         keep_recent=a.keep_recent, summary_model=a.summary_model,
-                        summary_reasoning_effort=a.summary_reasoning_effort, summary_max_tokens=a.summary_max_tokens)
+                        summary_reasoning_effort=a.summary_reasoning_effort, summary_max_tokens=a.summary_max_tokens,
+                        presummary_model=a.presummary_model, notes_model=a.notes_model,
+                        notes_reasoning_effort=a.notes_reasoning_effort, notes_max_tokens=a.notes_max_tokens,
+                        notes_target_ratio=a.notes_target_ratio, cost_mode=a.cost_mode)
 
 
 def main(argv=None):
@@ -1032,6 +1280,16 @@ def main(argv=None):
     from multiturn.scenario import load_scenarios
     scenarios = load_scenarios(a.scenarios)
     corpus = load_corpus()
+    presummary_store = None
+    if cfg.has_presummary:
+        from multiturn.history_compressors import MissingPresummaryError, PresummaryStore
+        try:
+            presummary_store = (PresummaryStore(Path(a.presummary_dir)) if a.presummary_dir
+                                else PresummaryStore.for_model(cfg.presummary_model))
+        except MissingPresummaryError as e:
+            if not a.estimate_only:
+                sys.exit(f"[중단] {e}")
+            print(f"[추정] {e} -> 원문 × 목표 비율 길이의 자리표시 요약으로 추정합니다", flush=True)
     if a.estimate_only:
         from multiturn.estimate import estimate, print_estimate
         tk = check_tokenizer(cfg.model, allow_approx=True)      # 추정은 근사여도 된다 (출력 맨 위에 표시)
@@ -1039,7 +1297,8 @@ def main(argv=None):
                                 reasoning_tokens=a.assume_reasoning_tokens, judge_model=a.judge_model,
                                 judge_in=a.judge_in_per_call, judge_out=a.judge_out_per_call, tokenizer_check=tk,
                                 summary_tokens=a.assume_summary_tokens,
-                                summary_reasoning_tokens=a.assume_summary_reasoning_tokens))
+                                summary_reasoning_tokens=a.assume_summary_reasoning_tokens,
+                                presummary_store=presummary_store))
         return
     try:
         tk = check_tokenizer(cfg.model, allow_approx=a.allow_approx_tokenizer)
@@ -1059,9 +1318,15 @@ def main(argv=None):
         from multiturn.history_compressors import Summarizer
         summarizer = {e: Summarizer(CachedLLM(configure_summary_llm(LLM(role="answer"), cfg, e)))
                       for e in cfg.summary_efforts}
+    notes_extractor = None
+    if cfg.has_notes:
+        from multiturn.history_compressors import NotesExtractor
+        notes_extractor = NotesExtractor(CachedLLM(configure_notes_llm(LLM(role="answer"), cfg)),
+                                         target_ratio=cfg.notes_target_ratio, token_counter=lambda t: count_tokens(t))
     run_id = a.resume or datetime.now().strftime("%Y%m%d-%H%M%S")
     out_dir = CFG.results_dir / "runs" / f"mt_{run_id}"
-    rep = Replay(cfg, scenarios, corpus, answer, judge, out_dir, tokenizer_check=tk, summarizer=summarizer)
+    rep = Replay(cfg, scenarios, corpus, answer, judge, out_dir, tokenizer_check=tk, summarizer=summarizer,
+                 presummary_store=presummary_store, notes_extractor=notes_extractor)
     try:
         if seq:
             out = rep.run_sequential(seq, [x for x in a.chain_scenarios.split(",") if x.strip()] or None,
@@ -1077,11 +1342,30 @@ def main(argv=None):
         judge.close()
         for sm in (summarizer or {}).values():
             sm.cached.close()
-    print("[압축기 비교] 시뮬레이션 캐시 비용(_sim) 기준, 실측(_measured)은 참고")
-    print(json.dumps({c: {k: b["all"].get(k) for k in ("input_reduction_pct", "total_token_reduction_pct",
-                                                       "cost_reduction_pct_sim", "cost_reduction_pct_measured",
-                                                       "retention_pct", "non_inferiority")}
-                      for c, b in summary["compressors"].items()}, ensure_ascii=False, indent=1))
+        if notes_extractor is not None:
+            notes_extractor.cached.close()
+    keys = ("input_reduction_pct", "total_token_reduction_pct", "reasoning_reduction_pct", "retention_pct",
+            "non_inferiority", "non_inferiority_cluster")
+    if cfg.cost_mode == "cache":
+        keys += ("cost_reduction_pct_sim", "cost_reduction_pct_measured")
+    print("[압축기 비교] 토큰 기준 (none 대비)" + (" + 캐시 비용 지표" if cfg.cost_mode == "cache" else ""))
+    print(json.dumps({c: {k: b["all"].get(k) for k in keys} for c, b in summary["compressors"].items()},
+                     ensure_ascii=False, indent=1))
+    if summary.get("fact_notes_compression"):
+        print("[fact_notes 압축률] " + json.dumps({c: {k: v[k] for k in ("notes", "ratio_mean", "ratio_total",
+                                                                           "over_2x_target", "failed")}
+                                                   for c, v in summary["fact_notes_compression"].items()},
+                                                  ensure_ascii=False))
+    if summary.get("presummary_build"):
+        pb = summary["presummary_build"]
+        print(f"[presummary 구축 비용] ${pb['build_usd']}  페이지 {pb['pages']}/{pb['pages_needed']}  압축률 평균 {pb['ratio_mean']}"
+              f"  목표 2배 초과 {pb['over_2x_target']}")
+        for c, b in summary["compressors"].items():
+            if "presummary" in c:
+                a = b["all"]
+                print(f"  {c} 총 토큰 절감률: 구축 제외 {a.get('total_token_reduction_pct_without_build')}%"
+                      f" / 구축 포함(상한 부담) {a.get('total_token_reduction_pct_with_build')}%"
+                      f"  (구축 토큰 {a.get('presummary_build_tokens')})")
     bud = summary["budget"]
     print(f"[예산 확인] 실제 지출 답변 ${bud['answer_usd_actual_total']} (기준 궤적 ${bud['reference_usd_actual']})")
     print(f"  * {REFERENCE_SPEND_NOTE}")
