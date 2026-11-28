@@ -78,8 +78,8 @@ def common_prefix_tokens(a: list[dict] | None, b: list[dict], count_fn=None) -> 
 class EstimateSummarizer(Summarizer):
     """API 를 부르지 않는 요약기: summary_tokens 길이의 자리표시 요약을 돌려주고 토큰만 센다."""
 
-    def __init__(self, model: str, summary_tokens: int, reasoning_tokens: int):
-        super().__init__(cached=None)
+    def __init__(self, model: str, summary_tokens: int, reasoning_tokens: int, max_target: int | None = None):
+        super().__init__(cached=None, max_target=max_target)
         self.model, self.summary_tokens, self.reasoning_tokens = model, summary_tokens, reasoning_tokens
 
     def summarize(self, turns, previous, target_tokens, sample_idx):
@@ -120,6 +120,24 @@ class EstimateNotesExtractor:
     def config(self):
         return {"estimate": True, "model": self.model, "target_ratio": self.target_ratio,
                 "reasoning_tokens": self.reasoning_tokens}
+
+
+class HashEmbedder:
+    """추정용 임베더: 서버를 부르지 않고 텍스트 해시로 정해지는 벡터를 쓴다. query_select_hybrid 는 예산까지 채우므로
+    토큰 수 추정에는 충분하다 (어떤 조각을 고르는지는 실제와 다르다)."""
+
+    def embed_many(self, texts):
+        import hashlib
+        out = []
+        for t in texts:
+            h = hashlib.sha256(t.encode("utf-8")).digest()
+            v = [(b - 127.5) / 127.5 for b in h[:16]]
+            n = sum(x * x for x in v) ** 0.5 or 1.0
+            out.append([x / n for x in v])
+        return out
+
+    def config(self):
+        return {"estimate": True}
 
 
 class PlaceholderPresummaryStore:
@@ -198,7 +216,8 @@ def estimate(cfg, scenarios: list[dict], corpus, answer_tokens: int = 300, reaso
     out_tokens = answer_tokens + reasoning_tokens
     sp = find_price(cfg.summary_model, pricing)[1] if cfg.summary_model else None
     summarizer = ({e: EstimateSummarizer(cfg.summary_model, summary_tokens,
-                                         0 if e == "none" else summary_reasoning_tokens)
+                                         0 if e == "none" else summary_reasoning_tokens,
+                                         max_target=getattr(cfg, "summary_max_target", None))
                    for e in cfg.summary_efforts} if cfg.has_summary else None)
     # 압축기 생성 실패(llmlingua 없음 등)는 삼키지 않는다: 여기서 예외가 나면 추정도 멈춘다
     if getattr(cfg, "has_presummary", False) and not isinstance(presummary_store, PlaceholderPresummaryStore):
@@ -209,7 +228,8 @@ def estimate(cfg, scenarios: list[dict], corpus, answer_tokens: int = 300, reaso
                        if getattr(cfg, "has_notes", False) else None)
     comps = {name: get_history_compressor(name, token_counter=lambda t: count_tokens(t), summarizer=summarizer,
                                           keep_recent=cfg.keep_recent, presummary_store=presummary_store,
-                                          notes_extractor=notes_extractor)
+                                          notes_extractor=notes_extractor, embedder=HashEmbedder(),
+                                          hybrid_bm25_weight=getattr(cfg, "hybrid_bm25_weight", 0.5))
              for name in cfg.compressors}
     cache = PrefixCache()
 

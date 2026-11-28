@@ -78,7 +78,7 @@ import random
 import threading
 import time
 from collections import defaultdict
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import CancelledError, ThreadPoolExecutor, as_completed
 from dataclasses import asdict, dataclass, field
 from datetime import datetime
 
@@ -87,7 +87,7 @@ import requests
 from config import CFG
 from cost import compute_cost, cost_from_fields, find_price, load_pricing
 from grader import contains_words, is_not_found_answer, word_tokens
-from llm import count_message_tokens, count_tokens
+from llm import InsufficientBalanceError, count_message_tokens, count_tokens
 from multiturn.fact_tags import setup_failed_fields, setup_indices, split_grade
 from multiturn.history_compressors import (
     BUDGET_FAMILIES, budget_of, expand_budgets, expand_sets, expand_summary_efforts, family_of, get_history_compressor,
@@ -102,8 +102,71 @@ from multiturn.trajectory import (
 )
 
 REFERENCE_ROOT = CFG.results_dir / "multiturn" / "references"
+JUDGE_V2, JUDGE_V3 = "fact_judge_v2", "fact_judge_v3"
+
+
+def judge_version_for(scenario: dict | None) -> str:
+    """multiturn-v2 (schema_version 2) 시나리오는 fact_judge_v3, 그 밖(v1)은 fact_judge_v2."""
+    return JUDGE_V3 if scenario is not None and scenario.get("schema_version") == 2 else JUDGE_V2
+
+
+def judge_kwargs(scenario: dict | None, turn: dict) -> dict:
+    """grade_fn 에 더 넘길 인자. v1 은 빈 dict (예전 호출 그대로)."""
+    if judge_version_for(scenario) != JUDGE_V3:
+        return {}
+    meta = turn.get("fact_meta") or [{} for _ in turn["key_facts"]]
+    return {"judge_version": JUDGE_V3,
+            "alternatives": [list((m or {}).get("accept_alternatives") or []) for m in meta]}
+
+
+def judge_versions_of(scenarios: list[dict]) -> dict:
+    """채점 버전별 시나리오 수 (summary 기록용)."""
+    out: dict = {}
+    for s in scenarios:
+        v = judge_version_for(s)
+        out[v] = out.get(v, 0) + 1
+    return out
 COST_MODES = ("none", "cache")
 RETRY_STATUS = {429, 500, 502, 503, 504}
+
+
+def merge_segments(lines: list[dict]) -> list[dict]:
+    """run_segments.jsonl 의 줄을 구간 하나당 한 기록으로. 번호 있는 구간은 start·end 두 줄을 합친다
+    (end 가 없으면 status=interrupted: 프로세스가 중간에 끊긴 구간). 번호 없는 예전 형식 줄은 그대로 한 구간."""
+    out, by_seg = [], {}
+    for r in lines:
+        if "segment" not in r:
+            out.append(dict(r))
+            continue
+        seg = by_seg.get(r["segment"])
+        if seg is None:
+            seg = by_seg[r["segment"]] = {"segment": r["segment"], "status": "interrupted", "trials_submitted": None,
+                                          "chains_submitted": None, "already_done": None, "failed": None}
+            out.append(seg)
+        ev = r.get("event")
+        body = {k: v for k, v in r.items() if k not in ("event", "time")}
+        if ev == "start":
+            seg.update(body)
+            seg["started_at"] = r.get("time")
+        else:
+            seg.update({k: v for k, v in body.items() if not (k == "started_at" and seg.get("started_at"))})
+            seg["finished_at"] = r.get("time")
+    return out
+
+
+class RunStopped(RuntimeError):
+    """다른 작업에서 잔액 부족이 나서 실행 전체를 멈추는 중. 이 trial 은 행을 쓰지 않는다 (--resume 이 다시 돌린다)."""
+
+
+class ReplayStoppedError(RuntimeError):
+    """잔액 부족으로 replay 를 멈췄다. balance 는 원래 InsufficientBalanceError."""
+
+    def __init__(self, balance: InsufficientBalanceError, out_dir):
+        self.balance, self.out_dir = balance, out_dir
+        rid = Path(out_dir).name
+        rid = rid[3:] if rid.startswith("mt_") else rid
+        super().__init__(f"{balance} -> 실행을 멈췄습니다. 끝난 trial 은 {out_dir} 에 남아 있고, "
+                         f"잔액을 채운 뒤 --resume {rid} 로 이어 돌립니다")
 # 답변 모델 -> history_tokens_* / input_tokens_est 를 셀 토크나이저 (TOKENIZER). 정확히 일치하는 키, 없으면 가장 긴 접두사
 EXPECTED_TOKENIZERS = {"gpt-6-luna": "tiktoken:o200k_base"}
 
@@ -150,6 +213,8 @@ class ReplayConfig:
     summary_model: str | None = None            # 요약형 압축기가 있으면 필수
     summary_reasoning_effort: str | list | None = None  # 요약형 압축기가 있으면 필수. 쉼표로 여러 조건 (server_default,none)
     summary_max_tokens: int | None = None        # 요약형 압축기가 있으면 필수
+    hybrid_bm25_weight: float = 0.5              # query_select_hybrid 점수 = w × minmax(BM25) + (1 − w) × minmax(코사인)
+    summary_max_target: int | None = 3000        # 요약 목표 길이 상한 (토큰). 목표 = min(예산 - 최근 원문 턴, 상한). None: 상한 없음
     presummary_model: str | None = None          # presummary 가 있으면 필수 (data/presummaries/<모델>/)
     notes_model: str | None = None               # fact_notes 가 있으면 필수
     notes_reasoning_effort: str | None = None    # fact_notes 가 있으면 필수
@@ -317,11 +382,16 @@ def entity_retention_in_history(entities: list[str], raw_past: list[dict], comp_
 class Replay:
     def __init__(self, cfg: ReplayConfig, scenarios: list[dict], corpus, answer_cached, judge_cached,
                  out_dir: Path, reference_root: Path = REFERENCE_ROOT, grade_fn=None, sleep=time.sleep,
-                 tokenizer_check: dict | None = None, summarizer=None, presummary_store=None, notes_extractor=None):
+                 tokenizer_check: dict | None = None, summarizer=None, presummary_store=None, notes_extractor=None,
+                 embedder=None):
         self.cfg, self.scenarios, self.corpus = cfg, scenarios, corpus
         self.summarizer = summarizer
         self.presummary_store = presummary_store
         self.notes_extractor = notes_extractor
+        if embedder is None and any(family_of(c) == "query_select_hybrid" for c in cfg.compressors):
+            from multiturn.history_compressors import OllamaEmbedder
+            embedder = OllamaEmbedder()          # 압축기끼리 한 임베더(같은 캐시)를 쓴다
+        self.embedder = embedder
         self.answer = answer_cached                    # multiturn.response_cache.CachedLLM (answer LLM 감쌈)
         self.judge = judge_cached.bind(0)              # 같은 답변은 같은 채점 (sample_idx 0 고정)
         self.out_dir = Path(out_dir)
@@ -338,9 +408,11 @@ class Replay:
         self.compressors = {name: get_history_compressor(name, token_counter=lambda t: count_tokens(t),
                                                          summarizer=summarizer, keep_recent=cfg.keep_recent,
                                                          presummary_store=presummary_store,
-                                                         notes_extractor=notes_extractor)
+                                                         notes_extractor=notes_extractor, embedder=self.embedder,
+                                                         hybrid_bm25_weight=cfg.hybrid_bm25_weight)
                             for name in cfg.compressors}
         self._lock = threading.Lock()
+        self._stop = threading.Event()          # 잔액 부족: 새 trial·체인 턴을 시작하지 않는다
         self._memo: dict = {}
         self.run_id = self.out_dir.name.removeprefix("mt_")
         for s in scenarios:
@@ -403,9 +475,12 @@ class Replay:
         tmp.replace(path)
         return steps
 
-    def grade(self, turn: dict, response: str):
+    def grade(self, turn: dict, response: str, scenario: dict | None = None):
+        """채점. multiturn-v2 (schema_version 2) 시나리오는 fact_judge_v3 와 key_fact 별 accept_alternatives 로 채점한다.
+        v1 시나리오는 예전과 똑같이 부른다 (채점 버전 인자를 넘기지 않아 v2 판정)."""
+        extra = judge_kwargs(scenario, turn)
         return with_backoff(lambda: self.grade_fn(turn["question"], turn["answer"], turn["key_facts"], response,
-                                                  self.judge, mode=self.cfg.judge_mode), self.cfg, self.sleep)
+                                                  self.judge, mode=self.cfg.judge_mode, **extra), self.cfg, self.sleep)
 
     def build_references(self) -> tuple[dict, dict, list[str]]:
         refs, grades, warnings = {}, {}, []
@@ -413,26 +488,49 @@ class Replay:
         p = self.out_dir / "reference_grades.json"
         if p.exists():
             saved = json.loads(p.read_text(encoding="utf-8"))
-        for s in self.scenarios:
+        def one(s):
+            return s["scenario_id"], self.reference(s)
+
+        # 시나리오끼리는 독립이라 동시에 만든다 (한 시나리오 안의 턴은 앞 답변이 필요해 순서대로)
+        if self.cfg.concurrency > 1 and len(self.scenarios) > 1:
+            with ThreadPoolExecutor(max_workers=self.cfg.concurrency) as pool:
+                made = dict(pool.map(one, self.scenarios))
+        else:
+            made = dict(one(s) for s in self.scenarios)
+
+        def grade_scenario(s):
             sid = s["scenario_id"]
-            refs[sid] = self.reference(s)
-            grades[sid] = {}
-            for step in refs[sid]:
+            out, warns = {}, []
+            for step in made[sid]:
                 t = s["turns"][step.turn]
                 if not step.response_content:
-                    warnings.append(f"{sid} 턴 {step.turn}: 기준 궤적 답변이 비었습니다")
+                    warns.append(f"{sid} 턴 {step.turn}: 기준 궤적 답변이 비었습니다")
                 if step.finish_reason == "length":
-                    warnings.append(f"{sid} 턴 {step.turn}: 기준 궤적 답변이 출력 한도에 걸렸습니다 (finish_reason=length)")
+                    warns.append(f"{sid} 턴 {step.turn}: 기준 궤적 답변이 출력 한도에 걸렸습니다 (finish_reason=length)")
                 prev = saved.get(sid, {}).get(str(step.turn))
+                jv = judge_version_for(s)
                 if (prev is not None and prev.get("response") == step.response_content
-                        and (not setup_indices(t) or "answer_accuracy_all" in prev)):
-                    grades[sid][str(step.turn)] = prev
+                        and (not setup_indices(t) or "answer_accuracy_all" in prev)
+                        and prev.get("judge_version", JUDGE_V2) == jv):
+                    out[str(step.turn)] = prev
                     continue
-                g = self.grade(t, step.response_content)
+                g = self.grade(t, step.response_content, s)
                 sg = split_grade(t, g)       # answer_accuracy 는 setup 항목을 뺀 주 정확도 (depends_on_reference_ok 에 쓴다)
-                grades[sid][str(step.turn)] = {"answer_accuracy": sg["answer_accuracy"], "response": step.response_content,
-                                               **({"answer_accuracy_all": sg["answer_accuracy_all"],
-                                                   "setup_accuracy": sg["setup_accuracy"]} if setup_indices(t) else {})}
+                out[str(step.turn)] = {"answer_accuracy": sg["answer_accuracy"], "response": step.response_content,
+                                       **({"answer_accuracy_all": sg["answer_accuracy_all"],
+                                           "setup_accuracy": sg["setup_accuracy"]} if setup_indices(t) else {}),
+                                       **({"judge_version": jv, "fact_satisfied": sg["fact_satisfied"]}
+                                          if jv != JUDGE_V2 else {})}
+            return sid, out, warns
+
+        if self.cfg.concurrency > 1 and len(self.scenarios) > 1:
+            with ThreadPoolExecutor(max_workers=self.cfg.concurrency) as pool:
+                graded = list(pool.map(grade_scenario, self.scenarios))
+        else:
+            graded = [grade_scenario(s) for s in self.scenarios]
+        for sid, out, warns in graded:            # 시나리오 순서대로 모은다 (출력·파일 순서가 실행마다 같게)
+            refs[sid], grades[sid] = made[sid], out
+            warnings += warns
         for w in warnings:
             print(f"  [경고] {w}", flush=True)
         self.out_dir.mkdir(parents=True, exist_ok=True)
@@ -490,6 +588,8 @@ class Replay:
 
     def run_trial(self, scenario: dict, ref_steps: list[TrajectoryStep], ref_grades: dict, k: int,
                   comp_name: str, sample_idx: int, pre=None, prev_messages=None) -> dict:
+        if self._stop.is_set():
+            raise RunStopped()
         t = scenario["turns"][k]
         if pre is None:
             pre = self._stateless(scenario, ref_steps, k, comp_name, sample_idx)
@@ -516,7 +616,7 @@ class Replay:
         compress_cost = compress_cost_of(results)
         res, hit = with_backoff(lambda: self.answer.chat(messages, sample_idx=sample_idx), self.cfg, self.sleep)
         response = res.text.strip()
-        g = self.grade(t, response)
+        g = self.grade(t, response, scenario)
         cost = compute_cost(res).to_dict()
         judge_cost = None
         if g.judge_prompt_tokens or g.judge_completion_tokens:
@@ -547,16 +647,22 @@ class Replay:
             "completion_tokens": res.completion_tokens, "usage_source": res.usage_source,
             "compress_llm_prompt_tokens": llm_pt, "compress_llm_completion_tokens": llm_ct,
             "compress_llm_reasoning_tokens": sum(r.reasoning_tokens or 0 for r in results),
+            "compress_llm_calls": len(results),
+            "compress_llm_length_hits": sum(1 for r in results if r.finish_reason == "length"),
             "compress_cost": compress_cost, "history_budget_effective": info.get("history_budget"),
             "notes_made": notes.record(comp.extractor.target_ratio) if notes is not None else None,
             "presummary_pages": info.get("pages_replaced"),
             "summary_calls": info.get("summary_calls"), "summary_cache_hits": info.get("summary_cache_hits"),
+            "summary_max_target": info.get("summary_max_target"),
+            "summary_target_requested": info.get("summary_target_requested"),
+            "summary_target": info.get("summary_target"), "summary_target_capped": info.get("summary_target_capped"),
             "recompressed": info.get("recompressed"), "recompress_turns": info.get("recompress_turns"),
             "cost": cost, "judge_cost": judge_cost, "cache_hit": hit, "finish_reason": res.finish_reason,
             "summary_effort": summary_effort_of(comp_name),
             "response": response, "empty_response": not response, "not_found": is_not_found_answer(response),
             **split_grade(t, g),      # answer_accuracy 등은 setup 항목을 뺀 주 정확도, setup_accuracy 는 따로
-            "judge_mode": g.judge_mode, "judge_skipped": g.judge_skipped, "judge_failed": list(g.judge_failed),
+            "judge_mode": g.judge_mode, "judge_version": judge_version_for(scenario),
+            "judge_skipped": g.judge_skipped, "judge_failed": list(g.judge_failed),
             "judge_prompt_tokens": g.judge_prompt_tokens, "judge_completion_tokens": g.judge_completion_tokens,
             "entity_retention": entity_retention_in_history(t["key_entities"], raw_past, comp_past),
             "prompt_hash": step.prompt_hash, "model": res.model,
@@ -581,6 +687,8 @@ class Replay:
                 "summary_fail_reason": info.get("summary_fail_reason"),
                 "summary_attempts": info.get("summary_attempts") if first else 0,
                 "compress_llm_prompt_tokens": hres.llm_prompt_tokens if first else 0,
+                "compress_llm_calls": len(results) if first else 0,
+                "compress_llm_length_hits": sum(1 for r in results if r.finish_reason == "length") if first else 0,
                 "compress_llm_completion_tokens": hres.llm_completion_tokens if first else 0,
                 "compress_cost": cost if first else {"usd": 0.0, "usd_nocache": 0.0, "calls": 0},
                 "summary_effort": summary_effort_of(comp_name),
@@ -596,6 +704,8 @@ class Replay:
         prev = None
         n = 0
         for k in range(len(scenario["turns"])):
+            if self._stop.is_set():
+                raise RunStopped()
             history, current_user = self._inputs(scenario, ref_steps, k)
             t0 = time.perf_counter()
             hres = with_backoff(lambda: comp.compress_history(history, current_user, None, state), self.cfg, self.sleep)
@@ -613,8 +723,40 @@ class Replay:
             n += 1
         return n
 
-    def run(self) -> dict:
-        refs, ref_grades, ref_warnings = self.build_references()
+    def _segment(self, event: str, seg: int, **extra):
+        self._append("run_segments.jsonl", {"segment": seg, "event": event, "concurrency": self.cfg.concurrency,
+                                            "time": datetime.now().isoformat(timespec="seconds"), **extra})
+
+    def _balance_stop(self, e: InsufficientBalanceError, where: str):
+        self._stop.set()
+        bar = "=" * 70
+        print(f"\n{bar}\n[잔액 부족] {e.provider} (HTTP {e.status}, model={e.model}) {where}\n  {e.body[:300]}\n"
+              "  -> 새 작업을 시작하지 않고 실행을 멈춥니다. 끝난 trial 은 그대로 두고, 이 작업의 행은 쓰지 않습니다 "
+              f"(--resume 으로 다시 돈다)\n{bar}", flush=True)
+        self._append("errors.jsonl", {"kind": "insufficient_balance", "provider": e.provider, "status": e.status,
+                                      "model": e.model, "base_url": e.base_url, "where": where, "body": e.body[:500],
+                                      "time": datetime.now().isoformat(timespec="seconds")})
+
+    def run(self, references_only: bool = False) -> dict:
+        """references_only=True 면 기준 궤적(과 그 채점)만 만들고 멈춘다 (나중에 --resume 으로 압축기를 돌린다).
+        잔액 부족(InsufficientBalanceError)이 나면 진행 중인 작업을 정리하고 ReplayStoppedError 를 낸다.
+        실행 구간은 run_segments.jsonl 에 시작·끝 두 줄로 남긴다 (끝 줄에 이어 붙인 행 수와 중복 키 수)."""
+        prev_segments = self._read("run_segments.jsonl")
+        numbered = [r["segment"] for r in prev_segments if "segment" in r]
+        seg = 1 + (max(numbered) if numbered else len(prev_segments))   # 예전 형식(번호 없는 한 줄 = 한 구간)도 센다
+        rows_before = len(self._trials())
+        self._segment("start", seg, rows_before=rows_before, resumed=rows_before > 0)
+        try:
+            refs, ref_grades, ref_warnings = self.build_references()
+        except InsufficientBalanceError as e:
+            self._balance_stop(e, "기준 궤적 생성·채점 중")
+            self._segment("end", seg, status="stopped_insufficient_balance", provider=e.provider,
+                          rows_before=rows_before, rows_after=rows_before, rows_appended=0)
+            raise ReplayStoppedError(e, self.out_dir) from e
+        if references_only:
+            self._segment("end", seg, status="references_only", rows_before=rows_before, rows_after=rows_before,
+                          rows_appended=0)
+            return {"references_only": True, "warnings": ref_warnings, "scenarios": len(refs)}
         done = {self.trial_key(r) for r in self._trials() if not r.get("summary_failed")}
         stateless = [c for c in self.cfg.compressors if not is_stateful(c)]
         stateful = [c for c in self.cfg.compressors if is_stateful(c)]
@@ -625,6 +767,7 @@ class Replay:
                   if any((s["scenario_id"], k, c, i) not in done for k in range(len(s["turns"])))]
         print(f"replay: trial {len(tasks)} + 상태형 체인 {len(chains)} (이미 끝남 {len(done)})", flush=True)
         failed = 0
+        balance = None
         seg_start = datetime.now().isoformat(timespec="seconds")
         with ThreadPoolExecutor(max_workers=self.cfg.concurrency) as pool:
             futs = {}
@@ -637,16 +780,28 @@ class Replay:
             for f in as_completed(futs):
                 try:
                     f.result()
+                except InsufficientBalanceError as e:
+                    if balance is None:
+                        balance = e
+                        self._balance_stop(e, f"작업 {list(futs[f])}")
+                        for other in futs:          # 아직 시작하지 않은 작업은 취소
+                            other.cancel()
+                except (RunStopped, CancelledError):
+                    pass                            # 멈추는 중: 행을 쓰지 않았고 --resume 이 다시 돌린다
                 except Exception as e:      # 한 trial·체인이 실패해도 나머지는 돈다. 이어 돌리기로 다시 시도된다
                     failed += 1
                     self._append("errors.jsonl", {"key": list(futs[f]), "error": f"{type(e).__name__}: {e}"[:500],
                                                   "time": datetime.now().isoformat(timespec="seconds")})
         # 실행 구간 기록: --resume 으로 이어 돌리면 구간이 하나씩 늘어난다 (concurrency 등을 덮어쓰지 않는다)
-        self._append("run_segments.jsonl", {
-            "started_at": seg_start, "finished_at": datetime.now().isoformat(timespec="seconds"),
-            "concurrency": self.cfg.concurrency, "trials_submitted": len(tasks), "chains_submitted": len(chains),
-            "already_done": len(done), "failed": failed})
         rows = self._trials()
+        keys = [self.trial_key(r) for r in rows]
+        self._segment("end", seg, status="stopped_insufficient_balance" if balance else "finished",
+                      provider=balance.provider if balance else None,
+                      started_at=seg_start, trials_submitted=len(tasks), chains_submitted=len(chains),
+                      already_done=len(done), failed=failed, rows_before=rows_before, rows_after=len(rows),
+                      rows_appended=len(rows) - rows_before, duplicate_keys=len(keys) - len(set(keys)))
+        if balance is not None:
+            raise ReplayStoppedError(balance, self.out_dir) from balance
         build = (presummary_build_block(self.presummary_store, self.scenarios)
                  if self.presummary_store is not None else None)
         summary = summarize_replay(rows, self.cfg, ref_warnings=ref_warnings, n_scenarios=len(self.scenarios),
@@ -676,15 +831,17 @@ class Replay:
         answer = CachedLLM(self.answer.llm, enabled=False)
         summ = self.summarizer
         if isinstance(summ, dict):
-            summ = {k: Summarizer(CachedLLM(v.cached.llm, enabled=False), v.prompt, v.max_attempts) for k, v in summ.items()}
+            summ = {k: Summarizer(CachedLLM(v.cached.llm, enabled=False), v.prompt, v.max_attempts, v.max_target)
+                    for k, v in summ.items()}
         elif summ is not None:
-            summ = Summarizer(CachedLLM(summ.cached.llm, enabled=False), summ.prompt, summ.max_attempts)
+            summ = Summarizer(CachedLLM(summ.cached.llm, enabled=False), summ.prompt, summ.max_attempts, summ.max_target)
         scen = [s for s in self.scenarios if not scenario_ids or s["scenario_id"] in scenario_ids]
         rows = []
         for name in comp_names:
             comp = get_history_compressor(name, token_counter=lambda t: count_tokens(t), summarizer=summ,
                                           keep_recent=self.cfg.keep_recent, presummary_store=self.presummary_store,
-                                          notes_extractor=self.notes_extractor)
+                                          notes_extractor=self.notes_extractor, embedder=self.embedder,
+                                          hybrid_bm25_weight=self.cfg.hybrid_bm25_weight)
             for s in scen:
                 for i in (samples or [0]):
                     state = comp.initial_state(i) if hasattr(comp, "initial_state") else None
@@ -731,14 +888,15 @@ class Replay:
         replay_cfg = asdict(self.cfg)
         # concurrency 는 실행 구간마다 다를 수 있어 execution_segments 에만 남긴다 (마지막 값으로 덮어쓰지 않는다)
         replay_cfg.pop("concurrency", None)
-        segments = self._read("run_segments.jsonl")
+        segments = merge_segments(self._read("run_segments.jsonl"))
         return {
             "replay": replay_cfg,
             "execution_segments": segments,
-            "concurrency_values": sorted({sg["concurrency"] for sg in segments}),
+            "concurrency_values": sorted({sg["concurrency"] for sg in segments if "concurrency" in sg}),
             "answer_sampling": self.answer.llm.sampling_info(),
             "answer_backend": {"backend": self.answer.llm.backend, "base_url": self.answer.llm.base_url},
-            "judge": {"model": self.judge.model, "mode": self.cfg.judge_mode},
+            "judge": {"model": self.judge.model, "mode": self.cfg.judge_mode,
+                      "versions": judge_versions_of(self.scenarios)},
             "prompt": {"version": self.prompt.version, "sha256": self.prompt.sha256},
             "scenarios": {s["scenario_id"]: {"hash": scenario_hash(s), "status": s["status"], "turns": len(s["turns"])}
                           for s in self.scenarios},
@@ -747,6 +905,7 @@ class Replay:
                            else self.summarizer.config() if self.summarizer else None),
             "presummary": self.presummary_store.config() if self.presummary_store else None,
             "notes_extractor": self.notes_extractor.config() if self.notes_extractor else None,
+            "embedder": self.embedder.config() if getattr(self.embedder, "config", None) else None,
             "tokenizer": CFG.tokenizer,
             "tokenizer_check": self.tokenizer_check,
         }
@@ -1027,6 +1186,14 @@ def _strip_cache(block: dict) -> dict:
     return out
 
 
+def budget_use_mean(rows: list[dict]):
+    """예산 대비 실제 사용 비율 평균 (압축 뒤 기록 토큰 / 그 턴 예산). 예산형이 아니면 None.
+    요약 목표 상한(summary_max_target) 때문에 요약형은 예산을 다 쓰지 않을 수 있다."""
+    vals = [r["history_tokens_compressed"] / r["history_budget_effective"] for r in rows
+            if r.get("history_budget_effective") and r.get("history_tokens_compressed") is not None]
+    return round(sum(vals) / len(vals), 4) if vals else None
+
+
 def compare_block(pairs: list[tuple[dict, dict]], cfg: ReplayConfig, n_scenarios: int) -> dict:
     """짝지은 (none, 압축) trial 들의 절감률·정확도·비열등 판정."""
     if not pairs:
@@ -1055,6 +1222,7 @@ def compare_block(pairs: list[tuple[dict, dict]], cfg: ReplayConfig, n_scenarios
         "compress_cost_usd": round(sum(((r.get("compress_cost") or {}).get("usd") or 0) for r in comp_rows), 6),
         "cache": {"none": cache_metrics(bs), "compressed": cache_metrics(cs)},
         "history_reduction_pct": _pct_reduction(_sum(bs, "history_tokens_raw"), _sum(cs, "history_tokens_compressed")),
+        "budget_use_mean": budget_use_mean(cs),
         "input_reduction_pct": _pct_reduction(_sum(bs, "prompt_tokens"), _sum(cs, "prompt_tokens")),
         "total_token_reduction_pct": _pct_reduction(base_total, comp_total),
         "output_reduction_pct": _pct_reduction(tb["output"], tc["output"]),
@@ -1106,6 +1274,23 @@ def overflow_block(all_pairs, cfg: ReplayConfig) -> dict | None:
             "cost_reduction_pct_sim": _pct_reduction(_usd_sim(bs, "usd_read"), _usd_sim(cs, "usd_read"))}
 
 
+def summary_capped_counts(rows: list[dict]) -> dict:
+    """요약 호출이 있었던 trial 중 목표 길이가 상한에 걸린 수."""
+    called = [r for r in rows if r.get("summary_target") is not None]
+    return {"trials_with_summary": len(called), "capped": sum(bool(r.get("summary_target_capped")) for r in called)}
+
+
+def judge_version_counts(rows: list[dict]) -> dict:
+    """trial 행의 채점 버전별 수. 한 run 에 버전이 섞이면 짝지은 비교가 같은 채점 기준이 아니다."""
+    out: dict = {}
+    for r in rows:
+        if r.get("summary_failed"):
+            continue
+        v = r.get("judge_version") or "unrecorded"
+        out[v] = out.get(v, 0) + 1
+    return out
+
+
 def summarize_replay(rows: list[dict], cfg: ReplayConfig, ref_warnings: list[str] | None = None,
                      n_scenarios: int | None = None, presummary_build: dict | None = None) -> dict:
     n_scen = n_scenarios or len({r["scenario_id"] for r in rows})
@@ -1129,6 +1314,11 @@ def summarize_replay(rows: list[dict], cfg: ReplayConfig, ref_warnings: list[str
             SIM_INTERPRETATION_NOTE,
         ] if cfg.cost_mode == "cache" else []),
         "cost_mode": cfg.cost_mode,
+        **({"summary_max_target": cfg.summary_max_target,
+            "summary_target_capped": {c: summary_capped_counts([r for r in rows if r["compressor"] == c])
+                                      for c in cfg.compressors if is_stateful(c)}}
+           if cfg.has_summary else {}),
+        **({"judge_versions": judge_version_counts(rows)} if any("judge_version" in r for r in rows) else {}),
         "reference_health": {"warnings": ref_warnings or [], "n_warnings": len(ref_warnings or [])},
         "n_trials": len(rows),
         "answer_health": {c: answer_health([r for r in rows if r["compressor"] == c and not r.get("summary_failed")])
@@ -1186,6 +1376,12 @@ def summarize_replay(rows: list[dict], cfg: ReplayConfig, ref_warnings: list[str
     nc = {c: notes_compression([r for r in rows if r["compressor"] == c]) for c in cfg.compressors}
     if any(nc.values()):
         out["fact_notes_compression"] = {c: v for c, v in nc.items() if v}
+    if any("compress_llm_length_hits" in r for r in rows):
+        out["compress_length_hits"] = {
+            c: {"calls": _sum(rs, "compress_llm_calls"), "length_hits": _sum(rs, "compress_llm_length_hits"),
+                "trials_with_length_hit": sum(1 for r in rs if r.get("compress_llm_length_hits"))}
+            for c in cfg.compressors for rs in [[r for r in rows if r["compressor"] == c]]
+            if _sum(rs, "compress_llm_calls")}
     setup = setup_accuracy_block(rows, cfg.compressors)
     if setup is not None:
         out["setup_accuracy"] = setup
@@ -1193,7 +1389,7 @@ def summarize_replay(rows: list[dict], cfg: ReplayConfig, ref_warnings: list[str
     return out
 
 
-TABLE_KEYS = ("n_pairs", "history_reduction_pct", "input_reduction_pct", "total_token_reduction_pct",
+TABLE_KEYS = ("n_pairs", "history_reduction_pct", "budget_use_mean", "input_reduction_pct", "total_token_reduction_pct",
               "output_reduction_pct", "reasoning_reduction_pct", "compress_token_share_pct",
               "retention_pct", "overflow_rate", "summary_failed_rate", "summary_calls", "recompress_count",
               "compress_cost_usd")
@@ -1275,6 +1471,15 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--chain-scenarios", default="", help="(--sequential-chains) 시나리오 id, 쉼표 구분. 기본: 시나리오마다 전부")
     ap.add_argument("--chain-samples", default="0", help="(--sequential-chains) sample_idx, 쉼표 구분")
     ap.add_argument("--summary-max-tokens", type=int, help="요약형 압축기가 있으면 필수 (추론 포함 출력 한도)")
+    ap.add_argument("--references-only", action="store_true",
+                    help="기준 궤적과 그 채점만 만들고 멈춘다 (확인 뒤 같은 명령에 --resume <run_id> 로 압축기를 돌린다)")
+    ap.add_argument("--skip-preflight", action="store_true",
+                    help="실행 전 API 연결·잔액 확인(작은 요청 1회씩)을 건너뛴다")
+    ap.add_argument("--hybrid-bm25-weight", type=float, default=0.5,
+                    help="query_select_hybrid 의 BM25 가중치 (임베딩 가중치 = 1 − 이 값). 기본 0.5")
+    ap.add_argument("--summary-max-target", type=int, default=3000,
+                    help="요약 목표 길이 상한 (토큰, 기본 3000). 목표 = min(예산 - 최근 원문 턴, 상한). "
+                         "실서비스의 요약은 짧다는 가정, 출력 한도로 인한 요약 실패 방지. 0 이면 상한 없음")
     ap.add_argument("--judge-mode", default=CFG.judge_mode)
     ap.add_argument("--resume", metavar="RUN_ID", help="results/runs/mt_<RUN_ID> 를 이어서")
     ap.add_argument("--allow-approx-tokenizer", action="store_true",
@@ -1300,9 +1505,49 @@ def config_from_args(a) -> ReplayConfig:
                         history_budgets=parse_budget_list(a.history_budget),
                         keep_recent=a.keep_recent, summary_model=a.summary_model,
                         summary_reasoning_effort=a.summary_reasoning_effort, summary_max_tokens=a.summary_max_tokens,
+                        summary_max_target=a.summary_max_target or None, hybrid_bm25_weight=a.hybrid_bm25_weight,
                         presummary_model=a.presummary_model, notes_model=a.notes_model,
                         notes_reasoning_effort=a.notes_reasoning_effort, notes_max_tokens=a.notes_max_tokens,
                         notes_target_ratio=a.notes_target_ratio, cost_mode=a.cost_mode)
+
+
+PREFLIGHT_MESSAGES = [{"role": "user", "content": "Reply with the single word OK."}]
+
+
+def preflight_check(llms: list, embedder=None, log=print) -> list[dict]:
+    """실행 전에 각 API (모델, 주소) 에 작은 요청을 한 번씩 보내 연결·잔액을 확인한다 (응답 캐시를 거치지 않음).
+    실패하면 SystemExit. 결과 목록을 돌려준다 (run 폴더의 preflight.json 에 남긴다)."""
+    import requests as _rq
+    out, seen = [], set()
+    for role, llm in llms:
+        key = (llm.model, llm.base_url)
+        if key in seen:
+            continue
+        seen.add(key)
+        t0 = time.perf_counter()
+        try:
+            res = llm.chat(PREFLIGHT_MESSAGES)
+            out.append({"role": role, "model": llm.model, "base_url": llm.base_url, "ok": True,
+                        "seconds": round(time.perf_counter() - t0, 2), "prompt_tokens": res.prompt_tokens,
+                        "completion_tokens": res.completion_tokens})
+            log(f"  [사전 확인] {role:<8} {llm.model} ({llm.base_url}) 정상 {time.perf_counter() - t0:.1f}초")
+        except InsufficientBalanceError as e:
+            raise SystemExit(f"[중단] 사전 확인: {e.provider} 잔액 부족 (HTTP {e.status}, model={e.model}). "
+                             f"실행을 시작하지 않습니다. {e.body[:200]}")
+        except (_rq.ConnectionError, _rq.Timeout) as e:
+            raise SystemExit(f"[중단] 사전 확인: {role} {llm.model} ({llm.base_url}) 에 연결되지 않습니다 "
+                             f"({type(e).__name__}). 네트워크를 확인하세요 (학교망 eduroam 에서는 DeepSeek 이 막힌다). 실행을 시작하지 않습니다")
+        except Exception as e:  # noqa: BLE001
+            raise SystemExit(f"[중단] 사전 확인: {role} {llm.model} ({llm.base_url}) 실패: {type(e).__name__}: {str(e)[:200]}")
+    if embedder is not None:
+        t0 = time.perf_counter()
+        try:
+            embedder.embed_many(["preflight ping"])
+        except Exception as e:  # noqa: BLE001
+            raise SystemExit(f"[중단] 사전 확인: 임베딩 서버 실패 ({type(e).__name__}: {str(e)[:200]}). 실행을 시작하지 않습니다")
+        out.append({"role": "embed", **embedder.config(), "ok": True, "seconds": round(time.perf_counter() - t0, 2)})
+        log(f"  [사전 확인] embed    {embedder.model} 정상")
+    return out
 
 
 def main(argv=None):
@@ -1348,7 +1593,8 @@ def main(argv=None):
         seq = expand_summary_efforts(expand_budgets(seq, cfg.history_budgets), cfg.summary_efforts)
     if cfg.has_summary or any(is_stateful(c) for c in seq):
         from multiturn.history_compressors import Summarizer
-        summarizer = {e: Summarizer(CachedLLM(configure_summary_llm(LLM(role="answer"), cfg, e)))
+        summarizer = {e: Summarizer(CachedLLM(configure_summary_llm(LLM(role="answer"), cfg, e)),
+                                    max_target=cfg.summary_max_target)
                       for e in cfg.summary_efforts}
     notes_extractor = None
     if cfg.has_notes:
@@ -1359,6 +1605,17 @@ def main(argv=None):
     out_dir = CFG.results_dir / "runs" / f"mt_{run_id}"
     rep = Replay(cfg, scenarios, corpus, answer, judge, out_dir, tokenizer_check=tk, summarizer=summarizer,
                  presummary_store=presummary_store, notes_extractor=notes_extractor)
+    if not a.skip_preflight:
+        llms = [("answer", answer.llm), ("judge", judge.llm)]
+        llms += [(f"summary[{e}]", sm.cached.llm) for e, sm in (summarizer or {}).items()]
+        if notes_extractor is not None:
+            llms.append(("notes", notes_extractor.cached.llm))
+        print("[사전 확인] API 연결·잔액", flush=True)
+        pf = preflight_check(llms, rep.embedder)
+        out_dir.mkdir(parents=True, exist_ok=True)
+        with open(out_dir / "preflight.jsonl", "a", encoding="utf-8") as f:
+            f.write(json.dumps({"time": datetime.now().isoformat(timespec="seconds"), "checks": pf},
+                               ensure_ascii=False) + "\n")
     try:
         if seq:
             out = rep.run_sequential(seq, [x for x in a.chain_scenarios.split(",") if x.strip()] or None,
@@ -1368,7 +1625,15 @@ def main(argv=None):
                                               if isinstance(v, dict) and "sim_hit_rate" in v}, ensure_ascii=False))
             print(f"저장: {out_dir / 'sequential_summary.json'}")
             return
-        summary = rep.run()
+        try:
+            summary = rep.run(references_only=a.references_only)
+        except ReplayStoppedError as e:
+            print(f"\n[중단] {e}", flush=True)
+            raise SystemExit(3)
+        if a.references_only:
+            print(f"[기준 궤적만] 시나리오 {summary['scenarios']}개, 경고 {len(summary['warnings'])}건. "
+                  f"저장: {out_dir}  (이어서: 같은 명령에서 --references-only 를 빼고 --resume {run_id})", flush=True)
+            return
     finally:
         answer.close()
         judge.close()

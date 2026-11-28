@@ -83,6 +83,29 @@ def count_message_tokens(messages: list[dict], add_generation_prompt: bool = Tru
     return len(ids)
 
 
+class InsufficientBalanceError(RuntimeError):
+    """API 잔액·한도 부족 (OpenAI 429 insufficient_quota, DeepSeek 402 Insufficient Balance).
+    일시적 오류가 아니므로 재시도하지 않는다. 실험 실행은 이 오류를 받으면 전체를 멈춘다 (multiturn/replay.py)."""
+
+    def __init__(self, provider: str, status: int, model: str, base_url: str, body: str):
+        self.provider, self.status, self.model, self.base_url, self.body = provider, status, model, base_url, body
+        super().__init__(f"[잔액 부족] {provider} ({base_url}, model={model}) HTTP {status}: {body[:300]}")
+
+
+def balance_error_of(status: int | None, body: str, model: str, base_url: str) -> InsufficientBalanceError | None:
+    """응답이 잔액·한도 부족이면 InsufficientBalanceError, 아니면 None.
+    OpenAI: 429 + error.code/type insufficient_quota (일반 429 rate limit 과 구분). DeepSeek: 402 (Insufficient Balance)."""
+    text = (body or "").lower()
+    provider = "DeepSeek" if "deepseek" in (base_url or "").lower() else (
+        "OpenAI" if "openai" in (base_url or "").lower() else (base_url or "unknown"))
+    if status == 402:
+        return InsufficientBalanceError(provider, status, model, base_url, body)
+    if status == 429 and ("insufficient_quota" in text or "insufficient balance" in text
+                          or "exceeded your current quota" in text):
+        return InsufficientBalanceError(provider, status, model, base_url, body)
+    return None
+
+
 @dataclass
 class LLMResult:
     """LLM 호출 결과. 실험 로그에 그대로 기록할 수 있는 형태."""
@@ -212,6 +235,8 @@ class LLM:
         for attempt in range(self.max_retries):
             try:
                 return self._call_once(messages, stream_ttft)
+            except InsufficientBalanceError:
+                raise                              # 잔액 부족은 다시 보내도 같다
             except Exception as e:
                 # 4xx(429 제외)는 다시 보내도 같은 결과라 바로 올린다
                 status = getattr(getattr(e, "response", None), "status_code", None)
@@ -394,6 +419,9 @@ class LLM:
                 continue
             body = r.text[:500]
             r.close()
+            bal = balance_error_of(r.status_code, body, self.model, self.base_url)
+            if bal is not None:
+                raise bal                      # 잔액 부족: 재시도하지 않는다
             raise requests.HTTPError(f"{r.status_code} {url}: {body}", response=r)
 
     def _openai_chat(self, messages: list[dict], stream_ttft: bool) -> LLMResult:
