@@ -1,0 +1,17 @@
+- **Response models and return types**
+  - Declaring a path operation’s response type makes FastAPI validate returned data (invalid data, e.g. a missing field, causes a server error rather than wrong output), filter output to declared fields, document JSON Schema in OpenAPI/generated clients, and serialize efficiently. With a response type and the default response class, Pydantic serializes directly to JSON bytes.
+- **Return type annotations**
+  - Pydantic field types are valid response types: models, `list[...]`, `dict[...]`, scalars, and unions. For example, `async def create_item(item: Item) -> Item` or `async def read_items() -> list[Item]`.
+- **The `response_model` parameter**
+  - Use decorator parameter `response_model` when the returned value is not literally the declared type (e.g. a dict or database object) and an annotation would upset the editor/type checker. It belongs to `@app.get()`, `@app.post()`, etc., not the function. If both are present, `response_model` wins; FastAPI derives a model from the return annotation only when `response_model` is not passed.
+- **Filtering output**
+  - Do not return sensitive input such as `UserIn` with its password in production. Declaring `response_model=UserOut` converts returned `UserIn` to `UserOut` and drops `password`.
+  - For both a precise return annotation and filtering, make input a subclass of output: `UserIn(BaseUser)` can return as `BaseUser`; type checkers accept this and FastAPI serializes only `BaseUser` fields.
+- **Returning `Response` objects**
+  - A return annotation of `Response` or a subclass does not create a response model (`lenient_issubclass(return_annotation, Response)` → `response_model = None`). Any returned `Response` instance is sent as-is, without validation or filtering.
+  - An annotation that is neither a valid Pydantic type nor a plain `Response` class (e.g. `Response | dict` or an ORM class) makes FastAPI fail when creating the route. Keep the annotation and use `response_model=None`; without a response model, return values are converted with `jsonable_encoder`.
+  - For streaming (JSON Lines / SSE), generator endpoints take the **item** type from annotations such as `AsyncIterable[Item]`.
+- **Response model encoding options**
+  - `response_model_exclude_unset=True` omits fields not explicitly set. For `{"name": "Foo", "price": 50.2}`, output is `{"name": "Foo", "price": 50.2}`; default `description`, `tax`, and `tags` are omitted. Explicitly set values are included even when equal to defaults (e.g. `baz`’s `"tax": 10.5`).
+  - Decorator options: `response_model_exclude_defaults` omits fields equal to their default; `response_model_exclude_none` omits fields whose value is `None`; `response_model_include` keeps only named fields; `response_model_exclude` drops named fields; `response_model_by_alias` uses field aliases (default `True`).
+  - `response_model_include` and `response_model_exclude` accept sets, lists, or tuples (lists/tuples become sets). Prefer separate models: include/exclude leaves the full model in the OpenAPI schema, while separate classes document exactly what is returned.

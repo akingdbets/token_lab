@@ -14,6 +14,8 @@
     B 는 절대 토큰(2000) 또는 비율(r=0.5: 그 턴의 원본 과거 기록 토큰의 50%). 예: window_budget(r=0.5)
     window_budget(<B>)            최근 턴부터 예산이 찰 때까지 원문
     query_select(<B>)             현재 질문 BM25 로 과거 조각을 골라 <selected_history> 로
+    query_select_hybrid(<B>)      현재 질문으로 BM25 + bge-m3 코사인 유사도(정규화 후 0.5:0.5, --hybrid-bm25-weight)로 골라
+                                  <selected_history> 로 (hybrid.py, 임베딩은 Ollama, 조각 임베딩 캐시)
     rolling_summary(<B>)          넘치면 오래된 턴을 요약 하나로 다시 씀 (상태형, summarizer 필요)
     frozen_summary(<B>)           넘치면 새 블록만 덧붙임, 쌓여 넘칠 때만 재압축 (상태형, summarizer 필요)
     replay 의 --history-budget 1000,2000,r=0.5 를 주면 예산 없이 쓴 이름(window_budget 등)을 예산마다 펼친다 (expand_budgets)
@@ -47,6 +49,7 @@ import re
 
 from multiturn.history_compressors.base import HistoryChain, HistoryCompressor, HistoryResult, split_turns
 from multiturn.history_compressors.budget import QuerySelect, WindowBudget, select_history
+from multiturn.history_compressors.hybrid import EmbeddingError, OllamaEmbedder, QuerySelectHybrid, select_hybrid
 from multiturn.history_compressors.simple import (
     CompressorFallbackError, MissingDependencyError, NoHistoryCompression, OnArrival, PerMessage, Window,
 )
@@ -55,7 +58,7 @@ from multiturn.history_compressors.notes import (
 )
 from multiturn.history_compressors.summary import FrozenSummary, RollingSummary, Summarizer
 
-BUDGET_FAMILIES = {"window_budget": WindowBudget, "query_select": QuerySelect,
+BUDGET_FAMILIES = {"window_budget": WindowBudget, "query_select": QuerySelect, "query_select_hybrid": QuerySelectHybrid,
                    "rolling_summary": RollingSummary, "frozen_summary": FrozenSummary}
 STATEFUL_FAMILIES = ("rolling_summary", "frozen_summary")
 COMPRESSOR_SETS = {
@@ -133,7 +136,7 @@ def split_top_level(spec: str, sep: str = ">") -> list[str]:
 
 
 def _stage(spec: str, token_counter=None, summarizer=None, keep_recent: int = 1, presummary_store=None,
-           notes_extractor=None) -> HistoryCompressor:
+           notes_extractor=None, embedder=None, hybrid_bm25_weight: float = 0.5) -> HistoryCompressor:
     m = _STAGE_RE.match(spec)
     if not m:
         raise KeyError(f"알 수 없는 history 압축기: {spec}")
@@ -146,6 +149,9 @@ def _stage(spec: str, token_counter=None, summarizer=None, keep_recent: int = 1,
         cls = BUDGET_FAMILIES[name]
         if name in STATEFUL_FAMILIES:
             return cls(budget, summarizer, keep_recent=keep_recent, token_counter=token_counter, ratio=ratio)
+        if name == "query_select_hybrid":
+            return cls(budget, keep_recent=keep_recent, token_counter=token_counter, ratio=ratio, embedder=embedder,
+                       bm25_weight=hybrid_bm25_weight)
         return cls(budget, keep_recent=keep_recent, token_counter=token_counter, ratio=ratio)
     if name == "none" and arg is None:
         return NoHistoryCompression()
@@ -164,7 +170,8 @@ def _stage(spec: str, token_counter=None, summarizer=None, keep_recent: int = 1,
 
 
 def get_history_compressor(spec: str, token_counter=None, summarizer=None, keep_recent: int = 1,
-                           presummary_store=None, notes_extractor=None) -> HistoryCompressor:
+                           presummary_store=None, notes_extractor=None, embedder=None,
+                           hybrid_bm25_weight: float = 0.5) -> HistoryCompressor:
     """summarizer 는 Summarizer 하나 또는 {요약 reasoning_effort 조건: Summarizer}. 조건 접미사 [sre=...] 로 고른다."""
     base, effort = split_sre(spec)
     if isinstance(summarizer, dict):
@@ -175,7 +182,8 @@ def get_history_compressor(spec: str, token_counter=None, summarizer=None, keep_
             if effort not in summarizer:
                 raise KeyError(f"{spec}: 요약 조건 {effort} 의 요약기가 없습니다 (있음: {sorted(map(str, summarizer))})")
             summarizer = summarizer[effort]
-    stages = [_stage(s, token_counter, summarizer, keep_recent, presummary_store, notes_extractor)
+    stages = [_stage(s, token_counter, summarizer, keep_recent, presummary_store, notes_extractor, embedder,
+                     hybrid_bm25_weight)
               for s in split_top_level(base)]
     if len(stages) > 1 and any(getattr(s, "per_sample", False) for s in stages):
         raise ValueError(f"fact_notes 는 체인에 넣지 않습니다: {spec}")
@@ -265,7 +273,8 @@ def split_compressor_list(arg: str) -> list[str]:
     return split_top_level(arg, sep=",")
 
 
-__all__ = ["BUDGET_FAMILIES", "COMPRESSOR_SETS", "FactNotes", "MissingPresummaryError", "NotesExtractor",
+__all__ = ["BUDGET_FAMILIES", "COMPRESSOR_SETS", "EmbeddingError", "OllamaEmbedder", "QuerySelectHybrid", "select_hybrid",
+           "FactNotes", "MissingPresummaryError", "NotesExtractor",
            "NotesFailedError", "PreSummary", "PresummaryStore", "budget_spec", "expand_sets", "parse_budget",
            "parse_budget_list", "FrozenSummary", "QuerySelect", "RollingSummary", "STATEFUL_FAMILIES", "Summarizer",
            "WindowBudget", "budget_of", "expand_budgets", "expand_summary_efforts", "family_of", "is_stateful",

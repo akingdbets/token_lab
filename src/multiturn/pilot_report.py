@@ -70,7 +70,7 @@ def config_section(s: dict, ref_run: str | None) -> list[str]:
              f"| 비열등 마진 | {r['margin']} (부트스트랩 {r['boot']}회) |",
              f"| 토크나이저 | {c['tokenizer']} |",
              f"| 실행 구간 | " + "; ".join(
-                 f"concurrency {g['concurrency']} · trial {g['trials_submitted']} + 체인 {g.get('chains_submitted', 0)}"
+                 f"concurrency {g.get('concurrency')} · trial {g.get('trials_submitted')} + 체인 {g.get('chains_submitted', 0)}"
                  + (" (사후 기록)" if g.get("backfilled") else "") for g in seg) + " |"]
     if ref_run:
         lines.append(f"| 기준 궤적 run | `{ref_run}` |")

@@ -409,6 +409,14 @@ LLM_MODEL=qwen2.5:3b python src/dataset_builder.py --docs 3 --dry-run
   - `fact_notes`: 턴이 끝날 때 그 턴의 문서·질문·답변(replay 에서는 기준 궤적)으로 사실 메모를 만들어, 이후 턴 기록의 그 턴 문서 블록을 메모로 바꾼다.
     문서 없는 턴은 건너뜀. 메모 토큰은 만든 턴 trial 에 귀속. `--notes-model`, `--notes-reasoning-effort`, `--notes-max-tokens` 필수, `--notes-target-ratio 0.25`
   - 지시문: `src/prompts/presummary_v1.md`, `src/prompts/fact_notes_v1.md` (이름·값·조건·부정을 원문 표기 그대로, 목표 길이 포함)
+  - **요약 목표 길이 상한** (`--summary-max-target`, 기본 3000): rolling_summary·frozen_summary 의 요약 목표 = min(예산에서 최근 원문 턴을 뺀 값, 3000 토큰).
+    실서비스의 요약은 짧다는 가정이고, 비율 예산이 커지면 요약이 출력 한도(4096)에 걸려 실패하는 것을 막는다 (v2_01 시험에서 턴 16 이후 실패).
+    그래서 요약형은 예산을 다 쓰지 않을 수 있다: summary·budget_table 의 `budget_use_mean` (압축 뒤 기록 / 예산) 과 입력 절감률을 함께 본다.
+    trial 행에 `summary_target_requested`, `summary_target`, `summary_target_capped`, summary 에 `summary_max_target`, `summary_target_capped` 기록. 0 이면 상한 없음
+  - `query_select_hybrid(<B>)`: query_select 와 같은 규칙(비율 예산, keep_recent, 원래 순서, 정답·key_facts 를 받지 않음)으로 고르되
+    점수 = 0.5 × minmax(BM25) + 0.5 × minmax(bge-m3 코사인) (`--hybrid-bm25-weight`). 질의는 현재 질문만. 모든 조각이 후보 (query_select 는 BM25 > 0 만).
+    임베딩은 Ollama (`EMBED_BASE_URL`, `EMBED_MODEL=bge-m3`), 같은 조각은 한 번만 계산 (`results/cache/embeddings.sqlite`).
+    근거: `scratch/feasibility/REPORT.md` (recall 18건 정확도 0.944 대 BM25 0.861, 표본이 작아 방향만)
   - **per_message(llmlingua2) / on_arrival(llmlingua2) 주의**: llmlingua2 는 문서가 들어온 턴의 질문에 나온 식별자를 보호한다
     (`compressors/llmlingua2.py` `_question_identifiers`). 그래서 이후 턴이 같은 문서의 다른 부분을 물으면 그 부분의 식별자는 보호되지 않아
     불리할 수 있다 (동작은 그대로 둠). rule 은 질문을 받기만 하고 어떤 규칙에도 쓰지 않는다

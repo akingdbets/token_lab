@@ -2,14 +2,23 @@
 
 먼저 "실행 전 점검 목록" 과 "파일럿 순서" 를 본다. 그 아래 절들은 단계별 세부 내용이다.
 
-## 멀티턴 v2 정식 실행 (2026-11-28 준비, 아직 실행하지 않음)
+## 멀티턴 v2 정식 실행 (2026-11-28 준비)
 
-두 단계로 나눈다. 1단계는 압축기 8조건을 예산 비율 0.5 하나로 보고, 2단계는 연구자가 고른 예산형 압축기만
+두 단계로 나눈다. 1단계는 압축기 9조건을 예산 비율 0.5 하나로 보고, 2단계는 연구자가 고른 예산형 압축기만
 비율 0.25·0.75 로 넓힌다. on_arrival(rule) 과 요약 추론 none 변형은 1단계에서 뺀다 (코드는 그대로).
 
 ### 전제
 
 - 실행은 시나리오 20개가 확정되고 연구자가 지시할 때 한다.
+- **네트워크**: 학교망(eduroam)에서는 DeepSeek(채점)이 막힌다 (TLS 시간 초과). 휴대폰 핫스팟으로, 폰 Wi-Fi 는 끄고 모바일 데이터로 돌린다.
+  노트북이 eduroam 으로 자동 재연결되지 않게 한다. 공인 IP 확인: `curl https://ipinfo.io/org` (Korea Telecom 등이어야 함).
+- **사전 확인**: replay 는 시작 전에 답변·채점·요약·메모 API 와 임베딩 서버에 작은 요청을 한 번씩 보내 연결·잔액을 확인하고,
+  실패하면 시작하지 않는다 (`preflight.jsonl`, 건너뛰려면 `--skip-preflight`).
+- **잔액 부족**: OpenAI 429 insufficient_quota, DeepSeek 402 는 재시도하지 않고 실행 전체를 멈춘다 (종료 코드 3, 화면과 `errors.jsonl` 에
+  어느 API 인지 기록). 그 시행은 행을 쓰지 않으므로 충전 뒤 같은 명령에 `--resume <run_id>` 를 붙이면 이어서 끝낸다.
+  구간마다 `run_segments.jsonl` 에 시작·끝 줄 (이어 붙인 행 수 `rows_appended`, 중복 키 `duplicate_keys`) 이 남는다.
+- **요약 목표 길이 상한**: rolling_summary 의 요약 목표 = min(예산에서 최근 원문 턴을 뺀 값, 3000 토큰) (`--summary-max-target`, 기본 3000).
+  실서비스의 요약은 짧다는 가정, 출력 한도(4096)로 인한 실패 방지. 예산을 다 쓰지 않을 수 있어 `budget_use_mean` 을 함께 본다.
 - 시나리오 20개가 `data/evalsets/multiturn-v2/` 에 확정돼 있어야 한다 (시나리오 세션 브랜치 `feature/multiturn-v2-scenarios` 병합 후).
   2026-11-28 현재 그 브랜치에 샘플 2개(draft)만 있다.
 - 채점 지시문: 시나리오 브랜치가 fact_judge_v3 를 더한다. 병합 뒤 어떤 판정 버전으로 돌지 확인한다.
@@ -33,13 +42,14 @@ python src/multiturn/build_presummaries.py --scenarios data/evalsets/multiturn-v
 - 예상 (50페이지 `--pages` 로 확인, 2026-11-28): 새로 41개, 입력 90,152 · 출력 가정 60,914 토큰, **$0.04**.
 - 끝나면 `_build_log.jsonl` 의 페이지별 압축률과 `over_2x_target` 을 본다.
 
-### (2) 1단계 replay: 8조건 × sample 2
+### (2) 1단계 replay: 9조건 × sample 2
 
 조건: none, per_message(rule), per_message(llmlingua2), presummary, fact_notes, window_budget(r=0.5), query_select(r=0.5),
-rolling_summary(r=0.5) (요약 추론 server_default 만).
+rolling_summary(r=0.5) (요약 추론 server_default 만, 요약 목표 상한 3000), query_select_hybrid(r=0.5) (BM25 0.5 : bge-m3 0.5).
+query_select_hybrid 는 로컬 Ollama 의 bge-m3 가 필요하다 (`EMBED_BASE_URL`, 조각 임베딩은 `results/cache/embeddings.sqlite` 에 캐시).
 
 ```powershell
-python src/multiturn/replay.py --scenarios data/evalsets/multiturn-v2 --model gpt-6-luna --compressors "none,per_message(rule),per_message(llmlingua2),presummary,fact_notes,window_budget(r=0.5),query_select(r=0.5),rolling_summary(r=0.5)" --samples 2 --reasoning-effort server_default --max-completion-tokens 4096 --summary-model gpt-6-luna --summary-reasoning-effort server_default --summary-max-tokens 4096 --presummary-model gpt-6-luna --notes-model gpt-6-luna --notes-reasoning-effort server_default --notes-max-tokens 4096 --concurrency 5 --estimate-only
+python src/multiturn/replay.py --scenarios data/evalsets/multiturn-v2 --model gpt-6-luna --compressors "none,per_message(rule),per_message(llmlingua2),presummary,fact_notes,window_budget(r=0.5),query_select(r=0.5),rolling_summary(r=0.5),query_select_hybrid(r=0.5)" --samples 2 --reasoning-effort server_default --max-completion-tokens 4096 --summary-model gpt-6-luna --summary-reasoning-effort server_default --summary-max-tokens 4096 --summary-max-target 3000 --presummary-model gpt-6-luna --notes-model gpt-6-luna --notes-reasoning-effort server_default --notes-max-tokens 4096 --hybrid-bm25-weight 0.5 --concurrency 5 --estimate-only
 ```
 
 같은 명령에서 `--estimate-only` 를 빼면 실행이다. 중단되면 `--resume <run_id>` 로 이어 간다.
@@ -47,7 +57,7 @@ python src/multiturn/replay.py --scenarios data/evalsets/multiturn-v2 --model gp
 ### (3) 2단계 대상 선정
 
 2단계 대상은 1단계 결과를 본 뒤 연구자가 선정하며, 선정 이유를 결과 문서에 기록한다.
-후보는 예산형 3종 window_budget, query_select, rolling_summary 다 (1단계 summary 의 `budget_table` 에서 r=0.5 행).
+후보는 예산형 4종 window_budget, query_select, rolling_summary, query_select_hybrid 다 (1단계 summary 의 `budget_table` 에서 r=0.5 행).
 
 ### (4) 2단계 replay: 고른 예산형 × r=0.25, 0.75 × sample 2
 
@@ -70,14 +80,18 @@ python src/multiturn/replay.py --scenarios data/evalsets/multiturn-v2 --model gp
 
 | 단계 | 내용 | 캐시 없음 | 청구 예상 |
 |---|---|---|---|
-| 1단계 | 8조건 × sample 2 (기준 궤적 포함) | **$8.0~12.5** | **$4.6~8.5** |
+| 1단계 | 9조건 × sample 2 (기준 궤적 포함) | **$8.9~13.9** | **$5.1~9.5** |
 | 2단계 | window_budget × r=0.25·0.75 | $1.7~2.6 | $0.9~1.8 |
 | 2단계 | query_select × r=0.25·0.75 | $1.6~2.6 | $1.0~1.9 |
 | 2단계 | rolling_summary × r=0.25·0.75 (요약 포함) | $1.7~2.9 | $1.3~2.4 |
 | 2단계 | 세 가지 모두 | $5.0~8.2 | $3.2~6.1 |
 | 구축 | presummary 41페이지 | $0.04 | $0.04 |
 
-1단계 내역 (캐시 없음, 위쪽 가정, 20개 환산): 답변 $9.4 (기준 궤적 $0.8 포함), 요약·메모 $0.5, 채점 $2.5.
+1단계 내역 (캐시 없음, 위쪽 가정, 20개 환산): 답변 $10.4 (기준 궤적 $0.8 포함), 요약·메모 $0.5, 채점 $2.8.
+query_select_hybrid 는 query_select 와 입력 길이가 비슷해 같은 값으로 더했다 (임베딩은 로컬이라 0원).
+
+**시험 실행 실측 기준 환산 (2026-11-28)**: v2_01 시험(8조건 × sample 1, 152 trial)의 실제 지출 $0.164 = trial 당 약 $0.0011.
+1단계 trial 6,858개 (20개 시나리오 381턴 × 9조건 × sample 2) 면 **약 $7.5** (기준 궤적 약 $0.1 포함). 위 범위 안이다.
 채점은 캐시와 무관해 청구 예상에서도 그대로라, 아래쪽 가정에서는 채점이 청구 예상의 절반쯤이다.
 
 청구 예상의 한계: v1 파일럿 적중률(none 0.95, rule 계열 0.93, presummary 0.83, window_budget 0.86, query_select 0.79,
@@ -86,10 +100,11 @@ rolling_summary 0.41, fact_notes 0.49)은 기록이 짧은 v1 에서 동시 실�
 
 ### 예상 실행 시간 (concurrency 5)
 
-- 1단계: trial 약 5,760개 (8조건 × 20 × 18턴 × sample 2). 약 0.6~2시간 + llmlingua2 로컬 압축 약 30~50분.
+- 1단계: trial 6,858개 (381턴 × 9조건 × sample 2). **약 8~10시간**.
+  근거: v2_01 시험 실행 실측 trial 당 약 4.9초 (152 trial 약 12.4분, 동시 실행 5, llmlingua2 로컬 압축·채점 포함).
+  hybrid 의 bge-m3 임베딩(로컬 CPU, 조각 약 3,800개)은 처음 한 번 약 11분, 이후 캐시.
 - 2단계: 세 가지 모두면 trial 약 4,320개, 약 0.4~1.6시간.
-- 근거: v1 파일럿 trial 당 0.36초 (243개 88초), 기존 요약 체인은 실제 진행 시간 기준 턴당 약 1.3초.
-  v2 는 기록이 길어(마지막 턴 15k~19k 토큰) 지연이 늘 수 있어 범위로 적는다.
+- 예전 추정(v1 파일럿 trial 당 0.36초 기준 0.6~2시간)은 v2 의 긴 기록·llmlingua2·채점 시간을 반영하지 못해 짧았다.
 - 20개 기준 `--estimate-only` 도 llmlingua2 때문에 수십 분 걸린다.
 
 

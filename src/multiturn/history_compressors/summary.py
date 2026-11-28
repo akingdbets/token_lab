@@ -90,6 +90,8 @@ class SummaryOutcome:
     cache_hits: list = field(default_factory=list)
     failed: bool = False
     reason: str | None = None
+    target_requested: int | None = None             # 예산에서 남은 몫
+    target_used: int | None = None                  # 상한(max_target) 적용 뒤 실제 목표
 
     @property
     def prompt_tokens(self):
@@ -103,10 +105,19 @@ class SummaryOutcome:
 class Summarizer:
     """요약 LLM 호출. cached 는 multiturn.response_cache.CachedLLM (요약 모델을 감쌈)."""
 
-    def __init__(self, cached, prompt: SummaryPrompt | None = None, max_attempts: int = 3):
+    def __init__(self, cached, prompt: SummaryPrompt | None = None, max_attempts: int = 3,
+                 max_target: int | None = None):
+        """max_target: 요약 목표 길이 상한 (토큰). 목표 = min(예산에서 최근 원문 턴을 뺀 값, max_target).
+        실서비스의 요약은 짧다는 가정이고, 비율 예산이 커져 요약이 출력 한도에 걸려 실패하는 것을 막는다. None 이면 상한 없음."""
         self.cached = cached
         self.prompt = prompt or load_summary_prompt("v1")
         self.max_attempts = max_attempts
+        if max_target is not None and (not isinstance(max_target, int) or max_target < MIN_TARGET_TOKENS):
+            raise ValueError(f"max_target 은 {MIN_TARGET_TOKENS} 이상의 정수")
+        self.max_target = max_target
+
+    def cap_target(self, target: int) -> int:
+        return int(target) if self.max_target is None else min(int(target), self.max_target)
 
     def build_messages(self, turns: list[tuple[int, list[dict]]], previous: str | None, target_tokens: int) -> list[dict]:
         prev = self.prompt.previous_block.format(summary=previous.strip()) + "\n\n" if previous else ""
@@ -132,6 +143,7 @@ class Summarizer:
     def config(self) -> dict:
         llm = self.cached.llm
         return {"prompt": [self.prompt.version, self.prompt.sha256], "max_attempts": self.max_attempts,
+                "max_target": self.max_target,
                 "sampling": llm.sampling_info(), "backend": llm.backend, "base_url": llm.base_url}
 
 
@@ -156,13 +168,26 @@ class SummaryCompressor(BudgetCompressor):
     def _fail(self, outcome, info):
         return HistoryResult(messages=[], llm_prompt_tokens=outcome.prompt_tokens,
                              llm_completion_tokens=outcome.completion_tokens, state=None,
-                             info={**info, "summary_failed": True, "summary_fail_reason": outcome.reason,
+                             info={**info, **self._target_info([outcome]), "summary_failed": True,
+                                   "summary_fail_reason": outcome.reason,
                                    "summary_attempts": len(outcome.results), "_llm_results": outcome.results})
 
     def _call(self, state, calls, turns, previous, target):
-        o = self.summarizer.summarize(turns, previous, target, state["sample_idx"])
+        """target: 예산에서 남은 몫 (요청 목표). 요약기의 상한(max_target)을 적용한 값을 실제 목표로 쓴다."""
+        used = self.summarizer.cap_target(target)
+        o = self.summarizer.summarize(turns, previous, used, state["sample_idx"])
+        o.target_requested, o.target_used = int(target), used
         calls.append(o)
         return o
+
+    @staticmethod
+    def _target_info(calls) -> dict:
+        if not calls:
+            return {}
+        last = calls[-1]
+        return {"summary_target_requested": getattr(last, "target_requested", None),
+                "summary_target": getattr(last, "target_used", None),
+                "summary_target_capped": getattr(last, "target_used", None) != getattr(last, "target_requested", None)}
 
     def _finish(self, state, msgs, calls, budget=None, **extra):
         budget = self.budget if budget is None else budget
@@ -170,7 +195,8 @@ class SummaryCompressor(BudgetCompressor):
             extra["history_budget_ratio"] = self.ratio
         info = budget_info(msgs, budget, self.count, summary_calls=sum(len(c.results) for c in calls),
                            summary_cache_hits=sum(sum(c.cache_hits) for c in calls),
-                           summary_blocks=len(state["blocks"]), summarized_through=state["through"], **extra)
+                           summary_blocks=len(state["blocks"]), summarized_through=state["through"],
+                           summary_max_target=self.summarizer.max_target, **self._target_info(calls), **extra)
         info["_llm_results"] = [r for c in calls for r in c.results]
         return HistoryResult(messages=msgs, llm_prompt_tokens=sum(c.prompt_tokens for c in calls),
                              llm_completion_tokens=sum(c.completion_tokens for c in calls), state=state, info=info)
