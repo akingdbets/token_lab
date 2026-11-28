@@ -88,6 +88,7 @@ from config import CFG
 from cost import compute_cost, cost_from_fields, find_price, load_pricing
 from grader import contains_words, is_not_found_answer, word_tokens
 from llm import count_message_tokens, count_tokens
+from multiturn.fact_tags import setup_failed_fields, setup_indices, split_grade
 from multiturn.history_compressors import (
     BUDGET_FAMILIES, budget_of, expand_budgets, expand_sets, expand_summary_efforts, family_of, get_history_compressor,
     is_stateful, label_of, parse_budget, parse_budget_list, split_compressor_list, summary_effort_of,
@@ -423,11 +424,15 @@ class Replay:
                 if step.finish_reason == "length":
                     warnings.append(f"{sid} 턴 {step.turn}: 기준 궤적 답변이 출력 한도에 걸렸습니다 (finish_reason=length)")
                 prev = saved.get(sid, {}).get(str(step.turn))
-                if prev is not None and prev.get("response") == step.response_content:
+                if (prev is not None and prev.get("response") == step.response_content
+                        and (not setup_indices(t) or "answer_accuracy_all" in prev)):
                     grades[sid][str(step.turn)] = prev
                     continue
                 g = self.grade(t, step.response_content)
-                grades[sid][str(step.turn)] = {"answer_accuracy": g.answer_accuracy, "response": step.response_content}
+                sg = split_grade(t, g)       # answer_accuracy 는 setup 항목을 뺀 주 정확도 (depends_on_reference_ok 에 쓴다)
+                grades[sid][str(step.turn)] = {"answer_accuracy": sg["answer_accuracy"], "response": step.response_content,
+                                               **({"answer_accuracy_all": sg["answer_accuracy_all"],
+                                                   "setup_accuracy": sg["setup_accuracy"]} if setup_indices(t) else {})}
         for w in warnings:
             print(f"  [경고] {w}", flush=True)
         self.out_dir.mkdir(parents=True, exist_ok=True)
@@ -550,7 +555,7 @@ class Replay:
             "cost": cost, "judge_cost": judge_cost, "cache_hit": hit, "finish_reason": res.finish_reason,
             "summary_effort": summary_effort_of(comp_name),
             "response": response, "empty_response": not response, "not_found": is_not_found_answer(response),
-            "answer_accuracy": g.answer_accuracy, "satisfied_facts": g.satisfied_count, "total_facts": g.total_count,
+            **split_grade(t, g),      # answer_accuracy 등은 setup 항목을 뺀 주 정확도, setup_accuracy 는 따로
             "judge_mode": g.judge_mode, "judge_skipped": g.judge_skipped, "judge_failed": list(g.judge_failed),
             "judge_prompt_tokens": g.judge_prompt_tokens, "judge_completion_tokens": g.judge_completion_tokens,
             "entity_retention": entity_retention_in_history(t["key_entities"], raw_past, comp_past),
@@ -579,7 +584,8 @@ class Replay:
                 "compress_llm_completion_tokens": hres.llm_completion_tokens if first else 0,
                 "compress_cost": cost if first else {"usd": 0.0, "usd_nocache": 0.0, "calls": 0},
                 "summary_effort": summary_effort_of(comp_name),
-                "answer_accuracy": 0.0, "response": None, "not_found": False, "empty_response": False,
+                "answer_accuracy": 0.0, **setup_failed_fields(scenario["turns"][k]),
+                "response": None, "not_found": False, "empty_response": False,
                 "cost": None, "cache_hit": False,
             })
 
@@ -973,6 +979,28 @@ def notes_compression(rows: list[dict]) -> dict | None:
             "by_turn_ratio_mean": {k: _mean(v) for k, v in sorted(by_turn.items())}}
 
 
+SETUP_NOTE = ("key_fact 에 setup 태그(같은 턴 사용자 발화에 답이 그대로 있는 설정 확인 항목)가 있는 턴은 주 정확도"
+              "(answer_accuracy, 유지율, 정확도 유지 확인 non_inferiority)에서 setup 항목을 뺀다. setup 항목도 채점은 하며 정확도는 setup_accuracy 에 따로 낸다. "
+              "행의 answer_accuracy_all 은 setup 포함 원래 채점 결과. key_fact 가 전부 setup 인 턴은 주 집계에서 빠진다.")
+
+
+def setup_accuracy_block(rows: list[dict], compressors: list[str]) -> dict | None:
+    """setup 항목 정확도 (압축기별). setup 항목이 있는 trial 이 없으면 None (v1 시나리오: summary 에 키를 내지 않는다)."""
+    if not any(r.get("setup_total") for r in rows):
+        return None
+    out = {}
+    for c in compressors:
+        rs = [r for r in rows if r["compressor"] == c and r.get("setup_total")]
+        out[c] = {"trials": len(rs), "turns": len({(r["scenario_id"], r["turn"]) for r in rs}),
+                  "facts": sum(r["setup_total"] for r in rs),
+                  "accuracy": _mean(r.get("setup_accuracy") for r in rs),
+                  "fact_accuracy": _ratio(sum(r.get("setup_satisfied") or 0 for r in rs), sum(r["setup_total"] for r in rs)),
+                  "main_excluded_trials": sum(1 for r in rs if r.get("total_facts") == 0),
+                  "by_turn_type": {tt: _mean(r.get("setup_accuracy") for r in rs if r["turn_type"] == tt)
+                                   for tt in sorted({r["turn_type"] for r in rs})}}
+    return out
+
+
 def presummary_build_block(store, scenarios: list[dict]) -> dict:
     """presummary 구축 비용과 페이지별 실제 압축률 (이 run 이 쓰는 페이지만). run 의 압축 LLM 토큰은 0 이다."""
     from multiturn.build_presummaries import pages_of
@@ -1093,7 +1121,8 @@ def summarize_replay(rows: list[dict], cfg: ReplayConfig, ref_warnings: list[str
             TOKEN_BASIS_NOTE,
             "fact_notes 의 메모 추출 토큰은 메모를 만든 턴의 trial 에 넣는다 (이후 턴의 재사용은 0).",
             REFERENCE_SPEND_NOTE,
-        ] + ([PRESUMMARY_BUILD_NOTE] if cfg.has_presummary else []) + ([
+        ] + ([PRESUMMARY_BUILD_NOTE] if cfg.has_presummary else [])
+          + ([SETUP_NOTE] if any(r.get("setup_total") for r in rows) else []) + ([
             "prefix_shared_tokens 는 직전 턴 요청과 메시지 단위로 겹치는 접두부 토큰 (1,024 미만은 0, 원래 값은 _raw). "
             "actual_cache_hit_rate 는 서버가 보고한 cached_tokens / prompt_tokens.",
             COST_BASIS_NOTE,
@@ -1157,6 +1186,9 @@ def summarize_replay(rows: list[dict], cfg: ReplayConfig, ref_warnings: list[str
     nc = {c: notes_compression([r for r in rows if r["compressor"] == c]) for c in cfg.compressors}
     if any(nc.values()):
         out["fact_notes_compression"] = {c: v for c, v in nc.items() if v}
+    setup = setup_accuracy_block(rows, cfg.compressors)
+    if setup is not None:
+        out["setup_accuracy"] = setup
     out["budget_table"] = budget_table(out["compressors"], cfg)
     return out
 

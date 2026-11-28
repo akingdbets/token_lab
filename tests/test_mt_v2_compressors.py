@@ -110,6 +110,10 @@ class _Tmp(unittest.TestCase):
 class RatioBudgetTest(unittest.TestCase):
     def test_parse_and_expand(self):
         self.assertEqual(parse_budget_list("2000, r=0.25,r=.5"), [2000, "r=0.25", "r=0.5"])
+        self.assertEqual(parse_budget_list("r=0.25,0.5,0.75"), ["r=0.25", "r=0.5", "r=0.75"])   # 지시 표기
+        self.assertEqual(parse_budget_list("r=0.5,4000"), ["r=0.5", 4000])
+        with self.assertRaises(KeyError):
+            parse_budget_list("0.5")                     # r= 없이 시작하는 소수는 모호하므로 거부
         self.assertEqual(expand_budgets(["window_budget", "none"], [2000, "r=0.5"]),
                          ["window_budget(2000)", "window_budget(r=0.5)", "none"])
         self.assertEqual(budget_of("rolling_summary(r=0.75)[sre=none]"), "r=0.75")
@@ -383,6 +387,16 @@ class FactNotesTest(_Tmp):
         sent = st["messages_sent"]
         self.assertIn("Fact notes from turn 0", sent[1]["content"])
         self.assertIn("filler line", sent[3]["content"])
+
+    def test_estimate_uses_placeholder_for_missing_pages(self):
+        from multiturn.estimate import PlaceholderPresummaryStore, estimate
+        store = write_store(self.root / "ps_partial", {"a.md": "Alpha value is 42."})     # b.md 요약 없음
+        ph = PlaceholderPresummaryStore(FakeCorpus(), real=store)
+        self.assertEqual(ph.get("a.md"), "Alpha value is 42.")
+        self.assertTrue(ph.get("b.md").startswith("summary"))
+        cfg = make_cfg(compressors=["none", "presummary"], samples=1, presummary_model="fake")
+        est = estimate(cfg, [SCENARIO], FakeCorpus(), judge_model="deepseek-flash", presummary_store=store)
+        self.assertEqual(est["presummary_placeholder_pages"], ["b.md"])
 
     def test_estimate_counts_notes_calls(self):
         from multiturn.estimate import estimate

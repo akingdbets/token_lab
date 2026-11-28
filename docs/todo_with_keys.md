@@ -2,6 +2,97 @@
 
 먼저 "실행 전 점검 목록" 과 "파일럿 순서" 를 본다. 그 아래 절들은 단계별 세부 내용이다.
 
+## 멀티턴 v2 정식 실행 (2026-11-28 준비, 아직 실행하지 않음)
+
+두 단계로 나눈다. 1단계는 압축기 8조건을 예산 비율 0.5 하나로 보고, 2단계는 연구자가 고른 예산형 압축기만
+비율 0.25·0.75 로 넓힌다. on_arrival(rule) 과 요약 추론 none 변형은 1단계에서 뺀다 (코드는 그대로).
+
+### 전제
+
+- 실행은 시나리오 20개가 확정되고 연구자가 지시할 때 한다.
+- 시나리오 20개가 `data/evalsets/multiturn-v2/` 에 확정돼 있어야 한다 (시나리오 세션 브랜치 `feature/multiturn-v2-scenarios` 병합 후).
+  2026-11-28 현재 그 브랜치에 샘플 2개(draft)만 있다.
+- 채점 지시문: 시나리오 브랜치가 fact_judge_v3 를 더한다. 병합 뒤 어떤 판정 버전으로 돌지 확인한다.
+- setup 태그 key_fact 는 주 정확도에서 빠지고 summary 의 `setup_accuracy` 로 따로 나온다 (채점은 한다).
+- 점검 목록 1·2 (llmlingua, 토크나이저) 는 같다. llmlingua2 는 CPU 에서 돌아 시간이 걸린다.
+
+### (1) presummary 구축
+
+필요한 페이지는 50개다. 코퍼스 `data/openwiki/en` 의 .md 66개 중 `index.md` 16개는 묶음에서 빠지고
+(`docs/experiments/multiturn_v2/bundles.json` 의 페이지 합집합 = 50), v1 파일럿에서 만든 9개는 건너뛰므로 새로 만드는 것은 41개다.
+설정(모델·추론·출력 한도·목표 비율·지시문)이 v1 구축과 같아야 기존 요약을 이어 쓴다 (다르면 manifest 검사에서 멈춘다).
+
+```powershell
+python src/multiturn/build_presummaries.py --scenarios data/evalsets/multiturn-v2 --model gpt-6-luna --reasoning-effort server_default --max-tokens 4096 --presummary-target-ratio 0.25 --estimate-only
+```
+
+```powershell
+python src/multiturn/build_presummaries.py --scenarios data/evalsets/multiturn-v2 --model gpt-6-luna --reasoning-effort server_default --max-tokens 4096 --presummary-target-ratio 0.25
+```
+
+- 예상 (50페이지 `--pages` 로 확인, 2026-11-28): 새로 41개, 입력 90,152 · 출력 가정 60,914 토큰, **$0.04**.
+- 끝나면 `_build_log.jsonl` 의 페이지별 압축률과 `over_2x_target` 을 본다.
+
+### (2) 1단계 replay: 8조건 × sample 2
+
+조건: none, per_message(rule), per_message(llmlingua2), presummary, fact_notes, window_budget(r=0.5), query_select(r=0.5),
+rolling_summary(r=0.5) (요약 추론 server_default 만).
+
+```powershell
+python src/multiturn/replay.py --scenarios data/evalsets/multiturn-v2 --model gpt-6-luna --compressors "none,per_message(rule),per_message(llmlingua2),presummary,fact_notes,window_budget(r=0.5),query_select(r=0.5),rolling_summary(r=0.5)" --samples 2 --reasoning-effort server_default --max-completion-tokens 4096 --summary-model gpt-6-luna --summary-reasoning-effort server_default --summary-max-tokens 4096 --presummary-model gpt-6-luna --notes-model gpt-6-luna --notes-reasoning-effort server_default --notes-max-tokens 4096 --concurrency 5 --estimate-only
+```
+
+같은 명령에서 `--estimate-only` 를 빼면 실행이다. 중단되면 `--resume <run_id>` 로 이어 간다.
+
+### (3) 2단계 대상 선정
+
+2단계 대상은 1단계 결과를 본 뒤 연구자가 선정하며, 선정 이유를 결과 문서에 기록한다.
+후보는 예산형 3종 window_budget, query_select, rolling_summary 다 (1단계 summary 의 `budget_table` 에서 r=0.5 행).
+
+### (4) 2단계 replay: 고른 예산형 × r=0.25, 0.75 × sample 2
+
+아래 명령은 세 가지를 모두 넓히는 경우다. 선정한 것만 남긴다. none 은 1단계와 같은 요청이라 답변·채점 모두 응답 캐시 적중이다
+(같은 응답 캐시 파일, 같은 모델·설정·sample). 1단계 run 과 합쳐 보려면 두 run 의 none 행이 같은 요청인지 `prompt_hash` 로 확인한다.
+
+```powershell
+python src/multiturn/replay.py --scenarios data/evalsets/multiturn-v2 --model gpt-6-luna --compressors "none,window_budget,query_select,rolling_summary" --history-budget r=0.25,0.75 --samples 2 --reasoning-effort server_default --max-completion-tokens 4096 --summary-model gpt-6-luna --summary-reasoning-effort server_default --summary-max-tokens 4096 --concurrency 5 --estimate-only
+```
+
+### 예상 비용 (샘플 2개로 추정해 20개로 10배 환산, 2026-11-28)
+
+샘플 2개 = 38턴. 20개 × 기본 18턴 ≈ 360턴이라 약 10배다. 범위의 위쪽은 답변 300 + 추론 1,000 토큰 가정,
+아래쪽은 답변 100 + 추론 100 토큰 가정이다 (v1 파일럿 실측: 출력 평균 65, 그중 추론 35).
+
+- 캐시 없음: 답변 입력 전부를 정가($0.10/1M)로 계산. 압축기 비교(cost-mode none)와 같은 기준.
+- 청구 예상: 답변 입력 중 서버 캐시 적중분을 캐시 단가($0.01/1M)로 계산. 적중률은 v1 파일럿 실측(cached_tokens / prompt_tokens)을 쓴다.
+  비율 예산은 v1 에서 잰 절대 예산 중 적중률이 낮은 쪽을 썼다 (보수적). 채점(deepseek-flash)·요약·메모는 캐시 없이 계산했다
+  (채점 요청은 1,024 토큰보다 짧아 캐시 대상이 아니다).
+
+| 단계 | 내용 | 캐시 없음 | 청구 예상 |
+|---|---|---|---|
+| 1단계 | 8조건 × sample 2 (기준 궤적 포함) | **$8.0~12.5** | **$4.6~8.5** |
+| 2단계 | window_budget × r=0.25·0.75 | $1.7~2.6 | $0.9~1.8 |
+| 2단계 | query_select × r=0.25·0.75 | $1.6~2.6 | $1.0~1.9 |
+| 2단계 | rolling_summary × r=0.25·0.75 (요약 포함) | $1.7~2.9 | $1.3~2.4 |
+| 2단계 | 세 가지 모두 | $5.0~8.2 | $3.2~6.1 |
+| 구축 | presummary 41페이지 | $0.04 | $0.04 |
+
+1단계 내역 (캐시 없음, 위쪽 가정, 20개 환산): 답변 $9.4 (기준 궤적 $0.8 포함), 요약·메모 $0.5, 채점 $2.5.
+채점은 캐시와 무관해 청구 예상에서도 그대로라, 아래쪽 가정에서는 채점이 청구 예상의 절반쯤이다.
+
+청구 예상의 한계: v1 파일럿 적중률(none 0.95, rule 계열 0.93, presummary 0.83, window_budget 0.86, query_select 0.79,
+rolling_summary 0.41, fact_notes 0.49)은 기록이 짧은 v1 에서 동시 실행 5 로 잰 값이다. v2 는 기록이 길고 서버 캐시 보존 시간·라우팅에
+따라 달라진다. 압축기 비교에는 쓰지 않고 예산 확인용으로만 쓴다.
+
+### 예상 실행 시간 (concurrency 5)
+
+- 1단계: trial 약 5,760개 (8조건 × 20 × 18턴 × sample 2). 약 0.6~2시간 + llmlingua2 로컬 압축 약 30~50분.
+- 2단계: 세 가지 모두면 trial 약 4,320개, 약 0.4~1.6시간.
+- 근거: v1 파일럿 trial 당 0.36초 (243개 88초), 기존 요약 체인은 실제 진행 시간 기준 턴당 약 1.3초.
+  v2 는 기록이 길어(마지막 턴 15k~19k 토큰) 지연이 늘 수 있어 범위로 적는다.
+- 20개 기준 `--estimate-only` 도 llmlingua2 때문에 수십 분 걸린다.
+
+
 ## 실행 전 점검 목록 (이 순서대로)
 
 1. 패키지 설치. llmlingua 가 없으면 `per_message(llmlingua2)` 등 llmlingua 계열 압축기는 시작 시점에 에러로 멈춘다 (원문으로 대체하지 않음).

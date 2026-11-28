@@ -123,19 +123,28 @@ class EstimateNotesExtractor:
 
 
 class PlaceholderPresummaryStore:
-    """사전 요약이 아직 없을 때: 원문 × ratio 길이의 자리표시 요약."""
+    """사전 요약이 아직 없을 때: 원문 × ratio 길이의 자리표시 요약.
+    real(PresummaryStore)을 주면 있는 페이지는 실제 요약을 쓰고, 없는 페이지만 자리표시로 센다 (추정 전용)."""
 
-    def __init__(self, corpus, ratio: float = 0.25):
-        self.corpus, self.ratio = corpus, ratio
+    def __init__(self, corpus, ratio: float = 0.25, real=None):
+        self.corpus, self.ratio, self.real = corpus, ratio, real
         self.manifest = {"placeholder": True, "target_ratio": ratio}
+        self.placeholder_pages: set[str] = set()
 
     def get(self, page: str) -> str:
-        from multiturn.history_compressors.notes import target_tokens_for
+        from multiturn.history_compressors.notes import MissingPresummaryError, target_tokens_for
+        if self.real is not None:
+            try:
+                return self.real.get(page)
+            except MissingPresummaryError:
+                pass
+        self.placeholder_pages.add(page)
         n = target_tokens_for(count_tokens(self.corpus.expanded_text(page)), self.ratio)
         return " ".join(["summary"] * n)
 
     def config(self):
-        return {"placeholder": True, "target_ratio": self.ratio}
+        return {"placeholder": True, "target_ratio": self.ratio, "real": self.real is not None,
+                "placeholder_pages": sorted(self.placeholder_pages)}
 
 
 class PrefixCache:
@@ -192,8 +201,9 @@ def estimate(cfg, scenarios: list[dict], corpus, answer_tokens: int = 300, reaso
                                          0 if e == "none" else summary_reasoning_tokens)
                    for e in cfg.summary_efforts} if cfg.has_summary else None)
     # 압축기 생성 실패(llmlingua 없음 등)는 삼키지 않는다: 여기서 예외가 나면 추정도 멈춘다
-    if getattr(cfg, "has_presummary", False) and presummary_store is None:
-        presummary_store = PlaceholderPresummaryStore(corpus)
+    if getattr(cfg, "has_presummary", False) and not isinstance(presummary_store, PlaceholderPresummaryStore):
+        # 추정은 요약이 없는 페이지에서 멈추지 않는다: 있는 요약은 쓰고 없는 페이지는 자리표시 (실제 run 은 멈춘다)
+        presummary_store = PlaceholderPresummaryStore(corpus, real=presummary_store)
     notes_extractor = (EstimateNotesExtractor(cfg.notes_model, cfg.notes_target_ratio,
                                               0 if cfg.notes_reasoning_effort == "none" else summary_reasoning_tokens)
                        if getattr(cfg, "has_notes", False) else None)
@@ -361,6 +371,8 @@ def estimate(cfg, scenarios: list[dict], corpus, answer_tokens: int = 300, reaso
         "budget_summary_usd": summary_total,           # 요약 호출 (sample 마다 실제로 보냄)
         "summary_usd_by_effort": by_effort,
         "budget_judge_usd": (round(sum(x["judge_usd"] or 0 for x in out_rows.values()), 4) if jp else None),
+        "presummary_placeholder_pages": (sorted(presummary_store.placeholder_pages)
+                                         if isinstance(presummary_store, PlaceholderPresummaryStore) else None),
     }
 
 
@@ -405,6 +417,9 @@ def print_estimate(est: dict) -> None:
             print(f"  {name:<24} 재압축 {x['recompress_count']}회 (체인당 {x['recompress_per_chain']})  "
                   f"요약 호출 {x['summary_calls']}회  재압축 턴 {x['recompress_turns']}")
 
+    if est.get("presummary_placeholder_pages"):
+        print(f"\n[presummary] 사전 요약이 없는 페이지 {len(est['presummary_placeholder_pages'])}개는 원문 × 목표 비율 길이의 "
+              "자리표시 요약으로 셌다 (구축 비용은 build_presummaries.py --estimate-only)")
     print("\n[예산 확인] 실제 지출 (실제로 보내는 요청만)")
     r = est["reference"]
     print(f"  기준 궤적: 요청 {r['requests']}  입력 {r['input_tokens']:,} 토큰  "
