@@ -1,0 +1,999 @@
+{
+  "schema_version": 2,
+  "scenario_id": "duckdb_v2_15_window_metrics",
+  "title": "Computing temporal dashboard metrics",
+  "topic": "Computing temporal dashboard metrics",
+  "status": "draft",
+  "bundle": [
+    "connect/connecting-and-concurrency.md",
+    "sql/functions/window.md",
+    "sql/data-types/date-and-time.md",
+    "sql/statements/inspection-and-metadata.md",
+    "sql/functions/timestamp.md",
+    "sql/functions/date-and-time.md",
+    "sql/query-syntax/grouping-and-filtering.md",
+    "sql/functions/aggregate.md"
+  ],
+  "generation": {
+    "method": "Session-authored fact cards assembled with a fixed 19-turn scaffold; no independent generation API call",
+    "model": "Codex current session (exact model identifier not recorded)",
+    "prompt": [
+      "mt_scenario_gen_v3_duckdb_session",
+      "b2d745c3f579"
+    ],
+    "created_at": "2026-11-28T12:09:48+00:00",
+    "run_id": "duckdb_v2_session/duckdb_v2_15_window_metrics",
+    "corpus_manifest_sha256": "1995523b1e9959f27811f9e8e3294ea4af05c52c668867b7b09cc8dbe8eae728",
+    "source_pr": "https://github.com/akingdbets/token_lab/pull/64",
+    "source_pr_head": "eda7e1a19d4189785b81c4a0e2baf27aa8b18689"
+  },
+  "turns": [
+    {
+      "turn": 0,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "We are computing temporal dashboard metrics. Our database path is window_metrics_r35.duckdb. Which database path should we use, and if we use an in-memory database, is its data retained when the process ends?",
+      "standalone_question": "For the DuckDB project: We are computing temporal dashboard metrics. Our database path is window_metrics_r35.duckdb. Which database path should we use, and if we use an in-memory database, is its data retained when the process ends?",
+      "asks": [
+        "database path",
+        "in-memory persistence"
+      ],
+      "answer": "The database path is window_metrics_r35.duckdb. No; all in-memory data is lost when the process ends.",
+      "key_facts": [
+        "The database path is window_metrics_r35.duckdb.",
+        "No; all in-memory data is lost when the process ends."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "window_metrics_r35.duckdb"
+      ],
+      "evidence_pages": [
+        "connect/connecting-and-concurrency.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 0,
+          "quote": "Our database path is window_metrics_r35.duckdb.",
+          "fact_idx": 0
+        },
+        {
+          "page": "connect/connecting-and-concurrency.md",
+          "quote": "Nothing is persisted; all data is lost when the process ends.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 1,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our run label is window_metrics-batch-46. Which run label should we record, and when a window omits PARTITION BY, what forms its partition?",
+      "standalone_question": "For the DuckDB project: Our run label is window_metrics-batch-46. Which run label should we record, and when a window omits PARTITION BY, what forms its partition?",
+      "asks": [
+        "run label",
+        "When a window omits PARTITION BY, what forms its partition?"
+      ],
+      "answer": "The run label is window_metrics-batch-46. The whole relation is one partition.",
+      "key_facts": [
+        "The run label is window_metrics-batch-46.",
+        "The whole relation is one partition."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "window_metrics-batch-46"
+      ],
+      "evidence_pages": [
+        "sql/functions/window.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Our run label is window_metrics-batch-46.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/functions/window.md",
+          "quote": "Without it the whole relation is one partition.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 2,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "Which clause allows several window functions to reuse a named window and its data layout?",
+      "standalone_question": "For the DuckDB project: Which clause allows several window functions to reuse a named window and its data layout?",
+      "asks": [
+        "Which clause allows several window functions to reuse a named window and its data layout?"
+      ],
+      "answer": "The WINDOW clause defines named windows that share the data layout.",
+      "key_facts": [
+        "The WINDOW clause defines named windows that share the data layout."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "WINDOW"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "sql/functions/window.md",
+          "quote": "The `WINDOW` clause defines named windows shared by several functions via `OVER ⟨name⟩`",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1
+    },
+    {
+      "turn": 3,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Which three independent components store an INTERVAL?",
+      "standalone_question": "For the DuckDB project: Which three independent components store an INTERVAL?",
+      "asks": [
+        "Which three independent components store an INTERVAL?"
+      ],
+      "answer": "An INTERVAL stores months, days, and microseconds independently.",
+      "key_facts": [
+        "An INTERVAL stores months, days, and microseconds independently."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [
+        "sql/data-types/date-and-time.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "sql/data-types/date-and-time.md",
+          "quote": "three independent components — **months, days, microseconds**",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 4,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our database path from window_metrics_r35.duckdb to window_metrics_r62.duckdb. Which database path should we use now, and does the in-memory alternative retain data after the process ends?",
+      "standalone_question": "For the DuckDB project: Change our database path from window_metrics_r35.duckdb to window_metrics_r62.duckdb. Which database path should we use now, and does the in-memory alternative retain data after the process ends?",
+      "asks": [
+        "updated database path",
+        "in-memory persistence"
+      ],
+      "answer": "The database path is window_metrics_r62.duckdb. No; all in-memory data is lost when the process ends.",
+      "key_facts": [
+        "The database path is window_metrics_r62.duckdb.",
+        "No; all in-memory data is lost when the process ends."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "window_metrics_r62.duckdb"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "Change our database path from window_metrics_r35.duckdb to window_metrics_r62.duckdb.",
+          "fact_idx": 0
+        },
+        {
+          "page": "connect/connecting-and-concurrency.md",
+          "quote": "Nothing is persisted; all data is lost when the process ends.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "database path",
+          "from": "window_metrics_r35.duckdb",
+          "to": "window_metrics_r62.duckdb"
+        }
+      ],
+      "affects": [
+        13,
+        18
+      ],
+      "source_turn": null,
+      "recall_distance": 4
+    },
+    {
+      "turn": 5,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Which statement computes summary statistics per column?",
+      "standalone_question": "For the DuckDB project: Which statement computes summary statistics per column?",
+      "asks": [
+        "column statistics statement"
+      ],
+      "answer": "SUMMARIZE computes summary statistics per column.",
+      "key_facts": [
+        "SUMMARIZE computes summary statistics per column."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "SUMMARIZE"
+      ],
+      "evidence_pages": [
+        "sql/statements/inspection-and-metadata.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "sql/statements/inspection-and-metadata.md",
+          "quote": "`SUMMARIZE` computes summary statistics per column.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 6,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "Does the non-ANALYZE form of EXPLAIN actually execute the query?",
+      "standalone_question": "For the DuckDB project: Does the non-ANALYZE form of EXPLAIN actually execute the query?",
+      "asks": [
+        "EXPLAIN execution"
+      ],
+      "answer": "EXPLAIN does not run the query.",
+      "key_facts": [
+        "EXPLAIN does not run the query."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "sql/statements/inspection-and-metadata.md",
+          "quote": "EXPLAIN ⟨query⟩;            -- plan with estimated cardinalities; does not run the query",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1
+    },
+    {
+      "turn": 7,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "Within a single writer process, do concurrent appends conflict even on the same table?",
+      "standalone_question": "For the DuckDB project: Within a single writer process, do concurrent appends conflict even on the same table?",
+      "asks": [
+        "concurrent append conflicts"
+      ],
+      "answer": "Appends never conflict, even on the same table.",
+      "key_facts": [
+        "Appends never conflict, even on the same table."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "page": "connect/connecting-and-concurrency.md",
+          "quote": "**Appends never conflict**, even on the same table.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 0,
+      "recall_distance": 7
+    },
+    {
+      "turn": 8,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our output path is exports/window_metrics_72.parquet. Which output path should we record, and for TIMESTAMP '1992-03-22 01:02:03' + INTERVAL 5 DAY, what timestamp is returned?",
+      "standalone_question": "For the DuckDB project: Our output path is exports/window_metrics_72.parquet. Which output path should we record, and for TIMESTAMP '1992-03-22 01:02:03' + INTERVAL 5 DAY, what timestamp is returned?",
+      "asks": [
+        "output path",
+        "For TIMESTAMP '1992-03-22 01:02:03' + INTERVAL 5 DAY, what timestamp is returned?"
+      ],
+      "answer": "The output path is exports/window_metrics_72.parquet. The result is 1992-03-27 01:02:03.",
+      "key_facts": [
+        "The output path is exports/window_metrics_72.parquet.",
+        "The result is 1992-03-27 01:02:03."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "example"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "exports/window_metrics_72.parquet",
+        "1992-03-27 01:02:03"
+      ],
+      "evidence_pages": [
+        "sql/functions/timestamp.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Our output path is exports/window_metrics_72.parquet.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/functions/timestamp.md",
+          "quote": "`TIMESTAMP '1992-03-22 01:02:03' + INTERVAL 5 DAY` | `1992-03-27 01:02:03`",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 9,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which run label did we choose, and which clause allows several window functions to reuse a named window and its data layout?",
+      "standalone_question": "For the DuckDB project: Which run label did we choose, and which clause allows several window functions to reuse a named window and its data layout?",
+      "asks": [
+        "chosen run label",
+        "Which clause allows several window functions to reuse a named window and its data layout?"
+      ],
+      "answer": "The run label is window_metrics-batch-46. The WINDOW clause defines named windows that share the data layout.",
+      "key_facts": [
+        "The run label is window_metrics-batch-46.",
+        "The WINDOW clause defines named windows that share the data layout."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "window_metrics-batch-46",
+        "WINDOW"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Our run label is window_metrics-batch-46.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/functions/window.md",
+          "quote": "The `WINDOW` clause defines named windows shared by several functions via `OVER ⟨name⟩`",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 8
+    },
+    {
+      "turn": 10,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "For date_add(DATE '1992-09-15', INTERVAL 2 MONTH), what timestamp is returned?",
+      "standalone_question": "For the DuckDB project: For date_add(DATE '1992-09-15', INTERVAL 2 MONTH), what timestamp is returned?",
+      "asks": [
+        "For date_add(DATE '1992-09-15', INTERVAL 2 MONTH), what timestamp is returned?"
+      ],
+      "answer": "The result is 1992-11-15 00:00:00.",
+      "key_facts": [
+        "The result is 1992-11-15 00:00:00."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "example"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "1992-11-15 00:00:00"
+      ],
+      "evidence_pages": [
+        "sql/functions/date-and-time.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "sql/functions/date-and-time.md",
+          "quote": "`date_add(DATE '1992-09-15', INTERVAL 2 MONTH)` | `1992-11-15 00:00:00`",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 11,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our run label from window_metrics-batch-46 to window_metrics-batch-88. Which run label should we record now, and when a window omits PARTITION BY, what forms its partition?",
+      "standalone_question": "For the DuckDB project: Change our run label from window_metrics-batch-46 to window_metrics-batch-88. Which run label should we record now, and when a window omits PARTITION BY, what forms its partition?",
+      "asks": [
+        "updated run label",
+        "When a window omits PARTITION BY, what forms its partition?"
+      ],
+      "answer": "The run label is window_metrics-batch-88. The whole relation is one partition.",
+      "key_facts": [
+        "The run label is window_metrics-batch-88.",
+        "The whole relation is one partition."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "window_metrics-batch-88"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our run label from window_metrics-batch-46 to window_metrics-batch-88.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/functions/window.md",
+          "quote": "Without it the whole relation is one partition.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "run label",
+          "from": "window_metrics-batch-46",
+          "to": "window_metrics-batch-88"
+        }
+      ],
+      "affects": [
+        17
+      ],
+      "source_turn": null,
+      "recall_distance": 10
+    },
+    {
+      "turn": 12,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Does HAVING filter input rows before aggregation or groups after aggregation?",
+      "standalone_question": "For the DuckDB project: Does HAVING filter input rows before aggregation or groups after aggregation?",
+      "asks": [
+        "Does HAVING filter input rows before aggregation or groups after aggregation?"
+      ],
+      "answer": "HAVING filters groups after aggregation.",
+      "key_facts": [
+        "HAVING filters groups after aggregation."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [
+        "sql/query-syntax/grouping-and-filtering.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "sql/query-syntax/grouping-and-filtering.md",
+          "quote": "Filters **groups after** aggregation",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 13,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "For this worker, which database path are we using now; Which three independent components store an INTERVAL; and which statement computes per-column statistics?",
+      "standalone_question": "For the DuckDB project: For this worker, which database path are we using now; Which three independent components store an INTERVAL; and which statement computes per-column statistics?",
+      "asks": [
+        "current database path",
+        "Which three independent components store an INTERVAL?",
+        "column statistics statement"
+      ],
+      "answer": "The database path is window_metrics_r62.duckdb. An INTERVAL stores months, days, and microseconds independently. SUMMARIZE computes summary statistics per column.",
+      "key_facts": [
+        "The database path is window_metrics_r62.duckdb.",
+        "An INTERVAL stores months, days, and microseconds independently.",
+        "SUMMARIZE computes summary statistics per column."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "window_metrics_r62.duckdb",
+        "SUMMARIZE"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        3,
+        5
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "Change our database path from window_metrics_r35.duckdb to window_metrics_r62.duckdb.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/data-types/date-and-time.md",
+          "quote": "three independent components — **months, days, microseconds**",
+          "fact_idx": 1
+        },
+        {
+          "page": "sql/statements/inspection-and-metadata.md",
+          "quote": "`SUMMARIZE` computes summary statistics per column.",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 10
+    },
+    {
+      "turn": 14,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "When a setting and table share a name, what does SHOW resolve to by default?",
+      "standalone_question": "For the DuckDB project: When a setting and table share a name, what does SHOW resolve to by default?",
+      "asks": [
+        "SHOW name resolution"
+      ],
+      "answer": "SHOW describes the table and emits a deprecation warning.",
+      "key_facts": [
+        "SHOW describes the table and emits a deprecation warning."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "condition",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "SHOW"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "sql/statements/inspection-and-metadata.md",
+          "quote": "If a table and a setting share the name, `SHOW` describes the table (with the deprecation warning).",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 5,
+      "recall_distance": 9
+    },
+    {
+      "turn": 15,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What value does any_value(arg) select?",
+      "standalone_question": "For the DuckDB project: What value does any_value(arg) select?",
+      "asks": [
+        "What value does any_value(arg) select?"
+      ],
+      "answer": "It selects the first non-NULL value.",
+      "key_facts": [
+        "It selects the first non-NULL value."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "NULL"
+      ],
+      "evidence_pages": [
+        "sql/functions/aggregate.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "sql/functions/aggregate.md",
+          "quote": "`any_value(arg)` | First non-`NULL` value",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 16,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which output path did we choose, and for TIMESTAMP '1992-03-22 01:02:03' + INTERVAL 5 DAY, what timestamp is returned?",
+      "standalone_question": "For the DuckDB project: Which output path did we choose, and for TIMESTAMP '1992-03-22 01:02:03' + INTERVAL 5 DAY, what timestamp is returned?",
+      "asks": [
+        "chosen output path",
+        "For TIMESTAMP '1992-03-22 01:02:03' + INTERVAL 5 DAY, what timestamp is returned?"
+      ],
+      "answer": "The output path is exports/window_metrics_72.parquet. The result is 1992-03-27 01:02:03.",
+      "key_facts": [
+        "The output path is exports/window_metrics_72.parquet.",
+        "The result is 1992-03-27 01:02:03."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "example"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "exports/window_metrics_72.parquet",
+        "1992-03-27 01:02:03"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        8
+      ],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Our output path is exports/window_metrics_72.parquet.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/functions/timestamp.md",
+          "quote": "`TIMESTAMP '1992-03-22 01:02:03' + INTERVAL 5 DAY` | `1992-03-27 01:02:03`",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 8
+    },
+    {
+      "turn": 17,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What is our current run label, and when a window omits PARTITION BY, what forms its partition?",
+      "standalone_question": "For the DuckDB project: What is our current run label, and when a window omits PARTITION BY, what forms its partition?",
+      "asks": [
+        "current run label",
+        "When a window omits PARTITION BY, what forms its partition?"
+      ],
+      "answer": "The run label is window_metrics-batch-88. The whole relation is one partition.",
+      "key_facts": [
+        "The run label is window_metrics-batch-88.",
+        "The whole relation is one partition."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "window_metrics-batch-88"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        11
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our run label from window_metrics-batch-46 to window_metrics-batch-88.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/functions/window.md",
+          "quote": "Without it the whole relation is one partition.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 6
+    },
+    {
+      "turn": 18,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "For the same worker, what is our current database path; For date_add(DATE '1992-09-15', INTERVAL 2 MONTH), what timestamp is returned; and does HAVING filter input rows before aggregation or groups after aggregation?",
+      "standalone_question": "For the DuckDB project: For the same worker, what is our current database path; For date_add(DATE '1992-09-15', INTERVAL 2 MONTH), what timestamp is returned; and does HAVING filter input rows before aggregation or groups after aggregation?",
+      "asks": [
+        "current database path",
+        "For date_add(DATE '1992-09-15', INTERVAL 2 MONTH), what timestamp is returned?",
+        "Does HAVING filter input rows before aggregation or groups after aggregation?"
+      ],
+      "answer": "The database path is window_metrics_r62.duckdb. The result is 1992-11-15 00:00:00. HAVING filters groups after aggregation.",
+      "key_facts": [
+        "The database path is window_metrics_r62.duckdb.",
+        "The result is 1992-11-15 00:00:00.",
+        "HAVING filters groups after aggregation."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "example"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "window_metrics_r62.duckdb",
+        "1992-11-15 00:00:00"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        10,
+        12
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "Change our database path from window_metrics_r35.duckdb to window_metrics_r62.duckdb.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/functions/date-and-time.md",
+          "quote": "`date_add(DATE '1992-09-15', INTERVAL 2 MONTH)` | `1992-11-15 00:00:00`",
+          "fact_idx": 1
+        },
+        {
+          "page": "sql/query-syntax/grouping-and-filtering.md",
+          "quote": "Filters **groups after** aggregation",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 14
+    }
+  ]
+}

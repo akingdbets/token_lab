@@ -1,0 +1,994 @@
+{
+  "schema_version": 2,
+  "scenario_id": "duckdb_v2_17_pivot_dashboard",
+  "title": "Reshaping dimensional reports",
+  "topic": "Reshaping dimensional reports",
+  "status": "draft",
+  "bundle": [
+    "connect/connecting-and-concurrency.md",
+    "sql/statements/pivot-and-unpivot.md",
+    "sql/query-syntax/grouping-and-filtering.md",
+    "sql/statements/inspection-and-metadata.md",
+    "sql/functions/aggregate.md",
+    "sql/dialect/friendly-sql.md",
+    "sql/functions/text-and-pattern-matching.md",
+    "sql/statements/views-macros-and-types.md"
+  ],
+  "generation": {
+    "method": "Session-authored fact cards assembled with a fixed 19-turn scaffold; no independent generation API call",
+    "model": "Codex current session (exact model identifier not recorded)",
+    "prompt": [
+      "mt_scenario_gen_v3_duckdb_session",
+      "b2d745c3f579"
+    ],
+    "created_at": "2026-11-28T12:09:48+00:00",
+    "run_id": "duckdb_v2_session/duckdb_v2_17_pivot_dashboard",
+    "corpus_manifest_sha256": "1995523b1e9959f27811f9e8e3294ea4af05c52c668867b7b09cc8dbe8eae728",
+    "source_pr": "https://github.com/akingdbets/token_lab/pull/64",
+    "source_pr_head": "eda7e1a19d4189785b81c4a0e2baf27aa8b18689"
+  },
+  "turns": [
+    {
+      "turn": 0,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "We are reshaping dimensional reports. Our database path is pivot_dashboard_r37.duckdb. Which database path should we use, and if we use an in-memory database, is its data retained when the process ends?",
+      "standalone_question": "For the DuckDB project: We are reshaping dimensional reports. Our database path is pivot_dashboard_r37.duckdb. Which database path should we use, and if we use an in-memory database, is its data retained when the process ends?",
+      "asks": [
+        "database path",
+        "in-memory persistence"
+      ],
+      "answer": "The database path is pivot_dashboard_r37.duckdb. No; all in-memory data is lost when the process ends.",
+      "key_facts": [
+        "The database path is pivot_dashboard_r37.duckdb.",
+        "No; all in-memory data is lost when the process ends."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "pivot_dashboard_r37.duckdb"
+      ],
+      "evidence_pages": [
+        "connect/connecting-and-concurrency.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 0,
+          "quote": "Our database path is pivot_dashboard_r37.duckdb.",
+          "fact_idx": 0
+        },
+        {
+          "page": "connect/connecting-and-concurrency.md",
+          "quote": "Nothing is persisted; all data is lost when the process ends.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 1,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our run label is pivot_dashboard-batch-48. Which run label should we record, and what happens to FILTER clauses on simplified PIVOT USING aggregates?",
+      "standalone_question": "For the DuckDB project: Our run label is pivot_dashboard-batch-48. Which run label should we record, and what happens to FILTER clauses on simplified PIVOT USING aggregates?",
+      "asks": [
+        "run label",
+        "What happens to FILTER clauses on simplified PIVOT USING aggregates?"
+      ],
+      "answer": "The run label is pivot_dashboard-batch-48. They are silently ignored.",
+      "key_facts": [
+        "The run label is pivot_dashboard-batch-48.",
+        "They are silently ignored."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "pivot_dashboard-batch-48"
+      ],
+      "evidence_pages": [
+        "sql/statements/pivot-and-unpivot.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Our run label is pivot_dashboard-batch-48.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/statements/pivot-and-unpivot.md",
+          "quote": "`FILTER` clauses on `USING` aggregates are currently **silently ignored**.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 2,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "What is required for every pivoted column in the SQL-standard PIVOT form?",
+      "standalone_question": "For the DuckDB project: What is required for every pivoted column in the SQL-standard PIVOT form?",
+      "asks": [
+        "What is required for every pivoted column in the SQL-standard PIVOT form?"
+      ],
+      "answer": "An IN list is required for every pivoted column.",
+      "key_facts": [
+        "An IN list is required for every pivoted column."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "sql/statements/pivot-and-unpivot.md",
+          "quote": "An `IN` list is **required** for every pivoted column",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1
+    },
+    {
+      "turn": 3,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Does HAVING filter input rows before aggregation or groups after aggregation?",
+      "standalone_question": "For the DuckDB project: Does HAVING filter input rows before aggregation or groups after aggregation?",
+      "asks": [
+        "Does HAVING filter input rows before aggregation or groups after aggregation?"
+      ],
+      "answer": "HAVING filters groups after aggregation.",
+      "key_facts": [
+        "HAVING filters groups after aggregation."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [
+        "sql/query-syntax/grouping-and-filtering.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "sql/query-syntax/grouping-and-filtering.md",
+          "quote": "Filters **groups after** aggregation",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 4,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our database path from pivot_dashboard_r37.duckdb to pivot_dashboard_r64.duckdb. Which database path should we use now, and does the in-memory alternative retain data after the process ends?",
+      "standalone_question": "For the DuckDB project: Change our database path from pivot_dashboard_r37.duckdb to pivot_dashboard_r64.duckdb. Which database path should we use now, and does the in-memory alternative retain data after the process ends?",
+      "asks": [
+        "updated database path",
+        "in-memory persistence"
+      ],
+      "answer": "The database path is pivot_dashboard_r64.duckdb. No; all in-memory data is lost when the process ends.",
+      "key_facts": [
+        "The database path is pivot_dashboard_r64.duckdb.",
+        "No; all in-memory data is lost when the process ends."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "pivot_dashboard_r64.duckdb"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "Change our database path from pivot_dashboard_r37.duckdb to pivot_dashboard_r64.duckdb.",
+          "fact_idx": 0
+        },
+        {
+          "page": "connect/connecting-and-concurrency.md",
+          "quote": "Nothing is persisted; all data is lost when the process ends.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "database path",
+          "from": "pivot_dashboard_r37.duckdb",
+          "to": "pivot_dashboard_r64.duckdb"
+        }
+      ],
+      "affects": [
+        13,
+        18
+      ],
+      "source_turn": null,
+      "recall_distance": 4
+    },
+    {
+      "turn": 5,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Which statement computes summary statistics per column?",
+      "standalone_question": "For the DuckDB project: Which statement computes summary statistics per column?",
+      "asks": [
+        "column statistics statement"
+      ],
+      "answer": "SUMMARIZE computes summary statistics per column.",
+      "key_facts": [
+        "SUMMARIZE computes summary statistics per column."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "SUMMARIZE"
+      ],
+      "evidence_pages": [
+        "sql/statements/inspection-and-metadata.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "sql/statements/inspection-and-metadata.md",
+          "quote": "`SUMMARIZE` computes summary statistics per column.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 6,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "Does the non-ANALYZE form of EXPLAIN actually execute the query?",
+      "standalone_question": "For the DuckDB project: Does the non-ANALYZE form of EXPLAIN actually execute the query?",
+      "asks": [
+        "EXPLAIN execution"
+      ],
+      "answer": "EXPLAIN does not run the query.",
+      "key_facts": [
+        "EXPLAIN does not run the query."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "sql/statements/inspection-and-metadata.md",
+          "quote": "EXPLAIN ⟨query⟩;            -- plan with estimated cardinalities; does not run the query",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1
+    },
+    {
+      "turn": 7,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "Within a single writer process, do concurrent appends conflict even on the same table?",
+      "standalone_question": "For the DuckDB project: Within a single writer process, do concurrent appends conflict even on the same table?",
+      "asks": [
+        "concurrent append conflicts"
+      ],
+      "answer": "Appends never conflict, even on the same table.",
+      "key_facts": [
+        "Appends never conflict, even on the same table."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "page": "connect/connecting-and-concurrency.md",
+          "quote": "**Appends never conflict**, even on the same table.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 0,
+      "recall_distance": 7
+    },
+    {
+      "turn": 8,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our output path is exports/pivot_dashboard_74.parquet. Which output path should we record, and what value does any_value(arg) select?",
+      "standalone_question": "For the DuckDB project: Our output path is exports/pivot_dashboard_74.parquet. Which output path should we record, and what value does any_value(arg) select?",
+      "asks": [
+        "output path",
+        "What value does any_value(arg) select?"
+      ],
+      "answer": "The output path is exports/pivot_dashboard_74.parquet. It selects the first non-NULL value.",
+      "key_facts": [
+        "The output path is exports/pivot_dashboard_74.parquet.",
+        "It selects the first non-NULL value."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "exports/pivot_dashboard_74.parquet",
+        "NULL"
+      ],
+      "evidence_pages": [
+        "sql/functions/aggregate.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Our output path is exports/pivot_dashboard_74.parquet.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/functions/aggregate.md",
+          "quote": "`any_value(arg)` | First non-`NULL` value",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 9,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which run label did we choose, and what is required for every pivoted column in the SQL-standard PIVOT form?",
+      "standalone_question": "For the DuckDB project: Which run label did we choose, and what is required for every pivoted column in the SQL-standard PIVOT form?",
+      "asks": [
+        "chosen run label",
+        "What is required for every pivoted column in the SQL-standard PIVOT form?"
+      ],
+      "answer": "The run label is pivot_dashboard-batch-48. An IN list is required for every pivoted column.",
+      "key_facts": [
+        "The run label is pivot_dashboard-batch-48.",
+        "An IN list is required for every pivoted column."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "pivot_dashboard-batch-48"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Our run label is pivot_dashboard-batch-48.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/statements/pivot-and-unpivot.md",
+          "quote": "An `IN` list is **required** for every pivoted column",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 8
+    },
+    {
+      "turn": 10,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Which two-argument aggregate retrieves the largest n argument values without a window subquery?",
+      "standalone_question": "For the DuckDB project: Which two-argument aggregate retrieves the largest n argument values without a window subquery?",
+      "asks": [
+        "Which two-argument aggregate retrieves the largest n argument values without a window subquery?"
+      ],
+      "answer": "Use max(arg, n).",
+      "key_facts": [
+        "Use max(arg, n)."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "max(arg, n)"
+      ],
+      "evidence_pages": [
+        "sql/dialect/friendly-sql.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "sql/dialect/friendly-sql.md",
+          "quote": "`max(arg, n)`",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 11,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our run label from pivot_dashboard-batch-48 to pivot_dashboard-batch-90. Which run label should we record now, and what happens to FILTER clauses on simplified PIVOT USING aggregates?",
+      "standalone_question": "For the DuckDB project: Change our run label from pivot_dashboard-batch-48 to pivot_dashboard-batch-90. Which run label should we record now, and what happens to FILTER clauses on simplified PIVOT USING aggregates?",
+      "asks": [
+        "updated run label",
+        "What happens to FILTER clauses on simplified PIVOT USING aggregates?"
+      ],
+      "answer": "The run label is pivot_dashboard-batch-90. They are silently ignored.",
+      "key_facts": [
+        "The run label is pivot_dashboard-batch-90.",
+        "They are silently ignored."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "pivot_dashboard-batch-90"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our run label from pivot_dashboard-batch-48 to pivot_dashboard-batch-90.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/statements/pivot-and-unpivot.md",
+          "quote": "`FILTER` clauses on `USING` aggregates are currently **silently ignored**.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "run label",
+          "from": "pivot_dashboard-batch-48",
+          "to": "pivot_dashboard-batch-90"
+        }
+      ],
+      "affects": [
+        17
+      ],
+      "source_turn": null,
+      "recall_distance": 10
+    },
+    {
+      "turn": 12,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Which regular expression engine does DuckDB use?",
+      "standalone_question": "For the DuckDB project: Which regular expression engine does DuckDB use?",
+      "asks": [
+        "Which regular expression engine does DuckDB use?"
+      ],
+      "answer": "DuckDB uses RE2.",
+      "key_facts": [
+        "DuckDB uses RE2."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [
+        "sql/functions/text-and-pattern-matching.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "sql/functions/text-and-pattern-matching.md",
+          "quote": "DuckDB uses the **RE2** engine.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 13,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "For this worker, which database path are we using now; Does HAVING filter input rows before aggregation or groups after aggregation; and which statement computes per-column statistics?",
+      "standalone_question": "For the DuckDB project: For this worker, which database path are we using now; Does HAVING filter input rows before aggregation or groups after aggregation; and which statement computes per-column statistics?",
+      "asks": [
+        "current database path",
+        "Does HAVING filter input rows before aggregation or groups after aggregation?",
+        "column statistics statement"
+      ],
+      "answer": "The database path is pivot_dashboard_r64.duckdb. HAVING filters groups after aggregation. SUMMARIZE computes summary statistics per column.",
+      "key_facts": [
+        "The database path is pivot_dashboard_r64.duckdb.",
+        "HAVING filters groups after aggregation.",
+        "SUMMARIZE computes summary statistics per column."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "pivot_dashboard_r64.duckdb",
+        "SUMMARIZE"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        3,
+        5
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "Change our database path from pivot_dashboard_r37.duckdb to pivot_dashboard_r64.duckdb.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/query-syntax/grouping-and-filtering.md",
+          "quote": "Filters **groups after** aggregation",
+          "fact_idx": 1
+        },
+        {
+          "page": "sql/statements/inspection-and-metadata.md",
+          "quote": "`SUMMARIZE` computes summary statistics per column.",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 10
+    },
+    {
+      "turn": 14,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "When a setting and table share a name, what does SHOW resolve to by default?",
+      "standalone_question": "For the DuckDB project: When a setting and table share a name, what does SHOW resolve to by default?",
+      "asks": [
+        "SHOW name resolution"
+      ],
+      "answer": "SHOW describes the table and emits a deprecation warning.",
+      "key_facts": [
+        "SHOW describes the table and emits a deprecation warning."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "condition",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "SHOW"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "sql/statements/inspection-and-metadata.md",
+          "quote": "If a table and a setting share the name, `SHOW` describes the table (with the deprecation warning).",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 5,
+      "recall_distance": 9
+    },
+    {
+      "turn": 15,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Are views materialized, or does their query run each time they are referenced?",
+      "standalone_question": "For the DuckDB project: Are views materialized, or does their query run each time they are referenced?",
+      "asks": [
+        "Are views materialized, or does their query run each time they are referenced?"
+      ],
+      "answer": "Views are not materialized; their query runs on every reference.",
+      "key_facts": [
+        "Views are not materialized; their query runs on every reference."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [
+        "sql/statements/views-macros-and-types.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "sql/statements/views-macros-and-types.md",
+          "quote": "Views are **not materialized**: the query runs every time the view is referenced.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 16,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which output path did we choose, and what value does any_value(arg) select?",
+      "standalone_question": "For the DuckDB project: Which output path did we choose, and what value does any_value(arg) select?",
+      "asks": [
+        "chosen output path",
+        "What value does any_value(arg) select?"
+      ],
+      "answer": "The output path is exports/pivot_dashboard_74.parquet. It selects the first non-NULL value.",
+      "key_facts": [
+        "The output path is exports/pivot_dashboard_74.parquet.",
+        "It selects the first non-NULL value."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "exports/pivot_dashboard_74.parquet",
+        "NULL"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        8
+      ],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Our output path is exports/pivot_dashboard_74.parquet.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/functions/aggregate.md",
+          "quote": "`any_value(arg)` | First non-`NULL` value",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 8
+    },
+    {
+      "turn": 17,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What is our current run label, and what happens to FILTER clauses on simplified PIVOT USING aggregates?",
+      "standalone_question": "For the DuckDB project: What is our current run label, and what happens to FILTER clauses on simplified PIVOT USING aggregates?",
+      "asks": [
+        "current run label",
+        "What happens to FILTER clauses on simplified PIVOT USING aggregates?"
+      ],
+      "answer": "The run label is pivot_dashboard-batch-90. They are silently ignored.",
+      "key_facts": [
+        "The run label is pivot_dashboard-batch-90.",
+        "They are silently ignored."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "pivot_dashboard-batch-90"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        11
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our run label from pivot_dashboard-batch-48 to pivot_dashboard-batch-90.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/statements/pivot-and-unpivot.md",
+          "quote": "`FILTER` clauses on `USING` aggregates are currently **silently ignored**.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 6
+    },
+    {
+      "turn": 18,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "For the same worker, what is our current database path; Which two-argument aggregate retrieves the largest n argument values without a window subquery; and which regular expression engine does DuckDB use?",
+      "standalone_question": "For the DuckDB project: For the same worker, what is our current database path; Which two-argument aggregate retrieves the largest n argument values without a window subquery; and which regular expression engine does DuckDB use?",
+      "asks": [
+        "current database path",
+        "Which two-argument aggregate retrieves the largest n argument values without a window subquery?",
+        "Which regular expression engine does DuckDB use?"
+      ],
+      "answer": "The database path is pivot_dashboard_r64.duckdb. Use max(arg, n). DuckDB uses RE2.",
+      "key_facts": [
+        "The database path is pivot_dashboard_r64.duckdb.",
+        "Use max(arg, n).",
+        "DuckDB uses RE2."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "pivot_dashboard_r64.duckdb",
+        "max(arg, n)"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        10,
+        12
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "Change our database path from pivot_dashboard_r37.duckdb to pivot_dashboard_r64.duckdb.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/dialect/friendly-sql.md",
+          "quote": "`max(arg, n)`",
+          "fact_idx": 1
+        },
+        {
+          "page": "sql/functions/text-and-pattern-matching.md",
+          "quote": "DuckDB uses the **RE2** engine.",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 14
+    }
+  ]
+}

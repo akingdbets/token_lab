@@ -1,0 +1,1007 @@
+{
+  "schema_version": 2,
+  "scenario_id": "duckdb_v2_13_nested_events",
+  "title": "Transforming nested event payloads",
+  "topic": "Transforming nested event payloads",
+  "status": "draft",
+  "bundle": [
+    "connect/connecting-and-concurrency.md",
+    "sql/data-types/nested-types.md",
+    "data/json/json-type-and-functions.md",
+    "sql/statements/inspection-and-metadata.md",
+    "sql/functions/struct-map-and-union.md",
+    "sql/data-types/variant-and-geometry.md",
+    "sql/functions/list-array-and-lambda.md",
+    "data/json/loading-and-writing-json.md"
+  ],
+  "generation": {
+    "method": "Session-authored fact cards assembled with a fixed 19-turn scaffold; no independent generation API call",
+    "model": "Codex current session (exact model identifier not recorded)",
+    "prompt": [
+      "mt_scenario_gen_v3_duckdb_session",
+      "b2d745c3f579"
+    ],
+    "created_at": "2026-11-28T12:09:48+00:00",
+    "run_id": "duckdb_v2_session/duckdb_v2_13_nested_events",
+    "corpus_manifest_sha256": "1995523b1e9959f27811f9e8e3294ea4af05c52c668867b7b09cc8dbe8eae728",
+    "source_pr": "https://github.com/akingdbets/token_lab/pull/64",
+    "source_pr_head": "eda7e1a19d4189785b81c4a0e2baf27aa8b18689"
+  },
+  "turns": [
+    {
+      "turn": 0,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "We are transforming nested event payloads. Our database path is nested_events_r33.duckdb. Which database path should we use, and if we use an in-memory database, is its data retained when the process ends?",
+      "standalone_question": "For the DuckDB project: We are transforming nested event payloads. Our database path is nested_events_r33.duckdb. Which database path should we use, and if we use an in-memory database, is its data retained when the process ends?",
+      "asks": [
+        "database path",
+        "in-memory persistence"
+      ],
+      "answer": "The database path is nested_events_r33.duckdb. No; all in-memory data is lost when the process ends.",
+      "key_facts": [
+        "The database path is nested_events_r33.duckdb.",
+        "No; all in-memory data is lost when the process ends."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "nested_events_r33.duckdb"
+      ],
+      "evidence_pages": [
+        "connect/connecting-and-concurrency.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 0,
+          "quote": "Our database path is nested_events_r33.duckdb.",
+          "fact_idx": 0
+        },
+        {
+          "page": "connect/connecting-and-concurrency.md",
+          "quote": "Nothing is persisted; all data is lost when the process ends.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 1,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our run label is nested_events-batch-44. Which run label should we record, and are DuckDB ARRAY values fixed-length or variable-length?",
+      "standalone_question": "For the DuckDB project: Our run label is nested_events-batch-44. Which run label should we record, and are DuckDB ARRAY values fixed-length or variable-length?",
+      "asks": [
+        "run label",
+        "Are DuckDB ARRAY values fixed-length or variable-length?"
+      ],
+      "answer": "The run label is nested_events-batch-44. DuckDB arrays are fixed-length.",
+      "key_facts": [
+        "The run label is nested_events-batch-44.",
+        "DuckDB arrays are fixed-length."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "nested_events-batch-44"
+      ],
+      "evidence_pages": [
+        "sql/data-types/nested-types.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Our run label is nested_events-batch-44.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/data-types/nested-types.md",
+          "quote": "DuckDB arrays are fixed-length (unlike PostgreSQL's)",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 2,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "May a MAP contain duplicate keys?",
+      "standalone_question": "For the DuckDB project: May a MAP contain duplicate keys?",
+      "asks": [
+        "May a MAP contain duplicate keys?"
+      ],
+      "answer": "No; MAP keys cannot be duplicated.",
+      "key_facts": [
+        "No; MAP keys cannot be duplicated."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "sql/data-types/nested-types.md",
+          "quote": "All keys share one type and all values share one type (they may differ from each other); no duplicate keys.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1
+    },
+    {
+      "turn": 3,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "How is the JSON logical type physically stored?",
+      "standalone_question": "For the DuckDB project: How is the JSON logical type physically stored?",
+      "asks": [
+        "How is the JSON logical type physically stored?"
+      ],
+      "answer": "JSON is physically stored as VARCHAR.",
+      "key_facts": [
+        "JSON is physically stored as VARCHAR."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "JSON",
+        "VARCHAR"
+      ],
+      "evidence_pages": [
+        "data/json/json-type-and-functions.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "data/json/json-type-and-functions.md",
+          "quote": "`JSON` is logically a `VARCHAR` restricted to valid JSON, and is physically stored as `VARCHAR`.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 4,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our database path from nested_events_r33.duckdb to nested_events_r60.duckdb. Which database path should we use now, and does the in-memory alternative retain data after the process ends?",
+      "standalone_question": "For the DuckDB project: Change our database path from nested_events_r33.duckdb to nested_events_r60.duckdb. Which database path should we use now, and does the in-memory alternative retain data after the process ends?",
+      "asks": [
+        "updated database path",
+        "in-memory persistence"
+      ],
+      "answer": "The database path is nested_events_r60.duckdb. No; all in-memory data is lost when the process ends.",
+      "key_facts": [
+        "The database path is nested_events_r60.duckdb.",
+        "No; all in-memory data is lost when the process ends."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "nested_events_r60.duckdb"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "Change our database path from nested_events_r33.duckdb to nested_events_r60.duckdb.",
+          "fact_idx": 0
+        },
+        {
+          "page": "connect/connecting-and-concurrency.md",
+          "quote": "Nothing is persisted; all data is lost when the process ends.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "database path",
+          "from": "nested_events_r33.duckdb",
+          "to": "nested_events_r60.duckdb"
+        }
+      ],
+      "affects": [
+        13,
+        18
+      ],
+      "source_turn": null,
+      "recall_distance": 4
+    },
+    {
+      "turn": 5,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Which statement computes summary statistics per column?",
+      "standalone_question": "For the DuckDB project: Which statement computes summary statistics per column?",
+      "asks": [
+        "column statistics statement"
+      ],
+      "answer": "SUMMARIZE computes summary statistics per column.",
+      "key_facts": [
+        "SUMMARIZE computes summary statistics per column."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "SUMMARIZE"
+      ],
+      "evidence_pages": [
+        "sql/statements/inspection-and-metadata.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "sql/statements/inspection-and-metadata.md",
+          "quote": "`SUMMARIZE` computes summary statistics per column.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 6,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "Does the non-ANALYZE form of EXPLAIN actually execute the query?",
+      "standalone_question": "For the DuckDB project: Does the non-ANALYZE form of EXPLAIN actually execute the query?",
+      "asks": [
+        "EXPLAIN execution"
+      ],
+      "answer": "EXPLAIN does not run the query.",
+      "key_facts": [
+        "EXPLAIN does not run the query."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "sql/statements/inspection-and-metadata.md",
+          "quote": "EXPLAIN ⟨query⟩;            -- plan with estimated cardinalities; does not run the query",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1
+    },
+    {
+      "turn": 7,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "Within a single writer process, do concurrent appends conflict even on the same table?",
+      "standalone_question": "For the DuckDB project: Within a single writer process, do concurrent appends conflict even on the same table?",
+      "asks": [
+        "concurrent append conflicts"
+      ],
+      "answer": "Appends never conflict, even on the same table.",
+      "key_facts": [
+        "Appends never conflict, even on the same table."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "page": "connect/connecting-and-concurrency.md",
+          "quote": "**Appends never conflict**, even on the same table.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 0,
+      "recall_distance": 7
+    },
+    {
+      "turn": 8,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our output path is exports/nested_events_70.parquet. Which output path should we record, and what does map_extract_value return when a key is missing?",
+      "standalone_question": "For the DuckDB project: Our output path is exports/nested_events_70.parquet. Which output path should we record, and what does map_extract_value return when a key is missing?",
+      "asks": [
+        "output path",
+        "What does map_extract_value return when a key is missing?"
+      ],
+      "answer": "The output path is exports/nested_events_70.parquet. It returns NULL.",
+      "key_facts": [
+        "The output path is exports/nested_events_70.parquet.",
+        "It returns NULL."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "exports/nested_events_70.parquet",
+        "NULL"
+      ],
+      "evidence_pages": [
+        "sql/functions/struct-map-and-union.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Our output path is exports/nested_events_70.parquet.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/functions/struct-map-and-union.md",
+          "quote": "`map[key]` / `map_extract_value(map, key)` | `map([100, 5], ['a', 'b'])[100]` | `a` (`NULL` if missing)",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 9,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which run label did we choose, and may a MAP contain duplicate keys?",
+      "standalone_question": "For the DuckDB project: Which run label did we choose, and may a MAP contain duplicate keys?",
+      "asks": [
+        "chosen run label",
+        "May a MAP contain duplicate keys?"
+      ],
+      "answer": "The run label is nested_events-batch-44. No; MAP keys cannot be duplicated.",
+      "key_facts": [
+        "The run label is nested_events-batch-44.",
+        "No; MAP keys cannot be duplicated."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "negation"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "nested_events-batch-44"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Our run label is nested_events-batch-44.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/data-types/nested-types.md",
+          "quote": "All keys share one type and all values share one type (they may differ from each other); no duplicate keys.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 8
+    },
+    {
+      "turn": 10,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Is VARIANT stored as typed binary data or as JSON text?",
+      "standalone_question": "For the DuckDB project: Is VARIANT stored as typed binary data or as JSON text?",
+      "asks": [
+        "Is VARIANT stored as typed binary data or as JSON text?"
+      ],
+      "answer": "VARIANT stores typed binary data with per-value type information.",
+      "key_facts": [
+        "VARIANT stores typed binary data with per-value type information."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "VARIANT"
+      ],
+      "evidence_pages": [
+        "sql/data-types/variant-and-geometry.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "sql/data-types/variant-and-geometry.md",
+          "quote": "`VARIANT` stores typed **binary** data where each value carries its own type information",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 11,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our run label from nested_events-batch-44 to nested_events-batch-86. Which run label should we record now, and are DuckDB ARRAY values fixed-length or variable-length?",
+      "standalone_question": "For the DuckDB project: Change our run label from nested_events-batch-44 to nested_events-batch-86. Which run label should we record now, and are DuckDB ARRAY values fixed-length or variable-length?",
+      "asks": [
+        "updated run label",
+        "Are DuckDB ARRAY values fixed-length or variable-length?"
+      ],
+      "answer": "The run label is nested_events-batch-86. DuckDB arrays are fixed-length.",
+      "key_facts": [
+        "The run label is nested_events-batch-86.",
+        "DuckDB arrays are fixed-length."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [
+            "setup",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "nested_events-batch-86"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our run label from nested_events-batch-44 to nested_events-batch-86.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/data-types/nested-types.md",
+          "quote": "DuckDB arrays are fixed-length (unlike PostgreSQL's)",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "run label",
+          "from": "nested_events-batch-44",
+          "to": "nested_events-batch-86"
+        }
+      ],
+      "affects": [
+        17
+      ],
+      "source_turn": null,
+      "recall_distance": 10
+    },
+    {
+      "turn": 12,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Are LIST element indexes 0-based or 1-based?",
+      "standalone_question": "For the DuckDB project: Are LIST element indexes 0-based or 1-based?",
+      "asks": [
+        "Are LIST element indexes 0-based or 1-based?"
+      ],
+      "answer": "LIST indexes are 1-based.",
+      "key_facts": [
+        "LIST indexes are 1-based."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [],
+      "evidence_pages": [
+        "sql/functions/list-array-and-lambda.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "sql/functions/list-array-and-lambda.md",
+          "quote": "`list[index]` is **1-based**",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 13,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "For this worker, which database path are we using now; How is the JSON logical type physically stored; and which statement computes per-column statistics?",
+      "standalone_question": "For the DuckDB project: For this worker, which database path are we using now; How is the JSON logical type physically stored; and which statement computes per-column statistics?",
+      "asks": [
+        "current database path",
+        "How is the JSON logical type physically stored?",
+        "column statistics statement"
+      ],
+      "answer": "The database path is nested_events_r60.duckdb. JSON is physically stored as VARCHAR. SUMMARIZE computes summary statistics per column.",
+      "key_facts": [
+        "The database path is nested_events_r60.duckdb.",
+        "JSON is physically stored as VARCHAR.",
+        "SUMMARIZE computes summary statistics per column."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "nested_events_r60.duckdb",
+        "JSON",
+        "VARCHAR",
+        "SUMMARIZE"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        3,
+        5
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "Change our database path from nested_events_r33.duckdb to nested_events_r60.duckdb.",
+          "fact_idx": 0
+        },
+        {
+          "page": "data/json/json-type-and-functions.md",
+          "quote": "`JSON` is logically a `VARCHAR` restricted to valid JSON, and is physically stored as `VARCHAR`.",
+          "fact_idx": 1
+        },
+        {
+          "page": "sql/statements/inspection-and-metadata.md",
+          "quote": "`SUMMARIZE` computes summary statistics per column.",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 10
+    },
+    {
+      "turn": 14,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "When a setting and table share a name, what does SHOW resolve to by default?",
+      "standalone_question": "For the DuckDB project: When a setting and table share a name, what does SHOW resolve to by default?",
+      "asks": [
+        "SHOW name resolution"
+      ],
+      "answer": "SHOW describes the table and emits a deprecation warning.",
+      "key_facts": [
+        "SHOW describes the table and emits a deprecation warning."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [
+            "condition",
+            "confusable"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "SHOW"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "sql/statements/inspection-and-metadata.md",
+          "quote": "If a table and a setting share the name, `SHOW` describes the table (with the deprecation warning).",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 5,
+      "recall_distance": 9
+    },
+    {
+      "turn": 15,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Which JSON reader returns each raw JSON value without schema detection?",
+      "standalone_question": "For the DuckDB project: Which JSON reader returns each raw JSON value without schema detection?",
+      "asks": [
+        "Which JSON reader returns each raw JSON value without schema detection?"
+      ],
+      "answer": "read_json_objects returns each value as a JSON column without schema detection.",
+      "key_facts": [
+        "read_json_objects returns each value as a JSON column without schema detection."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "tags": [],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "JSON"
+      ],
+      "evidence_pages": [
+        "data/json/loading-and-writing-json.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "data/json/loading-and-writing-json.md",
+          "quote": "`read_json_objects(filename)` returns each JSON value as a `JSON` column without schema detection",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0
+    },
+    {
+      "turn": 16,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which output path did we choose, and what does map_extract_value return when a key is missing?",
+      "standalone_question": "For the DuckDB project: Which output path did we choose, and what does map_extract_value return when a key is missing?",
+      "asks": [
+        "chosen output path",
+        "What does map_extract_value return when a key is missing?"
+      ],
+      "answer": "The output path is exports/nested_events_70.parquet. It returns NULL.",
+      "key_facts": [
+        "The output path is exports/nested_events_70.parquet.",
+        "It returns NULL."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "condition"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "exports/nested_events_70.parquet",
+        "NULL"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        8
+      ],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Our output path is exports/nested_events_70.parquet.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/functions/struct-map-and-union.md",
+          "quote": "`map[key]` / `map_extract_value(map, key)` | `map([100, 5], ['a', 'b'])[100]` | `a` (`NULL` if missing)",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 8
+    },
+    {
+      "turn": 17,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What is our current run label, and are DuckDB ARRAY values fixed-length or variable-length?",
+      "standalone_question": "For the DuckDB project: What is our current run label, and are DuckDB ARRAY values fixed-length or variable-length?",
+      "asks": [
+        "current run label",
+        "Are DuckDB ARRAY values fixed-length or variable-length?"
+      ],
+      "answer": "The run label is nested_events-batch-86. DuckDB arrays are fixed-length.",
+      "key_facts": [
+        "The run label is nested_events-batch-86.",
+        "DuckDB arrays are fixed-length."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "nested_events-batch-86"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        11
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our run label from nested_events-batch-44 to nested_events-batch-86.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/data-types/nested-types.md",
+          "quote": "DuckDB arrays are fixed-length (unlike PostgreSQL's)",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 6
+    },
+    {
+      "turn": 18,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "For the same worker, what is our current database path; Is VARIANT stored as typed binary data or as JSON text; and are LIST element indexes 0-based or 1-based?",
+      "standalone_question": "For the DuckDB project: For the same worker, what is our current database path; Is VARIANT stored as typed binary data or as JSON text; and are LIST element indexes 0-based or 1-based?",
+      "asks": [
+        "current database path",
+        "Is VARIANT stored as typed binary data or as JSON text?",
+        "Are LIST element indexes 0-based or 1-based?"
+      ],
+      "answer": "The database path is nested_events_r60.duckdb. VARIANT stores typed binary data with per-value type information. LIST indexes are 1-based.",
+      "key_facts": [
+        "The database path is nested_events_r60.duckdb.",
+        "VARIANT stores typed binary data with per-value type information.",
+        "LIST indexes are 1-based."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "tags": [],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ],
+          "accept_alternatives": []
+        },
+        {
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ],
+          "accept_alternatives": []
+        }
+      ],
+      "key_entities": [
+        "nested_events_r60.duckdb",
+        "VARIANT"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        10,
+        12
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "Change our database path from nested_events_r33.duckdb to nested_events_r60.duckdb.",
+          "fact_idx": 0
+        },
+        {
+          "page": "sql/data-types/variant-and-geometry.md",
+          "quote": "`VARIANT` stores typed **binary** data where each value carries its own type information",
+          "fact_idx": 1
+        },
+        {
+          "page": "sql/functions/list-array-and-lambda.md",
+          "quote": "`list[index]` is **1-based**",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 14
+    }
+  ]
+}
