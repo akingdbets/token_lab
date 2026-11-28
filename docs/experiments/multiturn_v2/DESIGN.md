@@ -288,3 +288,12 @@ closed-book 검사 결과(문항 설계의 타당성 점검)에 따른 **설계 
 
 closed-book 의 `correct` 도 주 정확도와 같게 setup 을 뺀 key_fact 기준 (`accuracy_main`) 으로 바꿨다.
 검수 시트에 시나리오별 보기, 자동 의심 사유(`suspect`), 검수 표시(`review` 필드: standalone_same_fact, flags) 를 더했다.
+
+### 2026-11-28 검수 2차 결정 (손 수정, 재생성 없음)
+
+- 검사기 오탐 2종 수정 (승인): key_entity 는 정규화 매칭이 실패하면 원문 글자 그대로 한 번 더 찾는다.
+  출처 단서 검사에서 한 단어 제목과 흔한 낱말(알파벳만) 두 단어 제목(Middleware, Background Tasks, WebSockets, Lifespan Events 등)은 뺀다.
+- 실제 실패 5건과 의심 턴 손 수정 (각 시나리오 `edits` 필드). 바뀐 턴만 closed-book 을 다시 돌렸다 (`closed_book_v2.py --missing-only`).
+- 간접 의존·기억 답·recall 인데 knowledge 로 맞힌 턴은 고치지 않고 표시만 유지한다. 기억 답 턴은 `review.flags = grounded_memory` 로 남긴다.
+- 사람 검수 대상 `review.target` (`src/multiturn/review_targets.py`, 시드 20261128): (a) 질문을 고친 턴, (b) 대안 판정 턴,
+  (c) 남은 의심 턴(한 턴 한 주제 경고 포함), (d) 나머지에서 시나리오마다 10% 무작위. 검수 시트의 "검수 대상만" 보기.

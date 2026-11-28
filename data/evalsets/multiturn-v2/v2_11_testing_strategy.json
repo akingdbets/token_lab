@@ -179,6 +179,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -306,6 +309,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -436,6 +442,11 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "b: 대안 판정 (alt_judge_label)"
+    ]
    }
   },
   {
@@ -557,6 +568,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -568,7 +582,7 @@
     "Updated settings return value",
     "Constructor-versus-environment precedence"
    ],
-   "standalone_question": "Change the settings-test admin_email to qa-comet@sample.net. What should the replacement settings provider return now, and will that explicit value win over an environment variable?",
+   "standalone_question": "In a FastAPI test, change the overridden configuration's admin_email to qa-comet@sample.net. What should the replacement return now, and will that explicit value win over an environment variable?",
    "answer": "Return `Settings(admin_email=\"qa-comet@sample.net\")`. Yes: constructor values take priority over environment variables.",
    "key_facts": [
     "The settings override now returns Settings with admin_email qa-comet@sample.net.",
@@ -625,11 +639,18 @@
    ],
    "source_turn": null,
    "recall_distance": 1,
+   "review": {
+    "changed_round2": true,
+    "question_changed": true,
+    "target": [
+     "a: 질문 수정 (standalone_same_fact 확인)"
+    ]
+   },
    "closed_book_knowledge": {
     "correct": true,
     "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "It should return `qa-comet@sample.net`. Yes—if that value is supplied explicitly to the settings provider, it takes precedence over an environment variable.",
+    "response": "```python\ndef get_settings_override():\n    return Settings(admin_email=\"qa-comet@sample.net\")\n```\n\nYes. The explicit constructor value takes precedence over an environment variable.",
     "fact_results": [
      true,
      true
@@ -653,7 +674,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-101331"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -687,7 +708,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-101331"
    }
   },
   {
@@ -821,6 +842,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -950,30 +974,46 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
    "turn": 7,
    "turn_type": "same_doc_new_topic",
-   "type": "code",
-   "question": "For request-body serialization, which model method and mode should I use before passing a Pydantic instance to the client's JSON argument?",
+   "type": "multi",
+   "question": "For the first smoke test: if my endpoints are async def, do the test functions also need to be async, and what JSON body does the first sample test assert?",
    "asks": [
-    "Pydantic model method for a JSON-ready request body"
+    "Whether test functions must be async for async endpoints",
+    "The JSON body the first sample test asserts"
    ],
-   "standalone_question": "Which Pydantic model method and mode should be used before passing a model instance to the test client's JSON argument?",
-   "answer": "Use `model.model_dump(mode=\"json\")`, for example `client.post(\"/items/\", json=model.model_dump(mode=\"json\"))`.",
+   "standalone_question": "With FastAPI's TestClient, must test functions be async when the endpoints are async def, and what JSON body does the first sample test assert?",
+   "answer": "No: test functions are normal `def` even when the endpoints are `async def`, because the client runs the app. The first sample test asserts `response.json() == {\"msg\": \"Hello World\"}` (and status code 200).",
    "key_facts": [
-    "Use model.model_dump(mode=\"json\") to convert the Pydantic model before passing it as json."
+    "Test functions are normal def even when the endpoints are async def; the client runs the app.",
+    "The first sample test asserts response.json() == {\"msg\": \"Hello World\"}."
    ],
    "fact_meta": [
     {
      "source": "doc",
      "accept_alternatives": [],
-     "tags": []
+     "tags": [
+      "negation",
+      "condition"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "example"
+     ]
     }
    ],
    "key_entities": [
-    "model.model_dump(mode=\"json\")"
+    "async def",
+    "Hello World"
    ],
    "evidence_pages": [],
    "depends_on": [
@@ -981,9 +1021,14 @@
    ],
    "evidence": [
     {
-     "quote": "To send a Pydantic model as JSON, convert it first with `jsonable_encoder` ([Extra Models and jsonable_encoder](../models/extra-models-and-updates.md)) or `model.model_dump(mode=\"json\")`.",
+     "quote": "Test functions are **normal `def`**, even when your endpoints are `async def` — the client runs the app for you.",
      "page": "testing/testing-basics.md",
      "fact_idx": 0
+    },
+    {
+     "quote": "    assert response.json() == {\"msg\": \"Hello World\"}",
+     "page": "testing/testing-basics.md",
+     "fact_idx": 1
     }
    ],
    "alt_evidence": [],
@@ -991,12 +1036,20 @@
    "affects": null,
    "source_turn": 0,
    "recall_distance": 7,
+   "review": {
+    "changed_round2": true,
+    "question_changed": true,
+    "target": [
+     "a: 질문 수정 (standalone_same_fact 확인)"
+    ]
+   },
    "closed_book_knowledge": {
     "correct": true,
     "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "Use `model_dump(mode=\"json\")`.",
+    "response": "No. Test functions can be regular `def` functions; the first sample asserts `{\"msg\": \"Hello World\"}`.",
     "fact_results": [
+     true,
      true
     ],
     "judge_skipped": null,
@@ -1018,18 +1071,19 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-101331"
    },
    "closed_book_grounded": {
-    "correct": true,
-    "accuracy_main": 1.0,
-    "accuracy": 1.0,
-    "response": ".model_dump(mode=\"json\")",
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
     "fact_results": [
-     true
+     false,
+     false
     ],
-    "judge_skipped": null,
-    "not_found": false,
+    "judge_skipped": "not_found",
+    "not_found": true,
     "answer_prompt": [
      "mt_answer_v2",
      "79e1fbab96c5"
@@ -1049,9 +1103,9 @@
     "judge": "deepseek-flash",
     "judge_prompt": [
      "fact_judge_v3",
-     "5e7fe8303199"
+     null
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-101331"
    }
   },
   {
@@ -1181,6 +1235,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1299,6 +1356,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1421,6 +1481,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1562,6 +1625,11 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ]
    }
   },
   {
@@ -1690,6 +1758,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1828,6 +1899,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1953,6 +2027,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2082,6 +2159,11 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "c: 한 턴 한 주제 경고"
+    ]
    }
   },
   {
@@ -2209,6 +2291,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2331,6 +2416,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2476,7 +2564,22 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "c: 턴 14 의존은 간접 채점 (턴 14 가 인용한 페이지만 같음)"
+    ]
    }
+  }
+ ],
+ "edits": [
+  {
+   "date": "2026-11-28",
+   "by": "검수 2차 결정 반영 (손 수정)",
+   "items": [
+    "턴 4: standalone_question 에서 원래 질문에 없던 Settings 를 뺌",
+    "턴 7: 앞서 물은 'Passing data in requests' 대신 'A first test' 소제목을 묻도록 질문·정답·key_facts·근거를 바꿈"
+   ]
   }
  ]
 }

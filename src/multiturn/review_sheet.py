@@ -13,6 +13,8 @@ multiturn-v2 시나리오 검수 시트 (API 호출 없음)
     alt_judge_label        대안(accept_alternatives)이 있는 fact 의 judge(fact_judge_v3) 판정이 맞는가: 맞음 / 틀림
                            (대안 블록이 붙은 판정은 80행 비교로 잴 수 없어 검수 때 사람 라벨로 따로 확인한다)
     verdict                OK / 수정 필요 / 제외
+review_target (자동)      review_targets.py 가 정한 검수 대상 사유 (a 질문 수정, b 대안 판정, c 남은 의심, d 무작위 10%).
+                          시트의 "검수 대상만" 보기로 모아 본다
     memo, reviewer
 자동 검사 결과(근거 확인·규칙 위반)와 closed-book 결과를 함께 보여 준다. 판정은 사람이 한다.
 """
@@ -31,7 +33,7 @@ from config import CFG  # noqa: E402
 
 COLUMNS = ["row_id", "scenario_id", "turn", "turn_type", "type", "depends_on", "recall_distance", "evidence_pages",
            "question", "asks", "standalone_question", "answer", "key_facts", "evidence", "update_info",
-           "closed_book_knowledge", "closed_book_grounded", "alt_judgments", "auto_check", "suspect", "review_flags",
+           "closed_book_knowledge", "closed_book_grounded", "alt_judgments", "auto_check", "suspect", "review_flags", "review_target",
            "standalone_same_fact", "alt_judge_label", "verdict", "memo", "reviewer"]
 REVIEW_COLS = ("standalone_same_fact", "alt_judge_label", "verdict", "memo", "reviewer")
 
@@ -103,6 +105,7 @@ def rows_for(s: dict, errors_by_turn: dict) -> list[dict]:
             "review_flags": "; ".join(((t.get("review") or {}).get("flags") or [])
                                       + ([t["review"]["note"]] if (t.get("review") or {}).get("note") else [])),
             "auto_check": "\n".join(errors_by_turn.get(t["turn"], [])) or "OK",
+            "review_target": "\n".join((t.get("review") or {}).get("target") or []),
             # 이미 받은 검수 값 (시나리오 JSON 의 review 필드) 은 채워 둔다
             **{c: str((t.get("review") or {}).get(c, "")) for c in REVIEW_COLS},
         })
@@ -148,7 +151,7 @@ button{padding:5px 12px;border:1px solid var(--acc);border-radius:6px;background
 <div class="top"><div class="bar"><h1>multiturn-v2 검수</h1>
 <label>검수자 <input id="who" size="6" placeholder="A"></label>
 <label>시나리오 <select id="scn"><option value="">전체</option></select></label>
-<label>보기 <select id="flt"><option value="">전체</option><option value="todo">미검수만</option><option value="warn">자동 검사 경고만</option><option value="sus">의심 턴만</option></select></label>
+<label>보기 <select id="flt"><option value="">전체</option><option value="todo">미검수만</option><option value="warn">자동 검사 경고만</option><option value="sus">의심 턴만</option><option value="target">검수 대상만</option></select></label>
 <span id="cnt" class="note"></span><button id="dl">CSV 내려받기</button></div></div>
 <main><p class="note">턴마다 (1) standalone_question 이 원래 질문과 같은 사실을 묻는지, (2) 판정(OK / 수정 필요 / 제외)과 메모를 적는다.
 입력은 이 브라우저에 자동 저장된다. 모델 성능을 보고 제외하지 않는다 (근거 오류·closed-book 이 아닌 이유는 메모에 적는다).</p>
@@ -169,15 +172,15 @@ function render() {
   for (const r of ROWS) {
     const s = st[r.row_id] || {}; if (s.verdict) done++;
     if (sc && r.scenario_id !== sc) continue;
-    if (f === "todo" && s.verdict) continue; if (f === "warn" && r.auto_check === "OK") continue; if (f === "sus" && !r.suspect) continue;
+    if (f === "todo" && s.verdict) continue; if (f === "warn" && r.auto_check === "OK") continue; if (f === "sus" && !r.suspect) continue; if (f === "target" && !r.review_target) continue;
     if (r.scenario_id !== last) { last = r.scenario_id; html += `<div class="scen">${esc(last)}</div>` + (WHOLE[last] || []).map(w => `<div class="note warn">${esc(w)}</div>`).join(""); }
     const opt = (name, vals) => vals.map(v => `<label><input type="radio" name="${name}-${r.row_id}" value="${v}" ${s[name] === v ? "checked" : ""} data-id="${r.row_id}" data-k="${name}"> ${v}</label>`).join(" ");
-    html += `<div class="card"><div class="head"><span class="id">턴 ${r.turn}</span><span class="pill">${esc(r.turn_type)}</span><span class="pill">${esc(r.type)}</span>
+    html += `<div class="card"><div class="head"><span class="id">턴 ${r.turn}</span><span class="pill">${esc(r.turn_type)}</span><span class="pill">${esc(r.type)}</span>${r.review_target ? '<span class="pill" style="background:var(--warn);color:#fff">검수 대상</span>' : ""}
       <span class="note">depends_on [${esc(r.depends_on)}] · 거리 ${esc(r.recall_distance)}${r.evidence_pages ? " · 첨부 " + esc(r.evidence_pages) : ""}</span></div>
       ${field("질문", r.question)}${field("standalone_question (closed-book 용)", r.standalone_question)}${field("정답", r.answer)}
       ${field("key_facts [태그] / 대안", r.key_facts, true)}${field("근거 인용", r.evidence, true)}${field("update / same_doc", r.update_info)}
       ${field("묻는 사항 (asks)", r.asks)}${field("closed-book knowledge (사전 지식, UNKNOWN 허용)", r.closed_book_knowledge)}
-      ${field("closed-book grounded (실험 지시문, NOT FOUND 규칙)", r.closed_book_grounded)}${field("대안 붙은 판정 (fact_judge_v3)", r.alt_judgments)}${r.suspect ? `<div class="k">먼저 볼 점 (자동 점검)</div><div class="v warn">${esc(r.suspect)}</div>` : ""}${field("검수 표시", r.review_flags)}<div class="k">자동 검사</div><div class="v ${r.auto_check === "OK" ? "okc" : "warn"}">${esc(r.auto_check)}</div>
+      ${field("closed-book grounded (실험 지시문, NOT FOUND 규칙)", r.closed_book_grounded)}${field("대안 붙은 판정 (fact_judge_v3)", r.alt_judgments)}${r.review_target ? `<div class="k">검수 대상 사유</div><div class="v warn">${esc(r.review_target)}</div>` : ""}${r.suspect ? `<div class="k">먼저 볼 점 (자동 점검)</div><div class="v warn">${esc(r.suspect)}</div>` : ""}${field("검수 표시", r.review_flags)}<div class="k">자동 검사</div><div class="v ${r.auto_check === "OK" ? "okc" : "warn"}">${esc(r.auto_check)}</div>
       <div class="rev"><span>같은 사실을 묻는가: ${opt("standalone_same_fact", ["예", "아니오"])}</span>
       ${r.alt_judgments ? `<span>대안 판정이 맞는가: ${opt("alt_judge_label", ["맞음", "틀림"])}</span>` : ""}
       <span>판정: ${opt("verdict", ["OK", "수정 필요", "제외"])}</span>

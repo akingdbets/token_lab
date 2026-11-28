@@ -177,6 +177,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -323,6 +326,11 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ]
    }
   },
   {
@@ -477,6 +485,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -611,6 +622,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -740,6 +754,11 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "c: 턴 2 의존은 간접 채점 (턴 2 가 인용한 페이지만 같음)"
+    ]
    }
   },
   {
@@ -869,6 +888,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -992,6 +1014,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1137,6 +1162,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1152,7 +1180,7 @@
    "answer": "The example uses `root_path=\"/api/v1\"`, while the direct backend still serves `http://127.0.0.1:8000/app` without that prefix. `--forwarded-allow-ips=\"*\"` is appropriate only when nothing except the trusted proxy can reach the server.",
    "key_facts": [
     "The stripped-prefix example uses /api/v1 and keeps the direct backend URL at http://127.0.0.1:8000/app.",
-    "Wildcard forwarded-header trust is appropriate only when nothing but the proxy can reach the server."
+    "--forwarded-allow-ips=\"*\" trusts every client IP and is safe only when nothing but the proxy can reach the server."
    ],
    "fact_meta": [
     {
@@ -1203,11 +1231,17 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
+   "review": {
+    "changed_round2": true,
+    "target": [
+     "c: grounded 에서 기억으로 답함 (정확도 0.50)"
+    ]
+   },
    "closed_book_knowledge": {
     "correct": false,
     "accuracy_main": 0.5,
     "accuracy": 0.5,
-    "response": "The example uses the prefix `/api/v1` and the direct backend URL `http://127.0.0.1:8000`. Trusting all forwarding clients with `*` is safe only when untrusted clients cannot reach the backend directly and traffic must come through trusted proxies.",
+    "response": "The example uses the prefix `/api/v1` and the direct backend URL `http://127.0.0.1:8000`. Trusting all forwarding clients (`*`) is safe only when untrusted clients cannot reach the backend directly and requests can reach it only through the trusted proxy.",
     "fact_results": [
      false,
      true
@@ -1231,19 +1265,19 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-101331"
    },
    "closed_book_grounded": {
     "correct": false,
-    "accuracy_main": 0.0,
-    "accuracy": 0.0,
-    "response": "NOT FOUND",
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "Set `root_path=\"/api/v1\"` (or run Uvicorn with `--root-path /api/v1`): the proxy strips `/api/v1` and forwards to the backend at `http://127.0.0.1:8000`. Trusting all forwarding clients with `--forwarded-allow-ips=\"*\"` is safe only when the backend is reachable only through a trusted proxy that sets the forwarding headers.",
     "fact_results": [
      false,
-     false
+     true
     ],
-    "judge_skipped": "not_found",
-    "not_found": true,
+    "judge_skipped": null,
+    "not_found": false,
     "answer_prompt": [
      "mt_answer_v2",
      "79e1fbab96c5"
@@ -1263,9 +1297,9 @@
     "judge": "deepseek-flash",
     "judge_prompt": [
      "fact_judge_v3",
-     null
+     "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-101331"
    }
   },
   {
@@ -1385,6 +1419,11 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ]
    }
   },
   {
@@ -1521,6 +1560,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1655,6 +1697,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1792,6 +1837,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1945,6 +1993,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2069,6 +2120,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2196,6 +2250,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2322,6 +2379,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2440,6 +2500,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2586,7 +2649,19 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
+  }
+ ],
+ "edits": [
+  {
+   "date": "2026-11-28",
+   "by": "검수 2차 결정 반영 (손 수정)",
+   "items": [
+    "턴 8: key_fact [1] 'appropriate' 를 원문 표현으로 좁힘"
+   ]
   }
  ]
 }

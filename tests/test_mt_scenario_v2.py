@@ -402,5 +402,45 @@ class ReviewRulesTest(unittest.TestCase):
         self.assertIsNone(main_accuracy(t, {"accuracy": None, "fact_results": []}))
 
 
+class CheckerFalsePositiveTest(unittest.TestCase):
+    """2026-11-28 승인: key_entity 원문 글자 그대로 확인, 흔한 낱말 제목은 출처 단서에서 뺌."""
+
+    def test_raw_substring_fallback(self):
+        page = PAGE_A.replace("The limit is 10 by default.", 'The limit is 10 by default. Run `fastapi run app/main.py --port 80`.')
+        corpus = FakeCorpus({f"p{i}.md": page if i % 2 == 0 else PAGE_B for i in range(10)})
+        s = valid()
+        s["turns"][0]["key_entities"] = ["app/main.py", "--port", "nowhere-token"]
+        errs = check_grounding_v2(s, corpus)
+        self.assertEqual([e for e in errs if "key_entity" in e], ["v2_t 턴 0: key_entity 'nowhere-token' 가 근거 페이지·사용자 발화에 없음"])
+
+    def test_common_titles_skipped(self):
+        from multiturn.scenario_v2 import is_common_title
+        self.assertTrue(is_common_title("Middleware"))
+        self.assertTrue(is_common_title("Background Tasks"))
+        self.assertFalse(is_common_title("OAuth2 Scopes"))
+        self.assertFalse(is_common_title("Alpha Settings Reference"))
+        page = PAGE_A.replace("Alpha Settings Reference", "Middleware")
+        corpus = FakeCorpus({f"p{i}.md": page if i % 2 == 0 else PAGE_B for i in range(10)})
+        s = valid()
+        s["turns"][10]["question"] = "Which middleware handles item 10?"
+        self.assertFalse(any("페이지 제목" in e for e in check_grounding_v2(s, corpus)))
+
+
+class ReviewTargetsTest(unittest.TestCase):
+    def test_marks_and_seeded_sample(self):
+        import copy as _copy
+        from multiturn.review_targets import mark
+        s = valid()
+        s["turns"][3]["review"] = {"question_changed": True}
+        s["turns"][5]["fact_meta"][0]["accept_alternatives"] = ["alt"]
+        s2 = _copy.deepcopy(s)
+        c = mark([s], seed=1)["v2_t"]
+        self.assertTrue(s["turns"][3]["review"]["target"][0].startswith("a:"))
+        self.assertTrue(any(x.startswith("b:") for x in s["turns"][5]["review"]["target"]))
+        self.assertGreaterEqual(c["d"], 1)
+        mark([s2], seed=1)
+        self.assertEqual([t["review"]["target"] for t in s["turns"]], [t["review"]["target"] for t in s2["turns"]])
+
+
 if __name__ == "__main__":
     unittest.main()

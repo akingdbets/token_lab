@@ -114,10 +114,15 @@ def main_accuracy(t: dict, r: dict) -> float | None:
     return sum(bool(fr[i]) for i in keep) / len(keep)
 
 
-def check_scenario(s: dict, answer, judge, run_id: str, out_rows: list, prompt) -> dict:
+def check_scenario(s: dict, answer, judge, run_id: str, out_rows: list, prompt, missing_only: bool = False) -> dict:
+    """missing_only: closed-book 결과가 없는 턴(손 수정으로 지운 턴)만 검사한다. 나머지 턴 결과는 그대로 둔다."""
     summary = {"scenario_id": s["scenario_id"], "turns": len(s["turns"])}
+    summary["checked_turns"] = []
     for t in s["turns"]:
         t.pop("closed_book", None)
+        if missing_only and all(f"closed_book_{kd}" in t for kd in KINDS):
+            continue
+        summary["checked_turns"].append(t["turn"])
         for kind in KINDS:
             r = (check_knowledge(t, s["scenario_id"], answer, judge) if kind == "knowledge"
                  else check_grounded(t, answer, judge, prompt))
@@ -150,6 +155,7 @@ def _usd(rows):
 def main(argv=None):
     ap = argparse.ArgumentParser(description="multiturn-v2 closed-book 검사 (knowledge, grounded)")
     ap.add_argument("scenarios", nargs="+")
+    ap.add_argument("--missing-only", action="store_true", help="결과가 없는 턴만 검사")
     ap.add_argument("--workers", type=int, default=1, help="시나리오 단위 동시 실행 수 (시나리오마다 LLM 객체를 따로 만든다)")
     a = ap.parse_args(argv)
     from concurrent.futures import ThreadPoolExecutor
@@ -165,7 +171,7 @@ def main(argv=None):
         ans, jud = make_llms()
         s = json.loads(Path(path).read_text(encoding="utf-8"))
         rows_one = []
-        summ = check_scenario(s, ans, jud, run_id, rows_one, prompt)
+        summ = check_scenario(s, ans, jud, run_id, rows_one, prompt, a.missing_only)
         Path(path).write_text(json.dumps(s, ensure_ascii=False, indent=1), encoding="utf-8")
         print(f"{s['scenario_id']}: knowledge {summ['knowledge_correct']}, grounded {summ['grounded_correct']}", flush=True)
         return summ, rows_one

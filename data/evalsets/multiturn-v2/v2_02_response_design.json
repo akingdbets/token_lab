@@ -166,7 +166,8 @@
    },
    "review": {
     "standalone_same_fact": "예",
-    "by": "사용자 검수 (2026-11-28)"
+    "by": "사용자 검수 (2026-11-28)",
+    "target": []
    }
   },
   {
@@ -295,7 +296,10 @@
    },
    "review": {
     "standalone_same_fact": "예",
-    "by": "사용자 검수 (2026-11-28)"
+    "by": "사용자 검수 (2026-11-28)",
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ]
    }
   },
   {
@@ -421,7 +425,8 @@
    },
    "review": {
     "standalone_same_fact": "예",
-    "by": "사용자 검수 (2026-11-28)"
+    "by": "사용자 검수 (2026-11-28)",
+    "target": []
    }
   },
   {
@@ -559,7 +564,10 @@
    },
    "review": {
     "standalone_same_fact": "예",
-    "by": "사용자 검수 (2026-11-28)"
+    "by": "사용자 검수 (2026-11-28)",
+    "target": [
+     "c: 근거 인용이 짧음: fact 0 '    <shampoo>'"
+    ]
    }
   },
   {
@@ -709,7 +717,10 @@
    },
    "review": {
     "standalone_same_fact": "예",
-    "by": "사용자 검수 (2026-11-28)"
+    "by": "사용자 검수 (2026-11-28)",
+    "target": [
+     "c: 턴 2 의존은 간접 채점 (턴 2 가 인용한 페이지만 같음)"
+    ]
    }
   },
   {
@@ -840,7 +851,8 @@
    },
    "review": {
     "standalone_same_fact": "예",
-    "by": "사용자 검수 (2026-11-28)"
+    "by": "사용자 검수 (2026-11-28)",
+    "target": []
    }
   },
   {
@@ -969,7 +981,8 @@
    },
    "review": {
     "standalone_same_fact": "예",
-    "by": "사용자 검수 (2026-11-28)"
+    "by": "사용자 검수 (2026-11-28)",
+    "target": []
    }
   },
   {
@@ -1081,7 +1094,8 @@
    },
    "review": {
     "standalone_same_fact": "예",
-    "by": "사용자 검수 (2026-11-28)"
+    "by": "사용자 검수 (2026-11-28)",
+    "target": []
    }
   },
   {
@@ -1230,7 +1244,10 @@
     "flags": [
      "grounded_memory"
     ],
-    "note": "실험 지시문 아래에서도 기억으로 답함 (제외하지 않고 표시 유지)"
+    "note": "실험 지시문 아래에서도 기억으로 답함 (제외하지 않고 표시 유지)",
+    "target": [
+     "c: grounded_memory 표시"
+    ]
    }
   },
   {
@@ -1368,7 +1385,10 @@
    },
    "review": {
     "standalone_same_fact": "예",
-    "by": "사용자 검수 (2026-11-28)"
+    "by": "사용자 검수 (2026-11-28)",
+    "target": [
+     "c: 턴 2 의존은 간접 채점 (턴 2 가 인용한 페이지만 같음)"
+    ]
    }
   },
   {
@@ -1505,7 +1525,10 @@
     "flags": [
      "grounded_memory"
     ],
-    "note": "실험 지시문 아래에서도 기억으로 답함 (제외하지 않고 표시 유지)"
+    "note": "실험 지시문 아래에서도 기억으로 답함 (제외하지 않고 표시 유지)",
+    "target": [
+     "c: grounded_memory 표시"
+    ]
    }
   },
   {
@@ -1644,7 +1667,10 @@
    },
    "review": {
     "standalone_same_fact": "예",
-    "by": "사용자 검수 (2026-11-28)"
+    "by": "사용자 검수 (2026-11-28)",
+    "target": [
+     "c: 턴 2 의존은 간접 채점 (턴 2 가 인용한 페이지만 같음)"
+    ]
    }
   },
   {
@@ -1779,7 +1805,8 @@
    },
    "review": {
     "standalone_same_fact": "예",
-    "by": "사용자 검수 (2026-11-28)"
+    "by": "사용자 검수 (2026-11-28)",
+    "target": []
    }
   },
   {
@@ -1952,7 +1979,8 @@
    },
    "review": {
     "standalone_same_fact": "예",
-    "by": "사용자 검수 (2026-11-28)"
+    "by": "사용자 검수 (2026-11-28)",
+    "target": []
    }
   },
   {
@@ -2085,7 +2113,8 @@
    },
    "review": {
     "standalone_same_fact": "예",
-    "by": "사용자 검수 (2026-11-28)"
+    "by": "사용자 검수 (2026-11-28)",
+    "target": []
    }
   },
   {
@@ -2137,7 +2166,11 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
-   "review": {},
+   "review": {
+    "target": [
+     "a: 질문 수정 (standalone_same_fact 확인)"
+    ]
+   },
    "closed_book_knowledge": {
     "correct": false,
     "accuracy_main": 0.0,
@@ -2261,7 +2294,11 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
-   "review": {},
+   "review": {
+    "target": [
+     "a: 질문 수정 (standalone_same_fact 확인)"
+    ]
+   },
    "closed_book_knowledge": {
     "correct": false,
     "accuracy_main": 0.0,
@@ -2452,7 +2489,8 @@
    },
    "review": {
     "standalone_same_fact": "예",
-    "by": "사용자 검수 (2026-11-28)"
+    "by": "사용자 검수 (2026-11-28)",
+    "target": []
    }
   },
   {
@@ -2585,7 +2623,10 @@
    },
    "review": {
     "standalone_same_fact": "예",
-    "by": "사용자 검수 (2026-11-28)"
+    "by": "사용자 검수 (2026-11-28)",
+    "target": [
+     "c: 턴 2 의존은 간접 채점 (턴 2 가 인용한 페이지만 같음)"
+    ]
    }
   },
   {
@@ -2698,7 +2739,11 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 19,
-   "review": {},
+   "review": {
+    "target": [
+     "a: 질문 수정 (standalone_same_fact 확인)"
+    ]
+   },
    "closed_book_knowledge": {
     "correct": false,
     "accuracy_main": 0.0,

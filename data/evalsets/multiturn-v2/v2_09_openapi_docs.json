@@ -160,6 +160,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -283,6 +286,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -403,6 +409,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -537,6 +546,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -552,7 +564,8 @@
    "answer": "The custom generation must use `title=\"Copper Finch Dispatch\"` (for example, by passing the updated `app.title`). An already populated `app.openapi_schema` would be returned unchanged, so clear it, such as with `app.openapi_schema = None`, before requesting regeneration.",
    "key_facts": [
     "The generated API title must now be Copper Finch Dispatch.",
-    "An existing cached schema must be invalidated or replaced because the custom function otherwise returns it before regenerating."
+    "An existing cached schema must be invalidated or replaced because the custom function otherwise returns it before regenerating.",
+    "The title comes from the FastAPI(...) title parameter, which fills the OpenAPI info section."
    ],
    "fact_meta": [
     {
@@ -568,6 +581,11 @@
      "tags": [
       "condition"
      ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
     }
    ],
    "key_entities": [
@@ -586,14 +604,14 @@
      "fact_idx": 0
     },
     {
-     "quote": "`FastAPI(...)` parameters fill the OpenAPI `info` section shown at the top of the docs (`docs_src/metadata/tutorial001_py310.py`):",
-     "page": "openapi/metadata-and-docs-ui.md",
-     "fact_idx": 0
-    },
-    {
      "quote": "if app.openapi_schema:\n        return app.openapi_schema",
      "page": "openapi/extending-openapi.md",
      "fact_idx": 1
+    },
+    {
+     "quote": "`FastAPI(...)` parameters fill the OpenAPI `info` section shown at the top of the docs",
+     "page": "openapi/metadata-and-docs-ui.md",
+     "fact_idx": 2
     }
    ],
    "alt_evidence": [],
@@ -609,12 +627,19 @@
    ],
    "source_turn": null,
    "recall_distance": 4,
+   "review": {
+    "changed_round2": true,
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ]
+   },
    "closed_book_knowledge": {
     "correct": true,
     "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "Generate the schema with the title **“Copper Finch Dispatch.”** Clear the existing populated schema cache (for example, set it to `None`) so the schema is regenerated with the new title.",
+    "response": "It must generate the title **“Copper Finch Dispatch.”** Clear or invalidate the populated schema cache so the schema is regenerated with the new title.",
     "fact_results": [
+     true,
      true,
      true
     ],
@@ -637,7 +662,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-101331"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -645,6 +670,7 @@
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
+     false,
      false,
      false
     ],
@@ -671,7 +697,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-101331"
    }
   },
   {
@@ -796,6 +822,15 @@
      "5e7fe8303199"
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "flags": [
+     "grounded_memory"
+    ],
+    "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
+    "target": [
+     "c: grounded 에서 기억으로 답함 (정확도 1.00)"
+    ]
    }
   },
   {
@@ -918,6 +953,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1041,6 +1079,15 @@
      "5e7fe8303199"
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "flags": [
+     "grounded_memory"
+    ],
+    "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 0.50). 제외하지 않고 표시 유지",
+    "target": [
+     "c: grounded 에서 기억으로 답함 (정확도 0.50)"
+    ]
    }
   },
   {
@@ -1163,6 +1210,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1283,6 +1333,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1408,6 +1461,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1545,6 +1601,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1592,12 +1651,12 @@
    "depends_on": [],
    "evidence": [
     {
-     "quote": "\"auto\" — use `404.html` if that file exists;",
+     "quote": "`\"auto\"` — use `404.html` if that file exists;",
      "page": "app-structure/static-files-templates-and-frontend.md",
      "fact_idx": 0
     },
     {
-     "quote": "\"404.html\" — serve `dist/404.html` with status **404**.",
+     "quote": "`\"404.html\"` — serve `dist/404.html` with status **404**.",
      "page": "app-structure/static-files-templates-and-frontend.md",
      "fact_idx": 0
     },
@@ -1675,6 +1734,10 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "changed_round2": true,
+    "target": []
    }
   },
   {
@@ -1813,6 +1876,11 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "c: 턴 7 의존은 간접 채점 (턴 7 가 인용한 페이지만 같음)"
+    ]
    }
   },
   {
@@ -1931,6 +1999,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2057,6 +2128,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2184,6 +2258,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2305,6 +2382,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2448,7 +2528,22 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ]
    }
+  }
+ ],
+ "edits": [
+  {
+   "date": "2026-11-28",
+   "by": "검수 2차 결정 반영 (손 수정)",
+   "items": [
+    "턴 12: 인용문 2개를 원문 글자 그대로 (백틱 포함)",
+    "턴 4: 턴 0 의존이 setup 항목으로만 채점돼, 턴 0 문서(FastAPI(...) 인자가 info 를 채움)를 근거로 한 key_fact [2] 추가"
+   ]
   }
  ]
 }

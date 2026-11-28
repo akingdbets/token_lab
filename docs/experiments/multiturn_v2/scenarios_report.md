@@ -8,27 +8,27 @@
 
 | 시나리오 | 턴 | new/followup/recall/synthesis/update/same_doc | recall 거리 | 마지막 턴 기록 | recall·synthesis 중 user | setup 항목 | knowledge 맞힘 | grounded 맞힘 | 생성 시도 | 손 수정 |
 |---|---|---|---|---|---|---|---|---|---|---|
-| v2_01_auth_switch | 19 | 8/2/3/2/2/2 | 6, 15, 7 | 18,186 | 5/12 (42%) | 6/41 | 7/19 (37%) | 0/19 (0%) | 2 | 예 |
+| v2_01_auth_switch | 19 | 8/2/3/2/2/2 | 6, 15, 7 | 18,191 | 5/12 (42%) | 6/41 | 7/19 (37%) | 0/19 (0%) | 2 | 예 |
 | v2_02_response_design | 20 | 9/2/3/2/2/2 | 8, 12, 16 | 20,782 | 5/12 (42%) | 4/40 | 6/20 (30%) | 0/20 (0%) | 2 | 예 |
 | v2_03_input_validation | 19 | 8/2/3/2/2/2 | 9, 8, 16 | 19,599 | 5/12 (42%) | 5/41 | 10/19 (53%) | 1/19 (5%) | 2 |  |
-| v2_04_dependency_lifecycle | 19 | 8/2/3/2/2/2 | 8, 16, 12 | 17,418 | 5/12 (42%) | 6/41 | 10/19 (53%) | 2/19 (11%) | 1 |  |
-| v2_05_deployment_setup | 19 | 8/2/3/2/2/2 | 9, 12, 12 | 16,693 | 6/12 (50%) | 5/42 | 9/19 (47%) | 1/19 (5%) | 2 |  |
-| v2_06_middleware_cors | 19 | 8/2/3/2/2/2 | 9, 15, 15 | 17,690 | 5/12 (42%) | 5/43 | 7/19 (37%) | 0/19 (0%) | 2 |  |
+| v2_04_dependency_lifecycle | 19 | 8/2/3/2/2/2 | 8, 16, 12 | 17,421 | 5/12 (42%) | 6/42 | 10/19 (53%) | 1/19 (5%) | 1 | 예 |
+| v2_05_deployment_setup | 19 | 8/2/3/2/2/2 | 9, 12, 12 | 16,693 | 6/12 (50%) | 5/42 | 9/19 (47%) | 1/19 (5%) | 2 | 예 |
+| v2_06_middleware_cors | 19 | 8/2/3/2/2/2 | 9, 15, 15 | 17,690 | 5/12 (42%) | 5/43 | 7/19 (37%) | 0/19 (0%) | 2 | 예 |
 | v2_07_streaming_realtime | 19 | 8/2/3/2/2/2 | 9, 15, 17 | 17,457 | 6/12 (50%) | 5/39 | 9/19 (47%) | 2/19 (11%) | 1 |  |
 | v2_08_model_serialization | 19 | 8/2/3/2/2/2 | 9, 16, 9 | 19,509 | 5/13 (38%) | 6/41 | 10/19 (53%) | 1/19 (5%) | 2 |  |
-| v2_09_openapi_docs | 19 | 8/2/3/2/2/2 | 9, 13, 16 | 18,668 | 6/12 (50%) | 4/40 | 7/19 (37%) | 1/19 (5%) | 2 |  |
+| v2_09_openapi_docs | 19 | 8/2/3/2/2/2 | 9, 13, 16 | 18,668 | 6/12 (50%) | 4/41 | 7/19 (37%) | 1/19 (5%) | 2 | 예 |
 | v2_10_app_structure | 19 | 8/2/3/2/2/2 | 7, 16, 6 | 19,664 | 6/12 (50%) | 5/40 | 9/19 (47%) | 0/19 (0%) | 1 |  |
-| v2_11_testing_strategy | 19 | 8/2/3/2/2/2 | 9, 16, 14 | 17,203 | 5/12 (42%) | 4/41 | 9/19 (47%) | 1/19 (5%) | 2 |  |
-| v2_12_database | 19 | 8/2/3/2/2/2 | 9, 6, 9 | 19,326 | 5/14 (36%) | 5/44 | 11/19 (58%) | 2/19 (11%) | 1 |  |
+| v2_11_testing_strategy | 19 | 8/2/3/2/2/2 | 9, 16, 14 | 17,236 | 5/12 (42%) | 4/42 | 9/19 (47%) | 0/19 (0%) | 2 | 예 |
+| v2_12_database | 19 | 8/2/3/2/2/2 | 9, 6, 9 | 19,326 | 5/14 (36%) | 5/44 | 11/19 (58%) | 2/19 (11%) | 1 | 예 |
 | v2_13_error_consistency | 19 | 8/2/3/2/2/2 | 9, 15, 7 | 21,275 | 6/12 (50%) | 6/40 | 11/19 (58%) | 0/19 (0%) | 2 |  |
-| v2_14_files_forms_static | 19 | 8/2/3/2/2/2 | 9, 8, 6 | 18,813 | 6/12 (50%) | 6/41 | 4/19 (21%) | 0/19 (0%) | 2 |  |
-| v2_15_settings_env | 19 | 8/2/3/2/2/2 | 9, 16, 5 | 17,348 | 5/12 (42%) | 4/41 | 11/19 (58%) | 0/19 (0%) | 1 |  |
+| v2_14_files_forms_static | 19 | 8/2/3/2/2/2 | 9, 8, 6 | 18,825 | 6/12 (50%) | 6/41 | 4/19 (21%) | 0/19 (0%) | 2 | 예 |
+| v2_15_settings_env | 19 | 8/2/3/2/2/2 | 9, 16, 5 | 17,348 | 5/12 (42%) | 4/41 | 11/19 (58%) | 0/19 (0%) | 1 | 예 |
 | v2_16_scopes_user_model | 19 | 8/2/3/2/2/2 | 9, 6, 14 | 20,626 | 5/12 (42%) | 6/39 | 9/19 (47%) | 3/19 (16%) | 1 |  |
 | v2_17_request_internals | 19 | 8/2/3/2/2/2 | 8, 12, 7 | 16,675 | 5/12 (42%) | 4/42 | 9/19 (47%) | 1/19 (5%) | 1 |  |
 | v2_18_integrations | 19 | 8/2/3/2/2/2 | 8, 16, 12 | 16,972 | 5/12 (42%) | 6/40 | 11/19 (58%) | 2/19 (11%) | 2 |  |
-| v2_19_first_service | 19 | 8/2/3/2/2/2 | 8, 11, 13 | 19,230 | 5/12 (42%) | 5/40 | 7/19 (37%) | 0/19 (0%) | 2 |  |
+| v2_19_first_service | 19 | 8/2/3/2/2/2 | 8, 11, 13 | 19,230 | 5/12 (42%) | 5/41 | 6/19 (32%) | 0/19 (0%) | 2 | 예 |
 | v2_20_client_contract | 19 | 8/2/3/2/2/2 | 9, 15, 6 | 18,322 | 5/12 (42%) | 5/39 | 9/19 (47%) | 1/19 (5%) | 1 |  |
-| **전체** | 381 | | | | | 102/815 | **175/381 (46%)** | **18/381 (5%)** | | |
+| **전체** | 381 | | | | | 102/819 | **174/381 (46%)** | **16/381 (4%)** | | |
 
 knowledge·grounded 맞힘은 setup 을 뺀 key_fact 가 모두 충족된 턴 (accuracy_main = 1.0).
 
@@ -39,15 +39,14 @@ knowledge·grounded 맞힘은 setup 을 뺀 key_fact 가 모두 충족된 턴 (a
 | v2_03_input_validation | 4 | update | 1.00 |
 | v2_03_input_validation | 7 | same_doc_new_topic | 0.50 |
 | v2_04_dependency_lifecycle | 2 | followup | 1.00 |
-| v2_04_dependency_lifecycle | 10 | new | 1.00 |
 | v2_04_dependency_lifecycle | 15 | new | 0.50 |
 | v2_05_deployment_setup | 6 | followup | 1.00 |
+| v2_06_middleware_cors | 8 | new | 0.50 |
 | v2_07_streaming_realtime | 6 | followup | 1.00 |
 | v2_07_streaming_realtime | 14 | same_doc_new_topic | 1.00 |
 | v2_08_model_serialization | 6 | followup | 1.00 |
 | v2_09_openapi_docs | 5 | new | 1.00 |
 | v2_09_openapi_docs | 7 | same_doc_new_topic | 0.50 |
-| v2_11_testing_strategy | 7 | same_doc_new_topic | 1.00 |
 | v2_12_database | 1 | new | 1.00 |
 | v2_12_database | 17 | recall | 1.00 |
 | v2_16_scopes_user_model | 7 | same_doc_new_topic | 1.00 |
@@ -62,9 +61,6 @@ knowledge·grounded 맞힘은 setup 을 뺀 key_fact 가 모두 충족된 턴 (a
 
 | 시나리오 | 턴 | 유형 | 사유 |
 |---|---|---|---|
-| v2_01_auth_switch | 5 | new | 정답이 열려 있을 수 있음: fact 1 'suitable' |
-| v2_01_auth_switch | 11 | update | 정답이 열려 있을 수 있음: fact 1 'suitable' |
-| v2_01_auth_switch | 12 | new | 정답이 열려 있을 수 있음: fact 1 'suitable' |
 | v2_01_auth_switch | 16 | recall | 턴 2 의존은 간접 채점 (턴 2 가 인용한 페이지만 같음) |
 | v2_01_auth_switch | 18 | synthesis | 대안 판정 확인 (alt_judge_label) |
 | v2_02_response_design | 3 | new | 근거 인용이 짧음: fact 0 '    <shampoo>' |
@@ -76,31 +72,25 @@ knowledge·grounded 맞힘은 setup 을 뺀 key_fact 가 모두 충족된 턴 (a
 | v2_03_input_validation | 7 | same_doc_new_topic | grounded 에서 기억으로 답함 (정확도 0.50) |
 | v2_03_input_validation | 12 | new | 근거 인용이 짧음: fact 1 '                "normal": {' |
 | v2_04_dependency_lifecycle | 2 | followup | grounded 에서 기억으로 답함 (정확도 1.00) |
-| v2_04_dependency_lifecycle | 10 | new | 물음표 3개; grounded 에서 기억으로 답함 (정확도 1.00) |
-| v2_04_dependency_lifecycle | 11 | update | 턴 3 의존은 setup 항목으로만 채점 |
 | v2_04_dependency_lifecycle | 15 | new | grounded 에서 기억으로 답함 (정확도 0.50) |
 | v2_04_dependency_lifecycle | 17 | recall | 턴 6 의존은 간접 채점 (턴 6 가 인용한 페이지만 같음) |
-| v2_05_deployment_setup | 3 | new | 정답이 열려 있을 수 있음: fact 2 'appropriate' |
 | v2_05_deployment_setup | 6 | followup | grounded 에서 기억으로 답함 (정확도 1.00) |
 | v2_06_middleware_cors | 4 | update | 턴 2 의존은 간접 채점 (턴 2 가 인용한 페이지만 같음) |
-| v2_06_middleware_cors | 8 | new | 정답이 열려 있을 수 있음: fact 1 'appropriate' |
+| v2_06_middleware_cors | 8 | new | grounded 에서 기억으로 답함 (정확도 0.50) |
 | v2_07_streaming_realtime | 6 | followup | grounded 에서 기억으로 답함 (정확도 1.00) |
 | v2_07_streaming_realtime | 14 | same_doc_new_topic | grounded 에서 기억으로 답함 (정확도 1.00) |
 | v2_07_streaming_realtime | 18 | synthesis | 턴 6 의존은 간접 채점 (턴 6 가 인용한 페이지만 같음) |
 | v2_08_model_serialization | 4 | update | 턴 2 의존은 간접 채점 (턴 2 가 인용한 페이지만 같음) |
 | v2_08_model_serialization | 6 | followup | grounded 에서 기억으로 답함 (정확도 1.00) |
 | v2_08_model_serialization | 17 | recall | recall·synthesis 인데 knowledge 로 맞힘 |
-| v2_09_openapi_docs | 4 | update | 턴 0 의존은 setup 항목으로만 채점 |
 | v2_09_openapi_docs | 5 | new | grounded 에서 기억으로 답함 (정확도 1.00) |
 | v2_09_openapi_docs | 7 | same_doc_new_topic | grounded 에서 기억으로 답함 (정확도 0.50) |
 | v2_09_openapi_docs | 13 | synthesis | 턴 7 의존은 간접 채점 (턴 7 가 인용한 페이지만 같음) |
 | v2_11_testing_strategy | 2 | followup | 대안 판정 확인 (alt_judge_label) |
-| v2_11_testing_strategy | 7 | same_doc_new_topic | grounded 에서 기억으로 답함 (정확도 1.00) |
 | v2_11_testing_strategy | 18 | synthesis | 턴 14 의존은 간접 채점 (턴 14 가 인용한 페이지만 같음) |
 | v2_12_database | 1 | new | grounded 에서 기억으로 답함 (정확도 1.00) |
 | v2_12_database | 17 | recall | grounded 에서 기억으로 답함 (정확도 1.00); recall·synthesis 인데 knowledge 로 맞힘 |
 | v2_13_error_consistency | 17 | recall | recall·synthesis 인데 knowledge 로 맞힘 |
-| v2_15_settings_env | 0 | new | 근거 인용이 짧음: fact 2 '@lru_cache' |
 | v2_15_settings_env | 12 | new | 대안 판정 확인 (alt_judge_label) |
 | v2_15_settings_env | 16 | recall | 턴 7 의존은 간접 채점 (턴 7 가 인용한 페이지만 같음) |
 | v2_15_settings_env | 18 | synthesis | 턴 14 의존은 간접 채점 (턴 14 가 인용한 페이지만 같음) |
@@ -114,7 +104,6 @@ knowledge·grounded 맞힘은 setup 을 뺀 key_fact 가 모두 충족된 턴 (a
 | v2_18_integrations | 6 | followup | grounded 에서 기억으로 답함 (정확도 1.00) |
 | v2_18_integrations | 13 | synthesis | 턴 7 의존은 간접 채점 (턴 7 가 인용한 페이지만 같음) |
 | v2_18_integrations | 18 | synthesis | 턴 7 의존은 간접 채점 (턴 7 가 인용한 페이지만 같음) |
-| v2_19_first_service | 11 | update | 턴 1 의존은 setup 항목으로만 채점 |
 | v2_19_first_service | 13 | synthesis | 턴 2 의존은 간접 채점 (턴 2 가 인용한 페이지만 같음); 턴 6 의존은 간접 채점 (턴 6 가 인용한 페이지만 같음) |
 | v2_20_client_contract | 14 | same_doc_new_topic | grounded 에서 기억으로 답함 (정확도 1.00) |
 | v2_20_client_contract | 18 | synthesis | 턴 7 의존은 간접 채점 (턴 7 가 인용한 페이지만 같음) |
@@ -123,85 +112,38 @@ knowledge·grounded 맞힘은 setup 을 뺀 key_fact 가 모두 충족된 턴 (a
 
 | 시나리오 | 턴 | new | followup | recall | synthesis | update | same_doc | recall 거리 | 3턴 이상 synthesis | 마지막 턴 기록 | 스키마 오류 | 근거 확인 실패 | 경고 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| v2_01_auth_switch | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 6, 15, 7 | 턴 13, 18 | 18,186 | 0 | 0 | 1 |
+| v2_01_auth_switch | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 6, 15, 7 | 턴 13, 18 | 18,191 | 0 | 0 | 1 |
 | v2_02_response_design | 20 | 9 | 2 | 3 | 2 | 2 | 2 | 8, 12, 16 | 턴 13, 19 | 20,782 | 0 | 0 | 0 |
 | v2_03_input_validation | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 8, 16 | 턴 13, 18 | 19,599 | 0 | 0 | 0 |
-| v2_04_dependency_lifecycle | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 8, 16, 12 | 턴 13, 18 | 17,418 | 0 | 1 | 0 |
-| v2_05_deployment_setup | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 12, 12 | 턴 13 | 16,693 | 0 | 5 | 1 |
-| v2_06_middleware_cors | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 15, 15 | 턴 13, 18 | 17,690 | 0 | 7 | 0 |
-| v2_07_streaming_realtime | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 15, 17 | 턴 13, 18 | 17,457 | 0 | 4 | 0 |
-| v2_08_model_serialization | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 16, 9 | 턴 13, 18 | 19,509 | 0 | 1 | 0 |
-| v2_09_openapi_docs | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 13, 16 | 턴 13, 18 | 18,668 | 0 | 2 | 0 |
+| v2_04_dependency_lifecycle | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 8, 16, 12 | 턴 13, 18 | 17,421 | 0 | 0 | 0 |
+| v2_05_deployment_setup | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 12, 12 | 턴 13 | 16,693 | 0 | 0 | 1 |
+| v2_06_middleware_cors | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 15, 15 | 턴 13, 18 | 17,690 | 0 | 0 | 0 |
+| v2_07_streaming_realtime | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 15, 17 | 턴 13, 18 | 17,457 | 0 | 0 | 0 |
+| v2_08_model_serialization | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 16, 9 | 턴 13, 18 | 19,509 | 0 | 0 | 0 |
+| v2_09_openapi_docs | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 13, 16 | 턴 13, 18 | 18,668 | 0 | 0 | 0 |
 | v2_10_app_structure | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 7, 16, 6 | 턴 13, 18 | 19,664 | 0 | 0 | 1 |
-| v2_11_testing_strategy | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 16, 14 | 턴 13, 18 | 17,203 | 1 | 1 | 1 |
-| v2_12_database | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 6, 9 | 턴 13, 18 | 19,326 | 0 | 2 | 1 |
-| v2_13_error_consistency | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 15, 7 | 턴 13, 18 | 21,275 | 0 | 2 | 1 |
-| v2_14_files_forms_static | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 8, 6 | 턴 13, 18 | 18,813 | 0 | 5 | 0 |
+| v2_11_testing_strategy | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 16, 14 | 턴 13, 18 | 17,236 | 0 | 0 | 1 |
+| v2_12_database | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 6, 9 | 턴 13, 18 | 19,326 | 0 | 0 | 1 |
+| v2_13_error_consistency | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 15, 7 | 턴 13, 18 | 21,275 | 0 | 0 | 1 |
+| v2_14_files_forms_static | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 8, 6 | 턴 13, 18 | 18,825 | 0 | 0 | 0 |
 | v2_15_settings_env | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 16, 5 | 턴 13, 18 | 17,348 | 0 | 0 | 1 |
 | v2_16_scopes_user_model | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 6, 14 | 턴 13 | 20,626 | 0 | 0 | 0 |
-| v2_17_request_internals | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 8, 12, 7 | 턴 13, 18 | 16,675 | 0 | 5 | 0 |
-| v2_18_integrations | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 8, 16, 12 | 턴 13, 18 | 16,972 | 0 | 3 | 1 |
-| v2_19_first_service | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 8, 11, 13 | 턴 13, 18 | 19,230 | 0 | 6 | 1 |
-| v2_20_client_contract | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 15, 6 | 턴 13, 18 | 18,322 | 0 | 2 | 0 |
+| v2_17_request_internals | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 8, 12, 7 | 턴 13, 18 | 16,675 | 0 | 0 | 0 |
+| v2_18_integrations | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 8, 16, 12 | 턴 13, 18 | 16,972 | 0 | 0 | 1 |
+| v2_19_first_service | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 8, 11, 13 | 턴 13, 18 | 19,230 | 0 | 0 | 1 |
+| v2_20_client_contract | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 15, 6 | 턴 13, 18 | 18,322 | 0 | 0 | 0 |
 
 스키마 오류·근거 확인 실패·경고 내용:
 
 - v2_01_auth_switch 턴 12: 서로 다른 주제 폴더의 문서 ['security/oauth2-scopes.md', 'errors/handling-errors.md'] 를 한 턴에 붙였습니다 (경고)
-- v2_04_dependency_lifecycle 턴 7: key_entity '__init__' 가 근거 페이지·사용자 발화에 없음
-- v2_05_deployment_setup 턴 1: key_entity 'app/main.py' 가 근거 페이지·사용자 발화에 없음
-- v2_05_deployment_setup 턴 3: key_entity '--forwarded-allow-ips' 가 근거 페이지·사용자 발화에 없음
-- v2_05_deployment_setup 턴 8: key_entity 'uv.lock' 가 근거 페이지·사용자 발화에 없음
-- v2_05_deployment_setup 턴 10: key_entity '5' 가 근거 페이지·사용자 발화에 없음
-- v2_05_deployment_setup 턴 10: 질문에 페이지 제목 'Middleware' 이 들어 있습니다 (출처 단서)
 - v2_05_deployment_setup 턴 0: 서로 다른 주제 폴더의 문서 ['deployment/deployment-concepts-and-servers.md', 'quickstart.md'] 를 한 턴에 붙였습니다 (경고)
-- v2_06_middleware_cors 턴 7: key_entity '5' 가 근거 페이지·사용자 발화에 없음
-- v2_06_middleware_cors 턴 8: key_entity '--forwarded-allow-ips="*"' 가 근거 페이지·사용자 발화에 없음
-- v2_06_middleware_cors 턴 0: 질문에 페이지 제목 'Middleware' 이 들어 있습니다 (출처 단서)
-- v2_06_middleware_cors 턴 4: 질문에 페이지 제목 'Middleware' 이 들어 있습니다 (출처 단서)
-- v2_06_middleware_cors 턴 7: 질문에 페이지 제목 'Middleware' 이 들어 있습니다 (출처 단서)
-- v2_06_middleware_cors 턴 12: 질문에 페이지 제목 'Middleware' 이 들어 있습니다 (출처 단서)
-- v2_06_middleware_cors 턴 18: 질문에 페이지 제목 'Middleware' 이 들어 있습니다 (출처 단서)
-- v2_07_streaming_realtime 턴 8: key_entity '5' 가 근거 페이지·사용자 발화에 없음
-- v2_07_streaming_realtime 턴 8: 질문에 페이지 제목 'Middleware' 이 들어 있습니다 (출처 단서)
-- v2_07_streaming_realtime 턴 12: 질문에 페이지 제목 'Background Tasks' 이 들어 있습니다 (출처 단서)
-- v2_07_streaming_realtime 턴 13: 질문에 페이지 제목 'Background Tasks' 이 들어 있습니다 (출처 단서)
-- v2_08_model_serialization 턴 17: key_entity 'b"hello"' 가 근거 페이지·사용자 발화에 없음
-- v2_09_openapi_docs 턴 12: 인용문이 app-structure/static-files-templates-and-frontend.md 에 없음: '"auto" — use `404.html` if that file exists;'
-- v2_09_openapi_docs 턴 12: 인용문이 app-structure/static-files-templates-and-frontend.md 에 없음: '"404.html" — serve `dist/404.html` with status **404**.'
 - v2_10_app_structure 턴 15: 서로 다른 주제 폴더의 문서 ['openapi/metadata-and-docs-ui.md', 'quickstart.md'] 를 한 턴에 붙였습니다 (경고)
-- v2_11_testing_strategy 턴 4: standalone_question 에 원래 질문에 없던 key_entity ['Settings'] (답 누설)
-- v2_11_testing_strategy 턴 7: same_doc_new_topic 이 앞서 물은 소제목과 같은 부분을 묻습니다 ['Passing data in requests']
 - v2_11_testing_strategy 턴 15: 서로 다른 주제 폴더의 문서 ['integrations/websockets.md', 'security/oauth2-jwt.md'] 를 한 턴에 붙였습니다 (경고)
-- v2_12_database 턴 1: 인용문이 dependencies/dependencies-with-yield.md 에 없음: '- "request" (default for `yield` dependencies): setup before'
-- v2_12_database 턴 1: 인용문이 dependencies/dependencies-with-yield.md 에 없음: '- "function": teardown right after the path operation functi'
 - v2_12_database 턴 15: 서로 다른 주제 폴더의 문서 ['request/query-parameters.md', 'getting-started/python-types-and-async.md'] 를 한 턴에 붙였습니다 (경고)
-- v2_13_error_consistency 턴 5: 질문에 페이지 제목 'Middleware' 이 들어 있습니다 (출처 단서)
-- v2_13_error_consistency 턴 6: 질문에 페이지 제목 'Middleware' 이 들어 있습니다 (출처 단서)
 - v2_13_error_consistency 턴 15: 서로 다른 주제 폴더의 문서 ['internals/request-handling-internals.md', 'openapi/extending-openapi.md'] 를 한 턴에 붙였습니다 (경고)
-- v2_14_files_forms_static 턴 12: key_entity 'app/main.py' 가 근거 페이지·사용자 발화에 없음
-- v2_14_files_forms_static 턴 12: key_entity '--port' 가 근거 페이지·사용자 발화에 없음
-- v2_14_files_forms_static 턴 8: 질문에 페이지 제목 'Middleware' 이 들어 있습니다 (출처 단서)
-- v2_14_files_forms_static 턴 14: same_doc_new_topic 이 앞서 물은 소제목과 같은 부분을 묻습니다 ['Templates (Jinja2)']
-- v2_14_files_forms_static 턴 16: 질문에 페이지 제목 'Middleware' 이 들어 있습니다 (출처 단서)
 - v2_15_settings_env 턴 1: 서로 다른 주제 폴더의 문서 ['getting-started/development-workflow.md', 'app-structure/static-files-templates-and-frontend.md'] 를 한 턴에 붙였습니다 (경고)
-- v2_17_request_internals 턴 1: 질문에 페이지 제목 'Middleware' 이 들어 있습니다 (출처 단서)
-- v2_17_request_internals 턴 2: 질문에 페이지 제목 'Middleware' 이 들어 있습니다 (출처 단서)
-- v2_17_request_internals 턴 9: 질문에 페이지 제목 'Middleware' 이 들어 있습니다 (출처 단서)
-- v2_17_request_internals 턴 11: 질문에 페이지 제목 'Middleware' 이 들어 있습니다 (출처 단서)
-- v2_17_request_internals 턴 14: 질문에 페이지 제목 'Middleware' 이 들어 있습니다 (출처 단서)
-- v2_18_integrations 턴 9: key_entity 'threadpool' 가 근거 페이지·사용자 발화에 없음
-- v2_18_integrations 턴 5: 질문에 페이지 제목 'Middleware' 이 들어 있습니다 (출처 단서)
-- v2_18_integrations 턴 6: 질문에 페이지 제목 'Middleware' 이 들어 있습니다 (출처 단서)
 - v2_18_integrations 턴 15: 서로 다른 주제 폴더의 문서 ['about/features-and-ecosystem.md', 'openapi/generating-clients.md'] 를 한 턴에 붙였습니다 (경고)
-- v2_19_first_service 턴 0: key_entity '--bare' 가 근거 페이지·사용자 발화에 없음
-- v2_19_first_service 턴 7: key_entity 'uvicorn.run' 가 근거 페이지·사용자 발화에 없음
-- v2_19_first_service 턴 15: key_entity 'app/main.py' 가 근거 페이지·사용자 발화에 없음
-- v2_19_first_service 턴 15: key_entity '--port' 가 근거 페이지·사용자 발화에 없음
-- v2_19_first_service 턴 18: key_entity 'app/main.py' 가 근거 페이지·사용자 발화에 없음
-- v2_19_first_service 턴 18: key_entity '--port' 가 근거 페이지·사용자 발화에 없음
 - v2_19_first_service 턴 8: 서로 다른 주제 폴더의 문서 ['quickstart.md', 'getting-started/python-types-and-async.md'] 를 한 턴에 붙였습니다 (경고)
-- v2_20_client_contract 턴 0: key_entity 'http://localhost:8000/openapi.json' 가 근거 페이지·사용자 발화에 없음
-- v2_20_client_contract 턴 4: key_entity 'http://localhost:8000/openapi.json' 가 근거 페이지·사용자 발화에 없음
 
 ## 출처와 질문 크기
 
@@ -210,22 +152,22 @@ knowledge·grounded 맞힘은 setup 을 뺀 key_fact 가 모두 충족된 턴 (a
 | v2_01_auth_switch | 29 / 12 | 5/12 (42%) | 턴 4, 11 | 10/29 (34%) | 2.05 (2) | 5 | 2.16 (3) |
 | v2_02_response_design | 31 / 9 | 5/12 (42%) | 턴 4, 11 | 11/31 (35%) | 1.85 (2) | 8 | 2.00 (3) |
 | v2_03_input_validation | 30 / 11 | 5/12 (42%) | 턴 4, 11 | 13/30 (43%) | 1.84 (2) | 0 | 2.16 (3) |
-| v2_04_dependency_lifecycle | 30 / 11 | 5/12 (42%) | 턴 4, 11 | 13/30 (43%) | 2.00 (2) | 7 | 2.16 (3) |
+| v2_04_dependency_lifecycle | 31 / 11 | 5/12 (42%) | 턴 4, 11 | 13/31 (42%) | 2.00 (2) | 7 | 2.21 (3) |
 | v2_05_deployment_setup | 31 / 11 | 6/12 (50%) | 턴 4, 11 | 9/31 (29%) | 2.05 (2) | 0 | 2.21 (3) |
 | v2_06_middleware_cors | 32 / 11 | 5/12 (42%) | 턴 4, 11 | 9/32 (28%) | 2.05 (2) | 3 | 2.26 (3) |
 | v2_07_streaming_realtime | 28 / 11 | 6/12 (50%) | 턴 4, 11 | 11/28 (39%) | 1.95 (2) | 0 | 2.05 (3) |
 | v2_08_model_serialization | 30 / 11 | 5/13 (38%) | 턴 4, 11 | 19/30 (63%) | 1.68 (2) | 2 | 2.16 (3) |
-| v2_09_openapi_docs | 30 / 10 | 6/12 (50%) | 턴 4, 11 | 16/30 (53%) | 2.05 (2) | 0 | 2.11 (3) |
+| v2_09_openapi_docs | 31 / 10 | 6/12 (50%) | 턴 4, 11 | 16/31 (52%) | 2.05 (2) | 0 | 2.16 (3) |
 | v2_10_app_structure | 29 / 11 | 6/12 (50%) | 턴 4, 11 | 11/29 (38%) | 2.05 (2) | 4 | 2.11 (3) |
-| v2_11_testing_strategy | 31 / 10 | 5/12 (42%) | 턴 4, 11 | 12/31 (39%) | 1.89 (2) | 2 | 2.16 (3) |
+| v2_11_testing_strategy | 32 / 10 | 5/12 (42%) | 턴 4, 11 | 13/32 (41%) | 1.95 (2) | 2 | 2.21 (3) |
 | v2_12_database | 34 / 10 | 5/14 (36%) | 턴 4, 11 | 9/34 (26%) | 1.89 (2) | 5 | 2.32 (3) |
 | v2_13_error_consistency | 27 / 13 | 6/12 (50%) | 턴 4, 11 | 12/27 (44%) | 1.79 (2) | 1 | 2.11 (3) |
-| v2_14_files_forms_static | 29 / 12 | 6/12 (50%) | 턴 4, 11 | 15/29 (52%) | 2.00 (2) | 0 | 2.16 (3) |
+| v2_14_files_forms_static | 29 / 12 | 6/12 (50%) | 턴 4, 11 | 13/29 (45%) | 2.00 (2) | 0 | 2.16 (3) |
 | v2_15_settings_env | 32 / 9 | 5/12 (42%) | 턴 4, 11 | 14/32 (44%) | 2.05 (2) | 0 | 2.16 (3) |
 | v2_16_scopes_user_model | 28 / 11 | 5/12 (42%) | 턴 4, 11 | 13/28 (46%) | 1.95 (2) | 5 | 2.05 (3) |
 | v2_17_request_internals | 32 / 10 | 5/12 (42%) | 턴 4, 11 | 11/32 (34%) | 1.95 (2) | 4 | 2.21 (3) |
 | v2_18_integrations | 29 / 11 | 5/12 (42%) | 턴 4, 11 | 15/29 (52%) | 2.00 (2) | 2 | 2.11 (3) |
-| v2_19_first_service | 30 / 10 | 5/12 (42%) | 턴 4, 11 | 11/30 (37%) | 2.05 (2) | 0 | 2.11 (3) |
+| v2_19_first_service | 31 / 10 | 5/12 (42%) | 턴 4, 11 | 11/31 (35%) | 2.05 (2) | 0 | 2.16 (3) |
 | v2_20_client_contract | 29 / 10 | 5/12 (42%) | 턴 4, 11 | 14/29 (48%) | 1.89 (2) | 0 | 2.05 (3) |
 
 asks 는 생성 모델이 적은 '묻는 사항' 목록, 물음표 수는 질문 문장에서 센 교차 확인용 값이다.
@@ -259,13 +201,13 @@ asks 는 생성 모델이 적은 '묻는 사항' 목록, 물음표 수는 질문
 | v2_03_input_validation | recall | 3 | 0 | 0 |
 | v2_03_input_validation | synthesis | 2 | 0 | 0 |
 | v2_03_input_validation | **전체** | 19 | **10/19 (53%)** | **1/19 (5%)** |
-| v2_04_dependency_lifecycle | new | 8 | 6 | 1 |
+| v2_04_dependency_lifecycle | new | 8 | 6 | 0 |
 | v2_04_dependency_lifecycle | followup | 2 | 1 | 1 |
 | v2_04_dependency_lifecycle | update | 2 | 2 | 0 |
 | v2_04_dependency_lifecycle | same_doc_new_topic | 2 | 1 | 0 |
 | v2_04_dependency_lifecycle | recall | 3 | 0 | 0 |
 | v2_04_dependency_lifecycle | synthesis | 2 | 0 | 0 |
-| v2_04_dependency_lifecycle | **전체** | 19 | **10/19 (53%)** | **2/19 (11%)** |
+| v2_04_dependency_lifecycle | **전체** | 19 | **10/19 (53%)** | **1/19 (5%)** |
 | v2_05_deployment_setup | new | 8 | 4 | 0 |
 | v2_05_deployment_setup | followup | 2 | 2 | 1 |
 | v2_05_deployment_setup | update | 2 | 2 | 0 |
@@ -311,10 +253,10 @@ asks 는 생성 모델이 적은 '묻는 사항' 목록, 물음표 수는 질문
 | v2_11_testing_strategy | new | 8 | 5 | 0 |
 | v2_11_testing_strategy | followup | 2 | 2 | 0 |
 | v2_11_testing_strategy | update | 2 | 1 | 0 |
-| v2_11_testing_strategy | same_doc_new_topic | 2 | 1 | 1 |
+| v2_11_testing_strategy | same_doc_new_topic | 2 | 1 | 0 |
 | v2_11_testing_strategy | recall | 3 | 0 | 0 |
 | v2_11_testing_strategy | synthesis | 2 | 0 | 0 |
-| v2_11_testing_strategy | **전체** | 19 | **9/19 (47%)** | **1/19 (5%)** |
+| v2_11_testing_strategy | **전체** | 19 | **9/19 (47%)** | **0/19 (0%)** |
 | v2_12_database | new | 8 | 6 | 1 |
 | v2_12_database | followup | 2 | 1 | 0 |
 | v2_12_database | update | 2 | 2 | 0 |
@@ -366,11 +308,11 @@ asks 는 생성 모델이 적은 '묻는 사항' 목록, 물음표 수는 질문
 | v2_18_integrations | **전체** | 19 | **11/19 (58%)** | **2/19 (11%)** |
 | v2_19_first_service | new | 8 | 2 | 0 |
 | v2_19_first_service | followup | 2 | 2 | 0 |
-| v2_19_first_service | update | 2 | 2 | 0 |
+| v2_19_first_service | update | 2 | 1 | 0 |
 | v2_19_first_service | same_doc_new_topic | 2 | 1 | 0 |
 | v2_19_first_service | recall | 3 | 0 | 0 |
 | v2_19_first_service | synthesis | 2 | 0 | 0 |
-| v2_19_first_service | **전체** | 19 | **7/19 (37%)** | **0/19 (0%)** |
+| v2_19_first_service | **전체** | 19 | **6/19 (32%)** | **0/19 (0%)** |
 | v2_20_client_contract | new | 8 | 4 | 0 |
 | v2_20_client_contract | followup | 2 | 2 | 0 |
 | v2_20_client_contract | update | 2 | 1 | 0 |
@@ -384,14 +326,14 @@ asks 는 생성 모델이 적은 '묻는 사항' 목록, 물음표 수는 질문
 | v2_01_auth_switch | 7 | 19 |
 | v2_02_response_design | 8 | 19 |
 | v2_03_input_validation | 4 | 17 |
-| v2_04_dependency_lifecycle | 5 | 16 |
+| v2_04_dependency_lifecycle | 5 | 17 |
 | v2_05_deployment_setup | 6 | 18 |
-| v2_06_middleware_cors | 5 | 19 |
+| v2_06_middleware_cors | 5 | 18 |
 | v2_07_streaming_realtime | 7 | 17 |
 | v2_08_model_serialization | 4 | 18 |
 | v2_09_openapi_docs | 6 | 17 |
 | v2_10_app_structure | 5 | 19 |
-| v2_11_testing_strategy | 8 | 18 |
+| v2_11_testing_strategy | 8 | 19 |
 | v2_12_database | 4 | 17 |
 | v2_13_error_consistency | 4 | 19 |
 | v2_14_files_forms_static | 5 | 19 |
@@ -412,27 +354,27 @@ key_fact 단위 충족률 (출처별):
 | v2_02_response_design | grounded | 0/31 (0%) | 0/9 (0%) |
 | v2_03_input_validation | knowledge | 21/30 (70%) | 5/11 (45%) |
 | v2_03_input_validation | grounded | 2/30 (7%) | 1/11 (9%) |
-| v2_04_dependency_lifecycle | knowledge | 20/30 (67%) | 5/11 (45%) |
-| v2_04_dependency_lifecycle | grounded | 5/30 (17%) | 0/11 (0%) |
+| v2_04_dependency_lifecycle | knowledge | 21/31 (68%) | 5/11 (45%) |
+| v2_04_dependency_lifecycle | grounded | 3/31 (10%) | 0/11 (0%) |
 | v2_05_deployment_setup | knowledge | 19/31 (61%) | 5/11 (45%) |
 | v2_05_deployment_setup | grounded | 2/31 (6%) | 0/11 (0%) |
 | v2_06_middleware_cors | knowledge | 17/32 (53%) | 5/11 (45%) |
-| v2_06_middleware_cors | grounded | 0/32 (0%) | 0/11 (0%) |
+| v2_06_middleware_cors | grounded | 1/32 (3%) | 0/11 (0%) |
 | v2_07_streaming_realtime | knowledge | 14/28 (50%) | 4/11 (36%) |
 | v2_07_streaming_realtime | grounded | 3/28 (11%) | 0/11 (0%) |
 | v2_08_model_serialization | knowledge | 18/30 (60%) | 3/11 (27%) |
 | v2_08_model_serialization | grounded | 2/30 (7%) | 0/11 (0%) |
-| v2_09_openapi_docs | knowledge | 14/30 (47%) | 4/10 (40%) |
-| v2_09_openapi_docs | grounded | 3/30 (10%) | 0/10 (0%) |
+| v2_09_openapi_docs | knowledge | 15/31 (48%) | 4/10 (40%) |
+| v2_09_openapi_docs | grounded | 3/31 (10%) | 0/10 (0%) |
 | v2_10_app_structure | knowledge | 17/29 (59%) | 5/11 (45%) |
 | v2_10_app_structure | grounded | 0/29 (0%) | 0/11 (0%) |
-| v2_11_testing_strategy | knowledge | 17/31 (55%) | 2/10 (20%) |
-| v2_11_testing_strategy | grounded | 1/31 (3%) | 0/10 (0%) |
+| v2_11_testing_strategy | knowledge | 18/32 (56%) | 2/10 (20%) |
+| v2_11_testing_strategy | grounded | 0/32 (0%) | 0/10 (0%) |
 | v2_12_database | knowledge | 21/34 (62%) | 5/10 (50%) |
 | v2_12_database | grounded | 4/34 (12%) | 0/10 (0%) |
 | v2_13_error_consistency | knowledge | 17/27 (63%) | 5/13 (38%) |
 | v2_13_error_consistency | grounded | 0/27 (0%) | 0/13 (0%) |
-| v2_14_files_forms_static | knowledge | 12/29 (41%) | 6/12 (50%) |
+| v2_14_files_forms_static | knowledge | 11/29 (38%) | 6/12 (50%) |
 | v2_14_files_forms_static | grounded | 0/29 (0%) | 0/12 (0%) |
 | v2_15_settings_env | knowledge | 22/32 (69%) | 4/9 (44%) |
 | v2_15_settings_env | grounded | 0/32 (0%) | 0/9 (0%) |
@@ -442,14 +384,14 @@ key_fact 단위 충족률 (출처별):
 | v2_17_request_internals | grounded | 1/32 (3%) | 1/10 (10%) |
 | v2_18_integrations | knowledge | 18/29 (62%) | 6/11 (55%) |
 | v2_18_integrations | grounded | 2/29 (7%) | 2/11 (18%) |
-| v2_19_first_service | knowledge | 15/30 (50%) | 5/10 (50%) |
-| v2_19_first_service | grounded | 0/30 (0%) | 0/10 (0%) |
+| v2_19_first_service | knowledge | 15/31 (48%) | 5/10 (50%) |
+| v2_19_first_service | grounded | 0/31 (0%) | 0/10 (0%) |
 | v2_20_client_contract | knowledge | 19/29 (66%) | 4/10 (40%) |
 | v2_20_client_contract | grounded | 1/29 (3%) | 0/10 (0%) |
 
 ## standalone_question 누설 (원래 질문에 없던 key_entity)
 
-- v2_11_testing_strategy 턴 4: ['Settings']
+- 없음 (검사기 오류로 잡는다)
 
 ## source=user key_fact
 
@@ -710,7 +652,7 @@ key_fact 단위 충족률 (출처별):
 | v2_01_auth_switch | 9 | Omitting expires_delta uses the helper's 15-minute fallback. |
 | v2_01_auth_switch | 11 | The browser authentication cookie is now named orbit_session_v2 rather than orbit_session. |
 | v2_01_auth_switch | 12 | The scoped example returns 401 Not enough permissions when items is missing for /users/me/items/. |
-| v2_01_auth_switch | 12 | FastAPI 0.122.0 changed built-in authentication errors from 403 to 401 with a suitable WWW-Authenticate header. |
+| v2_01_auth_switch | 12 | Since FastAPI 0.122.0, built-in security classes answer missing/invalid credentials with 401 Unauthorized plus a WWW-Authenticate header instead of 403 Forbidden. |
 | v2_01_auth_switch | 13 | The current project settings are cookie orbit_session_v2 and a 41-minute token lifetime. |
 | v2_01_auth_switch | 13 | The middleware handles preflight requests itself with 200 or 400, without passing them to endpoints. |
 | v2_01_auth_switch | 16 | APIKeyHeader returns str, while HTTPBearer returns HTTPAuthorizationCredentials with a credentials field. |
@@ -824,6 +766,7 @@ key_fact 단위 충족률 (출처별):
 | v2_13_error_consistency | 18 | A response-model mismatch raises ResponseValidationError and defaults to 500, not a client-validation status. |
 | v2_14_files_forms_static | 7 | An extra field produces status 422 with type extra_forbidden. |
 | v2_14_files_forms_static | 8 | Measure around await call_next(request) with time.perf_counter(), then set the response header. |
+| v2_14_files_forms_static | 14 | Frontend responses run inside the application, so HTTP middleware and app, router and include_router() dependencies apply. |
 | v2_14_files_forms_static | 15 | The sample adds image/png under responses[200].content alongside the JSON response model. |
 | v2_14_files_forms_static | 16 | time.perf_counter() is more precise than time.time() for duration measurement. |
 | v2_15_settings_env | 1 | With check_dir="auto", a missing frontend directory only warns when FASTAPI_ENV is development. |
@@ -898,16 +841,16 @@ key_fact 단위 충족률 (출처별):
 | v2_09_openapi_docs | 14 | 1 | app-structure/path-operation-configuration.md | Operation IDs | Excluding from OpenAPI | 예 |
 | v2_10_app_structure | 7 | 0 | app-structure/bigger-applications.md | Shared settings on the router | Telling the CLI where the app is | 예 |
 | v2_10_app_structure | 14 | 5 | app-structure/path-operation-configuration.md | Operation IDs | Excluding from OpenAPI | 예 |
-| v2_11_testing_strategy | 7 | 0 | testing/testing-basics.md | Extended example: headers, bodies, error cases; Passing data in requests | Passing data in requests | 아니오 |
+| v2_11_testing_strategy | 7 | 0 | testing/testing-basics.md | Extended example: headers, bodies, error cases; Passing data in requests | A first test | 예 |
 | v2_11_testing_strategy | 14 | 1 | testing/testing-dependencies-events-websockets.md | Overriding dependencies | Testing WebSockets | 예 |
 | v2_12_database | 7 | 0 | integrations/sql-databases.md | Building blocks | Multiple models | 예 |
-| v2_12_database | 14 | 1 | dependencies/dependencies-with-yield.md | ? | Background tasks | 예 |
+| v2_12_database | 14 | 1 | dependencies/dependencies-with-yield.md | Early exit with `scope` | Background tasks | 예 |
 | v2_13_error_consistency | 7 | 0 | errors/handling-errors.md | Custom headers; Overriding the default handlers | Reusing FastAPI's default handlers | 예 |
 | v2_13_error_consistency | 14 | 0 | errors/handling-errors.md | Custom headers; Overriding the default handlers | Authentication errors: 401 vs 403 | 예 |
 | v2_14_files_forms_static | 7 | 0 | request/forms-and-files.md | Files: `File()` and `UploadFile`; Multiple files | Form models | 예 |
-| v2_14_files_forms_static | 14 | 1 | app-structure/static-files-templates-and-frontend.md | Static files | Templates (Jinja2) | 예 |
-| v2_15_settings_env | 7 | 0 | app-structure/settings.md | Define a `Settings` class; Settings as a dependency (recommended); Why `@lru_cache` | Overriding settings in tests | 예 |
-| v2_15_settings_env | 14 | 0 | app-structure/settings.md | Define a `Settings` class; Settings as a dependency (recommended); Why `@lru_cache` | Reading a `.env` file | 예 |
+| v2_14_files_forms_static | 14 | 1 | app-structure/static-files-templates-and-frontend.md | Static files | Dependencies and middleware apply; Serving a built frontend: `app.frontend()` | 예 |
+| v2_15_settings_env | 7 | 0 | app-structure/settings.md | Define a `Settings` class; Why `@lru_cache` | Overriding settings in tests | 예 |
+| v2_15_settings_env | 14 | 0 | app-structure/settings.md | Define a `Settings` class; Why `@lru_cache` | Reading a `.env` file | 예 |
 | v2_16_scopes_user_model | 7 | 0 | security/oauth2-scopes.md | 3. Require scopes with `Security()` | Choosing a flow | 예 |
 | v2_16_scopes_user_model | 7 | 0 | security/oauth2-password-flow.md |  |  | 예 |
 | v2_16_scopes_user_model | 14 | 3 | models/extra-models-and-updates.md | Multiple models per entity | Partial update with `PATCH` | 예 |

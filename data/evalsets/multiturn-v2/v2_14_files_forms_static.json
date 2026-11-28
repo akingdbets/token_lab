@@ -160,6 +160,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -298,6 +301,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -421,6 +427,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -564,6 +573,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -693,6 +705,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -821,6 +836,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -926,6 +944,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1051,6 +1072,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1184,6 +1208,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1304,6 +1331,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1432,6 +1462,11 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ]
    }
   },
   {
@@ -1562,6 +1597,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1697,6 +1735,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1833,45 +1874,48 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ]
    }
   },
   {
    "turn": 14,
    "turn_type": "same_doc_new_topic",
-   "type": "code",
-   "question": "For a server-rendered item detail screen, show the sample template response call with its request and context, and the response class that makes the API describe HTML.",
+   "type": "multi",
+   "question": "For the built admin UI, if I serve it with app.frontend at the root path, could it shadow my API routes, and would our app-wide dependencies such as cookie auth run for those frontend responses?",
    "asks": [
-    "Sample template response call",
-    "HTML documentation response class"
+    "Whether a root frontend can shadow API routes",
+    "Whether app dependencies run for frontend responses"
    ],
-   "standalone_question": "For a server-rendered item detail screen, show the sample template response call with its request and context, and the response class that makes the API describe HTML.",
-   "answer": "```python\n@app.get(\"/items/{id}\", response_class=HTMLResponse)\nasync def read_item(request: Request, id: str):\n    return templates.TemplateResponse(\n        request=request, name=\"item.html\", context={\"id\": id}\n    )\n```\nUse a shared `Jinja2Templates(directory=\"templates\")` instance for `templates`.",
+   "standalone_question": "When FastAPI serves a built frontend with app.frontend at the root path, can it shadow API path operations, and do application dependencies such as cookie authentication run for those frontend responses?",
+   "answer": "No: path operations always win; frontend files are only considered when no normal route matched, even when the frontend is mounted at `/`. Yes: frontend responses run inside the normal application, so HTTP middleware and dependencies from the app, the router and `include_router()` run too (unlike a `StaticFiles` mount, which is an independent app).",
    "key_facts": [
-    "The sample calls templates.TemplateResponse with request=request, name=\"item.html\", and context={\"id\": id}.",
-    "The sample declares response_class=HTMLResponse so the API documentation describes HTML."
+    "Path operations always win: frontend files are only considered when no normal route matched.",
+    "Frontend responses run inside the application, so HTTP middleware and app, router and include_router() dependencies apply."
    ],
    "fact_meta": [
     {
      "source": "doc",
      "accept_alternatives": [],
      "tags": [
-      "example"
+      "negation",
+      "condition"
      ]
     },
     {
      "source": "doc",
      "accept_alternatives": [],
      "tags": [
-      "example"
+      "confusable"
      ]
     }
    ],
    "key_entities": [
-    "TemplateResponse",
-    "request=request",
-    "item.html",
-    "id",
-    "HTMLResponse"
+    "app.frontend",
+    "include_router()"
    ],
    "evidence_pages": [],
    "depends_on": [
@@ -1879,12 +1923,12 @@
    ],
    "evidence": [
     {
-     "quote": "        request=request, name=\"item.html\", context={\"id\": id}",
+     "quote": "**Path operations always win.** Frontend files are only considered when no normal route matched, so your API is never shadowed — even when the frontend is mounted at `/`.",
      "page": "app-structure/static-files-templates-and-frontend.md",
      "fact_idx": 0
     },
     {
-     "quote": "- `response_class=HTMLResponse` makes the docs show an HTML response.",
+     "quote": "Frontend responses run inside the normal application: HTTP middleware applies, and dependencies from the app, the router and `include_router()` run too",
      "page": "app-structure/static-files-templates-and-frontend.md",
      "fact_idx": 1
     }
@@ -1894,14 +1938,21 @@
    "affects": null,
    "source_turn": 1,
    "recall_distance": 13,
+   "review": {
+    "changed_round2": true,
+    "question_changed": true,
+    "target": [
+     "a: 질문 수정 (standalone_same_fact 확인)"
+    ]
+   },
    "closed_book_knowledge": {
     "correct": false,
-    "accuracy_main": 0.5,
-    "accuracy": 0.5,
-    "response": "```python\nfrom fastapi.responses import HTMLResponse\n\n@app.get(\"/items/{item_id}\", response_class=HTMLResponse)\nasync def item_detail(request: Request, item_id: str):\n    return templates.TemplateResponse(\n        request=request,\n        name=\"item.html\",\n        context={\"item_id\": item_id},\n    )\n```\n\n`response_class=HTMLResponse` tells FastAPI to describe the endpoint as returning HTML.",
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "A root frontend fallback should handle only requests that don’t match an API route; if it’s registered ahead of the API routes, it can shadow them. FastAPI application dependencies such as cookie authentication apply to FastAPI operations, not automatically to frontend or static-file responses.",
     "fact_results": [
      false,
-     true
+     false
     ],
     "judge_skipped": null,
     "unknown": false,
@@ -1922,7 +1973,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-101331"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -1956,7 +2007,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-101331"
    }
   },
   {
@@ -2088,6 +2139,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2209,6 +2263,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2328,6 +2385,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2471,7 +2531,19 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
+  }
+ ],
+ "edits": [
+  {
+   "date": "2026-11-28",
+   "by": "검수 2차 결정 반영 (손 수정)",
+   "items": [
+    "턴 14: 앞서 물은 'Templates (Jinja2)' 대신 'Serving a built frontend'·'Dependencies and middleware apply' 소제목을 묻도록 질문·정답·key_facts·근거를 바꿈 (턴 1 의 mount 와 헷갈리는 짝이라 confusable)"
+   ]
   }
  ]
 }

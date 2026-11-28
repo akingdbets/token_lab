@@ -163,6 +163,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -293,6 +296,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -412,6 +418,15 @@
      "5e7fe8303199"
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "flags": [
+     "grounded_memory"
+    ],
+    "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
+    "target": [
+     "c: grounded 에서 기억으로 답함 (정확도 1.00)"
+    ]
    }
   },
   {
@@ -537,6 +552,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -674,6 +692,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -823,6 +844,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -947,6 +971,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1080,6 +1107,11 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ]
    }
   },
   {
@@ -1202,6 +1234,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1324,18 +1359,21 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
    "turn": 10,
    "turn_type": "new",
    "type": "multi",
-   "question": "For dependency replacement in tests, what skip and limit does override_dependency return in the pagination example? If the request sends ?q=foo&skip=100&limit=200, which values survive and why?",
+   "question": "For dependency replacement in tests, what skip and limit does override_dependency return in the pagination example? If the request sends q=foo, skip=100 and limit=200 in the query string, which values survive and why?",
    "asks": [
     "Identify the replacement's fixed pagination values",
     "Explain the result of conflicting query parameters"
    ],
-   "standalone_question": "In the pagination testing example, what skip and limit does override_dependency return, and what happens when a request sends ?q=foo&skip=100&limit=200?",
+   "standalone_question": "In the pagination testing example, what skip and limit does override_dependency return, and what happens when a request sends q=foo, skip=100 and limit=200 in the query string?",
    "answer": "The replacement returns skip=5 and limit=10. The request produces q=\"foo\", skip=5, limit=10: only q is declared by the override, so the URL's skip and limit are ignored.",
    "key_facts": [
     "The sample override fixes skip at 5 and limit at 10.",
@@ -1391,153 +1429,23 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
-   "closed_book_knowledge": {
-    "correct": true,
-    "accuracy_main": 1.0,
-    "accuracy": 1.0,
-    "response": "`override_dependency` returns `skip=5` and `limit=10`. With `?q=foo&skip=100&limit=200`, the override keeps those fixed values; the result uses `q=\"foo\"`, `skip=5`, and `limit=10`.",
-    "fact_results": [
-     true,
-     true
+   "review": {
+    "changed_round2": true,
+    "question_changed": true,
+    "flags": [
+     "grounded_memory"
     ],
-    "judge_skipped": null,
-    "unknown": false,
-    "empty": false,
-    "model": "gpt-6-luna",
-    "settings": {
-     "model": "gpt-6-luna",
-     "temperature": null,
-     "temperature_requested": null,
-     "seed": 42,
-     "reasoning_effort": null,
-     "reasoning_effort_requested": null,
-     "max_tokens": 4096,
-     "max_tokens_param": "max_completion_tokens"
-    },
-    "judge": "deepseek-flash",
-    "judge_prompt": [
-     "fact_judge_v3",
-     "5e7fe8303199"
-    ],
-    "run_id": "20261128-094550"
+    "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
+    "target": [
+     "a: 질문 수정 (standalone_same_fact 확인)",
+     "c: grounded_memory 표시"
+    ]
    },
-   "closed_book_grounded": {
-    "correct": true,
-    "accuracy_main": 1.0,
-    "accuracy": 1.0,
-    "response": "`override_dependency` accepts `q` and returns `{\"q\": q, \"skip\": 5, \"limit\": 10}`. Once it’s registered as the override for the pagination dependency, a request to `?q=foo&skip=100&limit=200` returns `{\"q\": \"foo\", \"skip\": 5, \"limit\": 10}`: `q` is passed through, while the override’s fixed `skip` and `limit` replace the request values.",
-    "fact_results": [
-     true,
-     true
-    ],
-    "judge_skipped": null,
-    "not_found": false,
-    "answer_prompt": [
-     "mt_answer_v2",
-     "79e1fbab96c5"
-    ],
-    "empty": false,
-    "model": "gpt-6-luna",
-    "settings": {
-     "model": "gpt-6-luna",
-     "temperature": null,
-     "temperature_requested": null,
-     "seed": 42,
-     "reasoning_effort": null,
-     "reasoning_effort_requested": null,
-     "max_tokens": 4096,
-     "max_tokens_param": "max_completion_tokens"
-    },
-    "judge": "deepseek-flash",
-    "judge_prompt": [
-     "fact_judge_v3",
-     "5e7fe8303199"
-    ],
-    "run_id": "20261128-094550"
-   }
-  },
-  {
-   "turn": 11,
-   "turn_type": "update",
-   "type": "procedure",
-   "question": "Change our lifespan client state key from relay_client_83 to relay_client_94. What endpoint access expression should replace the old one, and how must I create the test client so the lifespan actually initializes it?",
-   "asks": [
-    "Apply the new client state key to endpoint access",
-    "Ensure the test runs lifespan initialization"
-   ],
-   "standalone_question": "After changing the lifespan client state key from relay_client_83 to relay_client_94, what endpoint access expression should replace the old one, and how must the test client be created to run lifespan initialization?",
-   "answer": "Yield the client under \"relay_client_94\" and access it as request.state.relay_client_94. Run requests inside `with TestClient(app) as client:` so startup runs on entering the block and shutdown runs on leaving it; constructing TestClient without the context manager does not run lifespan.",
-   "key_facts": [
-    "The new client state key is relay_client_94, so endpoint access is request.state.relay_client_94.",
-    "TestClient must be used as a context manager to run lifespan; construction without with does not run it."
-   ],
-   "fact_meta": [
-    {
-     "source": "user",
-     "accept_alternatives": [],
-     "tags": [
-      "setup"
-     ]
-    },
-    {
-     "source": "doc",
-     "accept_alternatives": [],
-     "tags": [
-      "condition",
-      "negation"
-     ]
-    }
-   ],
-   "key_entities": [
-    "relay_client_94",
-    "request.state",
-    "TestClient"
-   ],
-   "evidence_pages": [],
-   "depends_on": [
-    3,
-    10
-   ],
-   "evidence": [
-    {
-     "quote": "Change our lifespan client state key from relay_client_83 to relay_client_94.",
-     "user_turn": 11,
-     "fact_idx": 0
-    },
-    {
-     "quote": "    response = await request.state.http_client.get(\"https://example.com\")",
-     "page": "app-structure/lifespan-events.md",
-     "fact_idx": 0
-    },
-    {
-     "quote": "`TestClient` runs the app's **lifespan** only when used as a **context manager**.",
-     "page": "testing/testing-dependencies-events-websockets.md",
-     "fact_idx": 1
-    },
-    {
-     "quote": "A module-level `client = TestClient(app)` used without `with` does **not** run lifespan.",
-     "page": "testing/testing-dependencies-events-websockets.md",
-     "fact_idx": 1
-    }
-   ],
-   "alt_evidence": [],
-   "changes": [
-    {
-     "what": "Lifespan outbound-client state key",
-     "from": "relay_client_83",
-     "to": "relay_client_94"
-    }
-   ],
-   "affects": [
-    13
-   ],
-   "source_turn": null,
-   "recall_distance": 8,
    "closed_book_knowledge": {
     "correct": true,
     "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "Replace the old access with `request.state.relay_client_94`. Create the test client as a context manager—`with TestClient(app) as client:`—so lifespan initialization runs.",
+    "response": "`override_dependency` returns `skip=5` and `limit=10`. With `q=foo&skip=100&limit=200`, the response still uses `q=\"foo\"`, `skip=5`, and `limit=10`; the requested skip and limit are ignored by the override.",
     "fact_results": [
      true,
      true
@@ -1561,7 +1469,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-101331"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -1595,7 +1503,161 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-101331"
+   }
+  },
+  {
+   "turn": 11,
+   "turn_type": "update",
+   "type": "procedure",
+   "question": "Change our lifespan client state key from relay_client_83 to relay_client_94. What endpoint access expression should replace the old one, and how must I create the test client so the lifespan actually initializes it?",
+   "asks": [
+    "Apply the new client state key to endpoint access",
+    "Ensure the test runs lifespan initialization"
+   ],
+   "standalone_question": "After changing the lifespan client state key from relay_client_83 to relay_client_94, what endpoint access expression should replace the old one, and how must the test client be created to run lifespan initialization?",
+   "answer": "Yield the client under \"relay_client_94\" and access it as request.state.relay_client_94. Run requests inside `with TestClient(app) as client:` so startup runs on entering the block and shutdown runs on leaving it; constructing TestClient without the context manager does not run lifespan.",
+   "key_facts": [
+    "The new client state key is relay_client_94, so endpoint access is request.state.relay_client_94.",
+    "TestClient must be used as a context manager to run lifespan; construction without with does not run it.",
+    "Lifespan state yielded as a dictionary is read in endpoints through request.state."
+   ],
+   "fact_meta": [
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": [
+      "setup"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": [
+      "condition",
+      "negation"
+     ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
+    }
+   ],
+   "key_entities": [
+    "relay_client_94",
+    "request.state",
+    "TestClient"
+   ],
+   "evidence_pages": [],
+   "depends_on": [
+    3,
+    10
+   ],
+   "evidence": [
+    {
+     "quote": "Change our lifespan client state key from relay_client_83 to relay_client_94.",
+     "user_turn": 11,
+     "fact_idx": 0
+    },
+    {
+     "quote": "`TestClient` runs the app's **lifespan** only when used as a **context manager**.",
+     "page": "testing/testing-dependencies-events-websockets.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "A module-level `client = TestClient(app)` used without `with` does **not** run lifespan.",
+     "page": "testing/testing-dependencies-events-websockets.md",
+     "fact_idx": 1
+    },
+    {
+     "quote": "the yielded mapping is copied into each request's state, so endpoints can read it via `request.state`",
+     "page": "app-structure/lifespan-events.md",
+     "fact_idx": 2
+    }
+   ],
+   "alt_evidence": [],
+   "changes": [
+    {
+     "what": "Lifespan outbound-client state key",
+     "from": "relay_client_83",
+     "to": "relay_client_94"
+    }
+   ],
+   "affects": [
+    13
+   ],
+   "source_turn": null,
+   "recall_distance": 8,
+   "review": {
+    "changed_round2": true,
+    "target": []
+   },
+   "closed_book_knowledge": {
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Use `request.state.relay_client_94`. Create the test client in a context manager—`with TestClient(app) as client:`—so lifespan initialization runs.",
+    "fact_results": [
+     true,
+     true,
+     true
+    ],
+    "judge_skipped": null,
+    "unknown": false,
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     "5e7fe8303199"
+    ],
+    "run_id": "20261128-101331"
+   },
+   "closed_book_grounded": {
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.0,
+    "response": "NOT FOUND",
+    "fact_results": [
+     false,
+     false,
+     false
+    ],
+    "judge_skipped": "not_found",
+    "not_found": true,
+    "answer_prompt": [
+     "mt_answer_v2",
+     "79e1fbab96c5"
+    ],
+    "empty": false,
+    "model": "gpt-6-luna",
+    "settings": {
+     "model": "gpt-6-luna",
+     "temperature": null,
+     "temperature_requested": null,
+     "seed": 42,
+     "reasoning_effort": null,
+     "reasoning_effort_requested": null,
+     "max_tokens": 4096,
+     "max_tokens_param": "max_completion_tokens"
+    },
+    "judge": "deepseek-flash",
+    "judge_prompt": [
+     "fact_judge_v3",
+     null
+    ],
+    "run_id": "20261128-101331"
    }
   },
   {
@@ -1723,6 +1785,11 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ]
    }
   },
   {
@@ -1859,6 +1926,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1978,6 +2048,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2113,6 +2186,15 @@
      "5e7fe8303199"
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "flags": [
+     "grounded_memory"
+    ],
+    "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 0.50). 제외하지 않고 표시 유지",
+    "target": [
+     "c: grounded 에서 기억으로 답함 (정확도 0.50)"
+    ]
    }
   },
   {
@@ -2239,6 +2321,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2361,6 +2446,11 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "c: 턴 6 의존은 간접 채점 (턴 6 가 인용한 페이지만 같음)"
+    ]
    }
   },
   {
@@ -2504,7 +2594,20 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
+  }
+ ],
+ "edits": [
+  {
+   "date": "2026-11-28",
+   "by": "검수 2차 결정 반영 (손 수정)",
+   "items": [
+    "턴 11: 턴 3 의존이 setup 항목으로만 채점돼, 턴 3 문서(lifespan state 를 request.state 로 읽음)를 근거로 한 key_fact [2] 추가",
+    "턴 10: 질문의 URL 쿼리 문자열(?q=...) 때문에 물음표가 3개로 세어져, 쿼리 값을 말로 풀어 씀 (묻는 사항 2개 그대로)"
+   ]
   }
  ]
 }

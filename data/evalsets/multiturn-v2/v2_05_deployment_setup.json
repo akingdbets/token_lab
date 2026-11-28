@@ -160,6 +160,11 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "c: 한 턴 한 주제 경고"
+    ]
    }
   },
   {
@@ -289,6 +294,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -412,6 +420,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -428,7 +439,7 @@
    "key_facts": [
     "The configured external prefix must be /edge/r7.",
     "root_path represents the stripped external prefix while the backend still serves unprefixed paths.",
-    "Trusting every IP with forwarded-allow-ips=\"*\" is appropriate only when only the proxy can reach the server."
+    "--forwarded-allow-ips=\"*\" trusts every client IP and is safe only when nothing but the proxy can reach the server."
    ],
    "fact_meta": [
     {
@@ -485,11 +496,15 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
+   "review": {
+    "changed_round2": true,
+    "target": []
+   },
    "closed_book_knowledge": {
     "correct": true,
     "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "Set `root_path=\"/edge/r7\"` on the FastAPI app (or use Uvicorn’s `--root-path /edge/r7`). Keep route declarations unchanged; the proxy strips the prefix before forwarding.\n\nTrust forwarded headers from every IP only when the service is reachable exclusively through a trusted proxy that overwrites those headers, and direct client access is blocked. Otherwise, clients could spoof them.",
+    "response": "Set the ASGI `root_path` to `/edge/r7`—for example, `FastAPI(root_path=\"/edge/r7\")` or Uvicorn’s `--root-path /edge/r7`. This preserves route declarations when the proxy strips the prefix.\n\nTrust forwarded headers from every IP only if the app is reachable exclusively through trusted proxies that overwrite those headers. Otherwise, restrict trusted proxy IPs; clients could spoof them.",
     "fact_results": [
      true,
      true,
@@ -514,7 +529,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-101331"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -549,7 +564,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-101331"
    }
   },
   {
@@ -682,6 +697,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -820,6 +838,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -945,6 +966,15 @@
      "5e7fe8303199"
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "flags": [
+     "grounded_memory"
+    ],
+    "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
+    "target": [
+     "c: grounded 에서 기억으로 답함 (정확도 1.00)"
+    ]
    }
   },
   {
@@ -1067,6 +1097,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1187,6 +1220,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1308,6 +1344,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1434,6 +1473,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1582,6 +1624,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1704,6 +1749,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1853,6 +1901,11 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ]
    }
   },
   {
@@ -1976,6 +2029,11 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ]
    }
   },
   {
@@ -2095,6 +2153,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2215,6 +2276,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2337,6 +2401,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2472,7 +2539,19 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
+  }
+ ],
+ "edits": [
+  {
+   "date": "2026-11-28",
+   "by": "검수 2차 결정 반영 (손 수정)",
+   "items": [
+    "턴 3: key_fact [2] 'appropriate' 를 원문 표현으로 좁힘"
+   ]
   }
  ]
 }

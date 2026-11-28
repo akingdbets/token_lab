@@ -342,7 +342,15 @@ def _page_titles(text: str) -> list[str]:
     m = re.search(r"^#\s+(.+)$", text, re.M)
     if m:
         titles.append(m.group(1).strip())
-    return [x for x in titles if len(x) >= 8]
+    return [x for x in titles if len(x) >= 8 and not is_common_title(x)]
+
+
+def is_common_title(title: str) -> bool:
+    """출처 단서 검사에서 뺄 제목: 한 단어 제목, 또는 흔한 낱말(알파벳만) 두 단어 제목
+    (Middleware, WebSockets, Background Tasks, Lifespan Events 등은 질문에 일반 낱말로 쓰인다. 2026-11-28 승인).
+    세 단어 이상이거나 숫자·기호가 섞인 제목(OAuth2 Scopes 등)은 그대로 검사한다."""
+    words = title.split()
+    return len(words) == 1 or (len(words) == 2 and all(w.isalpha() for w in words))
 
 
 def check_grounding_v2(s: dict, corpus, warnings: list | None = None) -> list[str]:
@@ -381,7 +389,8 @@ def check_grounding_v2(s: dict, corpus, warnings: list | None = None) -> list[st
                 if warnings is not None:
                     warnings.append(f"{p}: key_entity {ent!r} 는 기호뿐이라 근거 확인에서 뺌 (경고)")
                 continue
-            if find_normalized(joined, ent) is None:
+            # 정규화 매칭이 기호가 섞인 토큰(app/main.py, --port, __init__ 등)을 놓치므로 원문 글자 그대로 한 번 더 찾는다 (2026-11-28 승인)
+            if find_normalized(joined, ent) is None and ent not in joined:
                 errs.append(f"{p}: key_entity {ent!r} 가 근거 페이지·사용자 발화에 없음")
     all_titles = set()
     for page in s.get("bundle") or []:

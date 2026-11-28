@@ -158,6 +158,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -285,6 +288,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -412,6 +418,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -542,6 +551,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -680,6 +692,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -803,6 +818,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -926,6 +944,11 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ]
    }
   },
   {
@@ -1051,6 +1074,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1179,6 +1205,11 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "c: 한 턴 한 주제 경고"
+    ]
    }
   },
   {
@@ -1300,6 +1331,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1424,6 +1458,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1439,7 +1476,8 @@
    "answer": "Set `entrypoint = \"service.gateway:app\"` under `[tool.fastapi]`. TestClient tests remain ordinary `def` functions even when the endpoints are `async def`.",
    "key_facts": [
     "The entrypoint must now be service.gateway:app.",
-    "TestClient tests use normal def functions even for async def endpoints."
+    "TestClient tests use normal def functions even for async def endpoints.",
+    "The entrypoint is declared under [tool.fastapi] in pyproject.toml."
    ],
    "fact_meta": [
     {
@@ -1455,6 +1493,11 @@
      "tags": [
       "condition"
      ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
     }
    ],
    "key_entities": [
@@ -1463,7 +1506,8 @@
     "[tool.fastapi]",
     "TestClient",
     "def",
-    "async def"
+    "async def",
+    "pyproject.toml"
    ],
    "evidence_pages": [],
    "depends_on": [
@@ -1477,14 +1521,19 @@
      "fact_idx": 0
     },
     {
-     "quote": "[tool.fastapi]\nentrypoint = \"main:app\"",
-     "page": "getting-started/first-steps.md",
-     "fact_idx": 0
-    },
-    {
      "quote": "Test functions are **normal `def`**, even when your endpoints are `async def` — the client runs the app for you.",
      "page": "testing/testing-basics.md",
      "fact_idx": 1
+    },
+    {
+     "quote": "declare the app location in `pyproject.toml`:",
+     "page": "getting-started/first-steps.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "[tool.fastapi]",
+     "page": "getting-started/first-steps.md",
+     "fact_idx": 2
     }
    ],
    "alt_evidence": [],
@@ -1501,14 +1550,19 @@
    ],
    "source_turn": null,
    "recall_distance": 10,
+   "review": {
+    "changed_round2": true,
+    "target": []
+   },
    "closed_book_knowledge": {
-    "correct": true,
-    "accuracy_main": 1.0,
-    "accuracy": 1.0,
-    "response": "Set the entrypoint to `service.gateway:app`. Async endpoints do not require async test functions when using `TestClient`; tests can be synchronous.",
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.6666666666666666,
+    "response": "Set the entrypoint to `service.gateway:app`. No—`TestClient` lets you test async endpoints from regular synchronous test functions.",
     "fact_results": [
      true,
-     true
+     true,
+     false
     ],
     "judge_skipped": null,
     "unknown": false,
@@ -1529,7 +1583,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-101331"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -1537,6 +1591,7 @@
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
+     false,
      false,
      false
     ],
@@ -1563,7 +1618,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-101331"
    }
   },
   {
@@ -1686,6 +1741,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1824,6 +1882,11 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "c: 턴 2 의존은 간접 채점 (턴 2 가 인용한 페이지만 같음); 턴 6 의존은 간접 채점 (턴 6 가 인용한 페이지만 같음)"
+    ]
    }
   },
   {
@@ -1943,6 +2006,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2071,6 +2137,11 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ]
    }
   },
   {
@@ -2194,6 +2265,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2315,6 +2389,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2461,7 +2538,19 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
+  }
+ ],
+ "edits": [
+  {
+   "date": "2026-11-28",
+   "by": "검수 2차 결정 반영 (손 수정)",
+   "items": [
+    "턴 11: 턴 1 의존이 setup 항목으로만 채점돼, 턴 1 문서(pyproject.toml 의 [tool.fastapi])를 근거로 한 key_fact [2] 추가"
+   ]
   }
  ]
 }

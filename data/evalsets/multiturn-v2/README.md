@@ -105,3 +105,8 @@ python src/multiturn/scenario_report.py data/evalsets/multiturn-v2/v2_01_auth_sw
 
 턴의 `review` 필드: `standalone_same_fact` (예 / 아니오), `flags` (`grounded_memory`: 실험 지시문 아래에서도 기억으로 답한 턴, 제외하지 않고 표시), `by`.
 샘플 2개의 손 수정 내용은 시나리오의 `edits` 필드.
+
+## 검수 대상
+
+`python src/multiturn/review_targets.py data/evalsets/multiturn-v2/v2_*.json` 이 턴의 `review.target` 에 사유를 쓴다
+(a 질문 수정, b 대안 판정, c 남은 의심, d 시나리오별 무작위 10%, 시드 20261128). 검수 시트(`docs/review/multiturn_v2_review.html`)의 "검수 대상만" 보기로 본다.

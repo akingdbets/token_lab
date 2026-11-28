@@ -177,6 +177,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -221,12 +224,12 @@
    "depends_on": [],
    "evidence": [
     {
-     "quote": "- \"request\" (default for `yield` dependencies): setup before the path operation, teardown **after the response is sent**.",
+     "quote": "- `\"request\"` (default for `yield` dependencies): setup before the path operation, teardown **after the response is sent**.",
      "page": "dependencies/dependencies-with-yield.md",
      "fact_idx": 0
     },
     {
-     "quote": "- \"function\": teardown right after the path operation function returns, **before** the response is sent.",
+     "quote": "- `\"function\"`: teardown right after the path operation function returns, **before** the response is sent.",
      "page": "dependencies/dependencies-with-yield.md",
      "fact_idx": 1
     }
@@ -299,6 +302,16 @@
      "5e7fe8303199"
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "changed_round2": true,
+    "flags": [
+     "grounded_memory"
+    ],
+    "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
+    "target": [
+     "c: grounded 에서 기억으로 답함 (정확도 1.00)"
+    ]
    }
   },
   {
@@ -425,6 +438,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -551,6 +567,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -682,6 +701,11 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ]
    }
   },
   {
@@ -810,6 +834,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -933,6 +960,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1063,6 +1093,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1189,6 +1222,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1325,6 +1361,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1469,6 +1508,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1600,6 +1642,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1755,6 +1800,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -1896,6 +1944,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2002,6 +2053,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2136,6 +2190,11 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "c: 한 턴 한 주제 경고"
+    ]
    }
   },
   {
@@ -2274,6 +2333,9 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": []
    }
   },
   {
@@ -2396,6 +2458,15 @@
      "5e7fe8303199"
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "flags": [
+     "grounded_memory"
+    ],
+    "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
+    "target": [
+     "c: grounded 에서 기억으로 답함 (정확도 1.00); recall·synthesis 인데 knowledge 로 맞힘"
+    ]
    }
   },
   {
@@ -2541,7 +2612,21 @@
      null
     ],
     "run_id": "20261128-094550"
+   },
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ]
    }
+  }
+ ],
+ "edits": [
+  {
+   "date": "2026-11-28",
+   "by": "검수 2차 결정 반영 (손 수정)",
+   "items": [
+    "턴 1: 인용문 2개를 원문 글자 그대로 (백틱 포함)"
+   ]
   }
  ]
 }
