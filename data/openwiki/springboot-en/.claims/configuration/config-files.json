@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:709eeb4f335f1010e5630d85736b1355446d9bec8c2807307c0e87d8f5ab2f74",
+  "claims": [
+    {
+      "id": "claim_6a03f037460344be9d3ef61c5ae01a60",
+      "statement": "The list is ordered by precedence (with values from lower items overriding earlier ones). Documents from the loaded files are added as PropertySource instances to the Spring Environment.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L111-L186",
+          "version": "repo-lines-v1:sha256:2e7fd8d128e8e279e1b563ee10cd0d73d1cff77b76a2f68787b3e14a8e4dc8f1:eyJzZWxlY3RlZExpbmVDb3VudCI6NzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxZTBjMWZlMjExNTZmMzFmN2U2NjlmZTI4Y2NjZDVhODNkYTE1NmU1NjUxMjM4Y2EwOTg3ZDNiZTIzZWZjMjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxMzY2YWRmZjVkN2Q5NjRjZWY2MTYzY2VmNzIzNjg5YWY4MDQ1OTQyNDIxNTljNTUyYjAxZjZlNjYzNTJhN2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_112e9ddbcd024ec59db2873b4ddebeb8",
+      "statement": "You can also refer to an explicit location by using the spring.config.location environment property. This property accepts a comma-separated list of one or more locations to check.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L111-L186",
+          "version": "repo-lines-v1:sha256:2e7fd8d128e8e279e1b563ee10cd0d73d1cff77b76a2f68787b3e14a8e4dc8f1:eyJzZWxlY3RlZExpbmVDb3VudCI6NzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxZTBjMWZlMjExNTZmMzFmN2U2NjlmZTI4Y2NjZDVhODNkYTE1NmU1NjUxMjM4Y2EwOTg3ZDNiZTIzZWZjMjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxMzY2YWRmZjVkN2Q5NjRjZWY2MTYzY2VmNzIzNjg5YWY4MDQ1OTQyNDIxNTljNTUyYjAxZjZlNjYzNTJhN2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8571e14825f74d61be3d84dd7f2573d9",
+      "statement": "If spring.config.location contains directories (as opposed to files), they should end in /. At runtime they will be appended with the names generated from spring.config.name before being loaded. Files specified in spring.config.location are imported directly.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L111-L186",
+          "version": "repo-lines-v1:sha256:2e7fd8d128e8e279e1b563ee10cd0d73d1cff77b76a2f68787b3e14a8e4dc8f1:eyJzZWxlY3RlZExpbmVDb3VudCI6NzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxZTBjMWZlMjExNTZmMzFmN2U2NjlmZTI4Y2NjZDVhODNkYTE1NmU1NjUxMjM4Y2EwOTg3ZDNiZTIzZWZjMjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxMzY2YWRmZjVkN2Q5NjRjZWY2MTYzY2VmNzIzNjg5YWY4MDQ1OTQyNDIxNTljNTUyYjAxZjZlNjYzNTJhN2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ae5470ec382040bcb725341587e47ccc",
+      "statement": "In most situations, each spring.config.location item you add will reference a single file or directory. Locations are processed in the order that they are defined and later ones can override the values of earlier ones.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L111-L186",
+          "version": "repo-lines-v1:sha256:2e7fd8d128e8e279e1b563ee10cd0d73d1cff77b76a2f68787b3e14a8e4dc8f1:eyJzZWxlY3RlZExpbmVDb3VudCI6NzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxZTBjMWZlMjExNTZmMzFmN2U2NjlmZTI4Y2NjZDVhODNkYTE1NmU1NjUxMjM4Y2EwOTg3ZDNiZTIzZWZjMjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxMzY2YWRmZjVkN2Q5NjRjZWY2MTYzY2VmNzIzNjg5YWY4MDQ1OTQyNDIxNTljNTUyYjAxZjZlNjYzNTJhN2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6d8030d283504e60b526eb56c13afedf",
+      "statement": "This search ordering lets you specify default values in one configuration file and then selectively override those values in another. You can provide default values for your application in application.properties (or whatever other basename you choose with spring.config.name) in one of the default locations. These default values can then be overridden at runtime with a different file located in one of the custom locations.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L111-L186",
+          "version": "repo-lines-v1:sha256:2e7fd8d128e8e279e1b563ee10cd0d73d1cff77b76a2f68787b3e14a8e4dc8f1:eyJzZWxlY3RlZExpbmVDb3VudCI6NzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxZTBjMWZlMjExNTZmMzFmN2U2NjlmZTI4Y2NjZDVhODNkYTE1NmU1NjUxMjM4Y2EwOTg3ZDNiZTIzZWZjMjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxMzY2YWRmZjVkN2Q5NjRjZWY2MTYzY2VmNzIzNjg5YWY4MDQ1OTQyNDIxNTljNTUyYjAxZjZlNjYzNTJhN2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

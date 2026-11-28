@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:6597ed5829058099c32deae7f8b270ce69d73b15733c9b88f82913d92bab747b",
+  "claims": [
+    {
+      "id": "claim_fa425a247e03478cbcf14d6a875a2a4b",
+      "statement": "Spring MVC uses a different ConversionService to the one used to convert values from your application.properties or application.yaml file. It means that Period, Duration and DataSize converters are not available and that @DurationUnit and @DataSizeUnit annotations will be ignored.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L59-L85",
+          "version": "repo-lines-v1:sha256:ea435e30ee7bc74a0c5cf71def722ee3c1b24d07cc88b666166b46dff84b4a94:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4MWJiMWZhODI5YmU4ZmM0NmMxZGMxYmNiOGRhNzA4NDFmZjg3YWFjOGViMDhmMWY3NTE0M2FkYWEyMTI2ZDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5ZDhmOGE3NTkwYTVhNDA0MjQwYzBhMjUyYjE0MDQzOWE3NWQxZmY3NzQ3YTYyMTM4ZTEyMDZjZmRmNDY4MGYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_de45e2a16fe741d0b9abaf2980ea54d3",
+      "statement": "If you want to customize the ConversionService used by Spring MVC, you can provide a WebMvcConfigurer bean with an addFormatters method. From this method you can register any converter that you like, or you can delegate to the static methods available on ApplicationConversionService.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L59-L85",
+          "version": "repo-lines-v1:sha256:ea435e30ee7bc74a0c5cf71def722ee3c1b24d07cc88b666166b46dff84b4a94:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4MWJiMWZhODI5YmU4ZmM0NmMxZGMxYmNiOGRhNzA4NDFmZjg3YWFjOGViMDhmMWY3NTE0M2FkYWEyMTI2ZDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5ZDhmOGE3NTkwYTVhNDA0MjQwYzBhMjUyYjE0MDQzOWE3NWQxZmY3NzQ3YTYyMTM4ZTEyMDZjZmRmNDY4MGYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:eef854bf0ed6f25180fbfecfa7a3bd6ece0c272c24d7b459784941ff7bfeb9c3",
+  "claims": [
+    {
+      "id": "claim_9588fc5623a6461ea9cea2511a085c88",
+      "statement": "The spring-boot-actuator module provides all of Spring Boot’s production-ready features. The recommended way to enable the features is to add a dependency on the spring-boot-starter-actuator starter.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/actuator/enabling.adoc#L1-L32",
+          "version": "repo-lines-v1:sha256:d7e618a65bbcd43c662d3e03e220f7eb103df3cca71da134a6e461b79c957980:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhZmIyZWM3MDRiZjM2NGEyODVkZmVkM2UzMWYwZmY1NTE0NjhhOWQwNzA4MjkxM2M4YmY5ZTNkMDU5ODI4Y2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxZWVmZTljMjY2NDE1ZTkyNTYzOGRlNGRkMzg5ZTUyMjRlNjRlOTNmZmFkZjAwMGFjMzQzNDc5YTUwYmE3ZTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_532b599c0027488cb597bdad76cbb208",
+      "statement": "An actuator is a manufacturing term that refers to a mechanical device for moving or controlling something. Actuators can generate a large amount of motion from a small change.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/actuator/enabling.adoc#L1-L32",
+          "version": "repo-lines-v1:sha256:d7e618a65bbcd43c662d3e03e220f7eb103df3cca71da134a6e461b79c957980:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhZmIyZWM3MDRiZjM2NGEyODVkZmVkM2UzMWYwZmY1NTE0NjhhOWQwNzA4MjkxM2M4YmY5ZTNkMDU5ODI4Y2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxZWVmZTljMjY2NDE1ZTkyNTYzOGRlNGRkMzg5ZTUyMjRlNjRlOTNmZmFkZjAwMGFjMzQzNDc5YTUwYmE3ZTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

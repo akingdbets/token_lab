@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:9d83b30f83a81f971a78ea4f64a1c014e75893e126dcf52889b5db1d00b15de2",
+  "claims": [
+    {
+      "id": "claim_2a235f0c20384923904b2d12f531ca84",
+      "statement": "You can also add a custom Spring Validator by creating a bean definition called configurationPropertiesValidator. The @Bean method should be declared static. The configuration properties validator is created very early in the application’s lifecycle, and declaring the @Bean method as static lets the bean be created without having to instantiate the @Configuration class. Doing so avoids any problems that may be caused by early instantiation.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L1402-L1425",
+          "version": "repo-lines-v1:sha256:9ef4141e0445e31ecdf867b645e78af21700ef0e1eb01179858978722d4064d2:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA5YTViZGYxNjI5ZTljOTNiYzRkODIzNTAzYjIwODcxNzczNDM2ZDRiMmIyZTM5NTRlMTBlMDNiOGZjN2UzMjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBkYzM2NmQ3M2YzMmM1ZGQ4OTczZmYwOTZhOTM4YzBkYmMxM2YzZDU4Y2E3NDJhOWM5MzZlOTU3NjYyMTA5NGMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/features/externalconfig/typesafeconfigurationproperties/validation/MyProperties.java",
+          "version": "repo-file-v1:sha256:f0140595bb321cd10841b01427d4175df928d597ad3331ba2ea4ecc114a0d7c8"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/features/externalconfig/typesafeconfigurationproperties/validation/nested/MyProperties.java",
+          "version": "repo-file-v1:sha256:7bbc0c227629719257b445285421bc005d293e9b97a2d05aefa24167c5ca3053"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

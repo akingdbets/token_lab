@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:a91181529e155bfb4a6b0689d141f9be84c26b865a88be1f40bb4c1b27bb2a4f",
+  "claims": [
+    {
+      "id": "claim_93274b1ec6254364bcc9f9317e737216",
+      "statement": "Docker images can be built directly from your Maven or Gradle plugin using Cloud Native Buildpacks. If you’ve ever used an application platform such as Cloud Foundry or Heroku then you’ve probably used a buildpack. Buildpacks are the part of the platform that takes your application and converts it into something that the platform can actually run. For example, Cloud Foundry’s Java buildpack will notice that you’re pushing a .jar file and automatically add a relevant JRE.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/packaging/container-images/cloud-native-buildpacks.adoc#L1-L19",
+          "version": "repo-lines-v1:sha256:53209c3a858c39246c84d3e3cfba2bf28d5bd58ae65eb11fe21e96bcf1f1657a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI3OWUxYmJkNDI3N2Q2MTgyNzg0OWMyOTI4YmI2YTk5M2U3MjljYzk2ZmExOGM4NTIwYThhZGZmZGI3Yzk1ODciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ0M2ZiM2M1YTM2NDljMTFlNWM2MDdkNTllNTg1ZDU3OWM3YzU0OWRjNWFmNGRhOWU1MmY1OGY2ZjUxY2Y1ODMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_44d39a0267ae4a9cb3287494f3ae95b6",
+      "statement": "With Cloud Native Buildpacks, you can create Docker compatible images that you can run anywhere. Spring Boot includes buildpack support directly for both Maven and Gradle. This means you can just type a single command and quickly get a sensible image into your locally running Docker daemon.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/packaging/container-images/cloud-native-buildpacks.adoc#L1-L19",
+          "version": "repo-lines-v1:sha256:53209c3a858c39246c84d3e3cfba2bf28d5bd58ae65eb11fe21e96bcf1f1657a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI3OWUxYmJkNDI3N2Q2MTgyNzg0OWMyOTI4YmI2YTk5M2U3MjljYzk2ZmExOGM4NTIwYThhZGZmZGI3Yzk1ODciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ0M2ZiM2M1YTM2NDljMTFlNWM2MDdkNTllNTg1ZDU3OWM3YzU0OWRjNWFmNGRhOWU1MmY1OGY2ZjUxY2Y1ODMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

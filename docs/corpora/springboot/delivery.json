@@ -1,0 +1,100 @@
+{
+  "base_main": "fabbe95c5c34ed59fd3cf0286c21d77c5971626c",
+  "imported_build_commit": "14c382aa98cc15dcb1ef10e7dbba5a0113358389",
+  "branch": "feature/springboot-openwiki",
+  "verified_at": "2026-11-29 Asia/Seoul",
+  "upstream_tag": "v4.2.0",
+  "upstream_commit": "3a36e91f4d92d2e5986092baf8fa1e4848098f01",
+  "original_native_files_unchanged": 113,
+  "source_md_only_attribution_added": true,
+  "versions": {
+    "openwiki": "0.7.0",
+    "@asciidoctor/core": "3.0.4",
+    "@springio/asciidoctor-extensions": "1.0.0-alpha.18",
+    "turndown": "7.2.2",
+    "turndown-plugin-gfm": "1.0.2"
+  },
+  "springboot": {
+    "documents": 60,
+    "topics": 49,
+    "quickstarts": 1,
+    "indexes": 10,
+    "non_index_pages": 50,
+    "total_tokens": 63566,
+    "non_index_tokens": 61706,
+    "non_index_distribution": {
+      "min": 338,
+      "p25": 686.25,
+      "median": 1027.0,
+      "p75": 1769.75,
+      "p90": 1948.7,
+      "p95": 2237.1,
+      "max": 5080,
+      "mean": 1234.12
+    },
+    "all_document_distribution": {
+      "min": 32,
+      "p25": 526.25,
+      "median": 895.0,
+      "p75": 1458.25,
+      "p90": 1913.9,
+      "p95": 2076.1,
+      "max": 5080,
+      "mean": 1059.43
+    }
+  },
+  "checks": {
+    "json_parse": true,
+    "manifest_pages": 50,
+    "claims": 192,
+    "evidence_records": 260,
+    "evidence_source_files": 91,
+    "raw_source_hashes": 95,
+    "expansions_source_matched": 70,
+    "config_examples_source_matched": 33,
+    "code_blocks": {
+      "shell": 12,
+      "java": 67,
+      "yaml": 36,
+      "properties": 3,
+      "plain": 7,
+      "xml": 3,
+      "dockerfile": 3,
+      "gradle": 1,
+      "json": 1
+    },
+    "java_identifiers_checked": 634,
+    "local_heading_anchors_checked": 3,
+    "java_blocks_source_matched": 67,
+    "broken_links": {},
+    "corpus_documents": 60,
+    "corpus_links": 168,
+    "fastapi_manifest_unchanged": true,
+    "separate_manifest": "data/corpus_manifest.springboot-en.jsonl"
+  },
+  "errors": [],
+  "fresh_reproduction": {
+    "markdown_bodies_compared": 60,
+    "different_bodies": [],
+    "rebuild_errors": [],
+    "upstream_license_matches": true
+  },
+  "tests": {
+    "run": 393,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "springboot_preparation_tests": 14,
+    "offline_and_socket_blocked": true
+  },
+  "original_worktrees_preserved": true,
+  "multiturn_head_preserved": "d92aa4048011a61eebbcba2cbeb66ad261c5e905",
+  "multiturn_payload_included": false,
+  "separate_model_API_calls": 0,
+  "upstream_license_matches": true,
+  "limitations": [
+    "One generated application-properties appendix anchor was not built; external URLs were not HTTP crawled.",
+    "Java compilation and complete Antora site build were not performed.",
+    "Rebuild run IDs, metadata timestamps and input gitHead differ; all 60 Markdown bodies match."
+  ]
+}

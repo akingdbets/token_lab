@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:5fac85eaee67ae46dd3e75d6bb1a69eb7efb294d4728c1dc1790f2f1cec37ef4",
+  "claims": [
+    {
+      "id": "claim_4521e831a4d24c159fd931b7418fd184",
+      "statement": "The Reactive Relational Database Connectivity (R2DBC) project brings reactive programming APIs to relational databases. R2DBC’s Connection provides a standard method of working with non-blocking database connections. Connections are provided by using a ConnectionFactory, similar to a DataSource with jdbc.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/data/sql.adoc#L494-L583",
+          "version": "repo-lines-v1:sha256:2681f79f2146762b7fb751f3b15fe0683412543fcd1c8322680a97485ad948dd:eyJzZWxlY3RlZExpbmVDb3VudCI6OTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNiYzRhYTM1Yjg4ZDc4NjY0MzE4YjMwODUwZjI0MDBhMzVkOTQ1YjlmMTUzMGRhMWFlMDM1NzU3ZDlmMjQyZDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ1NTVlODkxMDFjNDFhYzM5YjBiZTA4OGFjZTYwZjBlNDM0NDRjNjlhNWU4OWVjZmIyNjBkZTEwMWE5NjgzMDQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/data/sql/r2dbc/MyPostgresR2dbcConfiguration.java",
+          "version": "repo-file-v1:sha256:714e1bae292422b8997d93c7a967e130c6ba352fbcf19507787a018baa03769c"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/data/sql/r2dbc/MyR2dbcConfiguration.java",
+          "version": "repo-file-v1:sha256:186b6d0a3ecaa466c76870547a3d3245018721efc9ca35db812e9f7abb681076"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/data/sql/r2dbc/repositories/CityRepository.java",
+          "version": "repo-file-v1:sha256:785690ec4dc0a94041b1e0f5e94194fd66490d49fde05e61942b4e9525fcfbc6"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/data/sql/r2dbc/usingdatabaseclient/MyBean.java",
+          "version": "repo-file-v1:sha256:a0e84c5d9d50c5d5a1fa2fd6496abb02a5b7dfaa1b96f0181b6b41ee89036381"
+        }
+      ]
+    },
+    {
+      "id": "claim_eddeb4f3de3f467a86fbe811b2e09672",
+      "statement": "When a ConnectionFactory bean is available, the regular JDBC DataSource auto-configuration backs off. If you want to retain the JDBC DataSource auto-configuration, and are comfortable with the risk of using the blocking JDBC API in a reactive application, add @Import(DataSourceAutoConfiguration.class) on a @Configuration class in your application to re-enable it.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/data/sql.adoc#L494-L583",
+          "version": "repo-lines-v1:sha256:2681f79f2146762b7fb751f3b15fe0683412543fcd1c8322680a97485ad948dd:eyJzZWxlY3RlZExpbmVDb3VudCI6OTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNiYzRhYTM1Yjg4ZDc4NjY0MzE4YjMwODUwZjI0MDBhMzVkOTQ1YjlmMTUzMGRhMWFlMDM1NzU3ZDlmMjQyZDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ1NTVlODkxMDFjNDFhYzM5YjBiZTA4OGFjZTYwZjBlNDM0NDRjNjlhNWU4OWVjZmIyNjBkZTEwMWE5NjgzMDQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_046298e7b664449eb51a9b1243ec609a",
+      "statement": "If you are using this feature in your tests, you may notice that the same database is reused by your whole test suite regardless of the number of application contexts that you use. If you want to make sure that each context has a separate embedded database, you should set spring.r2dbc.generate-unique-name to true.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/data/sql.adoc#L494-L583",
+          "version": "repo-lines-v1:sha256:2681f79f2146762b7fb751f3b15fe0683412543fcd1c8322680a97485ad948dd:eyJzZWxlY3RlZExpbmVDb3VudCI6OTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNiYzRhYTM1Yjg4ZDc4NjY0MzE4YjMwODUwZjI0MDBhMzVkOTQ1YjlmMTUzMGRhMWFlMDM1NzU3ZDlmMjQyZDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ1NTVlODkxMDFjNDFhYzM5YjBiZTA4OGFjZTYwZjBlNDM0NDRjNjlhNWU4OWVjZmIyNjBkZTEwMWE5NjgzMDQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_531c196e21cb4009b365a6b9ddf0fd05",
+      "statement": "Spring Data R2DBC repositories are interfaces that you can define to access data. Queries are created automatically from your method names. For example, a CityRepository interface might declare a findAllByState(String state) method to find all the cities in a given state.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/data/sql.adoc#L494-L583",
+          "version": "repo-lines-v1:sha256:2681f79f2146762b7fb751f3b15fe0683412543fcd1c8322680a97485ad948dd:eyJzZWxlY3RlZExpbmVDb3VudCI6OTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNiYzRhYTM1Yjg4ZDc4NjY0MzE4YjMwODUwZjI0MDBhMzVkOTQ1YjlmMTUzMGRhMWFlMDM1NzU3ZDlmMjQyZDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ1NTVlODkxMDFjNDFhYzM5YjBiZTA4OGFjZTYwZjBlNDM0NDRjNjlhNWU4OWVjZmIyNjBkZTEwMWE5NjgzMDQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a7edf7bd9a4344ada6b890bf2d10aed8",
+      "statement": "Spring Data repositories usually extend from the Repository or CrudRepository interfaces. If you use auto-configuration, the auto-configuration packages are searched for repositories.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/data/sql.adoc#L494-L583",
+          "version": "repo-lines-v1:sha256:2681f79f2146762b7fb751f3b15fe0683412543fcd1c8322680a97485ad948dd:eyJzZWxlY3RlZExpbmVDb3VudCI6OTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNiYzRhYTM1Yjg4ZDc4NjY0MzE4YjMwODUwZjI0MDBhMzVkOTQ1YjlmMTUzMGRhMWFlMDM1NzU3ZDlmMjQyZDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ1NTVlODkxMDFjNDFhYzM5YjBiZTA4OGFjZTYwZjBlNDM0NDRjNjlhNWU4OWVjZmIyNjBkZTEwMWE5NjgzMDQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

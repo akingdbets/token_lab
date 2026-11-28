@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:0390e33ebcc6e0a1804c2c0a888c0aa2e9553778c49923c65e32f9f697b765fd",
+  "claims": [
+    {
+      "id": "claim_cd718d96220e4a93bfbe1e4d0d5a3546",
+      "statement": "Storing config values in environment variables has drawbacks, especially if the value is supposed to be kept secret.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L468-L560",
+          "version": "repo-lines-v1:sha256:e646be9ca78b157e3e175fabe825514943612836950d8f57c731357dca353462:eyJzZWxlY3RlZExpbmVDb3VudCI6OTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY5ZWE2MDMwMDEwMWUxOTk0MTMzODRmOWMxMTU3NTRlYzUyMjQyNDliOTI4OTg0ZTljNzQxMGMyNjEzYmU1ZTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxZWVmZTljMjY2NDE1ZTkyNTYzOGRlNGRkMzg5ZTUyMjRlNjRlOTNmZmFkZjAwMGFjMzQzNDc5YTUwYmE3ZTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4a04e0315d0a49f384687e0bae5d0087",
+      "statement": "As an alternative to environment variables, many cloud platforms now allow you to map configuration into mounted data volumes. For example, Kubernetes can volume mount both ConfigMaps and Secrets.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L468-L560",
+          "version": "repo-lines-v1:sha256:e646be9ca78b157e3e175fabe825514943612836950d8f57c731357dca353462:eyJzZWxlY3RlZExpbmVDb3VudCI6OTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY5ZWE2MDMwMDEwMWUxOTk0MTMzODRmOWMxMTU3NTRlYzUyMjQyNDliOTI4OTg0ZTljNzQxMGMyNjEzYmU1ZTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxZWVmZTljMjY2NDE1ZTkyNTYzOGRlNGRkMzg5ZTUyMjRlNjRlOTNmZmFkZjAwMGFjMzQzNDc5YTUwYmE3ZTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b3239c990a8d4b04b9e24701b7a9754c",
+      "statement": "For the first case, you can import the YAML or Properties file directly using spring.config.import as described above. For the second case, you need to use the configtree: prefix so that Spring Boot knows it needs to expose all the files as properties.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L468-L560",
+          "version": "repo-lines-v1:sha256:e646be9ca78b157e3e175fabe825514943612836950d8f57c731357dca353462:eyJzZWxlY3RlZExpbmVDb3VudCI6OTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY5ZWE2MDMwMDEwMWUxOTk0MTMzODRmOWMxMTU3NTRlYzUyMjQyNDliOTI4OTg0ZTljNzQxMGMyNjEzYmU1ZTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxZWVmZTljMjY2NDE1ZTkyNTYzOGRlNGRkMzg5ZTUyMjRlNjRlOTNmZmFkZjAwMGFjMzQzNDc5YTUwYmE3ZTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_61d0ec3066f04f10aba7c1868f5e9eb2",
+      "statement": "The contents of the username file would be a config value, and the contents of password would be a secret.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L468-L560",
+          "version": "repo-lines-v1:sha256:e646be9ca78b157e3e175fabe825514943612836950d8f57c731357dca353462:eyJzZWxlY3RlZExpbmVDb3VudCI6OTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY5ZWE2MDMwMDEwMWUxOTk0MTMzODRmOWMxMTU3NTRlYzUyMjQyNDliOTI4OTg0ZTljNzQxMGMyNjEzYmU1ZTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxZWVmZTljMjY2NDE1ZTkyNTYzOGRlNGRkMzg5ZTUyMjRlNjRlOTNmZmFkZjAwMGFjMzQzNDc5YTUwYmE3ZTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_eb9dba4ceaa349789f17cb6145ec1bd6",
+      "statement": "You can then access or inject myapp.username and myapp.password properties from the Environment in the usual way.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L468-L560",
+          "version": "repo-lines-v1:sha256:e646be9ca78b157e3e175fabe825514943612836950d8f57c731357dca353462:eyJzZWxlY3RlZExpbmVDb3VudCI6OTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY5ZWE2MDMwMDEwMWUxOTk0MTMzODRmOWMxMTU3NTRlYzUyMjQyNDliOTI4OTg0ZTljNzQxMGMyNjEzYmU1ZTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxZWVmZTljMjY2NDE1ZTkyNTYzOGRlNGRkMzg5ZTUyMjRlNjRlOTNmZmFkZjAwMGFjMzQzNDc5YTUwYmE3ZTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_55cf573eec564dafb0be0fb4f5dfd73d",
+      "statement": "If you have multiple config trees to import from the same parent folder you can use a wildcard shortcut. Any configtree: location that ends with /*/ will import all immediate children as config trees. As with a non-wildcard import, the names of the folders and files under each config tree form the property name.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/external-config.adoc#L468-L560",
+          "version": "repo-lines-v1:sha256:e646be9ca78b157e3e175fabe825514943612836950d8f57c731357dca353462:eyJzZWxlY3RlZExpbmVDb3VudCI6OTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY5ZWE2MDMwMDEwMWUxOTk0MTMzODRmOWMxMTU3NTRlYzUyMjQyNDliOTI4OTg0ZTljNzQxMGMyNjEzYmU1ZTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxZWVmZTljMjY2NDE1ZTkyNTYzOGRlNGRkMzg5ZTUyMjRlNjRlOTNmZmFkZjAwMGFjMzQzNDc5YTUwYmE3ZTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "upstream_url": "https://github.com/spring-projects/spring-boot.git",
+  "upstream_tag": "v4.2.0",
+  "tag_object": "a8da8b4df7a2984b7a20dd750e3fb8a7259fee9c",
+  "upstream_commit": "3a36e91f4d92d2e5986092baf8fa1e4848098f01",
+  "input_git_head": "2aac475cc4de920d1e8da1780b759a37188046f4",
+  "openwiki": "0.7.0",
+  "native_metadata": {
+    "updatedAt": "2026-11-28T11:55:35.038Z",
+    "command": "init",
+    "gitHead": "2aac475cc4de920d1e8da1780b759a37188046f4",
+    "model": "host-agent/codex",
+    "status": "complete",
+    "language": "en"
+  },
+  "host_model": "Codex (GPT-6 family; exact checkpoint ID not exposed)",
+  "source_preserving_render": true,
+  "separate_model_api_calls": 0,
+  "archive": {
+    "path": "results/corpora/springboot-v4.2.0-input.tar.gz",
+    "bytes": 650507,
+    "sha256": "5aa7e2554ec61cc630168dcc1d5cd8cdc9fbd69966bc62a8778af0b7639127d8"
+  },
+  "copied_native_files": 113,
+  "excluded_whole_upstream_repository": true,
+  "generation_attempts": "Source preparation and Markdown rendering were corrected before a clean final native init. All 50 pages were then regenerated sequentially with zero renderer warnings and copied byte-identically."
+}

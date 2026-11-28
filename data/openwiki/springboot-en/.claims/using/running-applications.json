@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:a9ca5ee581ef7ad3265a90a012e17de9ed189e13eeae5787363515b9af378d5a",
+  "claims": [
+    {
+      "id": "claim_cb7c7ec1bb66434bbd88ab136ba0b608",
+      "statement": "One of the biggest advantages of packaging your application as a jar and using an embedded HTTP server is that you can run your application as you would any other. The same applies to debugging Spring Boot applications. You do not need any special IDE plugins or extensions.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/using/running-your-application.adoc#L1-L104",
+          "version": "repo-lines-v1:sha256:dd21db74966487a2ab0e825f27893de4d604947b10ea1105dc7dff8bf6a4c801:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJiZjhhM2Y3ZWQyOTdlMDk0NTQwNTk4ZWQ1NTk1MDgwZThkNTIyNzA5YmE0NjcwNGVjNmI4MzAyOWExYjliOTQwIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJjYjMwMjIyNmZmMGEzODg3MDUzMmExZDZiZjljMmY5MmQyZWM1ZjgyMDVjYjVkMDUwMzhlZDlkY2M2MjM0ZWViIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_e7d0c0baae684624aa21fef9fbb966c6",
+      "statement": "You can run a Spring Boot application from your IDE as a Java application. However, you first need to import your project. Import steps vary depending on your IDE and build system. Most IDEs can import Maven projects directly. For example, Eclipse users can select Import…​ → Existing Maven Projects from the File menu.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/using/running-your-application.adoc#L1-L104",
+          "version": "repo-lines-v1:sha256:dd21db74966487a2ab0e825f27893de4d604947b10ea1105dc7dff8bf6a4c801:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJiZjhhM2Y3ZWQyOTdlMDk0NTQwNTk4ZWQ1NTk1MDgwZThkNTIyNzA5YmE0NjcwNGVjNmI4MzAyOWExYjliOTQwIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJjYjMwMjIyNmZmMGEzODg3MDUzMmExZDZiZjljMmY5MmQyZWM1ZjgyMDVjYjVkMDUwMzhlZDlkY2M2MjM0ZWViIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_5871265b33e9477990b3d1955122b600",
+      "statement": "If you cannot directly import your project into your IDE, you may be able to generate IDE metadata by using a build plugin. Maven includes plugins for Eclipse and IntelliJ IDEA. Gradle offers plugins for various IDEs.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/using/running-your-application.adoc#L1-L104",
+          "version": "repo-lines-v1:sha256:dd21db74966487a2ab0e825f27893de4d604947b10ea1105dc7dff8bf6a4c801:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJiZjhhM2Y3ZWQyOTdlMDk0NTQwNTk4ZWQ1NTk1MDgwZThkNTIyNzA5YmE0NjcwNGVjNmI4MzAyOWExYjliOTQwIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJjYjMwMjIyNmZmMGEzODg3MDUzMmExZDZiZjljMmY5MmQyZWM1ZjgyMDVjYjVkMDUwMzhlZDlkY2M2MjM0ZWViIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_f3bef3cdb6bc407d8a668c232cb13422",
+      "statement": "Since Spring Boot applications are plain Java applications, JVM hot-swapping should work out of the box. JVM hot swapping is somewhat limited with the bytecode that it can replace. For a more complete solution, JRebel can be used.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/using/running-your-application.adoc#L1-L104",
+          "version": "repo-lines-v1:sha256:dd21db74966487a2ab0e825f27893de4d604947b10ea1105dc7dff8bf6a4c801:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJiZjhhM2Y3ZWQyOTdlMDk0NTQwNTk4ZWQ1NTk1MDgwZThkNTIyNzA5YmE0NjcwNGVjNmI4MzAyOWExYjliOTQwIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJjYjMwMjIyNmZmMGEzODg3MDUzMmExZDZiZjljMmY5MmQyZWM1ZjgyMDVjYjVkMDUwMzhlZDlkY2M2MjM0ZWViIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_5719203bb5bf422c84e31fae649d0af2",
+      "statement": "The spring-boot-devtools module also includes support for quick application restarts. See the hotswapping.adoc section in “How-to Guides” for details.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/using/running-your-application.adoc#L1-L104",
+          "version": "repo-lines-v1:sha256:dd21db74966487a2ab0e825f27893de4d604947b10ea1105dc7dff8bf6a4c801:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJiZjhhM2Y3ZWQyOTdlMDk0NTQwNTk4ZWQ1NTk1MDgwZThkNTIyNzA5YmE0NjcwNGVjNmI4MzAyOWExYjliOTQwIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJjYjMwMjIyNmZmMGEzODg3MDUzMmExZDZiZjljMmY5MmQyZWM1ZjgyMDVjYjVkMDUwMzhlZDlkY2M2MjM0ZWViIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

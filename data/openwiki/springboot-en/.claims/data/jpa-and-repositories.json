@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:59226b5ff3005834447efae5344545dc9cc94414ae53e21b10a2b36d36504eb0",
+  "claims": [
+    {
+      "id": "claim_aac10aacc2ea4debb4befa1be6600a5b",
+      "statement": "Traditionally, JPA “Entity” classes are specified in a persistence.xml file. With Spring Boot, this file is not necessary and “Entity Scanning” is used instead. By default the auto-configuration packages are scanned.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/data/sql.adoc#L224-L342",
+          "version": "repo-lines-v1:sha256:2c8aae9f2cfa8745d51dcf692b73ad57f1de922cb3fa9bfc531a50c7a91b257c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE5LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIyYTRkMDdiYWYwNmQxNGIyYTNiZTQxMGNlMTYxMjYyZWVmYTkxZTc1YzgxM2VjNjc0NGU3Zjc1NDYxYzAxMDkyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIyMmRjYTRlZmM1NDQxNmM0OWY5NzA0ODBiMTIwZThjNTVmMDgxNmRkMDVmNzRkMWQ1N2QzMmQ4MjZkMzI2ZWZhIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/data/sql/jpaandspringdata/entityclasses/City.java",
+          "version": "repo-file-v1:sha256:de19f131a0d27ebd2105a3639670cfe7fc1de76ed04e8aa74f07fbc25e9a2764"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/data/sql/jpaandspringdata/enversrepositories/CountryRepository.java",
+          "version": "repo-file-v1:sha256:afd97c3f3c77c84af921b3e177886145988ddb1c726299aacb378509deeb7f29"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/data/sql/jpaandspringdata/repositories/CityRepository.java",
+          "version": "repo-file-v1:sha256:1913381a3e6fa8221e7bd03d7989bb0b330ae093abc385fcd0be96c91f708a12"
+        }
+      ]
+    },
+    {
+      "id": "claim_dd74d56f8c12448ea97d067359738a73",
+      "statement": "Spring Data JPA repositories are interfaces that you can define to access data. JPA queries are created automatically from your method names. For example, a CityRepository interface might declare a findAllByState(String state) method to find all the cities in a given state.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/data/sql.adoc#L224-L342",
+          "version": "repo-lines-v1:sha256:2c8aae9f2cfa8745d51dcf692b73ad57f1de922cb3fa9bfc531a50c7a91b257c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE5LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIyYTRkMDdiYWYwNmQxNGIyYTNiZTQxMGNlMTYxMjYyZWVmYTkxZTc1YzgxM2VjNjc0NGU3Zjc1NDYxYzAxMDkyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIyMmRjYTRlZmM1NDQxNmM0OWY5NzA0ODBiMTIwZThjNTVmMDgxNmRkMDVmNzRkMWQ1N2QzMmQ4MjZkMzI2ZWZhIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_fc3fe1714f43461baba0da33bfddd543",
+      "statement": "Spring Data repositories usually extend from the Repository or CrudRepository interfaces. If you use auto-configuration, the auto-configuration packages are searched for repositories.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/data/sql.adoc#L224-L342",
+          "version": "repo-lines-v1:sha256:2c8aae9f2cfa8745d51dcf692b73ad57f1de922cb3fa9bfc531a50c7a91b257c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE5LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIyYTRkMDdiYWYwNmQxNGIyYTNiZTQxMGNlMTYxMjYyZWVmYTkxZTc1YzgxM2VjNjc0NGU3Zjc1NDYxYzAxMDkyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIyMmRjYTRlZmM1NDQxNmM0OWY5NzA0ODBiMTIwZThjNTVmMDgxNmRkMDVmNzRkMWQ1N2QzMmQ4MjZkMzI2ZWZhIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_a8d3fc974e14490aaf89d0c1827d6ac5",
+      "statement": "Spring Data JPA repositories support three different modes of bootstrapping: default, deferred, and lazy. To enable deferred or lazy bootstrapping, set the spring.data.jpa.repositories.bootstrap-mode property to deferred or lazy respectively. When using deferred bootstrapping, the auto-configured EntityManagerFactoryBuilder requires a bootstrap executor and will use the context’s AsyncTaskExecutor, if one can be determined. If more than one exists, the one named applicationTaskExecutor will be used.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/data/sql.adoc#L224-L342",
+          "version": "repo-lines-v1:sha256:2c8aae9f2cfa8745d51dcf692b73ad57f1de922cb3fa9bfc531a50c7a91b257c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE5LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIyYTRkMDdiYWYwNmQxNGIyYTNiZTQxMGNlMTYxMjYyZWVmYTkxZTc1YzgxM2VjNjc0NGU3Zjc1NDYxYzAxMDkyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIyMmRjYTRlZmM1NDQxNmM0OWY5NzA0ODBiMTIwZThjNTVmMDgxNmRkMDVmNzRkMWQ1N2QzMmQ4MjZkMzI2ZWZhIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_0a6adb2ea8634a08b6a5b17a603e6d17",
+      "statement": "When using deferred or lazy bootstrapping, make sure to defer any access to the JPA infrastructure after the application context bootstrap phase. You can use SmartInitializingSingleton to invoke any initialization that requires the JPA infrastructure. For JPA components (such as converters) that are created as Spring beans, use ObjectProvider to delay the resolution of dependencies, if any.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/data/sql.adoc#L224-L342",
+          "version": "repo-lines-v1:sha256:2c8aae9f2cfa8745d51dcf692b73ad57f1de922cb3fa9bfc531a50c7a91b257c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE5LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIyYTRkMDdiYWYwNmQxNGIyYTNiZTQxMGNlMTYxMjYyZWVmYTkxZTc1YzgxM2VjNjc0NGU3Zjc1NDYxYzAxMDkyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIyMmRjYTRlZmM1NDQxNmM0OWY5NzA0ODBiMTIwZThjNTVmMDgxNmRkMDVmNzRkMWQ1N2QzMmQ4MjZkMzI2ZWZhIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_054ff4f41c264d0ba901b0be8895253d",
+      "statement": "If the spring-data-envers module from Spring Data JPA is available, JPA repositories are auto-configured to support typical Envers queries.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/data/sql.adoc#L224-L342",
+          "version": "repo-lines-v1:sha256:2c8aae9f2cfa8745d51dcf692b73ad57f1de922cb3fa9bfc531a50c7a91b257c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE5LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIyYTRkMDdiYWYwNmQxNGIyYTNiZTQxMGNlMTYxMjYyZWVmYTkxZTc1YzgxM2VjNjc0NGU3Zjc1NDYxYzAxMDkyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIyMmRjYTRlZmM1NDQxNmM0OWY5NzA0ODBiMTIwZThjNTVmMDgxNmRkMDVmNzRkMWQ1N2QzMmQ4MjZkMzI2ZWZhIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

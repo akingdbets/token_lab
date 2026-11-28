@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:be7cb085f990f8778b98555436de3f38c0226dfef3d1a6398aa1521dba2fed84",
+  "claims": [
+    {
+      "id": "claim_462d00c002d44d49b04676c3e61fd017",
+      "statement": "You are free to use any of the standard Spring Framework techniques to define your beans and their injected dependencies. We generally recommend using constructor injection to wire up dependencies and @ComponentScan to find beans.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/using/spring-beans-and-dependency-injection.adoc#L1-L18",
+          "version": "repo-lines-v1:sha256:10ad99ad5b55fe4f7b4a0dbc2ce91cfae55b7f1232172add4846b0334d0a742e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiMGI1OWI2OGQ3YzVhNDk3YzE0ZjJlMWZiZjc1NzdiMjU1NWViMWQ4MjZhYmRmYzllNjU4YmM1NGIyOGFiNzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdkMjU4MWVmMjMzYjNjMWMwZjk1NTg4NjMzM2RmOTIzNDBkMmViOTIzZWM4MDY3Y2M5NGQ5OWZiMTllODBkZTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/using/springbeansanddependencyinjection/multipleconstructors/MyAccountService.java",
+          "version": "repo-file-v1:sha256:d16e31d19ad3c5830560ccf6e0755482bf731b213119460c632dcc5da3a05073"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/using/springbeansanddependencyinjection/singleconstructor/MyAccountService.java",
+          "version": "repo-file-v1:sha256:c565a5988a5803dbb37989c7cf9f6009f49be05c7000c00b18fbab6e491724d7"
+        }
+      ]
+    },
+    {
+      "id": "claim_4d3aa78f4aec4d91975578064fb1d933",
+      "statement": "If you structure your code as suggested above (locating your application class in a top package), you can add @ComponentScan without any arguments or use the @SpringBootApplication annotation which implicitly includes it. All of your application components (@Component, @Service, @Repository, @Controller, and others) are automatically registered as Spring Beans.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/using/spring-beans-and-dependency-injection.adoc#L1-L18",
+          "version": "repo-lines-v1:sha256:10ad99ad5b55fe4f7b4a0dbc2ce91cfae55b7f1232172add4846b0334d0a742e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiMGI1OWI2OGQ3YzVhNDk3YzE0ZjJlMWZiZjc1NzdiMjU1NWViMWQ4MjZhYmRmYzllNjU4YmM1NGIyOGFiNzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdkMjU4MWVmMjMzYjNjMWMwZjk1NTg4NjMzM2RmOTIzNDBkMmViOTIzZWM4MDY3Y2M5NGQ5OWZiMTllODBkZTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

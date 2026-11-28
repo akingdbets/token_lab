@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:a72570fd1262d0cb65c76043e4517d6adbce48e123c095dc75dd5645f4282393",
+  "claims": [
+    {
+      "id": "claim_195a6d52261e4c70a93b96a93048c900",
+      "statement": "The Testcontainers library provides a way to manage services running inside Docker containers. It integrates with JUnit, allowing you to write a test class that can start up a container before any of the tests run. Testcontainers is especially useful for writing integration tests that talk to a real backend service such as MySQL, MongoDB, Cassandra and others.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/testcontainers.adoc#L1-L268",
+          "version": "repo-lines-v1:sha256:e63f7ab9067c6f862e08494dc4da4e97ce1d353a08a66a43507bbf6bc658e216:eyJzZWxlY3RlZExpbmVDb3VudCI6MjY4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI2ZTJlZGFhZTFjNjM2MDFlYWUxNjgxNTUzZmJiYTc1NzhmN2I4ZDhkNDc1Y2MyOTljMzU1OGRlNDk5YTE0ZmQwIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI5YWI2MmJkZTEwZTM0NTllOTkxNzA2NGZlMTEwZTY0NWMyM2MzMzIzNDNmY2U4MGQzMTE3YzY1NjdhNjcxNTVhIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/testing/testcontainers/dynamicproperties/MyIntegrationTests.java",
+          "version": "repo-file-v1:sha256:1e5e54e3c43936b9d79eb9ee4c1f7845722a27ab0d0f3dbcf6053e12b6259141"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/testing/testcontainers/importingconfigurationinterfaces/MyContainers.java",
+          "version": "repo-file-v1:sha256:34a12fa5ec6ff830c382ead0dbcffa5c1b9363c1cceb5827e311c5423994d982"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/testing/testcontainers/importingconfigurationinterfaces/MyTestConfiguration.java",
+          "version": "repo-file-v1:sha256:fec608e22610e73a123fc8d4cc5258eaca30bc75fa5d7800d31fc57d0d73b4ed"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/testing/testcontainers/junitextension/MyIntegrationTests.java",
+          "version": "repo-file-v1:sha256:ab72a3d585cca5dce19ef56051d0d766b3bea7fbccad1568ed36b9a2f79f6e91"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/testing/testcontainers/serviceconnections/MyIntegrationTests.java",
+          "version": "repo-file-v1:sha256:54dfb6e0b95e149e44d00833d9fe9afba4492ad977cd32742b763ac89ce2fcf7"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/testing/testcontainers/serviceconnections/MyRedisConfiguration.java",
+          "version": "repo-file-v1:sha256:437ae66a54e7f4aea95fa152dea70f26c95cec7e6cfae793904e6250a7502116"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/testing/testcontainers/serviceconnections/ssl/MyElasticsearchWithSslIntegrationTests.java",
+          "version": "repo-file-v1:sha256:a95110f262e5fe0e4e751a8580b8dd03c86db98cf6c6087ffeb379b28f7593f2"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/testing/testcontainers/serviceconnections/ssl/MyRedisWithSslIntegrationTests.java",
+          "version": "repo-file-v1:sha256:88319286c45c89b40460a1ec8d07718f6178510a585671e3f774e48cc6ec9cf6"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/testing/testcontainers/springbeans/MyIntegrationTests.java",
+          "version": "repo-file-v1:sha256:a0f5efa2c6380b2e08390dd6c63398b075bed2b702fe967ceb047c639c51a633"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/testing/testcontainers/springbeans/MyTestConfiguration.java",
+          "version": "repo-file-v1:sha256:247eacdf9d77cf1b5302280dd0d99cd96acc6b78080cbd6074dfd7fd82edf798"
+        }
+      ]
+    },
+    {
+      "id": "claim_51ebd38604b04d9398bfabc67ff25551",
+      "statement": "In following sections we will describe some of the methods you can use to integrate Testcontainers with your tests.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/testcontainers.adoc#L1-L268",
+          "version": "repo-lines-v1:sha256:e63f7ab9067c6f862e08494dc4da4e97ce1d353a08a66a43507bbf6bc658e216:eyJzZWxlY3RlZExpbmVDb3VudCI6MjY4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI2ZTJlZGFhZTFjNjM2MDFlYWUxNjgxNTUzZmJiYTc1NzhmN2I4ZDhkNDc1Y2MyOTljMzU1OGRlNDk5YTE0ZmQwIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI5YWI2MmJkZTEwZTM0NTllOTkxNzA2NGZlMTEwZTY0NWMyM2MzMzIzNDNmY2U4MGQzMTE3YzY1NjdhNjcxNTVhIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_9906846595ce4af1bab61f44851fde7a",
+      "statement": "Testcontainers provides a JUnit extension which can be used to manage containers in your tests. The extension is activated by applying the @Testcontainers annotation from Testcontainers to your test class.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/testcontainers.adoc#L1-L268",
+          "version": "repo-lines-v1:sha256:e63f7ab9067c6f862e08494dc4da4e97ce1d353a08a66a43507bbf6bc658e216:eyJzZWxlY3RlZExpbmVDb3VudCI6MjY4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI2ZTJlZGFhZTFjNjM2MDFlYWUxNjgxNTUzZmJiYTc1NzhmN2I4ZDhkNDc1Y2MyOTljMzU1OGRlNDk5YTE0ZmQwIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI5YWI2MmJkZTEwZTM0NTllOTkxNzA2NGZlMTEwZTY0NWMyM2MzMzIzNDNmY2U4MGQzMTE3YzY1NjdhNjcxNTVhIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_0680f653114342bdb3976c9f3802ec27",
+      "statement": "The example above will start up a Neo4j container before any of the tests are run. The lifecycle of the container instance is managed by Testcontainers, as described in their official documentation.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/testcontainers.adoc#L1-L268",
+          "version": "repo-lines-v1:sha256:e63f7ab9067c6f862e08494dc4da4e97ce1d353a08a66a43507bbf6bc658e216:eyJzZWxlY3RlZExpbmVDb3VudCI6MjY4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI2ZTJlZGFhZTFjNjM2MDFlYWUxNjgxNTUzZmJiYTc1NzhmN2I4ZDhkNDc1Y2MyOTljMzU1OGRlNDk5YTE0ZmQwIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI5YWI2MmJkZTEwZTM0NTllOTkxNzA2NGZlMTEwZTY0NWMyM2MzMzIzNDNmY2U4MGQzMTE3YzY1NjdhNjcxNTVhIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_8bb441b52a88481080408fa1ffeca6f3",
+      "statement": "When using the JUnit extension, container instances are stopped after the test class has run (for static fields) or after each test method (for non-static fields). This can cause issues when used with Spring Boot tests, as Spring’s TestContext Framework may cache the ApplicationContext beyond that point and reuse it for another test class or method with the same configuration. If the cached application context contains beans that depend on a container that has already been stopped, later tests or bean destruction callbacks may fail. For this reason, you should prefer managing containers as Spring beans or importing container declarations when the application context should remain usable for as long as it is cached.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/testcontainers.adoc#L1-L268",
+          "version": "repo-lines-v1:sha256:e63f7ab9067c6f862e08494dc4da4e97ce1d353a08a66a43507bbf6bc658e216:eyJzZWxlY3RlZExpbmVDb3VudCI6MjY4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI2ZTJlZGFhZTFjNjM2MDFlYWUxNjgxNTUzZmJiYTc1NzhmN2I4ZDhkNDc1Y2MyOTljMzU1OGRlNDk5YTE0ZmQwIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI5YWI2MmJkZTEwZTM0NTllOTkxNzA2NGZlMTEwZTY0NWMyM2MzMzIzNDNmY2U4MGQzMTE3YzY1NjdhNjcxNTVhIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_2d572badb3064abc99249dc4d3e149fa",
+      "statement": "A common pattern with Testcontainers is to declare the container instances as static fields in an interface.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/testcontainers.adoc#L1-L268",
+          "version": "repo-lines-v1:sha256:e63f7ab9067c6f862e08494dc4da4e97ce1d353a08a66a43507bbf6bc658e216:eyJzZWxlY3RlZExpbmVDb3VudCI6MjY4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI2ZTJlZGFhZTFjNjM2MDFlYWUxNjgxNTUzZmJiYTc1NzhmN2I4ZDhkNDc1Y2MyOTljMzU1OGRlNDk5YTE0ZmQwIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI5YWI2MmJkZTEwZTM0NTllOTkxNzA2NGZlMTEwZTY0NWMyM2MzMzIzNDNmY2U4MGQzMTE3YzY1NjdhNjcxNTVhIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

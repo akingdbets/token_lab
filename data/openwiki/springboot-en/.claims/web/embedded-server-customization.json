@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:0c7a7c6a100dd2d82af60352f881cf6f7e125ce12b673e94f25c93c42ed0230f",
+  "claims": [
+    {
+      "id": "claim_65a864db19f3460a91893eb58e5dd4bb",
+      "statement": "Common servlet container settings can be configured by using Spring Environment properties. Usually, you would define the properties in your application.properties or application.yaml file.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L622-L723",
+          "version": "repo-lines-v1:sha256:c49e1e4c36d6a2ac29c74b13e30664705afe4272907ec9a15cd46ecc443089aa:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI0NmEyMzRjZWJiZjk0MTZhZDg5NTVhMGVmNTRjNGY2ZGQzYmFjN2ZlYzM5YWQ2YmViYmE3MTE4MDVhNzM3YTkxIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI1NzQ2MGE0NWYyOTU2OTQ5NDhmOWQ1OWRiNzc5NzNhY2Y3ZWI0N2M2MTdiZWRhMzA5MjI4MDAyMjBhYWQ2MzFiIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/web/servlet/embeddedcontainer/customizing/programmatic/MyTomcatWebServerFactoryCustomizer.java",
+          "version": "repo-file-v1:sha256:e28d073f75c383edb1a92cfd6c6a5900656fa97ecfe45d2604e0652e949721da"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/web/servlet/embeddedcontainer/customizing/programmatic/MyWebServerFactoryCustomizer.java",
+          "version": "repo-file-v1:sha256:3183829d30b5f4a6b2557341c698b0b477c09eb4de1d8921c09121cd484ff2a2"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/web/servlet/embeddedcontainer/customizing/samesite/MySameSiteConfiguration.java",
+          "version": "repo-file-v1:sha256:13db5bf16e36f54c911b93b230e8b18dbab44b1693d20db079620d4d2071b64d"
+        }
+      ]
+    },
+    {
+      "id": "claim_2483f7a8d0b844a3b19ef53df60df683",
+      "statement": "Spring Boot tries as much as possible to expose common settings, but this is not always possible. For those cases, dedicated namespaces offer server-specific customizations (see server.tomcat). For instance, access logs can be configured with specific features of the embedded servlet container.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L622-L723",
+          "version": "repo-lines-v1:sha256:c49e1e4c36d6a2ac29c74b13e30664705afe4272907ec9a15cd46ecc443089aa:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI0NmEyMzRjZWJiZjk0MTZhZDg5NTVhMGVmNTRjNGY2ZGQzYmFjN2ZlYzM5YWQ2YmViYmE3MTE4MDVhNzM3YTkxIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI1NzQ2MGE0NWYyOTU2OTQ5NDhmOWQ1OWRiNzc5NzNhY2Y3ZWI0N2M2MTdiZWRhMzA5MjI4MDAyMjBhYWQ2MzFiIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_ad0631c13d844597aeaa15923ae8bc00",
+      "statement": "The SameSite cookie attribute can be used by web browsers to control if and how cookies are submitted in cross-site requests. The attribute is particularly relevant for modern web browsers which have started to change the default value that is used when the attribute is missing.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L622-L723",
+          "version": "repo-lines-v1:sha256:c49e1e4c36d6a2ac29c74b13e30664705afe4272907ec9a15cd46ecc443089aa:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI0NmEyMzRjZWJiZjk0MTZhZDg5NTVhMGVmNTRjNGY2ZGQzYmFjN2ZlYzM5YWQ2YmViYmE3MTE4MDVhNzM3YTkxIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI1NzQ2MGE0NWYyOTU2OTQ5NDhmOWQ1OWRiNzc5NzNhY2Y3ZWI0N2M2MTdiZWRhMzA5MjI4MDAyMjBhYWQ2MzFiIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_d39571a0c5c7498b9ed268a682953b78",
+      "statement": "If you want to change the SameSite attribute of your session cookie, you can use the server.servlet.session.cookie.same-site property. This property is supported by auto-configured Tomcat and Jetty servers. It is also used to configure Spring Session servlet based SessionRepository beans.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L622-L723",
+          "version": "repo-lines-v1:sha256:c49e1e4c36d6a2ac29c74b13e30664705afe4272907ec9a15cd46ecc443089aa:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI0NmEyMzRjZWJiZjk0MTZhZDg5NTVhMGVmNTRjNGY2ZGQzYmFjN2ZlYzM5YWQ2YmViYmE3MTE4MDVhNzM3YTkxIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI1NzQ2MGE0NWYyOTU2OTQ5NDhmOWQ1OWRiNzc5NzNhY2Y3ZWI0N2M2MTdiZWRhMzA5MjI4MDAyMjBhYWQ2MzFiIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_1556aa13b425437da50de65f5800ab73",
+      "statement": "If you want to change the SameSite attribute on other cookies added to your HttpServletResponse, you can use a CookieSameSiteSupplier. The CookieSameSiteSupplier is passed a Cookie and may return a SameSite value, or null.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L622-L723",
+          "version": "repo-lines-v1:sha256:c49e1e4c36d6a2ac29c74b13e30664705afe4272907ec9a15cd46ecc443089aa:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI0NmEyMzRjZWJiZjk0MTZhZDg5NTVhMGVmNTRjNGY2ZGQzYmFjN2ZlYzM5YWQ2YmViYmE3MTE4MDVhNzM3YTkxIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI1NzQ2MGE0NWYyOTU2OTQ5NDhmOWQ1OWRiNzc5NzNhY2Y3ZWI0N2M2MTdiZWRhMzA5MjI4MDAyMjBhYWQ2MzFiIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_b4c2d656bd484aad9725d3423b594dcd",
+      "statement": "There are a number of convenience factory and filter methods that you can use to quickly match specific cookies. For example, adding the following bean will automatically apply a SameSite of Lax for all cookies with a name that matches the regular expression myapp.*.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L622-L723",
+          "version": "repo-lines-v1:sha256:c49e1e4c36d6a2ac29c74b13e30664705afe4272907ec9a15cd46ecc443089aa:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI0NmEyMzRjZWJiZjk0MTZhZDg5NTVhMGVmNTRjNGY2ZGQzYmFjN2ZlYzM5YWQ2YmViYmE3MTE4MDVhNzM3YTkxIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI1NzQ2MGE0NWYyOTU2OTQ5NDhmOWQ1OWRiNzc5NzNhY2Y3ZWI0N2M2MTdiZWRhMzA5MjI4MDAyMjBhYWQ2MzFiIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2YTNjZjUxOTIzNTRmNzE2MTVhYzUxMDM0YjNlOTdjMjBlZGE5OTY0M2ZjYWY1YmJlNmQ0MWFkNTliZDEyMTY3In0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:0ceb388172299cba37d7ffacfaaa74d3942b83de7df2ef1f769a08cdf815541a",
+  "claims": [
+    {
+      "id": "claim_bf3aada336fa4498a905f859c6d9fb14",
+      "statement": "You could also specify it on the command line by using the following switch: --spring.profiles.active=dev,hsqldb.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/profiles.adoc#L1-L149",
+          "version": "repo-lines-v1:sha256:56ed1373b02113e993dd422adc540f06b6ee87e8052a18707f4cd7d58336b68f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQ5LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI1NjZlYWZiMGVlMjJlODkzOGU3Njc4YjA4MGU0ZmUwNzhmNzNjODVhMzViOTU1NWJmNTRlYmYyZWUwMDM2NGRjIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI4MWNhNWQwZDk5OTRhNjhlNjg5NmIyZmIwOWI3MWM0YmE0ZTdkMjY2NTkzMWI1ZjY5NjFkMTE2ZjViMmE2NDU5IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/features/profiles/ProductionConfiguration.java",
+          "version": "repo-file-v1:sha256:7a3200fb765d6a217b88bd0aaaed1bbbcf2cb0f0b22258950980c7ba6d1c8292"
+        }
+      ]
+    },
+    {
+      "id": "claim_e63ca894ec7b42b09bcf62ac349ea87c",
+      "statement": "spring.profiles.active and spring.profiles.default can only be used in non-profile-specific documents. This means they cannot be included in profile specific files or documents activated by spring.config.activate.on-profile.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/profiles.adoc#L1-L149",
+          "version": "repo-lines-v1:sha256:56ed1373b02113e993dd422adc540f06b6ee87e8052a18707f4cd7d58336b68f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQ5LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI1NjZlYWZiMGVlMjJlODkzOGU3Njc4YjA4MGU0ZmUwNzhmNzNjODVhMzViOTU1NWJmNTRlYmYyZWUwMDM2NGRjIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI4MWNhNWQwZDk5OTRhNjhlNjg5NmIyZmIwOWI3MWM0YmE0ZTdkMjY2NTkzMWI1ZjY5NjFkMTE2ZjViMmE2NDU5IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_b05ffa208b7b43c9a8427870449de42f",
+      "statement": "The spring.profiles.active property follows the same ordering rules as other properties. The highest PropertySource wins. This means that you can specify active profiles in application.properties and then **replace** them by using the command line switch.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/profiles.adoc#L1-L149",
+          "version": "repo-lines-v1:sha256:56ed1373b02113e993dd422adc540f06b6ee87e8052a18707f4cd7d58336b68f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQ5LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI1NjZlYWZiMGVlMjJlODkzOGU3Njc4YjA4MGU0ZmUwNzhmNzNjODVhMzViOTU1NWJmNTRlYmYyZWUwMDM2NGRjIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI4MWNhNWQwZDk5OTRhNjhlNjg5NmIyZmIwOWI3MWM0YmE0ZTdkMjY2NTkzMWI1ZjY5NjFkMTE2ZjViMmE2NDU5IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_6dd5be649a89471fb5690506a8003e15",
+      "statement": "By default, profile names in Spring Boot may contain letters, numbers, or permitted characters (-, _, ., +, @). In addition, they can only start and end with a letter or number.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/profiles.adoc#L1-L149",
+          "version": "repo-lines-v1:sha256:56ed1373b02113e993dd422adc540f06b6ee87e8052a18707f4cd7d58336b68f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQ5LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI1NjZlYWZiMGVlMjJlODkzOGU3Njc4YjA4MGU0ZmUwNzhmNzNjODVhMzViOTU1NWJmNTRlYmYyZWUwMDM2NGRjIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI4MWNhNWQwZDk5OTRhNjhlNjg5NmIyZmIwOWI3MWM0YmE0ZTdkMjY2NTkzMWI1ZjY5NjFkMTE2ZjViMmE2NDU5IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_32a761f7d2e24bf08060d599ce789414",
+      "statement": "Sometimes, it is useful to have properties that **add** to the active profiles rather than replace them. The spring.profiles.include property can be used to add active profiles on top of those activated by the spring.profiles.active property. The SpringApplication entry point also has a Java API for setting additional profiles. See the setAdditionalProfiles() method in SpringApplication.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/profiles.adoc#L1-L149",
+          "version": "repo-lines-v1:sha256:56ed1373b02113e993dd422adc540f06b6ee87e8052a18707f4cd7d58336b68f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQ5LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI1NjZlYWZiMGVlMjJlODkzOGU3Njc4YjA4MGU0ZmUwNzhmNzNjODVhMzViOTU1NWJmNTRlYmYyZWUwMDM2NGRjIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI4MWNhNWQwZDk5OTRhNjhlNjg5NmIyZmIwOWI3MWM0YmE0ZTdkMjY2NTkzMWI1ZjY5NjFkMTE2ZjViMmE2NDU5IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_cb5ed8bbd0b648968e2a2bb6f1e0da63",
+      "statement": "Profile groups, which are described in the next section can also be used to add active profiles if a given profile is active.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/profiles.adoc#L1-L149",
+          "version": "repo-lines-v1:sha256:56ed1373b02113e993dd422adc540f06b6ee87e8052a18707f4cd7d58336b68f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQ5LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI1NjZlYWZiMGVlMjJlODkzOGU3Njc4YjA4MGU0ZmUwNzhmNzNjODVhMzViOTU1NWJmNTRlYmYyZWUwMDM2NGRjIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI4MWNhNWQwZDk5OTRhNjhlNjg5NmIyZmIwOWI3MWM0YmE0ZTdkMjY2NTkzMWI1ZjY5NjFkMTE2ZjViMmE2NDU5IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:8d314dc8b1b04b7c4d3408e9150f79adac2ad0cdf369a633a9beb6758b5c5ea8",
+  "claims": [
+    {
+      "id": "claim_c5a0b48c76394c5a9c9558fc79601391",
+      "statement": "Spring Boot favors Java-based configuration. Although it is possible to use SpringApplication with XML sources, we generally recommend that your primary source be a single @Configuration class. Usually the class that defines the main method is a good candidate as the primary @Configuration.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/using/configuration-classes.adoc#L1-L27",
+          "version": "repo-lines-v1:sha256:954403bcc8784628a484614470b344090018fe025904288fb1b42e084d3ed576:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBiNTU0ZjM5ZTA0NTQ1ODlkMGIwYjQ3NTc0ZDgwOTg3OGExOGU5MGRiNmQzMmU2NDYyNTA3ZWNmZTAyZTAxMGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5NDVkNjZmOGI1YmUzOGE2NWU1NzU2MjNjNmE2YTg2ODgzYjM3NmIwOWJkN2M5NjhhNzJlODc0NGE1ZTViMmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_71efefdd00cb4566abb1dbed99bc875b",
+      "statement": "You need not put all your @Configuration into a single class. The @Import annotation can be used to import additional configuration classes. Alternatively, you can use @ComponentScan to automatically pick up all Spring components, including @Configuration classes.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/using/configuration-classes.adoc#L1-L27",
+          "version": "repo-lines-v1:sha256:954403bcc8784628a484614470b344090018fe025904288fb1b42e084d3ed576:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBiNTU0ZjM5ZTA0NTQ1ODlkMGIwYjQ3NTc0ZDgwOTg3OGExOGU5MGRiNmQzMmU2NDYyNTA3ZWNmZTAyZTAxMGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5NDVkNjZmOGI1YmUzOGE2NWU1NzU2MjNjNmE2YTg2ODgzYjM3NmIwOWJkN2M5NjhhNzJlODc0NGE1ZTViMmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_66855ffe17464081882ed614493a67b5",
+      "statement": "If you absolutely must use XML based configuration, we recommend that you still start with a @Configuration class. You can then use an @ImportResource annotation to load XML configuration files.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/using/configuration-classes.adoc#L1-L27",
+          "version": "repo-lines-v1:sha256:954403bcc8784628a484614470b344090018fe025904288fb1b42e084d3ed576:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBiNTU0ZjM5ZTA0NTQ1ODlkMGIwYjQ3NTc0ZDgwOTg3OGExOGU5MGRiNmQzMmU2NDYyNTA3ZWNmZTAyZTAxMGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5NDVkNjZmOGI1YmUzOGE2NWU1NzU2MjNjNmE2YTg2ODgzYjM3NmIwOWJkN2M5NjhhNzJlODc0NGE1ZTViMmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

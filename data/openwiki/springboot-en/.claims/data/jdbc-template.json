@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:aba902f47b4d3eddae4b53ffec257c8019f880916db6941b6bb7e75f0e3655bd",
+  "claims": [
+    {
+      "id": "claim_bd67b3dc89cc46d08dd226663fc38cd0",
+      "statement": "If tuning of SQL exceptions is required, you can define your own SQLExceptionTranslator bean so that it is associated with the auto-configured JdbcTemplate.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/data/sql.adoc#L188-L208",
+          "version": "repo-lines-v1:sha256:0fa0c6e1bcb415f9b7b8a50839cafc54d5d813c19b1a96bd1554ecdcf715d07f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUzY2Y3ZjkyYmExNTdkZTFjNDIzNGE3MWMxNWZkYzU2M2RjMTQ5MmIyMGJlZjY2NTc0MjFhNWJkOTk4NWVlYjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRlMzZmYjZlNjZiNDVkNzE5ZGRmZWRhNDdlNWJmY2Y0NjIzMWJhYzgwOWMxZGM0ZmIwNTUyNDk4ZjJlNThjNDUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/data/sql/jdbctemplate/MyBean.java",
+          "version": "repo-file-v1:sha256:7e225916116756f879235c27c05cf4c3e318c3063e37a5fe8f432702ae48a1da"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

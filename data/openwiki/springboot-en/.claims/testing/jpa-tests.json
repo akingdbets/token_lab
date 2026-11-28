@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:0feca81942ccf8b08a4a840eb7bebf162cc584f77adf8434bc0690eea037d57e",
+  "claims": [
+    {
+      "id": "claim_affe71b14d5c410c8a19a23bcc9f5ca3",
+      "statement": "You can use the @DataJpaTest annotation from the spring-boot-data-jpa-test module to test Data JPA applications. By default, it scans for @Entity classes and configures Spring Data JPA repositories. If an embedded database is available on the classpath, it configures one as well. SQL queries are logged by default by setting the spring.jpa.show-sql property to true. This can be disabled using the showSql attribute of the annotation.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/spring-boot-applications.adoc#L536-L569",
+          "version": "repo-lines-v1:sha256:4c8a2476b9379fe455b67ac6f8f3095df2ac66aa1f69196f57554897dfcd9ff1:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5YTIxOGNhNDJmOTkwODFiNzE1ODkwMGI3MTBjNjM2ZThjNWFmN2E4ZWY3N2M4OTgzNjgxNjM1YmE3ZjViNTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2YWZhMzk0MDRjNTA1NWRjMzU3ZTJhYTExNDc3NmVmZjE0MWEwMjQ1NmZiYWUxOTc2YzM2YTQwNTdjYzU4ODEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/testing/springbootapplications/autoconfiguredspringdatajpa/MyNonTransactionalTests.java",
+          "version": "repo-file-v1:sha256:710d22c9f8e8b369c10c16c13263868936eaed9a6e6fb927f9ada4b9a240581f"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/testing/springbootapplications/autoconfiguredspringdatajpa/withdb/MyRepositoryTests.java",
+          "version": "repo-file-v1:sha256:5d27eabfeb3b8bc39653abe54c54a3c8c1cd048928e65b5e3d71bc3e5fe6d177"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/testing/springbootapplications/autoconfiguredspringdatajpa/withoutdb/MyRepositoryTests.java",
+          "version": "repo-file-v1:sha256:f8da1f8f777da81e1ed1c3370939c3c9e255bc96b682c17d5c6cdecafe227db4"
+        }
+      ]
+    },
+    {
+      "id": "claim_21c924dfcd084608b4bc72ac69ad4626",
+      "statement": "Regular @Component and @ConfigurationProperties beans are not scanned when the @DataJpaTest annotation is used. @EnableConfigurationProperties can be used to include @ConfigurationProperties beans.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/spring-boot-applications.adoc#L536-L569",
+          "version": "repo-lines-v1:sha256:4c8a2476b9379fe455b67ac6f8f3095df2ac66aa1f69196f57554897dfcd9ff1:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5YTIxOGNhNDJmOTkwODFiNzE1ODkwMGI3MTBjNjM2ZThjNWFmN2E4ZWY3N2M4OTgzNjgxNjM1YmE3ZjViNTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2YWZhMzk0MDRjNTA1NWRjMzU3ZTJhYTExNDc3NmVmZjE0MWEwMjQ1NmZiYWUxOTc2YzM2YTQwNTdjYzU4ODEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_96801379224f489a9bdb7087492c8976",
+      "statement": "Data JPA tests may also inject a TestEntityManager bean, which provides an alternative to the standard JPA EntityManager that is specifically designed for tests.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/spring-boot-applications.adoc#L536-L569",
+          "version": "repo-lines-v1:sha256:4c8a2476b9379fe455b67ac6f8f3095df2ac66aa1f69196f57554897dfcd9ff1:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5YTIxOGNhNDJmOTkwODFiNzE1ODkwMGI3MTBjNjM2ZThjNWFmN2E4ZWY3N2M4OTgzNjgxNjM1YmE3ZjViNTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2YWZhMzk0MDRjNTA1NWRjMzU3ZTJhYTExNDc3NmVmZjE0MWEwMjQ1NmZiYWUxOTc2YzM2YTQwNTdjYzU4ODEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

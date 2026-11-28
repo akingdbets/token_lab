@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:39a8776e5f49e6c887456206faa7bc9cfebad0f4c459e7ffe282ca1cc696b75a",
+  "claims": [
+    {
+      "id": "claim_4d05962d7e9c4e7d9279b03e3f7345a8",
+      "statement": "In this example, MyApplication is just like any other Spring Boot application except that @Component\\-annotated classes and @ConfigurationProperties\\-annotated classes are not detected automatically and the user-defined beans are imported explicitly (see @Import).",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/using/using-the-springbootapplication-annotation.adoc#L1-L24",
+          "version": "repo-lines-v1:sha256:85812c7bd605bc62bbd3c594c7705995ac988c4ab0e9d33be256336dedaa3518:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA1MDU0M2JlMTljN2M0ZDY0MTRkNzFhNjFhYmJhOWIxNDlhZWU5YmM2MDZmM2NhMTExMjllMTdhMDdkZDFmZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlZTQ2NDE0YzllMzRkNWNiOGM3ZTQzZGJkM2YzMDU1OTQ0YTkzZDE5ZDhlYTEyMDE1MWJlYzY0YWE2OWFlMjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/using/usingthespringbootapplicationannotation/individualannotations/MyApplication.java",
+          "version": "repo-file-v1:sha256:42264dfe5c0666e48c04c8a0b88c6f99cd4fc9d2a483bc242ce588d8c81f2dbf"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/using/usingthespringbootapplicationannotation/springapplication/MyApplication.java",
+          "version": "repo-file-v1:sha256:8233728bfb8e51b7f03e3215b0ef41a69ce7e1042e3376ef488bc6818f05194b"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

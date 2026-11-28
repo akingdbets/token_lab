@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:973b2d191df7afc4a90c45dd5612def67a3bef1b4e0a7788fb3523fca2047a03",
+  "claims": [
+    {
+      "id": "claim_b6b9e868e9ce4d02a7c8ac12ee260292",
+      "statement": "If you are familiar with the Spring Test Framework, you may be used to using @ContextConfiguration(classes=…​) in order to specify which Spring @Configuration to load. Alternatively, you might have often used nested @Configuration classes within your test.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/spring-boot-applications.adoc#L49-L74",
+          "version": "repo-lines-v1:sha256:0d443e102ee6dae521b084c3d013b50db5d5381974233e84e4fa25145605cf40:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3OGRjNzA1MTZiMmIwZTkyZDYzZTU3MDM0NzlkNzc4YWNmNDU2NmZlNTAyODc2ZmFlYzMzNWQ3YWM5NGU2N2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZjZDQ0MjdkZDQ0YWQxNTA5ZWQ2YmM4MGI1YzA4M2MyNzBhOWM3YTZjZDM0ZDgwODQ4MTc2YzQwYWI1YzQ1NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e8bda66eb71c43de8ddc02d96036b65b",
+      "statement": "When testing Spring Boot applications, this is often not required. Spring Boot’s @*Test annotations search for your primary configuration automatically whenever you do not explicitly define one.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/spring-boot-applications.adoc#L49-L74",
+          "version": "repo-lines-v1:sha256:0d443e102ee6dae521b084c3d013b50db5d5381974233e84e4fa25145605cf40:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3OGRjNzA1MTZiMmIwZTkyZDYzZTU3MDM0NzlkNzc4YWNmNDU2NmZlNTAyODc2ZmFlYzMzNWQ3YWM5NGU2N2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZjZDQ0MjdkZDQ0YWQxNTA5ZWQ2YmM4MGI1YzA4M2MyNzBhOWM3YTZjZDM0ZDgwODQ4MTc2YzQwYWI1YzQ1NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7c32688cef6f4bf6b1aa3a7491ae1411",
+      "statement": "The search algorithm works up from the package that contains the test until it finds a class annotated with @SpringBootApplication or @SpringBootConfiguration. As long as you structured your code in a sensible way, your main configuration is usually found.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/spring-boot-applications.adoc#L49-L74",
+          "version": "repo-lines-v1:sha256:0d443e102ee6dae521b084c3d013b50db5d5381974233e84e4fa25145605cf40:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3OGRjNzA1MTZiMmIwZTkyZDYzZTU3MDM0NzlkNzc4YWNmNDU2NmZlNTAyODc2ZmFlYzMzNWQ3YWM5NGU2N2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZjZDQ0MjdkZDQ0YWQxNTA5ZWQ2YmM4MGI1YzA4M2MyNzBhOWM3YTZjZDM0ZDgwODQ4MTc2YzQwYWI1YzQ1NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7f4ed87e5c9c480b9d4eff28618c1875",
+      "statement": "If you use a test annotation to test a more specific slice of your application, you should avoid adding configuration settings that are specific to a particular area on the main method’s application class.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/spring-boot-applications.adoc#L49-L74",
+          "version": "repo-lines-v1:sha256:0d443e102ee6dae521b084c3d013b50db5d5381974233e84e4fa25145605cf40:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3OGRjNzA1MTZiMmIwZTkyZDYzZTU3MDM0NzlkNzc4YWNmNDU2NmZlNTAyODc2ZmFlYzMzNWQ3YWM5NGU2N2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZjZDQ0MjdkZDQ0YWQxNTA5ZWQ2YmM4MGI1YzA4M2MyNzBhOWM3YTZjZDM0ZDgwODQ4MTc2YzQwYWI1YzQ1NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e61b078e33fd4bcba50aa1b887365f42",
+      "statement": "The underlying component scan configuration of @SpringBootApplication defines exclude filters that are used to make sure slicing works as expected. If you are using an explicit @ComponentScan directive on your @SpringBootApplication\\-annotated class, be aware that those filters will be disabled. If you are using slicing, you should define them again.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/spring-boot-applications.adoc#L49-L74",
+          "version": "repo-lines-v1:sha256:0d443e102ee6dae521b084c3d013b50db5d5381974233e84e4fa25145605cf40:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3OGRjNzA1MTZiMmIwZTkyZDYzZTU3MDM0NzlkNzc4YWNmNDU2NmZlNTAyODc2ZmFlYzMzNWQ3YWM5NGU2N2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZjZDQ0MjdkZDQ0YWQxNTA5ZWQ2YmM4MGI1YzA4M2MyNzBhOWM3YTZjZDM0ZDgwODQ4MTc2YzQwYWI1YzQ1NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5fad1a5431844a9b9967cfc208b968f0",
+      "statement": "If you want to customize the primary configuration, you can use a nested @TestConfiguration class. Unlike a nested @Configuration class, which would be used instead of your application’s primary configuration, a nested @TestConfiguration class is used in addition to your application’s primary configuration.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/spring-boot-applications.adoc#L49-L74",
+          "version": "repo-lines-v1:sha256:0d443e102ee6dae521b084c3d013b50db5d5381974233e84e4fa25145605cf40:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3OGRjNzA1MTZiMmIwZTkyZDYzZTU3MDM0NzlkNzc4YWNmNDU2NmZlNTAyODc2ZmFlYzMzNWQ3YWM5NGU2N2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZjZDQ0MjdkZDQ0YWQxNTA5ZWQ2YmM4MGI1YzA4M2MyNzBhOWM3YTZjZDM0ZDgwODQ4MTc2YzQwYWI1YzQ1NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:4ae4e2abe707206e48bc83c6295b399aabd394660c4cc98733e628e12d9b1e7e",
+  "claims": [
+    {
+      "id": "claim_26fca722c4af48b4905424d39ad1de17",
+      "statement": "If Spring Security is on the classpath, then web applications are secured by default. This includes securing Spring Boot’s /error endpoint. Spring Boot relies on Spring Security’s content-negotiation strategy to determine whether to use httpBasic or formLogin. To add method-level security to a web application, you can also add @EnableMethodSecurity with your desired settings. Additional information can be found in the Spring Security Reference Guide.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/spring-security.adoc#L1-L102",
+          "version": "repo-lines-v1:sha256:fb30caec8cead564eb750a603ccb091dd2adadfcd80c536fa9be6ff2864976dc:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI5NWRlNWM3ZDQwMGFjZWQ2NjcwMDYzZmRiNmNhNDhlZTJkY2QwNmE2MTFiMTlmYjI4OGU1ZDQ1YWZlNmU2NzNkIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MDQzOTYyNjNjYTU0ZmQ5ZDA0N2MzMDZjODhhMjhjMzI0YTA3MGM1MTdiZWJhZjE1YzM2ZjBmMzIyNzczMjdhIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/web/security/springwebflux/MyWebFluxSecurityConfiguration.java",
+          "version": "repo-file-v1:sha256:1d79563bc4f0e9193d018c8fa67a4ca8e480a5685f8403620acac91640f9ce8b"
+        }
+      ]
+    },
+    {
+      "id": "claim_8c37bc1194ee421f8d591e1957fcfc7c",
+      "statement": "You can change the username and password by providing a spring.security.user.name and spring.security.user.password.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/spring-security.adoc#L1-L102",
+          "version": "repo-lines-v1:sha256:fb30caec8cead564eb750a603ccb091dd2adadfcd80c536fa9be6ff2864976dc:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI5NWRlNWM3ZDQwMGFjZWQ2NjcwMDYzZmRiNmNhNDhlZTJkY2QwNmE2MTFiMTlmYjI4OGU1ZDQ1YWZlNmU2NzNkIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MDQzOTYyNjNjYTU0ZmQ5ZDA0N2MzMDZjODhhMjhjMzI0YTA3MGM1MTdiZWJhZjE1YzM2ZjBmMzIyNzczMjdhIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_75e0690265e34ef8b57b720f5e8f03b5",
+      "statement": "The default security configuration is implemented in ServletWebSecurityAutoConfiguration and UserDetailsServiceAutoConfiguration.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/spring-security.adoc#L1-L102",
+          "version": "repo-lines-v1:sha256:fb30caec8cead564eb750a603ccb091dd2adadfcd80c536fa9be6ff2864976dc:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI5NWRlNWM3ZDQwMGFjZWQ2NjcwMDYzZmRiNmNhNDhlZTJkY2QwNmE2MTFiMTlmYjI4OGU1ZDQ1YWZlNmU2NzNkIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MDQzOTYyNjNjYTU0ZmQ5ZDA0N2MzMDZjODhhMjhjMzI0YTA3MGM1MTdiZWJhZjE1YzM2ZjBmMzIyNzczMjdhIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_e675430210c94db09e65fcdfeb7b20db",
+      "statement": "To completely switch off the default web application security configuration, including Actuator security, or to combine multiple Spring Security components such as OAuth2 Client and Resource Server, add a bean of type SecurityFilterChain (doing so does not disable the UserDetailsService configuration). To also switch off the UserDetailsService configuration, add a bean of type UserDetailsService, AuthenticationProvider, or AuthenticationManager.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/spring-security.adoc#L1-L102",
+          "version": "repo-lines-v1:sha256:fb30caec8cead564eb750a603ccb091dd2adadfcd80c536fa9be6ff2864976dc:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI5NWRlNWM3ZDQwMGFjZWQ2NjcwMDYzZmRiNmNhNDhlZTJkY2QwNmE2MTFiMTlmYjI4OGU1ZDQ1YWZlNmU2NzNkIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MDQzOTYyNjNjYTU0ZmQ5ZDA0N2MzMDZjODhhMjhjMzI0YTA3MGM1MTdiZWJhZjE1YzM2ZjBmMzIyNzczMjdhIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_06e589e1272a44658372a0eccb98a81e",
+      "statement": "To use UserDetailsService in addition to one or more of these dependencies, define your own InMemoryUserDetailsManager bean.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/spring-security.adoc#L1-L102",
+          "version": "repo-lines-v1:sha256:fb30caec8cead564eb750a603ccb091dd2adadfcd80c536fa9be6ff2864976dc:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI5NWRlNWM3ZDQwMGFjZWQ2NjcwMDYzZmRiNmNhNDhlZTJkY2QwNmE2MTFiMTlmYjI4OGU1ZDQ1YWZlNmU2NzNkIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MDQzOTYyNjNjYTU0ZmQ5ZDA0N2MzMDZjODhhMjhjMzI0YTA3MGM1MTdiZWJhZjE1YzM2ZjBmMzIyNzczMjdhIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_f74e433c5e0b4102b79d01fe5233f577",
+      "statement": "Access rules can be overridden by adding a custom SecurityFilterChain bean. Spring Boot provides convenience methods that can be used to override access rules for actuator endpoints and static resources. EndpointRequest can be used to create a RequestMatcher that is based on the management.endpoints.web.base-path property. PathRequest can be used to create a RequestMatcher for resources in commonly used locations.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/spring-security.adoc#L1-L102",
+          "version": "repo-lines-v1:sha256:fb30caec8cead564eb750a603ccb091dd2adadfcd80c536fa9be6ff2864976dc:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI5NWRlNWM3ZDQwMGFjZWQ2NjcwMDYzZmRiNmNhNDhlZTJkY2QwNmE2MTFiMTlmYjI4OGU1ZDQ1YWZlNmU2NzNkIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MDQzOTYyNjNjYTU0ZmQ5ZDA0N2MzMDZjODhhMjhjMzI0YTA3MGM1MTdiZWJhZjE1YzM2ZjBmMzIyNzczMjdhIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

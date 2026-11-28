@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:9a1850df1429e2ae5c0197eaf7b28b3a827546027e197897bf60c1c9afb6f51c",
+  "claims": [
+    {
+      "id": "claim_7e136c7c254c4cb8bf4f24a798824d6f",
+      "statement": "If you want to keep those Spring Boot MVC customizations and make more MVC customizations (interceptors, formatters, view controllers, and other features), you can add your own @Configuration class of type WebMvcConfigurer but **without** @EnableWebMvc.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L33-L55",
+          "version": "repo-lines-v1:sha256:c9f63fd5df4d688d87a4577a94198f523dfc1653a45ac7a213280d20cc41c646:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxZmFkODVmMTRhYWQ2MTE2NDRkNDk1YmM0MTlmNmNkZGIyYmRmNTAzOWRkNzAzZjMwZWFiZTJkMDQ5MWJmMmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZkYTkxN2I0NDY1M2UyOGVjZGFlNzlhMGYwNTk1NjhjYjM3ZGJjMWMxZTYxYjdmMzdmMTVlYzgyMzczN2IzMTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f05eb5e4abbf492ca93c0503ffa348ec",
+      "statement": "If you want to provide custom instances of RequestMappingHandlerMapping, RequestMappingHandlerAdapter, or ExceptionHandlerExceptionResolver, and still keep the Spring Boot MVC customizations, you can declare a bean of type WebMvcRegistrations and use it to provide custom instances of those components. The custom instances will be subject to further initialization and configuration by Spring MVC. To participate in, and if desired, override that subsequent processing, a WebMvcConfigurer should be used.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L33-L55",
+          "version": "repo-lines-v1:sha256:c9f63fd5df4d688d87a4577a94198f523dfc1653a45ac7a213280d20cc41c646:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxZmFkODVmMTRhYWQ2MTE2NDRkNDk1YmM0MTlmNmNkZGIyYmRmNTAzOWRkNzAzZjMwZWFiZTJkMDQ5MWJmMmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZkYTkxN2I0NDY1M2UyOGVjZGFlNzlhMGYwNTk1NjhjYjM3ZGJjMWMxZTYxYjdmMzdmMTVlYzgyMzczN2IzMTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7e1f493edc8545488c89c5d2d460b536",
+      "statement": "If you do not want to use the auto-configuration and want to take complete control of Spring MVC, add your own @Configuration annotated with @EnableWebMvc. Alternatively, add your own @Configuration\\-annotated DelegatingWebMvcConfiguration as described in the @EnableWebMvc API documentation.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/web/servlet.adoc#L33-L55",
+          "version": "repo-lines-v1:sha256:c9f63fd5df4d688d87a4577a94198f523dfc1653a45ac7a213280d20cc41c646:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxZmFkODVmMTRhYWQ2MTE2NDRkNDk1YmM0MTlmNmNkZGIyYmRmNTAzOWRkNzAzZjMwZWFiZTJkMDQ5MWJmMmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZkYTkxN2I0NDY1M2UyOGVjZGFlNzlhMGYwNTk1NjhjYjM3ZGJjMWMxZTYxYjdmMzdmMTVlYzgyMzczN2IzMTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}

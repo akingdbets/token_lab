@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:dd29231493e0c599743f99272a3aee44236ad876f3251f62e727ff761f308473",
+  "claims": [
+    {
+      "id": "claim_2c37db77f611495199ea85759e5a6711",
+      "statement": "By default, @SpringBootTest does not start the server but instead sets up a mock environment for testing web endpoints.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/spring-boot-applications.adoc#L138-L169",
+          "version": "repo-lines-v1:sha256:685b0531c49c2153bf5a585bb864fe9b86e5f4ea303179fc9ca08f0171ec52d0:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRkNjM0NDFiNzA5YWRmZTBlYmU1MGE3OGZkZmM0YTFhZTE5MGEzYzViZWYzZWNiOWI5YjU4YTE5ZGQxOWM5MzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlZTQ2NDE0YzllMzRkNWNiOGM3ZTQzZGJkM2YzMDU1OTQ0YTkzZDE5ZDhlYTEyMDE1MWJlYzY0YWE2OWFlMjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/testing/springbootapplications/withmockenvironment/MyMockMvcTests.java",
+          "version": "repo-file-v1:sha256:fdb63367730433d3ee56d10d9bc0d78a736ce6af577cc75f25c23e4aa23ffd04"
+        },
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/main/java/org/springframework/boot/docs/testing/springbootapplications/withmockenvironment/MyMockWebTestClientTests.java",
+          "version": "repo-file-v1:sha256:236c6f19383fd71509e325464afd7f3c855d83e97255ee11c02d02d05dc0f1cb"
+        }
+      ]
+    },
+    {
+      "id": "claim_8abef0c5456646de93cef4e8a02b78b2",
+      "statement": "Testing within a mocked environment is usually faster than running with a full servlet container. However, since mocking occurs at the Spring MVC layer, code that relies on lower-level servlet container behavior cannot be directly tested with MockMvc.",
+      "evidence": [
+        {
+          "resource": "repo://upstream/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/testing/spring-boot-applications.adoc#L138-L169",
+          "version": "repo-lines-v1:sha256:685b0531c49c2153bf5a585bb864fe9b86e5f4ea303179fc9ca08f0171ec52d0:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRkNjM0NDFiNzA5YWRmZTBlYmU1MGE3OGZkZmM0YTFhZTE5MGEzYzViZWYzZWNiOWI5YjU4YTE5ZGQxOWM5MzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlZTQ2NDE0YzllMzRkNWNiOGM3ZTQzZGJkM2YzMDU1OTQ0YTkzZDE5ZDhlYTEyMDE1MWJlYzY0YWE2OWFlMjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhM2NmNTE5MjM1NGY3MTYxNWFjNTEwMzRiM2U5N2MyMGVkYTk5NjQzZmNhZjViYmU2ZDQxYWQ1OWJkMTIxNjcifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.0",
+    "at": "2026-11-28T11:55:33.232Z"
+  }
+}
