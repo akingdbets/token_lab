@@ -1,0 +1,1461 @@
+{
+  "schema_version": 2,
+  "scenario_id": "kafka_v2_13_wordcount_service",
+  "title": "Building and deploying a continuous word-count service",
+  "topic": "Building and deploying a continuous word-count service",
+  "status": "final",
+  "bundle": [
+    "concepts/delivery-semantics.md",
+    "streams/introduction-and-quickstart.md",
+    "getting-started/introduction.md",
+    "streams/writing-an-application.md",
+    "streams/core-concepts-and-architecture.md",
+    "streams/configuration.md",
+    "streams/serdes-and-datatypes.md",
+    "streams/testing.md"
+  ],
+  "generation": {
+    "model": "gpt-6.1-sol",
+    "method": "Codex session, account plan",
+    "prompt": [
+      "mt_scenario_gen_v3",
+      "40710c69c22d"
+    ],
+    "run_id": "20261128-165733_kafka_18_session",
+    "request_file": "results/scenario_gen/20261128-165733_kafka_18_session/kafka_v2_13_wordcount_service_request.json",
+    "created_at": "2026-11-28T16:57:33",
+    "corpus_manifest_sha256": "a6fb69b10c7c98a2af883313f8938d0bfb1757fae65b8274c183a4c14ef4a735",
+    "context": "Authored in the ongoing Codex conversation with a shared turn structure, explicit page-grounded fact selections, and topic-specific project settings."
+  },
+  "turns": [
+    {
+      "turn": 0,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our project concerns building and deploying a continuous word-count service. For the planned deployment, set application.id to willow-count-17. Which value should we use, and which ordering of processing and offset saving gives at-least-once consumption?",
+      "standalone_question": "For this Kafka project, our project concerns building and deploying a continuous word-count service. For the planned deployment, set application.id to willow-count-17. Which value should we use, and which ordering of processing and offset saving gives at-least-once consumption?",
+      "asks": [
+        "project application.id",
+        "Which ordering of processing and offset saving gives at-least-once consumption?"
+      ],
+      "answer": "The project application.id is willow-count-17. Read, process, then save the position gives at-least-once consumption.",
+      "key_facts": [
+        "The project application.id is willow-count-17.",
+        "Read, process, then save the position gives at-least-once consumption."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "willow-count-17",
+        "At least once"
+      ],
+      "evidence_pages": [
+        "concepts/delivery-semantics.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 0,
+          "quote": "set application.id to willow-count-17",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/delivery-semantics.md",
+          "quote": "| Read → process → save position | First messages are re-processed by the new owner | **At least once** |",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "설정값과 소비 순서가 질문 및 근거에 일치합니다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181413-650094_kafka_v2_13_wordcount_service",
+        "llm_source_hash": "54ec771f862e69f0bfff87b099f505ac9edce71ff753fb4ed793ca7c92224d78",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 1,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Set our commit.interval.ms to 137. Which project value applies, and which input topic does the quickstart WordCountDemo read?",
+      "standalone_question": "For this Kafka project, set our commit.interval.ms to 137. Which project value applies, and which input topic does the quickstart WordCountDemo read?",
+      "asks": [
+        "project commit.interval.ms",
+        "Which input topic does the word-count example read?"
+      ],
+      "answer": "The project commit.interval.ms is 137. It reads streams-plaintext-input.",
+      "key_facts": [
+        "The project commit.interval.ms is 137.",
+        "It reads streams-plaintext-input."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example"
+          ]
+        }
+      ],
+      "key_entities": [
+        "137",
+        "streams-plaintext-input"
+      ],
+      "evidence_pages": [
+        "streams/introduction-and-quickstart.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Set our commit.interval.ms to 137.",
+          "fact_idx": 0
+        },
+        {
+          "page": "streams/introduction-and-quickstart.md",
+          "quote": "\"streams-plaintext-input\",",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:31+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181413-650094_kafka_v2_13_wordcount_service",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 2,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "Which output topic receives its running word counts?",
+      "standalone_question": "Which output topic receives the running word counts from the quickstart WordCountDemo?",
+      "asks": [
+        "Which output topic receives its running word counts?"
+      ],
+      "answer": "Running counts go to streams-wordcount-output.",
+      "key_facts": [
+        "Running counts go to streams-wordcount-output."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example"
+          ]
+        }
+      ],
+      "key_entities": [
+        "streams-wordcount-output"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "streams/introduction-and-quickstart.md",
+          "quote": "wordCounts.toStream().to(\"streams-wordcount-output\", Produced.with(Serdes.String(), Serdes.Long()));",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:31+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181413-650094_kafka_v2_13_wordcount_service",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 3,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "For our project, set input topic name to willow-lines-43. Which value should be used, and what key illustrates an event in the payment example?",
+      "standalone_question": "For our project, set input topic name to willow-lines-43. Which value should be used, and what key illustrates an event in the payment example?",
+      "asks": [
+        "project input topic name",
+        "What key illustrates an event in the payment example?"
+      ],
+      "answer": "The project input topic name is willow-lines-43. The payment example key is Alice.",
+      "key_facts": [
+        "The project input topic name is willow-lines-43.",
+        "The payment example key is Alice."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "user",
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "example"
+          ]
+        }
+      ],
+      "key_entities": [
+        "willow-lines-43",
+        "Alice"
+      ],
+      "evidence_pages": [
+        "getting-started/introduction.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "set input topic name to willow-lines-43",
+          "user_turn": 3
+        },
+        {
+          "fact_idx": 1,
+          "page": "getting-started/introduction.md",
+          "quote": "E.g. key `\"Alice\"`, value `\"Made a payment of $200 to Bob\"`."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T13:10:58+00:00",
+        "memo": "프로젝트 값과 예시 key만 질문하여 독립 질문 2개 유지",
+        "repair_history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/error_repairs/6e10f9ea2fc048a1a49cb5d9978cd531/kafka_v2_13_wordcount_service",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 4,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Before rollout, change our application.id from willow-count-17 to willow-count-29. What is the revised project value, and which consumer isolation mode still includes non-transactional records alongside committed transactions?",
+      "standalone_question": "For this Kafka project, before rollout, change our application.id from willow-count-17 to willow-count-29. What is the revised project value, and which consumer isolation mode still includes non-transactional records alongside committed transactions?",
+      "asks": [
+        "updated application.id",
+        "Which consumer isolation mode still includes non-transactional records alongside committed transactions?"
+      ],
+      "answer": "The project application.id is willow-count-29. read_committed includes committed transactional and non-transactional records.",
+      "key_facts": [
+        "The project application.id is willow-count-29.",
+        "read_committed includes committed transactional and non-transactional records."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "willow-count-29",
+        "read_committed"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our application.id from willow-count-17 to willow-count-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/delivery-semantics.md",
+          "quote": "`read_committed` returns only committed transactional messages (plus non-transactional ones).",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "application.id",
+          "from": "willow-count-17",
+          "to": "willow-count-29"
+        }
+      ],
+      "affects": [
+        9,
+        13
+      ],
+      "source_turn": null,
+      "recall_distance": 4,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "application.id 변경과 문서 회상이 일치하며 후속 영향도 정확합니다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181413-650094_kafka_v2_13_wordcount_service",
+        "llm_source_hash": "54ec771f862e69f0bfff87b099f505ac9edce71ff753fb4ed793ca7c92224d78",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 5,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Does constructing KafkaStreams start processing immediately?",
+      "standalone_question": "For this Kafka project, does constructing KafkaStreams start processing immediately?",
+      "asks": [
+        "Does constructing KafkaStreams start processing immediately?"
+      ],
+      "answer": "No; construction initializes internals but does not process records.",
+      "key_facts": [
+        "No; construction initializes internals but does not process records."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "KafkaStreams"
+      ],
+      "evidence_pages": [
+        "streams/writing-an-application.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "streams/writing-an-application.md",
+          "quote": "`new KafkaStreams(topology, props)` initializes internals but doesn't process yet.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "생성자와 처리 시작의 차이를 정확하게 묻고 답합니다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181413-650094_kafka_v2_13_wordcount_service",
+        "llm_source_hash": "54ec771f862e69f0bfff87b099f505ac9edce71ff753fb4ed793ca7c92224d78",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 6,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "When must the uncaught exception handler be installed relative to start()?",
+      "standalone_question": "For this Kafka project, when must the uncaught exception handler be installed relative to start()?",
+      "asks": [
+        "When must the uncaught exception handler be installed relative to start()?"
+      ],
+      "answer": "Install it before start().",
+      "key_facts": [
+        "Install it before start()."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "start()"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "streams/writing-an-application.md",
+          "quote": "set an uncaught exception handler **before** `start()`.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "이전 lifecycle 문서를 사용하는 적절한 후속 질문입니다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181413-650094_kafka_v2_13_wordcount_service",
+        "llm_source_hash": "54ec771f862e69f0bfff87b099f505ac9edce71ff753fb4ed793ca7c92224d78",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 7,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "In the sample console output, what is the final count for kafka?",
+      "standalone_question": "In the sample console output in the Kafka Streams WordCountDemo quickstart, what is the final count for kafka?",
+      "asks": [
+        "In the sample console output, what is the final count for kafka?"
+      ],
+      "answer": "The final count for kafka is 3.",
+      "key_facts": [
+        "The final count for kafka is 3."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example"
+          ]
+        }
+      ],
+      "key_entities": [
+        "3"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "streams/introduction-and-quickstart.md",
+          "quote": "kafka\t3",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 1,
+      "recall_distance": 6,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:31+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181413-650094_kafka_v2_13_wordcount_service",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 8,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Use willow-counts-41 as the project output topic name. Which value should be used, and when does stream time advance?",
+      "standalone_question": "For this Kafka project, use willow-counts-41 as the project output topic name. Which value should be used, and when does stream time advance?",
+      "asks": [
+        "project output topic name",
+        "When does stream time advance?"
+      ],
+      "answer": "The project output topic name is willow-counts-41. Stream time advances only when new records arrive.",
+      "key_facts": [
+        "The project output topic name is willow-counts-41.",
+        "Stream time advances only when new records arrive."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "willow-counts-41",
+        "Stream time"
+      ],
+      "evidence_pages": [
+        "streams/core-concepts-and-architecture.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Use willow-counts-41 as the project output topic name.",
+          "fact_idx": 0
+        },
+        {
+          "page": "streams/core-concepts-and-architecture.md",
+          "quote": "**Stream time** is data-driven: it only advances when new records arrive",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "프로젝트 출력 토픽과 stream time의 조건이 명확합니다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181413-650094_kafka_v2_13_wordcount_service",
+        "llm_source_hash": "54ec771f862e69f0bfff87b099f505ac9edce71ff753fb4ed793ca7c92224d78",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 9,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What application.id are we using now, and which consumer isolation mode still includes non-transactional records alongside committed transactions?",
+      "standalone_question": "For this Kafka project, what application.id are we using now, and which consumer isolation mode still includes non-transactional records alongside committed transactions?",
+      "asks": [
+        "current application.id",
+        "Which consumer isolation mode still includes non-transactional records alongside committed transactions?"
+      ],
+      "answer": "The project application.id is willow-count-29. read_committed includes committed transactional and non-transactional records.",
+      "key_facts": [
+        "The project application.id is willow-count-29.",
+        "read_committed includes committed transactional and non-transactional records."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "willow-count-29",
+        "read_committed"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our application.id from willow-count-17 to willow-count-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/delivery-semantics.md",
+          "quote": "`read_committed` returns only committed transactional messages (plus non-transactional ones).",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 5,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:31+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181413-650094_kafka_v2_13_wordcount_service",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 10,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Under exactly-once processing, what is the default commit interval?",
+      "standalone_question": "For this Kafka project, under exactly-once processing, what is the default commit interval?",
+      "asks": [
+        "Under exactly-once processing, what is the default commit interval?"
+      ],
+      "answer": "Under exactly-once processing, the default commit.interval.ms is 100 ms.",
+      "key_facts": [
+        "Under exactly-once processing, the default commit.interval.ms is 100 ms."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "100"
+      ],
+      "evidence_pages": [
+        "streams/configuration.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "page": "streams/configuration.md",
+          "quote": "`commit.interval.ms` default drops from `30000` to **`100`**."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:31+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181413-650094_kafka_v2_13_wordcount_service",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 11,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our commit.interval.ms from 137 to 173. What value should we use now, and which output topic receives the running word counts from the quickstart WordCountDemo?",
+      "standalone_question": "For this Kafka project, change our commit.interval.ms from 137 to 173. What value should we use now, and which output topic receives the running word counts from the quickstart WordCountDemo?",
+      "asks": [
+        "updated commit.interval.ms",
+        "Which output topic receives the running word counts from the quickstart WordCountDemo?"
+      ],
+      "answer": "The project commit.interval.ms is 173. The quickstart WordCountDemo writes running counts to streams-wordcount-output.",
+      "key_facts": [
+        "The project commit.interval.ms is 173.",
+        "The quickstart WordCountDemo writes running counts to streams-wordcount-output."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "user",
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "example"
+          ]
+        }
+      ],
+      "key_entities": [
+        "173",
+        "streams-wordcount-output"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "Change our commit.interval.ms from 137 to 173.",
+          "user_turn": 11
+        },
+        {
+          "fact_idx": 1,
+          "page": "streams/introduction-and-quickstart.md",
+          "quote": "wordCounts.toStream().to(\"streams-wordcount-output\", Produced.with(Serdes.String(), Serdes.Long()));"
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "commit.interval.ms",
+          "from": "137",
+          "to": "173"
+        }
+      ],
+      "affects": [
+        17
+      ],
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:31+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181413-650094_kafka_v2_13_wordcount_service",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 12,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What are the default key and value Serdes when none are configured?",
+      "standalone_question": "For this Kafka project, what are the default key and value Serdes when none are configured?",
+      "asks": [
+        "What is the default key Serde when none is configured?",
+        "What is the default value Serde when none is configured?"
+      ],
+      "answer": "default.key.serde and default.value.serde both default to null.",
+      "key_facts": [
+        "default.key.serde defaults to null.",
+        "default.value.serde defaults to null."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "null"
+      ],
+      "evidence_pages": [
+        "streams/serdes-and-datatypes.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "page": "streams/serdes-and-datatypes.md",
+          "quote": "`default.key.serde` and `default.value.serde` **default to `null`**"
+        },
+        {
+          "fact_idx": 1,
+          "page": "streams/serdes-and-datatypes.md",
+          "quote": "`default.key.serde` and `default.value.serde` **default to `null`**"
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:31+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181413-650094_kafka_v2_13_wordcount_service",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 13,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which application.id are we using now, when does stream time advance, and under exactly-once processing, what is the default commit interval?",
+      "standalone_question": "For this Kafka project, which application.id are we using now, when does stream time advance, and under exactly-once processing, what is the default commit interval?",
+      "asks": [
+        "current application.id",
+        "When does stream time advance?",
+        "Under exactly-once processing, what is the default commit interval?"
+      ],
+      "answer": "The project application.id is willow-count-29. Stream time advances only when new records arrive. Under exactly-once processing, the default commit.interval.ms is 100 ms.",
+      "key_facts": [
+        "The project application.id is willow-count-29.",
+        "Stream time advances only when new records arrive.",
+        "Under exactly-once processing, the default commit.interval.ms is 100 ms."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "user",
+          "tags": []
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "willow-count-29",
+        "Stream time",
+        "100"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        8,
+        10
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "change our application.id from willow-count-17 to willow-count-29.",
+          "user_turn": 4
+        },
+        {
+          "fact_idx": 1,
+          "page": "streams/core-concepts-and-architecture.md",
+          "quote": "**Stream time** is data-driven: it only advances when new records arrive"
+        },
+        {
+          "fact_idx": 2,
+          "page": "streams/configuration.md",
+          "quote": "`commit.interval.ms` default drops from `30000` to **`100`**."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 9,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:31+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181413-650094_kafka_v2_13_wordcount_service",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 14,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "What Java release does the generated quickstart Maven project target?",
+      "standalone_question": "For this Kafka project, what Java release does the generated quickstart Maven project target?",
+      "asks": [
+        "What Java release does the generated quickstart Maven project target?"
+      ],
+      "answer": "The generated pom.xml targets Java 11.",
+      "key_facts": [
+        "The generated pom.xml targets Java 11."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "11"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "streams/writing-an-application.md",
+          "quote": "The generated `pom.xml` already has the Streams dependency and **targets Java 11**.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 5,
+      "recall_distance": 9,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "오래전 첨부 문서의 미사용 프로젝트 설정 절을 정확히 묻습니다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181413-650094_kafka_v2_13_wordcount_service",
+        "llm_source_hash": "54ec771f862e69f0bfff87b099f505ac9edce71ff753fb4ed793ca7c92224d78",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 15,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What triggers event-time punctuation in the test driver?",
+      "standalone_question": "What triggers event-time punctuation in Kafka Streams TopologyTestDriver?",
+      "asks": [
+        "What triggers event-time punctuation in the test driver?"
+      ],
+      "answer": "Event-time punctuations fire automatically from timestamps of piped records.",
+      "key_facts": [
+        "Event-time punctuations fire automatically from timestamps of piped records."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "pipeInput"
+      ],
+      "evidence_pages": [
+        "streams/testing.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "streams/testing.md",
+          "quote": "**Event-time (stream-time) punctuations** fire automatically based on the timestamps of piped records (`pipeInput(key, value, Instant)`).",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:31+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181413-650094_kafka_v2_13_wordcount_service",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 16,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which input topic name did we choose, and what key illustrates an event in the payment example?",
+      "standalone_question": "For this Kafka project, which input topic name did we choose, and what key illustrates an event in the payment example?",
+      "asks": [
+        "project input topic name",
+        "What key illustrates an event in the payment example?"
+      ],
+      "answer": "The project input topic name is willow-lines-43. The payment example key is Alice.",
+      "key_facts": [
+        "The project input topic name is willow-lines-43.",
+        "The payment example key is Alice."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "user",
+          "tags": []
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "example"
+          ]
+        }
+      ],
+      "key_entities": [
+        "willow-lines-43",
+        "Alice"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        3
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "set input topic name to willow-lines-43",
+          "user_turn": 3
+        },
+        {
+          "fact_idx": 1,
+          "page": "getting-started/introduction.md",
+          "quote": "E.g. key `\"Alice\"`, value `\"Made a payment of $200 to Bob\"`."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 13,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T13:10:58+00:00",
+        "memo": "프로젝트 값과 예시 key만 질문하여 독립 질문 2개 유지",
+        "repair_history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/error_repairs/6e10f9ea2fc048a1a49cb5d9978cd531/kafka_v2_13_wordcount_service",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 17,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What commit.interval.ms are we using now, and which input topic does the quickstart WordCountDemo read?",
+      "standalone_question": "For this Kafka project, what commit.interval.ms are we using now, and which input topic does the quickstart WordCountDemo read?",
+      "asks": [
+        "current commit.interval.ms",
+        "Which input topic does the word-count example read?"
+      ],
+      "answer": "The project commit.interval.ms is 173. It reads streams-plaintext-input.",
+      "key_facts": [
+        "The project commit.interval.ms is 173.",
+        "It reads streams-plaintext-input."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example"
+          ]
+        }
+      ],
+      "key_entities": [
+        "173",
+        "streams-plaintext-input"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        11,
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our commit.interval.ms from 137 to 173.",
+          "fact_idx": 0
+        },
+        {
+          "page": "streams/introduction-and-quickstart.md",
+          "quote": "\"streams-plaintext-input\",",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 16,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:31+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181413-650094_kafka_v2_13_wordcount_service",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 18,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which output topic name did we choose, what is the default key Serde when none is configured, and what triggers event-time punctuation in the test driver?",
+      "standalone_question": "For this Kafka project, which output topic name did we choose, what is the default key Serde when none is configured, and what triggers event-time punctuation in Kafka Streams TopologyTestDriver?",
+      "asks": [
+        "project output topic name",
+        "What is the default key Serde when none is configured?",
+        "What triggers event-time punctuation in the test driver?"
+      ],
+      "answer": "The project output topic name is willow-counts-41. default.key.serde defaults to null. Event-time punctuations fire automatically from timestamps of piped records.",
+      "key_facts": [
+        "The project output topic name is willow-counts-41.",
+        "default.key.serde defaults to null.",
+        "Event-time punctuations fire automatically from timestamps of piped records."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "user",
+          "tags": []
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "willow-counts-41",
+        "null",
+        "pipeInput"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        8,
+        12,
+        15
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "Use willow-counts-41 as the project output topic name.",
+          "user_turn": 8
+        },
+        {
+          "fact_idx": 1,
+          "page": "streams/serdes-and-datatypes.md",
+          "quote": "`default.key.serde` and `default.value.serde` **default to `null`**"
+        },
+        {
+          "fact_idx": 2,
+          "page": "streams/testing.md",
+          "quote": "**Event-time (stream-time) punctuations** fire automatically based on the timestamps of piped records (`pipeInput(key, value, Instant)`)."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T13:10:58+00:00",
+        "memo": "종합 질문에서 value Serde를 제외해 세 사실과 세 의존 관계 유지",
+        "repair_history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/error_repairs/6e10f9ea2fc048a1a49cb5d9978cd531/kafka_v2_13_wordcount_service",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    }
+  ],
+  "edits": [
+    {
+      "at": "2026-11-28T12:52:31+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 1,
+      "fields": [
+        "question",
+        "standalone_question"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_13_wordcount_service_40a9be6fb0314632be6adbb73011cbfa"
+    },
+    {
+      "at": "2026-11-28T12:52:31+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 2,
+      "fields": [
+        "standalone_question"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_13_wordcount_service_40a9be6fb0314632be6adbb73011cbfa"
+    },
+    {
+      "at": "2026-11-28T12:52:31+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 7,
+      "fields": [
+        "standalone_question"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_13_wordcount_service_40a9be6fb0314632be6adbb73011cbfa"
+    },
+    {
+      "at": "2026-11-28T12:52:31+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 9,
+      "fields": [
+        "depends_on"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_13_wordcount_service_40a9be6fb0314632be6adbb73011cbfa"
+    },
+    {
+      "at": "2026-11-28T12:52:31+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 10,
+      "fields": [
+        "answer",
+        "key_facts",
+        "key_entities"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_13_wordcount_service_40a9be6fb0314632be6adbb73011cbfa"
+    },
+    {
+      "at": "2026-11-28T12:52:31+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 11,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks",
+        "key_facts",
+        "answer"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_13_wordcount_service_40a9be6fb0314632be6adbb73011cbfa"
+    },
+    {
+      "at": "2026-11-28T12:52:31+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 12,
+      "fields": [
+        "asks",
+        "key_facts",
+        "fact_meta",
+        "evidence"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_13_wordcount_service_40a9be6fb0314632be6adbb73011cbfa"
+    },
+    {
+      "at": "2026-11-28T12:52:31+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 13,
+      "fields": [
+        "answer",
+        "key_facts",
+        "key_entities"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_13_wordcount_service_40a9be6fb0314632be6adbb73011cbfa"
+    },
+    {
+      "at": "2026-11-28T12:52:31+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 15,
+      "fields": [
+        "standalone_question"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_13_wordcount_service_40a9be6fb0314632be6adbb73011cbfa"
+    },
+    {
+      "at": "2026-11-28T12:52:31+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 17,
+      "fields": [
+        "question",
+        "standalone_question"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_13_wordcount_service_40a9be6fb0314632be6adbb73011cbfa"
+    },
+    {
+      "at": "2026-11-28T13:10:58+00:00",
+      "by": "Codex session",
+      "turn": 3,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks",
+        "answer",
+        "key_facts",
+        "key_entities"
+      ],
+      "note": "프로젝트 값과 예시 key만 질문하여 독립 질문 2개 유지",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/error_repairs/6e10f9ea2fc048a1a49cb5d9978cd531/kafka_v2_13_wordcount_service"
+    },
+    {
+      "at": "2026-11-28T13:10:58+00:00",
+      "by": "Codex session",
+      "turn": 16,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks",
+        "answer",
+        "key_facts",
+        "key_entities"
+      ],
+      "note": "프로젝트 값과 예시 key만 질문하여 독립 질문 2개 유지",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/error_repairs/6e10f9ea2fc048a1a49cb5d9978cd531/kafka_v2_13_wordcount_service"
+    },
+    {
+      "at": "2026-11-28T13:10:58+00:00",
+      "by": "Codex session",
+      "turn": 18,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks",
+        "answer",
+        "key_facts"
+      ],
+      "note": "종합 질문에서 value Serde를 제외해 세 사실과 세 의존 관계 유지",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/error_repairs/6e10f9ea2fc048a1a49cb5d9978cd531/kafka_v2_13_wordcount_service"
+    }
+  ]
+}

@@ -1,0 +1,1311 @@
+{
+  "schema_version": 2,
+  "scenario_id": "kafka_v2_12_shared_jobs",
+  "title": "Processing a retryable job queue with share consumers",
+  "topic": "Processing a retryable job queue with share consumers",
+  "status": "final",
+  "bundle": [
+    "concepts/topics-partitions-offsets.md",
+    "clients/share-groups.md",
+    "operations/managing-groups.md",
+    "configuration/client-configuration.md",
+    "configuration/topic-and-group-configuration.md",
+    "clients/producer.md",
+    "clients/consumer-groups-and-rebalance.md",
+    "monitoring/client-metrics.md"
+  ],
+  "generation": {
+    "model": "gpt-6.1-sol",
+    "method": "Codex session, account plan",
+    "prompt": [
+      "mt_scenario_gen_v3",
+      "40710c69c22d"
+    ],
+    "run_id": "20261128-165733_kafka_18_session",
+    "request_file": "results/scenario_gen/20261128-165733_kafka_18_session/kafka_v2_12_shared_jobs_request.json",
+    "created_at": "2026-11-28T16:57:33",
+    "corpus_manifest_sha256": "a6fb69b10c7c98a2af883313f8938d0bfb1757fae65b8274c183a4c14ef4a735",
+    "context": "Authored in the ongoing Codex conversation with a shared turn structure, explicit page-grounded fact selections, and topic-specific project settings."
+  },
+  "turns": [
+    {
+      "turn": 0,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our project concerns processing a retryable job queue with share consumers. For the planned deployment, set share group.id to larch-jobs-17. Which value should we use, and can the partition count be reduced after creation?",
+      "standalone_question": "For this Kafka project, our project concerns processing a retryable job queue with share consumers. For the planned deployment, set share group.id to larch-jobs-17. Which value should we use, and can the partition count be reduced after creation?",
+      "asks": [
+        "project share group.id",
+        "Can the partition count be reduced after creation?"
+      ],
+      "answer": "The project share group.id is larch-jobs-17. Kafka does not support reducing the number of partitions.",
+      "key_facts": [
+        "The project share group.id is larch-jobs-17.",
+        "Kafka does not support reducing the number of partitions."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "larch-jobs-17",
+        "partitions"
+      ],
+      "evidence_pages": [
+        "concepts/topics-partitions-offsets.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 0,
+          "quote": "set share group.id to larch-jobs-17",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/topics-partitions-offsets.md",
+          "quote": "Kafka does not support reducing the number of partitions.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "현재 설정값과 문서 사실이 명확히 분리되어 있다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181146-233353_kafka_v2_12_shared_jobs",
+        "llm_source_hash": "6e038596f773f618ec23f8963ba0547aa8767a002e9b059c62a1921b6f861959",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 1,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Set our share.record.lock.duration.ms to 37000. Which project value applies, and what is the default record-acquisition lock duration?",
+      "standalone_question": "For this Kafka project, set our share.record.lock.duration.ms to 37000. Which project value applies, and what is the default record-acquisition lock duration?",
+      "asks": [
+        "project share.record.lock.duration.ms",
+        "What is the default record-acquisition lock duration?"
+      ],
+      "answer": "The project share.record.lock.duration.ms is 37000. The default acquisition lock duration is 30 seconds.",
+      "key_facts": [
+        "The project share.record.lock.duration.ms is 37000.",
+        "The default acquisition lock duration is 30 seconds."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "37000",
+        "30"
+      ],
+      "evidence_pages": [
+        "clients/share-groups.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Set our share.record.lock.duration.ms to 37000.",
+          "fact_idx": 0
+        },
+        {
+          "page": "clients/share-groups.md",
+          "quote": "Lock duration defaults to **30 seconds**",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "프로젝트 lock 설정과 문서 기본값을 구분한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181146-233353_kafka_v2_12_shared_jobs",
+        "llm_source_hash": "6e038596f773f618ec23f8963ba0547aa8767a002e9b059c62a1921b6f861959",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 2,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "What happens when a record-acquisition lock expires?",
+      "standalone_question": "For this Kafka project, what happens when a record-acquisition lock expires?",
+      "asks": [
+        "What happens when a record-acquisition lock expires?"
+      ],
+      "answer": "The record becomes available for another delivery attempt.",
+      "key_facts": [
+        "The record becomes available for another delivery attempt."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "record"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "clients/share-groups.md",
+          "quote": "When it elapses the lock is released automatically and the record becomes available for another delivery attempt.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "이전 첨부 페이지의 lock 만료 동작을 묻는 유효한 후속 질문이다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181146-233353_kafka_v2_12_shared_jobs",
+        "llm_source_hash": "6e038596f773f618ec23f8963ba0547aa8767a002e9b059c62a1921b6f861959",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 3,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "For our project, set job topic name to larch-tasks-43. Which value should be used, and when resetting a consumer group's offsets with kafka-consumer-groups.sh, must its consumers be inactive?",
+      "standalone_question": "For this Kafka project, the job topic name is set to larch-tasks-43. Which value should be used, and when resetting a consumer group's offsets with kafka-consumer-groups.sh, must its consumers be inactive?",
+      "asks": [
+        "project job topic name",
+        "When resetting a consumer group's offsets with kafka-consumer-groups.sh, must its consumers be inactive?"
+      ],
+      "answer": "The project job topic name is larch-tasks-43. Consumers must be inactive during a consumer-group offset reset.",
+      "key_facts": [
+        "The project job topic name is larch-tasks-43.",
+        "Consumers must be inactive during a consumer-group offset reset."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "larch-tasks-43",
+        "inactive"
+      ],
+      "evidence_pages": [
+        "operations/managing-groups.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 3,
+          "quote": "set job topic name to larch-tasks-43",
+          "fact_idx": 0
+        },
+        {
+          "page": "operations/managing-groups.md",
+          "quote": "the consumers must be **inactive**",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "질문을 consumer group(kafka-consumer-groups.sh)으로 한정. 근거 문장(managing-groups.md:104)은 consumer group 절에만 있고 share group 리셋 절에는 해당 조건이 없음. 독립형 질문 중복 문구 제거.",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:50:22+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    },
+    {
+      "turn": 4,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Before rollout, change our share group.id from larch-jobs-17 to larch-jobs-29. What is the revised project value, and after a partition-count increase, is existing data redistributed?",
+      "standalone_question": "For this Kafka project, before rollout, change our share group.id from larch-jobs-17 to larch-jobs-29. What is the revised project value, and after a partition-count increase, is existing data redistributed?",
+      "asks": [
+        "updated share group.id",
+        "After a partition-count increase, is existing data redistributed?"
+      ],
+      "answer": "The project share group.id is larch-jobs-29. Existing data is not redistributed.",
+      "key_facts": [
+        "The project share group.id is larch-jobs-29.",
+        "Existing data is not redistributed."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "larch-jobs-29",
+        "partitions"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our share group.id from larch-jobs-17 to larch-jobs-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/topics-partitions-offsets.md",
+          "quote": "existing data is not redistributed",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "share group.id",
+          "from": "larch-jobs-17",
+          "to": "larch-jobs-29"
+        }
+      ],
+      "affects": [
+        9,
+        13
+      ],
+      "source_turn": null,
+      "recall_distance": 4,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "그룹 식별자 변경과 과거 페이지의 파티션 증가 동작이 일관된다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181146-233353_kafka_v2_12_shared_jobs",
+        "llm_source_hash": "6e038596f773f618ec23f8963ba0547aa8767a002e9b059c62a1921b6f861959",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 5,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What is the consumer default max.poll.records?",
+      "standalone_question": "For this Kafka project, what is the consumer default max.poll.records?",
+      "asks": [
+        "What is the consumer default max.poll.records?"
+      ],
+      "answer": "The default max.poll.records is 500.",
+      "key_facts": [
+        "The default max.poll.records is 500."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "500"
+      ],
+      "evidence_pages": [
+        "configuration/client-configuration.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "configuration/client-configuration.md",
+          "quote": "| `max.poll.records` | `500` |",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "새 설정 문서의 단일 기본값을 정확히 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181146-233353_kafka_v2_12_shared_jobs",
+        "llm_source_hash": "6e038596f773f618ec23f8963ba0547aa8767a002e9b059c62a1921b6f861959",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 6,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "What is the consumer default isolation level?",
+      "standalone_question": "For this Kafka project, what is the consumer default isolation level?",
+      "asks": [
+        "What is the consumer default isolation level?"
+      ],
+      "answer": "The consumer default isolation.level is read_uncommitted.",
+      "key_facts": [
+        "The consumer default isolation.level is read_uncommitted."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "read_uncommitted"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "configuration/client-configuration.md",
+          "quote": "| `isolation.level` | `read_uncommitted` |",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "이전 첨부 설정 페이지를 사용하는 후속 질문이다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181146-233353_kafka_v2_12_shared_jobs",
+        "llm_source_hash": "6e038596f773f618ec23f8963ba0547aa8767a002e9b059c62a1921b6f861959",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 7,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "In implicit acknowledgement mode, may the application call ShareConsumer.acknowledge()?",
+      "standalone_question": "For this Kafka project, in implicit acknowledgement mode, may the application call ShareConsumer.acknowledge()?",
+      "asks": [
+        "In implicit acknowledgement mode, may the application call ShareConsumer.acknowledge()?"
+      ],
+      "answer": "No; implicit mode must not call ShareConsumer.acknowledge().",
+      "key_facts": [
+        "No; implicit mode must not call ShareConsumer.acknowledge()."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "ShareConsumer.acknowledge()"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "clients/share-groups.md",
+          "quote": "`implicit`: must **not** call `ShareConsumer.acknowledge()`",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 1,
+      "recall_distance": 6,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "충분히 이전에 첨부된 페이지의 미사용 acknowledgement 절을 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181146-233353_kafka_v2_12_shared_jobs",
+        "llm_source_hash": "6e038596f773f618ec23f8963ba0547aa8767a002e9b059c62a1921b6f861959",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 8,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Use dlq.larch-failed-41 as the project DLQ topic name. Which value should be used, and what is the default topic time-retention value?",
+      "standalone_question": "For this Kafka project, use dlq.larch-failed-41 as the project DLQ topic name. Which value should be used, and what is the default topic time-retention value?",
+      "asks": [
+        "project DLQ topic name",
+        "What is the default topic time-retention value?"
+      ],
+      "answer": "The project DLQ topic name is dlq.larch-failed-41. The default retention.ms is 604800000 milliseconds, or seven days.",
+      "key_facts": [
+        "The project DLQ topic name is dlq.larch-failed-41.",
+        "The default retention.ms is 604800000 milliseconds, or seven days."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "dlq.larch-failed-41",
+        "604800000"
+      ],
+      "evidence_pages": [
+        "configuration/topic-and-group-configuration.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Use dlq.larch-failed-41 as the project DLQ topic name.",
+          "fact_idx": 0
+        },
+        {
+          "page": "configuration/topic-and-group-configuration.md",
+          "quote": "| `retention.ms` | `604800000` (7 days) | `log.retention.ms` |",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "DLQ 이름 설정과 topic retention 기본값이 근거와 맞는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181146-233353_kafka_v2_12_shared_jobs",
+        "llm_source_hash": "6e038596f773f618ec23f8963ba0547aa8767a002e9b059c62a1921b6f861959",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 9,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What share group.id are we using now, and after a partition-count increase, is existing data redistributed?",
+      "standalone_question": "For this Kafka project, what share group.id are we using now, and after a partition-count increase, is existing data redistributed?",
+      "asks": [
+        "current share group.id",
+        "After a partition-count increase, is existing data redistributed?"
+      ],
+      "answer": "The project share group.id is larch-jobs-29. Existing data is not redistributed.",
+      "key_facts": [
+        "The project share group.id is larch-jobs-29.",
+        "Existing data is not redistributed."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "larch-jobs-29",
+        "partitions"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our share group.id from larch-jobs-17 to larch-jobs-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/topics-partitions-offsets.md",
+          "quote": "existing data is not redistributed",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 9,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    },
+    {
+      "turn": 10,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What is the default batching delay in milliseconds?",
+      "standalone_question": "For this Kafka project, what is the default batching delay in milliseconds?",
+      "asks": [
+        "What is the default batching delay in milliseconds?"
+      ],
+      "answer": "The default linger.ms is 5 ms.",
+      "key_facts": [
+        "The default linger.ms is 5 ms."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "linger.ms",
+        "5"
+      ],
+      "evidence_pages": [
+        "clients/producer.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "clients/producer.md",
+          "quote": "`linger.ms`, default `5` ms",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "첨부 producer 문서가 batching delay의 의미와 단위를 제공한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181146-233353_kafka_v2_12_shared_jobs",
+        "llm_source_hash": "6e038596f773f618ec23f8963ba0547aa8767a002e9b059c62a1921b6f861959",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 11,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our share.record.lock.duration.ms from 37000 to 47000. What value should we use now, and what happens when a record-acquisition lock expires?",
+      "standalone_question": "For this Kafka project, change our share.record.lock.duration.ms from 37000 to 47000. What value should we use now, and what happens when a record-acquisition lock expires?",
+      "asks": [
+        "updated share.record.lock.duration.ms",
+        "What happens when a record-acquisition lock expires?"
+      ],
+      "answer": "The project share.record.lock.duration.ms is 47000. The record becomes available for another delivery attempt.",
+      "key_facts": [
+        "The project share.record.lock.duration.ms is 47000.",
+        "The record becomes available for another delivery attempt."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "47000",
+        "record"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our share.record.lock.duration.ms from 37000 to 47000.",
+          "fact_idx": 0
+        },
+        {
+          "page": "clients/share-groups.md",
+          "quote": "When it elapses the lock is released automatically and the record becomes available for another delivery attempt.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "share.record.lock.duration.ms",
+          "from": "37000",
+          "to": "47000"
+        }
+      ],
+      "affects": [
+        17
+      ],
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "lock 기간 변경과 만료 동작이 일관된다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181146-233353_kafka_v2_12_shared_jobs",
+        "llm_source_hash": "6e038596f773f618ec23f8963ba0547aa8767a002e9b059c62a1921b6f861959",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 12,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Which new-protocol broker heartbeat interval is the default?",
+      "standalone_question": "For this Kafka project, which new-protocol broker heartbeat interval is the default?",
+      "asks": [
+        "Which new-protocol broker heartbeat interval is the default?"
+      ],
+      "answer": "group.consumer.heartbeat.interval.ms defaults to 5000 ms.",
+      "key_facts": [
+        "group.consumer.heartbeat.interval.ms defaults to 5000 ms."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "5000"
+      ],
+      "evidence_pages": [
+        "clients/consumer-groups-and-rebalance.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "clients/consumer-groups-and-rebalance.md",
+          "quote": "`group.consumer.heartbeat.interval.ms` (default `5000`)",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "consumer 프로토콜의 broker heartbeat 기본값이 근거에 맞는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181146-233353_kafka_v2_12_shared_jobs",
+        "llm_source_hash": "6e038596f773f618ec23f8963ba0547aa8767a002e9b059c62a1921b6f861959",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 13,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which share group.id are we using now, what is the default topic time-retention value, and what is the default batching delay in milliseconds?",
+      "standalone_question": "For this Kafka project, which share group.id are we using now, what is the default topic time-retention value, and what is the default batching delay in milliseconds?",
+      "asks": [
+        "current share group.id",
+        "What is the default topic time-retention value?",
+        "What is the default batching delay in milliseconds?"
+      ],
+      "answer": "The project share group.id is larch-jobs-29. The default retention.ms is 604800000 milliseconds, or seven days. The default linger.ms is 5 ms.",
+      "key_facts": [
+        "The project share group.id is larch-jobs-29.",
+        "The default retention.ms is 604800000 milliseconds, or seven days.",
+        "The default linger.ms is 5 ms."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "larch-jobs-29",
+        "604800000",
+        "linger.ms",
+        "5"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        8,
+        10
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our share group.id from larch-jobs-17 to larch-jobs-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "configuration/topic-and-group-configuration.md",
+          "quote": "| `retention.ms` | `604800000` (7 days) | `log.retention.ms` |",
+          "fact_idx": 1
+        },
+        {
+          "page": "clients/producer.md",
+          "quote": "`linger.ms`, default `5` ms",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 9,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    },
+    {
+      "turn": 14,
+      "turn_type": "same_doc_new_topic",
+      "type": "multi",
+      "question": "What are the default producer and consumer receive-buffer sizes?",
+      "standalone_question": "For this Kafka project, what are the default producer and consumer receive-buffer sizes?",
+      "asks": [
+        "What is the default producer receive-buffer size?",
+        "What is the default consumer receive-buffer size?"
+      ],
+      "answer": "receive.buffer.bytes defaults to 32768 for producers and 65536 for consumers.",
+      "key_facts": [
+        "The producer default receive.buffer.bytes is 32768 bytes.",
+        "The consumer default receive.buffer.bytes is 65536 bytes."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "32768",
+        "65536"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "page": "configuration/client-configuration.md",
+          "quote": "| `receive.buffer.bytes` | `32768` | `65536` | `65536` | |"
+        },
+        {
+          "fact_idx": 1,
+          "page": "configuration/client-configuration.md",
+          "quote": "| `receive.buffer.bytes` | `32768` | `65536` | `65536` | |"
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 5,
+      "recall_distance": 9,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:30+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181146-233353_kafka_v2_12_shared_jobs",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 15,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Which metric counts user threads waiting for producer buffer memory?",
+      "standalone_question": "For this Kafka project, which metric counts user threads waiting for producer buffer memory?",
+      "asks": [
+        "Which metric counts user threads waiting for producer buffer memory?"
+      ],
+      "answer": "waiting-threads counts user threads blocked waiting for buffer memory.",
+      "key_facts": [
+        "waiting-threads counts user threads blocked waiting for buffer memory."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "waiting-threads"
+      ],
+      "evidence_pages": [
+        "monitoring/client-metrics.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "monitoring/client-metrics.md",
+          "quote": "| `waiting-threads` | User threads blocked waiting for buffer memory. |",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "producer buffer 대기 metric이 직접 근거를 갖는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-181146-233353_kafka_v2_12_shared_jobs",
+        "llm_source_hash": "6e038596f773f618ec23f8963ba0547aa8767a002e9b059c62a1921b6f861959",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 16,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which job topic name did we choose, and when resetting a consumer group's offsets with kafka-consumer-groups.sh, must its consumers be inactive?",
+      "standalone_question": "For this Kafka project, which job topic name did we choose, and when resetting a consumer group's offsets with kafka-consumer-groups.sh, must its consumers be inactive?",
+      "asks": [
+        "project job topic name",
+        "When resetting a consumer group's offsets with kafka-consumer-groups.sh, must its consumers be inactive?"
+      ],
+      "answer": "The project job topic name is larch-tasks-43. Consumers must be inactive during a consumer-group offset reset.",
+      "key_facts": [
+        "The project job topic name is larch-tasks-43.",
+        "Consumers must be inactive during a consumer-group offset reset."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "larch-tasks-43",
+        "inactive"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        3
+      ],
+      "evidence": [
+        {
+          "user_turn": 3,
+          "quote": "set job topic name to larch-tasks-43",
+          "fact_idx": 0
+        },
+        {
+          "page": "operations/managing-groups.md",
+          "quote": "the consumers must be **inactive**",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 13,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "턴 3과 같은 이유로 질문을 consumer group(kafka-consumer-groups.sh)으로 한정.",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:50:22+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    },
+    {
+      "turn": 17,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What share.record.lock.duration.ms are we using now, and what is the default record-acquisition lock duration?",
+      "standalone_question": "For this Kafka project, what share.record.lock.duration.ms are we using now, and what is the default record-acquisition lock duration?",
+      "asks": [
+        "current share.record.lock.duration.ms",
+        "What is the default record-acquisition lock duration?"
+      ],
+      "answer": "The project share.record.lock.duration.ms is 47000. The default acquisition lock duration is 30 seconds.",
+      "key_facts": [
+        "The project share.record.lock.duration.ms is 47000.",
+        "The default acquisition lock duration is 30 seconds."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "47000",
+        "30"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        11,
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our share.record.lock.duration.ms from 37000 to 47000.",
+          "fact_idx": 0
+        },
+        {
+          "page": "clients/share-groups.md",
+          "quote": "Lock duration defaults to **30 seconds**",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 16,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    },
+    {
+      "turn": 18,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which DLQ topic name did we choose, which new-protocol broker heartbeat interval is the default, and which metric counts user threads waiting for producer buffer memory?",
+      "standalone_question": "For this Kafka project, which DLQ topic name did we choose, which new-protocol broker heartbeat interval is the default, and which metric counts user threads waiting for producer buffer memory?",
+      "asks": [
+        "project DLQ topic name",
+        "Which new-protocol broker heartbeat interval is the default?",
+        "Which metric counts user threads waiting for producer buffer memory?"
+      ],
+      "answer": "The project DLQ topic name is dlq.larch-failed-41. group.consumer.heartbeat.interval.ms defaults to 5000 ms. waiting-threads counts user threads blocked waiting for buffer memory.",
+      "key_facts": [
+        "The project DLQ topic name is dlq.larch-failed-41.",
+        "group.consumer.heartbeat.interval.ms defaults to 5000 ms.",
+        "waiting-threads counts user threads blocked waiting for buffer memory."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "dlq.larch-failed-41",
+        "5000",
+        "waiting-threads"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        8,
+        12,
+        15
+      ],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Use dlq.larch-failed-41 as the project DLQ topic name.",
+          "fact_idx": 0
+        },
+        {
+          "page": "clients/consumer-groups-and-rebalance.md",
+          "quote": "`group.consumer.heartbeat.interval.ms` (default `5000`)",
+          "fact_idx": 1
+        },
+        {
+          "page": "monitoring/client-metrics.md",
+          "quote": "| `waiting-threads` | User threads blocked waiting for buffer memory. |",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    }
+  ],
+  "edits": [
+    {
+      "at": "2026-11-28T12:52:30+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 14,
+      "fields": [
+        "asks",
+        "key_facts",
+        "fact_meta",
+        "evidence",
+        "type"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_12_shared_jobs_763579f270764ec889e5a5ab3cb7f846"
+    },
+    {
+      "at": "2026-11-28T14:50:22+00:00",
+      "by": "장우진",
+      "turn": 3,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks",
+        "answer",
+        "key_facts"
+      ],
+      "note": "질문을 consumer group(kafka-consumer-groups.sh)으로 한정. 근거 문장(managing-groups.md:104)은 consumer group 절에만 있고 share group 리셋 절에는 해당 조건이 없음. 독립형 질문 중복 문구 제거."
+    },
+    {
+      "at": "2026-11-28T14:50:22+00:00",
+      "by": "장우진",
+      "turn": 16,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks",
+        "answer",
+        "key_facts"
+      ],
+      "note": "턴 3과 같은 이유로 질문을 consumer group(kafka-consumer-groups.sh)으로 한정."
+    }
+  ]
+}

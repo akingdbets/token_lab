@@ -1,0 +1,1318 @@
+{
+  "schema_version": 2,
+  "scenario_id": "kafka_v2_10_connector_plugin",
+  "title": "Developing and packaging a custom file source plugin",
+  "topic": "Developing and packaging a custom file source plugin",
+  "status": "final",
+  "bundle": [
+    "concepts/delivery-semantics.md",
+    "connect/connector-development.md",
+    "clients/apis-overview.md",
+    "connect/transformations-and-predicates.md",
+    "connect/overview-and-running.md",
+    "clients/producer.md",
+    "connect/rest-api-and-operations.md",
+    "clients/examples.md"
+  ],
+  "generation": {
+    "model": "gpt-6.1-sol",
+    "method": "Codex session, account plan",
+    "prompt": [
+      "mt_scenario_gen_v3",
+      "40710c69c22d"
+    ],
+    "run_id": "20261128-165733_kafka_18_session",
+    "request_file": "results/scenario_gen/20261128-165733_kafka_18_session/kafka_v2_10_connector_plugin_request.json",
+    "created_at": "2026-11-28T16:57:33",
+    "corpus_manifest_sha256": "a6fb69b10c7c98a2af883313f8938d0bfb1757fae65b8274c183a4c14ef4a735",
+    "context": "Authored in the ongoing Codex conversation with a shared turn structure, explicit page-grounded fact selections, and topic-specific project settings."
+  },
+  "turns": [
+    {
+      "turn": 0,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our project concerns developing and packaging a custom file source plugin. For the planned deployment, set connector name to cedar-import-17. Which value should we use, and which ordering of processing and offset saving gives at-least-once consumption?",
+      "standalone_question": "For this Kafka project, our project concerns developing and packaging a custom file source plugin. For the planned deployment, set connector name to cedar-import-17. Which value should we use, and which ordering of processing and offset saving gives at-least-once consumption?",
+      "asks": [
+        "project connector name",
+        "Which ordering of processing and offset saving gives at-least-once consumption?"
+      ],
+      "answer": "The project connector name is cedar-import-17. Read, process, then save the position gives at-least-once consumption.",
+      "key_facts": [
+        "The project connector name is cedar-import-17.",
+        "Read, process, then save the position gives at-least-once consumption."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "cedar-import-17",
+        "At least once"
+      ],
+      "evidence_pages": [
+        "concepts/delivery-semantics.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 0,
+          "quote": "set connector name to cedar-import-17",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/delivery-semantics.md",
+          "quote": "| Read → process → save position | First messages are re-processed by the new owner | **At least once** |",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "현재 설정값과 문서의 처리 순서를 정확히 묻고 답한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180522-244850_kafka_v2_10_connector_plugin",
+        "llm_source_hash": "7dbf977a71995787418567fa628f136de00cd8dc0d760f92212e005ad7e52f18",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 1,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Set our tasks.max to 3. Which project value applies, and do connector instances copy records directly or distribute the work to tasks?",
+      "standalone_question": "For this Kafka project, set our tasks.max to 3. Which project value applies, and do connector instances copy records directly or distribute the work to tasks?",
+      "asks": [
+        "project tasks.max",
+        "Do connector instances copy records directly or distribute the work to tasks?"
+      ],
+      "answer": "The project tasks.max is 3. Connectors split the job into Tasks; they do not copy data themselves.",
+      "key_facts": [
+        "The project tasks.max is 3.",
+        "Connectors split the job into Tasks; they do not copy data themselves."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "3",
+        "Task"
+      ],
+      "evidence_pages": [
+        "connect/connector-development.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Set our tasks.max to 3.",
+          "fact_idx": 0
+        },
+        {
+          "page": "connect/connector-development.md",
+          "quote": "Connectors don't copy data themselves: they split the job into **`Task`**s",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "tasks.max 설정과 Connector/Task 역할 구분이 적절하다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180522-244850_kafka_v2_10_connector_plugin",
+        "llm_source_hash": "7dbf977a71995787418567fa628f136de00cd8dc0d760f92212e005ad7e52f18",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 2,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "What list type does a source task return from poll()?",
+      "standalone_question": "For this Kafka project, what list type does a source task return from poll()?",
+      "asks": [
+        "What list type does a source task return from poll()?"
+      ],
+      "answer": "SourceTask.poll() returns List<SourceRecord>.",
+      "key_facts": [
+        "SourceTask.poll() returns List<SourceRecord>."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "List<SourceRecord>"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "connect/connector-development.md",
+          "quote": "`poll()` is called repeatedly and returns `List<SourceRecord>`.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "이전에 첨부한 개발 문서에서 poll() 반환형을 확인한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180522-244850_kafka_v2_10_connector_plugin",
+        "llm_source_hash": "7dbf977a71995787418567fa628f136de00cd8dc0d760f92212e005ad7e52f18",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 3,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "For our project, set source partition label to cedar-file-43. Which value should be used, and which artifact contains the Java producer, consumer and Admin clients?",
+      "standalone_question": "For this Kafka project, for our project, set source partition label to cedar-file-43. Which value should be used, and which artifact contains the Java producer, consumer and Admin clients?",
+      "asks": [
+        "project source partition label",
+        "Which artifact contains the Java producer, consumer and Admin clients?"
+      ],
+      "answer": "The project source partition label is cedar-file-43. The artifact is kafka-clients.",
+      "key_facts": [
+        "The project source partition label is cedar-file-43.",
+        "The artifact is kafka-clients."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "cedar-file-43",
+        "kafka-clients"
+      ],
+      "evidence_pages": [
+        "clients/apis-overview.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "set source partition label to cedar-file-43",
+          "user_turn": 3
+        },
+        {
+          "fact_idx": 1,
+          "page": "clients/apis-overview.md",
+          "quote": "Producer, Consumer, Share Consumer and Admin all come from one artifact:\n\n```xml\n<dependency>\n\t<groupId>org.apache.kafka</groupId>\n\t<artifactId>kafka-clients</artifactId>\n\t<version>4.3.1</version>\n</dependency>\n```"
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:30+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180522-244850_kafka_v2_10_connector_plugin",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 4,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Before rollout, change our connector name from cedar-import-17 to cedar-import-29. What is the revised project value, and which consumer isolation mode still includes non-transactional records alongside committed transactions?",
+      "standalone_question": "For this Kafka project, before rollout, change our connector name from cedar-import-17 to cedar-import-29. What is the revised project value, and which consumer isolation mode still includes non-transactional records alongside committed transactions?",
+      "asks": [
+        "updated connector name",
+        "Which consumer isolation mode still includes non-transactional records alongside committed transactions?"
+      ],
+      "answer": "The project connector name is cedar-import-29. read_committed includes committed transactional and non-transactional records.",
+      "key_facts": [
+        "The project connector name is cedar-import-29.",
+        "read_committed includes committed transactional and non-transactional records."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "cedar-import-29",
+        "read_committed"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our connector name from cedar-import-17 to cedar-import-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/delivery-semantics.md",
+          "quote": "`read_committed` returns only committed transactional messages (plus non-transactional ones).",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "connector name",
+          "from": "cedar-import-17",
+          "to": "cedar-import-29"
+        }
+      ],
+      "affects": [
+        9,
+        13
+      ],
+      "source_turn": null,
+      "recall_distance": 4,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "이름 변경과 read_committed 설명이 근거 및 후속 사용과 일치한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180522-244850_kafka_v2_10_connector_plugin",
+        "llm_source_hash": "7dbf977a71995787418567fa628f136de00cd8dc0d760f92212e005ad7e52f18",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 5,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What static field and value does the InsertSource example add?",
+      "standalone_question": "For this Kafka project, what static field and value does the InsertSource example add?",
+      "asks": [
+        "What static field and value does the InsertSource example add?"
+      ],
+      "answer": "The example adds data_source=test-file-source.",
+      "key_facts": [
+        "The example adds data_source=test-file-source."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example"
+          ]
+        }
+      ],
+      "key_entities": [
+        "data_source=test-file-source"
+      ],
+      "evidence_pages": [
+        "connect/transformations-and-predicates.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "connect/transformations-and-predicates.md",
+          "quote": "`InsertSource` (**InsertField**) adds `data_source=test-file-source`.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "InsertSource 예제의 정적 필드와 값을 정확히 확인한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180522-244850_kafka_v2_10_connector_plugin",
+        "llm_source_hash": "7dbf977a71995787418567fa628f136de00cd8dc0d760f92212e005ad7e52f18",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 6,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "What field name does the MakeMap example wrap a line under?",
+      "standalone_question": "For this Kafka project, what field name does the MakeMap example wrap a line under?",
+      "asks": [
+        "What field name does the MakeMap example wrap a line under?"
+      ],
+      "answer": "The example wraps the line under the field line.",
+      "key_facts": [
+        "The example wraps the line under the field line."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example"
+          ]
+        }
+      ],
+      "key_entities": [
+        "line"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "connect/transformations-and-predicates.md",
+          "quote": "`MakeMap` (**HoistField**) wraps each line string in a map under the field `line`.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "같은 변환 예제의 앞 단계에 대한 적절한 후속 질문이다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180522-244850_kafka_v2_10_connector_plugin",
+        "llm_source_hash": "7dbf977a71995787418567fa628f136de00cd8dc0d760f92212e005ad7e52f18",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 7,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "Which manifest path makes a source connector discoverable?",
+      "standalone_question": "For this Kafka project, which manifest path makes a source connector discoverable?",
+      "asks": [
+        "Which manifest path makes a source connector discoverable?"
+      ],
+      "answer": "Use META-INF/services/org.apache.kafka.connect.source.SourceConnector.",
+      "key_facts": [
+        "Use META-INF/services/org.apache.kafka.connect.source.SourceConnector."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "META-INF/services/org.apache.kafka.connect.source.SourceConnector"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "connect/connector-development.md",
+          "quote": "Add a ServiceLoader manifest `META-INF/services/org.apache.kafka.connect.source.SourceConnector`",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 1,
+      "recall_distance": 6,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "충분히 오래전에 첨부한 개발 문서의 미사용 발견 설정을 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180522-244850_kafka_v2_10_connector_plugin",
+        "llm_source_hash": "7dbf977a71995787418567fa628f136de00cd8dc0d760f92212e005ad7e52f18",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 8,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Use /srv/cedar/input-41.txt as the project source file path. Which value should be used, and how many partitions must the distributed worker configuration topic have?",
+      "standalone_question": "For this Kafka project, use /srv/cedar/input-41.txt as the project source file path. Which value should be used, and how many partitions must the distributed worker configuration topic have?",
+      "asks": [
+        "project source file path",
+        "How many partitions must the distributed worker configuration topic have?"
+      ],
+      "answer": "The project source file path is /srv/cedar/input-41.txt. config.storage.topic must have one partition.",
+      "key_facts": [
+        "The project source file path is /srv/cedar/input-41.txt.",
+        "config.storage.topic must have one partition."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "/srv/cedar/input-41.txt",
+        "config.storage.topic"
+      ],
+      "evidence_pages": [
+        "connect/overview-and-running.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Use /srv/cedar/input-41.txt as the project source file path.",
+          "fact_idx": 0
+        },
+        {
+          "page": "connect/overview-and-running.md",
+          "quote": "| `config.storage.topic` | Connector/task configs — **single partition**, replicated, compacted. |",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "프로젝트 파일 경로와 분산 설정 토픽의 파티션 수가 정확하다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180522-244850_kafka_v2_10_connector_plugin",
+        "llm_source_hash": "7dbf977a71995787418567fa628f136de00cd8dc0d760f92212e005ad7e52f18",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 9,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What connector name are we using now, and which consumer isolation mode still includes non-transactional records alongside committed transactions?",
+      "standalone_question": "For this Kafka project, what connector name are we using now, and which consumer isolation mode still includes non-transactional records alongside committed transactions?",
+      "asks": [
+        "current connector name",
+        "Which consumer isolation mode still includes non-transactional records alongside committed transactions?"
+      ],
+      "answer": "The project connector name is cedar-import-29. read_committed includes committed transactional and non-transactional records.",
+      "key_facts": [
+        "The project connector name is cedar-import-29.",
+        "read_committed includes committed transactional and non-transactional records."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "cedar-import-29",
+        "read_committed"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our connector name from cedar-import-17 to cedar-import-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/delivery-semantics.md",
+          "quote": "`read_committed` returns only committed transactional messages (plus non-transactional ones).",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 5,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:30+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180522-244850_kafka_v2_10_connector_plugin",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 10,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What is the default batching delay in milliseconds?",
+      "standalone_question": "For this Kafka project, what is the default batching delay in milliseconds?",
+      "asks": [
+        "What is the default batching delay in milliseconds?"
+      ],
+      "answer": "The default linger.ms is 5 ms.",
+      "key_facts": [
+        "The default linger.ms is 5 ms."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "linger.ms",
+        "5"
+      ],
+      "evidence_pages": [
+        "clients/producer.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "clients/producer.md",
+          "quote": "`linger.ms`, default `5` ms",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "프로듀서 배칭 지연 기본값과 단위가 문서에 부합한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180522-244850_kafka_v2_10_connector_plugin",
+        "llm_source_hash": "7dbf977a71995787418567fa628f136de00cd8dc0d760f92212e005ad7e52f18",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 11,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our tasks.max from 3 to 7. What value should we use now, and what list type does a source task return from poll()?",
+      "standalone_question": "For this Kafka project, change our tasks.max from 3 to 7. What value should we use now, and what list type does a source task return from poll()?",
+      "asks": [
+        "updated tasks.max",
+        "What list type does a source task return from poll()?"
+      ],
+      "answer": "The project tasks.max is 7. SourceTask.poll() returns List<SourceRecord>.",
+      "key_facts": [
+        "The project tasks.max is 7.",
+        "SourceTask.poll() returns List<SourceRecord>."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "List<SourceRecord>",
+        "7"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our tasks.max from 3 to 7.",
+          "fact_idx": 0
+        },
+        {
+          "page": "connect/connector-development.md",
+          "quote": "`poll()` is called repeatedly and returns `List<SourceRecord>`.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "tasks.max",
+          "from": "3",
+          "to": "7"
+        }
+      ],
+      "affects": [
+        17
+      ],
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "tasks.max 변경과 과거 소스 태스크 인터페이스 확인이 일관된다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180522-244850_kafka_v2_10_connector_plugin",
+        "llm_source_hash": "7dbf977a71995787418567fa628f136de00cd8dc0d760f92212e005ad7e52f18",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 12,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Which endpoint stops a connector and frees its task resources?",
+      "standalone_question": "For this Kafka project, which endpoint stops a connector and frees its task resources?",
+      "asks": [
+        "Which endpoint stops a connector and frees its task resources?"
+      ],
+      "answer": "PUT /connectors/{name}/stop stops the connector and shuts down tasks.",
+      "key_facts": [
+        "PUT /connectors/{name}/stop stops the connector and shuts down tasks."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "/stop"
+      ],
+      "evidence_pages": [
+        "connect/rest-api-and-operations.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "connect/rest-api-and-operations.md",
+          "quote": "| `PUT /connectors/{name}/stop` | Stop and shut down tasks, freeing resources (since 3.5.0). Required before modifying offsets. |",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "리소스를 해제하는 stop 엔드포인트를 정확히 답한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180522-244850_kafka_v2_10_connector_plugin",
+        "llm_source_hash": "7dbf977a71995787418567fa628f136de00cd8dc0d760f92212e005ad7e52f18",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 13,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which connector name are we using now, how many partitions must the distributed worker configuration topic have, and what is the default batching delay in milliseconds?",
+      "standalone_question": "For this Kafka project, which connector name are we using now, how many partitions must the distributed worker configuration topic have, and what is the default batching delay in milliseconds?",
+      "asks": [
+        "current connector name",
+        "How many partitions must the distributed worker configuration topic have?",
+        "What is the default batching delay in milliseconds?"
+      ],
+      "answer": "The project connector name is cedar-import-29. config.storage.topic must have one partition. The default linger.ms is 5 ms.",
+      "key_facts": [
+        "The project connector name is cedar-import-29.",
+        "config.storage.topic must have one partition.",
+        "The default linger.ms is 5 ms."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "cedar-import-29",
+        "config.storage.topic",
+        "linger.ms",
+        "5"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        8,
+        10
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our connector name from cedar-import-17 to cedar-import-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "connect/overview-and-running.md",
+          "quote": "| `config.storage.topic` | Connector/task configs — **single partition**, replicated, compacted. |",
+          "fact_idx": 1
+        },
+        {
+          "page": "clients/producer.md",
+          "quote": "`linger.ms`, default `5` ms",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 9,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    },
+    {
+      "turn": 14,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "Which implicit property reverses a transformation predicate result?",
+      "standalone_question": "For this Kafka project, which implicit property reverses a transformation predicate result?",
+      "asks": [
+        "Which implicit property reverses a transformation predicate result?"
+      ],
+      "answer": "negate reverses the predicate result.",
+      "key_facts": [
+        "negate reverses the predicate result."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "negate"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "connect/transformations-and-predicates.md",
+          "quote": "`negate` — reverse the predicate's result.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 5,
+      "recall_distance": 9,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "오래전에 첨부된 SMT 문서의 미사용 predicate 절을 적절히 활용한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180522-244850_kafka_v2_10_connector_plugin",
+        "llm_source_hash": "7dbf977a71995787418567fa628f136de00cd8dc0d760f92212e005ad7e52f18",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 15,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "How many records does the KafkaExactlyOnceDemo example process?",
+      "standalone_question": "For this Kafka project, how many records does the KafkaExactlyOnceDemo example process?",
+      "asks": [
+        "How many records does the KafkaExactlyOnceDemo example process?"
+      ],
+      "answer": "The KafkaExactlyOnceDemo example processes 10000 records.",
+      "key_facts": [
+        "The KafkaExactlyOnceDemo example processes 10000 records."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "example",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "KafkaExactlyOnceDemo",
+        "10000"
+      ],
+      "evidence_pages": [
+        "clients/examples.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "page": "clients/examples.md",
+          "quote": "Arguments (all required): `partitions`, `instances`, `records` — e.g. `6 3 10000`."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    },
+    {
+      "turn": 16,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which source partition label did we choose, and which artifact contains the Java producer, consumer and Admin clients?",
+      "standalone_question": "For this Kafka project, which source partition label did we choose, and which artifact contains the Java producer, consumer and Admin clients?",
+      "asks": [
+        "project source partition label",
+        "Which artifact contains the Java producer, consumer and Admin clients?"
+      ],
+      "answer": "The project source partition label is cedar-file-43. The artifact is kafka-clients.",
+      "key_facts": [
+        "The project source partition label is cedar-file-43.",
+        "The artifact is kafka-clients."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "cedar-file-43",
+        "kafka-clients"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        3
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "set source partition label to cedar-file-43",
+          "user_turn": 3
+        },
+        {
+          "fact_idx": 1,
+          "page": "clients/apis-overview.md",
+          "quote": "Producer, Consumer, Share Consumer and Admin all come from one artifact:\n\n```xml\n<dependency>\n\t<groupId>org.apache.kafka</groupId>\n\t<artifactId>kafka-clients</artifactId>\n\t<version>4.3.1</version>\n</dependency>\n```"
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 13,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:30+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180522-244850_kafka_v2_10_connector_plugin",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 17,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What tasks.max are we using now, and do connector instances copy records directly or distribute the work to tasks?",
+      "standalone_question": "For this Kafka project, what tasks.max are we using now, and do connector instances copy records directly or distribute the work to tasks?",
+      "asks": [
+        "current tasks.max",
+        "Do connector instances copy records directly or distribute the work to tasks?"
+      ],
+      "answer": "The project tasks.max is 7. Connectors split the job into Tasks; they do not copy data themselves.",
+      "key_facts": [
+        "The project tasks.max is 7.",
+        "Connectors split the job into Tasks; they do not copy data themselves."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "7",
+        "Task"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        11,
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our tasks.max from 3 to 7.",
+          "fact_idx": 0
+        },
+        {
+          "page": "connect/connector-development.md",
+          "quote": "Connectors don't copy data themselves: they split the job into **`Task`**s",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 16,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "최신 tasks.max와 Connector/Task 역할을 정확히 회상한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180522-244850_kafka_v2_10_connector_plugin",
+        "llm_source_hash": "7dbf977a71995787418567fa628f136de00cd8dc0d760f92212e005ad7e52f18",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 18,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which source file path did we choose, which endpoint stops a connector and frees its task resources, and how many records does the KafkaExactlyOnceDemo example process?",
+      "standalone_question": "For this Kafka project, which source file path did we choose, which endpoint stops a connector and frees its task resources, and how many records does the KafkaExactlyOnceDemo example process?",
+      "asks": [
+        "project source file path",
+        "Which endpoint stops a connector and frees its task resources?",
+        "How many records does the KafkaExactlyOnceDemo example process?"
+      ],
+      "answer": "The project source file path is /srv/cedar/input-41.txt. PUT /connectors/{name}/stop stops the connector and shuts down tasks, freeing resources. The KafkaExactlyOnceDemo example processes 10000 records.",
+      "key_facts": [
+        "The project source file path is /srv/cedar/input-41.txt.",
+        "PUT /connectors/{name}/stop stops the connector and shuts down tasks, freeing resources.",
+        "The KafkaExactlyOnceDemo example processes 10000 records."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "user",
+          "tags": []
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "example",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "/srv/cedar/input-41.txt",
+        "/stop",
+        "KafkaExactlyOnceDemo",
+        "10000"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        8,
+        12,
+        15
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "Use /srv/cedar/input-41.txt as the project source file path.",
+          "user_turn": 8
+        },
+        {
+          "fact_idx": 1,
+          "page": "connect/rest-api-and-operations.md",
+          "quote": "| `PUT /connectors/{name}/stop` | Stop and shut down tasks, freeing resources (since 3.5.0). Required before modifying offsets. |"
+        },
+        {
+          "fact_idx": 2,
+          "page": "clients/examples.md",
+          "quote": "Arguments (all required): `partitions`, `instances`, `records` — e.g. `6 3 10000`."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    }
+  ],
+  "edits": [
+    {
+      "at": "2026-11-28T12:52:30+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 3,
+      "fields": [
+        "evidence"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_10_connector_plugin_2795c36186924a53bf8319106872a2d6"
+    },
+    {
+      "at": "2026-11-28T12:52:30+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 9,
+      "fields": [
+        "depends_on"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_10_connector_plugin_2795c36186924a53bf8319106872a2d6"
+    },
+    {
+      "at": "2026-11-28T12:52:30+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 16,
+      "fields": [
+        "evidence"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_10_connector_plugin_2795c36186924a53bf8319106872a2d6"
+    },
+    {
+      "at": "2026-11-28T14:39:41+00:00",
+      "by": "장우진",
+      "turn": 15,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks",
+        "answer",
+        "key_facts",
+        "key_entities"
+      ],
+      "note": ""
+    },
+    {
+      "at": "2026-11-28T14:39:41+00:00",
+      "by": "장우진",
+      "turn": 18,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks",
+        "answer",
+        "key_facts",
+        "key_entities"
+      ],
+      "note": ""
+    }
+  ]
+}

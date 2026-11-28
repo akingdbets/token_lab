@@ -1,0 +1,1381 @@
+{
+  "schema_version": 2,
+  "scenario_id": "kafka_v2_05_compacted_catalog",
+  "title": "Maintaining a compacted product catalog",
+  "topic": "Maintaining a compacted product catalog",
+  "status": "final",
+  "bundle": [
+    "concepts/topics-partitions-offsets.md",
+    "concepts/log-compaction.md",
+    "getting-started/introduction.md",
+    "clients/producer.md",
+    "concepts/storage-and-retention.md",
+    "configuration/topic-and-group-configuration.md",
+    "streams/configuration.md",
+    "streams/state-stores-and-interactive-queries.md"
+  ],
+  "generation": {
+    "model": "gpt-6.1-sol",
+    "method": "Codex session, account plan",
+    "prompt": [
+      "mt_scenario_gen_v3",
+      "40710c69c22d"
+    ],
+    "run_id": "20261128-165733_kafka_18_session",
+    "request_file": "results/scenario_gen/20261128-165733_kafka_18_session/kafka_v2_05_compacted_catalog_request.json",
+    "created_at": "2026-11-28T16:57:33",
+    "corpus_manifest_sha256": "a6fb69b10c7c98a2af883313f8938d0bfb1757fae65b8274c183a4c14ef4a735",
+    "context": "Authored in the ongoing Codex conversation with a shared turn structure, explicit page-grounded fact selections, and topic-specific project settings."
+  },
+  "turns": [
+    {
+      "turn": 0,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our project concerns maintaining a compacted product catalog. For the planned deployment, set catalog topic name to catalog-amber-17. Which value should we use, and can the partition count be reduced after creation?",
+      "standalone_question": "For this Kafka project, our project concerns maintaining a compacted product catalog. For the planned deployment, set catalog topic name to catalog-amber-17. Which value should we use, and can the partition count be reduced after creation?",
+      "asks": [
+        "project catalog topic name",
+        "Can the partition count be reduced after creation?"
+      ],
+      "answer": "The project catalog topic name is catalog-amber-17. Kafka does not support reducing the number of partitions.",
+      "key_facts": [
+        "The project catalog topic name is catalog-amber-17.",
+        "Kafka does not support reducing the number of partitions."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "catalog-amber-17",
+        "partitions"
+      ],
+      "evidence_pages": [
+        "concepts/topics-partitions-offsets.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 0,
+          "quote": "set catalog topic name to catalog-amber-17",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/topics-partitions-offsets.md",
+          "quote": "Kafka does not support reducing the number of partitions.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "현재 지정한 토픽 이름과 파티션 축소 불가 사실을 정확히 구분했다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174941-850062_kafka_v2_05_compacted_catalog",
+        "llm_source_hash": "329f6d0b47901a8892012fca5487c2f47bceebc2bc9791eae919f976e1acf4ec",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 1,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Set our delete.retention.ms to 111600000. Which project value applies, and does cleaning a log change the offsets of surviving records?",
+      "standalone_question": "For this Kafka project, set our delete.retention.ms to 111600000. Which project value applies, and does cleaning a log change the offsets of surviving records?",
+      "asks": [
+        "project delete.retention.ms",
+        "Does cleaning a log change the offsets of surviving records?"
+      ],
+      "answer": "The project delete.retention.ms is 111600000. Surviving messages keep their original offsets.",
+      "key_facts": [
+        "The project delete.retention.ms is 111600000.",
+        "Surviving messages keep their original offsets."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "111600000",
+        "offsets"
+      ],
+      "evidence_pages": [
+        "concepts/log-compaction.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Set our delete.retention.ms to 111600000.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/log-compaction.md",
+          "quote": "Messages keep their **original offsets** — offsets never change.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "삭제 마커 보존 설정과 컴팩션의 오프셋 보존을 적절히 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174941-850062_kafka_v2_05_compacted_catalog",
+        "llm_source_hash": "329f6d0b47901a8892012fca5487c2f47bceebc2bc9791eae919f976e1acf4ec",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 2,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "If only offset 38 remains, what record does a read from removed offset 36 reach?",
+      "standalone_question": "For this Kafka project, if only offset 38 remains, what record does a read from removed offset 36 reach?",
+      "asks": [
+        "If only offset 38 remains, what record does a read from removed offset 36 reach?"
+      ],
+      "answer": "It reaches the record at offset 38.",
+      "key_facts": [
+        "It reaches the record at offset 38."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "38"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "concepts/log-compaction.md",
+          "quote": "offsets 36, 37 and 38 are equivalent if only 38 remains",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "이전에 첨부한 컴팩션 문서의 구체적 읽기 예시를 평가한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174941-850062_kafka_v2_05_compacted_catalog",
+        "llm_source_hash": "329f6d0b47901a8892012fca5487c2f47bceebc2bc9791eae919f976e1acf4ec",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 3,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "For our project, set catalog key field to sku_amber. Which value should be used, and are events with the same key sent to the same partition?",
+      "standalone_question": "For our project, set catalog key field to sku_amber. Which value should be used, and are events with the same key sent to the same partition?",
+      "asks": [
+        "project catalog key field",
+        "Are events with the same key sent to the same partition?"
+      ],
+      "answer": "The project catalog key field is sku_amber. Events with the same key go to the same partition.",
+      "key_facts": [
+        "The project catalog key field is sku_amber.",
+        "Events with the same key go to the same partition."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "user",
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "sku_amber",
+        "partition"
+      ],
+      "evidence_pages": [
+        "getting-started/introduction.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "set catalog key field to sku_amber",
+          "user_turn": 3
+        },
+        {
+          "fact_idx": 1,
+          "page": "getting-started/introduction.md",
+          "quote": "Same-key events go to the same partition; each partition is read in write order."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T13:10:57+00:00",
+        "memo": "프로젝트 값과 예시 key만 질문하여 독립 질문 2개 유지",
+        "repair_history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/error_repairs/6e10f9ea2fc048a1a49cb5d9978cd531/kafka_v2_05_compacted_catalog",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 4,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Before rollout, change our catalog topic name from catalog-amber-17 to catalog-amber-29. What is the revised project value, and after a partition-count increase, is existing data redistributed?",
+      "standalone_question": "For this Kafka project, before rollout, change our catalog topic name from catalog-amber-17 to catalog-amber-29. What is the revised project value, and after a partition-count increase, is existing data redistributed?",
+      "asks": [
+        "updated catalog topic name",
+        "After a partition-count increase, is existing data redistributed?"
+      ],
+      "answer": "The project catalog topic name is catalog-amber-29. Existing data is not redistributed.",
+      "key_facts": [
+        "The project catalog topic name is catalog-amber-29.",
+        "Existing data is not redistributed."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "catalog-amber-29",
+        "partitions"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our catalog topic name from catalog-amber-17 to catalog-amber-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/topics-partitions-offsets.md",
+          "quote": "existing data is not redistributed",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "catalog topic name",
+          "from": "catalog-amber-17",
+          "to": "catalog-amber-29"
+        }
+      ],
+      "affects": [
+        9,
+        13
+      ],
+      "source_turn": null,
+      "recall_distance": 4,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "토픽 이름 갱신과 이후 영향 대상이 일관된다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174941-850062_kafka_v2_05_compacted_catalog",
+        "llm_source_hash": "329f6d0b47901a8892012fca5487c2f47bceebc2bc9791eae919f976e1acf4ec",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 5,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What is the default batching delay in milliseconds?",
+      "standalone_question": "For this Kafka project, what is the default batching delay in milliseconds?",
+      "asks": [
+        "What is the default batching delay in milliseconds?"
+      ],
+      "answer": "The default linger.ms is 5 ms.",
+      "key_facts": [
+        "The default linger.ms is 5 ms."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "linger.ms",
+        "5"
+      ],
+      "evidence_pages": [
+        "clients/producer.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "clients/producer.md",
+          "quote": "`linger.ms`, default `5` ms",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "새 Producer 문서의 batching 지연 기본값을 정확히 평가한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174941-850062_kafka_v2_05_compacted_catalog",
+        "llm_source_hash": "329f6d0b47901a8892012fca5487c2f47bceebc2bc9791eae919f976e1acf4ec",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 6,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "Can send() block even with zero batching delay?",
+      "standalone_question": "For this Kafka project, can send() block even with zero batching delay?",
+      "asks": [
+        "Can send() block even with zero batching delay?"
+      ],
+      "answer": "Even with linger.ms=0, send() can block when the buffer is full or metadata is unavailable.",
+      "key_facts": [
+        "Even with linger.ms=0, send() can block when the buffer is full or metadata is unavailable."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "send()"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "clients/producer.md",
+          "quote": "Even with `linger.ms=0`, `send()` can block when the buffer is full or metadata is unavailable.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "zero linger와 send() blocking의 관계를 이전 문서로 확인한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174941-850062_kafka_v2_05_compacted_catalog",
+        "llm_source_hash": "329f6d0b47901a8892012fca5487c2f47bceebc2bc9791eae919f976e1acf4ec",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 7,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "What payload makes a keyed record a delete marker?",
+      "standalone_question": "For this Kafka project, what payload makes a keyed record a delete marker?",
+      "asks": [
+        "What payload makes a keyed record a delete marker?"
+      ],
+      "answer": "A null payload makes a keyed record a tombstone.",
+      "key_facts": [
+        "A null payload makes a keyed record a tombstone."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "null"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "concepts/log-compaction.md",
+          "quote": "A message with a key and a **null payload** is a delete, called a **tombstone**.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 1,
+      "recall_distance": 6,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "충분히 이전에 첨부한 컴팩션 문서의 미사용 tombstone 정의를 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174941-850062_kafka_v2_05_compacted_catalog",
+        "llm_source_hash": "329f6d0b47901a8892012fca5487c2f47bceebc2bc9791eae919f976e1acf4ec",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 8,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Use amber-catalog-reader as the project query service name. Which value should be used, and what makes a segment old enough for time-based deletion?",
+      "standalone_question": "For this Kafka project, use amber-catalog-reader as the project query service name. Which value should be used, and what makes a segment old enough for time-based deletion?",
+      "asks": [
+        "project query service name",
+        "What makes a segment old enough for time-based deletion?"
+      ],
+      "answer": "The project query service name is amber-catalog-reader. A segment becomes eligible for time-based deletion when its age, determined by its largest record timestamp, exceeds retention.ms.",
+      "key_facts": [
+        "The project query service name is amber-catalog-reader.",
+        "A segment becomes eligible for time-based deletion when its age, determined by its largest record timestamp, exceeds retention.ms."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "user",
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "amber-catalog-reader",
+        "retention.ms"
+      ],
+      "evidence_pages": [
+        "concepts/storage-and-retention.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "Use amber-catalog-reader as the project query service name.",
+          "user_turn": 8
+        },
+        {
+          "fact_idx": 1,
+          "page": "concepts/storage-and-retention.md",
+          "quote": "a segment's age is the **largest record timestamp** in it; it becomes deletable when that exceeds `retention.ms`."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:28+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174941-850062_kafka_v2_05_compacted_catalog",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 9,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What catalog topic name are we using now, and after a partition-count increase, is existing data redistributed?",
+      "standalone_question": "For this Kafka project, what catalog topic name are we using now, and after a partition-count increase, is existing data redistributed?",
+      "asks": [
+        "current catalog topic name",
+        "After a partition-count increase, is existing data redistributed?"
+      ],
+      "answer": "The project catalog topic name is catalog-amber-29. Existing data is not redistributed.",
+      "key_facts": [
+        "The project catalog topic name is catalog-amber-29.",
+        "Existing data is not redistributed."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "catalog-amber-29",
+        "partitions"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our catalog topic name from catalog-amber-17 to catalog-amber-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/topics-partitions-offsets.md",
+          "quote": "existing data is not redistributed",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 9,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "갱신된 이름과 과거 첨부 문서의 재분배 제약을 회상한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174941-850062_kafka_v2_05_compacted_catalog",
+        "llm_source_hash": "329f6d0b47901a8892012fca5487c2f47bceebc2bc9791eae919f976e1acf4ec",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 10,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What is the default topic time-retention value?",
+      "standalone_question": "For this Kafka project, what is the default topic time-retention value?",
+      "asks": [
+        "What is the default topic time-retention value?"
+      ],
+      "answer": "The default retention.ms is 604800000 milliseconds, or seven days.",
+      "key_facts": [
+        "The default retention.ms is 604800000 milliseconds, or seven days."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "604800000"
+      ],
+      "evidence_pages": [
+        "configuration/topic-and-group-configuration.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "configuration/topic-and-group-configuration.md",
+          "quote": "| `retention.ms` | `604800000` (7 days) | `log.retention.ms` |",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "새 설정 문서의 기본 time retention 값을 정확히 평가한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174941-850062_kafka_v2_05_compacted_catalog",
+        "llm_source_hash": "329f6d0b47901a8892012fca5487c2f47bceebc2bc9791eae919f976e1acf4ec",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 11,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our delete.retention.ms from 111600000 to 198000000. What value should we use now, and if only offset 38 remains, what record does a read from removed offset 36 reach?",
+      "standalone_question": "For this Kafka project, change our delete.retention.ms from 111600000 to 198000000. What value should we use now, and if only offset 38 remains, what record does a read from removed offset 36 reach?",
+      "asks": [
+        "updated delete.retention.ms",
+        "If only offset 38 remains, what record does a read from removed offset 36 reach?"
+      ],
+      "answer": "The project delete.retention.ms is 198000000. It reaches the record at offset 38.",
+      "key_facts": [
+        "The project delete.retention.ms is 198000000.",
+        "It reaches the record at offset 38."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "198000000",
+        "38"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our delete.retention.ms from 111600000 to 198000000.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/log-compaction.md",
+          "quote": "offsets 36, 37 and 38 are equivalent if only 38 remains",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "delete.retention.ms",
+          "from": "111600000",
+          "to": "198000000"
+        }
+      ],
+      "affects": [
+        17
+      ],
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "delete.retention.ms 갱신과 과거 컴팩션 예시 재사용이 일관된다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174941-850062_kafka_v2_05_compacted_catalog",
+        "llm_source_hash": "329f6d0b47901a8892012fca5487c2f47bceebc2bc9791eae919f976e1acf4ec",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 12,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Under exactly-once processing, what is the default commit interval?",
+      "standalone_question": "For this Kafka project, under exactly-once processing, what is the default commit interval?",
+      "asks": [
+        "Under exactly-once processing, what is the default commit interval?"
+      ],
+      "answer": "Under exactly-once processing, the default commit.interval.ms is 100 ms.",
+      "key_facts": [
+        "Under exactly-once processing, the default commit.interval.ms is 100 ms."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "commit.interval.ms",
+        "100"
+      ],
+      "evidence_pages": [
+        "streams/configuration.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "page": "streams/configuration.md",
+          "quote": "| `commit.interval.ms` | `30000` (`100` with EOS) | Commit / flush frequency. |"
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:28+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174941-850062_kafka_v2_05_compacted_catalog",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 13,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which catalog topic name are we using now, what makes a segment old enough for time-based deletion, and what is the default topic time-retention value?",
+      "standalone_question": "For this Kafka project, which catalog topic name are we using now, what makes a segment old enough for time-based deletion, and what is the default topic time-retention value?",
+      "asks": [
+        "current catalog topic name",
+        "What makes a segment old enough for time-based deletion?",
+        "What is the default topic time-retention value?"
+      ],
+      "answer": "The project catalog topic name is catalog-amber-29. A segment becomes eligible for time-based deletion when its age, determined by its largest record timestamp, exceeds retention.ms. The default retention.ms is 604800000 milliseconds, or seven days.",
+      "key_facts": [
+        "The project catalog topic name is catalog-amber-29.",
+        "A segment becomes eligible for time-based deletion when its age, determined by its largest record timestamp, exceeds retention.ms.",
+        "The default retention.ms is 604800000 milliseconds, or seven days."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "user",
+          "tags": []
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "catalog-amber-29",
+        "retention.ms",
+        "604800000"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        8,
+        10
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "change our catalog topic name from catalog-amber-17 to catalog-amber-29.",
+          "user_turn": 4
+        },
+        {
+          "fact_idx": 1,
+          "page": "concepts/storage-and-retention.md",
+          "quote": "a segment's age is the **largest record timestamp** in it; it becomes deletable when that exceeds `retention.ms`."
+        },
+        {
+          "fact_idx": 2,
+          "page": "configuration/topic-and-group-configuration.md",
+          "quote": "| `retention.ms` | `604800000` (7 days) | `log.retention.ms` |"
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 9,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:28+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174941-850062_kafka_v2_05_compacted_catalog",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 14,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "What is the default compression codec for a producer?",
+      "standalone_question": "For this Kafka project, what is the default compression codec for a producer?",
+      "asks": [
+        "What is the default compression codec for a producer?"
+      ],
+      "answer": "The default compression.type is none.",
+      "key_facts": [
+        "The default compression.type is none."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "compression.type",
+        "none"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "clients/producer.md",
+          "quote": "`compression.type` (`none` default, `gzip`, `snappy`, `lz4`, `zstd`)",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 5,
+      "recall_distance": 9,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "오래된 Producer 페이지의 미사용 compression 절을 적절히 재사용한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174941-850062_kafka_v2_05_compacted_catalog",
+        "llm_source_hash": "329f6d0b47901a8892012fca5487c2f47bceebc2bc9791eae919f976e1acf4ec",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 15,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "May an interactive query modify a store outside the topology?",
+      "standalone_question": "For this Kafka project, may an interactive query modify a store outside the topology?",
+      "asks": [
+        "May an interactive query modify a store outside the topology?"
+      ],
+      "answer": "No; interactive queries are read-only.",
+      "key_facts": [
+        "No; interactive queries are read-only."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "read-only"
+      ],
+      "evidence_pages": [
+        "streams/state-stores-and-interactive-queries.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "streams/state-stores-and-interactive-queries.md",
+          "quote": "Queries are **read-only** — you can't mutate stores out of band.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "새 IQ 문서의 읽기 전용 제약을 정확히 평가한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174941-850062_kafka_v2_05_compacted_catalog",
+        "llm_source_hash": "329f6d0b47901a8892012fca5487c2f47bceebc2bc9791eae919f976e1acf4ec",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 16,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which catalog key field did we choose, and are events with the same key sent to the same partition?",
+      "standalone_question": "For this Kafka project, which catalog key field did we choose, and are events with the same key sent to the same partition?",
+      "asks": [
+        "project catalog key field",
+        "Are events with the same key sent to the same partition?"
+      ],
+      "answer": "The project catalog key field is sku_amber. Events with the same key go to the same partition.",
+      "key_facts": [
+        "The project catalog key field is sku_amber.",
+        "Events with the same key go to the same partition."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "user",
+          "tags": []
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "sku_amber",
+        "partition"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        3
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "set catalog key field to sku_amber",
+          "user_turn": 3
+        },
+        {
+          "fact_idx": 1,
+          "page": "getting-started/introduction.md",
+          "quote": "Same-key events go to the same partition; each partition is read in write order."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 13,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T13:10:57+00:00",
+        "memo": "프로젝트 값과 예시 key만 질문하여 독립 질문 2개 유지",
+        "repair_history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/error_repairs/6e10f9ea2fc048a1a49cb5d9978cd531/kafka_v2_05_compacted_catalog",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 17,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What delete.retention.ms are we using now, and does cleaning a log change the offsets of surviving records?",
+      "standalone_question": "For this Kafka project, what delete.retention.ms are we using now, and does cleaning a log change the offsets of surviving records?",
+      "asks": [
+        "current delete.retention.ms",
+        "Does cleaning a log change the offsets of surviving records?"
+      ],
+      "answer": "The project delete.retention.ms is 198000000. Surviving messages keep their original offsets.",
+      "key_facts": [
+        "The project delete.retention.ms is 198000000.",
+        "Surviving messages keep their original offsets."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "198000000",
+        "offsets"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        11,
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our delete.retention.ms from 111600000 to 198000000.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/log-compaction.md",
+          "quote": "Messages keep their **original offsets** — offsets never change.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 16,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "갱신된 delete.retention.ms와 오프셋 보존을 올바르게 회상한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174941-850062_kafka_v2_05_compacted_catalog",
+        "llm_source_hash": "329f6d0b47901a8892012fca5487c2f47bceebc2bc9791eae919f976e1acf4ec",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 18,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which query service name did we choose, under exactly-once processing, what is the default commit interval, and may an interactive query modify a store outside the topology?",
+      "standalone_question": "For this Kafka project, which query service name did we choose, under exactly-once processing, what is the default commit interval, and may an interactive query modify a store outside the topology?",
+      "asks": [
+        "project query service name",
+        "Under exactly-once processing, what is the default commit interval?",
+        "May an interactive query modify a store outside the topology?"
+      ],
+      "answer": "The project query service name is amber-catalog-reader. Under exactly-once processing, the default commit.interval.ms is 100 ms. No; interactive queries are read-only.",
+      "key_facts": [
+        "The project query service name is amber-catalog-reader.",
+        "Under exactly-once processing, the default commit.interval.ms is 100 ms.",
+        "No; interactive queries are read-only."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "user",
+          "tags": []
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "amber-catalog-reader",
+        "commit.interval.ms",
+        "100",
+        "read-only"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        8,
+        12,
+        15
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "Use amber-catalog-reader as the project query service name.",
+          "user_turn": 8
+        },
+        {
+          "fact_idx": 1,
+          "page": "streams/configuration.md",
+          "quote": "| `commit.interval.ms` | `30000` (`100` with EOS) | Commit / flush frequency. |"
+        },
+        {
+          "fact_idx": 2,
+          "page": "streams/state-stores-and-interactive-queries.md",
+          "quote": "Queries are **read-only** — you can't mutate stores out of band."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:28+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-174941-850062_kafka_v2_05_compacted_catalog",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    }
+  ],
+  "edits": [
+    {
+      "at": "2026-11-28T12:52:28+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 8,
+      "fields": [
+        "answer",
+        "key_facts"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_05_compacted_catalog_791685aeaaad4b58824033db50c967a1"
+    },
+    {
+      "at": "2026-11-28T12:52:28+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 12,
+      "fields": [
+        "answer",
+        "key_facts",
+        "evidence",
+        "key_entities"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_05_compacted_catalog_791685aeaaad4b58824033db50c967a1"
+    },
+    {
+      "at": "2026-11-28T12:52:28+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 13,
+      "fields": [
+        "answer",
+        "key_facts"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_05_compacted_catalog_791685aeaaad4b58824033db50c967a1"
+    },
+    {
+      "at": "2026-11-28T12:52:28+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 18,
+      "fields": [
+        "answer",
+        "key_facts",
+        "evidence",
+        "key_entities"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_05_compacted_catalog_791685aeaaad4b58824033db50c967a1"
+    },
+    {
+      "at": "2026-11-28T13:10:57+00:00",
+      "by": "Codex session",
+      "turn": 3,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks",
+        "answer",
+        "key_facts",
+        "key_entities"
+      ],
+      "note": "프로젝트 값과 예시 key만 질문하여 독립 질문 2개 유지",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/error_repairs/6e10f9ea2fc048a1a49cb5d9978cd531/kafka_v2_05_compacted_catalog"
+    },
+    {
+      "at": "2026-11-28T13:10:57+00:00",
+      "by": "Codex session",
+      "turn": 16,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks",
+        "answer",
+        "key_facts",
+        "key_entities"
+      ],
+      "note": "프로젝트 값과 예시 key만 질문하여 독립 질문 2개 유지",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/error_repairs/6e10f9ea2fc048a1a49cb5d9978cd531/kafka_v2_05_compacted_catalog"
+    },
+    {
+      "at": "2026-11-28T14:39:41+00:00",
+      "by": "장우진",
+      "turn": 16,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks",
+        "answer",
+        "key_facts",
+        "fact_meta",
+        "key_entities",
+        "evidence"
+      ],
+      "note": "프로젝트 값과 예시 key만 질문하여 독립 질문 2개 유지"
+    },
+    {
+      "at": "2026-11-28T14:39:41+00:00",
+      "by": "장우진",
+      "turn": 3,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks",
+        "answer",
+        "key_facts",
+        "fact_meta",
+        "key_entities",
+        "evidence"
+      ],
+      "note": "프로젝트 값과 예시 key만 질문하여 독립 질문 2개 유지"
+    }
+  ]
+}

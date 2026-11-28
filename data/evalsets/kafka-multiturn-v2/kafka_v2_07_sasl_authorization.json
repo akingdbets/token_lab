@@ -1,0 +1,1275 @@
+{
+  "schema_version": 2,
+  "scenario_id": "kafka_v2_07_sasl_authorization",
+  "title": "Deploying authenticated workers with scoped authorization",
+  "topic": "Deploying authenticated workers with scoped authorization",
+  "status": "final",
+  "bundle": [
+    "concepts/delivery-semantics.md",
+    "security/sasl-authentication.md",
+    "configuration/config-providers-and-system-properties.md",
+    "security/authorization-and-acls.md",
+    "security/ssl-encryption-and-authentication.md",
+    "configuration/client-configuration.md",
+    "security/listeners-and-security-overview.md",
+    "operations/quotas-and-multi-tenancy.md"
+  ],
+  "generation": {
+    "model": "gpt-6.1-sol",
+    "method": "Codex session, account plan",
+    "prompt": [
+      "mt_scenario_gen_v3",
+      "40710c69c22d"
+    ],
+    "run_id": "20261128-165733_kafka_18_session",
+    "request_file": "results/scenario_gen/20261128-165733_kafka_18_session/kafka_v2_07_sasl_authorization_request.json",
+    "created_at": "2026-11-28T16:57:33",
+    "corpus_manifest_sha256": "a6fb69b10c7c98a2af883313f8938d0bfb1757fae65b8274c183a4c14ef4a735",
+    "context": "Authored in the ongoing Codex conversation with a shared turn structure, explicit page-grounded fact selections, and topic-specific project settings."
+  },
+  "turns": [
+    {
+      "turn": 0,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our project concerns deploying authenticated workers with scoped authorization. For the planned deployment, set worker principal to saffron_worker_17. Which value should we use, and which ordering of processing and offset saving gives at-least-once consumption?",
+      "standalone_question": "For this Kafka project, our project concerns deploying authenticated workers with scoped authorization. For the planned deployment, set worker principal to saffron_worker_17. Which value should we use, and which ordering of processing and offset saving gives at-least-once consumption?",
+      "asks": [
+        "project worker principal",
+        "Which ordering of processing and offset saving gives at-least-once consumption?"
+      ],
+      "answer": "The project worker principal is saffron_worker_17. Read, process, then save the position gives at-least-once consumption.",
+      "key_facts": [
+        "The project worker principal is saffron_worker_17.",
+        "Read, process, then save the position gives at-least-once consumption."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "saffron_worker_17",
+        "At least once"
+      ],
+      "evidence_pages": [
+        "concepts/delivery-semantics.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 0,
+          "quote": "set worker principal to saffron_worker_17",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/delivery-semantics.md",
+          "quote": "| Read → process → save position | First messages are re-processed by the new owner | **At least once** |",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "현재 설정값과 문서의 처리 순서를 정확히 묻고 답한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175634-937082_kafka_v2_07_sasl_authorization",
+        "llm_source_hash": "565c3d323d18bb29372dbed6b5462b92be5cbd14d4e3635abdb9389af9ac27a8",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 1,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Set our client.id to saffron-reader-17. Which project value applies, and when both client JAAS options are set, which one wins?",
+      "standalone_question": "For this Kafka project, set our client.id to saffron-reader-17. Which project value applies, and when both client JAAS options are set, which one wins?",
+      "asks": [
+        "project client.id",
+        "When both client JAAS options are set, which one wins?"
+      ],
+      "answer": "The project client.id is saffron-reader-17. The client sasl.jaas.config property wins over java.security.auth.login.config.",
+      "key_facts": [
+        "The project client.id is saffron-reader-17.",
+        "The client sasl.jaas.config property wins over java.security.auth.login.config."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "saffron-reader-17",
+        "sasl.jaas.config"
+      ],
+      "evidence_pages": [
+        "security/sasl-authentication.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Set our client.id to saffron-reader-17.",
+          "fact_idx": 0
+        },
+        {
+          "page": "security/sasl-authentication.md",
+          "quote": "It wins over `java.security.auth.login.config` if both are set.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "client.id 설정과 클라이언트 JAAS 우선순위가 일치한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175634-937082_kafka_v2_07_sasl_authorization",
+        "llm_source_hash": "565c3d323d18bb29372dbed6b5462b92be5cbd14d4e3635abdb9389af9ac27a8",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 2,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "What static JAAS section name applies to a client?",
+      "standalone_question": "For this Kafka project, what static JAAS section name applies to a client?",
+      "asks": [
+        "What static JAAS section name applies to a client?"
+      ],
+      "answer": "The static client JAAS section is KafkaClient.",
+      "key_facts": [
+        "The static client JAAS section is KafkaClient."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "KafkaClient"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "security/sasl-authentication.md",
+          "quote": "a `KafkaClient` section passed via",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "이전 SASL 문서의 정적 클라이언트 JAAS 절을 활용한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175634-937082_kafka_v2_07_sasl_authorization",
+        "llm_source_hash": "565c3d323d18bb29372dbed6b5462b92be5cbd14d4e3635abdb9389af9ac27a8",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 3,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "For our project, set truststore path to /etc/saffron/trust.p12. Which value should be used, and how does the directory-backed configuration provider turn files into settings?",
+      "standalone_question": "For this Kafka project, for our project, set truststore path to /etc/saffron/trust.p12. Which value should be used, and how does the directory-backed configuration provider turn files into settings?",
+      "asks": [
+        "project truststore path",
+        "How does the directory-backed configuration provider turn files into settings?"
+      ],
+      "answer": "The project truststore path is /etc/saffron/trust.p12. Each file is a key and its content is the value.",
+      "key_facts": [
+        "The project truststore path is /etc/saffron/trust.p12.",
+        "Each file is a key and its content is the value."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "/etc/saffron/trust.p12",
+        "file"
+      ],
+      "evidence_pages": [
+        "configuration/config-providers-and-system-properties.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 3,
+          "quote": "set truststore path to /etc/saffron/trust.p12",
+          "fact_idx": 0
+        },
+        {
+          "page": "configuration/config-providers-and-system-properties.md",
+          "quote": "**each file is a key and its content is the value**",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "truststore 경로와 DirectoryConfigProvider 동작이 근거에 맞는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175634-937082_kafka_v2_07_sasl_authorization",
+        "llm_source_hash": "565c3d323d18bb29372dbed6b5462b92be5cbd14d4e3635abdb9389af9ac27a8",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 4,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Before rollout, change our worker principal from saffron_worker_17 to saffron_worker_29. What is the revised project value, and which consumer isolation mode includes committed transactional and non-transactional records while excluding aborted transactional records?",
+      "standalone_question": "For this Kafka project, before rollout, change our worker principal from saffron_worker_17 to saffron_worker_29. What is the revised project value, and which consumer isolation mode includes committed transactional and non-transactional records while excluding aborted transactional records?",
+      "asks": [
+        "updated worker principal",
+        "Which consumer isolation mode includes committed transactional and non-transactional records while excluding aborted transactional records?"
+      ],
+      "answer": "The project worker principal is saffron_worker_29. read_committed includes committed transactional and non-transactional records.",
+      "key_facts": [
+        "The project worker principal is saffron_worker_29.",
+        "read_committed includes committed transactional and non-transactional records."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "saffron_worker_29",
+        "read_committed"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our worker principal from saffron_worker_17 to saffron_worker_29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/delivery-semantics.md",
+          "quote": "`read_committed` returns only committed transactional messages (plus non-transactional ones).",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "worker principal",
+          "from": "saffron_worker_17",
+          "to": "saffron_worker_29"
+        }
+      ],
+      "affects": [
+        9,
+        13
+      ],
+      "source_turn": null,
+      "recall_distance": 4,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:28+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175634-937082_kafka_v2_07_sasl_authorization",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 5,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Who can access a resource when no ACL matches under the default policy?",
+      "standalone_question": "For this Kafka project, who can access a resource when no ACL matches under the default policy?",
+      "asks": [
+        "Who can access a resource when no ACL matches under the default policy?"
+      ],
+      "answer": "Only super users can access a resource with no matching ACL.",
+      "key_facts": [
+        "Only super users can access a resource with no matching ACL."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "super users"
+      ],
+      "evidence_pages": [
+        "security/authorization-and-acls.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "security/authorization-and-acls.md",
+          "quote": "If **no ACL matches** a resource, access is **restricted to super users**.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "authorizer의 기본 ACL 정책에 관한 답변이 문서에 부합한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175634-937082_kafka_v2_07_sasl_authorization",
+        "llm_source_hash": "565c3d323d18bb29372dbed6b5462b92be5cbd14d4e3635abdb9389af9ac27a8",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 6,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "Are super-user entries separated with commas or semicolons?",
+      "standalone_question": "For this Kafka project, are super-user entries separated with commas or semicolons?",
+      "asks": [
+        "Are super-user entries separated with commas or semicolons?"
+      ],
+      "answer": "Super-user entries use semicolons.",
+      "key_facts": [
+        "Super-user entries use semicolons."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "semicolon"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "security/authorization-and-acls.md",
+          "quote": "Super users (semicolon-separated",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "super.users 구분자를 묻는 후속 질문이 정확하다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175634-937082_kafka_v2_07_sasl_authorization",
+        "llm_source_hash": "565c3d323d18bb29372dbed6b5462b92be5cbd14d4e3635abdb9389af9ac27a8",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 7,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "Is the default unsecured bearer-token implementation suitable for production?",
+      "standalone_question": "For this Kafka project, is the default unsecured bearer-token implementation suitable for production?",
+      "asks": [
+        "Is the default unsecured bearer-token implementation suitable for production?"
+      ],
+      "answer": "No; the default unsecured JWT implementation is for dev/test only.",
+      "key_facts": [
+        "No; the default unsecured JWT implementation is for dev/test only."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "JWTs"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "security/sasl-authentication.md",
+          "quote": "The default implementation creates and validates **unsecured JWTs** — handy for dev/test only.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 1,
+      "recall_distance": 6,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "오래된 SASL 문서의 미사용 OAuth 절을 적절히 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175634-937082_kafka_v2_07_sasl_authorization",
+        "llm_source_hash": "565c3d323d18bb29372dbed6b5462b92be5cbd14d4e3635abdb9389af9ac27a8",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 8,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Use saffron-jobs-41 as the project worker group.id. Which value should be used, and what algorithm value enables hostname verification by default?",
+      "standalone_question": "For this Kafka project, use saffron-jobs-41 as the project worker group.id. Which value should be used, and what algorithm value enables hostname verification by default?",
+      "asks": [
+        "project worker group.id",
+        "What algorithm value enables hostname verification by default?"
+      ],
+      "answer": "The project worker group.id is saffron-jobs-41. ssl.endpoint.identification.algorithm defaults to https.",
+      "key_facts": [
+        "The project worker group.id is saffron-jobs-41.",
+        "ssl.endpoint.identification.algorithm defaults to https."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "saffron-jobs-41",
+        "https"
+      ],
+      "evidence_pages": [
+        "security/ssl-encryption-and-authentication.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Use saffron-jobs-41 as the project worker group.id.",
+          "fact_idx": 0
+        },
+        {
+          "page": "security/ssl-encryption-and-authentication.md",
+          "quote": "`ssl.endpoint.identification.algorithm=https`",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "group.id 설정과 hostname verification 기본값이 정확하다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175634-937082_kafka_v2_07_sasl_authorization",
+        "llm_source_hash": "565c3d323d18bb29372dbed6b5462b92be5cbd14d4e3635abdb9389af9ac27a8",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 9,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What worker principal are we using now, and which consumer isolation mode includes committed transactional and non-transactional records while excluding aborted transactional records?",
+      "standalone_question": "For this Kafka project, what worker principal are we using now, and which consumer isolation mode includes committed transactional and non-transactional records while excluding aborted transactional records?",
+      "asks": [
+        "current worker principal",
+        "Which consumer isolation mode includes committed transactional and non-transactional records while excluding aborted transactional records?"
+      ],
+      "answer": "The project worker principal is saffron_worker_29. read_committed includes committed transactional and non-transactional records.",
+      "key_facts": [
+        "The project worker principal is saffron_worker_29.",
+        "read_committed includes committed transactional and non-transactional records."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "saffron_worker_29",
+        "read_committed"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our worker principal from saffron_worker_17 to saffron_worker_29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/delivery-semantics.md",
+          "quote": "`read_committed` returns only committed transactional messages (plus non-transactional ones).",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 9,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:28+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175634-937082_kafka_v2_07_sasl_authorization",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 10,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What is the consumer default max.poll.records?",
+      "standalone_question": "For this Kafka project, what is the consumer default max.poll.records?",
+      "asks": [
+        "What is the consumer default max.poll.records?"
+      ],
+      "answer": "The default max.poll.records is 500.",
+      "key_facts": [
+        "The default max.poll.records is 500."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "500"
+      ],
+      "evidence_pages": [
+        "configuration/client-configuration.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "configuration/client-configuration.md",
+          "quote": "| `max.poll.records` | `500` |",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "consumer max.poll.records 기본값을 정확히 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175634-937082_kafka_v2_07_sasl_authorization",
+        "llm_source_hash": "565c3d323d18bb29372dbed6b5462b92be5cbd14d4e3635abdb9389af9ac27a8",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 11,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our client.id from saffron-reader-17 to saffron-reader-29. What value should we use now, and what static JAAS section name applies to a client?",
+      "standalone_question": "For this Kafka project, change our client.id from saffron-reader-17 to saffron-reader-29. What value should we use now, and what static JAAS section name applies to a client?",
+      "asks": [
+        "updated client.id",
+        "What static JAAS section name applies to a client?"
+      ],
+      "answer": "The project client.id is saffron-reader-29. The static client JAAS section is KafkaClient.",
+      "key_facts": [
+        "The project client.id is saffron-reader-29.",
+        "The static client JAAS section is KafkaClient."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "saffron-reader-29",
+        "KafkaClient"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our client.id from saffron-reader-17 to saffron-reader-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "security/sasl-authentication.md",
+          "quote": "a `KafkaClient` section passed via",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "client.id",
+          "from": "saffron-reader-17",
+          "to": "saffron-reader-29"
+        }
+      ],
+      "affects": [
+        17
+      ],
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "client.id 변경과 과거 JAAS 문서 사실이 일관된다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175634-937082_kafka_v2_07_sasl_authorization",
+        "llm_source_hash": "565c3d323d18bb29372dbed6b5462b92be5cbd14d4e3635abdb9389af9ac27a8",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 12,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Which property tells clients where to connect after metadata discovery?",
+      "standalone_question": "For this Kafka project, which property tells clients where to connect after metadata discovery?",
+      "asks": [
+        "Which property tells clients where to connect after metadata discovery?"
+      ],
+      "answer": "advertised.listeners supplies the advertised client endpoints.",
+      "key_facts": [
+        "advertised.listeners supplies the advertised client endpoints."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "advertised.listeners"
+      ],
+      "evidence_pages": [
+        "security/listeners-and-security-overview.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "security/listeners-and-security-overview.md",
+          "quote": "`advertised.listeners` — what the broker tells clients to connect to after the first metadata fetch",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "메타데이터 조회 후 접속 주소를 제공하는 속성을 정확히 식별한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175634-937082_kafka_v2_07_sasl_authorization",
+        "llm_source_hash": "565c3d323d18bb29372dbed6b5462b92be5cbd14d4e3635abdb9389af9ac27a8",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 13,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which worker principal are we using now, what algorithm value enables hostname verification by default, and what is the consumer default max.poll.records?",
+      "standalone_question": "For this Kafka project, which worker principal are we using now, what algorithm value enables hostname verification by default, and what is the consumer default max.poll.records?",
+      "asks": [
+        "current worker principal",
+        "What algorithm value enables hostname verification by default?",
+        "What is the consumer default max.poll.records?"
+      ],
+      "answer": "The project worker principal is saffron_worker_29. ssl.endpoint.identification.algorithm defaults to https. The default max.poll.records is 500.",
+      "key_facts": [
+        "The project worker principal is saffron_worker_29.",
+        "ssl.endpoint.identification.algorithm defaults to https.",
+        "The default max.poll.records is 500."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "saffron_worker_29",
+        "https",
+        "500"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        8,
+        10
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our worker principal from saffron_worker_17 to saffron_worker_29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "security/ssl-encryption-and-authentication.md",
+          "quote": "`ssl.endpoint.identification.algorithm=https`",
+          "fact_idx": 1
+        },
+        {
+          "page": "configuration/client-configuration.md",
+          "quote": "| `max.poll.records` | `500` |",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 9,
+      "review": {
+        "needs_recheck": false,
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 14,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "For SSL principals, what does the DEFAULT mapping rule preserve?",
+      "standalone_question": "For this Kafka project, for SSL principals, what does the DEFAULT mapping rule preserve?",
+      "asks": [
+        "For SSL principals, what does the DEFAULT mapping rule preserve?"
+      ],
+      "answer": "DEFAULT preserves the full distinguished name.",
+      "key_facts": [
+        "DEFAULT preserves the full distinguished name."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "DEFAULT"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "security/authorization-and-acls.md",
+          "quote": "`DEFAULT` keeps the full DN",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 5,
+      "recall_distance": 9,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "오래된 ACL 문서의 미사용 SSL principal 매핑 절을 활용한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175634-937082_kafka_v2_07_sasl_authorization",
+        "llm_source_hash": "565c3d323d18bb29372dbed6b5462b92be5cbd14d4e3635abdb9389af9ac27a8",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 15,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Does a quota apply per broker or to the cluster as a whole?",
+      "standalone_question": "For this Kafka project, does a quota apply per broker or to the cluster as a whole?",
+      "asks": [
+        "Does a quota apply per broker or to the cluster as a whole?"
+      ],
+      "answer": "Quotas apply per broker.",
+      "key_facts": [
+        "Quotas apply per broker."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "broker"
+      ],
+      "evidence_pages": [
+        "operations/quotas-and-multi-tenancy.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "operations/quotas-and-multi-tenancy.md",
+          "quote": "Quotas are per broker rather than cluster-wide",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:40+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "client quota의 적용 단위를 문서에 맞게 답한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-175634-937082_kafka_v2_07_sasl_authorization",
+        "llm_source_hash": "565c3d323d18bb29372dbed6b5462b92be5cbd14d4e3635abdb9389af9ac27a8",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 16,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which truststore path did we choose, and how does the directory-backed configuration provider turn files into settings?",
+      "standalone_question": "For this Kafka project, which truststore path did we choose, and how does the directory-backed configuration provider turn files into settings?",
+      "asks": [
+        "project truststore path",
+        "How does the directory-backed configuration provider turn files into settings?"
+      ],
+      "answer": "The project truststore path is /etc/saffron/trust.p12. Each file is a key and its content is the value.",
+      "key_facts": [
+        "The project truststore path is /etc/saffron/trust.p12.",
+        "Each file is a key and its content is the value."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "/etc/saffron/trust.p12",
+        "file"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        3
+      ],
+      "evidence": [
+        {
+          "user_turn": 3,
+          "quote": "set truststore path to /etc/saffron/trust.p12",
+          "fact_idx": 0
+        },
+        {
+          "page": "configuration/config-providers-and-system-properties.md",
+          "quote": "**each file is a key and its content is the value**",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 13,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    },
+    {
+      "turn": 17,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What client.id are we using now, and when both client JAAS options are set, which one wins?",
+      "standalone_question": "For this Kafka project, what client.id are we using now, and when both client JAAS options are set, which one wins?",
+      "asks": [
+        "current client.id",
+        "When both client JAAS options are set, which one wins?"
+      ],
+      "answer": "The project client.id is saffron-reader-29. The client sasl.jaas.config property wins over java.security.auth.login.config.",
+      "key_facts": [
+        "The project client.id is saffron-reader-29.",
+        "The client sasl.jaas.config property wins over java.security.auth.login.config."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "saffron-reader-29",
+        "sasl.jaas.config"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        11,
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our client.id from saffron-reader-17 to saffron-reader-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "security/sasl-authentication.md",
+          "quote": "It wins over `java.security.auth.login.config` if both are set.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 16,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    },
+    {
+      "turn": 18,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which worker group.id did we choose, which property tells clients where to connect after metadata discovery, and does a quota apply per broker or to the cluster as a whole?",
+      "standalone_question": "For this Kafka project, which worker group.id did we choose, which property tells clients where to connect after metadata discovery, and does a quota apply per broker or to the cluster as a whole?",
+      "asks": [
+        "project worker group.id",
+        "Which property tells clients where to connect after metadata discovery?",
+        "Does a quota apply per broker or to the cluster as a whole?"
+      ],
+      "answer": "The project worker group.id is saffron-jobs-41. advertised.listeners supplies the advertised client endpoints. Quotas apply per broker.",
+      "key_facts": [
+        "The project worker group.id is saffron-jobs-41.",
+        "advertised.listeners supplies the advertised client endpoints.",
+        "Quotas apply per broker."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "saffron-jobs-41",
+        "advertised.listeners",
+        "broker"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        8,
+        12,
+        15
+      ],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Use saffron-jobs-41 as the project worker group.id.",
+          "fact_idx": 0
+        },
+        {
+          "page": "security/listeners-and-security-overview.md",
+          "quote": "`advertised.listeners` — what the broker tells clients to connect to after the first metadata fetch",
+          "fact_idx": 1
+        },
+        {
+          "page": "operations/quotas-and-multi-tenancy.md",
+          "quote": "Quotas are per broker rather than cluster-wide",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "memo": "",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review",
+        "needs_recheck": false,
+        "excluded": false
+      }
+    }
+  ],
+  "edits": [
+    {
+      "at": "2026-11-28T12:52:28+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 4,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_07_sasl_authorization_f258434c571b479fba343980b2a4ff9f"
+    },
+    {
+      "at": "2026-11-28T12:52:28+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 9,
+      "fields": [
+        "question",
+        "asks",
+        "standalone_question"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_07_sasl_authorization_f258434c571b479fba343980b2a4ff9f"
+    }
+  ]
+}

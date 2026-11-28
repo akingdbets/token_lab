@@ -1,0 +1,1451 @@
+{
+  "schema_version": 2,
+  "scenario_id": "kafka_v2_01_producer_delivery",
+  "title": "Reliable order-event delivery",
+  "topic": "Configuring reliable delivery and transactions for an order-events producer",
+  "status": "final",
+  "bundle": [
+    "concepts/topics-partitions-offsets.md",
+    "clients/producer.md",
+    "concepts/delivery-semantics.md",
+    "configuration/client-configuration.md",
+    "concepts/idempotence-and-transactions.md",
+    "concepts/replication.md",
+    "configuration/topic-and-group-configuration.md",
+    "monitoring/client-metrics.md"
+  ],
+  "generation": {
+    "model": "gpt-6.1-sol",
+    "method": "Codex session, account plan",
+    "prompt": [
+      "mt_scenario_gen_v3",
+      "40710c69c22d"
+    ],
+    "request_file": "results/scenario_gen/20261128-164701_kafka_v2_01_producer_delivery_session/request.json",
+    "created_at": "2026-11-28T16:46:05",
+    "corpus_manifest_sha256": "a6fb69b10c7c98a2af883313f8938d0bfb1757fae65b8274c183a4c14ef4a735",
+    "run_id": "20261128-164701_kafka_v2_01_producer_delivery_session",
+    "context": "Generated directly in the ongoing Codex conversation using the prepared prompt and local source pages.",
+    "checks": "results/scenario_gen/20261128-164701_kafka_v2_01_producer_delivery_session/checks.json"
+  },
+  "turns": [
+    {
+      "turn_type": "new",
+      "type": "multi",
+      "question": "We are building an order-event service. Our topic is orbit-orders-v7. Which topic name should we configure, and can we reduce its partition count later?",
+      "standalone_question": "We are building an order-event service. Our topic is orbit-orders-v7. Which topic name should we configure, and can we reduce its partition count later?",
+      "asks": [
+        "project topic",
+        "partition-count reduction"
+      ],
+      "answer": "The project topic is orbit-orders-v7. Kafka does not support reducing the number of partitions.",
+      "key_facts": [
+        "The project topic is orbit-orders-v7.",
+        "Kafka does not support reducing the number of partitions."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "orbit-orders-v7",
+        "partitions"
+      ],
+      "evidence_pages": [
+        "concepts/topics-partitions-offsets.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 0,
+          "quote": "Our topic is orbit-orders-v7.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/topics-partitions-offsets.md",
+          "quote": "Kafka does not support reducing the number of partitions.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 0,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false,
+        "decision_source": "human_review",
+        "memo": "사용자 요청: 원본 변경 전 검토 결과 경고가 표시된 시나리오를 일단 제외. 실제 질문·정답 변경 없이 검수 메타데이터 차이로 발생한 경고였음.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-172237-091938_kafka_v2_01_producer_delivery",
+        "llm_source_hash": "332f8dff0ddddb319d8b31e5bc74559c47aab6a9858636d1d4d8ea9b16f76960",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "needs_recheck": false
+      }
+    },
+    {
+      "turn_type": "new",
+      "type": "multi",
+      "question": "For this producer, set linger.ms to 13 ms. Which value should we use, and what batch-size threshold sends a partition batch immediately?",
+      "standalone_question": "For this producer, set linger.ms to 13 ms. Which value should we use, and what batch-size threshold sends a partition batch immediately?",
+      "asks": [
+        "project linger",
+        "immediate batch threshold"
+      ],
+      "answer": "Use linger.ms=13 ms. A partition batch is sent immediately when batch.size is reached; the default is 16384 bytes.",
+      "key_facts": [
+        "Use linger.ms=13 ms.",
+        "A partition batch is sent immediately when batch.size is reached; the default is 16384 bytes."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "13",
+        "batch.size",
+        "16384"
+      ],
+      "evidence_pages": [
+        "clients/producer.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "set linger.ms to 13 ms",
+          "fact_idx": 0
+        },
+        {
+          "page": "clients/producer.md",
+          "quote": "Batching is bounded by size (`batch.size`, default `16384` bytes) and by time (`linger.ms`, default `5` ms)",
+          "fact_idx": 1
+        },
+        {
+          "page": "clients/producer.md",
+          "quote": "Once `batch.size` worth of records accumulates for a partition, it is sent immediately",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 1,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false,
+        "decision_source": "human_review",
+        "memo": "사용자 요청: 원본 변경 전 검토 결과 경고가 표시된 시나리오를 일단 제외. 실제 질문·정답 변경 없이 검수 메타데이터 차이로 발생한 경고였음.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-172237-091938_kafka_v2_01_producer_delivery",
+        "llm_source_hash": "332f8dff0ddddb319d8b31e5bc74559c47aab6a9858636d1d4d8ea9b16f76960",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "needs_recheck": false
+      }
+    },
+    {
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "We will enable idempotence explicitly. If a conflicting producer configuration is set, what exception is thrown?",
+      "standalone_question": "In Kafka, if idempotence is explicitly enabled and a conflicting producer configuration is set, what exception is thrown?",
+      "asks": [
+        "explicit-idempotence conflict"
+      ],
+      "answer": "An explicitly enabled idempotent producer with conflicting configurations throws ConfigException.",
+      "key_facts": [
+        "An explicitly enabled idempotent producer with conflicting configurations throws ConfigException."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "ConfigException"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "clients/producer.md",
+          "quote": "if it was explicitly enabled, a `ConfigException` is thrown.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 2,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false,
+        "decision_source": "human_review",
+        "memo": "사용자 요청: 원본 변경 전 검토 결과 경고가 표시된 시나리오를 일단 제외. 실제 질문·정답 변경 없이 검수 메타데이터 차이로 발생한 경고였음.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-172237-091938_kafka_v2_01_producer_delivery",
+        "llm_source_hash": "332f8dff0ddddb319d8b31e5bc74559c47aab6a9858636d1d4d8ea9b16f76960",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "needs_recheck": false
+      }
+    },
+    {
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Our service will also read and write Kafka topics. Which consumer isolation setting excludes aborted transactional messages, and what happens to non-transactional messages under that setting?",
+      "standalone_question": "In Kafka, which consumer isolation setting excludes aborted transactional messages, and what happens to non-transactional messages under it?",
+      "asks": [
+        "consumer isolation setting",
+        "non-transactional message visibility"
+      ],
+      "answer": "Use read_committed; it returns committed transactional messages plus non-transactional messages.",
+      "key_facts": [
+        "Use isolation.level=read_committed to exclude aborted transactional messages.",
+        "Non-transactional messages remain visible under read_committed."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "read_committed"
+      ],
+      "evidence_pages": [
+        "concepts/delivery-semantics.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "page": "concepts/delivery-semantics.md",
+          "quote": "`read_committed` returns only committed transactional messages (plus non-transactional ones)."
+        },
+        {
+          "fact_idx": 1,
+          "page": "concepts/delivery-semantics.md",
+          "quote": "`read_committed` returns only committed transactional messages (plus non-transactional ones)."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 3,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false,
+        "decision_source": "human_review",
+        "memo": "사용자 요청: 원본 변경 전 검토 결과 경고가 표시된 시나리오를 일단 제외. 실제 질문·정답 변경 없이 검수 메타데이터 차이로 발생한 경고였음.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-172237-091938_kafka_v2_01_producer_delivery",
+        "llm_source_hash": "332f8dff0ddddb319d8b31e5bc74559c47aab6a9858636d1d4d8ea9b16f76960",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "needs_recheck": false
+      }
+    },
+    {
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our linger.ms from 13 ms to 19 ms. What is the new project value, and can send() still block even if that delay were set to zero?",
+      "standalone_question": "Change our linger.ms from 13 ms to 19 ms. What is the new project value, and can send() still block even if that delay were set to zero?",
+      "asks": [
+        "updated linger",
+        "zero-linger blocking"
+      ],
+      "answer": "The project now uses linger.ms=19 ms. Even with linger.ms=0, send() can block when the buffer is full or metadata is unavailable.",
+      "key_facts": [
+        "The project now uses linger.ms=19 ms.",
+        "Even with linger.ms=0, send() can block when the buffer is full or metadata is unavailable."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "19",
+        "send()"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "Change our linger.ms from 13 ms to 19 ms.",
+          "fact_idx": 0
+        },
+        {
+          "page": "clients/producer.md",
+          "quote": "Even with `linger.ms=0`, `send()` can block when the buffer is full or metadata is unavailable.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "Project linger.ms in milliseconds",
+          "from": 13,
+          "to": 19
+        }
+      ],
+      "affects": [
+        9,
+        18
+      ],
+      "source_turn": null,
+      "turn": 4,
+      "recall_distance": 3,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false,
+        "decision_source": "human_review",
+        "memo": "사용자 요청: 원본 변경 전 검토 결과 경고가 표시된 시나리오를 일단 제외. 실제 질문·정답 변경 없이 검수 메타데이터 차이로 발생한 경고였음.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-172237-091938_kafka_v2_01_producer_delivery",
+        "llm_source_hash": "332f8dff0ddddb319d8b31e5bc74559c47aab6a9858636d1d4d8ea9b16f76960",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "needs_recheck": false
+      }
+    },
+    {
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Before wiring the transactional consumer, what are the default consumer isolation level and auto-commit setting?",
+      "standalone_question": "Before wiring the transactional consumer, what are the default consumer isolation level and auto-commit setting?",
+      "asks": [
+        "default consumer isolation.level",
+        "default consumer enable.auto.commit"
+      ],
+      "answer": "The default consumer isolation.level is read_uncommitted. The default enable.auto.commit is true.",
+      "key_facts": [
+        "The default consumer isolation.level is read_uncommitted.",
+        "The default enable.auto.commit is true."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "read_uncommitted",
+        "enable.auto.commit",
+        "true"
+      ],
+      "evidence_pages": [
+        "configuration/client-configuration.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "page": "configuration/client-configuration.md",
+          "quote": "| `isolation.level` | `read_uncommitted` |"
+        },
+        {
+          "fact_idx": 1,
+          "page": "configuration/client-configuration.md",
+          "quote": "| `enable.auto.commit` | `true` |"
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 5,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false,
+        "decision_source": "human_review",
+        "memo": "사용자 요청: 원본 변경 전 검토 결과 경고가 표시된 시나리오를 일단 제외. 실제 질문·정답 변경 없이 검수 메타데이터 차이로 발생한 경고였음.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-172237-091938_kafka_v2_01_producer_delivery",
+        "llm_source_hash": "332f8dff0ddddb319d8b31e5bc74559c47aab6a9858636d1d4d8ea9b16f76960",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "needs_recheck": false
+      }
+    },
+    {
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "For that consumer, what is the default max.poll.records value?",
+      "standalone_question": "In Kafka, what is the default consumer max.poll.records value?",
+      "asks": [
+        "consumer poll limit"
+      ],
+      "answer": "The default max.poll.records is 500.",
+      "key_facts": [
+        "The default max.poll.records is 500."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "500"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "page": "configuration/client-configuration.md",
+          "quote": "| `max.poll.records` | `500` |",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 6,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false,
+        "decision_source": "human_review",
+        "memo": "사용자 요청: 원본 변경 전 검토 결과 경고가 표시된 시나리오를 일단 제외. 실제 질문·정답 변경 없이 검수 메타데이터 차이로 발생한 경고였음.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-172237-091938_kafka_v2_01_producer_delivery",
+        "llm_source_hash": "332f8dff0ddddb319d8b31e5bc74559c47aab6a9858636d1d4d8ea9b16f76960",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "needs_recheck": false
+      }
+    },
+    {
+      "turn_type": "same_doc_new_topic",
+      "type": "multi",
+      "question": "When we add compression to that producer, does the codec operate per message or on whole batches, and what is its default setting?",
+      "standalone_question": "In Kafka, does producer compression operate per message or on whole batches, and what is the default compression.type?",
+      "asks": [
+        "compression unit",
+        "default codec"
+      ],
+      "answer": "Compression works on whole batches. The default compression.type is none.",
+      "key_facts": [
+        "Compression works on whole batches.",
+        "The default compression.type is none."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "batches",
+        "none"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "clients/producer.md",
+          "quote": "Compression works on **whole batches**",
+          "fact_idx": 0
+        },
+        {
+          "page": "clients/producer.md",
+          "quote": "`compression.type` (`none` default, `gzip`, `snappy`, `lz4`, `zstd`)",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 1,
+      "turn": 7,
+      "recall_distance": 6,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false,
+        "decision_source": "human_review",
+        "memo": "사용자 요청: 원본 변경 전 검토 결과 경고가 표시된 시나리오를 일단 제외. 실제 질문·정답 변경 없이 검수 메타데이터 차이로 발생한 경고였음.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-172237-091938_kafka_v2_01_producer_delivery",
+        "llm_source_hash": "332f8dff0ddddb319d8b31e5bc74559c47aab6a9858636d1d4d8ea9b16f76960",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "needs_recheck": false
+      }
+    },
+    {
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Use orbit-tx-worker-7 as our transactional.id and set transaction.timeout.ms to 17000. What transaction timeout should we configure, and does aborting automatically rewind the consumer?",
+      "standalone_question": "Use orbit-tx-worker-7 as our transactional.id and set transaction.timeout.ms to 17000. What transaction timeout should we configure, and does aborting automatically rewind the consumer?",
+      "asks": [
+        "project transaction timeout",
+        "abort rewind"
+      ],
+      "answer": "Use transaction.timeout.ms=17000. Aborted transactions do not rewind the consumer automatically; the application must reset its position explicitly.",
+      "key_facts": [
+        "Use transaction.timeout.ms=17000.",
+        "Aborted transactions do not rewind the consumer automatically; the application must reset its position explicitly."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "user",
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "17000",
+        "consumer"
+      ],
+      "evidence_pages": [
+        "concepts/idempotence-and-transactions.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "quote": "Use orbit-tx-worker-7 as our transactional.id and set transaction.timeout.ms to 17000.",
+          "user_turn": 8
+        },
+        {
+          "fact_idx": 1,
+          "page": "concepts/idempotence-and-transactions.md",
+          "quote": "After an abort, the application must **reset the consumer position explicitly**: aborted transactions don't rewind the consumer automatically."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 8,
+      "recall_distance": 0,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T13:10:57+00:00",
+        "memo": "프로젝트 ID 선언은 유지하고 timeout과 중단 후 위치 복구만 질문\n사용자 요청: 원본 변경 전 검토 결과 경고가 표시된 시나리오를 일단 제외. 실제 질문·정답 변경 없이 검수 메타데이터 차이로 발생한 경고였음.",
+        "repair_history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/error_repairs/6e10f9ea2fc048a1a49cb5d9978cd531/kafka_v2_01_producer_delivery",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "excluded": false,
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00"
+      }
+    },
+    {
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What producer batching delay are we using now, and what default batching delay would apply if we removed our override?",
+      "standalone_question": "In this Kafka project, what is the latest producer batching delay the team chose, and what default batching delay would apply without that override?",
+      "asks": [
+        "current project linger",
+        "default linger"
+      ],
+      "answer": "The current project linger.ms is 19 ms. The default linger.ms is 5 ms.",
+      "key_facts": [
+        "The current project linger.ms is 19 ms.",
+        "The default linger.ms is 5 ms."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "19",
+        "5"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "Change our linger.ms from 13 ms to 19 ms.",
+          "fact_idx": 0
+        },
+        {
+          "page": "clients/producer.md",
+          "quote": "`linger.ms`, default `5` ms",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 9,
+      "recall_distance": 8,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false,
+        "decision_source": "human_review",
+        "memo": "사용자 요청: 원본 변경 전 검토 결과 경고가 표시된 시나리오를 일단 제외. 실제 질문·정답 변경 없이 검수 메타데이터 차이로 발생한 경고였음.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-172237-091938_kafka_v2_01_producer_delivery",
+        "llm_source_hash": "332f8dff0ddddb319d8b31e5bc74559c47aab6a9858636d1d4d8ea9b16f76960",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "needs_recheck": false
+      }
+    },
+    {
+      "turn_type": "new",
+      "type": "fact",
+      "question": "With acks=all, what errors can the producer receive if the ISR is smaller than min.insync.replicas?",
+      "standalone_question": "With acks=all, what errors can the producer receive if the ISR is smaller than min.insync.replicas?",
+      "asks": [
+        "insufficient ISR errors"
+      ],
+      "answer": "The producer receives NotEnoughReplicas or NotEnoughReplicasAfterAppend.",
+      "key_facts": [
+        "The producer receives NotEnoughReplicas or NotEnoughReplicasAfterAppend."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "NotEnoughReplicas",
+        "NotEnoughReplicasAfterAppend"
+      ],
+      "evidence_pages": [
+        "concepts/replication.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "concepts/replication.md",
+          "quote": "With `acks=all` and an ISR smaller than `min.insync.replicas`, the producer gets `NotEnoughReplicas` or `NotEnoughReplicasAfterAppend`.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 10,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false,
+        "decision_source": "human_review",
+        "memo": "사용자 요청: 원본 변경 전 검토 결과 경고가 표시된 시나리오를 일단 제외. 실제 질문·정답 변경 없이 검수 메타데이터 차이로 발생한 경고였음.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-172237-091938_kafka_v2_01_producer_delivery",
+        "llm_source_hash": "332f8dff0ddddb319d8b31e5bc74559c47aab6a9858636d1d4d8ea9b16f76960",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "needs_recheck": false
+      }
+    },
+    {
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our transaction.timeout.ms from 17000 to 23000. What value should the project use now, and what is the producer default when no override is set?",
+      "standalone_question": "Change our transaction.timeout.ms from 17000 to 23000. What value should the project use now, and what is the producer default when no override is set?",
+      "asks": [
+        "updated transaction timeout",
+        "default timeout"
+      ],
+      "answer": "Use transaction.timeout.ms=23000 for the project. The default producer transaction.timeout.ms is 60000 milliseconds.",
+      "key_facts": [
+        "Use transaction.timeout.ms=23000 for the project.",
+        "The default producer transaction.timeout.ms is 60000 milliseconds."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "23000",
+        "60000"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        8
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our transaction.timeout.ms from 17000 to 23000.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/idempotence-and-transactions.md",
+          "quote": "| `transaction.timeout.ms` | `60000` (1 minute) |",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "Project transaction.timeout.ms",
+          "from": 17000,
+          "to": 23000
+        }
+      ],
+      "affects": [
+        17
+      ],
+      "source_turn": null,
+      "turn": 11,
+      "recall_distance": 3,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false,
+        "decision_source": "human_review",
+        "memo": "트랜잭션 timeout 변경과 기본값을 정확히 구분한다.\n사용자 요청: 원본 변경 전 검토 결과 경고가 표시된 시나리오를 일단 제외. 실제 질문·정답 변경 없이 검수 메타데이터 차이로 발생한 경고였음.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-172237-091938_kafka_v2_01_producer_delivery",
+        "llm_source_hash": "332f8dff0ddddb319d8b31e5bc74559c47aab6a9858636d1d4d8ea9b16f76960",
+        "needs_recheck": false,
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": ""
+      }
+    },
+    {
+      "turn_type": "new",
+      "type": "fact",
+      "question": "If we remove a topic-specific configuration override, when does the broker's server default apply?",
+      "standalone_question": "In Kafka, when a topic-specific configuration override is removed, when does the broker's server default apply?",
+      "asks": [
+        "server default fallback"
+      ],
+      "answer": "The server default applies to topics without an explicit override.",
+      "key_facts": [
+        "The server default applies to topics without an explicit override."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "override"
+      ],
+      "evidence_pages": [
+        "configuration/topic-and-group-configuration.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "configuration/topic-and-group-configuration.md",
+          "quote": "The server default only applies to topics without an explicit override.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 12,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false,
+        "decision_source": "human_review",
+        "memo": "사용자 요청: 원본 변경 전 검토 결과 경고가 표시된 시나리오를 일단 제외. 실제 질문·정답 변경 없이 검수 메타데이터 차이로 발생한 경고였음.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-172237-091938_kafka_v2_01_producer_delivery",
+        "llm_source_hash": "332f8dff0ddddb319d8b31e5bc74559c47aab6a9858636d1d4d8ea9b16f76960",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "needs_recheck": false
+      }
+    },
+    {
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which transactional identifier did we choose, can the topic's partition count be reduced, and which errors can the producer receive with acks=all when the ISR is smaller than min.insync.replicas?",
+      "standalone_question": "In this Kafka project, which transactional identifier did the team choose, can a topic's partition count be reduced, and which errors can the producer receive with acks=all when the ISR is smaller than min.insync.replicas?",
+      "asks": [
+        "project transaction id",
+        "partition-count reduction",
+        "insufficient ISR errors"
+      ],
+      "answer": "Our transactional.id is orbit-tx-worker-7. The partition count cannot be reduced. The errors are NotEnoughReplicas and NotEnoughReplicasAfterAppend.",
+      "key_facts": [
+        "Our transactional.id is orbit-tx-worker-7.",
+        "The partition count cannot be reduced.",
+        "The errors are NotEnoughReplicas and NotEnoughReplicasAfterAppend."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "orbit-tx-worker-7",
+        "partitions",
+        "NotEnoughReplicas",
+        "NotEnoughReplicasAfterAppend"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        8,
+        0,
+        10
+      ],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Use orbit-tx-worker-7 as our transactional.id and set transaction.timeout.ms to 17000.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/topics-partitions-offsets.md",
+          "quote": "Kafka does not support reducing the number of partitions.",
+          "fact_idx": 1
+        },
+        {
+          "page": "concepts/replication.md",
+          "quote": "the producer gets `NotEnoughReplicas` or `NotEnoughReplicasAfterAppend`.",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 13,
+      "recall_distance": 13,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false,
+        "decision_source": "human_review",
+        "memo": "세 이전 정보원을 실제로 사용하는 종합 질문이다.\n사용자 요청: 원본 변경 전 검토 결과 경고가 표시된 시나리오를 일단 제외. 실제 질문·정답 변경 없이 검수 메타데이터 차이로 발생한 경고였음.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-172237-091938_kafka_v2_01_producer_delivery",
+        "llm_source_hash": "332f8dff0ddddb319d8b31e5bc74559c47aab6a9858636d1d4d8ea9b16f76960",
+        "needs_recheck": false,
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": ""
+      }
+    },
+    {
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "For the network receive buffers of these clients, what are the default producer and consumer byte counts?",
+      "standalone_question": "In Kafka, what are the default producer and consumer receive-buffer byte counts?",
+      "asks": [
+        "producer receive-buffer default",
+        "consumer receive-buffer default"
+      ],
+      "answer": "The producer receive.buffer.bytes default is 32768, while the consumer default is 65536.",
+      "key_facts": [
+        "The producer receive.buffer.bytes default is 32768 bytes.",
+        "The consumer receive.buffer.bytes default is 65536 bytes."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ]
+        },
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "32768",
+        "65536"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "page": "configuration/client-configuration.md",
+          "quote": "| Config | Producer | Consumer | Admin | Notes |"
+        },
+        {
+          "fact_idx": 0,
+          "page": "configuration/client-configuration.md",
+          "quote": "| `receive.buffer.bytes` | `32768` | `65536` | `65536` | |"
+        },
+        {
+          "fact_idx": 1,
+          "page": "configuration/client-configuration.md",
+          "quote": "| Config | Producer | Consumer | Admin | Notes |"
+        },
+        {
+          "fact_idx": 1,
+          "page": "configuration/client-configuration.md",
+          "quote": "| `receive.buffer.bytes` | `32768` | `65536` | `65536` | |"
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 5,
+      "turn": 14,
+      "recall_distance": 9,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:27+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.\n사용자 요청: 원본 변경 전 검토 결과 경고가 표시된 시나리오를 일단 제외. 실제 질문·정답 변경 없이 검수 메타데이터 차이로 발생한 경고였음.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-172237-091938_kafka_v2_01_producer_delivery",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "excluded": false,
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00"
+      }
+    },
+    {
+      "turn_type": "new",
+      "type": "multi",
+      "question": "When diagnosing a stalled sender, which metric counts user threads waiting for buffer memory, and which metric gives the unused buffer capacity?",
+      "standalone_question": "When diagnosing a stalled sender, which metric counts user threads waiting for buffer memory, and which metric gives the unused buffer capacity?",
+      "asks": [
+        "waiting threads metric",
+        "unused buffer metric"
+      ],
+      "answer": "waiting-threads counts user threads blocked waiting for buffer memory. buffer-available-bytes measures unused buffer capacity.",
+      "key_facts": [
+        "waiting-threads counts user threads blocked waiting for buffer memory.",
+        "buffer-available-bytes measures unused buffer capacity."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "waiting-threads",
+        "buffer-available-bytes"
+      ],
+      "evidence_pages": [
+        "monitoring/client-metrics.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "monitoring/client-metrics.md",
+          "quote": "| `waiting-threads` | User threads blocked waiting for buffer memory. |",
+          "fact_idx": 0
+        },
+        {
+          "page": "monitoring/client-metrics.md",
+          "quote": "| `buffer-total-bytes` / `buffer-available-bytes` | Buffer capacity (`buffer.memory`) and unused part. |",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 15,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false,
+        "decision_source": "human_review",
+        "memo": "사용자 요청: 원본 변경 전 검토 결과 경고가 표시된 시나리오를 일단 제외. 실제 질문·정답 변경 없이 검수 메타데이터 차이로 발생한 경고였음.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-172237-091938_kafka_v2_01_producer_delivery",
+        "llm_source_hash": "332f8dff0ddddb319d8b31e5bc74559c47aab6a9858636d1d4d8ea9b16f76960",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "needs_recheck": false
+      }
+    },
+    {
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which topic name did we choose for the order events, and how does increasing its partition count affect existing stored data?",
+      "standalone_question": "In this Kafka project, which topic name did the team choose for order events, and how does increasing its partition count affect existing stored data?",
+      "asks": [
+        "project topic",
+        "existing data after partition increase"
+      ],
+      "answer": "The topic is orbit-orders-v7. Existing data is not redistributed when the partition count increases.",
+      "key_facts": [
+        "The topic is orbit-orders-v7.",
+        "Existing data is not redistributed when the partition count increases."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "orbit-orders-v7",
+        "partitions"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 0,
+          "quote": "Our topic is orbit-orders-v7.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/topics-partitions-offsets.md",
+          "quote": "existing data is not redistributed",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 16,
+      "recall_distance": 16,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false,
+        "decision_source": "human_review",
+        "memo": "사용자 요청: 원본 변경 전 검토 결과 경고가 표시된 시나리오를 일단 제외. 실제 질문·정답 변경 없이 검수 메타데이터 차이로 발생한 경고였음.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-172237-091938_kafka_v2_01_producer_delivery",
+        "llm_source_hash": "332f8dff0ddddb319d8b31e5bc74559c47aab6a9858636d1d4d8ea9b16f76960",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "needs_recheck": false
+      }
+    },
+    {
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What transaction timeout are we using now, and does a transaction abort automatically reset the consumer's position?",
+      "standalone_question": "In this Kafka project, what is the latest transaction timeout the team chose, and does a transaction abort automatically reset the consumer's position?",
+      "asks": [
+        "current transaction timeout",
+        "automatic rewind"
+      ],
+      "answer": "The current transaction.timeout.ms is 23000. No; the application must reset the consumer position explicitly after an abort.",
+      "key_facts": [
+        "The current transaction.timeout.ms is 23000.",
+        "No; the application must reset the consumer position explicitly after an abort."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "23000",
+        "consumer"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        11,
+        8
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our transaction.timeout.ms from 17000 to 23000.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/idempotence-and-transactions.md",
+          "quote": "aborted transactions don't rewind the consumer automatically.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 17,
+      "recall_distance": 9,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false,
+        "decision_source": "human_review",
+        "memo": "사용자 요청: 원본 변경 전 검토 결과 경고가 표시된 시나리오를 일단 제외. 실제 질문·정답 변경 없이 검수 메타데이터 차이로 발생한 경고였음.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-172237-091938_kafka_v2_01_producer_delivery",
+        "llm_source_hash": "332f8dff0ddddb319d8b31e5bc74559c47aab6a9858636d1d4d8ea9b16f76960",
+        "needs_recheck": false,
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": ""
+      }
+    },
+    {
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "What batching delay are we using now, which API commits consumer offsets inside the producer transaction, and what is the default topic compression.type?",
+      "standalone_question": "In this Kafka project, what is the latest batching delay the team chose, which API commits consumer offsets inside a producer transaction, and what is the default topic compression.type?",
+      "asks": [
+        "current project linger",
+        "transaction offset API",
+        "topic compression default"
+      ],
+      "answer": "The current linger.ms is 19 ms. Use sendOffsetsToTransaction with the consumer group metadata. The topic compression.type default is producer.",
+      "key_facts": [
+        "The current linger.ms is 19 ms.",
+        "Use sendOffsetsToTransaction with the consumer group metadata.",
+        "The topic compression.type default is producer."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "19",
+        "sendOffsetsToTransaction",
+        "producer"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        8,
+        12
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "Change our linger.ms from 13 ms to 19 ms.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/idempotence-and-transactions.md",
+          "quote": "producer.sendOffsetsToTransaction(getOffsetsToCommit(consumer), consumer.groupMetadata());",
+          "fact_idx": 1
+        },
+        {
+          "page": "configuration/topic-and-group-configuration.md",
+          "quote": "| `compression.type` | `producer` | `compression.type` |",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "turn": 18,
+      "recall_distance": 14,
+      "review": {
+        "needs_recheck": false,
+        "reviewer": "장우진",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "verdict": "OK",
+        "excluded": false,
+        "memo": "사용자 요청: 원본 변경 전 검토 결과 경고가 표시된 시나리오를 일단 제외. 실제 질문·정답 변경 없이 검수 메타데이터 차이로 발생한 경고였음.",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "decision_source": "human_review"
+      }
+    }
+  ],
+  "edits": [
+    {
+      "at": "2026-11-28T12:52:27+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 14,
+      "fields": [
+        "asks",
+        "key_facts",
+        "fact_meta",
+        "evidence"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_01_producer_delivery_f2b0d39e5fc04f13befe7eddd4313728"
+    },
+    {
+      "at": "2026-11-28T13:10:57+00:00",
+      "by": "Codex session",
+      "turn": 8,
+      "fields": [
+        "question",
+        "standalone_question",
+        "asks",
+        "answer",
+        "key_facts",
+        "key_entities",
+        "evidence"
+      ],
+      "note": "프로젝트 ID 선언은 유지하고 timeout과 중단 후 위치 복구만 질문",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/error_repairs/6e10f9ea2fc048a1a49cb5d9978cd531/kafka_v2_01_producer_delivery"
+    },
+    {
+      "at": "2026-11-28T14:39:41+00:00",
+      "by": "장우진",
+      "turn": 2,
+      "fields": [
+        "question"
+      ],
+      "note": "사용자 요청: 원본 변경 전 검토 결과 경고가 표시된 시나리오를 일단 제외. 실제 질문·정답 변경 없이 검수 메타데이터 차이로 발생한 경고였음."
+    },
+    {
+      "at": "2026-11-28T14:39:41+00:00",
+      "by": "장우진",
+      "turn": 3,
+      "fields": [
+        "asks",
+        "key_facts",
+        "fact_meta",
+        "evidence"
+      ],
+      "note": "사용자 요청: 원본 변경 전 검토 결과 경고가 표시된 시나리오를 일단 제외. 실제 질문·정답 변경 없이 검수 메타데이터 차이로 발생한 경고였음."
+    },
+    {
+      "at": "2026-11-28T14:39:41+00:00",
+      "by": "장우진",
+      "turn": 5,
+      "fields": [
+        "asks"
+      ],
+      "note": "사용자 요청: 원본 변경 전 검토 결과 경고가 표시된 시나리오를 일단 제외. 실제 질문·정답 변경 없이 검수 메타데이터 차이로 발생한 경고였음."
+    },
+    {
+      "at": "2026-11-28T14:39:41+00:00",
+      "by": "장우진",
+      "turn": 13,
+      "fields": [
+        "question",
+        "standalone_question"
+      ],
+      "note": "세 이전 정보원을 실제로 사용하는 종합 질문이다.\n사용자 요청: 원본 변경 전 검토 결과 경고가 표시된 시나리오를 일단 제외. 실제 질문·정답 변경 없이 검수 메타데이터 차이로 발생한 경고였음."
+    },
+    {
+      "at": "2026-11-28T14:39:41+00:00",
+      "by": "장우진",
+      "turn": 18,
+      "fields": [
+        "question",
+        "standalone_question"
+      ],
+      "note": "사용자 요청: 원본 변경 전 검토 결과 경고가 표시된 시나리오를 일단 제외. 실제 질문·정답 변경 없이 검수 메타데이터 차이로 발생한 경고였음."
+    }
+  ]
+}

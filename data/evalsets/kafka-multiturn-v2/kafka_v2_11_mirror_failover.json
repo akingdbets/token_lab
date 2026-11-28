@@ -1,0 +1,1271 @@
+{
+  "schema_version": 2,
+  "scenario_id": "kafka_v2_11_mirror_failover",
+  "title": "Preparing cross-region replication and consumer failover",
+  "topic": "Preparing cross-region replication and consumer failover",
+  "status": "final",
+  "bundle": [
+    "concepts/delivery-semantics.md",
+    "operations/geo-replication-mirrormaker.md",
+    "operations/topic-and-cluster-administration.md",
+    "clients/consumer.md",
+    "connect/overview-and-running.md",
+    "configuration/client-configuration.md",
+    "operations/quotas-and-multi-tenancy.md",
+    "monitoring/broker-and-kraft-metrics.md"
+  ],
+  "generation": {
+    "model": "gpt-6.1-sol",
+    "method": "Codex session, account plan",
+    "prompt": [
+      "mt_scenario_gen_v3",
+      "40710c69c22d"
+    ],
+    "run_id": "20261128-165733_kafka_18_session",
+    "request_file": "results/scenario_gen/20261128-165733_kafka_18_session/kafka_v2_11_mirror_failover_request.json",
+    "created_at": "2026-11-28T16:57:33",
+    "corpus_manifest_sha256": "a6fb69b10c7c98a2af883313f8938d0bfb1757fae65b8274c183a4c14ef4a735",
+    "context": "Authored in the ongoing Codex conversation with a shared turn structure, explicit page-grounded fact selections, and topic-specific project settings."
+  },
+  "turns": [
+    {
+      "turn": 0,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Our project concerns preparing cross-region replication and consumer failover. For the planned deployment, set source cluster alias to spruce-west-17. Which value should we use, and which ordering of processing and offset saving gives at-least-once consumption?",
+      "standalone_question": "For this Kafka project, our project concerns preparing cross-region replication and consumer failover. For the planned deployment, set source cluster alias to spruce-west-17. Which value should we use, and which ordering of processing and offset saving gives at-least-once consumption?",
+      "asks": [
+        "project source cluster alias",
+        "Which ordering of processing and offset saving gives at-least-once consumption?"
+      ],
+      "answer": "The project source cluster alias is spruce-west-17. Read, process, then save the position gives at-least-once consumption.",
+      "key_facts": [
+        "The project source cluster alias is spruce-west-17.",
+        "Read, process, then save the position gives at-least-once consumption."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "spruce-west-17",
+        "At least once"
+      ],
+      "evidence_pages": [
+        "concepts/delivery-semantics.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 0,
+          "quote": "set source cluster alias to spruce-west-17",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/delivery-semantics.md",
+          "quote": "| Read → process → save position | First messages are re-processed by the new owner | **At least once** |",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "현재 설정값과 문서 기반 처리 순서를 정확히 묻고 답한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180833-609373_kafka_v2_11_mirror_failover",
+        "llm_source_hash": "533720009344dc25f20b15d4b02b074b359ee93cc5845c82970591b482f622d9",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 1,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Set our target cluster alias to spruce-east-17. Which project value applies, and are directional replication flows enabled by default?",
+      "standalone_question": "For this Kafka project, set our target cluster alias to spruce-east-17. Which project value applies, and are directional replication flows enabled by default?",
+      "asks": [
+        "project target cluster alias",
+        "Are directional replication flows enabled by default?"
+      ],
+      "answer": "The project target cluster alias is spruce-east-17. No; flows are directional and disabled by default.",
+      "key_facts": [
+        "The project target cluster alias is spruce-east-17.",
+        "No; flows are directional and disabled by default."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "spruce-east-17",
+        "disabled"
+      ],
+      "evidence_pages": [
+        "operations/geo-replication-mirrormaker.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 1,
+          "quote": "Set our target cluster alias to spruce-east-17.",
+          "fact_idx": 0
+        },
+        {
+          "page": "operations/geo-replication-mirrormaker.md",
+          "quote": "flows are directional and **disabled by default**",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "대상 별칭과 복제 흐름의 기본 활성화 여부가 근거와 일치한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180833-609373_kafka_v2_11_mirror_failover",
+        "llm_source_hash": "533720009344dc25f20b15d4b02b074b359ee93cc5845c82970591b482f622d9",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 2,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "What minimum tasks.max does the replication configuration recommend?",
+      "standalone_question": "For this Kafka project, what minimum tasks.max does the replication configuration recommend?",
+      "asks": [
+        "What minimum tasks.max does the replication configuration recommend?"
+      ],
+      "answer": "Set tasks.max to at least 2.",
+      "key_facts": [
+        "Set tasks.max to at least 2."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "range",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "2"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "operations/geo-replication-mirrormaker.md",
+          "quote": "set it to **at least 2**",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "앞서 첨부한 복제 문서의 tasks.max 권고를 확인한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180833-609373_kafka_v2_11_mirror_failover",
+        "llm_source_hash": "533720009344dc25f20b15d4b02b074b359ee93cc5845c82970591b482f622d9",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 3,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "For our project, set replication topic pattern to spruce-events-.*. Which value should be used, and what limits the number of consumers doing useful work in a conventional consumer group?",
+      "standalone_question": "For this Kafka project, for our project, set replication topic pattern to spruce-events-.*. Which value should be used, and what limits the number of consumers doing useful work in a conventional consumer group?",
+      "asks": [
+        "project replication topic pattern",
+        "What limits the number of consumers doing useful work in a conventional consumer group?"
+      ],
+      "answer": "The project replication topic pattern is spruce-events-.*. Partition count caps consumer parallelism.",
+      "key_facts": [
+        "The project replication topic pattern is spruce-events-.*.",
+        "Partition count caps consumer parallelism."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "spruce-events-.*",
+        "Partition count"
+      ],
+      "evidence_pages": [
+        "operations/topic-and-cluster-administration.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 3,
+          "quote": "set replication topic pattern to spruce-events-.*",
+          "fact_idx": 0
+        },
+        {
+          "page": "operations/topic-and-cluster-administration.md",
+          "quote": "it caps consumer parallelism.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "복제 패턴 설정과 소비 병렬성 제한이 문서에 의해 뒷받침된다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180833-609373_kafka_v2_11_mirror_failover",
+        "llm_source_hash": "533720009344dc25f20b15d4b02b074b359ee93cc5845c82970591b482f622d9",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 4,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Before rollout, change our source cluster alias from spruce-west-17 to spruce-west-29. What is the revised project value, and which consumer isolation mode still includes non-transactional records alongside committed transactions?",
+      "standalone_question": "For this Kafka project, before rollout, change our source cluster alias from spruce-west-17 to spruce-west-29. What is the revised project value, and which consumer isolation mode still includes non-transactional records alongside committed transactions?",
+      "asks": [
+        "updated source cluster alias",
+        "Which consumer isolation mode still includes non-transactional records alongside committed transactions?"
+      ],
+      "answer": "The project source cluster alias is spruce-west-29. read_committed includes committed transactional and non-transactional records.",
+      "key_facts": [
+        "The project source cluster alias is spruce-west-29.",
+        "read_committed includes committed transactional and non-transactional records."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "spruce-west-29",
+        "read_committed"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our source cluster alias from spruce-west-17 to spruce-west-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/delivery-semantics.md",
+          "quote": "`read_committed` returns only committed transactional messages (plus non-transactional ones).",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "source cluster alias",
+          "from": "spruce-west-17",
+          "to": "spruce-west-29"
+        }
+      ],
+      "affects": [
+        9,
+        13
+      ],
+      "source_turn": null,
+      "recall_distance": 4,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "소스 별칭 변경과 isolation 모드 확인이 일관적이다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180833-609373_kafka_v2_11_mirror_failover",
+        "llm_source_hash": "533720009344dc25f20b15d4b02b074b359ee93cc5845c82970591b482f622d9",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 5,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Which internal topic stores group offset commits?",
+      "standalone_question": "For this Kafka project, which internal topic stores group offset commits?",
+      "asks": [
+        "Which internal topic stores group offset commits?"
+      ],
+      "answer": "Group offset commits are stored in __consumer_offsets.",
+      "key_facts": [
+        "Group offset commits are stored in __consumer_offsets."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "__consumer_offsets"
+      ],
+      "evidence_pages": [
+        "clients/consumer.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "clients/consumer.md",
+          "quote": "the coordinator appends the commit to the special **compacted** topic `__consumer_offsets`.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "그룹 오프셋 커밋 저장 토픽을 정확히 확인한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180833-609373_kafka_v2_11_mirror_failover",
+        "llm_source_hash": "533720009344dc25f20b15d4b02b074b359ee93cc5845c82970591b482f622d9",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 6,
+      "turn_type": "followup",
+      "type": "fact",
+      "question": "Which setting decides where to start when no committed offset exists?",
+      "standalone_question": "For this Kafka project, which setting decides where to start when no committed offset exists?",
+      "asks": [
+        "Which setting decides where to start when no committed offset exists?"
+      ],
+      "answer": "auto.offset.reset decides where to start when no committed offset exists.",
+      "key_facts": [
+        "auto.offset.reset decides where to start when no committed offset exists."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "auto.offset.reset"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "page": "clients/consumer.md",
+          "quote": "When no committed offset exists, or it is out of range, `auto.offset.reset` decides where to start."
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 1,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:30+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180833-609373_kafka_v2_11_mirror_failover",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 7,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "What remote-topic name results when the default policy copies foo-topic from us-west?",
+      "standalone_question": "For this Kafka project, what remote-topic name results when the default policy copies foo-topic from us-west?",
+      "asks": [
+        "What remote-topic name results when the default policy copies foo-topic from us-west?"
+      ],
+      "answer": "The remote topic is us-west.foo-topic.",
+      "key_facts": [
+        "The remote topic is us-west.foo-topic."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "example"
+          ]
+        }
+      ],
+      "key_entities": [
+        "us-west.foo-topic"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "page": "operations/geo-replication-mirrormaker.md",
+          "quote": "foo-topic  -->  us-west.foo-topic",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 1,
+      "recall_distance": 6,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "충분히 이전에 첨부한 문서의 미사용 원격 토픽 명명 절을 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180833-609373_kafka_v2_11_mirror_failover",
+        "llm_source_hash": "533720009344dc25f20b15d4b02b074b359ee93cc5845c82970591b482f622d9",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 8,
+      "turn_type": "new",
+      "type": "multi",
+      "question": "Use spruce-restore-41 as the project failover group.id. Which value should be used, and how many partitions must the distributed worker configuration topic have?",
+      "standalone_question": "For this Kafka project, use spruce-restore-41 as the project failover group.id. Which value should be used, and how many partitions must the distributed worker configuration topic have?",
+      "asks": [
+        "project failover group.id",
+        "How many partitions must the distributed worker configuration topic have?"
+      ],
+      "answer": "The project failover group.id is spruce-restore-41. config.storage.topic must have one partition.",
+      "key_facts": [
+        "The project failover group.id is spruce-restore-41.",
+        "config.storage.topic must have one partition."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "spruce-restore-41",
+        "config.storage.topic"
+      ],
+      "evidence_pages": [
+        "connect/overview-and-running.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Use spruce-restore-41 as the project failover group.id.",
+          "fact_idx": 0
+        },
+        {
+          "page": "connect/overview-and-running.md",
+          "quote": "| `config.storage.topic` | Connector/task configs — **single partition**, replicated, compacted. |",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "장애 전환 그룹 설정과 Connect 구성 토픽의 파티션 요건이 정확하다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180833-609373_kafka_v2_11_mirror_failover",
+        "llm_source_hash": "533720009344dc25f20b15d4b02b074b359ee93cc5845c82970591b482f622d9",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 9,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What source cluster alias are we using now, and which consumer isolation mode still includes non-transactional records alongside committed transactions?",
+      "standalone_question": "For this Kafka project, what source cluster alias are we using now, and which consumer isolation mode still includes non-transactional records alongside committed transactions?",
+      "asks": [
+        "current source cluster alias",
+        "Which consumer isolation mode still includes non-transactional records alongside committed transactions?"
+      ],
+      "answer": "The project source cluster alias is spruce-west-29. read_committed includes committed transactional and non-transactional records.",
+      "key_facts": [
+        "The project source cluster alias is spruce-west-29.",
+        "read_committed includes committed transactional and non-transactional records."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition"
+          ]
+        }
+      ],
+      "key_entities": [
+        "spruce-west-29",
+        "read_committed"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        0
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our source cluster alias from spruce-west-17 to spruce-west-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "concepts/delivery-semantics.md",
+          "quote": "`read_committed` returns only committed transactional messages (plus non-transactional ones).",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 9,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "갱신된 소스 별칭과 이전 문서의 isolation 동작을 회상한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180833-609373_kafka_v2_11_mirror_failover",
+        "llm_source_hash": "533720009344dc25f20b15d4b02b074b359ee93cc5845c82970591b482f622d9",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 10,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What is the consumer default max.poll.records?",
+      "standalone_question": "For this Kafka project, what is the consumer default max.poll.records?",
+      "asks": [
+        "What is the consumer default max.poll.records?"
+      ],
+      "answer": "The default max.poll.records is 500.",
+      "key_facts": [
+        "The default max.poll.records is 500."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "500"
+      ],
+      "evidence_pages": [
+        "configuration/client-configuration.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "configuration/client-configuration.md",
+          "quote": "| `max.poll.records` | `500` |",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "consumer의 max.poll.records 기본값을 정확히 묻는다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180833-609373_kafka_v2_11_mirror_failover",
+        "llm_source_hash": "533720009344dc25f20b15d4b02b074b359ee93cc5845c82970591b482f622d9",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 11,
+      "turn_type": "update",
+      "type": "multi",
+      "question": "Change our target cluster alias from spruce-east-17 to spruce-east-29. What value should we use now, and what minimum tasks.max does the replication configuration recommend?",
+      "standalone_question": "For this Kafka project, change our target cluster alias from spruce-east-17 to spruce-east-29. What value should we use now, and what minimum tasks.max does the replication configuration recommend?",
+      "asks": [
+        "updated target cluster alias",
+        "What minimum tasks.max does the replication configuration recommend?"
+      ],
+      "answer": "The project target cluster alias is spruce-east-29. Set tasks.max to at least 2.",
+      "key_facts": [
+        "The project target cluster alias is spruce-east-29.",
+        "Set tasks.max to at least 2."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": [
+            "setup"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "range",
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "spruce-east-29",
+        "2"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our target cluster alias from spruce-east-17 to spruce-east-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "operations/geo-replication-mirrormaker.md",
+          "quote": "set it to **at least 2**",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": [
+        {
+          "what": "target cluster alias",
+          "from": "spruce-east-17",
+          "to": "spruce-east-29"
+        }
+      ],
+      "affects": [
+        17
+      ],
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "대상 별칭 변경과 이전 문서의 tasks.max 권고가 일관적이다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180833-609373_kafka_v2_11_mirror_failover",
+        "llm_source_hash": "533720009344dc25f20b15d4b02b074b359ee93cc5845c82970591b482f622d9",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 12,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "Does a quota apply per broker or to the cluster as a whole?",
+      "standalone_question": "For this Kafka project, does a quota apply per broker or to the cluster as a whole?",
+      "asks": [
+        "Does a quota apply per broker or to the cluster as a whole?"
+      ],
+      "answer": "Quotas apply per broker.",
+      "key_facts": [
+        "Quotas apply per broker."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "broker"
+      ],
+      "evidence_pages": [
+        "operations/quotas-and-multi-tenancy.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "operations/quotas-and-multi-tenancy.md",
+          "quote": "Quotas are per broker rather than cluster-wide",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "문서에 명시된 quota 적용 범위를 정확히 확인한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180833-609373_kafka_v2_11_mirror_failover",
+        "llm_source_hash": "533720009344dc25f20b15d4b02b074b359ee93cc5845c82970591b482f622d9",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 13,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which source cluster alias are we using now, how many partitions must the distributed worker configuration topic have, and what is the consumer default max.poll.records?",
+      "standalone_question": "For this Kafka project, which source cluster alias are we using now, how many partitions must the distributed worker configuration topic have, and what is the consumer default max.poll.records?",
+      "asks": [
+        "current source cluster alias",
+        "How many partitions must the distributed worker configuration topic have?",
+        "What is the consumer default max.poll.records?"
+      ],
+      "answer": "The project source cluster alias is spruce-west-29. config.storage.topic must have one partition. The default max.poll.records is 500.",
+      "key_facts": [
+        "The project source cluster alias is spruce-west-29.",
+        "config.storage.topic must have one partition.",
+        "The default max.poll.records is 500."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "condition",
+            "confusable"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        }
+      ],
+      "key_entities": [
+        "spruce-west-29",
+        "config.storage.topic",
+        "500"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        4,
+        8,
+        10
+      ],
+      "evidence": [
+        {
+          "user_turn": 4,
+          "quote": "change our source cluster alias from spruce-west-17 to spruce-west-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "connect/overview-and-running.md",
+          "quote": "| `config.storage.topic` | Connector/task configs — **single partition**, replicated, compacted. |",
+          "fact_idx": 1
+        },
+        {
+          "page": "configuration/client-configuration.md",
+          "quote": "| `max.poll.records` | `500` |",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 9,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "세 과거 출처를 사용하며 변경된 소스 별칭도 올바르게 반영한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180833-609373_kafka_v2_11_mirror_failover",
+        "llm_source_hash": "533720009344dc25f20b15d4b02b074b359ee93cc5845c82970591b482f622d9",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 14,
+      "turn_type": "same_doc_new_topic",
+      "type": "fact",
+      "question": "When partitions are lost before graceful revocation, which callback should avoid committing offsets?",
+      "standalone_question": "For this Kafka project, when partitions are lost before graceful revocation, which callback should avoid committing offsets?",
+      "asks": [
+        "When partitions are lost before graceful revocation, which callback should avoid committing offsets?"
+      ],
+      "answer": "onPartitionsLost should avoid committing offsets.",
+      "key_facts": [
+        "onPartitionsLost should avoid committing offsets."
+      ],
+      "fact_meta": [
+        {
+          "accept_alternatives": [],
+          "source": "doc",
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "onPartitionsLost"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        5
+      ],
+      "evidence": [
+        {
+          "fact_idx": 0,
+          "page": "clients/consumer.md",
+          "quote": "| `onPartitionsLost(Collection<TopicPartition>)` | Partitions were reassigned before being revoked gracefully; do **not** commit (others likely own them), but clean up. |"
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": 5,
+      "recall_distance": 9,
+      "review": {
+        "needs_recheck": false,
+        "verdict": "OK",
+        "decision_source": "human_review",
+        "reviewer": "장우진",
+        "edited_at": "2026-11-28T12:52:30+00:00",
+        "memo": "저장된 LLM 수정 제안을 반영함. 수정 후 재검수 필요.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180833-609373_kafka_v2_11_mirror_failover",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00",
+        "standalone_same_fact": "",
+        "alt_judge_label": "",
+        "reviewed_at": "2026-11-28T14:39:41+00:00",
+        "excluded": false
+      }
+    },
+    {
+      "turn": 15,
+      "turn_type": "new",
+      "type": "fact",
+      "question": "What is the fastest suggested way to browse metrics on a running broker?",
+      "standalone_question": "For this Kafka project, what is the fastest suggested way to browse metrics on a running broker?",
+      "asks": [
+        "What is the fastest suggested way to browse metrics on a running broker?"
+      ],
+      "answer": "Attach jconsole to the broker.",
+      "key_facts": [
+        "Attach jconsole to the broker."
+      ],
+      "fact_meta": [
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "jconsole"
+      ],
+      "evidence_pages": [
+        "monitoring/broker-and-kraft-metrics.md"
+      ],
+      "depends_on": [],
+      "evidence": [
+        {
+          "page": "monitoring/broker-and-kraft-metrics.md",
+          "quote": "The quickest way to browse metrics is `jconsole` attached to a running broker or client.",
+          "fact_idx": 0
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 0,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "실행 중인 broker의 메트릭 탐색 도구를 정확히 답한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180833-609373_kafka_v2_11_mirror_failover",
+        "llm_source_hash": "533720009344dc25f20b15d4b02b074b359ee93cc5845c82970591b482f622d9",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 16,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "Which replication topic pattern did we choose, and what limits the number of consumers doing useful work in a conventional consumer group?",
+      "standalone_question": "For this Kafka project, which replication topic pattern did we choose, and what limits the number of consumers doing useful work in a conventional consumer group?",
+      "asks": [
+        "project replication topic pattern",
+        "What limits the number of consumers doing useful work in a conventional consumer group?"
+      ],
+      "answer": "The project replication topic pattern is spruce-events-.*. Partition count caps consumer parallelism.",
+      "key_facts": [
+        "The project replication topic pattern is spruce-events-.*.",
+        "Partition count caps consumer parallelism."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "spruce-events-.*",
+        "Partition count"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        3
+      ],
+      "evidence": [
+        {
+          "user_turn": 3,
+          "quote": "set replication topic pattern to spruce-events-.*",
+          "fact_idx": 0
+        },
+        {
+          "page": "operations/topic-and-cluster-administration.md",
+          "quote": "it caps consumer parallelism.",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 13,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "과거 복제 패턴과 소비 병렬성 제한을 정확히 회상한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180833-609373_kafka_v2_11_mirror_failover",
+        "llm_source_hash": "533720009344dc25f20b15d4b02b074b359ee93cc5845c82970591b482f622d9",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 17,
+      "turn_type": "recall",
+      "type": "multi",
+      "question": "What target cluster alias are we using now, and are directional replication flows enabled by default?",
+      "standalone_question": "For this Kafka project, what target cluster alias are we using now, and are directional replication flows enabled by default?",
+      "asks": [
+        "current target cluster alias",
+        "Are directional replication flows enabled by default?"
+      ],
+      "answer": "The project target cluster alias is spruce-east-29. No; flows are directional and disabled by default.",
+      "key_facts": [
+        "The project target cluster alias is spruce-east-29.",
+        "No; flows are directional and disabled by default."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "negation"
+          ]
+        }
+      ],
+      "key_entities": [
+        "spruce-east-29",
+        "disabled"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        11,
+        1
+      ],
+      "evidence": [
+        {
+          "user_turn": 11,
+          "quote": "Change our target cluster alias from spruce-east-17 to spruce-east-29.",
+          "fact_idx": 0
+        },
+        {
+          "page": "operations/geo-replication-mirrormaker.md",
+          "quote": "flows are directional and **disabled by default**",
+          "fact_idx": 1
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 16,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "최신 대상 별칭과 흐름 기본 활성화 여부를 올바르게 회상한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180833-609373_kafka_v2_11_mirror_failover",
+        "llm_source_hash": "533720009344dc25f20b15d4b02b074b359ee93cc5845c82970591b482f622d9",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    },
+    {
+      "turn": 18,
+      "turn_type": "synthesis",
+      "type": "multi",
+      "question": "Which failover group.id did we choose, does a quota apply per broker or to the cluster as a whole, and what is the fastest suggested way to browse metrics on a running broker?",
+      "standalone_question": "For this Kafka project, which failover group.id did we choose, does a quota apply per broker or to the cluster as a whole, and what is the fastest suggested way to browse metrics on a running broker?",
+      "asks": [
+        "project failover group.id",
+        "Does a quota apply per broker or to the cluster as a whole?",
+        "What is the fastest suggested way to browse metrics on a running broker?"
+      ],
+      "answer": "The project failover group.id is spruce-restore-41. Quotas apply per broker. Attach jconsole to the broker.",
+      "key_facts": [
+        "The project failover group.id is spruce-restore-41.",
+        "Quotas apply per broker.",
+        "Attach jconsole to the broker."
+      ],
+      "fact_meta": [
+        {
+          "source": "user",
+          "accept_alternatives": [],
+          "tags": []
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": [
+            "confusable"
+          ]
+        },
+        {
+          "source": "doc",
+          "accept_alternatives": [],
+          "tags": []
+        }
+      ],
+      "key_entities": [
+        "spruce-restore-41",
+        "broker",
+        "jconsole"
+      ],
+      "evidence_pages": [],
+      "depends_on": [
+        8,
+        12,
+        15
+      ],
+      "evidence": [
+        {
+          "user_turn": 8,
+          "quote": "Use spruce-restore-41 as the project failover group.id.",
+          "fact_idx": 0
+        },
+        {
+          "page": "operations/quotas-and-multi-tenancy.md",
+          "quote": "Quotas are per broker rather than cluster-wide",
+          "fact_idx": 1
+        },
+        {
+          "page": "monitoring/broker-and-kraft-metrics.md",
+          "quote": "The quickest way to browse metrics is `jconsole` attached to a running broker or client.",
+          "fact_idx": 2
+        }
+      ],
+      "alt_evidence": [],
+      "changes": null,
+      "affects": null,
+      "source_turn": null,
+      "recall_distance": 10,
+      "review": {
+        "verdict": "OK",
+        "reviewer": "장우진",
+        "reviewed_at": "2026-11-28T12:42:41+00:00",
+        "excluded": false,
+        "decision_source": "llm_ok",
+        "memo": "장애 전환 그룹과 두 운영 사실을 이전 정보에서 정확히 종합한다.",
+        "llm_run_dir": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/runs/20261128-180833-609373_kafka_v2_11_mirror_failover",
+        "llm_source_hash": "533720009344dc25f20b15d4b02b074b359ee93cc5845c82970591b482f622d9",
+        "reviewer_updated_at": "2026-11-28T14:27:10+00:00"
+      }
+    }
+  ],
+  "edits": [
+    {
+      "at": "2026-11-28T12:52:30+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 6,
+      "fields": [
+        "answer",
+        "key_facts"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_11_mirror_failover_17d8e9cd4f2342c59d02c49a6d4c86c0"
+    },
+    {
+      "at": "2026-11-28T12:52:30+00:00",
+      "by": "LLM:gpt-6.1-sol",
+      "turn": 14,
+      "fields": [
+        "answer",
+        "key_facts"
+      ],
+      "note": "LLM 수정 제안 일괄 반영",
+      "history": "/home/woojin/token_lab/kafka-experiment/data/evalsets/kafka-multiturn-v2/review/llm/edit_applications/kafka_v2_11_mirror_failover_17d8e9cd4f2342c59d02c49a6d4c86c0"
+    }
+  ]
+}
