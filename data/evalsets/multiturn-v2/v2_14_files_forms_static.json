@@ -3,7 +3,7 @@
  "scenario_id": "v2_14_files_forms_static",
  "title": "Upload Intake and Protected Asset Delivery",
  "topic": "파일·폼·정적 파일",
- "status": "draft",
+ "status": "final",
  "bundle": [
   "request/forms-and-files.md",
   "app-structure/static-files-templates-and-frontend.md",
@@ -444,8 +444,8 @@
    "standalone_question": "The browser download name must be review-pack-83.zip. Show a FileResponse return using the sample large-video disk path but that download name, and identify the automatic file metadata headers.",
    "answer": "```python\nreturn FileResponse(\"large-video-file.mp4\", filename=\"review-pack-83.zip\")\n```\n`filename` sets the download `Content-Disposition`. `FileResponse` also sets `Content-Length`, `Last-Modified`, and `ETag`.",
    "key_facts": [
-    "The filename argument must be review-pack-83.zip.",
-    "The sample disk path is large-video-file.mp4, passed to FileResponse.",
+    "The project's browser download name is review-pack-83.zip.",
+    "The sample passes the disk path large-video-file.mp4 to FileResponse, and the download name goes in its filename argument.",
     "FileResponse sets Content-Length, Last-Modified, and ETag."
    ],
    "fact_meta": [
@@ -501,6 +501,11 @@
      "quote": "It sets `Content-Length`, `Last-Modified` and `ETag`.",
      "page": "responses/custom-responses.md",
      "fact_idx": 2
+    },
+    {
+     "quote": "`filename` (sets `Content-Disposition` so browsers download it)",
+     "page": "responses/custom-responses.md",
+     "fact_idx": 1
     }
    ],
    "alt_evidence": [],
@@ -508,11 +513,18 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
+   "review": {
+    "target": [],
+    "flags": [
+     "grounded_memory"
+    ],
+    "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-103340, setup 제외 정확도 0.50, setup 분리 뒤 문서 부분이 채점 항목으로 옮겨 가며 생김). 제외하지 않고 표시 유지"
+   },
    "closed_book_knowledge": {
     "correct": false,
     "accuracy_main": 0.5,
     "accuracy": 0.6666666666666666,
-    "response": "```python\nreturn FileResponse(\n    \"large-video.mp4\",\n    filename=\"review-pack-83.zip\",\n)\n```\n\n`FileResponse` automatically adds `Content-Length`, `Last-Modified`, and `ETag`. The `filename` also sets `Content-Disposition` for the download name.",
+    "response": "```python\nreturn FileResponse(\n    \"/path/to/large-video.mp4\",\n    filename=\"review-pack-83.zip\",\n)\n```\n\nStarlette automatically adds `Content-Length`, `Last-Modified`, and `ETag`. The `filename` sets the download name via `Content-Disposition`.",
     "fact_results": [
      true,
      false,
@@ -537,20 +549,20 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-103340"
    },
    "closed_book_grounded": {
     "correct": false,
-    "accuracy_main": 0.0,
-    "accuracy": 0.0,
-    "response": "NOT FOUND",
+    "accuracy_main": 0.5,
+    "accuracy": 0.6666666666666666,
+    "response": "return FileResponse(\"large-video.mp4\", filename=\"review-pack-83.zip\")\n\nContent-Length, Last-Modified, ETag",
     "fact_results": [
+     true,
      false,
-     false,
-     false
+     true
     ],
-    "judge_skipped": "not_found",
-    "not_found": true,
+    "judge_skipped": null,
+    "not_found": false,
     "answer_prompt": [
      "mt_answer_v2",
      "79e1fbab96c5"
@@ -570,12 +582,9 @@
     "judge": "deepseek-flash",
     "judge_prompt": [
      "fact_judge_v3",
-     null
+     "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
-   },
-   "review": {
-    "target": []
+    "run_id": "20261128-103340"
    }
   },
   {
@@ -1466,7 +1475,10 @@
    "review": {
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -1481,8 +1493,9 @@
    "standalone_question": "Change a browser download name from review-pack-83.zip to review-pack-97.zip. What filename argument should be used now, and which three automatic file metadata headers remain unchanged?",
    "answer": "Use `filename=\"review-pack-97.zip\"`. The automatic metadata headers are still `Content-Length`, `Last-Modified`, and `ETag`.",
    "key_facts": [
-    "The current filename argument is review-pack-97.zip.",
-    "FileResponse still sets Content-Length, Last-Modified, and ETag."
+    "The project's browser download name is now review-pack-97.zip.",
+    "FileResponse still sets Content-Length, Last-Modified, and ETag.",
+    "The download name is passed in FileResponse's filename argument, which sets Content-Disposition."
    ],
    "fact_meta": [
     {
@@ -1491,6 +1504,11 @@
      "tags": [
       "setup"
      ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
     },
     {
      "source": "doc",
@@ -1519,6 +1537,11 @@
      "quote": "It sets `Content-Length`, `Last-Modified` and `ETag`.",
      "page": "responses/custom-responses.md",
      "fact_idx": 1
+    },
+    {
+     "quote": "`filename` (sets `Content-Disposition` so browsers download it)",
+     "page": "responses/custom-responses.md",
+     "fact_idx": 2
     }
    ],
    "alt_evidence": [],
@@ -1534,14 +1557,22 @@
    ],
    "source_turn": null,
    "recall_distance": 8,
+   "review": {
+    "target": [],
+    "flags": [
+     "grounded_memory"
+    ],
+    "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-103340, setup 제외 정확도 1.00, setup 분리 뒤 문서 부분이 채점 항목으로 옮겨 가며 생김). 제외하지 않고 표시 유지"
+   },
    "closed_book_knowledge": {
-    "correct": false,
-    "accuracy_main": 0.0,
-    "accuracy": 0.5,
-    "response": "Use `filename=\"review-pack-97.zip\"`. The unchanged automatic metadata headers are `Content-Type`, `Content-Length`, and `Last-Modified`.",
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Use `filename=\"review-pack-97.zip\"`. The unchanged automatic headers are `Content-Length`, `Last-Modified`, and `ETag`.",
     "fact_results": [
      true,
-     false
+     true,
+     true
     ],
     "judge_skipped": null,
     "unknown": false,
@@ -1562,19 +1593,20 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-103340"
    },
    "closed_book_grounded": {
-    "correct": false,
-    "accuracy_main": 0.0,
-    "accuracy": 0.0,
-    "response": "NOT FOUND",
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "Set `filename=\"review-pack-97.zip\"` on `FileResponse` to change the browser’s download name. `FileResponse` continues to set the `Content-Length`, `Last-Modified`, and `ETag` headers automatically.",
     "fact_results": [
-     false,
-     false
+     true,
+     true,
+     true
     ],
-    "judge_skipped": "not_found",
-    "not_found": true,
+    "judge_skipped": null,
+    "not_found": false,
     "answer_prompt": [
      "mt_answer_v2",
      "79e1fbab96c5"
@@ -1594,12 +1626,9 @@
     "judge": "deepseek-flash",
     "judge_prompt": [
      "fact_judge_v3",
-     null
+     "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
-   },
-   "review": {
-    "target": []
+    "run_id": "20261128-103340"
    }
   },
   {
@@ -1878,7 +1907,10 @@
    "review": {
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -1943,7 +1975,11 @@
     "question_changed": true,
     "target": [
      "a: 질문 수정 (standalone_same_fact 확인)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28",
+    "standalone_same_fact": "예"
    },
    "closed_book_knowledge": {
     "correct": false,
@@ -2544,6 +2580,24 @@
    "items": [
     "턴 14: 앞서 물은 'Templates (Jinja2)' 대신 'Serving a built frontend'·'Dependencies and middleware apply' 소제목을 묻도록 질문·정답·key_facts·근거를 바꿈 (턴 1 의 mount 와 헷갈리는 짝이라 confusable)"
    ]
+  },
+  {
+   "date": "2026-11-28",
+   "by": "검수 결과 반영 (손 수정)",
+   "items": [
+    "턴 3: setup [0] 분리: 'The filename argument must be review-pack-83.zip.' → setup \"The project's browser download name is review-pack-83.zip.\", 기존 doc 항목 [1] 에 합침 → 'The sample passes the disk path large-video-file.mp4 to FileResponse, and the download name goes in its filename argument.'",
+    "턴 11: setup [0] 분리: 'The current filename argument is review-pack-97.zip.' → setup \"The project's browser download name is now review-pack-97.zip.\", 새 doc 항목 [2] \"The download name is passed in FileResponse's filename argument, which sets Content-Disposition.\""
+   ]
   }
- ]
+ ],
+ "review_summary": {
+  "reviewer": "akingdbets",
+  "date": "2026-11-28",
+  "targets": 3,
+  "verdicts": {
+   "OK": 3,
+   "수정 필요": 0,
+   "제외": 0
+  }
+ }
 }

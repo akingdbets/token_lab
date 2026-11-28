@@ -3,7 +3,7 @@
  "scenario_id": "v2_10_app_structure",
  "title": "Growing an Archive API with Shared Routers",
  "topic": "큰 앱 구조와 라우터",
- "status": "draft",
+ "status": "final",
  "bundle": [
   "app-structure/bigger-applications.md",
   "app-structure/sub-applications-proxy-and-wsgi.md",
@@ -322,7 +322,10 @@
    "review": {
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -1626,7 +1629,10 @@
    "review": {
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2036,25 +2042,16 @@
    "turn": 15,
    "turn_type": "new",
    "type": "multi",
-   "question": "I'm labeling the split API's release metadata. Which FastAPI release is this reference material about, and what does the application's version metadata mean and default to if I omit it?",
+   "question": "I'm labeling the split API's release metadata. What does the application's version metadata mean, and what does it default to if I omit it?",
    "asks": [
-    "Identify the documented framework release",
     "Identify the meaning and default of API version metadata"
    ],
-   "standalone_question": "I'm labeling the split API's release metadata. Which FastAPI release is this reference material about, and what does the application's version metadata mean and default to if I omit it?",
-   "answer": "The material documents FastAPI `0.142.2`. The application's `version` is your API's version, not FastAPI's or OpenAPI's, and defaults to `\"0.1.0\"`.",
+   "standalone_question": "For a FastAPI application, what does the application's version metadata mean, and what does it default to if it is omitted?",
+   "answer": "The application's `version` is your API's version, not FastAPI's or OpenAPI's, and defaults to `\"0.1.0\"`.",
    "key_facts": [
-    "The documented FastAPI framework release is 0.142.2.",
     "Application version metadata describes your API and defaults to 0.1.0, not the framework or OpenAPI version."
    ],
    "fact_meta": [
-    {
-     "source": "doc",
-     "accept_alternatives": [],
-     "tags": [
-      "confusable"
-     ]
-    },
     {
      "source": "doc",
      "accept_alternatives": [],
@@ -2065,7 +2062,6 @@
     }
    ],
    "key_entities": [
-    "0.142.2",
     "version",
     "0.1.0"
    ],
@@ -2076,14 +2072,9 @@
    "depends_on": [],
    "evidence": [
     {
-     "quote": "This wiki documents **FastAPI 0.142.2** (this repository: `fastapi/`, `docs/en/docs/`, `docs_src/`) for developers **using** FastAPI, from beginners to advanced users.",
-     "page": "quickstart.md",
-     "fact_idx": 0
-    },
-    {
      "quote": "| `version` | `str` | **Your API's** version, default `\"0.1.0\"` (not FastAPI's or OpenAPI's) |",
      "page": "openapi/metadata-and-docs-ui.md",
-     "fact_idx": 1
+     "fact_idx": 0
     }
    ],
    "alt_evidence": [],
@@ -2091,13 +2082,21 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
+   "review": {
+    "target": [
+     "c: 한 턴 한 주제 경고"
+    ],
+    "verdict": "수정 필요",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28",
+    "memo": "버전(0.142.2)을 묻는 부분 제거 지시 → 반영함"
+   },
    "closed_book_knowledge": {
-    "correct": false,
-    "accuracy_main": 0.5,
-    "accuracy": 0.5,
-    "response": "The reference is for FastAPI **0.115.12**. The application’s `version` metadata is the version of your API—not FastAPI itself—and defaults to **`0.1.0`** if omitted.",
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "The `version` metadata identifies the application’s version in its OpenAPI documentation; it defaults to `\"0.1.0\"` if omitted.",
     "fact_results": [
-     false,
      true
     ],
     "judge_skipped": null,
@@ -2119,7 +2118,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-103340"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -2127,7 +2126,6 @@
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
-     false,
      false
     ],
     "judge_skipped": "not_found",
@@ -2153,12 +2151,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
-   },
-   "review": {
-    "target": [
-     "c: 한 턴 한 주제 경고"
-    ]
+    "run_id": "20261128-103340"
    }
   },
   {
@@ -2548,5 +2541,24 @@
     "target": []
    }
   }
- ]
+ ],
+ "edits": [
+  {
+   "date": "2026-11-28",
+   "by": "검수 결과 반영 (손 수정)",
+   "items": [
+    "턴 15: FastAPI 버전(0.142.2)을 묻는 부분을 질문·정답·key_facts·asks 에서 뺌 (첨부 문서는 그대로, 남은 key_fact 1개는 setup 아님)"
+   ]
+  }
+ ],
+ "review_summary": {
+  "reviewer": "akingdbets",
+  "date": "2026-11-28",
+  "targets": 3,
+  "verdicts": {
+   "OK": 2,
+   "수정 필요": 1,
+   "제외": 0
+  }
+ }
 }

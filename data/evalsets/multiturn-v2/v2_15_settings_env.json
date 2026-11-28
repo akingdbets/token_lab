@@ -3,7 +3,7 @@
  "scenario_id": "v2_15_settings_env",
  "title": "Separating Application Settings Across Environments",
  "topic": "설정과 환경 분리",
- "status": "draft",
+ "status": "final",
  "bundle": [
   "app-structure/settings.md",
   "getting-started/development-workflow.md",
@@ -49,8 +49,8 @@
    "standalone_question": "For a FastAPI service whose application name is Copper Finch Console, administrator email is ops@finch.example, and per-user item limit is 73, how should I declare typed settings and inject a cached settings dependency instead of creating a settings singleton at import time?",
    "answer": "Use `BaseSettings` from `pydantic_settings` and expose it through a cached dependency:\n\n```python\n# config.py\nfrom pydantic_settings import BaseSettings\n\nclass Settings(BaseSettings):\n    app_name: str = \"Copper Finch Console\"\n    admin_email: str = \"ops@finch.example\"\n    items_per_user: int = 73\n```\n\n```python\n# main.py\nfrom functools import lru_cache\nfrom typing import Annotated\nfrom fastapi import Depends, FastAPI\nfrom .config import Settings\n\napp = FastAPI()\n\n@lru_cache\ndef get_settings():\n    return Settings()\n\n@app.get(\"/info\")\nasync def info(settings: Annotated[Settings, Depends(get_settings)]):\n    return {\n        \"app_name\": settings.app_name,\n        \"admin_email\": settings.admin_email,\n        \"items_per_user\": settings.items_per_user,\n    }\n```\n\nThese defaults can be overridden by environment variables. The cached settings object is created lazily when first needed, not during module import.",
    "key_facts": [
-    "The project settings use app_name Copper Finch Console, admin_email ops@finch.example, and integer items_per_user 73.",
-    "Typed settings inherit from BaseSettings imported from pydantic_settings.",
+    "The project's application name is Copper Finch Console, administrator email ops@finch.example and per-user item limit 73.",
+    "Typed settings inherit from BaseSettings imported from pydantic_settings, with fields app_name, admin_email and items_per_user: int.",
     "A get_settings dependency decorated with lru_cache builds settings lazily and returns the same object on later calls."
    ],
    "fact_meta": [
@@ -113,6 +113,11 @@
      "quote": "so settings are built once, lazily, on the first request that needs them.",
      "page": "app-structure/settings.md",
      "fact_idx": 2
+    },
+    {
+     "quote": "    items_per_user: int = 50",
+     "page": "app-structure/settings.md",
+     "fact_idx": 1
     }
    ],
    "alt_evidence": [],
@@ -120,11 +125,19 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
+   "review": {
+    "changed_round2": true,
+    "target": [],
+    "flags": [
+     "grounded_memory"
+    ],
+    "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-103340, setup 제외 정확도 1.00, setup 분리 뒤 문서 부분이 채점 항목으로 옮겨 가며 생김). 제외하지 않고 표시 유지"
+   },
    "closed_book_knowledge": {
     "correct": true,
     "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "```python\nfrom functools import lru_cache\nfrom typing import Annotated\n\nfrom fastapi import Depends, FastAPI\nfrom pydantic_settings import BaseSettings, SettingsConfigDict\n\n\nclass Settings(BaseSettings):\n    model_config = SettingsConfigDict(env_file=\".env\", extra=\"ignore\")\n\n    app_name: str = \"Copper Finch Console\"\n    admin_email: str = \"ops@finch.example\"\n    items_per_user: int = 73\n\n\n@lru_cache\ndef get_settings() -> Settings:\n    return Settings()\n\n\napp = FastAPI()\n\n\n@app.get(\"/\")\ndef read_root(settings: Annotated[Settings, Depends(get_settings)]):\n    return {\"app_name\": settings.app_name}\n```\n\n`get_settings()` constructs settings on first use and reuses the cached instance, rather than creating one at import time.",
+    "response": "```python\nfrom functools import lru_cache\nfrom typing import Annotated\n\nfrom fastapi import Depends, FastAPI\nfrom pydantic_settings import BaseSettings, SettingsConfigDict\n\nclass Settings(BaseSettings):\n    app_name: str = \"Copper Finch Console\"\n    admin_email: str = \"ops@finch.example\"\n    items_per_user: int = 73\n\n    model_config = SettingsConfigDict(env_file=\".env\")\n\n@lru_cache\ndef get_settings() -> Settings:\n    return Settings()\n\napp = FastAPI()\n\n@app.get(\"/\")\ndef read_root(settings: Annotated[Settings, Depends(get_settings)]):\n    return {\"app_name\": settings.app_name}\n```\n\nThe cached dependency creates settings on first use, rather than at import time.",
     "fact_results": [
      true,
      true,
@@ -149,20 +162,20 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-103340"
    },
    "closed_book_grounded": {
-    "correct": false,
-    "accuracy_main": 0.0,
-    "accuracy": 0.0,
-    "response": "NOT FOUND",
+    "correct": true,
+    "accuracy_main": 1.0,
+    "accuracy": 1.0,
+    "response": "```python\nfrom functools import lru_cache\nfrom typing import Annotated\n\nfrom fastapi import Depends\nfrom pydantic_settings import BaseSettings\n\n\nclass Settings(BaseSettings):\n    app_name: str = \"Copper Finch Console\"\n    admin_email: str = \"ops@finch.example\"\n    items_per_user: int = 73\n\n\n@lru_cache\ndef get_settings() -> Settings:\n    return Settings()\n\n\nasync def read_info(\n    settings: Annotated[Settings, Depends(get_settings)],\n):\n    ...\n```",
     "fact_results": [
-     false,
-     false,
-     false
+     true,
+     true,
+     true
     ],
-    "judge_skipped": "not_found",
-    "not_found": true,
+    "judge_skipped": null,
+    "not_found": false,
     "answer_prompt": [
      "mt_answer_v2",
      "79e1fbab96c5"
@@ -182,13 +195,9 @@
     "judge": "deepseek-flash",
     "judge_prompt": [
      "fact_judge_v3",
-     null
+     "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
-   },
-   "review": {
-    "changed_round2": true,
-    "target": []
+    "run_id": "20261128-103340"
    }
   },
   {
@@ -319,7 +328,10 @@
    "review": {
     "target": [
      "c: 한 턴 한 주제 경고"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -462,8 +474,9 @@
    "standalone_question": "How do I make the schema URL /schema/finch.json environment-configurable at app construction, and what happens to the schema and built-in documentation UIs if the environment supplies an empty URL instead?",
    "answer": "Declare the setting and pass it when constructing the app:\n\n```python\nfrom fastapi import FastAPI\nfrom pydantic_settings import BaseSettings\n\nclass Settings(BaseSettings):\n    openapi_url: str = \"/schema/finch.json\"\n\nsettings = Settings()\napp = FastAPI(openapi_url=settings.openapi_url)\n```\n\nAn empty `OPENAPI_URL` disables schema publication and both built-in docs UIs. In the default-path example, `/openapi.json`, `/docs`, and `/redoc` return 404.",
    "key_facts": [
-    "The project's openapi_url default is /schema/finch.json and is passed into FastAPI at construction.",
-    "An empty openapi_url disables the schema and both docs UIs; the default-path example returns 404 at /openapi.json, /docs, and /redoc."
+    "The project's schema URL is /schema/finch.json.",
+    "An empty openapi_url disables the schema and both docs UIs; the default-path example returns 404 at /openapi.json, /docs, and /redoc.",
+    "The schema URL is passed into FastAPI(openapi_url=...) at construction."
    ],
    "fact_meta": [
     {
@@ -481,6 +494,11 @@
       "condition",
       "confusable"
      ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
     }
    ],
    "key_entities": [
@@ -504,14 +522,14 @@
      "fact_idx": 0
     },
     {
-     "quote": "app = FastAPI(openapi_url=settings.openapi_url)",
-     "page": "openapi/metadata-and-docs-ui.md",
-     "fact_idx": 0
-    },
-    {
      "quote": "An empty `openapi_url` disables the schema and the docs UIs (requests to `/openapi.json`, `/docs`, `/redoc` return 404).",
      "page": "openapi/metadata-and-docs-ui.md",
      "fact_idx": 1
+    },
+    {
+     "quote": "app = FastAPI(openapi_url=settings.openapi_url)",
+     "page": "openapi/metadata-and-docs-ui.md",
+     "fact_idx": 2
     }
    ],
    "alt_evidence": [],
@@ -519,14 +537,23 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   },
    "closed_book_knowledge": {
-    "correct": true,
-    "accuracy_main": 1.0,
-    "accuracy": 1.0,
-    "response": "Pass the URL as an app-construction option, using an environment variable and defaulting only when it’s unset. For example: `schemaUrl: process.env.FINCH_SCHEMA_URL ?? \"/schema/finch.json\"`. An explicitly empty value disables the schema endpoint and the built-in documentation UIs; avoid `||`, which would replace the empty value with the default.",
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.6666666666666666,
+    "response": "Pass the URL through the app’s constructor, using nullish coalescing so an empty value stays empty:\n\n```js\nconst app = new Finch({\n  schemaUrl: process.env.FINCH_SCHEMA_URL ?? \"/schema/finch.json\",\n});\n```\n\nIf `FINCH_SCHEMA_URL` is empty, the schema endpoint and built-in documentation UIs are disabled. Avoid `||` if you want an empty value to disable them rather than fall back to the default.",
     "fact_results": [
      true,
-     true
+     true,
+     false
     ],
     "judge_skipped": null,
     "unknown": false,
@@ -547,7 +574,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-103340"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -555,6 +582,7 @@
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
+     false,
      false,
      false
     ],
@@ -581,12 +609,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
-   },
-   "review": {
-    "target": [
-     "d: 무작위 표본 (시드 20261128)"
-    ]
+    "run_id": "20261128-103340"
    }
   },
   {
@@ -1790,7 +1813,10 @@
    "review": {
     "target": [
      "b: 대안 판정 (alt_judge_label)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2065,7 +2091,10 @@
    "review": {
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2319,7 +2348,10 @@
    "review": {
     "target": [
      "c: 턴 7 의존은 간접 채점 (턴 7 가 인용한 페이지만 같음)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2610,7 +2642,10 @@
    "review": {
     "target": [
      "c: 턴 14 의존은 간접 채점 (턴 14 가 인용한 페이지만 같음)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   }
  ],
@@ -2621,6 +2656,24 @@
    "items": [
     "턴 0: 짧은 인용 '@lru_cache' 를 원문 문장 인용으로 바꿈"
    ]
+  },
+  {
+   "date": "2026-11-28",
+   "by": "검수 결과 반영 (손 수정)",
+   "items": [
+    "턴 0: setup [0] 분리: 'The project settings use app_name Copper Finch Console, admin_email ops@finch.example, and integer items_per_user 73.' → setup \"The project's application name is Copper Finch Console, administrator email ops@finch.example and per-user item limit 73.\", 기존 doc 항목 [1] 에 합침 → 'Typed settings inherit from BaseSettings imported from pydantic_settings, with fields app_name, admin_email and items_per_user: int.'",
+    "턴 3: setup [0] 분리: \"The project's openapi_url default is /schema/finch.json and is passed into FastAPI at construction.\" → setup \"The project's schema URL is /schema/finch.json.\", 새 doc 항목 [2] 'The schema URL is passed into FastAPI(openapi_url=...) at construction.'"
+   ]
   }
- ]
+ ],
+ "review_summary": {
+  "reviewer": "akingdbets",
+  "date": "2026-11-28",
+  "targets": 6,
+  "verdicts": {
+   "OK": 6,
+   "수정 필요": 0,
+   "제외": 0
+  }
+ }
 }

@@ -3,7 +3,7 @@
  "scenario_id": "v2_02_response_design",
  "title": "Artifact API Response Contracts",
  "topic": "응답 상태·형식 설계",
- "status": "draft",
+ "status": "final",
  "bundle": [
   "responses/status-codes.md",
   "responses/custom-responses.md",
@@ -299,7 +299,10 @@
     "by": "사용자 검수 (2026-11-28)",
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -567,7 +570,10 @@
     "by": "사용자 검수 (2026-11-28)",
     "target": [
      "c: 근거 인용이 짧음: fact 0 '    <shampoo>'"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -720,7 +726,10 @@
     "by": "사용자 검수 (2026-11-28)",
     "target": [
      "c: 턴 2 의존은 간접 채점 (턴 2 가 인용한 페이지만 같음)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -1247,7 +1256,10 @@
     "note": "실험 지시문 아래에서도 기억으로 답함 (제외하지 않고 표시 유지)",
     "target": [
      "c: grounded_memory 표시"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -1388,7 +1400,10 @@
     "by": "사용자 검수 (2026-11-28)",
     "target": [
      "c: 턴 2 의존은 간접 채점 (턴 2 가 인용한 페이지만 같음)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -1528,7 +1543,10 @@
     "note": "실험 지시문 아래에서도 기억으로 답함 (제외하지 않고 표시 유지)",
     "target": [
      "c: grounded_memory 표시"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -1670,7 +1688,10 @@
     "by": "사용자 검수 (2026-11-28)",
     "target": [
      "c: 턴 2 의존은 간접 채점 (턴 2 가 인용한 페이지만 같음)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2169,7 +2190,11 @@
    "review": {
     "target": [
      "a: 질문 수정 (standalone_same_fact 확인)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28",
+    "standalone_same_fact": "예"
    },
    "closed_book_knowledge": {
     "correct": false,
@@ -2297,7 +2322,11 @@
    "review": {
     "target": [
      "a: 질문 수정 (standalone_same_fact 확인)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28",
+    "standalone_same_fact": "예"
    },
    "closed_book_knowledge": {
     "correct": false,
@@ -2626,7 +2655,10 @@
     "by": "사용자 검수 (2026-11-28)",
     "target": [
      "c: 턴 2 의존은 간접 채점 (턴 2 가 인용한 페이지만 같음)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2742,7 +2774,11 @@
    "review": {
     "target": [
      "a: 질문 수정 (standalone_same_fact 확인)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28",
+    "standalone_same_fact": "예"
    },
    "closed_book_knowledge": {
     "correct": false,
@@ -2824,5 +2860,15 @@
     "턴 19 (옛 18): 'final review checklist' 를 세 가지를 하나씩 묻는 질문으로 (asks 3 = key_facts 3), standalone 도 같게"
    ]
   }
- ]
+ ],
+ "review_summary": {
+  "reviewer": "akingdbets",
+  "date": "2026-11-28",
+  "targets": 11,
+  "verdicts": {
+   "OK": 11,
+   "수정 필요": 0,
+   "제외": 0
+  }
+ }
 }

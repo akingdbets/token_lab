@@ -3,7 +3,7 @@
  "scenario_id": "v2_17_request_internals",
  "title": "Request Inspection and Lifecycle Boundaries",
  "topic": "요청 객체와 내부 동작",
- "status": "draft",
+ "status": "final",
  "bundle": [
   "request/using-request-directly.md",
   "internals/request-handling-internals.md",
@@ -306,7 +306,10 @@
     "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
     "target": [
      "c: grounded 에서 기억으로 답함 (정확도 1.00)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -1480,7 +1483,10 @@
    "review": {
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -1618,7 +1624,10 @@
    "review": {
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2419,7 +2428,10 @@
    "review": {
     "target": [
      "c: recall·synthesis 인데 knowledge 로 맞힘"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2576,8 +2588,21 @@
    "review": {
     "target": [
      "c: 턴 14 의존은 간접 채점 (턴 14 가 인용한 페이지만 같음)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   }
- ]
+ ],
+ "review_summary": {
+  "reviewer": "akingdbets",
+  "date": "2026-11-28",
+  "targets": 5,
+  "verdicts": {
+   "OK": 5,
+   "수정 필요": 0,
+   "제외": 0
+  }
+ }
 }

@@ -3,7 +3,7 @@
  "scenario_id": "v2_09_openapi_docs",
  "title": "Branding an Internal API Explorer",
  "topic": "OpenAPI 문서 꾸미기",
- "status": "draft",
+ "status": "final",
  "bundle": [
   "openapi/metadata-and-docs-ui.md",
   "openapi/extending-openapi.md",
@@ -48,8 +48,9 @@
    "standalone_question": "Initialize FastAPI with title Copper Finch Relay, schema URL /spec/finch-27.json, and Swagger UI URL /workbench-27, with ReDoc disabled. Does disabling only ReDoc remove the schema?",
    "answer": "```python\nfrom fastapi import FastAPI\n\napp = FastAPI(\n    title=\"Copper Finch Relay\",\n    openapi_url=\"/spec/finch-27.json\",\n    docs_url=\"/workbench-27\",\n    redoc_url=None,\n)\n```\nSetting `redoc_url=None` disables only ReDoc. The schema remains available at the configured schema URL.",
    "key_facts": [
-    "The initialization uses title Copper Finch Relay, openapi_url /spec/finch-27.json, and docs_url /workbench-27.",
-    "redoc_url=None disables ReDoc only; it does not disable the schema."
+    "The project's title is Copper Finch Relay, schema URL /spec/finch-27.json and Swagger UI URL /workbench-27.",
+    "redoc_url=None disables ReDoc only; it does not disable the schema.",
+    "The schema URL is FastAPI's openapi_url and the Swagger UI URL is docs_url."
    ],
    "fact_meta": [
     {
@@ -66,6 +67,11 @@
       "negation",
       "confusable"
      ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
     }
    ],
    "key_entities": [
@@ -90,6 +96,16 @@
      "quote": "| `redoc_url` | `\"/redoc\"` | disable ReDoc |",
      "page": "openapi/metadata-and-docs-ui.md",
      "fact_idx": 1
+    },
+    {
+     "quote": "| `openapi_url` | `\"/openapi.json\"` | disable the schema **and** both docs UIs |",
+     "page": "openapi/metadata-and-docs-ui.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "| `docs_url` | `\"/docs\"` | disable Swagger UI |",
+     "page": "openapi/metadata-and-docs-ui.md",
+     "fact_idx": 2
     }
    ],
    "alt_evidence": [],
@@ -97,12 +113,16 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
+   "review": {
+    "target": []
+   },
    "closed_book_knowledge": {
     "correct": true,
     "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "```python\napp = FastAPI(\n    title=\"Copper Finch Relay\",\n    openapi_url=\"/spec/finch-27.json\",\n    docs_url=\"/workbench-27\",\n    redoc_url=None,\n)\n```\n\nNo. Disabling ReDoc only removes its UI; the schema remains available at `/spec/finch-27.json`.",
+    "response": "```python\nfrom fastapi import FastAPI\n\napp = FastAPI(\n    title=\"Copper Finch Relay\",\n    openapi_url=\"/spec/finch-27.json\",\n    docs_url=\"/workbench-27\",\n    redoc_url=None,\n)\n```\n\nNo. Disabling ReDoc only removes its UI; the schema remains available at `/spec/finch-27.json`.",
     "fact_results": [
+     true,
      true,
      true
     ],
@@ -125,7 +145,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-103340"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -133,6 +153,7 @@
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
+     false,
      false,
      false
     ],
@@ -159,10 +180,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
-   },
-   "review": {
-    "target": []
+    "run_id": "20261128-103340"
    }
   },
   {
@@ -631,7 +649,10 @@
     "changed_round2": true,
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    },
    "closed_book_knowledge": {
     "correct": true,
@@ -830,7 +851,10 @@
     "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
     "target": [
      "c: grounded 에서 기억으로 답함 (정확도 1.00)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -1087,7 +1111,10 @@
     "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 0.50). 제외하지 않고 표시 유지",
     "target": [
      "c: grounded 에서 기억으로 답함 (정확도 0.50)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -1478,8 +1505,9 @@
    "standalone_question": "Move a project's Swagger UI from /workbench-27 to /console-63 while keeping its schema endpoint unchanged. Which FastAPI constructor option changes, and must the schema URL option also change?",
    "answer": "Set `docs_url=\"/console-63\"`. There is no need to change `openapi_url`: it independently controls the schema endpoint.",
    "key_facts": [
-    "The Swagger UI route is now configured with docs_url=\"/console-63\".",
-    "Changing docs_url does not require changing openapi_url."
+    "The project's Swagger UI path is now /console-63.",
+    "Changing docs_url does not require changing openapi_url.",
+    "Swagger UI's path is set with docs_url."
    ],
    "fact_meta": [
     {
@@ -1496,6 +1524,11 @@
       "negation",
       "confusable"
      ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
     }
    ],
    "key_entities": [
@@ -1514,14 +1547,14 @@
      "fact_idx": 0
     },
     {
-     "quote": "| `docs_url` | `\"/docs\"` | disable Swagger UI |",
-     "page": "openapi/metadata-and-docs-ui.md",
-     "fact_idx": 0
-    },
-    {
      "quote": "app = FastAPI(docs_url=\"/documentation\", redoc_url=None)   # tutorial003",
      "page": "openapi/metadata-and-docs-ui.md",
      "fact_idx": 1
+    },
+    {
+     "quote": "| `docs_url` | `\"/docs\"` | disable Swagger UI |",
+     "page": "openapi/metadata-and-docs-ui.md",
+     "fact_idx": 2
     }
    ],
    "alt_evidence": [],
@@ -1538,12 +1571,16 @@
    ],
    "source_turn": null,
    "recall_distance": 11,
+   "review": {
+    "target": []
+   },
    "closed_book_knowledge": {
     "correct": true,
     "accuracy_main": 1.0,
     "accuracy": 1.0,
     "response": "Change `docs_url` to `/console-63`. Keep `openapi_url` unchanged; it does not need to change.",
     "fact_results": [
+     true,
      true,
      true
     ],
@@ -1566,7 +1603,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-103340"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -1574,6 +1611,7 @@
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
+     false,
      false,
      false
     ],
@@ -1600,10 +1638,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
-   },
-   "review": {
-    "target": []
+    "run_id": "20261128-103340"
    }
   },
   {
@@ -1880,7 +1915,10 @@
    "review": {
     "target": [
      "c: 턴 7 의존은 간접 채점 (턴 7 가 인용한 페이지만 같음)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2532,7 +2570,10 @@
    "review": {
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   }
  ],
@@ -2544,6 +2585,24 @@
     "턴 12: 인용문 2개를 원문 글자 그대로 (백틱 포함)",
     "턴 4: 턴 0 의존이 setup 항목으로만 채점돼, 턴 0 문서(FastAPI(...) 인자가 info 를 채움)를 근거로 한 key_fact [2] 추가"
    ]
+  },
+  {
+   "date": "2026-11-28",
+   "by": "검수 결과 반영 (손 수정)",
+   "items": [
+    "턴 0: setup [0] 분리: 'The initialization uses title Copper Finch Relay, openapi_url /spec/finch-27.json, and docs_url /workbench-27.' → setup \"The project's title is Copper Finch Relay, schema URL /spec/finch-27.json and Swagger UI URL /workbench-27.\", 새 doc 항목 [2] \"The schema URL is FastAPI's openapi_url and the Swagger UI URL is docs_url.\"",
+    "턴 11: setup [0] 분리: 'The Swagger UI route is now configured with docs_url=\"/console-63\".' → setup \"The project's Swagger UI path is now /console-63.\", 새 doc 항목 [2] \"Swagger UI's path is set with docs_url.\""
+   ]
   }
- ]
+ ],
+ "review_summary": {
+  "reviewer": "akingdbets",
+  "date": "2026-11-28",
+  "targets": 5,
+  "verdicts": {
+   "OK": 5,
+   "수정 필요": 0,
+   "제외": 0
+  }
+ }
 }

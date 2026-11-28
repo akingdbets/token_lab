@@ -442,5 +442,14 @@ class ReviewTargetsTest(unittest.TestCase):
         self.assertEqual([t["review"]["target"] for t in s["turns"]], [t["review"]["target"] for t in s2["turns"]])
 
 
+class FinalStatusTest(unittest.TestCase):
+    def test_final_only_for_v2(self):
+        s = valid()
+        s["status"] = "final"
+        self.assertEqual(validate_scenario(s), [])
+        del s["schema_version"]
+        self.assertTrue(any("status" in e for e in validate_scenario(s)))
+
+
 if __name__ == "__main__":
     unittest.main()

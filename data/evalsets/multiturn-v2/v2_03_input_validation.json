@@ -3,7 +3,7 @@
  "scenario_id": "v2_03_input_validation",
  "title": "Validating a Catalog Intake API",
  "topic": "요청 입력 검증",
- "status": "draft",
+ "status": "final",
  "bundle": [
   "request/query-parameters.md",
   "request/path-parameters.md",
@@ -167,7 +167,10 @@
    "review": {
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -586,7 +589,10 @@
    "review": {
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -732,7 +738,10 @@
     "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
     "target": [
      "c: grounded 에서 기억으로 답함 (정확도 1.00)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -1124,7 +1133,10 @@
     "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 0.50). 제외하지 않고 표시 유지",
     "target": [
      "c: grounded 에서 기억으로 답함 (정확도 0.50)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -1819,7 +1831,10 @@
    "review": {
     "target": [
      "c: 근거 인용이 짧음: fact 1 '                \"normal\": {'"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2620,5 +2635,15 @@
     "target": []
    }
   }
- ]
+ ],
+ "review_summary": {
+  "reviewer": "akingdbets",
+  "date": "2026-11-28",
+  "targets": 5,
+  "verdicts": {
+   "OK": 5,
+   "수정 필요": 0,
+   "제외": 0
+  }
+ }
 }

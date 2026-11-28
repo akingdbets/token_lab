@@ -3,7 +3,7 @@
  "scenario_id": "v2_13_error_consistency",
  "title": "Consistent Error Envelopes Without Losing Semantics",
  "topic": "에러 처리 일관성",
- "status": "draft",
+ "status": "final",
  "bundle": [
   "errors/handling-errors.md",
   "responses/status-codes.md",
@@ -195,8 +195,9 @@
    "standalone_question": "How should a FastAPI endpoint declare a single model body wrapped under \"parcel\", rather than expecting a bare model object?",
    "answer": "```python\nfrom typing import Annotated\nfrom fastapi import Body\nfrom pydantic import BaseModel\n\nclass Item(BaseModel):\n    name: str\n    price: float\n\n@app.post(\"/inventory/\")\nasync def create_inventory(parcel: Annotated[Item, Body(embed=True)]):\n    return parcel\n```\nThe expected JSON is `{\"parcel\": {\"name\": \"Widget\", \"price\": 12.5}}`. A single model normally occupies the whole body; `embed=True` requires the parameter-name wrapper.",
    "key_facts": [
-    "The body wrapper and parameter name are parcel.",
-    "Body(embed=True) requires a wrapper for a single model instead of the default bare-model body."
+    "The project's body wrapper key is parcel.",
+    "Body(embed=True) requires a wrapper for a single model instead of the default bare-model body.",
+    "With Body(embed=True) the wrapper key is the parameter's name."
    ],
    "fact_meta": [
     {
@@ -212,6 +213,11 @@
      "tags": [
       "condition"
      ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
     }
    ],
    "key_entities": [
@@ -232,6 +238,16 @@
      "quote": "By default a **single** model parameter means the body *is* the model. To require a key wrapping it, use `embed=True`",
      "page": "request/request-body.md",
      "fact_idx": 1
+    },
+    {
+     "quote": "Expected body: `{\"item\": {\"name\": \"Foo\", \"price\": 42.0, ...}}` instead of `{\"name\": \"Foo\", ...}`.",
+     "page": "request/request-body.md",
+     "fact_idx": 2
+    },
+    {
+     "quote": "async def update_item(item_id: int, item: Annotated[Item, Body(embed=True)]):",
+     "page": "request/request-body.md",
+     "fact_idx": 2
     }
    ],
    "alt_evidence": [],
@@ -239,12 +255,16 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
+   "review": {
+    "target": []
+   },
    "closed_book_knowledge": {
     "correct": true,
     "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "Use `Body(embed=True)` and name the parameter `parcel`:\n\n```python\nfrom fastapi import Body\n\n@app.post(\"/items\")\nasync def create_item(parcel: Parcel = Body(..., embed=True)):\n    ...\n```\n\nThe request body should be `{\"parcel\": { ... }}`.",
+    "response": "Use `Body(embed=True)` on a parameter named `parcel`:\n\n```python\nfrom fastapi import Body\n\n@app.post(\"/parcels\")\nasync def create_parcel(parcel: Parcel = Body(embed=True)):\n    ...\n```\n\nThis expects a JSON body shaped like `{\"parcel\": {...}}`.",
     "fact_results": [
+     true,
      true,
      true
     ],
@@ -267,7 +287,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-103340"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -275,6 +295,7 @@
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
+     false,
      false,
      false
     ],
@@ -301,10 +322,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
-   },
-   "review": {
-    "target": []
+    "run_id": "20261128-103340"
    }
   },
   {
@@ -1864,7 +1882,10 @@
    "review": {
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2126,7 +2147,10 @@
    "review": {
     "target": [
      "c: 한 턴 한 주제 경고"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2363,7 +2387,10 @@
    "review": {
     "target": [
      "c: recall·synthesis 인데 knowledge 로 맞힘"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2513,8 +2540,30 @@
    "review": {
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   }
- ]
+ ],
+ "edits": [
+  {
+   "date": "2026-11-28",
+   "by": "검수 결과 반영 (손 수정)",
+   "items": [
+    "턴 1: setup [0] 분리: 'The body wrapper and parameter name are parcel.' → setup \"The project's body wrapper key is parcel.\", 새 doc 항목 [2] \"With Body(embed=True) the wrapper key is the parameter's name.\""
+   ]
+  }
+ ],
+ "review_summary": {
+  "reviewer": "akingdbets",
+  "date": "2026-11-28",
+  "targets": 4,
+  "verdicts": {
+   "OK": 4,
+   "수정 필요": 0,
+   "제외": 0
+  }
+ }
 }

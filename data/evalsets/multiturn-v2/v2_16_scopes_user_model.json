@@ -3,7 +3,7 @@
  "scenario_id": "v2_16_scopes_user_model",
  "title": "Scoped Access and Safe User Responses",
  "topic": "권한 범위와 사용자 모델",
- "status": "draft",
+ "status": "final",
  "bundle": [
   "security/oauth2-scopes.md",
   "security/oauth2-jwt.md",
@@ -49,8 +49,9 @@
    "standalone_question": "For a first-party inventory API whose custom permission is vault:scan, how is that permission declared as an available OAuth2 scope, and what scopes reach the token checker when the route requires it and its active-user dependency requires me?",
    "answer": "Declare it on the bearer scheme:\n```python\noauth2_scheme = OAuth2PasswordBearer(\n    tokenUrl=\"token\",\n    scopes={\"me\": \"Read current user\", \"vault:scan\": \"Scan inventory\"},\n)\n```\nUse `Security(get_current_active_user, scopes=[\"vault:scan\"])` on the route and `Security(get_current_user, scopes=[\"me\"])` inside the active-user dependency. The checker receives both `vault:scan` and `me`; requirements accumulate rather than replace each other.",
    "key_facts": [
-    "The project's custom scope is vault:scan and belongs in the available-scopes mapping.",
-    "Required scopes accumulate, so the checker requires both the route's scope and me from the active-user dependency."
+    "The project's custom permission is vault:scan.",
+    "Required scopes accumulate, so the checker requires both the route's scope and me from the active-user dependency.",
+    "Custom scopes are declared in the scopes mapping of OAuth2PasswordBearer."
    ],
    "fact_meta": [
     {
@@ -66,6 +67,11 @@
      "tags": [
       "example"
      ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
     }
    ],
    "key_entities": [
@@ -95,6 +101,11 @@
      "quote": "| `/users/me/` | `me` (from `get_current_active_user`) |",
      "page": "security/oauth2-scopes.md",
      "fact_idx": 1
+    },
+    {
+     "quote": "scopes={\"me\": \"Read information about the current user.\", \"items\": \"Read items.\"},",
+     "page": "security/oauth2-scopes.md",
+     "fact_idx": 2
     }
    ],
    "alt_evidence": [],
@@ -102,12 +113,16 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
+   "review": {
+    "target": []
+   },
    "closed_book_knowledge": {
     "correct": true,
     "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "Declare it in the OAuth2 scheme’s scope map, e.g. `scopes={\"vault:scan\": \"Scan vault inventory\", \"me\": \"Read the current user\"}`. The token checker receives both required scopes: `[\"vault:scan\", \"me\"]`.",
+    "response": "Declare it in the OAuth2 scheme’s available scopes, for example: `OAuth2PasswordBearer(..., scopes={\"vault:scan\": \"Scan vault inventory\"})`.\n\nThe token checker receives both required scopes: `[\"vault:scan\", \"me\"]` (with `scope_str` equal to `\"vault:scan me\"`).",
     "fact_results": [
+     true,
      true,
      true
     ],
@@ -130,7 +145,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-103340"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -138,6 +153,7 @@
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
+     false,
      false,
      false
     ],
@@ -164,10 +180,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
-   },
-   "review": {
-    "target": []
+    "run_id": "20261128-103340"
    }
   },
   {
@@ -182,8 +195,9 @@
    "standalone_question": "With access tokens lasting 23 minutes, what expiry argument should signed token creation receive after authentication, and what response shape should the login endpoint return?",
    "answer": "```python\naccess_token = create_access_token(\n    data={\"sub\": user.username},\n    expires_delta=timedelta(minutes=23),\n)\nreturn Token(access_token=access_token, token_type=\"bearer\")\n```\nThe JSON response has `access_token` and `token_type`, with the latter set to `\"bearer\"`.",
    "key_facts": [
-    "Pass timedelta(minutes=23) as expires_delta.",
-    "Return access_token and token_type=\"bearer\"."
+    "The project's access-token lifetime is 23 minutes.",
+    "Return access_token and token_type=\"bearer\".",
+    "The lifetime is passed to the token helper as expires_delta=timedelta(minutes=...)."
    ],
    "fact_meta": [
     {
@@ -199,6 +213,11 @@
      "tags": [
       "example"
      ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
     }
    ],
    "key_entities": [
@@ -222,6 +241,11 @@
      "quote": "    return Token(access_token=access_token, token_type=\"bearer\")",
      "page": "security/oauth2-jwt.md",
      "fact_idx": 1
+    },
+    {
+     "quote": "def create_access_token(data: dict, expires_delta: timedelta | None = None):",
+     "page": "security/oauth2-jwt.md",
+     "fact_idx": 2
     }
    ],
    "alt_evidence": [],
@@ -229,12 +253,16 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
+   "review": {
+    "target": []
+   },
    "closed_book_knowledge": {
     "correct": false,
     "accuracy_main": 0.0,
-    "accuracy": 0.0,
-    "response": "Pass `{ expiresIn: '23m' }` to token signing, and return `{ accessToken: token }` from the login endpoint.",
+    "accuracy": 0.3333333333333333,
+    "response": "Pass `{ expiresIn: '23m' }` to token signing, and return the token as `{ access_token: token }`.",
     "fact_results": [
+     true,
      false,
      false
     ],
@@ -257,7 +285,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-103340"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -265,6 +293,7 @@
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
+     false,
      false,
      false
     ],
@@ -291,10 +320,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
-   },
-   "review": {
-    "target": []
+    "run_id": "20261128-103340"
    }
   },
   {
@@ -430,7 +456,10 @@
    "review": {
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -1070,7 +1099,10 @@
     "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
     "target": [
      "c: grounded 에서 기억으로 답함 (정확도 1.00)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -1353,8 +1385,9 @@
    "standalone_question": "To serve Swagger UI at /bench-62, what application setting is needed, and what is the schema URL when its own setting is unchanged?",
    "answer": "```python\napp = FastAPI(docs_url=\"/bench-62\")\n```\nThe schema remains at `/openapi.json`.",
    "key_facts": [
-    "Set docs_url to the project's /bench-62 path.",
-    "The default openapi_url is /openapi.json."
+    "The project's Swagger UI path is /bench-62.",
+    "The default openapi_url is /openapi.json.",
+    "Swagger UI's path is set with docs_url."
    ],
    "fact_meta": [
     {
@@ -1370,6 +1403,11 @@
      "tags": [
       "example"
      ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
     }
    ],
    "key_entities": [
@@ -1392,6 +1430,11 @@
      "quote": "| `openapi_url` | `\"/openapi.json\"` | disable the schema **and** both docs UIs |",
      "page": "openapi/metadata-and-docs-ui.md",
      "fact_idx": 1
+    },
+    {
+     "quote": "| `docs_url` | `\"/docs\"` | disable Swagger UI |",
+     "page": "openapi/metadata-and-docs-ui.md",
+     "fact_idx": 2
     }
    ],
    "alt_evidence": [],
@@ -1399,14 +1442,18 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
+   "review": {
+    "target": []
+   },
    "closed_book_knowledge": {
-    "correct": true,
-    "accuracy_main": 1.0,
-    "accuracy": 1.0,
-    "response": "Set FastAPI’s `docs_url=\"/bench-62\"`. If `openapi_url` is unchanged, the schema remains at `/openapi.json`.",
+    "correct": false,
+    "accuracy_main": 0.0,
+    "accuracy": 0.3333333333333333,
+    "response": "Set `springdoc.swagger-ui.path=/bench-62`. With the schema-path setting unchanged, the OpenAPI schema URL remains `/v3/api-docs`.",
     "fact_results": [
      true,
-     true
+     false,
+     false
     ],
     "judge_skipped": null,
     "unknown": false,
@@ -1427,7 +1474,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-103340"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -1435,6 +1482,7 @@
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
+     false,
      false,
      false
     ],
@@ -1461,10 +1509,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
-   },
-   "review": {
-    "target": []
+    "run_id": "20261128-103340"
    }
   },
   {
@@ -1608,7 +1653,10 @@
     "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
     "target": [
      "c: grounded 에서 기억으로 답함 (정확도 1.00)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -1742,7 +1790,10 @@
    "review": {
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2015,7 +2066,10 @@
     "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
     "target": [
      "c: grounded 에서 기억으로 답함 (정확도 1.00)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2542,5 +2596,26 @@
     "target": []
    }
   }
- ]
+ ],
+ "edits": [
+  {
+   "date": "2026-11-28",
+   "by": "검수 결과 반영 (손 수정)",
+   "items": [
+    "턴 0: setup [0] 분리: \"The project's custom scope is vault:scan and belongs in the available-scopes mapping.\" → setup \"The project's custom permission is vault:scan.\", 새 doc 항목 [2] 'Custom scopes are declared in the scopes mapping of OAuth2PasswordBearer.'",
+    "턴 1: setup [0] 분리: 'Pass timedelta(minutes=23) as expires_delta.' → setup \"The project's access-token lifetime is 23 minutes.\", 새 doc 항목 [2] 'The lifetime is passed to the token helper as expires_delta=timedelta(minutes=...).'",
+    "턴 10: setup [0] 분리: \"Set docs_url to the project's /bench-62 path.\" → setup \"The project's Swagger UI path is /bench-62.\", 새 doc 항목 [2] \"Swagger UI's path is set with docs_url.\""
+   ]
+  }
+ ],
+ "review_summary": {
+  "reviewer": "akingdbets",
+  "date": "2026-11-28",
+  "targets": 5,
+  "verdicts": {
+   "OK": 5,
+   "수정 필요": 0,
+   "제외": 0
+  }
+ }
 }

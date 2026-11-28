@@ -8,27 +8,27 @@
 
 | 시나리오 | 턴 | new/followup/recall/synthesis/update/same_doc | recall 거리 | 마지막 턴 기록 | recall·synthesis 중 user | setup 항목 | knowledge 맞힘 | grounded 맞힘 | 생성 시도 | 손 수정 |
 |---|---|---|---|---|---|---|---|---|---|---|
-| v2_01_auth_switch | 19 | 8/2/3/2/2/2 | 6, 15, 7 | 18,191 | 5/12 (42%) | 6/41 | 7/19 (37%) | 0/19 (0%) | 2 | 예 |
+| v2_01_auth_switch | 19 | 8/2/3/2/2/2 | 6, 15, 7 | 18,191 | 5/12 (42%) | 6/44 | 7/19 (37%) | 0/19 (0%) | 2 | 예 |
 | v2_02_response_design | 20 | 9/2/3/2/2/2 | 8, 12, 16 | 20,782 | 5/12 (42%) | 4/40 | 6/20 (30%) | 0/20 (0%) | 2 | 예 |
 | v2_03_input_validation | 19 | 8/2/3/2/2/2 | 9, 8, 16 | 19,599 | 5/12 (42%) | 5/41 | 10/19 (53%) | 1/19 (5%) | 2 |  |
 | v2_04_dependency_lifecycle | 19 | 8/2/3/2/2/2 | 8, 16, 12 | 17,421 | 5/12 (42%) | 6/42 | 10/19 (53%) | 1/19 (5%) | 1 | 예 |
-| v2_05_deployment_setup | 19 | 8/2/3/2/2/2 | 9, 12, 12 | 16,693 | 6/12 (50%) | 5/42 | 9/19 (47%) | 1/19 (5%) | 2 | 예 |
+| v2_05_deployment_setup | 19 | 8/2/3/2/2/2 | 9, 12, 12 | 16,693 | 6/12 (50%) | 5/43 | 8/19 (42%) | 1/19 (5%) | 2 | 예 |
 | v2_06_middleware_cors | 19 | 8/2/3/2/2/2 | 9, 15, 15 | 17,690 | 5/12 (42%) | 5/43 | 7/19 (37%) | 0/19 (0%) | 2 | 예 |
 | v2_07_streaming_realtime | 19 | 8/2/3/2/2/2 | 9, 15, 17 | 17,457 | 6/12 (50%) | 5/39 | 9/19 (47%) | 2/19 (11%) | 1 |  |
 | v2_08_model_serialization | 19 | 8/2/3/2/2/2 | 9, 16, 9 | 19,509 | 5/13 (38%) | 6/41 | 10/19 (53%) | 1/19 (5%) | 2 |  |
-| v2_09_openapi_docs | 19 | 8/2/3/2/2/2 | 9, 13, 16 | 18,668 | 6/12 (50%) | 4/41 | 7/19 (37%) | 1/19 (5%) | 2 | 예 |
-| v2_10_app_structure | 19 | 8/2/3/2/2/2 | 7, 16, 6 | 19,664 | 6/12 (50%) | 5/40 | 9/19 (47%) | 0/19 (0%) | 1 |  |
-| v2_11_testing_strategy | 19 | 8/2/3/2/2/2 | 9, 16, 14 | 17,236 | 5/12 (42%) | 4/42 | 9/19 (47%) | 0/19 (0%) | 2 | 예 |
-| v2_12_database | 19 | 8/2/3/2/2/2 | 9, 6, 9 | 19,326 | 5/14 (36%) | 5/44 | 11/19 (58%) | 2/19 (11%) | 1 | 예 |
-| v2_13_error_consistency | 19 | 8/2/3/2/2/2 | 9, 15, 7 | 21,275 | 6/12 (50%) | 6/40 | 11/19 (58%) | 0/19 (0%) | 2 |  |
-| v2_14_files_forms_static | 19 | 8/2/3/2/2/2 | 9, 8, 6 | 18,825 | 6/12 (50%) | 6/41 | 4/19 (21%) | 0/19 (0%) | 2 | 예 |
-| v2_15_settings_env | 19 | 8/2/3/2/2/2 | 9, 16, 5 | 17,348 | 5/12 (42%) | 4/41 | 11/19 (58%) | 0/19 (0%) | 1 | 예 |
-| v2_16_scopes_user_model | 19 | 8/2/3/2/2/2 | 9, 6, 14 | 20,626 | 5/12 (42%) | 6/39 | 9/19 (47%) | 3/19 (16%) | 1 |  |
+| v2_09_openapi_docs | 19 | 8/2/3/2/2/2 | 9, 13, 16 | 18,668 | 6/12 (50%) | 4/43 | 7/19 (37%) | 1/19 (5%) | 2 | 예 |
+| v2_10_app_structure | 19 | 8/2/3/2/2/2 | 7, 16, 6 | 19,645 | 6/12 (50%) | 5/39 | 10/19 (53%) | 0/19 (0%) | 1 | 예 |
+| v2_11_testing_strategy | 19 | 8/2/3/2/2/2 | 9, 16, 14 | 17,236 | 5/12 (42%) | 4/44 | 8/19 (42%) | 0/19 (0%) | 2 | 예 |
+| v2_12_database | 19 | 8/2/3/2/2/2 | 9, 6, 9 | 19,326 | 5/14 (36%) | 5/45 | 11/19 (58%) | 2/19 (11%) | 1 | 예 |
+| v2_13_error_consistency | 19 | 8/2/3/2/2/2 | 9, 15, 7 | 21,275 | 6/12 (50%) | 6/41 | 11/19 (58%) | 0/19 (0%) | 2 | 예 |
+| v2_14_files_forms_static | 19 | 8/2/3/2/2/2 | 9, 8, 6 | 18,825 | 6/12 (50%) | 6/42 | 5/19 (26%) | 1/19 (5%) | 2 | 예 |
+| v2_15_settings_env | 19 | 8/2/3/2/2/2 | 9, 16, 5 | 17,348 | 5/12 (42%) | 4/42 | 10/19 (53%) | 1/19 (5%) | 1 | 예 |
+| v2_16_scopes_user_model | 19 | 8/2/3/2/2/2 | 9, 6, 14 | 20,626 | 5/12 (42%) | 6/42 | 8/19 (42%) | 3/19 (16%) | 1 | 예 |
 | v2_17_request_internals | 19 | 8/2/3/2/2/2 | 8, 12, 7 | 16,675 | 5/12 (42%) | 4/42 | 9/19 (47%) | 1/19 (5%) | 1 |  |
-| v2_18_integrations | 19 | 8/2/3/2/2/2 | 8, 16, 12 | 16,972 | 5/12 (42%) | 6/40 | 11/19 (58%) | 2/19 (11%) | 2 |  |
-| v2_19_first_service | 19 | 8/2/3/2/2/2 | 8, 11, 13 | 19,230 | 5/12 (42%) | 5/41 | 6/19 (32%) | 0/19 (0%) | 2 | 예 |
-| v2_20_client_contract | 19 | 8/2/3/2/2/2 | 9, 15, 6 | 18,322 | 5/12 (42%) | 5/39 | 9/19 (47%) | 1/19 (5%) | 1 |  |
-| **전체** | 381 | | | | | 102/819 | **174/381 (46%)** | **16/381 (4%)** | | |
+| v2_18_integrations | 19 | 8/2/3/2/2/2 | 8, 16, 12 | 16,972 | 5/12 (42%) | 6/41 | 11/19 (58%) | 2/19 (11%) | 2 | 예 |
+| v2_19_first_service | 19 | 8/2/3/2/2/2 | 8, 11, 13 | 19,216 | 5/12 (42%) | 5/42 | 6/19 (32%) | 0/19 (0%) | 2 | 예 |
+| v2_20_client_contract | 19 | 8/2/3/2/2/2 | 9, 15, 6 | 18,322 | 5/12 (42%) | 5/39 | 9/19 (47%) | 1/19 (5%) | 1 | 예 |
+| **전체** | 381 | | | | | 102/835 | **172/381 (45%)** | **18/381 (5%)** | | |
 
 knowledge·grounded 맞힘은 setup 을 뺀 key_fact 가 모두 충족된 턴 (accuracy_main = 1.0).
 
@@ -49,6 +49,9 @@ knowledge·grounded 맞힘은 setup 을 뺀 key_fact 가 모두 충족된 턴 (a
 | v2_09_openapi_docs | 7 | same_doc_new_topic | 0.50 |
 | v2_12_database | 1 | new | 1.00 |
 | v2_12_database | 17 | recall | 1.00 |
+| v2_14_files_forms_static | 3 | new | 0.50 |
+| v2_14_files_forms_static | 11 | update | 1.00 |
+| v2_15_settings_env | 0 | new | 1.00 |
 | v2_16_scopes_user_model | 7 | same_doc_new_topic | 1.00 |
 | v2_16_scopes_user_model | 11 | update | 1.00 |
 | v2_16_scopes_user_model | 14 | same_doc_new_topic | 1.00 |
@@ -91,6 +94,9 @@ knowledge·grounded 맞힘은 setup 을 뺀 key_fact 가 모두 충족된 턴 (a
 | v2_12_database | 1 | new | grounded 에서 기억으로 답함 (정확도 1.00) |
 | v2_12_database | 17 | recall | grounded 에서 기억으로 답함 (정확도 1.00); recall·synthesis 인데 knowledge 로 맞힘 |
 | v2_13_error_consistency | 17 | recall | recall·synthesis 인데 knowledge 로 맞힘 |
+| v2_14_files_forms_static | 3 | new | grounded 에서 기억으로 답함 (정확도 0.50) |
+| v2_14_files_forms_static | 11 | update | grounded 에서 기억으로 답함 (정확도 1.00) |
+| v2_15_settings_env | 0 | new | grounded 에서 기억으로 답함 (정확도 1.00) |
 | v2_15_settings_env | 12 | new | 대안 판정 확인 (alt_judge_label) |
 | v2_15_settings_env | 16 | recall | 턴 7 의존은 간접 채점 (턴 7 가 인용한 페이지만 같음) |
 | v2_15_settings_env | 18 | synthesis | 턴 14 의존은 간접 채점 (턴 14 가 인용한 페이지만 같음) |
@@ -121,7 +127,7 @@ knowledge·grounded 맞힘은 setup 을 뺀 key_fact 가 모두 충족된 턴 (a
 | v2_07_streaming_realtime | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 15, 17 | 턴 13, 18 | 17,457 | 0 | 0 | 0 |
 | v2_08_model_serialization | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 16, 9 | 턴 13, 18 | 19,509 | 0 | 0 | 0 |
 | v2_09_openapi_docs | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 13, 16 | 턴 13, 18 | 18,668 | 0 | 0 | 0 |
-| v2_10_app_structure | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 7, 16, 6 | 턴 13, 18 | 19,664 | 0 | 0 | 1 |
+| v2_10_app_structure | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 7, 16, 6 | 턴 13, 18 | 19,645 | 0 | 0 | 1 |
 | v2_11_testing_strategy | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 16, 14 | 턴 13, 18 | 17,236 | 0 | 0 | 1 |
 | v2_12_database | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 6, 9 | 턴 13, 18 | 19,326 | 0 | 0 | 1 |
 | v2_13_error_consistency | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 15, 7 | 턴 13, 18 | 21,275 | 0 | 0 | 1 |
@@ -130,7 +136,7 @@ knowledge·grounded 맞힘은 setup 을 뺀 key_fact 가 모두 충족된 턴 (a
 | v2_16_scopes_user_model | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 6, 14 | 턴 13 | 20,626 | 0 | 0 | 0 |
 | v2_17_request_internals | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 8, 12, 7 | 턴 13, 18 | 16,675 | 0 | 0 | 0 |
 | v2_18_integrations | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 8, 16, 12 | 턴 13, 18 | 16,972 | 0 | 0 | 1 |
-| v2_19_first_service | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 8, 11, 13 | 턴 13, 18 | 19,230 | 0 | 0 | 1 |
+| v2_19_first_service | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 8, 11, 13 | 턴 13, 18 | 19,216 | 0 | 0 | 1 |
 | v2_20_client_contract | 19 | 8 | 2 | 3 | 2 | 2 | 2 | 9, 15, 6 | 턴 13, 18 | 18,322 | 0 | 0 | 0 |
 
 스키마 오류·근거 확인 실패·경고 내용:
@@ -149,25 +155,25 @@ knowledge·grounded 맞힘은 setup 을 뺀 key_fact 가 모두 충족된 턴 (a
 
 | 시나리오 | key_fact doc / user | recall·synthesis 중 user | user 값을 바꾸는 update | doc 중 example 태그 | 턴당 asks 평균 (synthesis 외 최대) | 물음표 2개 이상 턴 | 턴당 key_fact 평균 (최대) |
 |---|---|---|---|---|---|---|---|
-| v2_01_auth_switch | 29 / 12 | 5/12 (42%) | 턴 4, 11 | 10/29 (34%) | 2.05 (2) | 5 | 2.16 (3) |
+| v2_01_auth_switch | 32 / 12 | 5/12 (42%) | 턴 4, 11 | 10/32 (31%) | 2.05 (2) | 5 | 2.32 (3) |
 | v2_02_response_design | 31 / 9 | 5/12 (42%) | 턴 4, 11 | 11/31 (35%) | 1.85 (2) | 8 | 2.00 (3) |
 | v2_03_input_validation | 30 / 11 | 5/12 (42%) | 턴 4, 11 | 13/30 (43%) | 1.84 (2) | 0 | 2.16 (3) |
 | v2_04_dependency_lifecycle | 31 / 11 | 5/12 (42%) | 턴 4, 11 | 13/31 (42%) | 2.00 (2) | 7 | 2.21 (3) |
-| v2_05_deployment_setup | 31 / 11 | 6/12 (50%) | 턴 4, 11 | 9/31 (29%) | 2.05 (2) | 0 | 2.21 (3) |
+| v2_05_deployment_setup | 32 / 11 | 6/12 (50%) | 턴 4, 11 | 9/32 (28%) | 2.05 (2) | 0 | 2.26 (3) |
 | v2_06_middleware_cors | 32 / 11 | 5/12 (42%) | 턴 4, 11 | 9/32 (28%) | 2.05 (2) | 3 | 2.26 (3) |
 | v2_07_streaming_realtime | 28 / 11 | 6/12 (50%) | 턴 4, 11 | 11/28 (39%) | 1.95 (2) | 0 | 2.05 (3) |
 | v2_08_model_serialization | 30 / 11 | 5/13 (38%) | 턴 4, 11 | 19/30 (63%) | 1.68 (2) | 2 | 2.16 (3) |
-| v2_09_openapi_docs | 31 / 10 | 6/12 (50%) | 턴 4, 11 | 16/31 (52%) | 2.05 (2) | 0 | 2.16 (3) |
-| v2_10_app_structure | 29 / 11 | 6/12 (50%) | 턴 4, 11 | 11/29 (38%) | 2.05 (2) | 4 | 2.11 (3) |
-| v2_11_testing_strategy | 32 / 10 | 5/12 (42%) | 턴 4, 11 | 13/32 (41%) | 1.95 (2) | 2 | 2.21 (3) |
-| v2_12_database | 34 / 10 | 5/14 (36%) | 턴 4, 11 | 9/34 (26%) | 1.89 (2) | 5 | 2.32 (3) |
-| v2_13_error_consistency | 27 / 13 | 6/12 (50%) | 턴 4, 11 | 12/27 (44%) | 1.79 (2) | 1 | 2.11 (3) |
-| v2_14_files_forms_static | 29 / 12 | 6/12 (50%) | 턴 4, 11 | 13/29 (45%) | 2.00 (2) | 0 | 2.16 (3) |
-| v2_15_settings_env | 32 / 9 | 5/12 (42%) | 턴 4, 11 | 14/32 (44%) | 2.05 (2) | 0 | 2.16 (3) |
-| v2_16_scopes_user_model | 28 / 11 | 5/12 (42%) | 턴 4, 11 | 13/28 (46%) | 1.95 (2) | 5 | 2.05 (3) |
+| v2_09_openapi_docs | 33 / 10 | 6/12 (50%) | 턴 4, 11 | 16/33 (48%) | 2.05 (2) | 0 | 2.26 (3) |
+| v2_10_app_structure | 28 / 11 | 6/12 (50%) | 턴 4, 11 | 11/28 (39%) | 2.00 (2) | 4 | 2.05 (3) |
+| v2_11_testing_strategy | 34 / 10 | 5/12 (42%) | 턴 4, 11 | 13/34 (38%) | 1.95 (2) | 2 | 2.32 (3) |
+| v2_12_database | 35 / 10 | 5/14 (36%) | 턴 4, 11 | 9/35 (26%) | 1.89 (2) | 5 | 2.37 (3) |
+| v2_13_error_consistency | 28 / 13 | 6/12 (50%) | 턴 4, 11 | 12/28 (43%) | 1.79 (2) | 1 | 2.16 (3) |
+| v2_14_files_forms_static | 30 / 12 | 6/12 (50%) | 턴 4, 11 | 13/30 (43%) | 2.00 (2) | 0 | 2.21 (3) |
+| v2_15_settings_env | 33 / 9 | 5/12 (42%) | 턴 4, 11 | 14/33 (42%) | 2.05 (2) | 0 | 2.21 (3) |
+| v2_16_scopes_user_model | 31 / 11 | 5/12 (42%) | 턴 4, 11 | 13/31 (42%) | 1.95 (2) | 5 | 2.21 (3) |
 | v2_17_request_internals | 32 / 10 | 5/12 (42%) | 턴 4, 11 | 11/32 (34%) | 1.95 (2) | 4 | 2.21 (3) |
-| v2_18_integrations | 29 / 11 | 5/12 (42%) | 턴 4, 11 | 15/29 (52%) | 2.00 (2) | 2 | 2.11 (3) |
-| v2_19_first_service | 31 / 10 | 5/12 (42%) | 턴 4, 11 | 11/31 (35%) | 2.05 (2) | 0 | 2.16 (3) |
+| v2_18_integrations | 30 / 11 | 5/12 (42%) | 턴 4, 11 | 15/30 (50%) | 2.00 (2) | 2 | 2.16 (3) |
+| v2_19_first_service | 32 / 10 | 5/12 (42%) | 턴 4, 11 | 11/32 (34%) | 2.05 (2) | 0 | 2.21 (3) |
 | v2_20_client_contract | 29 / 10 | 5/12 (42%) | 턴 4, 11 | 14/29 (48%) | 1.89 (2) | 0 | 2.05 (3) |
 
 asks 는 생성 모델이 적은 '묻는 사항' 목록, 물음표 수는 질문 문장에서 센 교차 확인용 값이다.
@@ -210,11 +216,11 @@ asks 는 생성 모델이 적은 '묻는 사항' 목록, 물음표 수는 질문
 | v2_04_dependency_lifecycle | **전체** | 19 | **10/19 (53%)** | **1/19 (5%)** |
 | v2_05_deployment_setup | new | 8 | 4 | 0 |
 | v2_05_deployment_setup | followup | 2 | 2 | 1 |
-| v2_05_deployment_setup | update | 2 | 2 | 0 |
+| v2_05_deployment_setup | update | 2 | 1 | 0 |
 | v2_05_deployment_setup | same_doc_new_topic | 2 | 1 | 0 |
 | v2_05_deployment_setup | recall | 3 | 0 | 0 |
 | v2_05_deployment_setup | synthesis | 2 | 0 | 0 |
-| v2_05_deployment_setup | **전체** | 19 | **9/19 (47%)** | **1/19 (5%)** |
+| v2_05_deployment_setup | **전체** | 19 | **8/19 (42%)** | **1/19 (5%)** |
 | v2_06_middleware_cors | new | 8 | 4 | 0 |
 | v2_06_middleware_cors | followup | 2 | 1 | 0 |
 | v2_06_middleware_cors | update | 2 | 2 | 0 |
@@ -243,20 +249,20 @@ asks 는 생성 모델이 적은 '묻는 사항' 목록, 물음표 수는 질문
 | v2_09_openapi_docs | recall | 3 | 0 | 0 |
 | v2_09_openapi_docs | synthesis | 2 | 0 | 0 |
 | v2_09_openapi_docs | **전체** | 19 | **7/19 (37%)** | **1/19 (5%)** |
-| v2_10_app_structure | new | 8 | 3 | 0 |
+| v2_10_app_structure | new | 8 | 4 | 0 |
 | v2_10_app_structure | followup | 2 | 2 | 0 |
 | v2_10_app_structure | update | 2 | 2 | 0 |
 | v2_10_app_structure | same_doc_new_topic | 2 | 2 | 0 |
 | v2_10_app_structure | recall | 3 | 0 | 0 |
 | v2_10_app_structure | synthesis | 2 | 0 | 0 |
-| v2_10_app_structure | **전체** | 19 | **9/19 (47%)** | **0/19 (0%)** |
+| v2_10_app_structure | **전체** | 19 | **10/19 (53%)** | **0/19 (0%)** |
 | v2_11_testing_strategy | new | 8 | 5 | 0 |
 | v2_11_testing_strategy | followup | 2 | 2 | 0 |
-| v2_11_testing_strategy | update | 2 | 1 | 0 |
+| v2_11_testing_strategy | update | 2 | 0 | 0 |
 | v2_11_testing_strategy | same_doc_new_topic | 2 | 1 | 0 |
 | v2_11_testing_strategy | recall | 3 | 0 | 0 |
 | v2_11_testing_strategy | synthesis | 2 | 0 | 0 |
-| v2_11_testing_strategy | **전체** | 19 | **9/19 (47%)** | **0/19 (0%)** |
+| v2_11_testing_strategy | **전체** | 19 | **8/19 (42%)** | **0/19 (0%)** |
 | v2_12_database | new | 8 | 6 | 1 |
 | v2_12_database | followup | 2 | 1 | 0 |
 | v2_12_database | update | 2 | 2 | 0 |
@@ -273,25 +279,25 @@ asks 는 생성 모델이 적은 '묻는 사항' 목록, 물음표 수는 질문
 | v2_13_error_consistency | **전체** | 19 | **11/19 (58%)** | **0/19 (0%)** |
 | v2_14_files_forms_static | new | 8 | 1 | 0 |
 | v2_14_files_forms_static | followup | 2 | 1 | 0 |
-| v2_14_files_forms_static | update | 2 | 1 | 0 |
+| v2_14_files_forms_static | update | 2 | 2 | 1 |
 | v2_14_files_forms_static | same_doc_new_topic | 2 | 1 | 0 |
 | v2_14_files_forms_static | recall | 3 | 0 | 0 |
 | v2_14_files_forms_static | synthesis | 2 | 0 | 0 |
-| v2_14_files_forms_static | **전체** | 19 | **4/19 (21%)** | **0/19 (0%)** |
-| v2_15_settings_env | new | 8 | 5 | 0 |
+| v2_14_files_forms_static | **전체** | 19 | **5/19 (26%)** | **1/19 (5%)** |
+| v2_15_settings_env | new | 8 | 4 | 1 |
 | v2_15_settings_env | followup | 2 | 2 | 0 |
 | v2_15_settings_env | update | 2 | 2 | 0 |
 | v2_15_settings_env | same_doc_new_topic | 2 | 2 | 0 |
 | v2_15_settings_env | recall | 3 | 0 | 0 |
 | v2_15_settings_env | synthesis | 2 | 0 | 0 |
-| v2_15_settings_env | **전체** | 19 | **11/19 (58%)** | **0/19 (0%)** |
-| v2_16_scopes_user_model | new | 8 | 4 | 0 |
+| v2_15_settings_env | **전체** | 19 | **10/19 (53%)** | **1/19 (5%)** |
+| v2_16_scopes_user_model | new | 8 | 3 | 0 |
 | v2_16_scopes_user_model | followup | 2 | 1 | 0 |
 | v2_16_scopes_user_model | update | 2 | 2 | 1 |
 | v2_16_scopes_user_model | same_doc_new_topic | 2 | 2 | 2 |
 | v2_16_scopes_user_model | recall | 3 | 0 | 0 |
 | v2_16_scopes_user_model | synthesis | 2 | 0 | 0 |
-| v2_16_scopes_user_model | **전체** | 19 | **9/19 (47%)** | **3/19 (16%)** |
+| v2_16_scopes_user_model | **전체** | 19 | **8/19 (42%)** | **3/19 (16%)** |
 | v2_17_request_internals | new | 8 | 5 | 1 |
 | v2_17_request_internals | followup | 2 | 1 | 0 |
 | v2_17_request_internals | update | 2 | 1 | 0 |
@@ -336,56 +342,56 @@ asks 는 생성 모델이 적은 '묻는 사항' 목록, 물음표 수는 질문
 | v2_11_testing_strategy | 8 | 19 |
 | v2_12_database | 4 | 17 |
 | v2_13_error_consistency | 4 | 19 |
-| v2_14_files_forms_static | 5 | 19 |
-| v2_15_settings_env | 5 | 19 |
+| v2_14_files_forms_static | 5 | 17 |
+| v2_15_settings_env | 5 | 18 |
 | v2_16_scopes_user_model | 5 | 16 |
 | v2_17_request_internals | 3 | 18 |
 | v2_18_integrations | 4 | 17 |
-| v2_19_first_service | 6 | 19 |
+| v2_19_first_service | 5 | 19 |
 | v2_20_client_contract | 4 | 18 |
 
 key_fact 단위 충족률 (출처별):
 
 | 시나리오 | 검사 | source=doc | source=user |
 |---|---|---|---|
-| v2_01_auth_switch | knowledge | 14/29 (48%) | 6/12 (50%) |
-| v2_01_auth_switch | grounded | 0/29 (0%) | 0/12 (0%) |
+| v2_01_auth_switch | knowledge | 17/32 (53%) | 6/12 (50%) |
+| v2_01_auth_switch | grounded | 0/32 (0%) | 0/12 (0%) |
 | v2_02_response_design | knowledge | 12/31 (39%) | 2/9 (22%) |
 | v2_02_response_design | grounded | 0/31 (0%) | 0/9 (0%) |
 | v2_03_input_validation | knowledge | 21/30 (70%) | 5/11 (45%) |
 | v2_03_input_validation | grounded | 2/30 (7%) | 1/11 (9%) |
 | v2_04_dependency_lifecycle | knowledge | 21/31 (68%) | 5/11 (45%) |
 | v2_04_dependency_lifecycle | grounded | 3/31 (10%) | 0/11 (0%) |
-| v2_05_deployment_setup | knowledge | 19/31 (61%) | 5/11 (45%) |
-| v2_05_deployment_setup | grounded | 2/31 (6%) | 0/11 (0%) |
+| v2_05_deployment_setup | knowledge | 19/32 (59%) | 5/11 (45%) |
+| v2_05_deployment_setup | grounded | 2/32 (6%) | 0/11 (0%) |
 | v2_06_middleware_cors | knowledge | 17/32 (53%) | 5/11 (45%) |
 | v2_06_middleware_cors | grounded | 1/32 (3%) | 0/11 (0%) |
 | v2_07_streaming_realtime | knowledge | 14/28 (50%) | 4/11 (36%) |
 | v2_07_streaming_realtime | grounded | 3/28 (11%) | 0/11 (0%) |
 | v2_08_model_serialization | knowledge | 18/30 (60%) | 3/11 (27%) |
 | v2_08_model_serialization | grounded | 2/30 (7%) | 0/11 (0%) |
-| v2_09_openapi_docs | knowledge | 15/31 (48%) | 4/10 (40%) |
-| v2_09_openapi_docs | grounded | 3/31 (10%) | 0/10 (0%) |
-| v2_10_app_structure | knowledge | 17/29 (59%) | 5/11 (45%) |
-| v2_10_app_structure | grounded | 0/29 (0%) | 0/11 (0%) |
-| v2_11_testing_strategy | knowledge | 18/32 (56%) | 2/10 (20%) |
-| v2_11_testing_strategy | grounded | 0/32 (0%) | 0/10 (0%) |
-| v2_12_database | knowledge | 21/34 (62%) | 5/10 (50%) |
-| v2_12_database | grounded | 4/34 (12%) | 0/10 (0%) |
-| v2_13_error_consistency | knowledge | 17/27 (63%) | 5/13 (38%) |
-| v2_13_error_consistency | grounded | 0/27 (0%) | 0/13 (0%) |
-| v2_14_files_forms_static | knowledge | 11/29 (38%) | 6/12 (50%) |
-| v2_14_files_forms_static | grounded | 0/29 (0%) | 0/12 (0%) |
-| v2_15_settings_env | knowledge | 22/32 (69%) | 4/9 (44%) |
-| v2_15_settings_env | grounded | 0/32 (0%) | 0/9 (0%) |
-| v2_16_scopes_user_model | knowledge | 17/28 (61%) | 5/11 (45%) |
-| v2_16_scopes_user_model | grounded | 4/28 (14%) | 1/11 (9%) |
+| v2_09_openapi_docs | knowledge | 17/33 (52%) | 4/10 (40%) |
+| v2_09_openapi_docs | grounded | 3/33 (9%) | 0/10 (0%) |
+| v2_10_app_structure | knowledge | 17/28 (61%) | 5/11 (45%) |
+| v2_10_app_structure | grounded | 0/28 (0%) | 0/11 (0%) |
+| v2_11_testing_strategy | knowledge | 19/34 (56%) | 1/10 (10%) |
+| v2_11_testing_strategy | grounded | 0/34 (0%) | 0/10 (0%) |
+| v2_12_database | knowledge | 22/35 (63%) | 5/10 (50%) |
+| v2_12_database | grounded | 4/35 (11%) | 0/10 (0%) |
+| v2_13_error_consistency | knowledge | 18/28 (64%) | 5/13 (38%) |
+| v2_13_error_consistency | grounded | 0/28 (0%) | 0/13 (0%) |
+| v2_14_files_forms_static | knowledge | 13/30 (43%) | 6/12 (50%) |
+| v2_14_files_forms_static | grounded | 3/30 (10%) | 2/12 (17%) |
+| v2_15_settings_env | knowledge | 22/33 (67%) | 4/9 (44%) |
+| v2_15_settings_env | grounded | 2/33 (6%) | 1/9 (11%) |
+| v2_16_scopes_user_model | knowledge | 17/31 (55%) | 6/11 (55%) |
+| v2_16_scopes_user_model | grounded | 4/31 (13%) | 1/11 (9%) |
 | v2_17_request_internals | knowledge | 22/32 (69%) | 4/10 (40%) |
 | v2_17_request_internals | grounded | 1/32 (3%) | 1/10 (10%) |
-| v2_18_integrations | knowledge | 18/29 (62%) | 6/11 (55%) |
-| v2_18_integrations | grounded | 2/29 (7%) | 2/11 (18%) |
-| v2_19_first_service | knowledge | 15/31 (48%) | 5/10 (50%) |
-| v2_19_first_service | grounded | 0/31 (0%) | 0/10 (0%) |
+| v2_18_integrations | knowledge | 19/30 (63%) | 6/11 (55%) |
+| v2_18_integrations | grounded | 2/30 (7%) | 2/11 (18%) |
+| v2_19_first_service | knowledge | 17/32 (53%) | 5/10 (50%) |
+| v2_19_first_service | grounded | 0/32 (0%) | 0/10 (0%) |
 | v2_20_client_contract | knowledge | 19/29 (66%) | 4/10 (40%) |
 | v2_20_client_contract | grounded | 1/29 (3%) | 0/10 (0%) |
 
@@ -397,10 +403,10 @@ key_fact 단위 충족률 (출처별):
 
 | 시나리오 | 턴 | 유형 | key_fact |
 |---|---|---|---|
-| v2_01_auth_switch | 0 | new | Configure OAuth2PasswordBearer with the project's relative token URL auth/issue. |
-| v2_01_auth_switch | 1 | new | Use APIKeyHeader with the project's X-Orbit-Key header name. |
+| v2_01_auth_switch | 0 | new | The project's relative token URL is auth/issue. |
+| v2_01_auth_switch | 1 | new | The project's API-key header name is X-Orbit-Key. |
 | v2_01_auth_switch | 2 | followup | The browser-cookie extractor must use the project's orbit_session cookie name. |
-| v2_01_auth_switch | 3 | new | Pass timedelta(minutes=23) for the project's access-token lifetime. |
+| v2_01_auth_switch | 3 | new | The project's access-token lifetime is 23 minutes. |
 | v2_01_auth_switch | 4 | update | The project's access-token lifetime is now 41 minutes, replacing 23 minutes. |
 | v2_01_auth_switch | 5 | new | The cookie set at login is the project's orbit_session cookie. |
 | v2_01_auth_switch | 9 | recall | The current project lifetime is 41 minutes. |
@@ -435,14 +441,14 @@ key_fact 단위 충족률 (출처별):
 | v2_04_dependency_lifecycle | 4 | update | The stream route is now /sealed-feed rather than /vault-feed. |
 | v2_04_dependency_lifecycle | 5 | new | The gate's rejection detail must be Seal missing 83. |
 | v2_04_dependency_lifecycle | 9 | recall | The chosen pagination alias is SliceDep83. |
-| v2_04_dependency_lifecycle | 11 | update | The new client state key is relay_client_94, so endpoint access is request.state.relay_client_94. |
+| v2_04_dependency_lifecycle | 11 | update | The project's lifespan client state key is now relay_client_94. |
 | v2_04_dependency_lifecycle | 13 | synthesis | The current stream route is /sealed-feed. |
 | v2_04_dependency_lifecycle | 13 | synthesis | The current shared-client state key is relay_client_94. |
 | v2_04_dependency_lifecycle | 16 | recall | The renamed streaming route is /sealed-feed. |
 | v2_04_dependency_lifecycle | 17 | recall | The chosen rejection detail is Seal missing 83. |
 | v2_05_deployment_setup | 0 | new | The project's launch command must use port 8137 and 3 workers. |
 | v2_05_deployment_setup | 3 | new | The configured external prefix must be /edge/r7. |
-| v2_05_deployment_setup | 4 | update | The new root-path option is --root-path /edge/r9. |
+| v2_05_deployment_setup | 4 | update | The project's public prefix is now /edge/r9. |
 | v2_05_deployment_setup | 5 | new | The deployment's ADMIN_EMAIL value is release-otter@ops.example.org. |
 | v2_05_deployment_setup | 9 | recall | The initial deployment uses internal port 8137 and 3 workers. |
 | v2_05_deployment_setup | 11 | update | The project's updated worker count is 1 per container. |
@@ -453,7 +459,7 @@ key_fact 단위 충족률 (출처별):
 | v2_05_deployment_setup | 18 | synthesis | The current advertised public prefix is /edge/r9. |
 | v2_06_middleware_cors | 0 | new | The project's elapsed-time response header is X-Trace-Lag. |
 | v2_06_middleware_cors | 1 | new | Set the cookie under the project name orbit_session. |
-| v2_06_middleware_cors | 2 | followup | Configure the project's origin as https://console.aster-lab.net:5447 and max_age as 731 seconds. |
+| v2_06_middleware_cors | 2 | followup | The project's frontend origin is https://console.aster-lab.net:5447 and its preflight cache is 731 seconds. |
 | v2_06_middleware_cors | 2 | followup | The project timing header to expose is X-Trace-Lag. |
 | v2_06_middleware_cors | 4 | update | The project's new preflight cache duration is 947 seconds. |
 | v2_06_middleware_cors | 9 | recall | The project's timing response header is X-Trace-Lag. |
@@ -484,11 +490,11 @@ key_fact 단위 충족률 (출처별):
 | v2_08_model_serialization | 13 | synthesis | The current project Item tax default is 8.75. |
 | v2_08_model_serialization | 16 | recall | The active crew creation route is /crew-83/. |
 | v2_08_model_serialization | 18 | synthesis | Under the changed project default, replacement-style PUT saves tax 8.75 when tax is omitted. |
-| v2_09_openapi_docs | 0 | new | The initialization uses title Copper Finch Relay, openapi_url /spec/finch-27.json, and docs_url /workbench-27. |
+| v2_09_openapi_docs | 0 | new | The project's title is Copper Finch Relay, schema URL /spec/finch-27.json and Swagger UI URL /workbench-27. |
 | v2_09_openapi_docs | 1 | new | The parcel operation's explicit operation_id is dispatchParcelQ8. |
 | v2_09_openapi_docs | 4 | update | The generated API title must now be Copper Finch Dispatch. |
 | v2_09_openapi_docs | 9 | recall | The chosen schema URL is /spec/finch-27.json. |
-| v2_09_openapi_docs | 11 | update | The Swagger UI route is now configured with docs_url="/console-63". |
+| v2_09_openapi_docs | 11 | update | The project's Swagger UI path is now /console-63. |
 | v2_09_openapi_docs | 13 | synthesis | The current API title is Copper Finch Dispatch. |
 | v2_09_openapi_docs | 13 | synthesis | The current Swagger UI route is /console-63. |
 | v2_09_openapi_docs | 16 | recall | The current Swagger UI route is /console-63. |
@@ -506,8 +512,8 @@ key_fact 단위 충족률 (출처별):
 | v2_10_app_structure | 17 | recall | The current audit API mount path is /audit-hub. |
 | v2_10_app_structure | 18 | synthesis | The current router version prefix is /vault/r9. |
 | v2_11_testing_strategy | 0 | new | The project's request uses X-Experiment-Seal with value violet-62. |
-| v2_11_testing_strategy | 3 | new | The override constructs Settings with admin_email qa-orbit@sample.net. |
-| v2_11_testing_strategy | 4 | update | The settings override now returns Settings with admin_email qa-comet@sample.net. |
+| v2_11_testing_strategy | 3 | new | The project's settings tests use admin_email qa-orbit@sample.net. |
+| v2_11_testing_strategy | 4 | update | The project's settings-test admin_email is now qa-comet@sample.net. |
 | v2_11_testing_strategy | 9 | recall | The chosen header pair is X-Experiment-Seal: violet-62. |
 | v2_11_testing_strategy | 11 | update | The new header value is amber-93. |
 | v2_11_testing_strategy | 11 | update | The retained header name is X-Experiment-Seal. |
@@ -515,8 +521,8 @@ key_fact 단위 충족률 (출처별):
 | v2_11_testing_strategy | 16 | recall | The current custom header is X-Experiment-Seal with value amber-93. |
 | v2_11_testing_strategy | 17 | recall | The current settings-test admin email is qa-comet@sample.net. |
 | v2_11_testing_strategy | 18 | synthesis | The current custom HTTP header pair is X-Experiment-Seal: amber-93. |
-| v2_12_database | 0 | new | The configured SQLite URL is sqlite:///basalt-ledger.db. |
-| v2_12_database | 4 | update | The replacement engine uses sqlite:///basalt-rehearsal.db. |
+| v2_12_database | 0 | new | The project's SQLite filename is basalt-ledger.db. |
+| v2_12_database | 4 | update | The project's SQLite filename is now basalt-rehearsal.db. |
 | v2_12_database | 6 | followup | The POST collection route is /vault-heroes/. |
 | v2_12_database | 9 | recall | The current database URL uses basalt-rehearsal.db, not the original filename. |
 | v2_12_database | 10 | new | The project's app_name default is Basalt Registry. |
@@ -527,7 +533,7 @@ key_fact 단위 충족률 (출처별):
 | v2_12_database | 18 | synthesis | The service's current configured SQLite filename is basalt-rehearsal.db. |
 | v2_13_error_consistency | 0 | new | Both handlers use the project envelope key fault. |
 | v2_13_error_consistency | 0 | new | The request-validation handler returns status 409. |
-| v2_13_error_consistency | 1 | new | The body wrapper and parameter name are parcel. |
+| v2_13_error_consistency | 1 | new | The project's body wrapper key is parcel. |
 | v2_13_error_consistency | 4 | update | Request-validation errors now return 400 instead of 409. |
 | v2_13_error_consistency | 4 | update | The envelope key remains fault. |
 | v2_13_error_consistency | 5 | new | The response trace header is X-Fault-Trace. |
@@ -540,18 +546,18 @@ key_fact 단위 충족률 (출처별):
 | v2_13_error_consistency | 18 | synthesis | The current request-validation status is 400. |
 | v2_14_files_forms_static | 0 | new | The multiple-upload parameter must use the project field name artifacts. |
 | v2_14_files_forms_static | 1 | new | The asset mount uses the project prefix /atelier-assets. |
-| v2_14_files_forms_static | 3 | new | The filename argument must be review-pack-83.zip. |
+| v2_14_files_forms_static | 3 | new | The project's browser download name is review-pack-83.zip. |
 | v2_14_files_forms_static | 4 | update | The active asset URL prefix is now /sealed-assets. |
 | v2_14_files_forms_static | 8 | new | The middleware writes the project header X-Intake-Elapsed. |
 | v2_14_files_forms_static | 9 | recall | The upload field is artifacts. |
-| v2_14_files_forms_static | 11 | update | The current filename argument is review-pack-97.zip. |
+| v2_14_files_forms_static | 11 | update | The project's browser download name is now review-pack-97.zip. |
 | v2_14_files_forms_static | 13 | synthesis | The current asset URL prefix is /sealed-assets. |
 | v2_14_files_forms_static | 13 | synthesis | The timing response header is X-Intake-Elapsed. |
 | v2_14_files_forms_static | 16 | recall | The chosen timing header is X-Intake-Elapsed. |
 | v2_14_files_forms_static | 17 | recall | The current browser download filename is review-pack-97.zip. |
 | v2_14_files_forms_static | 18 | synthesis | The chosen upload field name is artifacts. |
-| v2_15_settings_env | 0 | new | The project settings use app_name Copper Finch Console, admin_email ops@finch.example, and integer items_per_user 73. |
-| v2_15_settings_env | 3 | new | The project's openapi_url default is /schema/finch.json and is passed into FastAPI at construction. |
+| v2_15_settings_env | 0 | new | The project's application name is Copper Finch Console, administrator email ops@finch.example and per-user item limit 73. |
+| v2_15_settings_env | 3 | new | The project's schema URL is /schema/finch.json. |
 | v2_15_settings_env | 4 | update | The new project per-user item limit is 91. |
 | v2_15_settings_env | 9 | recall | The response uses the chosen name Copper Finch Console, email ops@finch.example, and updated limit 91. |
 | v2_15_settings_env | 11 | update | The project's schema URL is now /internal/finch-schema.json. |
@@ -559,12 +565,12 @@ key_fact 단위 충족률 (출처별):
 | v2_15_settings_env | 13 | synthesis | The current per-user item limit is 91. |
 | v2_15_settings_env | 16 | recall | The chosen application name is Copper Finch Console and the administrator email is ops@finch.example. |
 | v2_15_settings_env | 18 | synthesis | The current project schema URL is /internal/finch-schema.json. |
-| v2_16_scopes_user_model | 0 | new | The project's custom scope is vault:scan and belongs in the available-scopes mapping. |
-| v2_16_scopes_user_model | 1 | new | Pass timedelta(minutes=23) as expires_delta. |
+| v2_16_scopes_user_model | 0 | new | The project's custom permission is vault:scan. |
+| v2_16_scopes_user_model | 1 | new | The project's access-token lifetime is 23 minutes. |
 | v2_16_scopes_user_model | 3 | new | AccountCard is the project's public user model. |
 | v2_16_scopes_user_model | 4 | update | The new explicit token lifetime is 41 minutes. |
 | v2_16_scopes_user_model | 9 | recall | The scan route's custom permission is vault:scan. |
-| v2_16_scopes_user_model | 10 | new | Set docs_url to the project's /bench-62 path. |
+| v2_16_scopes_user_model | 10 | new | The project's Swagger UI path is /bench-62. |
 | v2_16_scopes_user_model | 11 | update | The updated Swagger UI path is /bench-94. |
 | v2_16_scopes_user_model | 13 | synthesis | The current explicit access-token lifetime is 41 minutes. |
 | v2_16_scopes_user_model | 16 | recall | The final Swagger UI path is /bench-94. |
@@ -582,8 +588,8 @@ key_fact 단위 충족률 (출처별):
 | v2_17_request_internals | 18 | synthesis | The current timing header is X-Quartz-Elapsed. |
 | v2_18_integrations | 0 | new | The router inclusion must use the project's /query-cedar prefix. |
 | v2_18_integrations | 1 | new | The writer uses audit-73.log as its output filename. |
-| v2_18_integrations | 3 | new | The project's stripped prefix is configured as root_path="/edge/r9". |
-| v2_18_integrations | 4 | update | The new root_path is /edge/r11. |
+| v2_18_integrations | 3 | new | The project's stripped public prefix is /edge/r9. |
+| v2_18_integrations | 4 | update | The project's stripped public prefix is now /edge/r11. |
 | v2_18_integrations | 6 | followup | The project's GZip minimum_size is 1379 bytes. |
 | v2_18_integrations | 9 | recall | The configured writer filename is audit-73.log. |
 | v2_18_integrations | 11 | update | The revised GraphQL inclusion uses /query-larch. |
@@ -591,10 +597,10 @@ key_fact 단위 충족률 (출처별):
 | v2_18_integrations | 13 | synthesis | The chosen GZip minimum_size is 1379 bytes. |
 | v2_18_integrations | 16 | recall | The current GraphQL prefix is /query-larch. |
 | v2_18_integrations | 18 | synthesis | The notification output filename is audit-73.log. |
-| v2_19_first_service | 1 | new | The configured entrypoint must be service.api:app. |
+| v2_19_first_service | 1 | new | The project's application import target is service.api:app. |
 | v2_19_first_service | 3 | new | The project's item ID ceiling is 731 and must be used as the inclusive upper bound. |
 | v2_19_first_service | 4 | update | The revised inclusive ceiling is 947, while the positive-only constraint remains. |
-| v2_19_first_service | 5 | new | The public query alias is lookup-key, while the Python parameter remains q. |
+| v2_19_first_service | 5 | new | The project's public search key is lookup-key. |
 | v2_19_first_service | 9 | recall | The configured application target is service.api:app. |
 | v2_19_first_service | 11 | update | The entrypoint must now be service.gateway:app. |
 | v2_19_first_service | 13 | synthesis | The current import target is service.gateway:app. |
@@ -603,10 +609,10 @@ key_fact 단위 충족률 (출처별):
 | v2_19_first_service | 18 | synthesis | The project's current application target is service.gateway:app. |
 | v2_20_client_contract | 0 | new | Write the generated client to src/nebula-sdk. |
 | v2_20_client_contract | 1 | new | The project's public response model is named RelicPublic. |
-| v2_20_client_contract | 3 | new | Pin the project's ID with operation_id="relics-fetch_relic". |
+| v2_20_client_contract | 3 | new | The project's public fetch operation ID is relics-fetch_relic. |
 | v2_20_client_contract | 4 | update | The generated client directory is now packages/aster-client. |
 | v2_20_client_contract | 9 | recall | The current output directory is packages/aster-client, not the original directory. |
-| v2_20_client_contract | 11 | update | The public fetch operation now uses operation_id="relics-load_relic". |
+| v2_20_client_contract | 11 | update | The project's public fetch operation ID is now relics-load_relic. |
 | v2_20_client_contract | 13 | synthesis | The current public fetch operation ID is relics-load_relic. |
 | v2_20_client_contract | 16 | recall | The chosen public response model name is RelicPublic. |
 | v2_20_client_contract | 17 | recall | The current explicit setting is operation_id="relics-load_relic". |
@@ -737,7 +743,6 @@ key_fact 단위 충족률 (출처별):
 | v2_10_app_structure | 2 | The example verify_key accepts fake-super-secret-key. |
 | v2_10_app_structure | 12 | The item-testing example's successful X-Token value is coneofsilence. |
 | v2_10_app_structure | 12 | The hailhydra bad-token test expects 400 and detail Invalid X-Token header. |
-| v2_10_app_structure | 15 | The documented FastAPI framework release is 0.142.2. |
 | v2_10_app_structure | 15 | Application version metadata describes your API and defaults to 0.1.0, not the framework or OpenAPI version. |
 | v2_11_testing_strategy | 0 | The sample rejects a bad token with 400 and detail Invalid X-Token header. |
 | v2_11_testing_strategy | 1 | The returned params are q=foo, skip=5, limit=10, ignoring the supplied skip and limit. |
@@ -851,7 +856,7 @@ key_fact 단위 충족률 (출처별):
 | v2_14_files_forms_static | 14 | 1 | app-structure/static-files-templates-and-frontend.md | Static files | Dependencies and middleware apply; Serving a built frontend: `app.frontend()` | 예 |
 | v2_15_settings_env | 7 | 0 | app-structure/settings.md | Define a `Settings` class; Why `@lru_cache` | Overriding settings in tests | 예 |
 | v2_15_settings_env | 14 | 0 | app-structure/settings.md | Define a `Settings` class; Why `@lru_cache` | Reading a `.env` file | 예 |
-| v2_16_scopes_user_model | 7 | 0 | security/oauth2-scopes.md | 3. Require scopes with `Security()` | Choosing a flow | 예 |
+| v2_16_scopes_user_model | 7 | 0 | security/oauth2-scopes.md | 1. Declare available scopes; 3. Require scopes with `Security()` | Choosing a flow | 예 |
 | v2_16_scopes_user_model | 7 | 0 | security/oauth2-password-flow.md |  |  | 예 |
 | v2_16_scopes_user_model | 14 | 3 | models/extra-models-and-updates.md | Multiple models per entity | Partial update with `PATCH` | 예 |
 | v2_17_request_internals | 7 | 0 | request/using-request-directly.md | Using the `Request` directly | Allowing requests without `Content-Type`; Strict `Content-Type` checking | 예 |

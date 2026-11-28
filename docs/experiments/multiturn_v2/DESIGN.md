@@ -297,3 +297,11 @@ closed-book 의 `correct` 도 주 정확도와 같게 setup 을 뺀 key_fact 기
 - 간접 의존·기억 답·recall 인데 knowledge 로 맞힌 턴은 고치지 않고 표시만 유지한다. 기억 답 턴은 `review.flags = grounded_memory` 로 남긴다.
 - 사람 검수 대상 `review.target` (`src/multiturn/review_targets.py`, 시드 20261128): (a) 질문을 고친 턴, (b) 대안 판정 턴,
   (c) 남은 의심 턴(한 턴 한 주제 경고 포함), (d) 나머지에서 시나리오마다 10% 무작위. 검수 시트의 "검수 대상만" 보기.
+
+### 2026-11-28 검수 결과 반영과 확정
+
+- 검수 대상 102턴: OK 100, 수정 필요 2 (v2_10 턴 15, v2_19 턴 8: FastAPI 버전을 묻는 부분 제거). 대안 판정 v2_11 턴 2 는 채점기 관대함으로 기록.
+- setup 혼합 항목 분리 26개: 사용자 값 부분만 setup, 문서 부분은 source=doc 일반 항목 (새 항목 17, 기존 doc 항목에 합침 4, 이미 다른 항목이 다룸 5).
+  턴당 key_fact 최대 3개를 지키려고 이미 3개인 턴은 기존 doc 항목에 합쳤다.
+- 분리 뒤 grounded closed-book 에서 기억으로 답한 턴이 3개 생겨 (v2_14 턴 3·11, v2_15 턴 0) grounded_memory 로 표시.
+- status `final` 을 schema_version 2 에만 허용 (`scenario.py` STATUSES_V2, v1 은 draft / reviewed 그대로). 20개 모두 final.

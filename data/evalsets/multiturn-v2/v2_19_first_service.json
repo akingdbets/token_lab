@@ -3,7 +3,7 @@
  "scenario_id": "v2_19_first_service",
  "title": "A First Service from Local Development to Containers",
  "topic": "첫 서비스 만들기(입문에서 운영까지)",
- "status": "draft",
+ "status": "final",
  "bundle": [
   "quickstart.md",
   "getting-started/first-steps.md",
@@ -175,7 +175,7 @@
    "standalone_question": "With the application import target service.api:app, how is it configured once, and which plain CLI commands use that configuration?",
    "answer": "Add this to pyproject.toml:\n```toml\n[tool.fastapi]\nentrypoint = \"service.api:app\"\n```\nThen use `fastapi dev` or `fastapi run` without supplying a file path.",
    "key_facts": [
-    "The configured entrypoint must be service.api:app.",
+    "The project's application import target is service.api:app.",
     "The [tool.fastapi] entrypoint setting lets plain fastapi dev and fastapi run locate the application."
    ],
    "fact_meta": [
@@ -225,11 +225,14 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
+   "review": {
+    "target": []
+   },
    "closed_book_knowledge": {
     "correct": true,
     "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "Set it once in `pyproject.toml`:\n\n```toml\n[tool.fastapi]\nentrypoint = \"service.api:app\"\n```\n\nThen use `fastapi dev` or `fastapi run` without specifying the app target.",
+    "response": "Set it once in `pyproject.toml`:\n\n```toml\n[tool.fastapi]\nentrypoint = \"service.api:app\"\n```\n\nThen use `fastapi dev` or `fastapi run`; both use that configured entrypoint.",
     "fact_results": [
      true,
      true
@@ -253,7 +256,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-103340"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -287,10 +290,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
-   },
-   "review": {
-    "target": []
+    "run_id": "20261128-103340"
    }
   },
   {
@@ -708,8 +708,9 @@
    "standalone_question": "With the public search key lookup-key, how should optional q be declared with that alias and the example's maximum string length?",
    "answer": "```python\nfrom typing import Annotated\nfrom fastapi import Query\n\nq: Annotated[str | None, Query(alias=\"lookup-key\", max_length=50)] = None\n```",
    "key_facts": [
-    "The public query alias is lookup-key, while the Python parameter remains q.",
-    "The optional string example uses max_length=50 and a default of None."
+    "The project's public search key is lookup-key.",
+    "The optional string example uses max_length=50 and a default of None.",
+    "A different public name is declared with Query(alias=...), while the Python parameter keeps its own name."
    ],
    "fact_meta": [
     {
@@ -725,6 +726,11 @@
      "tags": [
       "example"
      ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
     }
    ],
    "key_entities": [
@@ -748,6 +754,11 @@
      "quote": "async def read_items(q: Annotated[str | None, Query(max_length=50)] = None):",
      "page": "request/query-parameters.md",
      "fact_idx": 1
+    },
+    {
+     "quote": "alias=\"item-query\",",
+     "page": "request/query-parameters.md",
+     "fact_idx": 2
     }
    ],
    "alt_evidence": [],
@@ -755,12 +766,16 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
+   "review": {
+    "target": []
+   },
    "closed_book_knowledge": {
     "correct": true,
     "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "`q: str | None = Query(default=None, alias=\"lookup-key\", max_length=50)`",
+    "response": "```python\nq: Annotated[str | None, Query(alias=\"lookup-key\", max_length=50)] = None\n```",
     "fact_results": [
+     true,
      true,
      true
     ],
@@ -783,7 +798,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-103340"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -791,6 +806,7 @@
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
+     false,
      false,
      false
     ],
@@ -817,10 +833,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
-   },
-   "review": {
-    "target": []
+    "run_id": "20261128-103340"
    }
   },
   {
@@ -948,7 +961,10 @@
    "review": {
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -1083,15 +1099,15 @@
    "turn": 8,
    "turn_type": "new",
    "type": "multi",
-   "question": "Before choosing our runtime, which FastAPI version and minimum Python version are we working with, and which automatic input-validation error status comes from the type-driven approach?",
+   "question": "Before choosing our runtime, which minimum Python version does FastAPI need, and which automatic input-validation error status comes from the type-driven approach?",
    "asks": [
-    "FastAPI version and minimum Python version",
+    "Minimum Python version",
     "Automatic input-validation error status"
    ],
-   "standalone_question": "Which FastAPI version and minimum Python version are described for this service, and which automatic input-validation error status comes from the type-driven approach?",
-   "answer": "The material targets FastAPI `0.142.2` on Python `3.10+`. Type-driven validation automatically returns `422` for validation errors.",
+   "standalone_question": "Which minimum Python version does FastAPI need, and which automatic input-validation error status comes from its type-driven approach?",
+   "answer": "FastAPI needs Python `3.10+`. Type-driven validation automatically returns `422` for validation errors.",
    "key_facts": [
-    "The documented FastAPI version is 0.142.2 and Python must be 3.10 or newer.",
+    "FastAPI needs Python 3.10 or newer.",
     "Type-driven validation produces automatic 422 errors."
    ],
    "fact_meta": [
@@ -1111,7 +1127,6 @@
     }
    ],
    "key_entities": [
-    "0.142.2",
     "3.10+",
     "422"
    ],
@@ -1121,11 +1136,6 @@
    ],
    "depends_on": [],
    "evidence": [
-    {
-     "quote": "This wiki documents **FastAPI 0.142.2**",
-     "page": "quickstart.md",
-     "fact_idx": 0
-    },
     {
      "quote": "FastAPI is a Python (3.10+) framework for building APIs from standard type hints.",
      "page": "quickstart.md",
@@ -1142,17 +1152,26 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
+   "review": {
+    "target": [
+     "c: 한 턴 한 주제 경고"
+    ],
+    "verdict": "수정 필요",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28",
+    "memo": "버전(0.142.2)을 묻는 부분 제거 지시 → 반영함"
+   },
    "closed_book_knowledge": {
     "correct": false,
-    "accuracy_main": 0.0,
-    "accuracy": 0.0,
-    "response": "UNKNOWN",
+    "accuracy_main": 0.5,
+    "accuracy": 0.5,
+    "response": "FastAPI requires Python 3.8 or newer, and invalid input automatically returns **HTTP 422 (Unprocessable Entity)**.",
     "fact_results": [
      false,
-     false
+     true
     ],
-    "judge_skipped": "unknown",
-    "unknown": true,
+    "judge_skipped": null,
+    "unknown": false,
     "empty": false,
     "model": "gpt-6-luna",
     "settings": {
@@ -1168,9 +1187,9 @@
     "judge": "deepseek-flash",
     "judge_prompt": [
      "fact_judge_v3",
-     null
+     "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-103340"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -1204,12 +1223,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
-   },
-   "review": {
-    "target": [
-     "c: 한 턴 한 주제 경고"
-    ]
+    "run_id": "20261128-103340"
    }
   },
   {
@@ -1886,7 +1900,10 @@
    "review": {
     "target": [
      "c: 턴 2 의존은 간접 채점 (턴 2 가 인용한 페이지만 같음); 턴 6 의존은 간접 채점 (턴 6 가 인용한 페이지만 같음)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2141,7 +2158,10 @@
    "review": {
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2551,6 +2571,25 @@
    "items": [
     "턴 11: 턴 1 의존이 setup 항목으로만 채점돼, 턴 1 문서(pyproject.toml 의 [tool.fastapi])를 근거로 한 key_fact [2] 추가"
    ]
+  },
+  {
+   "date": "2026-11-28",
+   "by": "검수 결과 반영 (손 수정)",
+   "items": [
+    "턴 8: FastAPI 버전(0.142.2)을 묻는 부분을 질문·정답·key_facts·asks 에서 뺌 (key_fact [0] 은 Python 3.10+ 만 남김, setup 아님)",
+    "턴 1: setup [0] 분리: 'The configured entrypoint must be service.api:app.' → setup \"The project's application import target is service.api:app.\", 문서 부분은 기존 doc 항목 [1] 이 이미 다룸",
+    "턴 5: setup [0] 분리: 'The public query alias is lookup-key, while the Python parameter remains q.' → setup \"The project's public search key is lookup-key.\", 새 doc 항목 [2] 'A different public name is declared with Query(alias=...), while the Python parameter keeps its own name.'"
+   ]
   }
- ]
+ ],
+ "review_summary": {
+  "reviewer": "akingdbets",
+  "date": "2026-11-28",
+  "targets": 4,
+  "verdicts": {
+   "OK": 3,
+   "수정 필요": 1,
+   "제외": 0
+  }
+ }
 }

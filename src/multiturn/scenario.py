@@ -5,7 +5,7 @@
     schema_version 2 (multiturn-v2) 는 turn_type 에 update, same_doc_new_topic 을 더 받는다. v2 전용 규칙은 multiturn/scenario_v2.py.
     schema_version 2 의 evidence 는 사용자 발화 인용 {quote, user_turn, fact_idx} 도 받는다 (근거 확인은 scenario_v2).
     schema_version 이 없으면 v1 규칙 그대로 (turn_type 4종, evidence 는 page 인용만).
-    scenario_id, title, topic, status ("draft" | "reviewed")
+    scenario_id, title, topic, status ("draft" | "reviewed", schema_version 2 는 "final" 도)
     turns: [
         turn            0 부터 순서대로
         turn_type       new | followup | recall | synthesis
@@ -34,6 +34,7 @@ TURN_TYPES_V2 = TURN_TYPES_V1 + ("update", "same_doc_new_topic")
 TURN_TYPES = TURN_TYPES_V2          # 집계·표시용 전체 목록. 검증은 시나리오의 schema_version 으로 고른다
 ANSWER_TYPES = ("fact", "code", "procedure", "multi", "default")
 STATUSES = ("draft", "reviewed")
+STATUSES_V2 = STATUSES + ("final",)   # multiturn-v2: 사람 검수 후 확정 (2026-11-28)
 MIN_RECALL = 2
 MIN_SYNTHESIS = 2
 
@@ -63,8 +64,9 @@ def validate_scenario(s: dict) -> list[str]:
         return errs
     sid = s["scenario_id"]
     allowed_types = TURN_TYPES_V2 if s.get("schema_version") == 2 else TURN_TYPES_V1
-    if s["status"] not in STATUSES:
-        errs.append(f"{sid}: status 는 {STATUSES} 중 하나")
+    statuses = STATUSES_V2 if s.get("schema_version") == 2 else STATUSES
+    if s["status"] not in statuses:
+        errs.append(f"{sid}: status 는 {statuses} 중 하나")
     turns = s["turns"]
     if not isinstance(turns, list) or not turns:
         return errs + [f"{sid}: turns 가 비었습니다"]

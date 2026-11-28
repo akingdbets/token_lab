@@ -3,7 +3,7 @@
  "scenario_id": "v2_18_integrations",
  "title": "GraphQL, Telemetry and Deferred Work",
  "topic": "외부 연동(GraphQL·관측·백그라운드)",
- "status": "draft",
+ "status": "final",
  "bundle": [
   "integrations/graphql-and-opentelemetry.md",
   "integrations/background-tasks.md",
@@ -293,7 +293,10 @@
     "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
     "target": [
      "c: grounded 에서 기억으로 답함 (정확도 1.00)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -433,8 +436,9 @@
    "standalone_question": "A proxy strips /edge/r9 before forwarding. Show the FastAPI constructor setting for that prefix and identify the direct server path for the example's /app endpoint.",
    "answer": "Use `app = FastAPI(root_path=\"/edge/r9\")`. The server still serves `/app` directly, for example at `http://127.0.0.1:8000/app`; the proxy supplies the public prefix.",
    "key_facts": [
-    "The project's stripped prefix is configured as root_path=\"/edge/r9\".",
-    "The example remains directly accessible at http://127.0.0.1:8000/app without the public prefix."
+    "The project's stripped public prefix is /edge/r9.",
+    "The example remains directly accessible at http://127.0.0.1:8000/app without the public prefix.",
+    "The stripped prefix is configured with root_path."
    ],
    "fact_meta": [
     {
@@ -451,6 +455,11 @@
       "example",
       "negation"
      ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
     }
    ],
    "key_entities": [
@@ -473,6 +482,11 @@
      "quote": "Either way the server still serves the path **without** the prefix (`http://127.0.0.1:8000/app`); adding `/api/v1` is the proxy's job.",
      "page": "app-structure/sub-applications-proxy-and-wsgi.md",
      "fact_idx": 1
+    },
+    {
+     "quote": "app = FastAPI(root_path=\"/api/v1\")",
+     "page": "app-structure/sub-applications-proxy-and-wsgi.md",
+     "fact_idx": 2
     }
    ],
    "alt_evidence": [],
@@ -480,12 +494,16 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
+   "review": {
+    "target": []
+   },
    "closed_book_knowledge": {
     "correct": true,
     "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "```python\napp = FastAPI(root_path=\"/edge/r9\")\n```\n\nThe direct server path is `/app` (the proxy-facing path is `/edge/r9/app`).",
+    "response": "```python\napp = FastAPI(root_path=\"/edge/r9\")\n```\n\nThe direct server path for `/app` is `/app`.",
     "fact_results": [
+     true,
      true,
      true
     ],
@@ -508,7 +526,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-103340"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -516,6 +534,7 @@
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
+     false,
      false,
      false
     ],
@@ -542,10 +561,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
-   },
-   "review": {
-    "target": []
+    "run_id": "20261128-103340"
    }
   },
   {
@@ -560,7 +576,7 @@
    "standalone_question": "Change a proxy's stripped public prefix from /edge/r9 to /edge/r11. What FastAPI constructor setting should be used, and does it make the server itself serve the prefixed route?",
    "answer": "Use `app = FastAPI(root_path=\"/edge/r11\")`. No: the server still serves the route without the prefix; the proxy is responsible for exposing the prefixed public URL.",
    "key_facts": [
-    "The new root_path is /edge/r11.",
+    "The project's stripped public prefix is now /edge/r11.",
     "Setting root_path does not add the public prefix to the server's route."
    ],
    "fact_meta": [
@@ -612,11 +628,19 @@
    ],
    "source_turn": null,
    "recall_distance": 1,
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   },
    "closed_book_knowledge": {
     "correct": true,
     "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "Use `FastAPI(root_path=\"/edge/r11\")`. No—the proxy strips that prefix; the app still serves its routes without it. `root_path` tells FastAPI about the external prefix, but doesn’t make the server serve prefixed routes itself.",
+    "response": "Use `FastAPI(root_path=\"/edge/r11\")`. It tells FastAPI the external prefix; it does **not** make the app serve routes under `/edge/r11` itself. The proxy strips that prefix before forwarding requests.",
     "fact_results": [
      true,
      true
@@ -640,7 +664,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-103340"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -674,12 +698,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
-   },
-   "review": {
-    "target": [
-     "d: 무작위 표본 (시드 20261128)"
-    ]
+    "run_id": "20261128-103340"
    }
   },
   {
@@ -935,7 +954,10 @@
     "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
     "target": [
      "c: grounded 에서 기억으로 답함 (정확도 1.00)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -1838,7 +1860,10 @@
    "review": {
     "target": [
      "c: 턴 7 의존은 간접 채점 (턴 7 가 인용한 페이지만 같음)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2085,7 +2110,10 @@
    "review": {
     "target": [
      "c: 한 턴 한 주제 경고"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2477,8 +2505,31 @@
    "review": {
     "target": [
      "c: 턴 7 의존은 간접 채점 (턴 7 가 인용한 페이지만 같음)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   }
- ]
+ ],
+ "edits": [
+  {
+   "date": "2026-11-28",
+   "by": "검수 결과 반영 (손 수정)",
+   "items": [
+    "턴 3: setup [0] 분리: 'The project\\'s stripped prefix is configured as root_path=\"/edge/r9\".' → setup \"The project's stripped public prefix is /edge/r9.\", 새 doc 항목 [2] 'The stripped prefix is configured with root_path.'",
+    "턴 4: setup [0] 분리: 'The new root_path is /edge/r11.' → setup \"The project's stripped public prefix is now /edge/r11.\", 문서 부분은 기존 doc 항목 [1] 이 이미 다룸"
+   ]
+  }
+ ],
+ "review_summary": {
+  "reviewer": "akingdbets",
+  "date": "2026-11-28",
+  "targets": 6,
+  "verdicts": {
+   "OK": 6,
+   "수정 필요": 0,
+   "제외": 0
+  }
+ }
 }

@@ -3,7 +3,7 @@
  "scenario_id": "v2_06_middleware_cors",
  "title": "Browser Diagnostics Across Middleware and Proxies",
  "topic": "미들웨어와 교차 출처",
- "status": "draft",
+ "status": "final",
  "bundle": [
   "middleware/middleware.md",
   "middleware/cors.md",
@@ -330,7 +330,10 @@
    "review": {
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -345,9 +348,9 @@
    "standalone_question": "For a cookie-based browser flow, show a credentialed CORS configuration for https://console.aster-lab.net:5447 with a 731-second preflight cache, allowing GET and POST with Content-Type and Authorization request headers, and exposing the project's timing response header to JavaScript.",
    "answer": "```python\nfrom fastapi.middleware.cors import CORSMiddleware\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"https://console.aster-lab.net:5447\"],\n    allow_credentials=True,\n    allow_methods=[\"GET\", \"POST\"],\n    allow_headers=[\"Content-Type\", \"Authorization\"],\n    expose_headers=[\"X-Trace-Lag\"],\n    max_age=731,\n)\n```\nUse explicit origins, methods, and request headers with credentials. expose_headers controls whether cross-origin browser JavaScript can read the custom response header.",
    "key_facts": [
-    "Configure the project's origin as https://console.aster-lab.net:5447 and max_age as 731 seconds.",
+    "The project's frontend origin is https://console.aster-lab.net:5447 and its preflight cache is 731 seconds.",
     "The project timing header to expose is X-Trace-Lag.",
-    "Credentialed CORS uses explicit origins, methods, and request headers, while custom response headers must be listed in expose_headers for cross-origin JavaScript access."
+    "Credentialed CORS uses explicit origins, methods, and request headers, while custom response headers must be listed in expose_headers for cross-origin JavaScript access; the preflight cache duration is CORSMiddleware's max_age."
    ],
    "fact_meta": [
     {
@@ -413,6 +416,11 @@
      "quote": "- For JavaScript in a browser on **another origin** to read a custom response header, list it in `CORSMiddleware(expose_headers=[...])` ([CORS](../middleware/cors.md)).",
      "page": "responses/response-headers-and-cookies.md",
      "fact_idx": 2
+    },
+    {
+     "quote": "| `max_age` | Seconds browsers may cache preflight responses | `600` |",
+     "page": "middleware/cors.md",
+     "fact_idx": 2
     }
    ],
    "alt_evidence": [],
@@ -420,11 +428,14 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 2,
+   "review": {
+    "target": []
+   },
    "closed_book_knowledge": {
     "correct": false,
     "accuracy_main": 0.5,
     "accuracy": 0.6666666666666666,
-    "response": "Assuming the timing response header is `Server-Timing`, return these CORS headers (including on the preflight response):\n\n```http\nAccess-Control-Allow-Origin: https://console.aster-lab.net:5447\nAccess-Control-Allow-Credentials: true\nAccess-Control-Allow-Methods: GET, POST\nAccess-Control-Allow-Headers: Content-Type, Authorization\nAccess-Control-Max-Age: 731\nAccess-Control-Expose-Headers: Server-Timing\nVary: Origin\n```\n\nUse the exact project-specific timing header name in place of `Server-Timing` if it differs.",
+    "response": "```http\nAccess-Control-Allow-Origin: https://console.aster-lab.net:5447\nAccess-Control-Allow-Credentials: true\nAccess-Control-Allow-Methods: GET, POST\nAccess-Control-Allow-Headers: Content-Type, Authorization\nAccess-Control-Max-Age: 731\nAccess-Control-Expose-Headers: Server-Timing\nVary: Origin\n```\n\nFor cookie-based requests, send them with `credentials: \"include}`.",
     "fact_results": [
      true,
      false,
@@ -449,7 +460,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-103340"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -484,10 +495,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
-   },
-   "review": {
-    "target": []
+    "run_id": "20261128-103340"
    }
   },
   {
@@ -758,7 +766,10 @@
    "review": {
     "target": [
      "c: 턴 2 의존은 간접 채점 (턴 2 가 인용한 페이지만 같음)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -1235,7 +1246,10 @@
     "changed_round2": true,
     "target": [
      "c: grounded 에서 기억으로 답함 (정확도 0.50)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    },
    "closed_book_knowledge": {
     "correct": false,
@@ -1423,7 +1437,10 @@
    "review": {
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2662,6 +2679,23 @@
    "items": [
     "턴 8: key_fact [1] 'appropriate' 를 원문 표현으로 좁힘"
    ]
+  },
+  {
+   "date": "2026-11-28",
+   "by": "검수 결과 반영 (손 수정)",
+   "items": [
+    "턴 2: setup [0] 분리: \"Configure the project's origin as https://console.aster-lab.net:5447 and max_age as 731 seconds.\" → setup \"The project's frontend origin is https://console.aster-lab.net:5447 and its preflight cache is 731 seconds.\", 기존 doc 항목 [2] 에 합침 → \"Credentialed CORS uses explicit origins, methods, and request headers, while custom response headers must be listed in expose_headers for cross-origin JavaScript access; the preflight cache duration is CORSMiddleware's max_age.\""
+   ]
   }
- ]
+ ],
+ "review_summary": {
+  "reviewer": "akingdbets",
+  "date": "2026-11-28",
+  "targets": 4,
+  "verdicts": {
+   "OK": 4,
+   "수정 필요": 0,
+   "제외": 0
+  }
+ }
 }

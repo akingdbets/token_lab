@@ -3,7 +3,7 @@
  "scenario_id": "v2_05_deployment_setup",
  "title": "Container Deployment Behind a Prefix-Stripping Proxy",
  "topic": "배포 구성(서버·컨테이너·프록시)",
- "status": "draft",
+ "status": "final",
  "bundle": [
   "deployment/deployment-concepts-and-servers.md",
   "deployment/docker.md",
@@ -164,7 +164,10 @@
    "review": {
     "target": [
      "c: 한 턴 한 주제 경고"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -579,8 +582,9 @@
    "standalone_question": "For a FastAPI service whose proxy still strips the public prefix, change that prefix from /edge/r7 to /edge/r9. What should the prefix option be now, and does this require adding the prefix to backend route declarations?",
    "answer": "Use `--root-path /edge/r9`. Do not add that prefix to backend route declarations: the proxy strips it, and the backend continues serving unprefixed paths.",
    "key_facts": [
-    "The new root-path option is --root-path /edge/r9.",
-    "Backend route declarations remain unprefixed because the proxy strips the external prefix."
+    "The project's public prefix is now /edge/r9.",
+    "Backend route declarations remain unprefixed because the proxy strips the external prefix.",
+    "The stripped prefix is passed to the server with --root-path."
    ],
    "fact_meta": [
     {
@@ -597,6 +601,11 @@
       "negation",
       "condition"
      ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
     }
    ],
    "key_entities": [
@@ -617,6 +626,11 @@
      "quote": "Either way the server still serves the path **without** the prefix (`http://127.0.0.1:8000/app`); adding `/api/v1` is the proxy's job.",
      "page": "app-structure/sub-applications-proxy-and-wsgi.md",
      "fact_idx": 1
+    },
+    {
+     "quote": "fastapi run main.py --forwarded-allow-ips=\"*\" --root-path /api/v1",
+     "page": "app-structure/sub-applications-proxy-and-wsgi.md",
+     "fact_idx": 2
     }
    ],
    "alt_evidence": [],
@@ -634,14 +648,18 @@
    ],
    "source_turn": null,
    "recall_distance": 1,
+   "review": {
+    "target": []
+   },
    "closed_book_knowledge": {
-    "correct": true,
-    "accuracy_main": 1.0,
-    "accuracy": 1.0,
-    "response": "Set the FastAPI `root_path` option to `/edge/r9`. No—keep backend route declarations unchanged; the proxy strips the prefix.",
+    "correct": false,
+    "accuracy_main": 0.5,
+    "accuracy": 0.6666666666666666,
+    "response": "Set the prefix option to `/edge/r9`. No—because the proxy strips it, keep backend route declarations unchanged.",
     "fact_results": [
      true,
-     true
+     true,
+     false
     ],
     "judge_skipped": null,
     "unknown": false,
@@ -662,7 +680,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-103340"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -670,6 +688,7 @@
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
+     false,
      false,
      false
     ],
@@ -696,10 +715,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
-   },
-   "review": {
-    "target": []
+    "run_id": "20261128-103340"
    }
   },
   {
@@ -974,7 +990,10 @@
     "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
     "target": [
      "c: grounded 에서 기억으로 답함 (정확도 1.00)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -1905,7 +1924,10 @@
    "review": {
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2033,7 +2055,10 @@
    "review": {
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2552,6 +2577,23 @@
    "items": [
     "턴 3: key_fact [2] 'appropriate' 를 원문 표현으로 좁힘"
    ]
+  },
+  {
+   "date": "2026-11-28",
+   "by": "검수 결과 반영 (손 수정)",
+   "items": [
+    "턴 4: setup [0] 분리: 'The new root-path option is --root-path /edge/r9.' → setup \"The project's public prefix is now /edge/r9.\", 새 doc 항목 [2] 'The stripped prefix is passed to the server with --root-path.'"
+   ]
   }
- ]
+ ],
+ "review_summary": {
+  "reviewer": "akingdbets",
+  "date": "2026-11-28",
+  "targets": 4,
+  "verdicts": {
+   "OK": 4,
+   "수정 필요": 0,
+   "제외": 0
+  }
+ }
 }

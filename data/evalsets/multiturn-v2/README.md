@@ -1,7 +1,7 @@
 # multiturn-v2 (FastAPI 정식 시나리오)
 
 설계: [`docs/experiments/multiturn_v2/DESIGN.md`](../../../docs/experiments/multiturn_v2/DESIGN.md). 스키마 검사: `src/multiturn/scenario_v2.py`.
-상태: **20개 draft** (샘플 2개는 `mt_scenario_gen_v2` 로 만들고 검수 결정대로 손 수정, 나머지 18개는 `mt_scenario_gen_v3`). `reviewed` 가 되기 전에는 본 실험에 쓰지 않는다.
+상태: **20개 final** (2026-11-28 사람 검수 후 확정). 샘플 2개는 `mt_scenario_gen_v2` 로 만들고 손 수정, 나머지 18개는 `mt_scenario_gen_v3`. 검수 기록은 아래 "검수 기록".
 2026-11-28 설계 변경 내용과 이유는 DESIGN.md 9절 변경 이력.
 
 ## 가정과 범위
@@ -45,26 +45,26 @@
 
 | 파일 | 내용 |
 |---|---|
-| `multiturn-v2\v2_01_auth_switch.json` | 인증 방식 전환(헤더 토큰·쿠키·API 키), 19턴, mt_scenario_gen_v2, 손 수정, draft |
-| `multiturn-v2\v2_02_response_design.json` | 응답 상태·형식 설계, 20턴, mt_scenario_gen_v2, 손 수정, draft |
-| `multiturn-v2\v2_03_input_validation.json` | 요청 입력 검증, 19턴, mt_scenario_gen_v3, draft |
-| `multiturn-v2\v2_04_dependency_lifecycle.json` | 의존성 수명과 정리, 19턴, mt_scenario_gen_v3, draft |
-| `multiturn-v2\v2_05_deployment_setup.json` | 배포 구성(서버·컨테이너·프록시), 19턴, mt_scenario_gen_v3, draft |
-| `multiturn-v2\v2_06_middleware_cors.json` | 미들웨어와 교차 출처, 19턴, mt_scenario_gen_v3, draft |
-| `multiturn-v2\v2_07_streaming_realtime.json` | 스트리밍·실시간, 19턴, mt_scenario_gen_v3, draft |
-| `multiturn-v2\v2_08_model_serialization.json` | 모델 설계와 직렬화, 19턴, mt_scenario_gen_v3, draft |
-| `multiturn-v2\v2_09_openapi_docs.json` | OpenAPI 문서 꾸미기, 19턴, mt_scenario_gen_v3, draft |
-| `multiturn-v2\v2_10_app_structure.json` | 큰 앱 구조와 라우터, 19턴, mt_scenario_gen_v3, draft |
-| `multiturn-v2\v2_11_testing_strategy.json` | 테스트 전략, 19턴, mt_scenario_gen_v3, draft |
-| `multiturn-v2\v2_12_database.json` | 데이터베이스 연동, 19턴, mt_scenario_gen_v3, draft |
-| `multiturn-v2\v2_13_error_consistency.json` | 에러 처리 일관성, 19턴, mt_scenario_gen_v3, draft |
-| `multiturn-v2\v2_14_files_forms_static.json` | 파일·폼·정적 파일, 19턴, mt_scenario_gen_v3, draft |
-| `multiturn-v2\v2_15_settings_env.json` | 설정과 환경 분리, 19턴, mt_scenario_gen_v3, draft |
-| `multiturn-v2\v2_16_scopes_user_model.json` | 권한 범위와 사용자 모델, 19턴, mt_scenario_gen_v3, draft |
-| `multiturn-v2\v2_17_request_internals.json` | 요청 객체와 내부 동작, 19턴, mt_scenario_gen_v3, draft |
-| `multiturn-v2\v2_18_integrations.json` | 외부 연동(GraphQL·관측·백그라운드), 19턴, mt_scenario_gen_v3, draft |
-| `multiturn-v2\v2_19_first_service.json` | 첫 서비스 만들기(입문에서 운영까지), 19턴, mt_scenario_gen_v3, draft |
-| `multiturn-v2\v2_20_client_contract.json` | 클라이언트 생성과 API 계약, 19턴, mt_scenario_gen_v3, draft |
+| `v2_01_auth_switch.json` | 인증 방식 전환(헤더 토큰·쿠키·API 키), 19턴, mt_scenario_gen_v2, 손 수정, final |
+| `v2_02_response_design.json` | 응답 상태·형식 설계, 20턴, mt_scenario_gen_v2, 손 수정, final |
+| `v2_03_input_validation.json` | 요청 입력 검증, 19턴, mt_scenario_gen_v3, final |
+| `v2_04_dependency_lifecycle.json` | 의존성 수명과 정리, 19턴, mt_scenario_gen_v3, final |
+| `v2_05_deployment_setup.json` | 배포 구성(서버·컨테이너·프록시), 19턴, mt_scenario_gen_v3, final |
+| `v2_06_middleware_cors.json` | 미들웨어와 교차 출처, 19턴, mt_scenario_gen_v3, final |
+| `v2_07_streaming_realtime.json` | 스트리밍·실시간, 19턴, mt_scenario_gen_v3, final |
+| `v2_08_model_serialization.json` | 모델 설계와 직렬화, 19턴, mt_scenario_gen_v3, final |
+| `v2_09_openapi_docs.json` | OpenAPI 문서 꾸미기, 19턴, mt_scenario_gen_v3, final |
+| `v2_10_app_structure.json` | 큰 앱 구조와 라우터, 19턴, mt_scenario_gen_v3, final |
+| `v2_11_testing_strategy.json` | 테스트 전략, 19턴, mt_scenario_gen_v3, final |
+| `v2_12_database.json` | 데이터베이스 연동, 19턴, mt_scenario_gen_v3, final |
+| `v2_13_error_consistency.json` | 에러 처리 일관성, 19턴, mt_scenario_gen_v3, final |
+| `v2_14_files_forms_static.json` | 파일·폼·정적 파일, 19턴, mt_scenario_gen_v3, final |
+| `v2_15_settings_env.json` | 설정과 환경 분리, 19턴, mt_scenario_gen_v3, final |
+| `v2_16_scopes_user_model.json` | 권한 범위와 사용자 모델, 19턴, mt_scenario_gen_v3, final |
+| `v2_17_request_internals.json` | 요청 객체와 내부 동작, 19턴, mt_scenario_gen_v3, final |
+| `v2_18_integrations.json` | 외부 연동(GraphQL·관측·백그라운드), 19턴, mt_scenario_gen_v3, final |
+| `v2_19_first_service.json` | 첫 서비스 만들기(입문에서 운영까지), 19턴, mt_scenario_gen_v3, final |
+| `v2_20_client_contract.json` | 클라이언트 생성과 API 계약, 19턴, mt_scenario_gen_v3, final |
 
 생성 기록(프롬프트·요청 설정·응답 원문): `results/scenario_gen/<run_id>/` (git 제외). 시나리오의 `generation.run_id` 로 찾는다.
 
@@ -96,12 +96,27 @@ python src/multiturn/scenario_report.py data/evalsets/multiturn-v2/v2_01_auth_sw
 - 대안 블록이 붙은 판정은 이 비교로 잴 수 없으므로, v2 시나리오 검수 때 사람 라벨로 따로 확인한다
   (검수 시트의 `alt_judgments` 열에 판정, `alt_judge_label` 열에 맞음 / 틀림).
 
+## 채점 한계
+
+- fact_judge_v3 는 대안이 붙은 판정에서 관대할 수 있다. v2_11 턴 2: 문서에 없는 방법(fixture 로 이전 값 복원)을 충족으로 판정했다 (검수 alt_judge_label = 틀림).
+
 ## setup 항목 (2026-11-28 검수 결정)
 
 이번 턴 사용자 발화에 답이 그대로 있는 key_fact (사용자가 이번 턴에 정한 값을 그대로 쓰라는 항목, update 턴에서 바뀐 값을 그대로 반영하는 항목)
 에는 `tags` 에 `setup` 을 단다. **setup 항목은 주 정확도에서 빼고 따로 집계한다.** 모든 턴에는 setup 이 아닌 key_fact 가 1개 이상 있다.
 
 ## 검수 기록
+
+| 항목 | 내용 |
+|---|---|
+| 검수자 / 날짜 | akingdbets / 2026-11-28 |
+| 검수 대상 | 102턴 (질문 수정 9, 대안 판정 3, 남은 의심 56, 시나리오별 무작위 10% 36, 겹침 2) |
+| 판정 | OK 100, 수정 필요 2 (v2_10 턴 15, v2_19 턴 8: FastAPI 버전을 묻는 부분 제거 후 반영), 제외 0 |
+| standalone_same_fact | 질문을 고친 9턴 모두 "예" |
+| 대안 판정 | 3턴 중 v2_11 턴 2 는 틀림 (채점기 관대함, 위 "채점 한계") |
+| 검수 뒤 손 수정 | 버전 질문 2턴, setup 혼합 항목 분리 26개 (사용자 값만 setup, 문서 부분은 source=doc 일반 항목). 바뀐 턴만 자동 검사·closed-book 재실행 |
+| 확정 | 20개 status = final |
+
 
 턴의 `review` 필드: `standalone_same_fact` (예 / 아니오), `flags` (`grounded_memory`: 실험 지시문 아래에서도 기억으로 답한 턴, 제외하지 않고 표시), `by`.
 샘플 2개의 손 수정 내용은 시나리오의 `edits` 필드.

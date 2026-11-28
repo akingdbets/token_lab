@@ -3,7 +3,7 @@
  "scenario_id": "v2_04_dependency_lifecycle",
  "title": "Resource Lifetimes in a Streaming API",
  "topic": "의존성 수명과 정리",
- "status": "draft",
+ "status": "final",
  "bundle": [
   "dependencies/dependency-injection-basics.md",
   "dependencies/dependencies-with-yield.md",
@@ -426,7 +426,10 @@
     "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
     "target": [
      "c: grounded 에서 기억으로 답함 (정확도 1.00)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -1111,7 +1114,10 @@
    "review": {
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -1439,7 +1445,11 @@
     "target": [
      "a: 질문 수정 (standalone_same_fact 확인)",
      "c: grounded_memory 표시"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28",
+    "standalone_same_fact": "예"
    },
    "closed_book_knowledge": {
     "correct": true,
@@ -1518,7 +1528,7 @@
    "standalone_question": "After changing the lifespan client state key from relay_client_83 to relay_client_94, what endpoint access expression should replace the old one, and how must the test client be created to run lifespan initialization?",
    "answer": "Yield the client under \"relay_client_94\" and access it as request.state.relay_client_94. Run requests inside `with TestClient(app) as client:` so startup runs on entering the block and shutdown runs on leaving it; constructing TestClient without the context manager does not run lifespan.",
    "key_facts": [
-    "The new client state key is relay_client_94, so endpoint access is request.state.relay_client_94.",
+    "The project's lifespan client state key is now relay_client_94.",
     "TestClient must be used as a context manager to run lifespan; construction without with does not run it.",
     "Lifespan state yielded as a dictionary is read in endpoints through request.state."
    ],
@@ -1597,7 +1607,7 @@
     "correct": true,
     "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "Use `request.state.relay_client_94`. Create the test client in a context manager—`with TestClient(app) as client:`—so lifespan initialization runs.",
+    "response": "Replace the endpoint access with `request.state.relay_client_94`. Create the test client in a context manager—`with TestClient(app) as client:`—so lifespan initialization runs.",
     "fact_results": [
      true,
      true,
@@ -1622,7 +1632,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-101331"
+    "run_id": "20261128-103340"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -1657,7 +1667,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-101331"
+    "run_id": "20261128-103340"
    }
   },
   {
@@ -1789,7 +1799,10 @@
    "review": {
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2194,7 +2207,10 @@
     "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 0.50). 제외하지 않고 표시 유지",
     "target": [
      "c: grounded 에서 기억으로 답함 (정확도 0.50)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2450,7 +2466,10 @@
    "review": {
     "target": [
      "c: 턴 6 의존은 간접 채점 (턴 6 가 인용한 페이지만 같음)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2608,6 +2627,23 @@
     "턴 11: 턴 3 의존이 setup 항목으로만 채점돼, 턴 3 문서(lifespan state 를 request.state 로 읽음)를 근거로 한 key_fact [2] 추가",
     "턴 10: 질문의 URL 쿼리 문자열(?q=...) 때문에 물음표가 3개로 세어져, 쿼리 값을 말로 풀어 씀 (묻는 사항 2개 그대로)"
    ]
+  },
+  {
+   "date": "2026-11-28",
+   "by": "검수 결과 반영 (손 수정)",
+   "items": [
+    "턴 11: setup [0] 분리: 'The new client state key is relay_client_94, so endpoint access is request.state.relay_client_94.' → setup \"The project's lifespan client state key is now relay_client_94.\", 문서 부분은 기존 doc 항목 [2] 이 이미 다룸"
+   ]
   }
- ]
+ ],
+ "review_summary": {
+  "reviewer": "akingdbets",
+  "date": "2026-11-28",
+  "targets": 6,
+  "verdicts": {
+   "OK": 6,
+   "수정 필요": 0,
+   "제외": 0
+  }
+ }
 }

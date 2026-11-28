@@ -3,7 +3,7 @@
  "scenario_id": "v2_12_database",
  "title": "A Private Hero Registry",
  "topic": "데이터베이스 연동",
- "status": "draft",
+ "status": "final",
  "bundle": [
   "integrations/sql-databases.md",
   "dependencies/dependencies-with-yield.md",
@@ -48,8 +48,8 @@
    "standalone_question": "For a private hero registry using synchronous SQLModel, with SQLite filename basalt-ledger.db and chosen default list size 37, show the engine and per-request session setup, including SQLite's thread option.",
    "answer": "```python\nfrom typing import Annotated\nfrom fastapi import Depends\nfrom sqlmodel import Session, create_engine\n\nengine = create_engine(\n    \"sqlite:///basalt-ledger.db\",\n    connect_args={\"check_same_thread\": False},\n)\n\ndef get_session():\n    with Session(engine) as session:\n        yield session\n\nSessionDep = Annotated[Session, Depends(get_session)]\n```\nCreate one engine for the app, but a new session for each request; the context manager closes that session afterwards.",
    "key_facts": [
-    "The configured SQLite URL is sqlite:///basalt-ledger.db.",
-    "Create one engine for the app, with check_same_thread=False for this SQLite setup.",
+    "The project's SQLite filename is basalt-ledger.db.",
+    "Create one engine for the app from a sqlite:///<file name> URL, with check_same_thread=False for this SQLite setup.",
     "get_session yields a new Session per request and closes it afterwards."
    ],
    "fact_meta": [
@@ -105,6 +105,11 @@
      "quote": "The `yield` dependency gives **one new session per request** and closes it afterwards",
      "page": "integrations/sql-databases.md",
      "fact_idx": 2
+    },
+    {
+     "quote": "sqlite_url = f\"sqlite:///{sqlite_file_name}\"",
+     "page": "integrations/sql-databases.md",
+     "fact_idx": 1
     }
    ],
    "alt_evidence": [],
@@ -112,11 +117,14 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
+   "review": {
+    "target": []
+   },
    "closed_book_knowledge": {
     "correct": true,
     "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "```python\nfrom collections.abc import Generator\n\nfrom sqlmodel import Session, create_engine\n\nsqlite_url = \"sqlite:///basalt-ledger.db\"\nengine = create_engine(\n    sqlite_url,\n    connect_args={\"check_same_thread\": False},\n)\n\ndef get_session() -> Generator[Session, None, None]:\n    with Session(engine) as session:\n        yield session\n\nDEFAULT_LIST_SIZE = 37  # Use as the list endpoint's default limit.\n```",
+    "response": "```python\nfrom sqlmodel import Session, create_engine\n\nsqlite_url = \"sqlite:///basalt-ledger.db\"\nengine = create_engine(\n    sqlite_url,\n    connect_args={\"check_same_thread\": False},\n)\n\nDEFAULT_LIST_SIZE = 37\n\ndef get_session():\n    with Session(engine) as session:\n        yield session\n```",
     "fact_results": [
      true,
      true,
@@ -141,7 +149,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-103340"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -176,10 +184,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
-   },
-   "review": {
-    "target": []
+    "run_id": "20261128-103340"
    }
   },
   {
@@ -311,7 +316,10 @@
     "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
     "target": [
      "c: grounded 에서 기억으로 답함 (정확도 1.00)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -583,8 +591,9 @@
    "standalone_question": "Change the project's SQLite filename from basalt-ledger.db to basalt-rehearsal.db and show the replacement engine declaration preserving the SQLite thread option.",
    "answer": "```python\nengine = create_engine(\n    \"sqlite:///basalt-rehearsal.db\",\n    connect_args={\"check_same_thread\": False},\n)\n```",
    "key_facts": [
-    "The replacement engine uses sqlite:///basalt-rehearsal.db.",
-    "The SQLite connection option remains check_same_thread=False."
+    "The project's SQLite filename is now basalt-rehearsal.db.",
+    "The SQLite connection option remains check_same_thread=False.",
+    "The engine URL has the form sqlite:///<file name>."
    ],
    "fact_meta": [
     {
@@ -600,6 +609,11 @@
      "tags": [
       "condition"
      ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
     }
    ],
    "key_entities": [
@@ -622,6 +636,11 @@
      "quote": "connect_args = {\"check_same_thread\": False}",
      "page": "integrations/sql-databases.md",
      "fact_idx": 1
+    },
+    {
+     "quote": "sqlite_url = f\"sqlite:///{sqlite_file_name}\"",
+     "page": "integrations/sql-databases.md",
+     "fact_idx": 2
     }
    ],
    "alt_evidence": [],
@@ -638,12 +657,21 @@
    ],
    "source_turn": null,
    "recall_distance": 4,
+   "review": {
+    "target": [
+     "d: 무작위 표본 (시드 20261128)"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   },
    "closed_book_knowledge": {
     "correct": true,
     "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "```python\nengine = create_engine(\"sqlite:///basalt-rehearsal.db\", connect_args={\"check_same_thread\": False})\n```",
+    "response": "```python\nengine = create_engine(\n    \"sqlite:///basalt-rehearsal.db\",\n    connect_args={\"check_same_thread\": False},\n)\n```",
     "fact_results": [
+     true,
      true,
      true
     ],
@@ -666,7 +694,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-103340"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -674,6 +702,7 @@
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
+     false,
      false,
      false
     ],
@@ -700,12 +729,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
-   },
-   "review": {
-    "target": [
-     "d: 무작위 표본 (시드 20261128)"
-    ]
+    "run_id": "20261128-103340"
    }
   },
   {
@@ -2194,7 +2218,10 @@
    "review": {
     "target": [
      "c: 한 턴 한 주제 경고"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2466,7 +2493,10 @@
     "note": "실험 지시문 아래에서도 기억으로 답함 (closed-book run 20261128-094550, setup 제외 정확도 1.00). 제외하지 않고 표시 유지",
     "target": [
      "c: grounded 에서 기억으로 답함 (정확도 1.00); recall·synthesis 인데 knowledge 로 맞힘"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2616,7 +2646,10 @@
    "review": {
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   }
  ],
@@ -2627,6 +2660,24 @@
    "items": [
     "턴 1: 인용문 2개를 원문 글자 그대로 (백틱 포함)"
    ]
+  },
+  {
+   "date": "2026-11-28",
+   "by": "검수 결과 반영 (손 수정)",
+   "items": [
+    "턴 0: setup [0] 분리: 'The configured SQLite URL is sqlite:///basalt-ledger.db.' → setup \"The project's SQLite filename is basalt-ledger.db.\", 기존 doc 항목 [1] 에 합침 → 'Create one engine for the app from a sqlite:///<file name> URL, with check_same_thread=False for this SQLite setup.'",
+    "턴 4: setup [0] 분리: 'The replacement engine uses sqlite:///basalt-rehearsal.db.' → setup \"The project's SQLite filename is now basalt-rehearsal.db.\", 새 doc 항목 [2] 'The engine URL has the form sqlite:///<file name>.'"
+   ]
   }
- ]
+ ],
+ "review_summary": {
+  "reviewer": "akingdbets",
+  "date": "2026-11-28",
+  "targets": 5,
+  "verdicts": {
+   "OK": 5,
+   "수정 필요": 0,
+   "제외": 0
+  }
+ }
 }

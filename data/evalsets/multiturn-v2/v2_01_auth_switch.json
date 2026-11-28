@@ -3,7 +3,7 @@
  "scenario_id": "v2_01_auth_switch",
  "title": "Migrating Between Bearer Tokens, Cookies, and API Keys",
  "topic": "인증 방식 전환(헤더 토큰·쿠키·API 키)",
- "status": "draft",
+ "status": "final",
  "bundle": [
   "security/oauth2-password-flow.md",
   "security/oauth2-jwt.md",
@@ -49,8 +49,9 @@
    "standalone_question": "For a first-party FastAPI service whose relative token URL will be auth/issue, how should I configure the password-flow bearer dependency, and does that declaration create the login endpoint?",
    "answer": "Use `oauth2_scheme = OAuth2PasswordBearer(tokenUrl=\"auth/issue\")`. This declares where clients obtain tokens; it does not create the login endpoint. Implement that endpoint separately.",
    "key_facts": [
-    "Configure OAuth2PasswordBearer with the project's relative token URL auth/issue.",
-    "Declaring tokenUrl does not create the login endpoint."
+    "The project's relative token URL is auth/issue.",
+    "Declaring tokenUrl does not create the login endpoint.",
+    "The password-flow dependency is declared with OAuth2PasswordBearer(tokenUrl=...)."
    ],
    "fact_meta": [
     {
@@ -66,6 +67,11 @@
      "tags": [
       "negation"
      ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
     }
    ],
    "key_entities": [
@@ -87,6 +93,11 @@
      "quote": "It does **not** create that endpoint.",
      "page": "security/oauth2-password-flow.md",
      "fact_idx": 1
+    },
+    {
+     "quote": "oauth2_scheme = OAuth2PasswordBearer(tokenUrl=\"token\")",
+     "page": "security/oauth2-password-flow.md",
+     "fact_idx": 2
     }
    ],
    "alt_evidence": [],
@@ -94,12 +105,18 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)",
+    "target": []
+   },
    "closed_book_knowledge": {
     "correct": true,
     "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "Use `oauth2_scheme = OAuth2PasswordBearer(tokenUrl=\"auth/issue\")`, then inject it with `Depends(oauth2_scheme)` where you need the bearer token. This declares the OAuth2 security scheme for dependency handling and OpenAPI; it does **not** create the `/auth/issue` login endpoint—you must implement that route separately.",
+    "response": "Use `oauth2_scheme = OAuth2PasswordBearer(tokenUrl=\"auth/issue\")`, then inject it with `Depends(oauth2_scheme)` where you need the bearer token. This declares the OAuth2 password-flow scheme for dependency handling and OpenAPI docs; it does **not** create the login endpoint. Define `POST /auth/issue` separately.",
     "fact_results": [
+     true,
      true,
      true
     ],
@@ -122,7 +139,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-103340"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -130,6 +147,7 @@
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
+     false,
      false,
      false
     ],
@@ -156,12 +174,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
-   },
-   "review": {
-    "standalone_same_fact": "예",
-    "by": "사용자 검수 (2026-11-28)",
-    "target": []
+    "run_id": "20261128-103340"
    }
   },
   {
@@ -176,8 +189,9 @@
    "standalone_question": "Machine clients will send their API key in X-Orbit-Key. Which FastAPI security dependency should extract it, and does that dependency verify that the key is valid?",
    "answer": "Use `api_key_scheme = APIKeyHeader(name=\"X-Orbit-Key\")`. It extracts the header value as a string and registers the security scheme, but your own code must verify the key.",
    "key_facts": [
-    "Use APIKeyHeader with the project's X-Orbit-Key header name.",
-    "Security utilities extract credentials; credential verification remains application code."
+    "The project's API-key header name is X-Orbit-Key.",
+    "Security utilities extract credentials; credential verification remains application code.",
+    "A header API key is extracted with APIKeyHeader(name=...)."
    ],
    "fact_meta": [
     {
@@ -193,6 +207,11 @@
      "tags": [
       "negation"
      ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
     }
    ],
    "key_entities": [
@@ -213,6 +232,11 @@
      "quote": "They only **extract** credentials — **verifying** them is your code's job.",
      "page": "security/http-basic-and-api-keys.md",
      "fact_idx": 1
+    },
+    {
+     "quote": "| `APIKeyHeader(name=...)` | the named header | `str` |",
+     "page": "security/http-basic-and-api-keys.md",
+     "fact_idx": 2
     }
    ],
    "alt_evidence": [],
@@ -220,12 +244,18 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)",
+    "target": []
+   },
    "closed_book_knowledge": {
     "correct": true,
     "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "Use FastAPI’s `APIKeyHeader(name=\"X-Orbit-Key\")`. It extracts the header value but does not verify whether the key is valid; validate it separately.",
+    "response": "Use FastAPI’s `APIKeyHeader(name=\"X-Orbit-Key\")` dependency. It extracts the header value but does not validate the key; your application must check it.",
     "fact_results": [
+     true,
      true,
      true
     ],
@@ -248,7 +278,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-103340"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -256,6 +286,7 @@
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
+     false,
      false,
      false
     ],
@@ -282,12 +313,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
-   },
-   "review": {
-    "standalone_same_fact": "예",
-    "by": "사용자 검수 (2026-11-28)",
-    "target": []
+    "run_id": "20261128-103340"
    }
   },
   {
@@ -437,8 +463,9 @@
    "standalone_question": "With an access-token lifetime of 23 minutes, use the signed-token helper pattern to show a call issuing a token for user.username with that lifetime. What lifetime does the helper use if expires_delta is omitted?",
    "answer": "```python\naccess_token = create_access_token(\n    data={\"sub\": user.username},\n    expires_delta=timedelta(minutes=23),\n)\n```\nIf `expires_delta` is omitted, the helper falls back to 15 minutes.",
    "key_facts": [
-    "Pass timedelta(minutes=23) for the project's access-token lifetime.",
-    "The helper's fallback lifetime is 15 minutes when expires_delta is not provided."
+    "The project's access-token lifetime is 23 minutes.",
+    "The helper's fallback lifetime is 15 minutes when expires_delta is not provided.",
+    "The lifetime is passed to the token helper as expires_delta=timedelta(minutes=...)."
    ],
    "fact_meta": [
     {
@@ -456,6 +483,11 @@
       "condition",
       "confusable"
      ]
+    },
+    {
+     "source": "doc",
+     "accept_alternatives": [],
+     "tags": []
     }
    ],
    "key_entities": [
@@ -480,6 +512,11 @@
      "quote": "        expire = datetime.now(timezone.utc) + timedelta(minutes=15)",
      "page": "security/oauth2-jwt.md",
      "fact_idx": 1
+    },
+    {
+     "quote": "def create_access_token(data: dict, expires_delta: timedelta | None = None):",
+     "page": "security/oauth2-jwt.md",
+     "fact_idx": 2
     }
    ],
    "alt_evidence": [],
@@ -487,12 +524,27 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 0,
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)",
+    "flags": [
+     "grounded_memory"
+    ],
+    "note": "실험 지시문 아래에서도 기억으로 답함 (제외하지 않고 표시 유지)",
+    "target": [
+     "c: grounded_memory 표시"
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
+   },
    "closed_book_knowledge": {
     "correct": true,
     "accuracy_main": 1.0,
     "accuracy": 1.0,
-    "response": "```python\naccess_token = create_access_token(\n    data={\"sub\": user.username},\n    expires_delta=timedelta(minutes=23),\n)\n```\n\nIf `expires_delta` is omitted, the helper uses **15 minutes**.",
+    "response": "```python\naccess_token = create_access_token(\n    data={\"sub\": user.username},\n    expires_delta=timedelta(minutes=23),\n)\n```\n\nIf `expires_delta` is omitted, the helper uses a 15-minute lifetime.",
     "fact_results": [
+     true,
      true,
      true
     ],
@@ -515,7 +567,7 @@
      "fact_judge_v3",
      "5e7fe8303199"
     ],
-    "run_id": "20261128-094550"
+    "run_id": "20261128-103340"
    },
    "closed_book_grounded": {
     "correct": false,
@@ -523,6 +575,7 @@
     "accuracy": 0.0,
     "response": "NOT FOUND",
     "fact_results": [
+     false,
      false,
      false
     ],
@@ -549,18 +602,7 @@
      "fact_judge_v3",
      null
     ],
-    "run_id": "20261128-094550"
-   },
-   "review": {
-    "standalone_same_fact": "예",
-    "by": "사용자 검수 (2026-11-28)",
-    "flags": [
-     "grounded_memory"
-    ],
-    "note": "실험 지시문 아래에서도 기억으로 답함 (제외하지 않고 표시 유지)",
-    "target": [
-     "c: grounded_memory 표시"
-    ]
+    "run_id": "20261128-103340"
    }
   },
   {
@@ -1252,7 +1294,10 @@
     "by": "사용자 검수 (2026-11-28)",
     "target": [
      "d: 무작위 표본 (시드 20261128)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -1723,7 +1768,10 @@
     "changed_round2": true,
     "target": [
      "c: 한 턴 한 주제 경고"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    },
    "closed_book_knowledge": {
     "correct": false,
@@ -1875,7 +1923,11 @@
    "review": {
     "target": [
      "a: 질문 수정 (standalone_same_fact 확인)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28",
+    "standalone_same_fact": "예"
    },
    "closed_book_knowledge": {
     "correct": false,
@@ -2341,7 +2393,10 @@
     "by": "사용자 검수 (2026-11-28)",
     "target": [
      "c: 턴 2 의존은 간접 채점 (턴 2 가 인용한 페이지만 같음)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28"
    }
   },
   {
@@ -2569,7 +2624,11 @@
     "target": [
      "a: 질문 수정 (standalone_same_fact 확인)",
      "b: 대안 판정 (alt_judge_label)"
-    ]
+    ],
+    "verdict": "OK",
+    "reviewer": "akingdbets",
+    "reviewed_at": "2026-11-28",
+    "standalone_same_fact": "예"
    },
    "closed_book_knowledge": {
     "correct": false,
@@ -2659,6 +2718,25 @@
     "턴 11: key_fact [1] 'suitable samesite' 를 원문 표현으로 좁힘, 정답 끝 문장도 맞춤",
     "턴 12: key_fact [1] 'suitable WWW-Authenticate' 를 원문 표현으로 좁힘"
    ]
+  },
+  {
+   "date": "2026-11-28",
+   "by": "검수 결과 반영 (손 수정)",
+   "items": [
+    "턴 0: setup [0] 분리: \"Configure OAuth2PasswordBearer with the project's relative token URL auth/issue.\" → setup \"The project's relative token URL is auth/issue.\", 새 doc 항목 [2] 'The password-flow dependency is declared with OAuth2PasswordBearer(tokenUrl=...).'",
+    "턴 1: setup [0] 분리: \"Use APIKeyHeader with the project's X-Orbit-Key header name.\" → setup \"The project's API-key header name is X-Orbit-Key.\", 새 doc 항목 [2] 'A header API key is extracted with APIKeyHeader(name=...).'",
+    "턴 3: setup [0] 분리: \"Pass timedelta(minutes=23) for the project's access-token lifetime.\" → setup \"The project's access-token lifetime is 23 minutes.\", 새 doc 항목 [2] 'The lifetime is passed to the token helper as expires_delta=timedelta(minutes=...).'"
+   ]
   }
- ]
+ ],
+ "review_summary": {
+  "reviewer": "akingdbets",
+  "date": "2026-11-28",
+  "targets": 6,
+  "verdicts": {
+   "OK": 6,
+   "수정 필요": 0,
+   "제외": 0
+  }
+ }
 }
