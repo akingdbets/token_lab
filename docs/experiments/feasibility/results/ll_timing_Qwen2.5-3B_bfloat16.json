@@ -1,0 +1,34 @@
+{
+ "model": "Qwen/Qwen2.5-3B",
+ "dtype": "bfloat16",
+ "load_seconds": 8.6,
+ "rss_before_gb": 0.3,
+ "rss_after_load_gb": 6.29,
+ "threads": 8,
+ "rows": [
+  {
+   "model": "Qwen/Qwen2.5-3B",
+   "scenario": "v2_01_auth_switch",
+   "turn": 11,
+   "turn_type": "update",
+   "ratio": 0.5,
+   "hist_tokens": 11406,
+   "comp_tokens": 4763,
+   "seconds": 629.57,
+   "peak_rss_gb": 12.03,
+   "target": 4027,
+   "contexts": 25,
+   "origin_tokens_model": 9601,
+   "compressed_tokens_model": 2922,
+   "checks": [
+    {
+     "quote": "For session/auth cookies, set `httponly=True`, `secure=True`",
+     "src": "doc",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    }
+   ]
+  }
+ ]
+}

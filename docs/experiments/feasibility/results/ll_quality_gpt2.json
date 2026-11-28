@@ -1,0 +1,652 @@
+{
+ "model": "openai-community/gpt2",
+ "dtype": "float32",
+ "load_seconds": 3.5,
+ "rss_before_gb": 0.3,
+ "rss_after_load_gb": 0.99,
+ "threads": 8,
+ "rows": [
+  {
+   "model": "openai-community/gpt2",
+   "scenario": "v2_01_auth_switch",
+   "turn": 9,
+   "turn_type": "recall",
+   "ratio": 0.25,
+   "hist_tokens": 9528,
+   "comp_tokens": 1851,
+   "seconds": 19.74,
+   "peak_rss_gb": 1.91,
+   "target": 1482,
+   "contexts": 20,
+   "origin_tokens_model": 8180,
+   "compressed_tokens_model": 498,
+   "checks": [
+    {
+     "quote": "Actually, change our access-token lifetime from 23 to 41 min",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.0
+    },
+    {
+     "quote": "        expire = datetime.now(timezone.utc) + timedelta(minu",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.0
+    }
+   ]
+  },
+  {
+   "model": "openai-community/gpt2",
+   "scenario": "v2_01_auth_switch",
+   "turn": 9,
+   "turn_type": "recall",
+   "ratio": 0.5,
+   "hist_tokens": 9528,
+   "comp_tokens": 4720,
+   "seconds": 43.66,
+   "peak_rss_gb": 2.04,
+   "target": 4617,
+   "contexts": 20,
+   "origin_tokens_model": 8180,
+   "compressed_tokens_model": 3352,
+   "checks": [
+    {
+     "quote": "Actually, change our access-token lifetime from 23 to 41 min",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.0
+    },
+    {
+     "quote": "        expire = datetime.now(timezone.utc) + timedelta(minu",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.0
+    }
+   ]
+  },
+  {
+   "model": "openai-community/gpt2",
+   "scenario": "v2_01_auth_switch",
+   "turn": 9,
+   "turn_type": "recall",
+   "ratio": 0.75,
+   "hist_tokens": 9528,
+   "comp_tokens": 6974,
+   "seconds": 61.49,
+   "peak_rss_gb": 2.05,
+   "target": 7751,
+   "contexts": 20,
+   "origin_tokens_model": 8180,
+   "compressed_tokens_model": 5623,
+   "checks": [
+    {
+     "quote": "Actually, change our access-token lifetime from 23 to 41 min",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.909
+    },
+    {
+     "quote": "        expire = datetime.now(timezone.utc) + timedelta(minu",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.375
+    }
+   ]
+  },
+  {
+   "model": "openai-community/gpt2",
+   "scenario": "v2_01_auth_switch",
+   "turn": 16,
+   "turn_type": "recall",
+   "ratio": 0.25,
+   "hist_tokens": 18006,
+   "comp_tokens": 4649,
+   "seconds": 38.0,
+   "peak_rss_gb": 2.04,
+   "target": 3181,
+   "contexts": 38,
+   "origin_tokens_model": 15866,
+   "compressed_tokens_model": 2532,
+   "checks": [
+    {
+     "quote": "Machine clients will send their API key in X-Orbit-Key.",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.182
+    },
+    {
+     "quote": "| `APIKeyHeader(name=...)` | the named header | `str` |",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.333
+    },
+    {
+     "quote": "| `HTTPBearer` | `Authorization: Bearer <token>` | `HTTPAuth",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.571
+    }
+   ]
+  },
+  {
+   "model": "openai-community/gpt2",
+   "scenario": "v2_01_auth_switch",
+   "turn": 16,
+   "turn_type": "recall",
+   "ratio": 0.5,
+   "hist_tokens": 18006,
+   "comp_tokens": 7703,
+   "seconds": 70.62,
+   "peak_rss_gb": 2.04,
+   "target": 9142,
+   "contexts": 38,
+   "origin_tokens_model": 15866,
+   "compressed_tokens_model": 5590,
+   "checks": [
+    {
+     "quote": "Machine clients will send their API key in X-Orbit-Key.",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.818
+    },
+    {
+     "quote": "| `APIKeyHeader(name=...)` | the named header | `str` |",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.667
+    },
+    {
+     "quote": "| `HTTPBearer` | `Authorization: Bearer <token>` | `HTTPAuth",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.571
+    }
+   ]
+  },
+  {
+   "model": "openai-community/gpt2",
+   "scenario": "v2_01_auth_switch",
+   "turn": 16,
+   "turn_type": "recall",
+   "ratio": 0.75,
+   "hist_tokens": 18006,
+   "comp_tokens": 12172,
+   "seconds": 106.38,
+   "peak_rss_gb": 2.03,
+   "target": 15103,
+   "contexts": 38,
+   "origin_tokens_model": 15866,
+   "compressed_tokens_model": 10032,
+   "checks": [
+    {
+     "quote": "Machine clients will send their API key in X-Orbit-Key.",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 1.0
+    },
+    {
+     "quote": "| `APIKeyHeader(name=...)` | the named header | `str` |",
+     "src": "doc",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "| `HTTPBearer` | `Authorization: Bearer <token>` | `HTTPAuth",
+     "src": "doc",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    }
+   ]
+  },
+  {
+   "model": "openai-community/gpt2",
+   "scenario": "v2_01_auth_switch",
+   "turn": 17,
+   "turn_type": "recall",
+   "ratio": 0.25,
+   "hist_tokens": 18101,
+   "comp_tokens": 4308,
+   "seconds": 57.35,
+   "peak_rss_gb": 2.04,
+   "target": 5875,
+   "contexts": 41,
+   "origin_tokens_model": 17964,
+   "compressed_tokens_model": 4207,
+   "checks": [
+    {
+     "quote": "Rename our browser authentication cookie from orbit_session ",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 1.0
+    },
+    {
+     "quote": "**\"Try it out\" in the docs UI can't send cookies** — test wi",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.211
+    }
+   ]
+  },
+  {
+   "model": "openai-community/gpt2",
+   "scenario": "v2_01_auth_switch",
+   "turn": 17,
+   "turn_type": "recall",
+   "ratio": 0.5,
+   "hist_tokens": 18101,
+   "comp_tokens": 7520,
+   "seconds": 135.65,
+   "peak_rss_gb": 2.04,
+   "target": 11864,
+   "contexts": 41,
+   "origin_tokens_model": 17964,
+   "compressed_tokens_model": 7401,
+   "checks": [
+    {
+     "quote": "Rename our browser authentication cookie from orbit_session ",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.923
+    },
+    {
+     "quote": "**\"Try it out\" in the docs UI can't send cookies** — test wi",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.211
+    }
+   ]
+  },
+  {
+   "model": "openai-community/gpt2",
+   "scenario": "v2_01_auth_switch",
+   "turn": 17,
+   "turn_type": "recall",
+   "ratio": 0.75,
+   "hist_tokens": 18101,
+   "comp_tokens": 11066,
+   "seconds": 123.27,
+   "peak_rss_gb": 2.05,
+   "target": 17853,
+   "contexts": 41,
+   "origin_tokens_model": 17964,
+   "compressed_tokens_model": 10924,
+   "checks": [
+    {
+     "quote": "Rename our browser authentication cookie from orbit_session ",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.923
+    },
+    {
+     "quote": "**\"Try it out\" in the docs UI can't send cookies** — test wi",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.211
+    }
+   ]
+  },
+  {
+   "model": "openai-community/gpt2",
+   "scenario": "v2_02_response_design",
+   "turn": 9,
+   "turn_type": "recall",
+   "ratio": 0.25,
+   "hist_tokens": 10608,
+   "comp_tokens": 2562,
+   "seconds": 14.73,
+   "peak_rss_gb": 2.04,
+   "target": 274,
+   "contexts": 20,
+   "origin_tokens_model": 8207,
+   "compressed_tokens_model": 172,
+   "checks": [
+    {
+     "quote": "the custom header is X-Forge-Stamp, the cookie is forge_tick",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.273
+    },
+    {
+     "quote": "Change the cookie lifetime from 1380 to 2460 seconds; keep i",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.077
+    },
+    {
+     "quote": "FastAPI injects a **temporary** response object; you set hea",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.176
+    },
+    {
+     "quote": "Remember: a directly returned response skips `response_model",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.042
+    }
+   ]
+  },
+  {
+   "model": "openai-community/gpt2",
+   "scenario": "v2_02_response_design",
+   "turn": 9,
+   "turn_type": "recall",
+   "ratio": 0.5,
+   "hist_tokens": 10608,
+   "comp_tokens": 4886,
+   "seconds": 28.73,
+   "peak_rss_gb": 2.04,
+   "target": 3698,
+   "contexts": 20,
+   "origin_tokens_model": 8207,
+   "compressed_tokens_model": 2486,
+   "checks": [
+    {
+     "quote": "the custom header is X-Forge-Stamp, the cookie is forge_tick",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.273
+    },
+    {
+     "quote": "Change the cookie lifetime from 1380 to 2460 seconds; keep i",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.231
+    },
+    {
+     "quote": "FastAPI injects a **temporary** response object; you set hea",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.529
+    },
+    {
+     "quote": "Remember: a directly returned response skips `response_model",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.25
+    }
+   ]
+  },
+  {
+   "model": "openai-community/gpt2",
+   "scenario": "v2_02_response_design",
+   "turn": 9,
+   "turn_type": "recall",
+   "ratio": 0.75,
+   "hist_tokens": 10608,
+   "comp_tokens": 7267,
+   "seconds": 48.96,
+   "peak_rss_gb": 2.04,
+   "target": 7122,
+   "contexts": 20,
+   "origin_tokens_model": 8207,
+   "compressed_tokens_model": 4853,
+   "checks": [
+    {
+     "quote": "the custom header is X-Forge-Stamp, the cookie is forge_tick",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "Change the cookie lifetime from 1380 to 2460 seconds; keep i",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "FastAPI injects a **temporary** response object; you set hea",
+     "src": "doc",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "Remember: a directly returned response skips `response_model",
+     "src": "doc",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    }
+   ]
+  },
+  {
+   "model": "openai-community/gpt2",
+   "scenario": "v2_02_response_design",
+   "turn": 17,
+   "turn_type": "recall",
+   "ratio": 0.25,
+   "hist_tokens": 20615,
+   "comp_tokens": 5352,
+   "seconds": 58.24,
+   "peak_rss_gb": 2.04,
+   "target": 4122,
+   "contexts": 40,
+   "origin_tokens_model": 18348,
+   "compressed_tokens_model": 3158,
+   "checks": [
+    {
+     "quote": "Rename our custom response header from X-Forge-Stamp to X-Fo",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "For `\"foo\": {\"name\": \"Foo\", \"price\": 50.2}` the response is ",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.095
+    }
+   ]
+  },
+  {
+   "model": "openai-community/gpt2",
+   "scenario": "v2_02_response_design",
+   "turn": 17,
+   "turn_type": "recall",
+   "ratio": 0.5,
+   "hist_tokens": 20615,
+   "comp_tokens": 8803,
+   "seconds": 78.91,
+   "peak_rss_gb": 2.05,
+   "target": 10888,
+   "contexts": 40,
+   "origin_tokens_model": 18348,
+   "compressed_tokens_model": 6580,
+   "checks": [
+    {
+     "quote": "Rename our custom response header from X-Forge-Stamp to X-Fo",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "For `\"foo\": {\"name\": \"Foo\", \"price\": 50.2}` the response is ",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.429
+    }
+   ]
+  },
+  {
+   "model": "openai-community/gpt2",
+   "scenario": "v2_02_response_design",
+   "turn": 17,
+   "turn_type": "recall",
+   "ratio": 0.75,
+   "hist_tokens": 20615,
+   "comp_tokens": 12470,
+   "seconds": 115.92,
+   "peak_rss_gb": 2.05,
+   "target": 17654,
+   "contexts": 40,
+   "origin_tokens_model": 18348,
+   "compressed_tokens_model": 10236,
+   "checks": [
+    {
+     "quote": "Rename our custom response header from X-Forge-Stamp to X-Fo",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "For `\"foo\": {\"name\": \"Foo\", \"price\": 50.2}` the response is ",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.762
+    }
+   ]
+  },
+  {
+   "model": "openai-community/gpt2",
+   "scenario": "v2_02_response_design",
+   "turn": 18,
+   "turn_type": "recall",
+   "ratio": 0.25,
+   "hist_tokens": 20694,
+   "comp_tokens": 4669,
+   "seconds": 64.4,
+   "peak_rss_gb": 2.04,
+   "target": 6701,
+   "contexts": 43,
+   "origin_tokens_model": 20521,
+   "compressed_tokens_model": 4575,
+   "checks": [
+    {
+     "quote": "the cookie is forge_ticket",
+     "src": "user",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.5
+    },
+    {
+     "quote": "Change the cookie lifetime from 1380 to 2460 seconds; keep i",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "Remember: a directly returned response skips `response_model",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.25
+    }
+   ]
+  },
+  {
+   "model": "openai-community/gpt2",
+   "scenario": "v2_02_response_design",
+   "turn": 18,
+   "turn_type": "recall",
+   "ratio": 0.5,
+   "hist_tokens": 20694,
+   "comp_tokens": 8641,
+   "seconds": 98.25,
+   "peak_rss_gb": 2.05,
+   "target": 13489,
+   "contexts": 43,
+   "origin_tokens_model": 20521,
+   "compressed_tokens_model": 8520,
+   "checks": [
+    {
+     "quote": "the cookie is forge_ticket",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "Change the cookie lifetime from 1380 to 2460 seconds; keep i",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "Remember: a directly returned response skips `response_model",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.25
+    }
+   ]
+  },
+  {
+   "model": "openai-community/gpt2",
+   "scenario": "v2_02_response_design",
+   "turn": 18,
+   "turn_type": "recall",
+   "ratio": 0.75,
+   "hist_tokens": 20694,
+   "comp_tokens": 12690,
+   "seconds": 137.19,
+   "peak_rss_gb": 2.05,
+   "target": 20277,
+   "contexts": 43,
+   "origin_tokens_model": 20521,
+   "compressed_tokens_model": 12526,
+   "checks": [
+    {
+     "quote": "the cookie is forge_ticket",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "Change the cookie lifetime from 1380 to 2460 seconds; keep i",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "Remember: a directly returned response skips `response_model",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.917
+    }
+   ]
+  }
+ ]
+}

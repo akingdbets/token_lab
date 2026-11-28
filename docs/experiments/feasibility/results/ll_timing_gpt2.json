@@ -1,0 +1,65 @@
+{
+ "model": "openai-community/gpt2",
+ "dtype": "float32",
+ "load_seconds": 8.9,
+ "rss_before_gb": 0.3,
+ "rss_after_load_gb": 0.99,
+ "threads": 8,
+ "rows": [
+  {
+   "model": "openai-community/gpt2",
+   "scenario": "v2_01_auth_switch",
+   "turn": 11,
+   "turn_type": "update",
+   "ratio": 0.5,
+   "hist_tokens": 11406,
+   "comp_tokens": 5617,
+   "seconds": 117.74,
+   "peak_rss_gb": 2.01,
+   "target": 5148,
+   "contexts": 25,
+   "origin_tokens_model": 9601,
+   "compressed_tokens_model": 3805,
+   "checks": [
+    {
+     "quote": "For session/auth cookies, set `httponly=True`, `secure=True`",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.077
+    }
+   ]
+  },
+  {
+   "model": "openai-community/gpt2",
+   "scenario": "v2_02_response_design",
+   "turn": 17,
+   "turn_type": "recall",
+   "ratio": 0.5,
+   "hist_tokens": 20615,
+   "comp_tokens": 8803,
+   "seconds": 178.0,
+   "peak_rss_gb": 2.05,
+   "target": 10888,
+   "contexts": 40,
+   "origin_tokens_model": 18348,
+   "compressed_tokens_model": 6580,
+   "checks": [
+    {
+     "quote": "Rename our custom response header from X-Forge-Stamp to X-Fo",
+     "src": "user",
+     "in_raw": true,
+     "exact": true,
+     "cov": 1.0
+    },
+    {
+     "quote": "For `\"foo\": {\"name\": \"Foo\", \"price\": 50.2}` the response is ",
+     "src": "doc",
+     "in_raw": true,
+     "exact": false,
+     "cov": 0.429
+    }
+   ]
+  }
+ ]
+}
