@@ -16,7 +16,9 @@ import re
 
 from multiturn.scenario import _squash, grounding_pages, validate_scenario
 
-FACT_TAGS = ("condition", "negation", "range", "confusable", "example")
+# setup: 이번 턴 사용자 발화에 답이 그대로 있는 항목 (사용자가 이번 턴에 정한 값, update 로 바뀐 값을 그대로 쓰기).
+#        주 정확도에서 빼고 따로 집계한다 (2026-11-28 검수 결정)
+FACT_TAGS = ("condition", "negation", "range", "confusable", "example", "setup")
 FACT_SOURCES = ("doc", "user")          # key_fact 출처: 문서 | 사용자가 대화 중 정한 프로젝트 고유 값
 USER_SHARE_MIN, USER_SHARE_MAX = 0.3, 0.5   # recall·synthesis 턴 key_fact 중 source=user 비율
 MIN_USER_UPDATES = 1                    # source=user key_fact 를 가진 update 턴
@@ -28,6 +30,10 @@ MIN_FAR_RECALL, FAR_RECALL_DISTANCE = 2, 6
 MIN_WIDE_SYNTHESIS, WIDE_SYNTHESIS_TURNS = 1, 3
 MIN_CONDITION_TAGS, MIN_CONFUSABLE_TAGS = 3, 2
 SAME_DOC_MIN_GAP = 3
+# synthesis 질문에서 답의 범위가 열린 요청 (계획·체크리스트·요약 등) 은 금지 (2026-11-28 검수 결정)
+OPEN_ENDED_RES = [re.compile(p, re.I) for p in (
+    r"\bplan\b", r"\bchecklist\b", r"\bsummar(y|ise|ize)\b", r"\brecap\b", r"\boverview\b", r"\boutline\b",
+    r"\bwrite[- ]?up\b", r"\beverything\b", r"\bwalk me through\b")]
 NO_UPDATE_IN_LAST, LATE_WINDOW = 3, 3
 MAX_SAME_TYPE_RUN = 3
 
@@ -54,6 +60,26 @@ def fill_derived(s: dict) -> dict:
 
 def _count(types, name):
     return sum(1 for x in types if x == name)
+
+
+def covers(e: dict, d_turn: dict) -> bool:
+    """근거 인용 e 가 턴 d 의 정보에서 왔는가: 턴 d 사용자 발화 인용, 턴 d 에 첨부한 페이지,
+    또는 턴 d 의 근거 인용이 쓴 페이지 (문서 없는 followup·recall 턴이 앞 문서로 답한 정보)."""
+    if isinstance(e.get("user_turn"), int):
+        return e["user_turn"] == d_turn["turn"]
+    page = e.get("page")
+    return page is not None and (page in d_turn["evidence_pages"]
+                                 or page in {x.get("page") for x in d_turn["evidence"] if isinstance(x, dict)})
+
+
+def topic_warnings(s: dict) -> list[str]:
+    """한 턴에 문서를 둘 이상 붙였는데 폴더(주제)가 다르면 경고 (한 턴 한 주제, 사람이 판단)."""
+    out = []
+    for t in s["turns"]:
+        dirs = {pg.split("/")[0] if "/" in pg else "(root)" for pg in t["evidence_pages"]}
+        if len(t["evidence_pages"]) >= 2 and len(dirs) >= 2:
+            out.append(f"{s['scenario_id']} 턴 {t['turn']}: 서로 다른 주제 폴더의 문서 {t['evidence_pages']} 를 한 턴에 붙였습니다 (경고)")
+    return out
 
 
 def chain_turns(s: dict, k: int) -> list[int]:
@@ -117,11 +143,21 @@ def validate_scenario_v2(s: dict) -> list[str]:
             errs.append(f"{p}: fact_meta 길이가 key_facts 와 다릅니다")
             meta = []
         alt_cov = set()
+        chain = set(chain_turns(s, k))
         for e in t.get("alt_evidence") or []:
-            if not (isinstance(e, dict) and isinstance(e.get("quote"), str) and isinstance(e.get("page"), str)
+            if not (isinstance(e, dict) and isinstance(e.get("quote"), str)
+                    and (isinstance(e.get("page"), str) or isinstance(e.get("user_turn"), int))
                     and isinstance(e.get("fact_idx"), int) and isinstance(e.get("alt_idx"), int)):
-                errs.append(f"{p}: alt_evidence 항목은 {{quote, page, fact_idx, alt_idx}}")
+                errs.append(f"{p}: alt_evidence 항목은 {{quote, page | user_turn, fact_idx, alt_idx}}")
                 continue
+            if isinstance(e.get("user_turn"), int):     # 앞 대화 근거 대안 (문서 근거는 check_grounding_v2)
+                ut = e["user_turn"]
+                if ut not in chain:
+                    errs.append(f"{p}: 대안 근거 사용자 발화 턴 {ut} 이 depends_on 사슬 밖입니다")
+                    continue
+                if _squash(e["quote"]) not in _squash(turns[ut]["question"]):
+                    errs.append(f"{p}: 대안 근거 인용문이 턴 {ut} 질문에 없음: {e['quote'][:60]!r}")
+                    continue
             alt_cov.add((e["fact_idx"], e["alt_idx"]))
         if len(t["key_facts"]) > MAX_KEY_FACTS:
             errs.append(f"{p}: key_facts {len(t['key_facts'])}개 (최대 {MAX_KEY_FACTS})")
@@ -133,7 +169,6 @@ def validate_scenario_v2(s: dict) -> list[str]:
         leaks = leak_entities(t)
         if leaks:
             errs.append(f"{p}: standalone_question 에 원래 질문에 없던 key_entity {leaks} (답 누설)")
-        chain = set(chain_turns(s, k))
         ev_kind = {}                                    # fact_idx -> {"doc", "user"}
         for e in t["evidence"]:
             if not isinstance(e, dict):
@@ -147,11 +182,20 @@ def validate_scenario_v2(s: dict) -> list[str]:
                     errs.append(f"{p}: 사용자 발화 인용문이 턴 {ut} 질문에 없음: {str(e.get('quote'))[:60]!r}")
             elif isinstance(e.get("page"), str):
                 ev_kind.setdefault(e.get("fact_idx"), set()).add("doc")
+        same_turn_user = {e.get("fact_idx") for e in t["evidence"]
+                          if isinstance(e, dict) and e.get("user_turn") == k}
+        n_main = 0
         for i, m in enumerate(meta):
             if not (isinstance(m, dict) and isinstance(m.get("accept_alternatives"), list)
                     and isinstance(m.get("tags"), list)):
                 errs.append(f"{p}: fact_meta[{i}] 는 {{accept_alternatives: [], tags: [], source}}")
                 continue
+            setup = "setup" in m["tags"]
+            n_main += not setup
+            if m.get("source") == "user" and i in same_turn_user and not setup:
+                errs.append(f"{p}: fact {i} 는 이번 턴 사용자 발화가 답입니다 (tags 에 setup 필요)")
+            if setup and not (m.get("source") == "user" and i in same_turn_user):
+                errs.append(f"{p}: fact {i} 의 setup 태그는 이번 턴 사용자 발화 인용이 있는 source=user 항목에만")
             if m.get("source") not in FACT_SOURCES:
                 errs.append(f"{p}: fact_meta[{i}].source 는 {FACT_SOURCES} 중 하나")
             elif m["source"] not in ev_kind.get(i, set()):
@@ -165,6 +209,18 @@ def validate_scenario_v2(s: dict) -> list[str]:
             for j, _ in enumerate(m["accept_alternatives"]):
                 if (i, j) not in alt_cov:
                     errs.append(f"{p}: fact {i} 의 대안 {j} 에 근거 인용(alt_evidence)이 없습니다")
+        if meta and n_main == 0:
+            errs.append(f"{p}: setup 이 아닌 key_fact 가 없습니다 (최소 1개)")
+        if tt == "synthesis":
+            if isinstance(asks, list) and len(asks) != len(t["key_facts"]):
+                errs.append(f"{p}: synthesis 는 asks 와 key_facts 가 1:1 이어야 합니다 (asks {len(asks)}, key_facts {len(t['key_facts'])})")
+            for rx in OPEN_ENDED_RES:
+                mm = rx.search(t["question"])
+                if mm:
+                    errs.append(f"{p}: synthesis 질문이 답의 범위가 열린 요청입니다 ({mm.group(0)!r})")
+        for d in sorted(set(x for x in t["depends_on"] if isinstance(x, int) and 0 <= x < k)):
+            if not any(covers(e, turns[d]) for e in t["evidence"] if isinstance(e, dict)):
+                errs.append(f"{p}: depends_on 턴 {d} 의 정보(사용자 발화·문서)를 근거로 한 key_fact 가 없습니다")
         if t.get("recall_distance") != recall_distance(t):
             errs.append(f"{p}: recall_distance {t.get('recall_distance')} (자동 계산값 {recall_distance(t)}, fill_derived 로 채움)")
         for rx in SOURCE_CUE_RES:
@@ -453,3 +509,46 @@ def ratio_overflow(s: dict, corpus, prompt, token_counter, ratios=RATIOS, keep_r
             **{f"r{int(r * 100)}_overflow_rate": (sum(x[f"r{int(r * 100)}"] for x in rows) / n if n else None)
                for r in ratios},
             "rows": rows}
+
+
+VAGUE_RES = [re.compile(p, re.I) for p in (r"\bsuitable\b", r"\bappropriate\b", r"\bbest practice", r"\bconsider\b",
+                                             r"\bas needed\b", r"\bsomething like\b", r"\bproperly\b")]
+
+
+def suspect_reasons(s: dict, t: dict) -> list[str]:
+    """검수 때 먼저 볼 의심 사유 (자동 점검, 판정은 사람이 한다)."""
+    out = []
+    tt, k = t["turn_type"], t["turn"]
+    if len(t["question"]) > 400:
+        out.append(f"질문이 김 ({len(t['question'])}자)")
+    if tt != "synthesis" and t["question"].count("?") >= 3:
+        out.append(f"물음표 {t['question'].count('?')}개")
+    for i, f in enumerate(t["key_facts"]):
+        for rx in VAGUE_RES:
+            m = rx.search(f)
+            if m:
+                out.append(f"정답이 열려 있을 수 있음: fact {i} {m.group(0)!r}")
+                break
+    for e in t["evidence"]:
+        if "page" in e and len(e["quote"].strip()) < 20:
+            out.append(f"근거 인용이 짧음: fact {e['fact_idx']} {e['quote']!r}")
+    if any((m or {}).get("accept_alternatives") for m in t.get("fact_meta") or []):
+        out.append("대안 판정 확인 (alt_judge_label)")
+    turns = s["turns"]
+    for d in sorted(set(t["depends_on"])):
+        evs = [e for e in t["evidence"] if isinstance(e, dict) and covers(e, turns[d])]
+        direct = [e for e in evs if e.get("user_turn") == d or e.get("page") in turns[d]["evidence_pages"]]
+        if evs and not direct:
+            out.append(f"턴 {d} 의존은 간접 채점 (턴 {d} 가 인용한 페이지만 같음)")
+        if evs and all("setup" in ((t["fact_meta"][e["fact_idx"]] or {}).get("tags") or [])
+                       for e in evs if 0 <= e["fact_idx"] < len(t["fact_meta"])):
+            out.append(f"턴 {d} 의존은 setup 항목으로만 채점")
+    g = t.get("closed_book_grounded") or {}
+    if (g.get("accuracy_main") or 0) > 0:
+        out.append(f"grounded 에서 기억으로 답함 (정확도 {g.get('accuracy_main'):.2f})")
+    kn = t.get("closed_book_knowledge") or {}
+    if kn.get("correct") and tt in ("recall", "synthesis"):
+        out.append("recall·synthesis 인데 knowledge 로 맞힘")
+    if tt == "update" and len(t["key_facts"]) - sum("setup" in (m.get("tags") or []) for m in t["fact_meta"]) < 1:
+        out.append("update 턴에 setup 외 항목 없음")
+    return out

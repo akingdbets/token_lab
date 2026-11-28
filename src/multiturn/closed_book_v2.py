@@ -11,8 +11,8 @@ grounded   (턴 필드 closed_book_grounded)
     NOT FOUND 대신 정답을 내면 압축 결과를 오염시킨다 (압축으로 정보를 잃어도 맞힐 수 있으므로).
     NOT FOUND·빈 답변은 grade_answer_accuracy 가 judge 없이 0 으로 처리한다.
 
-- 채점: deepseek-flash, fact_judge_v3, per_fact, fact_meta 의 accept_alternatives 를 넘긴다
-  (대안이 없는 fact 는 v2 와 같은 프롬프트). correct = accuracy == 1.0.
+- 채점: deepseek-flash, fact_judge_v3, per_fact, fact_meta 의 accept_alternatives 를 넘긴다. correct 는 setup 태그를 뺀 key_fact 기준
+  (대안이 없는 fact 는 v2 와 같은 프롬프트). correct = accuracy_main == 1.0 (setup 제외), accuracy 는 전체 fact 기준.
 - 답변 모델은 실험과 같은 설정: gpt-6-luna, reasoning_effort server_default, 출력 한도 4096, temperature 보내지 않음
   (replay.configure_llm).
 - 결과를 시나리오 JSON 의 턴마다 쓴다. 맞힌 턴은 제외하지 않는다 (분석에서 따로 집계).
@@ -100,6 +100,20 @@ def check_grounded(t: dict, answer, judge, prompt) -> dict:
     return out
 
 
+def main_accuracy(t: dict, r: dict) -> float | None:
+    """setup 태그를 뺀 key_fact 의 정확도 (주 정확도와 같은 기준, 2026-11-28 검수 결정). correct = 이 값이 1.0."""
+    if r["accuracy"] is None:
+        return None
+    keep = [i for i, m in enumerate(t.get("fact_meta") or [{}] * len(t["key_facts"]))
+            if "setup" not in ((m or {}).get("tags") or [])]
+    fr = r["fact_results"]
+    if not keep:
+        return r["accuracy"]
+    if len(fr) < len(t["key_facts"]):        # judge 를 안 부른 경우 (UNKNOWN 등): 전체 정확도 그대로 (0)
+        return r["accuracy"]
+    return sum(bool(fr[i]) for i in keep) / len(keep)
+
+
 def check_scenario(s: dict, answer, judge, run_id: str, out_rows: list, prompt) -> dict:
     summary = {"scenario_id": s["scenario_id"], "turns": len(s["turns"])}
     for t in s["turns"]:
@@ -107,9 +121,9 @@ def check_scenario(s: dict, answer, judge, run_id: str, out_rows: list, prompt) 
         for kind in KINDS:
             r = (check_knowledge(t, s["scenario_id"], answer, judge) if kind == "knowledge"
                  else check_grounded(t, answer, judge, prompt))
-            acc = r["accuracy"]
+            acc, main = r["accuracy"], main_accuracy(t, r)
             t[f"closed_book_{kind}"] = {
-                "correct": acc == 1.0, "accuracy": acc, "response": r["response"],
+                "correct": main == 1.0, "accuracy_main": main, "accuracy": acc, "response": r["response"],
                 "fact_results": r["fact_results"], "judge_skipped": r["judge_skipped"],
                 **({"unknown": r["unknown"]} if kind == "knowledge" else {"not_found": r["not_found"],
                                                                          "answer_prompt": ["mt_answer_v2", prompt.sha256]}),
@@ -136,18 +150,30 @@ def _usd(rows):
 def main(argv=None):
     ap = argparse.ArgumentParser(description="multiturn-v2 closed-book 검사 (knowledge, grounded)")
     ap.add_argument("scenarios", nargs="+")
+    ap.add_argument("--workers", type=int, default=1, help="시나리오 단위 동시 실행 수 (시나리오마다 LLM 객체를 따로 만든다)")
     a = ap.parse_args(argv)
+    from concurrent.futures import ThreadPoolExecutor
+
     from multiturn.prompt import load_mt_prompt
     prompt = load_mt_prompt(ANSWER_PROMPT_VERSION)
     run_id = datetime.now().strftime("%Y%m%d-%H%M%S")
     out_dir = CFG.results_dir / "closed_book_v2" / run_id
     out_dir.mkdir(parents=True, exist_ok=True)
-    answer, judge = make_llms()
-    rows, summary = [], []
-    for path in a.scenarios:
+    answer, _ = make_llms()
+
+    def one(path):
+        ans, jud = make_llms()
         s = json.loads(Path(path).read_text(encoding="utf-8"))
-        summary.append(check_scenario(s, answer, judge, run_id, rows, prompt))
+        rows_one = []
+        summ = check_scenario(s, ans, jud, run_id, rows_one, prompt)
         Path(path).write_text(json.dumps(s, ensure_ascii=False, indent=1), encoding="utf-8")
+        print(f"{s['scenario_id']}: knowledge {summ['knowledge_correct']}, grounded {summ['grounded_correct']}", flush=True)
+        return summ, rows_one
+
+    with ThreadPoolExecutor(max_workers=max(1, a.workers)) as ex:
+        results = list(ex.map(one, a.scenarios))
+    summary = [r[0] for r in results]
+    rows = [x for r in results for x in r[1]]
     with open(out_dir / "closed_book.jsonl", "w", encoding="utf-8") as f:
         for r in rows:
             f.write(json.dumps(r, ensure_ascii=False) + "\n")

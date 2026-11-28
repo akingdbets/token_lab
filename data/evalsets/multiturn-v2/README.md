@@ -1,7 +1,7 @@
 # multiturn-v2 (FastAPI 정식 시나리오)
 
 설계: [`docs/experiments/multiturn_v2/DESIGN.md`](../../../docs/experiments/multiturn_v2/DESIGN.md). 스키마 검사: `src/multiturn/scenario_v2.py`.
-상태: **샘플 2개 (draft, 검수 전, 생성 프롬프트 `mt_scenario_gen_v2`)**. `reviewed` 가 되기 전에는 본 실험에 쓰지 않는다.
+상태: **20개 draft** (샘플 2개는 `mt_scenario_gen_v2` 로 만들고 검수 결정대로 손 수정, 나머지 18개는 `mt_scenario_gen_v3`). `reviewed` 가 되기 전에는 본 실험에 쓰지 않는다.
 2026-11-28 설계 변경 내용과 이유는 DESIGN.md 9절 변경 이력.
 
 ## 가정과 범위
@@ -77,3 +77,13 @@ python src/multiturn/scenario_report.py data/evalsets/multiturn-v2/v2_01_auth_sw
   v2 0.863 / v3 0.850 차이(1행)는 같은 프롬프트에서의 채점기 변동이다 (80행에는 대안이 없다). v3 가 나쁘다는 근거가 아니다.
 - 대안 블록이 붙은 판정은 이 비교로 잴 수 없으므로, v2 시나리오 검수 때 사람 라벨로 따로 확인한다
   (검수 시트의 `alt_judgments` 열에 판정, `alt_judge_label` 열에 맞음 / 틀림).
+
+## setup 항목 (2026-11-28 검수 결정)
+
+이번 턴 사용자 발화에 답이 그대로 있는 key_fact (사용자가 이번 턴에 정한 값을 그대로 쓰라는 항목, update 턴에서 바뀐 값을 그대로 반영하는 항목)
+에는 `tags` 에 `setup` 을 단다. **setup 항목은 주 정확도에서 빼고 따로 집계한다.** 모든 턴에는 setup 이 아닌 key_fact 가 1개 이상 있다.
+
+## 검수 기록
+
+턴의 `review` 필드: `standalone_same_fact` (예 / 아니오), `flags` (`grounded_memory`: 실험 지시문 아래에서도 기억으로 답한 턴, 제외하지 않고 표시), `by`.
+샘플 2개의 손 수정 내용은 시나리오의 `edits` 필드.

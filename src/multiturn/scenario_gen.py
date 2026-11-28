@@ -32,7 +32,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from config import CFG  # noqa: E402
 
 PROMPTS_DIR = Path(__file__).resolve().parents[1] / "prompts"
-GEN_PROMPT_VERSION = "v2"     # v1: B단계 첫 샘플 (2026-11-27). v2: closed-book 결과에 따른 설계 변경 (2026-11-28)
+GEN_PROMPT_VERSION = "v3"     # v1: B단계 첫 샘플 (2026-11-27). v2: closed-book 결과에 따른 설계 변경. v3: 샘플 검수 결정 (2026-11-28)
 BUNDLES = CFG.root / "docs" / "experiments" / "multiturn_v2" / "bundles.json"
 OUT_DIR = CFG.root / "data" / "evalsets" / "multiturn-v2"
 GEN_MODEL = "gpt-6.1-sol"

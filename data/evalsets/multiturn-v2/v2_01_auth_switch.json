@@ -56,7 +56,9 @@
     {
      "source": "user",
      "accept_alternatives": [],
-     "tags": []
+     "tags": [
+      "setup"
+     ]
     },
     {
      "source": "doc",
@@ -153,6 +155,10 @@
      null
     ],
     "run_id": "20261128-005056"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)"
    }
   },
   {
@@ -174,7 +180,9 @@
     {
      "source": "user",
      "accept_alternatives": [],
-     "tags": []
+     "tags": [
+      "setup"
+     ]
     },
     {
      "source": "doc",
@@ -270,6 +278,10 @@
      null
     ],
     "run_id": "20261128-005056"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)"
    }
   },
   {
@@ -291,7 +303,9 @@
     {
      "source": "user",
      "accept_alternatives": [],
-     "tags": []
+     "tags": [
+      "setup"
+     ]
     },
     {
      "source": "doc",
@@ -396,6 +410,10 @@
      null
     ],
     "run_id": "20261128-005056"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)"
    }
   },
   {
@@ -417,7 +435,9 @@
     {
      "source": "user",
      "accept_alternatives": [],
-     "tags": []
+     "tags": [
+      "setup"
+     ]
     },
     {
      "source": "doc",
@@ -519,6 +539,14 @@
      "5e7fe8303199"
     ],
     "run_id": "20261128-005056"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)",
+    "flags": [
+     "grounded_memory"
+    ],
+    "note": "실험 지시문 아래에서도 기억으로 답함 (제외하지 않고 표시 유지)"
    }
   },
   {
@@ -541,7 +569,8 @@
      "source": "user",
      "accept_alternatives": [],
      "tags": [
-      "confusable"
+      "confusable",
+      "setup"
      ]
     },
     {
@@ -646,6 +675,10 @@
      null
     ],
     "run_id": "20261128-005056"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)"
    }
   },
   {
@@ -654,14 +687,15 @@
    "type": "procedure",
    "question": "The browser login should set our chosen cookie while returning ordinary data through a response_model. Which response technique preserves filtering, and which authentication-cookie flags should I set?",
    "asks": [
-    "Choose a cookie-setting technique that preserves response filtering",
+    "Choose a technique for setting the project's cookie that preserves response filtering",
     "Identify authentication-cookie flags"
    ],
    "standalone_question": "For a browser login that sets the project's chosen cookie while returning ordinary data through a response_model, which response technique preserves filtering, and which authentication-cookie flags should be set?",
-   "answer": "Inject a `Response` parameter, call `response.set_cookie(...)` on it using the chosen cookie name, and return the data normally. FastAPI copies the cookie onto the final response while retaining `response_model` filtering. Set `httponly=True`, `secure=True`, and a suitable `samesite` value.",
+   "answer": "Inject a `Response` parameter, call `response.set_cookie(key=\"orbit_session\", ...)` on it, and return the data normally. FastAPI copies the cookie onto the final response while retaining `response_model` filtering. Set `httponly=True`, `secure=True`, and a suitable `samesite` value.",
    "key_facts": [
     "Setting cookies on the injected temporary Response preserves response_model filtering when ordinary data is returned.",
-    "Authentication cookies should use httponly=True, secure=True, and a suitable samesite."
+    "Authentication cookies should use httponly=True, secure=True, and a suitable samesite.",
+    "The cookie set at login is the project's orbit_session cookie."
    ],
    "fact_meta": [
     {
@@ -675,6 +709,11 @@
      "source": "doc",
      "accept_alternatives": [],
      "tags": []
+    },
+    {
+     "source": "user",
+     "accept_alternatives": [],
+     "tags": []
     }
    ],
    "key_entities": [
@@ -682,7 +721,8 @@
     "response_model",
     "httponly=True",
     "secure=True",
-    "samesite"
+    "samesite",
+    "orbit_session"
    ],
    "evidence_pages": [
     "responses/response-headers-and-cookies.md"
@@ -705,6 +745,11 @@
      "quote": "For session/auth cookies, set `httponly=True`, `secure=True` and a suitable `samesite`.",
      "page": "responses/response-headers-and-cookies.md",
      "fact_idx": 1
+    },
+    {
+     "quote": "For browsers, our cookie name will be orbit_session.",
+     "user_turn": 2,
+     "fact_idx": 2
     }
    ],
    "alt_evidence": [],
@@ -712,67 +757,9 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 3,
-   "closed_book_knowledge": {
-    "correct": true,
-    "accuracy": 1.0,
-    "response": "Inject FastAPI’s `Response`, set the cookie on it, and return the normal data object so `response_model` filtering still applies. Set the auth cookie with `httponly=True`, `secure=True`, and an appropriate `samesite` value (typically `\"lax\"`).",
-    "fact_results": [
-     true,
-     true
-    ],
-    "judge_skipped": null,
-    "unknown": false,
-    "empty": false,
-    "model": "gpt-6-luna",
-    "settings": {
-     "model": "gpt-6-luna",
-     "temperature": null,
-     "temperature_requested": null,
-     "seed": 42,
-     "reasoning_effort": null,
-     "reasoning_effort_requested": null,
-     "max_tokens": 4096,
-     "max_tokens_param": "max_completion_tokens"
-    },
-    "judge": "deepseek-flash",
-    "judge_prompt": [
-     "fact_judge_v3",
-     "5e7fe8303199"
-    ],
-    "run_id": "20261128-005056"
-   },
-   "closed_book_grounded": {
-    "correct": false,
-    "accuracy": 0.0,
-    "response": "NOT FOUND",
-    "fact_results": [
-     false,
-     false
-    ],
-    "judge_skipped": "not_found",
-    "not_found": true,
-    "answer_prompt": [
-     "mt_answer_v2",
-     "79e1fbab96c5"
-    ],
-    "empty": false,
-    "model": "gpt-6-luna",
-    "settings": {
-     "model": "gpt-6-luna",
-     "temperature": null,
-     "temperature_requested": null,
-     "seed": 42,
-     "reasoning_effort": null,
-     "reasoning_effort_requested": null,
-     "max_tokens": 4096,
-     "max_tokens_param": "max_completion_tokens"
-    },
-    "judge": "deepseek-flash",
-    "judge_prompt": [
-     "fact_judge_v3",
-     null
-    ],
-    "run_id": "20261128-005056"
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)"
    }
   },
   {
@@ -893,6 +880,10 @@
      null
     ],
     "run_id": "20261128-005056"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)"
    }
   },
   {
@@ -1020,6 +1011,10 @@
      null
     ],
     "run_id": "20261128-005056"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)"
    }
   },
   {
@@ -1158,6 +1153,10 @@
      null
     ],
     "run_id": "20261128-005056"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)"
    }
   },
   {
@@ -1281,6 +1280,10 @@
      null
     ],
     "run_id": "20261128-005056"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)"
    }
   },
   {
@@ -1404,6 +1407,10 @@
      null
     ],
     "run_id": "20261128-005056"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)"
    }
   },
   {
@@ -1426,7 +1433,8 @@
      "source": "user",
      "accept_alternatives": [],
      "tags": [
-      "confusable"
+      "confusable",
+      "setup"
      ]
     },
     {
@@ -1443,7 +1451,6 @@
    ],
    "evidence_pages": [],
    "depends_on": [
-    2,
     5
    ],
    "evidence": [
@@ -1472,7 +1479,7 @@
     18
    ],
    "source_turn": null,
-   "recall_distance": 9,
+   "recall_distance": 6,
    "closed_book_knowledge": {
     "correct": true,
     "accuracy": 1.0,
@@ -1534,6 +1541,10 @@
      null
     ],
     "run_id": "20261128-005056"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)"
    }
   },
   {
@@ -1661,19 +1672,23 @@
      null
     ],
     "run_id": "20261128-005056"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)"
    }
   },
   {
    "turn": 13,
    "turn_type": "synthesis",
    "type": "multi",
-   "question": "Summarize the current browser-login checklist: our chosen cookie name and token lifetime, the wildcard restriction for credentialed CORS, and who handles a preflight request with what success or rejection status.",
+   "question": "For browser login, which cookie name and token lifetime are we using now? With credentials enabled, may CORS use wildcard lists for origins, methods and headers? And who answers a preflight request, with which status when allowed or rejected?",
    "asks": [
-    "Recall current browser-cookie and token-lifetime settings",
-    "State credentialed CORS wildcard restrictions",
-    "Explain preflight handling and statuses"
+    "Recall the current browser-cookie name and token lifetime",
+    "State whether credentialed CORS may use wildcard lists",
+    "Identify who answers preflight requests and the allowed and rejected statuses"
    ],
-   "standalone_question": "Summarize the project's current browser-login checklist: its chosen cookie name and token lifetime, the wildcard restriction for credentialed CORS, and who handles a preflight request with what success or rejection status.",
+   "standalone_question": "For the project's browser login, which cookie name and token lifetime are currently in use? With credentials enabled, may FastAPI's CORS middleware use wildcard lists for origins, methods and headers? And who answers a CORS preflight request, with which status when allowed or rejected?",
    "answer": "Use cookie `orbit_session_v2` and an explicit token lifetime of 41 minutes. For credentialed CORS, list allowed origins, methods, and headers explicitly rather than using wildcard lists. The middleware handles qualifying preflight `OPTIONS` requests itself, returning `200` when allowed or `400` when rejected; endpoints do not receive them.",
    "key_facts": [
     "The current project settings are cookie orbit_session_v2 and a 41-minute token lifetime.",
@@ -1745,70 +1760,7 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 9,
-   "closed_book_knowledge": {
-    "correct": false,
-    "accuracy": 0.0,
-    "response": "UNKNOWN",
-    "fact_results": [
-     false,
-     false,
-     false
-    ],
-    "judge_skipped": "unknown",
-    "unknown": true,
-    "empty": false,
-    "model": "gpt-6-luna",
-    "settings": {
-     "model": "gpt-6-luna",
-     "temperature": null,
-     "temperature_requested": null,
-     "seed": 42,
-     "reasoning_effort": null,
-     "reasoning_effort_requested": null,
-     "max_tokens": 4096,
-     "max_tokens_param": "max_completion_tokens"
-    },
-    "judge": "deepseek-flash",
-    "judge_prompt": [
-     "fact_judge_v3",
-     null
-    ],
-    "run_id": "20261128-005056"
-   },
-   "closed_book_grounded": {
-    "correct": false,
-    "accuracy": 0.0,
-    "response": "NOT FOUND",
-    "fact_results": [
-     false,
-     false,
-     false
-    ],
-    "judge_skipped": "not_found",
-    "not_found": true,
-    "answer_prompt": [
-     "mt_answer_v2",
-     "79e1fbab96c5"
-    ],
-    "empty": false,
-    "model": "gpt-6-luna",
-    "settings": {
-     "model": "gpt-6-luna",
-     "temperature": null,
-     "temperature_requested": null,
-     "seed": 42,
-     "reasoning_effort": null,
-     "reasoning_effort_requested": null,
-     "max_tokens": 4096,
-     "max_tokens_param": "max_completion_tokens"
-    },
-    "judge": "deepseek-flash",
-    "judge_prompt": [
-     "fact_judge_v3",
-     null
-    ],
-    "run_id": "20261128-005056"
-   }
+   "review": {}
   },
   {
    "turn": 14,
@@ -1910,6 +1862,10 @@
      null
     ],
     "run_id": "20261128-005056"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)"
    }
   },
   {
@@ -2058,6 +2014,10 @@
      null
     ],
     "run_id": "20261128-005056"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)"
    }
   },
   {
@@ -2185,6 +2145,10 @@
      null
     ],
     "run_id": "20261128-005056"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)"
    }
   },
   {
@@ -2307,20 +2271,24 @@
      null
     ],
     "run_id": "20261128-005056"
+   },
+   "review": {
+    "standalone_same_fact": "예",
+    "by": "사용자 검수 (2026-11-28)"
    }
   },
   {
    "turn": 18,
    "turn_type": "synthesis",
-   "type": "procedure",
-   "question": "Give a compact smoke-test plan using our configured token URL, machine header, and current browser cookie. Explain whether replacing the current-user dependency exercises authentication, and how to clean up overrides afterward.",
+   "type": "multi",
+   "question": "For the smoke tests, which token URL, machine-client header and browser cookie are we using now? Does replacing the current-user dependency in a test still run the original authentication chain? And how do I remove the overrides after the tests?",
    "asks": [
-    "Use the project's current authentication transport settings in a smoke-test plan",
-    "Distinguish authentication tests from current-user override tests",
-    "Clean up dependency overrides"
+    "Recall the current token URL, machine header and browser cookie",
+    "State whether a current-user override runs the original dependency chain",
+    "Remove dependency overrides after tests"
    ],
-   "standalone_question": "Give a compact smoke-test plan using the project's configured token URL, machine header, and current browser cookie. Explain whether replacing the current-user dependency exercises authentication, and how to clean up overrides afterward.",
-   "answer": "1. With authentication overrides disabled, exercise token issuance at the relative URL `auth/issue`, machine authentication through `X-Orbit-Key`, and browser authentication through `orbit_session_v2`.\n2. Keep fixed-user endpoint tests separate: overriding the current-user dependency bypasses that dependency and its sub-dependencies, so those tests do not exercise that authentication chain.\n3. In teardown, call `app.dependency_overrides.clear()` so overrides do not leak into other tests.",
+   "standalone_question": "For the project's smoke tests, which token URL, machine-client header and browser cookie are currently in use? In FastAPI tests, does replacing the current-user dependency with an override still run the original dependency and its sub-dependencies? And how are overrides removed after the tests?",
+   "answer": "- Current settings: token URL `auth/issue`, machine header `X-Orbit-Key`, browser cookie `orbit_session_v2`.\n- No: the override replaces the dependency, so the original and its sub-dependencies don't run; those tests do not exercise that authentication chain.\n- Call `app.dependency_overrides.clear()` (or set `app.dependency_overrides = {}`) after the tests.",
    "key_facts": [
     "The project's settings are auth/issue for token issuance, X-Orbit-Key for machine keys, and orbit_session_v2 for browser authentication.",
     "A current-user override bypasses the original dependency and its sub-dependencies, so it does not test that authentication chain.",
@@ -2401,70 +2369,20 @@
    "affects": null,
    "source_turn": null,
    "recall_distance": 18,
-   "closed_book_knowledge": {
-    "correct": false,
-    "accuracy": 0.3333333333333333,
-    "response": "- Use the project’s configured token URL and machine header to obtain a token, then call the protected endpoint with the current browser cookie and whatever auth headers the configured flow requires. Confirm success; repeat without or with invalid credentials and expect an auth failure.\n- Replacing the current-user dependency **does not test authentication**: it bypasses the checks that resolve the user. Use it only to test downstream endpoint behavior.\n- If you add an override, save any existing override and restore it in a `finally` block; otherwise remove just that entry afterward.",
-    "fact_results": [
-     false,
-     true,
-     false
-    ],
-    "judge_skipped": null,
-    "unknown": false,
-    "empty": false,
-    "model": "gpt-6-luna",
-    "settings": {
-     "model": "gpt-6-luna",
-     "temperature": null,
-     "temperature_requested": null,
-     "seed": 42,
-     "reasoning_effort": null,
-     "reasoning_effort_requested": null,
-     "max_tokens": 4096,
-     "max_tokens_param": "max_completion_tokens"
-    },
-    "judge": "deepseek-flash",
-    "judge_prompt": [
-     "fact_judge_v3",
-     "5e7fe8303199"
-    ],
-    "run_id": "20261128-005056"
-   },
-   "closed_book_grounded": {
-    "correct": false,
-    "accuracy": 0.0,
-    "response": "NOT FOUND",
-    "fact_results": [
-     false,
-     false,
-     false
-    ],
-    "judge_skipped": "not_found",
-    "not_found": true,
-    "answer_prompt": [
-     "mt_answer_v2",
-     "79e1fbab96c5"
-    ],
-    "empty": false,
-    "model": "gpt-6-luna",
-    "settings": {
-     "model": "gpt-6-luna",
-     "temperature": null,
-     "temperature_requested": null,
-     "seed": 42,
-     "reasoning_effort": null,
-     "reasoning_effort_requested": null,
-     "max_tokens": 4096,
-     "max_tokens_param": "max_completion_tokens"
-    },
-    "judge": "deepseek-flash",
-    "judge_prompt": [
-     "fact_judge_v3",
-     null
-    ],
-    "run_id": "20261128-005056"
-   }
+   "review": {}
+  }
+ ],
+ "edits": [
+  {
+   "date": "2026-11-28",
+   "by": "검수 결정 반영 (손 수정)",
+   "items": [
+    "턴 0·1·2·3·4·11 의 [0] 에 setup 태그 (턴 11 [0] 은 검증기가 추가로 찾은 update 반영 항목)",
+    "턴 5: 턴 2 에서 정한 쿠키 이름 orbit_session 을 쓰는지 보는 key_fact [2] 추가 (source=user, 근거 턴 2 사용자 발화), 정답에 쿠키 이름 명시",
+    "턴 11: depends_on [2, 5] → [5] (질문이 옛 이름과 새 이름을 모두 말해 턴 2 정보가 답에 쓰이지 않음, 의존 채점 규칙)",
+    "턴 13: 'Summarize ... checklist' 를 세 가지를 하나씩 묻는 질문으로 (asks 3 = key_facts 3), standalone 도 같게",
+    "턴 18: 'smoke-test plan' 을 세 가지를 하나씩 묻는 질문으로 (asks 3 = key_facts 3), type procedure → multi, 정답 정리"
+   ]
   }
  ]
 }

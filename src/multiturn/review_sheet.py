@@ -31,7 +31,7 @@ from config import CFG  # noqa: E402
 
 COLUMNS = ["row_id", "scenario_id", "turn", "turn_type", "type", "depends_on", "recall_distance", "evidence_pages",
            "question", "asks", "standalone_question", "answer", "key_facts", "evidence", "update_info",
-           "closed_book_knowledge", "closed_book_grounded", "alt_judgments", "auto_check",
+           "closed_book_knowledge", "closed_book_grounded", "alt_judgments", "auto_check", "suspect", "review_flags",
            "standalone_same_fact", "alt_judge_label", "verdict", "memo", "reviewer"]
 REVIEW_COLS = ("standalone_same_fact", "alt_judge_label", "verdict", "memo", "reviewer")
 
@@ -87,6 +87,7 @@ def _alt_judgments(t: dict) -> str:
 
 
 def rows_for(s: dict, errors_by_turn: dict) -> list[dict]:
+    from multiturn.scenario_v2 import suspect_reasons
     out = []
     for t in s["turns"]:
         out.append({
@@ -98,16 +99,20 @@ def rows_for(s: dict, errors_by_turn: dict) -> list[dict]:
             "key_facts": _facts(t), "evidence": _evidence(t), "update_info": _update_info(t),
             "closed_book_knowledge": _closed_book(t, "knowledge"), "closed_book_grounded": _closed_book(t, "grounded"),
             "alt_judgments": _alt_judgments(t),
+            "suspect": "\n".join(suspect_reasons(s, t)),
+            "review_flags": "; ".join(((t.get("review") or {}).get("flags") or [])
+                                      + ([t["review"]["note"]] if (t.get("review") or {}).get("note") else [])),
             "auto_check": "\n".join(errors_by_turn.get(t["turn"], [])) or "OK",
-            **{c: "" for c in REVIEW_COLS},
+            # 이미 받은 검수 값 (시나리오 JSON 의 review 필드) 은 채워 둔다
+            **{c: str((t.get("review") or {}).get(c, "")) for c in REVIEW_COLS},
         })
     return out
 
 
 def errors_by_turn(s: dict, corpus) -> tuple[dict, list[str]]:
-    from multiturn.scenario_v2 import check_grounding_v2, validate_scenario_v2
+    from multiturn.scenario_v2 import check_grounding_v2, topic_warnings, validate_scenario_v2
     by, whole, warns = {}, [], []
-    for e in validate_scenario_v2(s) + check_grounding_v2(s, corpus, warns) + warns:
+    for e in validate_scenario_v2(s) + check_grounding_v2(s, corpus, warns) + warns + topic_warnings(s):
         marker = f"{s['scenario_id']} 턴 "
         if e.startswith(marker):
             k = int(e[len(marker):].split(":")[0].split(" ")[0])
@@ -142,7 +147,8 @@ button{padding:5px 12px;border:1px solid var(--acc);border-radius:6px;background
 </style></head><body>
 <div class="top"><div class="bar"><h1>multiturn-v2 검수</h1>
 <label>검수자 <input id="who" size="6" placeholder="A"></label>
-<label>보기 <select id="flt"><option value="">전체</option><option value="todo">미검수만</option><option value="warn">자동 검사 경고만</option></select></label>
+<label>시나리오 <select id="scn"><option value="">전체</option></select></label>
+<label>보기 <select id="flt"><option value="">전체</option><option value="todo">미검수만</option><option value="warn">자동 검사 경고만</option><option value="sus">의심 턴만</option></select></label>
 <span id="cnt" class="note"></span><button id="dl">CSV 내려받기</button></div></div>
 <main><p class="note">턴마다 (1) standalone_question 이 원래 질문과 같은 사실을 묻는지, (2) 판정(OK / 수정 필요 / 제외)과 메모를 적는다.
 입력은 이 브라우저에 자동 저장된다. 모델 성능을 보고 제외하지 않는다 (근거 오류·closed-book 이 아닌 이유는 메모에 적는다).</p>
@@ -150,15 +156,20 @@ button{padding:5px 12px;border:1px solid var(--acc);border-radius:6px;background
 <script>
 const ROWS = __ROWS__; const COLS = __COLS__; const WHOLE = __WHOLE__; const KEY = "mt2review:" + __NAME__;
 let st = {}; try { st = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { st = {}; }
+for (const r of ROWS) { for (const c of ["standalone_same_fact", "alt_judge_label", "verdict", "memo"]) {
+  if (r[c] && !(st[r.row_id] || {})[c]) { st[r.row_id] = st[r.row_id] || {}; st[r.row_id][c] = r[c]; } } }
+const scnEl = document.getElementById("scn");
+for (const id of [...new Set(ROWS.map(r => r.scenario_id))]) { const o = document.createElement("option"); o.value = o.textContent = id; scnEl.appendChild(o); }
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} };
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const whoEl = document.getElementById("who"); whoEl.value = st.__who || ""; whoEl.oninput = () => { st.__who = whoEl.value; save(); };
 function field(k, v, code) { return v ? `<div class="k">${k}</div><div class="v${code ? " code" : ""}">${esc(v)}</div>` : ""; }
 function render() {
-  const f = document.getElementById("flt").value; let html = "", last = "", done = 0;
+  const f = document.getElementById("flt").value, sc = scnEl.value; let html = "", last = "", done = 0;
   for (const r of ROWS) {
     const s = st[r.row_id] || {}; if (s.verdict) done++;
-    if (f === "todo" && s.verdict) continue; if (f === "warn" && r.auto_check === "OK") continue;
+    if (sc && r.scenario_id !== sc) continue;
+    if (f === "todo" && s.verdict) continue; if (f === "warn" && r.auto_check === "OK") continue; if (f === "sus" && !r.suspect) continue;
     if (r.scenario_id !== last) { last = r.scenario_id; html += `<div class="scen">${esc(last)}</div>` + (WHOLE[last] || []).map(w => `<div class="note warn">${esc(w)}</div>`).join(""); }
     const opt = (name, vals) => vals.map(v => `<label><input type="radio" name="${name}-${r.row_id}" value="${v}" ${s[name] === v ? "checked" : ""} data-id="${r.row_id}" data-k="${name}"> ${v}</label>`).join(" ");
     html += `<div class="card"><div class="head"><span class="id">턴 ${r.turn}</span><span class="pill">${esc(r.turn_type)}</span><span class="pill">${esc(r.type)}</span>
@@ -166,7 +177,7 @@ function render() {
       ${field("질문", r.question)}${field("standalone_question (closed-book 용)", r.standalone_question)}${field("정답", r.answer)}
       ${field("key_facts [태그] / 대안", r.key_facts, true)}${field("근거 인용", r.evidence, true)}${field("update / same_doc", r.update_info)}
       ${field("묻는 사항 (asks)", r.asks)}${field("closed-book knowledge (사전 지식, UNKNOWN 허용)", r.closed_book_knowledge)}
-      ${field("closed-book grounded (실험 지시문, NOT FOUND 규칙)", r.closed_book_grounded)}${field("대안 붙은 판정 (fact_judge_v3)", r.alt_judgments)}<div class="k">자동 검사</div><div class="v ${r.auto_check === "OK" ? "okc" : "warn"}">${esc(r.auto_check)}</div>
+      ${field("closed-book grounded (실험 지시문, NOT FOUND 규칙)", r.closed_book_grounded)}${field("대안 붙은 판정 (fact_judge_v3)", r.alt_judgments)}${r.suspect ? `<div class="k">먼저 볼 점 (자동 점검)</div><div class="v warn">${esc(r.suspect)}</div>` : ""}${field("검수 표시", r.review_flags)}<div class="k">자동 검사</div><div class="v ${r.auto_check === "OK" ? "okc" : "warn"}">${esc(r.auto_check)}</div>
       <div class="rev"><span>같은 사실을 묻는가: ${opt("standalone_same_fact", ["예", "아니오"])}</span>
       ${r.alt_judgments ? `<span>대안 판정이 맞는가: ${opt("alt_judge_label", ["맞음", "틀림"])}</span>` : ""}
       <span>판정: ${opt("verdict", ["OK", "수정 필요", "제외"])}</span>
@@ -178,7 +189,7 @@ function render() {
 document.addEventListener("input", e => { const id = e.target.dataset.id, k = e.target.dataset.k; if (!id) return;
   st[id] = st[id] || {}; st[id][k] = e.target.value; st[id].reviewer = st.__who || ""; save();
   if (k === "verdict") { const s = window.scrollY; render(); window.scrollTo(0, s); } });
-document.getElementById("flt").onchange = render;
+document.getElementById("flt").onchange = render; scnEl.onchange = render;
 document.getElementById("dl").onclick = () => {
   const q = v => '"' + String(v ?? "").replace(/"/g, '""') + '"';
   const lines = [COLS.join(",")].concat(ROWS.map(r => COLS.map(c => q((st[r.row_id] || {})[c] ?? r[c])).join(",")));
